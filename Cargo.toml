@@ -1,0 +1,8 @@
+[package]
+name = "fitparser-rs"
+version = "0.1.0"
+authors = ["Matthew Stadelman <stadelmanma@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+nom = "5"
