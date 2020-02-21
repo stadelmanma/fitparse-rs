@@ -1,5 +1,5 @@
 [package]
-name = "fitparser-rs"
+name = "fitparser"
 version = "0.1.0"
 authors = ["Matthew Stadelman <stadelmanma@gmail.com>"]
 edition = "2018"
