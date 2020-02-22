@@ -1,5 +1,6 @@
 use nom::bytes::complete::{tag, take};
 use nom::combinator::cond;
+use nom::error::ErrorKind;
 use nom::multi::{count, many1};
 use nom::number::complete::{le_u16, le_u32, le_u8};
 use nom::number::Endianness;
@@ -194,14 +195,31 @@ fn fit_file_header(input: &[u8]) -> IResult<&[u8], FitFileHeader> {
 /// throughout the file.
 fn parse_messages(input: &[u8]) -> IResult<&[u8], Vec<FitDataRecord>> {
     let mut definitions: HashMap<u8, FitDataRecord> = HashMap::new();
-    let (input, messages) = many1(fit_data_record(&mut definitions))(input)?;
+    let mut messages = Vec::new();
+    let mut input = input.clone();
+    loop {
+        match fit_data_record(input.clone(), &mut definitions) {
+            Err(nom::Err::Error(_)) => return Ok((input, messages)),
+            Err(e) => return Err(e),
+            Ok((new_inp, o)) => {
+                if new_inp == input {
+                    return Err(nom::Err::Error((input, ErrorKind::Many1)));
+                }
+
+                input = new_inp;
+                messages.push(o);
+            }
+        }
+    }
 
     Ok((input, messages))
 }
 
 /// parse a single FIT data record which can define further fields or actaully cotain data itself
-fn fit_data_record(definitions: &mut HashMap<u8, FitDataRecord>) -> impl Fn(&[u8]) ->  IResult<&[u8], FitDataRecord> {
-  move |input| {
+fn fit_data_record<'a>(
+    input: &'a [u8],
+    definitions: &mut HashMap<u8, FitDataRecord>,
+) -> IResult<&'a [u8], FitDataRecord> {
     let (input, header) = message_header(input)?;
     let (input, message) = match &header {
         FitMessageHeader::Normal {
@@ -214,9 +232,17 @@ fn fit_data_record(definitions: &mut HashMap<u8, FitDataRecord>) -> impl Fn(&[u8
         },
         CompressedTimestamp => panic!("Not implemented yet"),
     };
+    let record = FitDataRecord { header, message };
+    if let FitMessageHeader::Normal {
+        message_type: FitMessageType::Definition,
+        local_message_type,
+        ..
+    } = &record.header
+    {
+        definitions.insert(*local_message_type, record.clone());
+    }
 
-    Ok((input, FitDataRecord{header, message}))
-  }
+    Ok((input, record))
 }
 
 /// Parse the header of a single FIT message
