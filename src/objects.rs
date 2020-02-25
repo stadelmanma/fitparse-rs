@@ -130,5 +130,72 @@ pub struct DeveloperFieldDescription {
 /// Definition message describing the Data message.
 #[derive(Clone, Debug)]
 pub struct DataField {
-    pub value: Vec<u8>,
+    pub raw_value: Vec<u8>,
+    pub value: DataFieldValue
+}
+
+#[derive(Clone, Debug)]
+pub enum DataFieldValue {
+  Enum(u8),
+  SInt8(i8),
+  UInt8(u8),
+  SInt16(i16),
+  UInt16(u16),
+  SInt32(i32),
+  UInt32(u32),
+  String(String),
+  Float32(f32),
+  Float64(f64),
+  UInt8z(u8),
+  UInt16z(u16),
+  UInt32z(u32),
+  Byte(Vec<u8>),
+  SInt64(i64),
+  UInt64(u64),
+  UInt64z(u64),
+}
+
+impl DataFieldValue {
+  pub fn is_valid(self, value: DataFieldValue) -> bool {
+    match value {
+      DataFieldValue::Enum(val) => val != 0xFF,
+      DataFieldValue::SInt8(val) => val != 0x7F,
+      DataFieldValue::UInt8(val) => val != 0xFF,
+      DataFieldValue::SInt16(val) => val != 0x7FFF,
+      DataFieldValue::UInt16(val) => val != 0xFFFF,
+      DataFieldValue::SInt32(val) => val != 0x7FFFFFFF,
+      DataFieldValue::UInt32(val) => val != 0xFFFFFFFF,
+      DataFieldValue::String(val) => { !val.contains("\0") },
+      DataFieldValue::Float32(val) => val.is_finite(),
+      DataFieldValue::Float64(val) => val.is_finite(),
+      DataFieldValue::UInt8z(val) => val != 0x0,
+      DataFieldValue::UInt16z(val) => val != 0x0,
+      DataFieldValue::UInt32z(val) => val != 0x0,
+      DataFieldValue::Byte(val) => { !val.iter().all(|&v| v == 0xFF)},
+      DataFieldValue::SInt64(val) => val != 0x7FFFFFFFFFFFFFFF,
+      DataFieldValue::UInt64(val) => val != 0xFFFFFFFFFFFFFFFF,
+      DataFieldValue::UInt64z(val) => val != 0x0,
+    }
+  }
+}
+
+#[derive(Clone, Copy, Debug)]
+pub enum BaseType {
+  Enum = 0x00,
+  SInt8 = 0x01,
+  UInt8 = 0x02,
+  SInt16 = 0x83,
+  UInt16 = 0x84,
+  SInt32 = 0x85,
+  UInt32 = 0x86,
+  String = 0x07,
+  Float32 = 0x88,
+  Float64 = 0x89,
+  UInt8z = 0x0A,
+  UInt16z = 0x8B,
+  UInt32z = 0x8C,
+  Byte = 0x0D,
+  SInt64 = 0x8E,
+  UInt64 = 0x8F,
+  UInt64z = 0x90,
 }
