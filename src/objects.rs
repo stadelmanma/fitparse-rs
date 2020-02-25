@@ -65,7 +65,9 @@ pub enum FitMessageHeader {
 pub enum FitMessage {
     /// Stores a vector of fields described by the preceding Definition message, a Definition message
     /// must come before any Data message.
-    Data { data_fields: Vec<DataField> },
+    Data {
+        data_fields: Vec<Option<DataFieldValue>>,
+    },
     /// The definition message is used to create an association between the local message type
     /// contained in the record header, and a Global Message Number (mesg_num) that relates to the
     /// global FIT message. Although 1 byte is available for the number of fields and 1 byte is
@@ -89,7 +91,7 @@ pub enum FitMessage {
 pub struct FieldDefinition {
     pub field_definition_number: u8, //  could possibly be an enum (ie. field_type) but this is per-message type
     pub size: u8, // which might make things messy (i.e. umpteen different enums of enums)
-    pub base_type: u8, // probably needs to be an enum of types, I think this is fairly limited
+    pub base_type: BaseType,
 }
 
 /// Developer data fields allow for files to define the meaning of data without requiring changes to
@@ -126,76 +128,69 @@ pub struct DeveloperFieldDescription {
     pub native_field_num: u8,
 }
 
-/// Contains arbitrary data that needs converted to a value based on the base_type defined in the
-/// Definition message describing the Data message.
-#[derive(Clone, Debug)]
-pub struct DataField {
-    pub raw_value: Vec<u8>,
-    pub value: DataFieldValue
-}
-
+/// Contains arbitrary data in the defined format.
 #[derive(Clone, Debug)]
 pub enum DataFieldValue {
-  Enum(u8),
-  SInt8(i8),
-  UInt8(u8),
-  SInt16(i16),
-  UInt16(u16),
-  SInt32(i32),
-  UInt32(u32),
-  String(String),
-  Float32(f32),
-  Float64(f64),
-  UInt8z(u8),
-  UInt16z(u16),
-  UInt32z(u32),
-  Byte(Vec<u8>),
-  SInt64(i64),
-  UInt64(u64),
-  UInt64z(u64),
+    Enum(u8),
+    SInt8(i8),
+    UInt8(u8),
+    SInt16(i16),
+    UInt16(u16),
+    SInt32(i32),
+    UInt32(u32),
+    String(String),
+    Float32(f32),
+    Float64(f64),
+    UInt8z(u8),
+    UInt16z(u16),
+    UInt32z(u32),
+    Byte(Vec<u8>),
+    SInt64(i64),
+    UInt64(u64),
+    UInt64z(u64),
 }
 
 impl DataFieldValue {
-  pub fn is_valid(self, value: DataFieldValue) -> bool {
-    match value {
-      DataFieldValue::Enum(val) => val != 0xFF,
-      DataFieldValue::SInt8(val) => val != 0x7F,
-      DataFieldValue::UInt8(val) => val != 0xFF,
-      DataFieldValue::SInt16(val) => val != 0x7FFF,
-      DataFieldValue::UInt16(val) => val != 0xFFFF,
-      DataFieldValue::SInt32(val) => val != 0x7FFFFFFF,
-      DataFieldValue::UInt32(val) => val != 0xFFFFFFFF,
-      DataFieldValue::String(val) => { !val.contains("\0") },
-      DataFieldValue::Float32(val) => val.is_finite(),
-      DataFieldValue::Float64(val) => val.is_finite(),
-      DataFieldValue::UInt8z(val) => val != 0x0,
-      DataFieldValue::UInt16z(val) => val != 0x0,
-      DataFieldValue::UInt32z(val) => val != 0x0,
-      DataFieldValue::Byte(val) => { !val.iter().all(|&v| v == 0xFF)},
-      DataFieldValue::SInt64(val) => val != 0x7FFFFFFFFFFFFFFF,
-      DataFieldValue::UInt64(val) => val != 0xFFFFFFFFFFFFFFFF,
-      DataFieldValue::UInt64z(val) => val != 0x0,
+    pub fn is_valid(&self) -> bool {
+        match self {
+            DataFieldValue::Enum(val) => *val != 0xFF,
+            DataFieldValue::SInt8(val) => *val != 0x7F,
+            DataFieldValue::UInt8(val) => *val != 0xFF,
+            DataFieldValue::SInt16(val) => *val != 0x7FFF,
+            DataFieldValue::UInt16(val) => *val != 0xFFFF,
+            DataFieldValue::SInt32(val) => *val != 0x7FFFFFFF,
+            DataFieldValue::UInt32(val) => *val != 0xFFFFFFFF,
+            DataFieldValue::String(val) => !val.contains("\0"),
+            DataFieldValue::Float32(val) => val.is_finite(),
+            DataFieldValue::Float64(val) => val.is_finite(),
+            DataFieldValue::UInt8z(val) => *val != 0x0,
+            DataFieldValue::UInt16z(val) => *val != 0x0,
+            DataFieldValue::UInt32z(val) => *val != 0x0,
+            DataFieldValue::Byte(val) => !val.iter().all(|&v| v == 0xFF),
+            DataFieldValue::SInt64(val) => *val != 0x7FFFFFFFFFFFFFFF,
+            DataFieldValue::UInt64(val) => *val != 0xFFFFFFFFFFFFFFFF,
+            DataFieldValue::UInt64z(val) => *val != 0x0,
+        }
     }
-  }
 }
 
 #[derive(Clone, Copy, Debug)]
 pub enum BaseType {
-  Enum = 0x00,
-  SInt8 = 0x01,
-  UInt8 = 0x02,
-  SInt16 = 0x83,
-  UInt16 = 0x84,
-  SInt32 = 0x85,
-  UInt32 = 0x86,
-  String = 0x07,
-  Float32 = 0x88,
-  Float64 = 0x89,
-  UInt8z = 0x0A,
-  UInt16z = 0x8B,
-  UInt32z = 0x8C,
-  Byte = 0x0D,
-  SInt64 = 0x8E,
-  UInt64 = 0x8F,
-  UInt64z = 0x90,
+    Enum = 0x00,
+    SInt8 = 0x01,
+    UInt8 = 0x02,
+    SInt16 = 0x83,
+    UInt16 = 0x84,
+    SInt32 = 0x85,
+    UInt32 = 0x86,
+    String = 0x07,
+    Float32 = 0x88,
+    Float64 = 0x89,
+    UInt8z = 0x0A,
+    UInt16z = 0x8B,
+    UInt32z = 0x8C,
+    Byte = 0x0D,
+    SInt64 = 0x8E,
+    UInt64 = 0x8F,
+    UInt64z = 0x90,
 }

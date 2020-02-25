@@ -12,11 +12,11 @@ use nom::bytes::complete::{tag, take};
 use nom::combinator::cond;
 use nom::error::ErrorKind;
 use nom::multi::count;
-use nom::number::complete::{le_u16, le_u32, le_u8};
+use nom::number::complete::{le_i8, le_u16, le_u32, le_u8};
 use nom::number::Endianness;
 use nom::sequence::tuple;
-use nom::u16;
 use nom::IResult;
+use nom::{i16, i32, i64, u16, u32, u64};
 use std::collections::HashMap;
 use std::fmt::Display;
 
@@ -189,15 +189,17 @@ fn data_message<'a>(
         if let FitMessage::Definition {
             field_definitions,
             number_of_developer_fields,
+            byte_order,
             ..
         } = def_mesg
         {
             let mut data_fields = Vec::new();
+            let mut input = input;
             for field_def in field_definitions {
-                let (input, value) = take(field_def.size as usize)(input)?;
-                data_fields.push(DataField {
-                    value: Vec::from(value),
-                });
+                let (i, value) =
+                    data_field_value(input, field_def.base_type, *byte_order, field_def.size)?;
+                data_fields.push(value);
+                input = i;
             }
             if *number_of_developer_fields != 0u8 {
                 panic!("Not Implemented: number_of_developer_fields > 0")
@@ -213,16 +215,136 @@ fn data_message<'a>(
 fn field_definition(input: &[u8]) -> IResult<&[u8], FieldDefinition> {
     let (input, field_definition_number) = le_u8(input)?;
     let (input, size) = le_u8(input)?;
-    let (input, base_type) = le_u8(input)?;
+    let (input, base_type_field) = le_u8(input)?;
 
     Ok((
         input,
         FieldDefinition {
             field_definition_number,
             size,
-            base_type,
+            base_type: parse_base_type(base_type_field),
         },
     ))
+}
+
+/// Check the value of the last 5 bits to determine the base type.
+///
+/// Bits 5 and 6 are reserved so we don't check them and to avoid issues it's easier to
+/// simply zero them out, 0x9f == 159 == 0b10011111. When the type can't be determined we default
+/// to a byte vector.
+fn parse_base_type(base_type_field: u8) -> BaseType {
+    match base_type_field & 0x9f {
+        0x00 => BaseType::Enum,
+        0x01 => BaseType::SInt8,
+        0x02 => BaseType::UInt8,
+        0x83 => BaseType::SInt16,
+        0x84 => BaseType::UInt16,
+        0x85 => BaseType::SInt32,
+        0x86 => BaseType::UInt32,
+        0x07 => BaseType::String,
+        0x88 => BaseType::Float32,
+        0x89 => BaseType::Float64,
+        0x0A => BaseType::UInt8z,
+        0x8B => BaseType::UInt16z,
+        0x8C => BaseType::UInt32z,
+        0x0D => BaseType::Byte,
+        0x8E => BaseType::SInt64,
+        0x8F => BaseType::UInt64,
+        0x90 => BaseType::UInt64z,
+        _ => BaseType::Byte,
+    }
+}
+
+macro_rules! parse_f32 ( ($i:expr, $e:expr) => ( {if nom::number::Endianness::Big == $e { nom::number::complete::be_f32($i) } else { nom::number::complete::le_f32($i) } } ););
+macro_rules! parse_f64 ( ($i:expr, $e:expr) => ( {if nom::number::Endianness::Big == $e { nom::number::complete::be_f64($i) } else { nom::number::complete::le_f64($i) } } ););
+
+fn data_field_value(
+    input: &[u8],
+    base_type: BaseType,
+    byte_order: Endianness,
+    size: u8,
+) -> IResult<&[u8], Option<DataFieldValue>> {
+    let (input, value) = match base_type {
+        BaseType::Enum => {
+            let (input, value) = le_u8(input)?;
+            (input, DataFieldValue::Enum(value))
+        }
+        BaseType::SInt8 => {
+            let (input, value) = le_i8(input)?;
+            (input, DataFieldValue::SInt8(value))
+        }
+        BaseType::UInt8 => {
+            let (input, value) = le_u8(input)?;
+            (input, DataFieldValue::UInt8(value))
+        }
+        BaseType::SInt16 => {
+            let (input, value) = i16!(input, byte_order)?;
+            (input, DataFieldValue::SInt16(value))
+        }
+        BaseType::UInt16 => {
+            let (input, value) = u16!(input, byte_order)?;
+            (input, DataFieldValue::UInt16(value))
+        }
+        BaseType::SInt32 => {
+            let (input, value) = i32!(input, byte_order)?;
+            (input, DataFieldValue::SInt32(value))
+        }
+        BaseType::UInt32 => {
+            let (input, value) = u32!(input, byte_order)?;
+            (input, DataFieldValue::UInt32(value))
+        }
+        BaseType::String => {
+            let (input, value) = take(size as usize)(input)?;
+            if let Ok(value) = String::from_utf8(value.to_vec()) {
+                (input, DataFieldValue::String(value))
+            } else {
+                return Ok((input, None));
+            }
+        }
+        BaseType::Float32 => {
+            let (input, value) = parse_f32!(input, byte_order)?;
+            (input, DataFieldValue::Float32(value))
+        }
+        BaseType::Float64 => {
+            let (input, value) = parse_f64!(input, byte_order)?;
+            (input, DataFieldValue::Float64(value))
+        }
+        BaseType::UInt8z => {
+            let (input, value) = le_u8(input)?;
+            (input, DataFieldValue::UInt8z(value))
+        }
+        BaseType::UInt16z => {
+            let (input, value) = u16!(input, byte_order)?;
+            (input, DataFieldValue::UInt16z(value))
+        }
+        BaseType::UInt32z => {
+            let (input, value) = u32!(input, byte_order)?;
+            (input, DataFieldValue::UInt32z(value))
+        }
+        BaseType::Byte => {
+            let (input, value) = take(size as usize)(input)?;
+            (input, DataFieldValue::Byte(Vec::from(value)))
+        }
+        BaseType::SInt64 => {
+            let (input, value) = i64!(input, byte_order)?;
+            (input, DataFieldValue::SInt64(value))
+        }
+        BaseType::UInt64 => {
+            let (input, value) = u64!(input, byte_order)?;
+            (input, DataFieldValue::UInt64(value))
+        }
+        BaseType::UInt64z => {
+            let (input, value) = u64!(input, byte_order)?;
+            (input, DataFieldValue::UInt64z(value))
+        }
+    };
+
+    // Only return "something" if it's in the valid range
+    if value.is_valid() {
+        Ok((input, Some(value)))
+    } else {
+        Ok((input, None))
+    }
 }
 
 /// Convert a split decimal style value with fix precision into a single floating point value
