@@ -66,14 +66,13 @@ fn fit_file_header(input: &[u8]) -> IResult<&[u8], FitFileHeader> {
 ///
 /// All messages are returned in the order that they were written in but we use a local definition
 /// message mapping to decode the data messages since local_message_type numbers can be redefined
-/// throughout the file.
+/// throughout the file. This contiues until we reach the 2 byte CRC at the end of the input stream
 fn parse_messages(input: &[u8]) -> IResult<&[u8], Vec<FitDataRecord>> {
     let mut definitions: HashMap<u8, FitMessage> = HashMap::new();
     let mut messages = Vec::new();
     let mut input = input.clone();
-    loop {
+    while input.len() > 2 {
         match fit_data_record(input.clone(), &mut definitions) {
-            Err(nom::Err::Error(_)) => return Ok((input, messages)),
             Err(e) => return Err(e),
             Ok((new_inp, o)) => {
                 if new_inp == input {
@@ -81,11 +80,12 @@ fn parse_messages(input: &[u8]) -> IResult<&[u8], Vec<FitDataRecord>> {
                 }
 
                 input = new_inp;
-                println!("{:#?}", o);
                 messages.push(o);
             }
         }
     }
+
+    Ok((input, messages))
 }
 
 /// parse a single FIT data record which can define further fields or actaully cotain data itself
