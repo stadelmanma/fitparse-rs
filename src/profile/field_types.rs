@@ -2,26 +2,26 @@
 
 #[derive(Clone, Copy, Debug)]
 pub enum File {
-    Device, // Read only, single file. Must be in root directory.
-    Settings, // Read/write, single file. Directory=Settings
-    Sport, // Read/write, multiple files, file number = sport type. Directory=Sports
-    Activity, // Read/erase, multiple files. Directory=Activities
-    Workout, // Read/write/erase, multiple files. Directory=Workouts
-    Course, // Read/write/erase, multiple files. Directory=Courses
-    Schedules, // Read/write, single file. Directory=Schedules
+    Device,          // Read only, single file. Must be in root directory.
+    Settings,        // Read/write, single file. Directory=Settings
+    Sport,           // Read/write, multiple files, file number = sport type. Directory=Sports
+    Activity,        // Read/erase, multiple files. Directory=Activities
+    Workout,         // Read/write/erase, multiple files. Directory=Workouts
+    Course,          // Read/write/erase, multiple files. Directory=Courses
+    Schedules,       // Read/write, single file. Directory=Schedules
     Weight, // Read only, single file. Circular buffer. All message definitions at start of file. Directory=Weight
     Totals, // Read only, single file. Directory=Totals
-    Goals, // Read/write, single file. Directory=Goals
+    Goals,  // Read/write, single file. Directory=Goals
     BloodPressure, // Read only. Directory=Blood Pressure
     MonitoringA, // Read only. Directory=Monitoring. File number=sub type.
     ActivitySummary, // Read/erase, multiple files. Directory=Activities
     MonitoringDaily,
-    MonitoringB, // Read only. Directory=Monitoring. File number=identifier
-    Segment, // Read/write/erase. Multiple Files.  Directory=Segments
-    SegmentList, // Read/write/erase. Single File.  Directory=Segments
+    MonitoringB,      // Read only. Directory=Monitoring. File number=identifier
+    Segment,          // Read/write/erase. Multiple Files.  Directory=Segments
+    SegmentList,      // Read/write/erase. Single File.  Directory=Segments
     ExdConfiguration, // Read/write/erase. Single File. Directory=Settings
-    MfgRangeMin, // 0xF7 - 0xFE reserved for manufacturer specific file types
-    MfgRangeMax, // 0xF7 - 0xFE reserved for manufacturer specific file types
+    MfgRangeMin,      // 0xF7 - 0xFE reserved for manufacturer specific file types
+    MfgRangeMax,      // 0xF7 - 0xFE reserved for manufacturer specific file types
     UnknownVariant(u8),
 }
 
@@ -48,7 +48,7 @@ impl File {
             40 => File::ExdConfiguration,
             247 => File::MfgRangeMin,
             254 => File::MfgRangeMax,
-            _ => File::UnknownVariant(value)
+            _ => File::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -73,7 +73,7 @@ impl File {
             File::ExdConfiguration => 40,
             File::MfgRangeMin => 247,
             File::MfgRangeMax => 254,
-            File::UnknownVariant(value) => *value
+            File::UnknownVariant(value) => *value,
         }
     }
 }
@@ -266,7 +266,7 @@ impl MesgNum {
             317 => MesgNum::ClimbPro,
             65280 => MesgNum::MfgRangeMin,
             65534 => MesgNum::MfgRangeMax,
-            _ => MesgNum::UnknownVariant(value)
+            _ => MesgNum::UnknownVariant(value),
         }
     }
     pub fn as_u16(&self) -> u16 {
@@ -361,7 +361,7 @@ impl MesgNum {
             MesgNum::ClimbPro => 317,
             MesgNum::MfgRangeMin => 65280,
             MesgNum::MfgRangeMax => 65534,
-            MesgNum::UnknownVariant(value) => *value
+            MesgNum::UnknownVariant(value) => *value,
         }
     }
 }
@@ -378,14 +378,14 @@ impl Checksum {
         match value {
             0 => Checksum::Clear,
             1 => Checksum::Ok,
-            _ => Checksum::UnknownVariant(value)
+            _ => Checksum::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
             Checksum::Clear => 0,
             Checksum::Ok => 1,
-            Checksum::UnknownVariant(value) => *value
+            Checksum::UnknownVariant(value) => *value,
         }
     }
 }
@@ -404,7 +404,7 @@ impl FileFlags {
             2 => FileFlags::Read,
             4 => FileFlags::Write,
             8 => FileFlags::Erase,
-            _ => FileFlags::UnknownVariant(value)
+            _ => FileFlags::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -412,7 +412,7 @@ impl FileFlags {
             FileFlags::Read => 2,
             FileFlags::Write => 4,
             FileFlags::Erase => 8,
-            FileFlags::UnknownVariant(value) => *value
+            FileFlags::UnknownVariant(value) => *value,
         }
     }
 }
@@ -431,7 +431,7 @@ impl MesgCount {
             0 => MesgCount::NumPerFile,
             1 => MesgCount::MaxPerFile,
             2 => MesgCount::MaxPerFileType,
-            _ => MesgCount::UnknownVariant(value)
+            _ => MesgCount::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -439,7 +439,7 @@ impl MesgCount {
             MesgCount::NumPerFile => 0,
             MesgCount::MaxPerFile => 1,
             MesgCount::MaxPerFileType => 2,
-            MesgCount::UnknownVariant(value) => *value
+            MesgCount::UnknownVariant(value) => *value,
         }
     }
 }
@@ -454,13 +454,13 @@ impl DateTime {
     pub fn from_u32(value: u32) -> DateTime {
         match value {
             268435456 => DateTime::Min,
-            _ => DateTime::UnknownVariant(value)
+            _ => DateTime::UnknownVariant(value),
         }
     }
     pub fn as_u32(&self) -> u32 {
         match &self {
             DateTime::Min => 268435456,
-            DateTime::UnknownVariant(value) => *value
+            DateTime::UnknownVariant(value) => *value,
         }
     }
 }
@@ -475,13 +475,13 @@ impl LocalDateTime {
     pub fn from_u32(value: u32) -> LocalDateTime {
         match value {
             268435456 => LocalDateTime::Min,
-            _ => LocalDateTime::UnknownVariant(value)
+            _ => LocalDateTime::UnknownVariant(value),
         }
     }
     pub fn as_u32(&self) -> u32 {
         match &self {
             LocalDateTime::Min => 268435456,
-            LocalDateTime::UnknownVariant(value) => *value
+            LocalDateTime::UnknownVariant(value) => *value,
         }
     }
 }
@@ -490,7 +490,7 @@ impl LocalDateTime {
 pub enum MessageIndex {
     Selected, // message is selected if set
     Reserved, // reserved (default 0)
-    Mask, // index
+    Mask,     // index
     UnknownVariant(u16),
 }
 
@@ -500,7 +500,7 @@ impl MessageIndex {
             4095 => MessageIndex::Mask,
             28672 => MessageIndex::Reserved,
             32768 => MessageIndex::Selected,
-            _ => MessageIndex::UnknownVariant(value)
+            _ => MessageIndex::UnknownVariant(value),
         }
     }
     pub fn as_u16(&self) -> u16 {
@@ -508,7 +508,7 @@ impl MessageIndex {
             MessageIndex::Mask => 4095,
             MessageIndex::Reserved => 28672,
             MessageIndex::Selected => 32768,
-            MessageIndex::UnknownVariant(value) => *value
+            MessageIndex::UnknownVariant(value) => *value,
         }
     }
 }
@@ -523,13 +523,13 @@ impl DeviceIndex {
     pub fn from_u8(value: u8) -> DeviceIndex {
         match value {
             0 => DeviceIndex::Creator,
-            _ => DeviceIndex::UnknownVariant(value)
+            _ => DeviceIndex::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
             DeviceIndex::Creator => 0,
-            DeviceIndex::UnknownVariant(value) => *value
+            DeviceIndex::UnknownVariant(value) => *value,
         }
     }
 }
@@ -546,14 +546,14 @@ impl Gender {
         match value {
             0 => Gender::Female,
             1 => Gender::Male,
-            _ => Gender::UnknownVariant(value)
+            _ => Gender::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
             Gender::Female => 0,
             Gender::Male => 1,
-            Gender::UnknownVariant(value) => *value
+            Gender::UnknownVariant(value) => *value,
         }
     }
 }
@@ -644,7 +644,7 @@ impl Language {
             36 => Language::Burmese,
             37 => Language::Mongolian,
             254 => Language::Custom,
-            _ => Language::UnknownVariant(value)
+            _ => Language::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -688,7 +688,7 @@ impl Language {
             Language::Burmese => 36,
             Language::Mongolian => 37,
             Language::Custom => 254,
-            Language::UnknownVariant(value) => *value
+            Language::UnknownVariant(value) => *value,
         }
     }
 }
@@ -717,7 +717,7 @@ impl LanguageBits0 {
             32 => LanguageBits0::Croatian,
             64 => LanguageBits0::Czech,
             128 => LanguageBits0::Danish,
-            _ => LanguageBits0::UnknownVariant(value)
+            _ => LanguageBits0::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -730,7 +730,7 @@ impl LanguageBits0 {
             LanguageBits0::Croatian => 32,
             LanguageBits0::Czech => 64,
             LanguageBits0::Danish => 128,
-            LanguageBits0::UnknownVariant(value) => *value
+            LanguageBits0::UnknownVariant(value) => *value,
         }
     }
 }
@@ -759,7 +759,7 @@ impl LanguageBits1 {
             32 => LanguageBits1::Polish,
             64 => LanguageBits1::Portuguese,
             128 => LanguageBits1::Slovakian,
-            _ => LanguageBits1::UnknownVariant(value)
+            _ => LanguageBits1::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -772,7 +772,7 @@ impl LanguageBits1 {
             LanguageBits1::Polish => 32,
             LanguageBits1::Portuguese => 64,
             LanguageBits1::Slovakian => 128,
-            LanguageBits1::UnknownVariant(value) => *value
+            LanguageBits1::UnknownVariant(value) => *value,
         }
     }
 }
@@ -801,7 +801,7 @@ impl LanguageBits2 {
             32 => LanguageBits2::Ukrainian,
             64 => LanguageBits2::Arabic,
             128 => LanguageBits2::Farsi,
-            _ => LanguageBits2::UnknownVariant(value)
+            _ => LanguageBits2::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -814,7 +814,7 @@ impl LanguageBits2 {
             LanguageBits2::Ukrainian => 32,
             LanguageBits2::Arabic => 64,
             LanguageBits2::Farsi => 128,
-            LanguageBits2::UnknownVariant(value) => *value
+            LanguageBits2::UnknownVariant(value) => *value,
         }
     }
 }
@@ -843,7 +843,7 @@ impl LanguageBits3 {
             32 => LanguageBits3::Taiwanese,
             64 => LanguageBits3::Thai,
             128 => LanguageBits3::Hebrew,
-            _ => LanguageBits3::UnknownVariant(value)
+            _ => LanguageBits3::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -856,7 +856,7 @@ impl LanguageBits3 {
             LanguageBits3::Taiwanese => 32,
             LanguageBits3::Thai => 64,
             LanguageBits3::Hebrew => 128,
-            LanguageBits3::UnknownVariant(value) => *value
+            LanguageBits3::UnknownVariant(value) => *value,
         }
     }
 }
@@ -881,7 +881,7 @@ impl LanguageBits4 {
             8 => LanguageBits4::Vietnamese,
             16 => LanguageBits4::Burmese,
             32 => LanguageBits4::Mongolian,
-            _ => LanguageBits4::UnknownVariant(value)
+            _ => LanguageBits4::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -892,7 +892,7 @@ impl LanguageBits4 {
             LanguageBits4::Vietnamese => 8,
             LanguageBits4::Burmese => 16,
             LanguageBits4::Mongolian => 32,
-            LanguageBits4::UnknownVariant(value) => *value
+            LanguageBits4::UnknownVariant(value) => *value,
         }
     }
 }
@@ -1117,7 +1117,7 @@ impl TimeZone {
             103 => TimeZone::Santiago,
             253 => TimeZone::Manual,
             254 => TimeZone::Automatic,
-            _ => TimeZone::UnknownVariant(value)
+            _ => TimeZone::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -1228,7 +1228,7 @@ impl TimeZone {
             TimeZone::Santiago => 103,
             TimeZone::Manual => 253,
             TimeZone::Automatic => 254,
-            TimeZone::UnknownVariant(value) => *value
+            TimeZone::UnknownVariant(value) => *value,
         }
     }
 }
@@ -1247,7 +1247,7 @@ impl DisplayMeasure {
             0 => DisplayMeasure::Metric,
             1 => DisplayMeasure::Statute,
             2 => DisplayMeasure::Nautical,
-            _ => DisplayMeasure::UnknownVariant(value)
+            _ => DisplayMeasure::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -1255,7 +1255,7 @@ impl DisplayMeasure {
             DisplayMeasure::Metric => 0,
             DisplayMeasure::Statute => 1,
             DisplayMeasure::Nautical => 2,
-            DisplayMeasure::UnknownVariant(value) => *value
+            DisplayMeasure::UnknownVariant(value) => *value,
         }
     }
 }
@@ -1274,7 +1274,7 @@ impl DisplayHeart {
             0 => DisplayHeart::Bpm,
             1 => DisplayHeart::Max,
             2 => DisplayHeart::Reserve,
-            _ => DisplayHeart::UnknownVariant(value)
+            _ => DisplayHeart::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -1282,7 +1282,7 @@ impl DisplayHeart {
             DisplayHeart::Bpm => 0,
             DisplayHeart::Max => 1,
             DisplayHeart::Reserve => 2,
-            DisplayHeart::UnknownVariant(value) => *value
+            DisplayHeart::UnknownVariant(value) => *value,
         }
     }
 }
@@ -1299,62 +1299,62 @@ impl DisplayPower {
         match value {
             0 => DisplayPower::Watts,
             1 => DisplayPower::PercentFtp,
-            _ => DisplayPower::UnknownVariant(value)
+            _ => DisplayPower::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
             DisplayPower::Watts => 0,
             DisplayPower::PercentFtp => 1,
-            DisplayPower::UnknownVariant(value) => *value
+            DisplayPower::UnknownVariant(value) => *value,
         }
     }
 }
 
 #[derive(Clone, Copy, Debug)]
 pub enum DisplayPosition {
-    Degree, // dd.dddddd
-    DegreeMinute, // dddmm.mmm
-    DegreeMinuteSecond, // dddmmss
-    AustrianGrid, // Austrian Grid (BMN)
-    BritishGrid, // British National Grid
-    DutchGrid, // Dutch grid system
-    HungarianGrid, // Hungarian grid system
-    FinnishGrid, // Finnish grid system Zone3 KKJ27
-    GermanGrid, // Gausss Krueger (German)
-    IcelandicGrid, // Icelandic Grid
+    Degree,               // dd.dddddd
+    DegreeMinute,         // dddmm.mmm
+    DegreeMinuteSecond,   // dddmmss
+    AustrianGrid,         // Austrian Grid (BMN)
+    BritishGrid,          // British National Grid
+    DutchGrid,            // Dutch grid system
+    HungarianGrid,        // Hungarian grid system
+    FinnishGrid,          // Finnish grid system Zone3 KKJ27
+    GermanGrid,           // Gausss Krueger (German)
+    IcelandicGrid,        // Icelandic Grid
     IndonesianEquatorial, // Indonesian Equatorial LCO
-    IndonesianIrian, // Indonesian Irian LCO
-    IndonesianSouthern, // Indonesian Southern LCO
-    IndiaZone0, // India zone 0
-    IndiaZoneIA, // India zone IA
-    IndiaZoneIB, // India zone IB
-    IndiaZoneIIA, // India zone IIA
-    IndiaZoneIIB, // India zone IIB
-    IndiaZoneIIIA, // India zone IIIA
-    IndiaZoneIIIB, // India zone IIIB
-    IndiaZoneIVA, // India zone IVA
-    IndiaZoneIVB, // India zone IVB
-    IrishTransverse, // Irish Transverse Mercator
-    IrishGrid, // Irish Grid
-    Loran, // Loran TD
-    MaidenheadGrid, // Maidenhead grid system
-    MgrsGrid, // MGRS grid system
-    NewZealandGrid, // New Zealand grid system
+    IndonesianIrian,      // Indonesian Irian LCO
+    IndonesianSouthern,   // Indonesian Southern LCO
+    IndiaZone0,           // India zone 0
+    IndiaZoneIA,          // India zone IA
+    IndiaZoneIB,          // India zone IB
+    IndiaZoneIIA,         // India zone IIA
+    IndiaZoneIIB,         // India zone IIB
+    IndiaZoneIIIA,        // India zone IIIA
+    IndiaZoneIIIB,        // India zone IIIB
+    IndiaZoneIVA,         // India zone IVA
+    IndiaZoneIVB,         // India zone IVB
+    IrishTransverse,      // Irish Transverse Mercator
+    IrishGrid,            // Irish Grid
+    Loran,                // Loran TD
+    MaidenheadGrid,       // Maidenhead grid system
+    MgrsGrid,             // MGRS grid system
+    NewZealandGrid,       // New Zealand grid system
     NewZealandTransverse, // New Zealand Transverse Mercator
-    QatarGrid, // Qatar National Grid
-    ModifiedSwedishGrid, // Modified RT-90 (Sweden)
-    SwedishGrid, // RT-90 (Sweden)
-    SouthAfricanGrid, // South African Grid
-    SwissGrid, // Swiss CH-1903 grid
-    TaiwanGrid, // Taiwan Grid
-    UnitedStatesGrid, // United States National Grid
-    UtmUpsGrid, // UTM/UPS grid system
-    WestMalayan, // West Malayan RSO
-    BorneoRso, // Borneo RSO
-    EstonianGrid, // Estonian grid system
-    LatvianGrid, // Latvian Transverse Mercator
-    SwedishRef99Grid, // Reference Grid 99 TM (Swedish)
+    QatarGrid,            // Qatar National Grid
+    ModifiedSwedishGrid,  // Modified RT-90 (Sweden)
+    SwedishGrid,          // RT-90 (Sweden)
+    SouthAfricanGrid,     // South African Grid
+    SwissGrid,            // Swiss CH-1903 grid
+    TaiwanGrid,           // Taiwan Grid
+    UnitedStatesGrid,     // United States National Grid
+    UtmUpsGrid,           // UTM/UPS grid system
+    WestMalayan,          // West Malayan RSO
+    BorneoRso,            // Borneo RSO
+    EstonianGrid,         // Estonian grid system
+    LatvianGrid,          // Latvian Transverse Mercator
+    SwedishRef99Grid,     // Reference Grid 99 TM (Swedish)
     UnknownVariant(u8),
 }
 
@@ -1403,7 +1403,7 @@ impl DisplayPosition {
             39 => DisplayPosition::EstonianGrid,
             40 => DisplayPosition::LatvianGrid,
             41 => DisplayPosition::SwedishRef99Grid,
-            _ => DisplayPosition::UnknownVariant(value)
+            _ => DisplayPosition::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -1450,7 +1450,7 @@ impl DisplayPosition {
             DisplayPosition::EstonianGrid => 39,
             DisplayPosition::LatvianGrid => 40,
             DisplayPosition::SwedishRef99Grid => 41,
-            DisplayPosition::UnknownVariant(value) => *value
+            DisplayPosition::UnknownVariant(value) => *value,
         }
     }
 }
@@ -1469,7 +1469,7 @@ impl Switch {
             0 => Switch::Off,
             1 => Switch::On,
             2 => Switch::Auto,
-            _ => Switch::UnknownVariant(value)
+            _ => Switch::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -1477,7 +1477,7 @@ impl Switch {
             Switch::Off => 0,
             Switch::On => 1,
             Switch::Auto => 2,
-            Switch::UnknownVariant(value) => *value
+            Switch::UnknownVariant(value) => *value,
         }
     }
 }
@@ -1590,7 +1590,7 @@ impl Sport {
             47 => Sport::Boxing,
             48 => Sport::FloorClimbing,
             254 => Sport::All,
-            _ => Sport::UnknownVariant(value)
+            _ => Sport::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -1645,7 +1645,7 @@ impl Sport {
             Sport::Boxing => 47,
             Sport::FloorClimbing => 48,
             Sport::All => 254,
-            Sport::UnknownVariant(value) => *value
+            Sport::UnknownVariant(value) => *value,
         }
     }
 }
@@ -1674,7 +1674,7 @@ impl SportBits0 {
             32 => SportBits0::Swimming,
             64 => SportBits0::Basketball,
             128 => SportBits0::Soccer,
-            _ => SportBits0::UnknownVariant(value)
+            _ => SportBits0::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -1687,7 +1687,7 @@ impl SportBits0 {
             SportBits0::Swimming => 32,
             SportBits0::Basketball => 64,
             SportBits0::Soccer => 128,
-            SportBits0::UnknownVariant(value) => *value
+            SportBits0::UnknownVariant(value) => *value,
         }
     }
 }
@@ -1716,7 +1716,7 @@ impl SportBits1 {
             32 => SportBits1::AlpineSkiing,
             64 => SportBits1::Snowboarding,
             128 => SportBits1::Rowing,
-            _ => SportBits1::UnknownVariant(value)
+            _ => SportBits1::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -1729,7 +1729,7 @@ impl SportBits1 {
             SportBits1::AlpineSkiing => 32,
             SportBits1::Snowboarding => 64,
             SportBits1::Rowing => 128,
-            SportBits1::UnknownVariant(value) => *value
+            SportBits1::UnknownVariant(value) => *value,
         }
     }
 }
@@ -1758,7 +1758,7 @@ impl SportBits2 {
             32 => SportBits2::EBiking,
             64 => SportBits2::Motorcycling,
             128 => SportBits2::Boating,
-            _ => SportBits2::UnknownVariant(value)
+            _ => SportBits2::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -1771,7 +1771,7 @@ impl SportBits2 {
             SportBits2::EBiking => 32,
             SportBits2::Motorcycling => 64,
             SportBits2::Boating => 128,
-            SportBits2::UnknownVariant(value) => *value
+            SportBits2::UnknownVariant(value) => *value,
         }
     }
 }
@@ -1800,7 +1800,7 @@ impl SportBits3 {
             32 => SportBits3::Fishing,
             64 => SportBits3::InlineSkating,
             128 => SportBits3::RockClimbing,
-            _ => SportBits3::UnknownVariant(value)
+            _ => SportBits3::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -1813,7 +1813,7 @@ impl SportBits3 {
             SportBits3::Fishing => 32,
             SportBits3::InlineSkating => 64,
             SportBits3::RockClimbing => 128,
-            SportBits3::UnknownVariant(value) => *value
+            SportBits3::UnknownVariant(value) => *value,
         }
     }
 }
@@ -1842,7 +1842,7 @@ impl SportBits4 {
             32 => SportBits4::StandUpPaddleboarding,
             64 => SportBits4::Surfing,
             128 => SportBits4::Wakeboarding,
-            _ => SportBits4::UnknownVariant(value)
+            _ => SportBits4::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -1855,7 +1855,7 @@ impl SportBits4 {
             SportBits4::StandUpPaddleboarding => 32,
             SportBits4::Surfing => 64,
             SportBits4::Wakeboarding => 128,
-            SportBits4::UnknownVariant(value) => *value
+            SportBits4::UnknownVariant(value) => *value,
         }
     }
 }
@@ -1884,7 +1884,7 @@ impl SportBits5 {
             32 => SportBits5::Tactical,
             64 => SportBits5::Jumpmaster,
             128 => SportBits5::Boxing,
-            _ => SportBits5::UnknownVariant(value)
+            _ => SportBits5::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -1897,7 +1897,7 @@ impl SportBits5 {
             SportBits5::Tactical => 32,
             SportBits5::Jumpmaster => 64,
             SportBits5::Boxing => 128,
-            SportBits5::UnknownVariant(value) => *value
+            SportBits5::UnknownVariant(value) => *value,
         }
     }
 }
@@ -1912,13 +1912,13 @@ impl SportBits6 {
     pub fn from_u8(value: u8) -> SportBits6 {
         match value {
             1 => SportBits6::FloorClimbing,
-            _ => SportBits6::UnknownVariant(value)
+            _ => SportBits6::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
             SportBits6::FloorClimbing => 1,
-            SportBits6::UnknownVariant(value) => *value
+            SportBits6::UnknownVariant(value) => *value,
         }
     }
 }
@@ -1926,63 +1926,63 @@ impl SportBits6 {
 #[derive(Clone, Copy, Debug)]
 pub enum SubSport {
     Generic,
-    Treadmill, // Run/Fitness Equipment
-    Street, // Run
-    Trail, // Run
-    Track, // Run
-    Spin, // Cycling
-    IndoorCycling, // Cycling/Fitness Equipment
-    Road, // Cycling
-    Mountain, // Cycling
-    Downhill, // Cycling
-    Recumbent, // Cycling
-    Cyclocross, // Cycling
-    HandCycling, // Cycling
-    TrackCycling, // Cycling
-    IndoorRowing, // Fitness Equipment
-    Elliptical, // Fitness Equipment
-    StairClimbing, // Fitness Equipment
-    LapSwimming, // Swimming
-    OpenWater, // Swimming
+    Treadmill,           // Run/Fitness Equipment
+    Street,              // Run
+    Trail,               // Run
+    Track,               // Run
+    Spin,                // Cycling
+    IndoorCycling,       // Cycling/Fitness Equipment
+    Road,                // Cycling
+    Mountain,            // Cycling
+    Downhill,            // Cycling
+    Recumbent,           // Cycling
+    Cyclocross,          // Cycling
+    HandCycling,         // Cycling
+    TrackCycling,        // Cycling
+    IndoorRowing,        // Fitness Equipment
+    Elliptical,          // Fitness Equipment
+    StairClimbing,       // Fitness Equipment
+    LapSwimming,         // Swimming
+    OpenWater,           // Swimming
     FlexibilityTraining, // Training
-    StrengthTraining, // Training
-    WarmUp, // Tennis
-    Match, // Tennis
-    Exercise, // Tennis
+    StrengthTraining,    // Training
+    WarmUp,              // Tennis
+    Match,               // Tennis
+    Exercise,            // Tennis
     Challenge,
-    IndoorSkiing, // Fitness Equipment
-    CardioTraining, // Training
-    IndoorWalking, // Walking/Fitness Equipment
-    EBikeFitness, // E-Biking
-    Bmx, // Cycling
-    CasualWalking, // Walking
-    SpeedWalking, // Walking
-    BikeToRunTransition, // Transition
-    RunToBikeTransition, // Transition
+    IndoorSkiing,         // Fitness Equipment
+    CardioTraining,       // Training
+    IndoorWalking,        // Walking/Fitness Equipment
+    EBikeFitness,         // E-Biking
+    Bmx,                  // Cycling
+    CasualWalking,        // Walking
+    SpeedWalking,         // Walking
+    BikeToRunTransition,  // Transition
+    RunToBikeTransition,  // Transition
     SwimToBikeTransition, // Transition
-    Atv, // Motorcycling
-    Motocross, // Motorcycling
-    Backcountry, // Alpine Skiing/Snowboarding
-    Resort, // Alpine Skiing/Snowboarding
-    RcDrone, // Flying
-    Wingsuit, // Flying
-    Whitewater, // Kayaking/Rafting
-    SkateSkiing, // Cross Country Skiing
-    Yoga, // Training
-    Pilates, // Fitness Equipment
-    IndoorRunning, // Run
-    GravelCycling, // Cycling
-    EBikeMountain, // Cycling
-    Commuting, // Cycling
-    MixedSurface, // Cycling
+    Atv,                  // Motorcycling
+    Motocross,            // Motorcycling
+    Backcountry,          // Alpine Skiing/Snowboarding
+    Resort,               // Alpine Skiing/Snowboarding
+    RcDrone,              // Flying
+    Wingsuit,             // Flying
+    Whitewater,           // Kayaking/Rafting
+    SkateSkiing,          // Cross Country Skiing
+    Yoga,                 // Training
+    Pilates,              // Fitness Equipment
+    IndoorRunning,        // Run
+    GravelCycling,        // Cycling
+    EBikeMountain,        // Cycling
+    Commuting,            // Cycling
+    MixedSurface,         // Cycling
     Navigate,
     TrackMe,
     Map,
     SingleGasDiving, // Diving
-    MultiGasDiving, // Diving
-    GaugeDiving, // Diving
-    ApneaDiving, // Diving
-    ApneaHunting, // Diving
+    MultiGasDiving,  // Diving
+    GaugeDiving,     // Diving
+    ApneaDiving,     // Diving
+    ApneaHunting,    // Diving
     VirtualActivity,
     Obstacle, // Used for events where participants run, crawl through mud, climb over walls, etc.
     All,
@@ -2053,7 +2053,7 @@ impl SubSport {
             58 => SubSport::VirtualActivity,
             59 => SubSport::Obstacle,
             254 => SubSport::All,
-            _ => SubSport::UnknownVariant(value)
+            _ => SubSport::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -2119,7 +2119,7 @@ impl SubSport {
             SubSport::VirtualActivity => 58,
             SubSport::Obstacle => 59,
             SubSport::All => 254,
-            SubSport::UnknownVariant(value) => *value
+            SubSport::UnknownVariant(value) => *value,
         }
     }
 }
@@ -2150,7 +2150,7 @@ impl SportEvent {
             6 => SportEvent::Training,
             7 => SportEvent::Transportation,
             8 => SportEvent::Touring,
-            _ => SportEvent::UnknownVariant(value)
+            _ => SportEvent::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -2164,7 +2164,7 @@ impl SportEvent {
             SportEvent::Training => 6,
             SportEvent::Transportation => 7,
             SportEvent::Touring => 8,
-            SportEvent::UnknownVariant(value) => *value
+            SportEvent::UnknownVariant(value) => *value,
         }
     }
 }
@@ -2181,14 +2181,14 @@ impl Activity {
         match value {
             0 => Activity::Manual,
             1 => Activity::AutoMultiSport,
-            _ => Activity::UnknownVariant(value)
+            _ => Activity::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
             Activity::Manual => 0,
             Activity::AutoMultiSport => 1,
-            Activity::UnknownVariant(value) => *value
+            Activity::UnknownVariant(value) => *value,
         }
     }
 }
@@ -2209,7 +2209,7 @@ impl Intensity {
             1 => Intensity::Rest,
             2 => Intensity::Warmup,
             3 => Intensity::Cooldown,
-            _ => Intensity::UnknownVariant(value)
+            _ => Intensity::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -2218,7 +2218,7 @@ impl Intensity {
             Intensity::Rest => 1,
             Intensity::Warmup => 2,
             Intensity::Cooldown => 3,
-            Intensity::UnknownVariant(value) => *value
+            Intensity::UnknownVariant(value) => *value,
         }
     }
 }
@@ -2226,7 +2226,7 @@ impl Intensity {
 #[derive(Clone, Copy, Debug)]
 pub enum SessionTrigger {
     ActivityEnd,
-    Manual, // User changed sport.
+    Manual,           // User changed sport.
     AutoMultiSport, // Auto multi-sport feature is enabled and user pressed lap button to advance session.
     FitnessEquipment, // Auto sport change caused by user linking to fitness equipment.
     UnknownVariant(u8),
@@ -2239,7 +2239,7 @@ impl SessionTrigger {
             1 => SessionTrigger::Manual,
             2 => SessionTrigger::AutoMultiSport,
             3 => SessionTrigger::FitnessEquipment,
-            _ => SessionTrigger::UnknownVariant(value)
+            _ => SessionTrigger::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -2248,7 +2248,7 @@ impl SessionTrigger {
             SessionTrigger::Manual => 1,
             SessionTrigger::AutoMultiSport => 2,
             SessionTrigger::FitnessEquipment => 3,
-            SessionTrigger::UnknownVariant(value) => *value
+            SessionTrigger::UnknownVariant(value) => *value,
         }
     }
 }
@@ -2275,7 +2275,7 @@ impl AutolapTrigger {
             4 => AutolapTrigger::PositionWaypoint,
             5 => AutolapTrigger::PositionMarked,
             6 => AutolapTrigger::Off,
-            _ => AutolapTrigger::UnknownVariant(value)
+            _ => AutolapTrigger::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -2287,7 +2287,7 @@ impl AutolapTrigger {
             AutolapTrigger::PositionWaypoint => 4,
             AutolapTrigger::PositionMarked => 5,
             AutolapTrigger::Off => 6,
-            AutolapTrigger::UnknownVariant(value) => *value
+            AutolapTrigger::UnknownVariant(value) => *value,
         }
     }
 }
@@ -2318,7 +2318,7 @@ impl LapTrigger {
             6 => LapTrigger::PositionMarked,
             7 => LapTrigger::SessionEnd,
             8 => LapTrigger::FitnessEquipment,
-            _ => LapTrigger::UnknownVariant(value)
+            _ => LapTrigger::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -2332,7 +2332,7 @@ impl LapTrigger {
             LapTrigger::PositionMarked => 6,
             LapTrigger::SessionEnd => 7,
             LapTrigger::FitnessEquipment => 8,
-            LapTrigger::UnknownVariant(value) => *value
+            LapTrigger::UnknownVariant(value) => *value,
         }
     }
 }
@@ -2340,7 +2340,7 @@ impl LapTrigger {
 #[derive(Clone, Copy, Debug)]
 pub enum TimeMode {
     Hour12,
-    Hour24, // Does not use a leading zero and has a colon
+    Hour24,   // Does not use a leading zero and has a colon
     Military, // Uses a leading zero and does not have a colon
     Hour12WithSeconds,
     Hour24WithSeconds,
@@ -2357,7 +2357,7 @@ impl TimeMode {
             3 => TimeMode::Hour12WithSeconds,
             4 => TimeMode::Hour24WithSeconds,
             5 => TimeMode::Utc,
-            _ => TimeMode::UnknownVariant(value)
+            _ => TimeMode::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -2368,7 +2368,7 @@ impl TimeMode {
             TimeMode::Hour12WithSeconds => 3,
             TimeMode::Hour24WithSeconds => 4,
             TimeMode::Utc => 5,
-            TimeMode::UnknownVariant(value) => *value
+            TimeMode::UnknownVariant(value) => *value,
         }
     }
 }
@@ -2395,7 +2395,7 @@ impl BacklightMode {
             4 => BacklightMode::SmartNotifications,
             5 => BacklightMode::KeyAndMessagesNight,
             6 => BacklightMode::KeyAndMessagesAndSmartNotifications,
-            _ => BacklightMode::UnknownVariant(value)
+            _ => BacklightMode::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -2407,7 +2407,7 @@ impl BacklightMode {
             BacklightMode::SmartNotifications => 4,
             BacklightMode::KeyAndMessagesNight => 5,
             BacklightMode::KeyAndMessagesAndSmartNotifications => 6,
-            BacklightMode::UnknownVariant(value) => *value
+            BacklightMode::UnknownVariant(value) => *value,
         }
     }
 }
@@ -2424,14 +2424,14 @@ impl DateMode {
         match value {
             0 => DateMode::DayMonth,
             1 => DateMode::MonthDay,
-            _ => DateMode::UnknownVariant(value)
+            _ => DateMode::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
             DateMode::DayMonth => 0,
             DateMode::MonthDay => 1,
-            DateMode::UnknownVariant(value) => *value
+            DateMode::UnknownVariant(value) => *value,
         }
     }
 }
@@ -2446,55 +2446,55 @@ impl BacklightTimeout {
     pub fn from_u8(value: u8) -> BacklightTimeout {
         match value {
             0 => BacklightTimeout::Infinite,
-            _ => BacklightTimeout::UnknownVariant(value)
+            _ => BacklightTimeout::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
             BacklightTimeout::Infinite => 0,
-            BacklightTimeout::UnknownVariant(value) => *value
+            BacklightTimeout::UnknownVariant(value) => *value,
         }
     }
 }
 
 #[derive(Clone, Copy, Debug)]
 pub enum Event {
-    Timer, // Group 0.  Start / stop_all
-    Workout, // start / stop
-    WorkoutStep, // Start at beginning of workout.  Stop at end of each step.
-    PowerDown, // stop_all group 0
-    PowerUp, // stop_all group 0
-    OffCourse, // start / stop group 0
-    Session, // Stop at end of each session.
-    Lap, // Stop at end of each lap.
-    CoursePoint, // marker
-    Battery, // marker
+    Timer,                 // Group 0.  Start / stop_all
+    Workout,               // start / stop
+    WorkoutStep,           // Start at beginning of workout.  Stop at end of each step.
+    PowerDown,             // stop_all group 0
+    PowerUp,               // stop_all group 0
+    OffCourse,             // start / stop group 0
+    Session,               // Stop at end of each session.
+    Lap,                   // Stop at end of each lap.
+    CoursePoint,           // marker
+    Battery,               // marker
     VirtualPartnerPace, // Group 1. Start at beginning of activity if VP enabled, when VP pace is changed during activity or VP enabled mid activity.  stop_disable when VP disabled.
-    HrHighAlert, // Group 0.  Start / stop when in alert condition.
-    HrLowAlert, // Group 0.  Start / stop when in alert condition.
-    SpeedHighAlert, // Group 0.  Start / stop when in alert condition.
-    SpeedLowAlert, // Group 0.  Start / stop when in alert condition.
-    CadHighAlert, // Group 0.  Start / stop when in alert condition.
-    CadLowAlert, // Group 0.  Start / stop when in alert condition.
-    PowerHighAlert, // Group 0.  Start / stop when in alert condition.
-    PowerLowAlert, // Group 0.  Start / stop when in alert condition.
-    RecoveryHr, // marker
-    BatteryLow, // marker
+    HrHighAlert,        // Group 0.  Start / stop when in alert condition.
+    HrLowAlert,         // Group 0.  Start / stop when in alert condition.
+    SpeedHighAlert,     // Group 0.  Start / stop when in alert condition.
+    SpeedLowAlert,      // Group 0.  Start / stop when in alert condition.
+    CadHighAlert,       // Group 0.  Start / stop when in alert condition.
+    CadLowAlert,        // Group 0.  Start / stop when in alert condition.
+    PowerHighAlert,     // Group 0.  Start / stop when in alert condition.
+    PowerLowAlert,      // Group 0.  Start / stop when in alert condition.
+    RecoveryHr,         // marker
+    BatteryLow,         // marker
     TimeDurationAlert, // Group 1.  Start if enabled mid activity (not required at start of activity). Stop when duration is reached.  stop_disable if disabled.
     DistanceDurationAlert, // Group 1.  Start if enabled mid activity (not required at start of activity). Stop when duration is reached.  stop_disable if disabled.
     CalorieDurationAlert, // Group 1.  Start if enabled mid activity (not required at start of activity). Stop when duration is reached.  stop_disable if disabled.
-    Activity, // Group 1..  Stop at end of activity.
-    FitnessEquipment, // marker
-    Length, // Stop at end of each length.
-    UserMarker, // marker
-    SportPoint, // marker
-    Calibration, // start/stop/marker
-    FrontGearChange, // marker
-    RearGearChange, // marker
-    RiderPositionChange, // marker
-    ElevHighAlert, // Group 0.  Start / stop when in alert condition.
-    ElevLowAlert, // Group 0.  Start / stop when in alert condition.
-    CommTimeout, // marker
+    Activity,             // Group 1..  Stop at end of activity.
+    FitnessEquipment,     // marker
+    Length,               // Stop at end of each length.
+    UserMarker,           // marker
+    SportPoint,           // marker
+    Calibration,          // start/stop/marker
+    FrontGearChange,      // marker
+    RearGearChange,       // marker
+    RiderPositionChange,  // marker
+    ElevHighAlert,        // Group 0.  Start / stop when in alert condition.
+    ElevLowAlert,         // Group 0.  Start / stop when in alert condition.
+    CommTimeout,          // marker
     UnknownVariant(u8),
 }
 
@@ -2537,7 +2537,7 @@ impl Event {
             45 => Event::ElevHighAlert,
             46 => Event::ElevLowAlert,
             47 => Event::CommTimeout,
-            _ => Event::UnknownVariant(value)
+            _ => Event::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -2578,7 +2578,7 @@ impl Event {
             Event::ElevHighAlert => 45,
             Event::ElevLowAlert => 46,
             Event::CommTimeout => 47,
-            Event::UnknownVariant(value) => *value
+            Event::UnknownVariant(value) => *value,
         }
     }
 }
@@ -2611,7 +2611,7 @@ impl EventType {
             7 => EventType::EndAllDepreciated,
             8 => EventType::StopDisable,
             9 => EventType::StopDisableAll,
-            _ => EventType::UnknownVariant(value)
+            _ => EventType::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -2626,7 +2626,7 @@ impl EventType {
             EventType::EndAllDepreciated => 7,
             EventType::StopDisable => 8,
             EventType::StopDisableAll => 9,
-            EventType::UnknownVariant(value) => *value
+            EventType::UnknownVariant(value) => *value,
         }
     }
 }
@@ -2645,7 +2645,7 @@ impl TimerTrigger {
             0 => TimerTrigger::Manual,
             1 => TimerTrigger::Auto,
             2 => TimerTrigger::FitnessEquipment,
-            _ => TimerTrigger::UnknownVariant(value)
+            _ => TimerTrigger::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -2653,7 +2653,7 @@ impl TimerTrigger {
             TimerTrigger::Manual => 0,
             TimerTrigger::Auto => 1,
             TimerTrigger::FitnessEquipment => 2,
-            TimerTrigger::UnknownVariant(value) => *value
+            TimerTrigger::UnknownVariant(value) => *value,
         }
     }
 }
@@ -2674,7 +2674,7 @@ impl FitnessEquipmentState {
             1 => FitnessEquipmentState::InUse,
             2 => FitnessEquipmentState::Paused,
             3 => FitnessEquipmentState::Unknown,
-            _ => FitnessEquipmentState::UnknownVariant(value)
+            _ => FitnessEquipmentState::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -2683,7 +2683,7 @@ impl FitnessEquipmentState {
             FitnessEquipmentState::InUse => 1,
             FitnessEquipmentState::Paused => 2,
             FitnessEquipmentState::Unknown => 3,
-            FitnessEquipmentState::UnknownVariant(value) => *value
+            FitnessEquipmentState::UnknownVariant(value) => *value,
         }
     }
 }
@@ -2704,7 +2704,7 @@ impl Tone {
             1 => Tone::Tone,
             2 => Tone::Vibrate,
             3 => Tone::ToneAndVibrate,
-            _ => Tone::UnknownVariant(value)
+            _ => Tone::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -2713,7 +2713,7 @@ impl Tone {
             Tone::Tone => 1,
             Tone::Vibrate => 2,
             Tone::ToneAndVibrate => 3,
-            Tone::UnknownVariant(value) => *value
+            Tone::UnknownVariant(value) => *value,
         }
     }
 }
@@ -2734,7 +2734,7 @@ impl Autoscroll {
             1 => Autoscroll::Slow,
             2 => Autoscroll::Medium,
             3 => Autoscroll::Fast,
-            _ => Autoscroll::UnknownVariant(value)
+            _ => Autoscroll::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -2743,7 +2743,7 @@ impl Autoscroll {
             Autoscroll::Slow => 1,
             Autoscroll::Medium => 2,
             Autoscroll::Fast => 3,
-            Autoscroll::UnknownVariant(value) => *value
+            Autoscroll::UnknownVariant(value) => *value,
         }
     }
 }
@@ -2762,7 +2762,7 @@ impl ActivityClass {
             100 => ActivityClass::LevelMax,
             127 => ActivityClass::Level,
             128 => ActivityClass::Athlete,
-            _ => ActivityClass::UnknownVariant(value)
+            _ => ActivityClass::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -2770,7 +2770,7 @@ impl ActivityClass {
             ActivityClass::LevelMax => 100,
             ActivityClass::Level => 127,
             ActivityClass::Athlete => 128,
-            ActivityClass::UnknownVariant(value) => *value
+            ActivityClass::UnknownVariant(value) => *value,
         }
     }
 }
@@ -2789,7 +2789,7 @@ impl HrZoneCalc {
             0 => HrZoneCalc::Custom,
             1 => HrZoneCalc::PercentMaxHr,
             2 => HrZoneCalc::PercentHrr,
-            _ => HrZoneCalc::UnknownVariant(value)
+            _ => HrZoneCalc::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -2797,7 +2797,7 @@ impl HrZoneCalc {
             HrZoneCalc::Custom => 0,
             HrZoneCalc::PercentMaxHr => 1,
             HrZoneCalc::PercentHrr => 2,
-            HrZoneCalc::UnknownVariant(value) => *value
+            HrZoneCalc::UnknownVariant(value) => *value,
         }
     }
 }
@@ -2814,14 +2814,14 @@ impl PwrZoneCalc {
         match value {
             0 => PwrZoneCalc::Custom,
             1 => PwrZoneCalc::PercentFtp,
-            _ => PwrZoneCalc::UnknownVariant(value)
+            _ => PwrZoneCalc::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
             PwrZoneCalc::Custom => 0,
             PwrZoneCalc::PercentFtp => 1,
-            PwrZoneCalc::UnknownVariant(value) => *value
+            PwrZoneCalc::UnknownVariant(value) => *value,
         }
     }
 }
@@ -2894,7 +2894,7 @@ impl WktStepDuration {
             27 => WktStepDuration::RepeatUntilTrainingPeaksTss,
             28 => WktStepDuration::RepetitionTime,
             29 => WktStepDuration::Reps,
-            _ => WktStepDuration::UnknownVariant(value)
+            _ => WktStepDuration::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -2929,7 +2929,7 @@ impl WktStepDuration {
             WktStepDuration::RepeatUntilTrainingPeaksTss => 27,
             WktStepDuration::RepetitionTime => 28,
             WktStepDuration::Reps => 29,
-            WktStepDuration::UnknownVariant(value) => *value
+            WktStepDuration::UnknownVariant(value) => *value,
         }
     }
 }
@@ -2970,7 +2970,7 @@ impl WktStepTarget {
             11 => WktStepTarget::SwimStroke,
             12 => WktStepTarget::SpeedLap,
             13 => WktStepTarget::HeartRateLap,
-            _ => WktStepTarget::UnknownVariant(value)
+            _ => WktStepTarget::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -2989,7 +2989,7 @@ impl WktStepTarget {
             WktStepTarget::SwimStroke => 11,
             WktStepTarget::SpeedLap => 12,
             WktStepTarget::HeartRateLap => 13,
-            WktStepTarget::UnknownVariant(value) => *value
+            WktStepTarget::UnknownVariant(value) => *value,
         }
     }
 }
@@ -3016,7 +3016,7 @@ impl Goal {
             4 => Goal::Steps,
             5 => Goal::Ascent,
             6 => Goal::ActiveMinutes,
-            _ => Goal::UnknownVariant(value)
+            _ => Goal::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -3028,7 +3028,7 @@ impl Goal {
             Goal::Steps => 4,
             Goal::Ascent => 5,
             Goal::ActiveMinutes => 6,
-            Goal::UnknownVariant(value) => *value
+            Goal::UnknownVariant(value) => *value,
         }
     }
 }
@@ -3053,7 +3053,7 @@ impl GoalRecurrence {
             3 => GoalRecurrence::Monthly,
             4 => GoalRecurrence::Yearly,
             5 => GoalRecurrence::Custom,
-            _ => GoalRecurrence::UnknownVariant(value)
+            _ => GoalRecurrence::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -3064,16 +3064,16 @@ impl GoalRecurrence {
             GoalRecurrence::Monthly => 3,
             GoalRecurrence::Yearly => 4,
             GoalRecurrence::Custom => 5,
-            GoalRecurrence::UnknownVariant(value) => *value
+            GoalRecurrence::UnknownVariant(value) => *value,
         }
     }
 }
 
 #[derive(Clone, Copy, Debug)]
 pub enum GoalSource {
-    Auto, // Device generated
+    Auto,      // Device generated
     Community, // Social network sourced goal
-    User, // Manually generated
+    User,      // Manually generated
     UnknownVariant(u8),
 }
 
@@ -3083,7 +3083,7 @@ impl GoalSource {
             0 => GoalSource::Auto,
             1 => GoalSource::Community,
             2 => GoalSource::User,
-            _ => GoalSource::UnknownVariant(value)
+            _ => GoalSource::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -3091,7 +3091,7 @@ impl GoalSource {
             GoalSource::Auto => 0,
             GoalSource::Community => 1,
             GoalSource::User => 2,
-            GoalSource::UnknownVariant(value) => *value
+            GoalSource::UnknownVariant(value) => *value,
         }
     }
 }
@@ -3108,14 +3108,14 @@ impl Schedule {
         match value {
             0 => Schedule::Workout,
             1 => Schedule::Course,
-            _ => Schedule::UnknownVariant(value)
+            _ => Schedule::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
             Schedule::Workout => 0,
             Schedule::Course => 1,
-            Schedule::UnknownVariant(value) => *value
+            Schedule::UnknownVariant(value) => *value,
         }
     }
 }
@@ -3180,7 +3180,7 @@ impl CoursePoint {
             23 => CoursePoint::UTurn,
             24 => CoursePoint::SegmentStart,
             25 => CoursePoint::SegmentEnd,
-            _ => CoursePoint::UnknownVariant(value)
+            _ => CoursePoint::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -3211,7 +3211,7 @@ impl CoursePoint {
             CoursePoint::UTurn => 23,
             CoursePoint::SegmentStart => 24,
             CoursePoint::SegmentEnd => 25,
-            CoursePoint::UnknownVariant(value) => *value
+            CoursePoint::UnknownVariant(value) => *value,
         }
     }
 }
@@ -3317,7 +3317,7 @@ pub enum Manufacturer {
     CampagnoloSrl,
     BodyBikeSmart,
     Praxisworks,
-    LimitsTechnology, // Limits Technology Ltd.
+    LimitsTechnology,    // Limits Technology Ltd.
     TopactionTechnology, // TopAction Technology Inc.
     Cosinuss,
     Fitcare,
@@ -3360,7 +3360,7 @@ pub enum Manufacturer {
     Bryton,
     Sram,
     Navman, // MiTAC Global Corporation (Mio Technology)
-    Cobi, // COBI GmbH
+    Cobi,   // COBI GmbH
     Spivi,
     MioMagellan,
     Evesports,
@@ -3574,7 +3574,7 @@ impl Manufacturer {
             300 => Manufacturer::Nurvv,
             301 => Manufacturer::Microprogram,
             5759 => Manufacturer::Actigraphcorp,
-            _ => Manufacturer::UnknownVariant(value)
+            _ => Manufacturer::UnknownVariant(value),
         }
     }
     pub fn as_u16(&self) -> u16 {
@@ -3754,7 +3754,7 @@ impl Manufacturer {
             Manufacturer::Nurvv => 300,
             Manufacturer::Microprogram => 301,
             Manufacturer::Actigraphcorp => 5759,
-            Manufacturer::UnknownVariant(value) => *value
+            Manufacturer::UnknownVariant(value) => *value,
         }
     }
 }
@@ -3769,17 +3769,17 @@ pub enum GarminProduct {
     DsiAlf02,
     Hrm3ss,
     HrmRunSingleByteProductId, // hrm_run model for HRM ANT+ messaging
-    Bsm, // BSM model for ANT+ messaging
-    Bcm, // BCM model for ANT+ messaging
-    Axs01, // AXS01 HRM Bike Chipset model for ANT+ messaging
+    Bsm,                       // BSM model for ANT+ messaging
+    Bcm,                       // BCM model for ANT+ messaging
+    Axs01,                     // AXS01 HRM Bike Chipset model for ANT+ messaging
     HrmTriSingleByteProductId, // hrm_tri model for HRM ANT+ messaging
-    Fr225SingleByteProductId, // fr225 model for HRM ANT+ messaging
+    Fr225SingleByteProductId,  // fr225 model for HRM ANT+ messaging
     Fr301China,
     Fr301Japan,
     Fr301Korea,
     Fr301Taiwan,
     Fr405, // Forerunner 405
-    Fr50, // Forerunner 50
+    Fr50,  // Forerunner 50
     Fr405Japan,
     Fr60, // Forerunner 60
     DsiAlf01,
@@ -4147,7 +4147,7 @@ impl GarminProduct {
             65531 => GarminProduct::ConnectiqSimulator,
             65532 => GarminProduct::AndroidAntplusPlugin,
             65534 => GarminProduct::Connect,
-            _ => GarminProduct::UnknownVariant(value)
+            _ => GarminProduct::UnknownVariant(value),
         }
     }
     pub fn as_u16(&self) -> u16 {
@@ -4342,7 +4342,7 @@ impl GarminProduct {
             GarminProduct::ConnectiqSimulator => 65531,
             GarminProduct::AndroidAntplusPlugin => 65532,
             GarminProduct::Connect => 65534,
-            GarminProduct::UnknownVariant(value) => *value
+            GarminProduct::UnknownVariant(value) => *value,
         }
     }
 }
@@ -4403,7 +4403,7 @@ impl AntplusDeviceType {
             122 => AntplusDeviceType::BikeCadence,
             123 => AntplusDeviceType::BikeSpeed,
             124 => AntplusDeviceType::StrideSpeedDistance,
-            _ => AntplusDeviceType::UnknownVariant(value)
+            _ => AntplusDeviceType::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -4432,7 +4432,7 @@ impl AntplusDeviceType {
             AntplusDeviceType::BikeCadence => 122,
             AntplusDeviceType::BikeSpeed => 123,
             AntplusDeviceType::StrideSpeedDistance => 124,
-            AntplusDeviceType::UnknownVariant(value) => *value
+            AntplusDeviceType::UnknownVariant(value) => *value,
         }
     }
 }
@@ -4453,7 +4453,7 @@ impl AntNetwork {
             1 => AntNetwork::Antplus,
             2 => AntNetwork::Antfs,
             3 => AntNetwork::Private,
-            _ => AntNetwork::UnknownVariant(value)
+            _ => AntNetwork::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -4462,7 +4462,7 @@ impl AntNetwork {
             AntNetwork::Antplus => 1,
             AntNetwork::Antfs => 2,
             AntNetwork::Private => 3,
-            AntNetwork::UnknownVariant(value) => *value
+            AntNetwork::UnknownVariant(value) => *value,
         }
     }
 }
@@ -4474,7 +4474,7 @@ pub enum WorkoutCapabilities {
     FitnessEquipment,
     Firstbeat,
     NewLeaf,
-    Tcx, // For backwards compatibility.  Watch should add missing id fields then clear flag.
+    Tcx,   // For backwards compatibility.  Watch should add missing id fields then clear flag.
     Speed, // Speed source required for workout step.
     HeartRate, // Heart rate source required for workout step.
     Distance, // Distance source required for workout step.
@@ -4503,7 +4503,7 @@ impl WorkoutCapabilities {
             4096 => WorkoutCapabilities::Grade,
             8192 => WorkoutCapabilities::Resistance,
             16384 => WorkoutCapabilities::Protected,
-            _ => WorkoutCapabilities::UnknownVariant(value)
+            _ => WorkoutCapabilities::UnknownVariant(value),
         }
     }
     pub fn as_u32(&self) -> u32 {
@@ -4522,7 +4522,7 @@ impl WorkoutCapabilities {
             WorkoutCapabilities::Grade => 4096,
             WorkoutCapabilities::Resistance => 8192,
             WorkoutCapabilities::Protected => 16384,
-            WorkoutCapabilities::UnknownVariant(value) => *value
+            WorkoutCapabilities::UnknownVariant(value) => *value,
         }
     }
 }
@@ -4549,7 +4549,7 @@ impl BatteryStatus {
             5 => BatteryStatus::Critical,
             6 => BatteryStatus::Charging,
             7 => BatteryStatus::Unknown,
-            _ => BatteryStatus::UnknownVariant(value)
+            _ => BatteryStatus::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -4561,7 +4561,7 @@ impl BatteryStatus {
             BatteryStatus::Critical => 5,
             BatteryStatus::Charging => 6,
             BatteryStatus::Unknown => 7,
-            BatteryStatus::UnknownVariant(value) => *value
+            BatteryStatus::UnknownVariant(value) => *value,
         }
     }
 }
@@ -4578,14 +4578,14 @@ impl HrType {
         match value {
             0 => HrType::Normal,
             1 => HrType::Irregular,
-            _ => HrType::UnknownVariant(value)
+            _ => HrType::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
             HrType::Normal => 0,
             HrType::Irregular => 1,
-            HrType::UnknownVariant(value) => *value
+            HrType::UnknownVariant(value) => *value,
         }
     }
 }
@@ -4620,7 +4620,7 @@ impl CourseCapabilities {
             256 => CourseCapabilities::Training,
             512 => CourseCapabilities::Navigation,
             1024 => CourseCapabilities::Bikeway,
-            _ => CourseCapabilities::UnknownVariant(value)
+            _ => CourseCapabilities::UnknownVariant(value),
         }
     }
     pub fn as_u32(&self) -> u32 {
@@ -4636,7 +4636,7 @@ impl CourseCapabilities {
             CourseCapabilities::Training => 256,
             CourseCapabilities::Navigation => 512,
             CourseCapabilities::Bikeway => 1024,
-            CourseCapabilities::UnknownVariant(value) => *value
+            CourseCapabilities::UnknownVariant(value) => *value,
         }
     }
 }
@@ -4651,13 +4651,13 @@ impl Weight {
     pub fn from_u16(value: u16) -> Weight {
         match value {
             65534 => Weight::Calculating,
-            _ => Weight::UnknownVariant(value)
+            _ => Weight::UnknownVariant(value),
         }
     }
     pub fn as_u16(&self) -> u16 {
         match &self {
             Weight::Calculating => 65534,
-            Weight::UnknownVariant(value) => *value
+            Weight::UnknownVariant(value) => *value,
         }
     }
 }
@@ -4672,13 +4672,13 @@ impl WorkoutHr {
     pub fn from_u32(value: u32) -> WorkoutHr {
         match value {
             100 => WorkoutHr::BpmOffset,
-            _ => WorkoutHr::UnknownVariant(value)
+            _ => WorkoutHr::UnknownVariant(value),
         }
     }
     pub fn as_u32(&self) -> u32 {
         match &self {
             WorkoutHr::BpmOffset => 100,
-            WorkoutHr::UnknownVariant(value) => *value
+            WorkoutHr::UnknownVariant(value) => *value,
         }
     }
 }
@@ -4693,13 +4693,13 @@ impl WorkoutPower {
     pub fn from_u32(value: u32) -> WorkoutPower {
         match value {
             1000 => WorkoutPower::WattsOffset,
-            _ => WorkoutPower::UnknownVariant(value)
+            _ => WorkoutPower::UnknownVariant(value),
         }
     }
     pub fn as_u32(&self) -> u32 {
         match &self {
             WorkoutPower::WattsOffset => 1000,
-            WorkoutPower::UnknownVariant(value) => *value
+            WorkoutPower::UnknownVariant(value) => *value,
         }
     }
 }
@@ -4722,7 +4722,7 @@ impl BpStatus {
             2 => BpStatus::ErrorNoMeasurement,
             3 => BpStatus::ErrorDataOutOfRange,
             4 => BpStatus::ErrorIrregularHeartRate,
-            _ => BpStatus::UnknownVariant(value)
+            _ => BpStatus::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -4732,7 +4732,7 @@ impl BpStatus {
             BpStatus::ErrorNoMeasurement => 2,
             BpStatus::ErrorDataOutOfRange => 3,
             BpStatus::ErrorIrregularHeartRate => 4,
-            BpStatus::UnknownVariant(value) => *value
+            BpStatus::UnknownVariant(value) => *value,
         }
     }
 }
@@ -4757,7 +4757,7 @@ impl UserLocalId {
             255 => UserLocalId::StationaryMax,
             256 => UserLocalId::PortableMin,
             65534 => UserLocalId::PortableMax,
-            _ => UserLocalId::UnknownVariant(value)
+            _ => UserLocalId::UnknownVariant(value),
         }
     }
     pub fn as_u16(&self) -> u16 {
@@ -4768,7 +4768,7 @@ impl UserLocalId {
             UserLocalId::StationaryMax => 255,
             UserLocalId::PortableMin => 256,
             UserLocalId::PortableMax => 65534,
-            UserLocalId::UnknownVariant(value) => *value
+            UserLocalId::UnknownVariant(value) => *value,
         }
     }
 }
@@ -4795,7 +4795,7 @@ impl SwimStroke {
             4 => SwimStroke::Drill,
             5 => SwimStroke::Mixed,
             6 => SwimStroke::Im,
-            _ => SwimStroke::UnknownVariant(value)
+            _ => SwimStroke::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -4807,7 +4807,7 @@ impl SwimStroke {
             SwimStroke::Drill => 4,
             SwimStroke::Mixed => 5,
             SwimStroke::Im => 6,
-            SwimStroke::UnknownVariant(value) => *value
+            SwimStroke::UnknownVariant(value) => *value,
         }
     }
 }
@@ -4838,7 +4838,7 @@ impl ActivityType {
             6 => ActivityType::Walking,
             8 => ActivityType::Sedentary,
             254 => ActivityType::All,
-            _ => ActivityType::UnknownVariant(value)
+            _ => ActivityType::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -4852,7 +4852,7 @@ impl ActivityType {
             ActivityType::Walking => 6,
             ActivityType::Sedentary => 8,
             ActivityType::All => 254,
-            ActivityType::UnknownVariant(value) => *value
+            ActivityType::UnknownVariant(value) => *value,
         }
     }
 }
@@ -4860,24 +4860,24 @@ impl ActivityType {
 #[derive(Clone, Copy, Debug)]
 pub enum ActivitySubtype {
     Generic,
-    Treadmill, // Run
-    Street, // Run
-    Trail, // Run
-    Track, // Run
-    Spin, // Cycling
+    Treadmill,     // Run
+    Street,        // Run
+    Trail,         // Run
+    Track,         // Run
+    Spin,          // Cycling
     IndoorCycling, // Cycling
-    Road, // Cycling
-    Mountain, // Cycling
-    Downhill, // Cycling
-    Recumbent, // Cycling
-    Cyclocross, // Cycling
-    HandCycling, // Cycling
-    TrackCycling, // Cycling
-    IndoorRowing, // Fitness Equipment
-    Elliptical, // Fitness Equipment
+    Road,          // Cycling
+    Mountain,      // Cycling
+    Downhill,      // Cycling
+    Recumbent,     // Cycling
+    Cyclocross,    // Cycling
+    HandCycling,   // Cycling
+    TrackCycling,  // Cycling
+    IndoorRowing,  // Fitness Equipment
+    Elliptical,    // Fitness Equipment
     StairClimbing, // Fitness Equipment
-    LapSwimming, // Swimming
-    OpenWater, // Swimming
+    LapSwimming,   // Swimming
+    OpenWater,     // Swimming
     All,
     UnknownVariant(u8),
 }
@@ -4905,7 +4905,7 @@ impl ActivitySubtype {
             17 => ActivitySubtype::LapSwimming,
             18 => ActivitySubtype::OpenWater,
             254 => ActivitySubtype::All,
-            _ => ActivitySubtype::UnknownVariant(value)
+            _ => ActivitySubtype::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -4930,7 +4930,7 @@ impl ActivitySubtype {
             ActivitySubtype::LapSwimming => 17,
             ActivitySubtype::OpenWater => 18,
             ActivitySubtype::All => 254,
-            ActivitySubtype::UnknownVariant(value) => *value
+            ActivitySubtype::UnknownVariant(value) => *value,
         }
     }
 }
@@ -4949,7 +4949,7 @@ impl ActivityLevel {
             0 => ActivityLevel::Low,
             1 => ActivityLevel::Medium,
             2 => ActivityLevel::High,
-            _ => ActivityLevel::UnknownVariant(value)
+            _ => ActivityLevel::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -4957,7 +4957,7 @@ impl ActivityLevel {
             ActivityLevel::Low => 0,
             ActivityLevel::Medium => 1,
             ActivityLevel::High => 2,
-            ActivityLevel::UnknownVariant(value) => *value
+            ActivityLevel::UnknownVariant(value) => *value,
         }
     }
 }
@@ -4974,21 +4974,21 @@ impl Side {
         match value {
             0 => Side::Right,
             1 => Side::Left,
-            _ => Side::UnknownVariant(value)
+            _ => Side::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
             Side::Right => 0,
             Side::Left => 1,
-            Side::UnknownVariant(value) => *value
+            Side::UnknownVariant(value) => *value,
         }
     }
 }
 
 #[derive(Clone, Copy, Debug)]
 pub enum LeftRightBalance {
-    Mask, // % contribution
+    Mask,  // % contribution
     Right, // data corresponds to right if set, otherwise unknown
     UnknownVariant(u8),
 }
@@ -4998,21 +4998,21 @@ impl LeftRightBalance {
         match value {
             127 => LeftRightBalance::Mask,
             128 => LeftRightBalance::Right,
-            _ => LeftRightBalance::UnknownVariant(value)
+            _ => LeftRightBalance::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
             LeftRightBalance::Mask => 127,
             LeftRightBalance::Right => 128,
-            LeftRightBalance::UnknownVariant(value) => *value
+            LeftRightBalance::UnknownVariant(value) => *value,
         }
     }
 }
 
 #[derive(Clone, Copy, Debug)]
 pub enum LeftRightBalance100 {
-    Mask, // % contribution scaled by 100
+    Mask,  // % contribution scaled by 100
     Right, // data corresponds to right if set, otherwise unknown
     UnknownVariant(u16),
 }
@@ -5022,21 +5022,21 @@ impl LeftRightBalance100 {
         match value {
             16383 => LeftRightBalance100::Mask,
             32768 => LeftRightBalance100::Right,
-            _ => LeftRightBalance100::UnknownVariant(value)
+            _ => LeftRightBalance100::UnknownVariant(value),
         }
     }
     pub fn as_u16(&self) -> u16 {
         match &self {
             LeftRightBalance100::Mask => 16383,
             LeftRightBalance100::Right => 32768,
-            LeftRightBalance100::UnknownVariant(value) => *value
+            LeftRightBalance100::UnknownVariant(value) => *value,
         }
     }
 }
 
 #[derive(Clone, Copy, Debug)]
 pub enum LengthType {
-    Idle, // Rest period. Length with no strokes
+    Idle,   // Rest period. Length with no strokes
     Active, // Length with strokes.
     UnknownVariant(u8),
 }
@@ -5046,14 +5046,14 @@ impl LengthType {
         match value {
             0 => LengthType::Idle,
             1 => LengthType::Active,
-            _ => LengthType::UnknownVariant(value)
+            _ => LengthType::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
             LengthType::Idle => 0,
             LengthType::Active => 1,
-            LengthType::UnknownVariant(value) => *value
+            LengthType::UnknownVariant(value) => *value,
         }
     }
 }
@@ -5080,7 +5080,7 @@ impl DayOfWeek {
             4 => DayOfWeek::Thursday,
             5 => DayOfWeek::Friday,
             6 => DayOfWeek::Saturday,
-            _ => DayOfWeek::UnknownVariant(value)
+            _ => DayOfWeek::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -5092,7 +5092,7 @@ impl DayOfWeek {
             DayOfWeek::Thursday => 4,
             DayOfWeek::Friday => 5,
             DayOfWeek::Saturday => 6,
-            DayOfWeek::UnknownVariant(value) => *value
+            DayOfWeek::UnknownVariant(value) => *value,
         }
     }
 }
@@ -5125,12 +5125,12 @@ pub enum ConnectivityCapabilities {
     IncidentDetection, // Device supports incident detection
     AudioPrompts,
     WifiVerification, // Device supports reporting wifi verification via GCM
-    TrueUp, // Device supports True Up
-    FindMyWatch, // Device supports Find My Watch
+    TrueUp,           // Device supports True Up
+    FindMyWatch,      // Device supports Find My Watch
     RemoteManualSync,
     LiveTrackAutoStart, // Device supports LiveTrack auto start
     LiveTrackMessaging, // Device supports LiveTrack Messaging
-    InstantInput, // Device supports instant input feature
+    InstantInput,       // Device supports instant input feature
     UnknownVariant(u32),
 }
 
@@ -5169,7 +5169,7 @@ impl ConnectivityCapabilities {
             536870912 => ConnectivityCapabilities::LiveTrackAutoStart,
             1073741824 => ConnectivityCapabilities::LiveTrackMessaging,
             2147483648 => ConnectivityCapabilities::InstantInput,
-            _ => ConnectivityCapabilities::UnknownVariant(value)
+            _ => ConnectivityCapabilities::UnknownVariant(value),
         }
     }
     pub fn as_u32(&self) -> u32 {
@@ -5206,7 +5206,7 @@ impl ConnectivityCapabilities {
             ConnectivityCapabilities::LiveTrackAutoStart => 536870912,
             ConnectivityCapabilities::LiveTrackMessaging => 1073741824,
             ConnectivityCapabilities::InstantInput => 2147483648,
-            ConnectivityCapabilities::UnknownVariant(value) => *value
+            ConnectivityCapabilities::UnknownVariant(value) => *value,
         }
     }
 }
@@ -5225,7 +5225,7 @@ impl WeatherReport {
             0 => WeatherReport::Current,
             1 => WeatherReport::Forecast,
             2 => WeatherReport::DailyForecast,
-            _ => WeatherReport::UnknownVariant(value)
+            _ => WeatherReport::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -5233,7 +5233,7 @@ impl WeatherReport {
             WeatherReport::Current => 0,
             WeatherReport::Forecast => 1,
             WeatherReport::DailyForecast => 2,
-            WeatherReport::UnknownVariant(value) => *value
+            WeatherReport::UnknownVariant(value) => *value,
         }
     }
 }
@@ -5288,7 +5288,7 @@ impl WeatherStatus {
             20 => WeatherStatus::LightRainSnow,
             21 => WeatherStatus::HeavyRainSnow,
             22 => WeatherStatus::Cloudy,
-            _ => WeatherStatus::UnknownVariant(value)
+            _ => WeatherStatus::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -5314,7 +5314,7 @@ impl WeatherStatus {
             WeatherStatus::LightRainSnow => 20,
             WeatherStatus::HeavyRainSnow => 21,
             WeatherStatus::Cloudy => 22,
-            WeatherStatus::UnknownVariant(value) => *value
+            WeatherStatus::UnknownVariant(value) => *value,
         }
     }
 }
@@ -5337,7 +5337,7 @@ impl WeatherSeverity {
             2 => WeatherSeverity::Watch,
             3 => WeatherSeverity::Advisory,
             4 => WeatherSeverity::Statement,
-            _ => WeatherSeverity::UnknownVariant(value)
+            _ => WeatherSeverity::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -5347,7 +5347,7 @@ impl WeatherSeverity {
             WeatherSeverity::Watch => 2,
             WeatherSeverity::Advisory => 3,
             WeatherSeverity::Statement => 4,
-            WeatherSeverity::UnknownVariant(value) => *value
+            WeatherSeverity::UnknownVariant(value) => *value,
         }
     }
 }
@@ -5530,7 +5530,7 @@ impl WeatherSevereType {
             82 => WeatherSevereType::LowWater,
             83 => WeatherSevereType::Hydrological,
             84 => WeatherSevereType::SpecialWeather,
-            _ => WeatherSevereType::UnknownVariant(value)
+            _ => WeatherSevereType::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -5620,7 +5620,7 @@ impl WeatherSevereType {
             WeatherSevereType::LowWater => 82,
             WeatherSevereType::Hydrological => 83,
             WeatherSevereType::SpecialWeather => 84,
-            WeatherSevereType::UnknownVariant(value) => *value
+            WeatherSevereType::UnknownVariant(value) => *value,
         }
     }
 }
@@ -5633,12 +5633,12 @@ pub enum TimeIntoDay {
 impl TimeIntoDay {
     pub fn from_u32(value: u32) -> TimeIntoDay {
         match value {
-            _ => TimeIntoDay::UnknownVariant(value)
+            _ => TimeIntoDay::UnknownVariant(value),
         }
     }
     pub fn as_u32(&self) -> u32 {
         match &self {
-            TimeIntoDay::UnknownVariant(value) => *value
+            TimeIntoDay::UnknownVariant(value) => *value,
         }
     }
 }
@@ -5651,12 +5651,12 @@ pub enum LocaltimeIntoDay {
 impl LocaltimeIntoDay {
     pub fn from_u32(value: u32) -> LocaltimeIntoDay {
         match value {
-            _ => LocaltimeIntoDay::UnknownVariant(value)
+            _ => LocaltimeIntoDay::UnknownVariant(value),
         }
     }
     pub fn as_u32(&self) -> u32 {
         match &self {
-            LocaltimeIntoDay::UnknownVariant(value) => *value
+            LocaltimeIntoDay::UnknownVariant(value) => *value,
         }
     }
 }
@@ -5681,7 +5681,7 @@ impl StrokeType {
             3 => StrokeType::Forehand,
             4 => StrokeType::Backhand,
             5 => StrokeType::Smash,
-            _ => StrokeType::UnknownVariant(value)
+            _ => StrokeType::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -5692,7 +5692,7 @@ impl StrokeType {
             StrokeType::Forehand => 3,
             StrokeType::Backhand => 4,
             StrokeType::Smash => 5,
-            StrokeType::UnknownVariant(value) => *value
+            StrokeType::UnknownVariant(value) => *value,
         }
     }
 }
@@ -5725,13 +5725,13 @@ pub enum BodyLocation {
     LeftShoulder,
     LeftBicep,
     LeftTricep,
-    LeftBrachioradialis, // Left anterior forearm
+    LeftBrachioradialis,  // Left anterior forearm
     LeftForearmExtensors, // Left posterior forearm
     RightArm,
     RightShoulder,
     RightBicep,
     RightTricep,
-    RightBrachioradialis, // Right anterior forearm
+    RightBrachioradialis,  // Right anterior forearm
     RightForearmExtensors, // Right posterior forearm
     Neck,
     Throat,
@@ -5785,7 +5785,7 @@ impl BodyLocation {
             37 => BodyLocation::WaistFront,
             38 => BodyLocation::WaistLeft,
             39 => BodyLocation::WaistRight,
-            _ => BodyLocation::UnknownVariant(value)
+            _ => BodyLocation::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -5830,7 +5830,7 @@ impl BodyLocation {
             BodyLocation::WaistFront => 37,
             BodyLocation::WaistLeft => 38,
             BodyLocation::WaistRight => 39,
-            BodyLocation::UnknownVariant(value) => *value
+            BodyLocation::UnknownVariant(value) => *value,
         }
     }
 }
@@ -5847,14 +5847,14 @@ impl SegmentLapStatus {
         match value {
             0 => SegmentLapStatus::End,
             1 => SegmentLapStatus::Fail,
-            _ => SegmentLapStatus::UnknownVariant(value)
+            _ => SegmentLapStatus::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
             SegmentLapStatus::End => 0,
             SegmentLapStatus::Fail => 1,
-            SegmentLapStatus::UnknownVariant(value) => *value
+            SegmentLapStatus::UnknownVariant(value) => *value,
         }
     }
 }
@@ -5889,7 +5889,7 @@ impl SegmentLeaderboardType {
             8 => SegmentLeaderboardType::Goal,
             9 => SegmentLeaderboardType::Rival,
             10 => SegmentLeaderboardType::ClubLeader,
-            _ => SegmentLeaderboardType::UnknownVariant(value)
+            _ => SegmentLeaderboardType::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -5905,7 +5905,7 @@ impl SegmentLeaderboardType {
             SegmentLeaderboardType::Goal => 8,
             SegmentLeaderboardType::Rival => 9,
             SegmentLeaderboardType::ClubLeader => 10,
-            SegmentLeaderboardType::UnknownVariant(value) => *value
+            SegmentLeaderboardType::UnknownVariant(value) => *value,
         }
     }
 }
@@ -5924,7 +5924,7 @@ impl SegmentDeleteStatus {
             0 => SegmentDeleteStatus::DoNotDelete,
             1 => SegmentDeleteStatus::DeleteOne,
             2 => SegmentDeleteStatus::DeleteAll,
-            _ => SegmentDeleteStatus::UnknownVariant(value)
+            _ => SegmentDeleteStatus::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -5932,7 +5932,7 @@ impl SegmentDeleteStatus {
             SegmentDeleteStatus::DoNotDelete => 0,
             SegmentDeleteStatus::DeleteOne => 1,
             SegmentDeleteStatus::DeleteAll => 2,
-            SegmentDeleteStatus::UnknownVariant(value) => *value
+            SegmentDeleteStatus::UnknownVariant(value) => *value,
         }
     }
 }
@@ -5949,26 +5949,26 @@ impl SegmentSelectionType {
         match value {
             0 => SegmentSelectionType::Starred,
             1 => SegmentSelectionType::Suggested,
-            _ => SegmentSelectionType::UnknownVariant(value)
+            _ => SegmentSelectionType::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
             SegmentSelectionType::Starred => 0,
             SegmentSelectionType::Suggested => 1,
-            SegmentSelectionType::UnknownVariant(value) => *value
+            SegmentSelectionType::UnknownVariant(value) => *value,
         }
     }
 }
 
 #[derive(Clone, Copy, Debug)]
 pub enum SourceType {
-    Ant, // External device connected with ANT
-    Antplus, // External device connected with ANT+
-    Bluetooth, // External device connected with BT
+    Ant,                // External device connected with ANT
+    Antplus,            // External device connected with ANT+
+    Bluetooth,          // External device connected with BT
     BluetoothLowEnergy, // External device connected with BLE
-    Wifi, // External device connected with Wifi
-    Local, // Onboard device
+    Wifi,               // External device connected with Wifi
+    Local,              // Onboard device
     UnknownVariant(u8),
 }
 
@@ -5981,7 +5981,7 @@ impl SourceType {
             3 => SourceType::BluetoothLowEnergy,
             4 => SourceType::Wifi,
             5 => SourceType::Local,
-            _ => SourceType::UnknownVariant(value)
+            _ => SourceType::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -5992,7 +5992,7 @@ impl SourceType {
             SourceType::BluetoothLowEnergy => 3,
             SourceType::Wifi => 4,
             SourceType::Local => 5,
-            SourceType::UnknownVariant(value) => *value
+            SourceType::UnknownVariant(value) => *value,
         }
     }
 }
@@ -6005,12 +6005,12 @@ pub enum LocalDeviceType {
 impl LocalDeviceType {
     pub fn from_u8(value: u8) -> LocalDeviceType {
         match value {
-            _ => LocalDeviceType::UnknownVariant(value)
+            _ => LocalDeviceType::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
-            LocalDeviceType::UnknownVariant(value) => *value
+            LocalDeviceType::UnknownVariant(value) => *value,
         }
     }
 }
@@ -6020,7 +6020,7 @@ pub enum DisplayOrientation {
     Auto, // automatic if the device supports it
     Portrait,
     Landscape,
-    PortraitFlipped, // portrait mode but rotated 180 degrees
+    PortraitFlipped,  // portrait mode but rotated 180 degrees
     LandscapeFlipped, // landscape mode but rotated 180 degrees
     UnknownVariant(u8),
 }
@@ -6033,7 +6033,7 @@ impl DisplayOrientation {
             2 => DisplayOrientation::Landscape,
             3 => DisplayOrientation::PortraitFlipped,
             4 => DisplayOrientation::LandscapeFlipped,
-            _ => DisplayOrientation::UnknownVariant(value)
+            _ => DisplayOrientation::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -6043,7 +6043,7 @@ impl DisplayOrientation {
             DisplayOrientation::Landscape => 2,
             DisplayOrientation::PortraitFlipped => 3,
             DisplayOrientation::LandscapeFlipped => 4,
-            DisplayOrientation::UnknownVariant(value) => *value
+            DisplayOrientation::UnknownVariant(value) => *value,
         }
     }
 }
@@ -6068,7 +6068,7 @@ impl WorkoutEquipment {
             3 => WorkoutEquipment::SwimPaddles,
             4 => WorkoutEquipment::SwimPullBuoy,
             5 => WorkoutEquipment::SwimSnorkel,
-            _ => WorkoutEquipment::UnknownVariant(value)
+            _ => WorkoutEquipment::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -6079,7 +6079,7 @@ impl WorkoutEquipment {
             WorkoutEquipment::SwimPaddles => 3,
             WorkoutEquipment::SwimPullBuoy => 4,
             WorkoutEquipment::SwimSnorkel => 5,
-            WorkoutEquipment::UnknownVariant(value) => *value
+            WorkoutEquipment::UnknownVariant(value) => *value,
         }
     }
 }
@@ -6100,7 +6100,7 @@ impl WatchfaceMode {
             1 => WatchfaceMode::Analog,
             2 => WatchfaceMode::ConnectIq,
             3 => WatchfaceMode::Disabled,
-            _ => WatchfaceMode::UnknownVariant(value)
+            _ => WatchfaceMode::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -6109,7 +6109,7 @@ impl WatchfaceMode {
             WatchfaceMode::Analog => 1,
             WatchfaceMode::ConnectIq => 2,
             WatchfaceMode::Disabled => 3,
-            WatchfaceMode::UnknownVariant(value) => *value
+            WatchfaceMode::UnknownVariant(value) => *value,
         }
     }
 }
@@ -6128,7 +6128,7 @@ impl DigitalWatchfaceLayout {
             0 => DigitalWatchfaceLayout::Traditional,
             1 => DigitalWatchfaceLayout::Modern,
             2 => DigitalWatchfaceLayout::Bold,
-            _ => DigitalWatchfaceLayout::UnknownVariant(value)
+            _ => DigitalWatchfaceLayout::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -6136,7 +6136,7 @@ impl DigitalWatchfaceLayout {
             DigitalWatchfaceLayout::Traditional => 0,
             DigitalWatchfaceLayout::Modern => 1,
             DigitalWatchfaceLayout::Bold => 2,
-            DigitalWatchfaceLayout::UnknownVariant(value) => *value
+            DigitalWatchfaceLayout::UnknownVariant(value) => *value,
         }
     }
 }
@@ -6155,7 +6155,7 @@ impl AnalogWatchfaceLayout {
             0 => AnalogWatchfaceLayout::Minimal,
             1 => AnalogWatchfaceLayout::Traditional,
             2 => AnalogWatchfaceLayout::Modern,
-            _ => AnalogWatchfaceLayout::UnknownVariant(value)
+            _ => AnalogWatchfaceLayout::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -6163,7 +6163,7 @@ impl AnalogWatchfaceLayout {
             AnalogWatchfaceLayout::Minimal => 0,
             AnalogWatchfaceLayout::Traditional => 1,
             AnalogWatchfaceLayout::Modern => 2,
-            AnalogWatchfaceLayout::UnknownVariant(value) => *value
+            AnalogWatchfaceLayout::UnknownVariant(value) => *value,
         }
     }
 }
@@ -6184,7 +6184,7 @@ impl RiderPositionType {
             1 => RiderPositionType::Standing,
             2 => RiderPositionType::TransitionToSeated,
             3 => RiderPositionType::TransitionToStanding,
-            _ => RiderPositionType::UnknownVariant(value)
+            _ => RiderPositionType::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -6193,7 +6193,7 @@ impl RiderPositionType {
             RiderPositionType::Standing => 1,
             RiderPositionType::TransitionToSeated => 2,
             RiderPositionType::TransitionToStanding => 3,
-            RiderPositionType::UnknownVariant(value) => *value
+            RiderPositionType::UnknownVariant(value) => *value,
         }
     }
 }
@@ -6214,7 +6214,7 @@ impl PowerPhaseType {
             1 => PowerPhaseType::PowerPhaseEndAngle,
             2 => PowerPhaseType::PowerPhaseArcLength,
             3 => PowerPhaseType::PowerPhaseCenter,
-            _ => PowerPhaseType::UnknownVariant(value)
+            _ => PowerPhaseType::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -6223,7 +6223,7 @@ impl PowerPhaseType {
             PowerPhaseType::PowerPhaseEndAngle => 1,
             PowerPhaseType::PowerPhaseArcLength => 2,
             PowerPhaseType::PowerPhaseCenter => 3,
-            PowerPhaseType::UnknownVariant(value) => *value
+            PowerPhaseType::UnknownVariant(value) => *value,
         }
     }
 }
@@ -6232,7 +6232,7 @@ impl PowerPhaseType {
 pub enum CameraEventType {
     VideoStart, // Start of video recording
     VideoSplit, // Mark of video file split (end of one file, beginning of the other)
-    VideoEnd, // End of video recording
+    VideoEnd,   // End of video recording
     PhotoTaken, // Still photo taken
     VideoSecondStreamStart,
     VideoSecondStreamSplit,
@@ -6262,7 +6262,7 @@ impl CameraEventType {
             12 => CameraEventType::VideoSecondStreamPause,
             13 => CameraEventType::VideoResume,
             14 => CameraEventType::VideoSecondStreamResume,
-            _ => CameraEventType::UnknownVariant(value)
+            _ => CameraEventType::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -6280,7 +6280,7 @@ impl CameraEventType {
             CameraEventType::VideoSecondStreamPause => 12,
             CameraEventType::VideoResume => 13,
             CameraEventType::VideoSecondStreamResume => 14,
-            CameraEventType::UnknownVariant(value) => *value
+            CameraEventType::UnknownVariant(value) => *value,
         }
     }
 }
@@ -6301,7 +6301,7 @@ impl SensorType {
             1 => SensorType::Gyroscope,
             2 => SensorType::Compass,
             3 => SensorType::Barometer,
-            _ => SensorType::UnknownVariant(value)
+            _ => SensorType::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -6310,7 +6310,7 @@ impl SensorType {
             SensorType::Gyroscope => 1,
             SensorType::Compass => 2,
             SensorType::Barometer => 3,
-            SensorType::UnknownVariant(value) => *value
+            SensorType::UnknownVariant(value) => *value,
         }
     }
 }
@@ -6331,7 +6331,7 @@ impl BikeLightNetworkConfigType {
             4 => BikeLightNetworkConfigType::Individual,
             5 => BikeLightNetworkConfigType::HighVisibility,
             6 => BikeLightNetworkConfigType::Trail,
-            _ => BikeLightNetworkConfigType::UnknownVariant(value)
+            _ => BikeLightNetworkConfigType::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -6340,7 +6340,7 @@ impl BikeLightNetworkConfigType {
             BikeLightNetworkConfigType::Individual => 4,
             BikeLightNetworkConfigType::HighVisibility => 5,
             BikeLightNetworkConfigType::Trail => 6,
-            BikeLightNetworkConfigType::UnknownVariant(value) => *value
+            BikeLightNetworkConfigType::UnknownVariant(value) => *value,
         }
     }
 }
@@ -6348,9 +6348,9 @@ impl BikeLightNetworkConfigType {
 #[derive(Clone, Copy, Debug)]
 pub enum CommTimeoutType {
     WildcardPairingTimeout, // Timeout pairing to any device
-    PairingTimeout, // Timeout pairing to previously paired device
-    ConnectionLost, // Temporary loss of communications
-    ConnectionTimeout, // Connection closed due to extended bad communications
+    PairingTimeout,         // Timeout pairing to previously paired device
+    ConnectionLost,         // Temporary loss of communications
+    ConnectionTimeout,      // Connection closed due to extended bad communications
     UnknownVariant(u16),
 }
 
@@ -6361,7 +6361,7 @@ impl CommTimeoutType {
             1 => CommTimeoutType::PairingTimeout,
             2 => CommTimeoutType::ConnectionLost,
             3 => CommTimeoutType::ConnectionTimeout,
-            _ => CommTimeoutType::UnknownVariant(value)
+            _ => CommTimeoutType::UnknownVariant(value),
         }
     }
     pub fn as_u16(&self) -> u16 {
@@ -6370,7 +6370,7 @@ impl CommTimeoutType {
             CommTimeoutType::PairingTimeout => 1,
             CommTimeoutType::ConnectionLost => 2,
             CommTimeoutType::ConnectionTimeout => 3,
-            CommTimeoutType::UnknownVariant(value) => *value
+            CommTimeoutType::UnknownVariant(value) => *value,
         }
     }
 }
@@ -6391,7 +6391,7 @@ impl CameraOrientationType {
             1 => CameraOrientationType::CameraOrientation90,
             2 => CameraOrientationType::CameraOrientation180,
             3 => CameraOrientationType::CameraOrientation270,
-            _ => CameraOrientationType::UnknownVariant(value)
+            _ => CameraOrientationType::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -6400,7 +6400,7 @@ impl CameraOrientationType {
             CameraOrientationType::CameraOrientation90 => 1,
             CameraOrientationType::CameraOrientation180 => 2,
             CameraOrientationType::CameraOrientation270 => 3,
-            CameraOrientationType::UnknownVariant(value) => *value
+            CameraOrientationType::UnknownVariant(value) => *value,
         }
     }
 }
@@ -6421,7 +6421,7 @@ impl AttitudeStage {
             1 => AttitudeStage::Aligning,
             2 => AttitudeStage::Degraded,
             3 => AttitudeStage::Valid,
-            _ => AttitudeStage::UnknownVariant(value)
+            _ => AttitudeStage::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -6430,7 +6430,7 @@ impl AttitudeStage {
             AttitudeStage::Aligning => 1,
             AttitudeStage::Degraded => 2,
             AttitudeStage::Valid => 3,
-            AttitudeStage::UnknownVariant(value) => *value
+            AttitudeStage::UnknownVariant(value) => *value,
         }
     }
 }
@@ -6469,7 +6469,7 @@ impl AttitudeValidity {
             1024 => AttitudeValidity::SolutionCoasting,
             2048 => AttitudeValidity::TrueTrackAngle,
             4096 => AttitudeValidity::MagneticHeading,
-            _ => AttitudeValidity::UnknownVariant(value)
+            _ => AttitudeValidity::UnknownVariant(value),
         }
     }
     pub fn as_u16(&self) -> u16 {
@@ -6487,7 +6487,7 @@ impl AttitudeValidity {
             AttitudeValidity::SolutionCoasting => 1024,
             AttitudeValidity::TrueTrackAngle => 2048,
             AttitudeValidity::MagneticHeading => 4096,
-            AttitudeValidity::UnknownVariant(value) => *value
+            AttitudeValidity::UnknownVariant(value) => *value,
         }
     }
 }
@@ -6510,7 +6510,7 @@ impl AutoSyncFrequency {
             2 => AutoSyncFrequency::Frequent,
             3 => AutoSyncFrequency::OnceADay,
             4 => AutoSyncFrequency::Remote,
-            _ => AutoSyncFrequency::UnknownVariant(value)
+            _ => AutoSyncFrequency::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -6520,7 +6520,7 @@ impl AutoSyncFrequency {
             AutoSyncFrequency::Frequent => 2,
             AutoSyncFrequency::OnceADay => 3,
             AutoSyncFrequency::Remote => 4,
-            AutoSyncFrequency::UnknownVariant(value) => *value
+            AutoSyncFrequency::UnknownVariant(value) => *value,
         }
     }
 }
@@ -6549,7 +6549,7 @@ impl ExdLayout {
             5 => ExdLayout::FullQuarterSplit,
             6 => ExdLayout::HalfVerticalLeftSplit,
             7 => ExdLayout::HalfHorizontalTopSplit,
-            _ => ExdLayout::UnknownVariant(value)
+            _ => ExdLayout::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -6562,7 +6562,7 @@ impl ExdLayout {
             ExdLayout::FullQuarterSplit => 5,
             ExdLayout::HalfVerticalLeftSplit => 6,
             ExdLayout::HalfHorizontalTopSplit => 7,
-            ExdLayout::UnknownVariant(value) => *value
+            ExdLayout::UnknownVariant(value) => *value,
         }
     }
 }
@@ -6597,7 +6597,7 @@ impl ExdDisplayType {
             8 => ExdDisplayType::String,
             9 => ExdDisplayType::SimpleDynamicIcon,
             10 => ExdDisplayType::Gauge,
-            _ => ExdDisplayType::UnknownVariant(value)
+            _ => ExdDisplayType::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -6613,7 +6613,7 @@ impl ExdDisplayType {
             ExdDisplayType::String => 8,
             ExdDisplayType::SimpleDynamicIcon => 9,
             ExdDisplayType::Gauge => 10,
-            ExdDisplayType::UnknownVariant(value) => *value
+            ExdDisplayType::UnknownVariant(value) => *value,
         }
     }
 }
@@ -6726,7 +6726,7 @@ impl ExdDataUnits {
             47 => ExdDataUnits::MetersPerMin,
             48 => ExdDataUnits::MetersPerSec,
             49 => ExdDataUnits::EightCardinal,
-            _ => ExdDataUnits::UnknownVariant(value)
+            _ => ExdDataUnits::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -6781,7 +6781,7 @@ impl ExdDataUnits {
             ExdDataUnits::MetersPerMin => 47,
             ExdDataUnits::MetersPerSec => 48,
             ExdDataUnits::EightCardinal => 49,
-            ExdDataUnits::UnknownVariant(value) => *value
+            ExdDataUnits::UnknownVariant(value) => *value,
         }
     }
 }
@@ -6882,7 +6882,7 @@ impl ExdQualifiers {
             248 => ExdQualifiers::Zone3,
             249 => ExdQualifiers::Zone2,
             250 => ExdQualifiers::Zone1,
-            _ => ExdQualifiers::UnknownVariant(value)
+            _ => ExdQualifiers::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -6931,7 +6931,7 @@ impl ExdQualifiers {
             ExdQualifiers::Zone3 => 248,
             ExdQualifiers::Zone2 => 249,
             ExdQualifiers::Zone1 => 250,
-            ExdQualifiers::UnknownVariant(value) => *value
+            ExdQualifiers::UnknownVariant(value) => *value,
         }
     }
 }
@@ -7138,7 +7138,7 @@ impl ExdDescriptors {
             94 => ExdDescriptors::AmbientPressure,
             95 => ExdDescriptors::Pressure,
             96 => ExdDescriptors::Vam,
-            _ => ExdDescriptors::UnknownVariant(value)
+            _ => ExdDescriptors::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -7240,7 +7240,7 @@ impl ExdDescriptors {
             ExdDescriptors::AmbientPressure => 94,
             ExdDescriptors::Pressure => 95,
             ExdDescriptors::Vam => 96,
-            ExdDescriptors::UnknownVariant(value) => *value
+            ExdDescriptors::UnknownVariant(value) => *value,
         }
     }
 }
@@ -7267,7 +7267,7 @@ impl AutoActivityDetect {
             8 => AutoActivityDetect::Walking,
             32 => AutoActivityDetect::Elliptical,
             1024 => AutoActivityDetect::Sedentary,
-            _ => AutoActivityDetect::UnknownVariant(value)
+            _ => AutoActivityDetect::UnknownVariant(value),
         }
     }
     pub fn as_u32(&self) -> u32 {
@@ -7279,7 +7279,7 @@ impl AutoActivityDetect {
             AutoActivityDetect::Walking => 8,
             AutoActivityDetect::Elliptical => 32,
             AutoActivityDetect::Sedentary => 1024,
-            AutoActivityDetect::UnknownVariant(value) => *value
+            AutoActivityDetect::UnknownVariant(value) => *value,
         }
     }
 }
@@ -7308,7 +7308,7 @@ impl SupportedExdScreenLayouts {
             32 => SupportedExdScreenLayouts::FullQuarterSplit,
             64 => SupportedExdScreenLayouts::HalfVerticalLeftSplit,
             128 => SupportedExdScreenLayouts::HalfHorizontalTopSplit,
-            _ => SupportedExdScreenLayouts::UnknownVariant(value)
+            _ => SupportedExdScreenLayouts::UnknownVariant(value),
         }
     }
     pub fn as_u32(&self) -> u32 {
@@ -7321,7 +7321,7 @@ impl SupportedExdScreenLayouts {
             SupportedExdScreenLayouts::FullQuarterSplit => 32,
             SupportedExdScreenLayouts::HalfVerticalLeftSplit => 64,
             SupportedExdScreenLayouts::HalfHorizontalTopSplit => 128,
-            SupportedExdScreenLayouts::UnknownVariant(value) => *value
+            SupportedExdScreenLayouts::UnknownVariant(value) => *value,
         }
     }
 }
@@ -7368,7 +7368,7 @@ impl FitBaseType {
             142 => FitBaseType::Sint64,
             143 => FitBaseType::Uint64,
             144 => FitBaseType::Uint64z,
-            _ => FitBaseType::UnknownVariant(value)
+            _ => FitBaseType::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -7390,7 +7390,7 @@ impl FitBaseType {
             FitBaseType::Sint64 => 142,
             FitBaseType::Uint64 => 143,
             FitBaseType::Uint64z => 144,
-            FitBaseType::UnknownVariant(value) => *value
+            FitBaseType::UnknownVariant(value) => *value,
         }
     }
 }
@@ -7479,7 +7479,7 @@ impl TurnType {
             35 => TurnType::UturnRightIdx,
             36 => TurnType::IconInvIdx,
             37 => TurnType::IconIdxCnt,
-            _ => TurnType::UnknownVariant(value)
+            _ => TurnType::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -7522,7 +7522,7 @@ impl TurnType {
             TurnType::UturnRightIdx => 35,
             TurnType::IconInvIdx => 36,
             TurnType::IconIdxCnt => 37,
-            TurnType::UnknownVariant(value) => *value
+            TurnType::UnknownVariant(value) => *value,
         }
     }
 }
@@ -7539,14 +7539,14 @@ impl BikeLightBeamAngleMode {
         match value {
             0 => BikeLightBeamAngleMode::Manual,
             1 => BikeLightBeamAngleMode::Auto,
-            _ => BikeLightBeamAngleMode::UnknownVariant(value)
+            _ => BikeLightBeamAngleMode::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
             BikeLightBeamAngleMode::Manual => 0,
             BikeLightBeamAngleMode::Auto => 1,
-            BikeLightBeamAngleMode::UnknownVariant(value) => *value
+            BikeLightBeamAngleMode::UnknownVariant(value) => *value,
         }
     }
 }
@@ -7565,7 +7565,7 @@ impl FitBaseUnit {
             0 => FitBaseUnit::Other,
             1 => FitBaseUnit::Kilogram,
             2 => FitBaseUnit::Pound,
-            _ => FitBaseUnit::UnknownVariant(value)
+            _ => FitBaseUnit::UnknownVariant(value),
         }
     }
     pub fn as_u16(&self) -> u16 {
@@ -7573,7 +7573,7 @@ impl FitBaseUnit {
             FitBaseUnit::Other => 0,
             FitBaseUnit::Kilogram => 1,
             FitBaseUnit::Pound => 2,
-            FitBaseUnit::UnknownVariant(value) => *value
+            FitBaseUnit::UnknownVariant(value) => *value,
         }
     }
 }
@@ -7590,14 +7590,14 @@ impl SetType {
         match value {
             0 => SetType::Rest,
             1 => SetType::Active,
-            _ => SetType::UnknownVariant(value)
+            _ => SetType::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
             SetType::Rest => 0,
             SetType::Active => 1,
-            SetType::UnknownVariant(value) => *value
+            SetType::UnknownVariant(value) => *value,
         }
     }
 }
@@ -7678,7 +7678,7 @@ impl ExerciseCategory {
             31 => ExerciseCategory::WarmUp,
             32 => ExerciseCategory::Run,
             65534 => ExerciseCategory::Unknown,
-            _ => ExerciseCategory::UnknownVariant(value)
+            _ => ExerciseCategory::UnknownVariant(value),
         }
     }
     pub fn as_u16(&self) -> u16 {
@@ -7717,7 +7717,7 @@ impl ExerciseCategory {
             ExerciseCategory::WarmUp => 31,
             ExerciseCategory::Run => 32,
             ExerciseCategory::Unknown => 65534,
-            ExerciseCategory::UnknownVariant(value) => *value
+            ExerciseCategory::UnknownVariant(value) => *value,
         }
     }
 }
@@ -7784,7 +7784,7 @@ impl BenchPressExerciseName {
             24 => BenchPressExerciseName::TripleStopBarbellBenchPress,
             25 => BenchPressExerciseName::WideGripBarbellBenchPress,
             26 => BenchPressExerciseName::AlternatingDumbbellChestPress,
-            _ => BenchPressExerciseName::UnknownVariant(value)
+            _ => BenchPressExerciseName::UnknownVariant(value),
         }
     }
     pub fn as_u16(&self) -> u16 {
@@ -7816,7 +7816,7 @@ impl BenchPressExerciseName {
             BenchPressExerciseName::TripleStopBarbellBenchPress => 24,
             BenchPressExerciseName::WideGripBarbellBenchPress => 25,
             BenchPressExerciseName::AlternatingDumbbellChestPress => 26,
-            BenchPressExerciseName::UnknownVariant(value) => *value
+            BenchPressExerciseName::UnknownVariant(value) => *value,
         }
     }
 }
@@ -7871,7 +7871,7 @@ impl CalfRaiseExerciseName {
             18 => CalfRaiseExerciseName::StandingCalfRaise,
             19 => CalfRaiseExerciseName::WeightedStandingCalfRaise,
             20 => CalfRaiseExerciseName::StandingDumbbellCalfRaise,
-            _ => CalfRaiseExerciseName::UnknownVariant(value)
+            _ => CalfRaiseExerciseName::UnknownVariant(value),
         }
     }
     pub fn as_u16(&self) -> u16 {
@@ -7897,7 +7897,7 @@ impl CalfRaiseExerciseName {
             CalfRaiseExerciseName::StandingCalfRaise => 18,
             CalfRaiseExerciseName::WeightedStandingCalfRaise => 19,
             CalfRaiseExerciseName::StandingDumbbellCalfRaise => 20,
-            CalfRaiseExerciseName::UnknownVariant(value) => *value
+            CalfRaiseExerciseName::UnknownVariant(value) => *value,
         }
     }
 }
@@ -7954,7 +7954,7 @@ impl CardioExerciseName {
             19 => CardioExerciseName::WeightedSquatJacks,
             20 => CardioExerciseName::TripleUnder,
             21 => CardioExerciseName::WeightedTripleUnder,
-            _ => CardioExerciseName::UnknownVariant(value)
+            _ => CardioExerciseName::UnknownVariant(value),
         }
     }
     pub fn as_u16(&self) -> u16 {
@@ -7981,7 +7981,7 @@ impl CardioExerciseName {
             CardioExerciseName::WeightedSquatJacks => 19,
             CardioExerciseName::TripleUnder => 20,
             CardioExerciseName::WeightedTripleUnder => 21,
-            CardioExerciseName::UnknownVariant(value) => *value
+            CardioExerciseName::UnknownVariant(value) => *value,
         }
     }
 }
@@ -8004,7 +8004,7 @@ impl CarryExerciseName {
             2 => CarryExerciseName::FarmersWalkOnToes,
             3 => CarryExerciseName::HexDumbbellHold,
             4 => CarryExerciseName::OverheadCarry,
-            _ => CarryExerciseName::UnknownVariant(value)
+            _ => CarryExerciseName::UnknownVariant(value),
         }
     }
     pub fn as_u16(&self) -> u16 {
@@ -8014,7 +8014,7 @@ impl CarryExerciseName {
             CarryExerciseName::FarmersWalkOnToes => 2,
             CarryExerciseName::HexDumbbellHold => 3,
             CarryExerciseName::OverheadCarry => 4,
-            CarryExerciseName::UnknownVariant(value) => *value
+            CarryExerciseName::UnknownVariant(value) => *value,
         }
     }
 }
@@ -8073,7 +8073,7 @@ impl ChopExerciseName {
             20 => ChopExerciseName::StandingSplitRotationalChop,
             21 => ChopExerciseName::StandingSplitRotationalReverseChop,
             22 => ChopExerciseName::StandingStabilityReverseChop,
-            _ => ChopExerciseName::UnknownVariant(value)
+            _ => ChopExerciseName::UnknownVariant(value),
         }
     }
     pub fn as_u16(&self) -> u16 {
@@ -8101,7 +8101,7 @@ impl ChopExerciseName {
             ChopExerciseName::StandingSplitRotationalChop => 20,
             ChopExerciseName::StandingSplitRotationalReverseChop => 21,
             ChopExerciseName::StandingStabilityReverseChop => 22,
-            ChopExerciseName::UnknownVariant(value) => *value
+            ChopExerciseName::UnknownVariant(value) => *value,
         }
     }
 }
@@ -8260,7 +8260,7 @@ impl CoreExerciseName {
             70 => CoreExerciseName::Swimming,
             71 => CoreExerciseName::Teaser,
             72 => CoreExerciseName::TheHundred,
-            _ => CoreExerciseName::UnknownVariant(value)
+            _ => CoreExerciseName::UnknownVariant(value),
         }
     }
     pub fn as_u16(&self) -> u16 {
@@ -8338,7 +8338,7 @@ impl CoreExerciseName {
             CoreExerciseName::Swimming => 70,
             CoreExerciseName::Teaser => 71,
             CoreExerciseName::TheHundred => 72,
-            CoreExerciseName::UnknownVariant(value) => *value
+            CoreExerciseName::UnknownVariant(value) => *value,
         }
     }
 }
@@ -8521,7 +8521,7 @@ impl CrunchExerciseName {
             82 => CrunchExerciseName::WeightedToesToBar,
             83 => CrunchExerciseName::Crunch,
             84 => CrunchExerciseName::StraightLegCrunchWithBall,
-            _ => CrunchExerciseName::UnknownVariant(value)
+            _ => CrunchExerciseName::UnknownVariant(value),
         }
     }
     pub fn as_u16(&self) -> u16 {
@@ -8611,7 +8611,7 @@ impl CrunchExerciseName {
             CrunchExerciseName::WeightedToesToBar => 82,
             CrunchExerciseName::Crunch => 83,
             CrunchExerciseName::StraightLegCrunchWithBall => 84,
-            CrunchExerciseName::UnknownVariant(value) => *value
+            CrunchExerciseName::UnknownVariant(value) => *value,
         }
     }
 }
@@ -8712,7 +8712,7 @@ impl CurlExerciseName {
             41 => CurlExerciseName::SwissBallEzBarPreacherCurl,
             42 => CurlExerciseName::TwistingStandingDumbbellBicepsCurl,
             43 => CurlExerciseName::WideGripEzBarBicepsCurl,
-            _ => CurlExerciseName::UnknownVariant(value)
+            _ => CurlExerciseName::UnknownVariant(value),
         }
     }
     pub fn as_u16(&self) -> u16 {
@@ -8761,7 +8761,7 @@ impl CurlExerciseName {
             CurlExerciseName::SwissBallEzBarPreacherCurl => 41,
             CurlExerciseName::TwistingStandingDumbbellBicepsCurl => 42,
             CurlExerciseName::WideGripEzBarBicepsCurl => 43,
-            CurlExerciseName::UnknownVariant(value) => *value
+            CurlExerciseName::UnknownVariant(value) => *value,
         }
     }
 }
@@ -8812,7 +8812,7 @@ impl DeadliftExerciseName {
             16 => DeadliftExerciseName::SumoDeadliftHighPull,
             17 => DeadliftExerciseName::TrapBarDeadlift,
             18 => DeadliftExerciseName::WideGripBarbellDeadlift,
-            _ => DeadliftExerciseName::UnknownVariant(value)
+            _ => DeadliftExerciseName::UnknownVariant(value),
         }
     }
     pub fn as_u16(&self) -> u16 {
@@ -8836,7 +8836,7 @@ impl DeadliftExerciseName {
             DeadliftExerciseName::SumoDeadliftHighPull => 16,
             DeadliftExerciseName::TrapBarDeadlift => 17,
             DeadliftExerciseName::WideGripBarbellDeadlift => 18,
-            DeadliftExerciseName::UnknownVariant(value) => *value
+            DeadliftExerciseName::UnknownVariant(value) => *value,
         }
     }
 }
@@ -8869,7 +8869,7 @@ impl FlyeExerciseName {
             7 => FlyeExerciseName::SwissBallDumbbellFlye,
             8 => FlyeExerciseName::ArmRotations,
             9 => FlyeExerciseName::HugATree,
-            _ => FlyeExerciseName::UnknownVariant(value)
+            _ => FlyeExerciseName::UnknownVariant(value),
         }
     }
     pub fn as_u16(&self) -> u16 {
@@ -8884,7 +8884,7 @@ impl FlyeExerciseName {
             FlyeExerciseName::SwissBallDumbbellFlye => 7,
             FlyeExerciseName::ArmRotations => 8,
             FlyeExerciseName::HugATree => 9,
-            FlyeExerciseName::UnknownVariant(value) => *value
+            FlyeExerciseName::UnknownVariant(value) => *value,
         }
     }
 }
@@ -8997,7 +8997,7 @@ impl HipRaiseExerciseName {
             47 => HipRaiseExerciseName::LegCircles,
             48 => HipRaiseExerciseName::LegLift,
             49 => HipRaiseExerciseName::LegLiftInExternalRotation,
-            _ => HipRaiseExerciseName::UnknownVariant(value)
+            _ => HipRaiseExerciseName::UnknownVariant(value),
         }
     }
     pub fn as_u16(&self) -> u16 {
@@ -9052,7 +9052,7 @@ impl HipRaiseExerciseName {
             HipRaiseExerciseName::LegCircles => 47,
             HipRaiseExerciseName::LegLift => 48,
             HipRaiseExerciseName::LegLiftInExternalRotation => 49,
-            HipRaiseExerciseName::UnknownVariant(value) => *value
+            HipRaiseExerciseName::UnknownVariant(value) => *value,
         }
     }
 }
@@ -9133,7 +9133,7 @@ impl HipStabilityExerciseName {
             31 => HipStabilityExerciseName::WeightedStandingRearLegRaise,
             32 => HipStabilityExerciseName::SupineHipInternalRotation,
             33 => HipStabilityExerciseName::WeightedSupineHipInternalRotation,
-            _ => HipStabilityExerciseName::UnknownVariant(value)
+            _ => HipStabilityExerciseName::UnknownVariant(value),
         }
     }
     pub fn as_u16(&self) -> u16 {
@@ -9172,7 +9172,7 @@ impl HipStabilityExerciseName {
             HipStabilityExerciseName::WeightedStandingRearLegRaise => 31,
             HipStabilityExerciseName::SupineHipInternalRotation => 32,
             HipStabilityExerciseName::WeightedSupineHipInternalRotation => 33,
-            HipStabilityExerciseName::UnknownVariant(value) => *value
+            HipStabilityExerciseName::UnknownVariant(value) => *value,
         }
     }
 }
@@ -9191,7 +9191,7 @@ impl HipSwingExerciseName {
             0 => HipSwingExerciseName::SingleArmKettlebellSwing,
             1 => HipSwingExerciseName::SingleArmDumbbellSwing,
             2 => HipSwingExerciseName::StepOutSwing,
-            _ => HipSwingExerciseName::UnknownVariant(value)
+            _ => HipSwingExerciseName::UnknownVariant(value),
         }
     }
     pub fn as_u16(&self) -> u16 {
@@ -9199,7 +9199,7 @@ impl HipSwingExerciseName {
             HipSwingExerciseName::SingleArmKettlebellSwing => 0,
             HipSwingExerciseName::SingleArmDumbbellSwing => 1,
             HipSwingExerciseName::StepOutSwing => 2,
-            HipSwingExerciseName::UnknownVariant(value) => *value
+            HipSwingExerciseName::UnknownVariant(value) => *value,
         }
     }
 }
@@ -9292,7 +9292,7 @@ impl HyperextensionExerciseName {
             37 => HyperextensionExerciseName::SupermanOnSwissBall,
             38 => HyperextensionExerciseName::Cobra,
             39 => HyperextensionExerciseName::SupineFloorBarre,
-            _ => HyperextensionExerciseName::UnknownVariant(value)
+            _ => HyperextensionExerciseName::UnknownVariant(value),
         }
     }
     pub fn as_u16(&self) -> u16 {
@@ -9337,7 +9337,7 @@ impl HyperextensionExerciseName {
             HyperextensionExerciseName::SupermanOnSwissBall => 37,
             HyperextensionExerciseName::Cobra => 38,
             HyperextensionExerciseName::SupineFloorBarre => 39,
-            HyperextensionExerciseName::UnknownVariant(value) => *value
+            HyperextensionExerciseName::UnknownVariant(value) => *value,
         }
     }
 }
@@ -9418,7 +9418,7 @@ impl LateralRaiseExerciseName {
             31 => LateralRaiseExerciseName::WeightedWallSlide,
             32 => LateralRaiseExerciseName::ArmCircles,
             33 => LateralRaiseExerciseName::ShavingTheHead,
-            _ => LateralRaiseExerciseName::UnknownVariant(value)
+            _ => LateralRaiseExerciseName::UnknownVariant(value),
         }
     }
     pub fn as_u16(&self) -> u16 {
@@ -9457,7 +9457,7 @@ impl LateralRaiseExerciseName {
             LateralRaiseExerciseName::WeightedWallSlide => 31,
             LateralRaiseExerciseName::ArmCircles => 32,
             LateralRaiseExerciseName::ShavingTheHead => 33,
-            LateralRaiseExerciseName::UnknownVariant(value) => *value
+            LateralRaiseExerciseName::UnknownVariant(value) => *value,
         }
     }
 }
@@ -9494,7 +9494,7 @@ impl LegCurlExerciseName {
             9 => LegCurlExerciseName::StaggeredStanceGoodMorning,
             10 => LegCurlExerciseName::SwissBallHipRaiseAndLegCurl,
             11 => LegCurlExerciseName::ZercherGoodMorning,
-            _ => LegCurlExerciseName::UnknownVariant(value)
+            _ => LegCurlExerciseName::UnknownVariant(value),
         }
     }
     pub fn as_u16(&self) -> u16 {
@@ -9511,7 +9511,7 @@ impl LegCurlExerciseName {
             LegCurlExerciseName::StaggeredStanceGoodMorning => 9,
             LegCurlExerciseName::SwissBallHipRaiseAndLegCurl => 10,
             LegCurlExerciseName::ZercherGoodMorning => 11,
-            LegCurlExerciseName::UnknownVariant(value) => *value
+            LegCurlExerciseName::UnknownVariant(value) => *value,
         }
     }
 }
@@ -9568,7 +9568,7 @@ impl LegRaiseExerciseName {
             19 => LegRaiseExerciseName::WeightedHangingKneeRaise,
             20 => LegRaiseExerciseName::LateralStepover,
             21 => LegRaiseExerciseName::WeightedLateralStepover,
-            _ => LegRaiseExerciseName::UnknownVariant(value)
+            _ => LegRaiseExerciseName::UnknownVariant(value),
         }
     }
     pub fn as_u16(&self) -> u16 {
@@ -9595,7 +9595,7 @@ impl LegRaiseExerciseName {
             LegRaiseExerciseName::WeightedHangingKneeRaise => 19,
             LegRaiseExerciseName::LateralStepover => 20,
             LegRaiseExerciseName::WeightedLateralStepover => 21,
-            LegRaiseExerciseName::UnknownVariant(value) => *value
+            LegRaiseExerciseName::UnknownVariant(value) => *value,
         }
     }
 }
@@ -9770,7 +9770,7 @@ impl LungeExerciseName {
             78 => LungeExerciseName::WalkingLunge,
             79 => LungeExerciseName::WeightedWalkingLunge,
             80 => LungeExerciseName::WideGripOverheadBarbellSplitSquat,
-            _ => LungeExerciseName::UnknownVariant(value)
+            _ => LungeExerciseName::UnknownVariant(value),
         }
     }
     pub fn as_u16(&self) -> u16 {
@@ -9856,7 +9856,7 @@ impl LungeExerciseName {
             LungeExerciseName::WalkingLunge => 78,
             LungeExerciseName::WeightedWalkingLunge => 79,
             LungeExerciseName::WideGripOverheadBarbellSplitSquat => 80,
-            LungeExerciseName::UnknownVariant(value) => *value
+            LungeExerciseName::UnknownVariant(value) => *value,
         }
     }
 }
@@ -9911,7 +9911,7 @@ impl OlympicLiftExerciseName {
             18 => OlympicLiftExerciseName::SingleArmKettlebellSnatch,
             19 => OlympicLiftExerciseName::SplitJerk,
             20 => OlympicLiftExerciseName::SquatCleanAndJerk,
-            _ => OlympicLiftExerciseName::UnknownVariant(value)
+            _ => OlympicLiftExerciseName::UnknownVariant(value),
         }
     }
     pub fn as_u16(&self) -> u16 {
@@ -9937,7 +9937,7 @@ impl OlympicLiftExerciseName {
             OlympicLiftExerciseName::SingleArmKettlebellSnatch => 18,
             OlympicLiftExerciseName::SplitJerk => 19,
             OlympicLiftExerciseName::SquatCleanAndJerk => 20,
-            OlympicLiftExerciseName::UnknownVariant(value) => *value
+            OlympicLiftExerciseName::UnknownVariant(value) => *value,
         }
     }
 }
@@ -10220,7 +10220,7 @@ impl PlankExerciseName {
             132 => PlankExerciseName::PlankWithArmVariations,
             133 => PlankExerciseName::PlankWithLegLift,
             134 => PlankExerciseName::ReversePlankWithLegPull,
-            _ => PlankExerciseName::UnknownVariant(value)
+            _ => PlankExerciseName::UnknownVariant(value),
         }
     }
     pub fn as_u16(&self) -> u16 {
@@ -10360,7 +10360,7 @@ impl PlankExerciseName {
             PlankExerciseName::PlankWithArmVariations => 132,
             PlankExerciseName::PlankWithLegLift => 133,
             PlankExerciseName::ReversePlankWithLegPull => 134,
-            PlankExerciseName::UnknownVariant(value) => *value
+            PlankExerciseName::UnknownVariant(value) => *value,
         }
     }
 }
@@ -10439,7 +10439,7 @@ impl PlyoExerciseName {
             30 => PlyoExerciseName::WeightedSquatJumpOntoBox,
             31 => PlyoExerciseName::SquatJumpsInAndOut,
             32 => PlyoExerciseName::WeightedSquatJumpsInAndOut,
-            _ => PlyoExerciseName::UnknownVariant(value)
+            _ => PlyoExerciseName::UnknownVariant(value),
         }
     }
     pub fn as_u16(&self) -> u16 {
@@ -10477,7 +10477,7 @@ impl PlyoExerciseName {
             PlyoExerciseName::WeightedSquatJumpOntoBox => 30,
             PlyoExerciseName::SquatJumpsInAndOut => 31,
             PlyoExerciseName::WeightedSquatJumpsInAndOut => 32,
-            PlyoExerciseName::UnknownVariant(value) => *value
+            PlyoExerciseName::UnknownVariant(value) => *value,
         }
     }
 }
@@ -10568,7 +10568,7 @@ impl PullUpExerciseName {
             36 => PullUpExerciseName::SuspendedChinUp,
             37 => PullUpExerciseName::WeightedSuspendedChinUp,
             38 => PullUpExerciseName::PullUp,
-            _ => PullUpExerciseName::UnknownVariant(value)
+            _ => PullUpExerciseName::UnknownVariant(value),
         }
     }
     pub fn as_u16(&self) -> u16 {
@@ -10612,7 +10612,7 @@ impl PullUpExerciseName {
             PullUpExerciseName::SuspendedChinUp => 36,
             PullUpExerciseName::WeightedSuspendedChinUp => 37,
             PullUpExerciseName::PullUp => 38,
-            PullUpExerciseName::UnknownVariant(value) => *value
+            PullUpExerciseName::UnknownVariant(value) => *value,
         }
     }
 }
@@ -10783,7 +10783,7 @@ impl PushUpExerciseName {
             76 => PushUpExerciseName::WeightedRingPushUp,
             77 => PushUpExerciseName::PushUp,
             78 => PushUpExerciseName::PilatesPushup,
-            _ => PushUpExerciseName::UnknownVariant(value)
+            _ => PushUpExerciseName::UnknownVariant(value),
         }
     }
     pub fn as_u16(&self) -> u16 {
@@ -10867,7 +10867,7 @@ impl PushUpExerciseName {
             PushUpExerciseName::WeightedRingPushUp => 76,
             PushUpExerciseName::PushUp => 77,
             PushUpExerciseName::PilatesPushup => 78,
-            PushUpExerciseName::UnknownVariant(value) => *value
+            PushUpExerciseName::UnknownVariant(value) => *value,
         }
     }
 }
@@ -10948,7 +10948,7 @@ impl RowExerciseName {
             31 => RowExerciseName::UnderhandGripCableRow,
             32 => RowExerciseName::VGripCableRow,
             33 => RowExerciseName::WideGripSeatedCableRow,
-            _ => RowExerciseName::UnknownVariant(value)
+            _ => RowExerciseName::UnknownVariant(value),
         }
     }
     pub fn as_u16(&self) -> u16 {
@@ -10987,7 +10987,7 @@ impl RowExerciseName {
             RowExerciseName::UnderhandGripCableRow => 31,
             RowExerciseName::VGripCableRow => 32,
             RowExerciseName::WideGripSeatedCableRow => 33,
-            RowExerciseName::UnknownVariant(value) => *value
+            RowExerciseName::UnknownVariant(value) => *value,
         }
     }
 }
@@ -11048,7 +11048,7 @@ impl ShoulderPressExerciseName {
             21 => ShoulderPressExerciseName::SplitStanceHammerCurlToPress,
             22 => ShoulderPressExerciseName::SwissBallDumbbellShoulderPress,
             23 => ShoulderPressExerciseName::WeightPlateFrontRaise,
-            _ => ShoulderPressExerciseName::UnknownVariant(value)
+            _ => ShoulderPressExerciseName::UnknownVariant(value),
         }
     }
     pub fn as_u16(&self) -> u16 {
@@ -11077,7 +11077,7 @@ impl ShoulderPressExerciseName {
             ShoulderPressExerciseName::SplitStanceHammerCurlToPress => 21,
             ShoulderPressExerciseName::SwissBallDumbbellShoulderPress => 22,
             ShoulderPressExerciseName::WeightPlateFrontRaise => 23,
-            ShoulderPressExerciseName::UnknownVariant(value) => *value
+            ShoulderPressExerciseName::UnknownVariant(value) => *value,
         }
     }
 }
@@ -11156,7 +11156,7 @@ impl ShoulderStabilityExerciseName {
             30 => ShoulderStabilityExerciseName::WeightedSwissBallWRaise,
             31 => ShoulderStabilityExerciseName::SwissBallYRaise,
             32 => ShoulderStabilityExerciseName::WeightedSwissBallYRaise,
-            _ => ShoulderStabilityExerciseName::UnknownVariant(value)
+            _ => ShoulderStabilityExerciseName::UnknownVariant(value),
         }
     }
     pub fn as_u16(&self) -> u16 {
@@ -11194,7 +11194,7 @@ impl ShoulderStabilityExerciseName {
             ShoulderStabilityExerciseName::WeightedSwissBallWRaise => 30,
             ShoulderStabilityExerciseName::SwissBallYRaise => 31,
             ShoulderStabilityExerciseName::WeightedSwissBallYRaise => 32,
-            ShoulderStabilityExerciseName::UnknownVariant(value) => *value
+            ShoulderStabilityExerciseName::UnknownVariant(value) => *value,
         }
     }
 }
@@ -11241,7 +11241,7 @@ impl ShrugExerciseName {
             14 => ShrugExerciseName::SerratusShrug,
             15 => ShrugExerciseName::WeightedSerratusShrug,
             16 => ShrugExerciseName::WideGripJumpShrug,
-            _ => ShrugExerciseName::UnknownVariant(value)
+            _ => ShrugExerciseName::UnknownVariant(value),
         }
     }
     pub fn as_u16(&self) -> u16 {
@@ -11263,7 +11263,7 @@ impl ShrugExerciseName {
             ShrugExerciseName::SerratusShrug => 14,
             ShrugExerciseName::WeightedSerratusShrug => 15,
             ShrugExerciseName::WideGripJumpShrug => 16,
-            ShrugExerciseName::UnknownVariant(value) => *value
+            ShrugExerciseName::UnknownVariant(value) => *value,
         }
     }
 }
@@ -11352,7 +11352,7 @@ impl SitUpExerciseName {
             35 => SitUpExerciseName::XAbs,
             36 => SitUpExerciseName::WeightedXAbs,
             37 => SitUpExerciseName::SitUp,
-            _ => SitUpExerciseName::UnknownVariant(value)
+            _ => SitUpExerciseName::UnknownVariant(value),
         }
     }
     pub fn as_u16(&self) -> u16 {
@@ -11395,7 +11395,7 @@ impl SitUpExerciseName {
             SitUpExerciseName::XAbs => 35,
             SitUpExerciseName::WeightedXAbs => 36,
             SitUpExerciseName::SitUp => 37,
-            SitUpExerciseName::UnknownVariant(value) => *value
+            SitUpExerciseName::UnknownVariant(value) => *value,
         }
     }
 }
@@ -11592,7 +11592,7 @@ impl SquatExerciseName {
             89 => SquatExerciseName::SquatJumpsInNOut,
             90 => SquatExerciseName::PilatesPlieSquatsParallelTurnedOutFlatAndHeels,
             91 => SquatExerciseName::ReleveStraightLegAndKneeBentWithOneLegVariation,
-            _ => SquatExerciseName::UnknownVariant(value)
+            _ => SquatExerciseName::UnknownVariant(value),
         }
     }
     pub fn as_u16(&self) -> u16 {
@@ -11689,7 +11689,7 @@ impl SquatExerciseName {
             SquatExerciseName::SquatJumpsInNOut => 89,
             SquatExerciseName::PilatesPlieSquatsParallelTurnedOutFlatAndHeels => 90,
             SquatExerciseName::ReleveStraightLegAndKneeBentWithOneLegVariation => 91,
-            SquatExerciseName::UnknownVariant(value) => *value
+            SquatExerciseName::UnknownVariant(value) => *value,
         }
     }
 }
@@ -11728,7 +11728,7 @@ impl TotalBodyExerciseName {
             10 => TotalBodyExerciseName::WeightedSquatPlankPushUp,
             11 => TotalBodyExerciseName::StandingTRotationBalance,
             12 => TotalBodyExerciseName::WeightedStandingTRotationBalance,
-            _ => TotalBodyExerciseName::UnknownVariant(value)
+            _ => TotalBodyExerciseName::UnknownVariant(value),
         }
     }
     pub fn as_u16(&self) -> u16 {
@@ -11746,7 +11746,7 @@ impl TotalBodyExerciseName {
             TotalBodyExerciseName::WeightedSquatPlankPushUp => 10,
             TotalBodyExerciseName::StandingTRotationBalance => 11,
             TotalBodyExerciseName::WeightedStandingTRotationBalance => 12,
-            TotalBodyExerciseName::UnknownVariant(value) => *value
+            TotalBodyExerciseName::UnknownVariant(value) => *value,
         }
     }
 }
@@ -11841,7 +11841,7 @@ impl TricepsExtensionExerciseName {
             38 => TricepsExtensionExerciseName::TricepsExtensionOnFloor,
             39 => TricepsExtensionExerciseName::TricepsPressdown,
             40 => TricepsExtensionExerciseName::WeightedDip,
-            _ => TricepsExtensionExerciseName::UnknownVariant(value)
+            _ => TricepsExtensionExerciseName::UnknownVariant(value),
         }
     }
     pub fn as_u16(&self) -> u16 {
@@ -11887,7 +11887,7 @@ impl TricepsExtensionExerciseName {
             TricepsExtensionExerciseName::TricepsExtensionOnFloor => 38,
             TricepsExtensionExerciseName::TricepsPressdown => 39,
             TricepsExtensionExerciseName::WeightedDip => 40,
-            TricepsExtensionExerciseName::UnknownVariant(value) => *value
+            TricepsExtensionExerciseName::UnknownVariant(value) => *value,
         }
     }
 }
@@ -11962,7 +11962,7 @@ impl WarmUpExerciseName {
             28 => WarmUpExerciseName::WalkingLegCradles,
             29 => WarmUpExerciseName::Walkout,
             30 => WarmUpExerciseName::WalkoutFromPushUpPosition,
-            _ => WarmUpExerciseName::UnknownVariant(value)
+            _ => WarmUpExerciseName::UnknownVariant(value),
         }
     }
     pub fn as_u16(&self) -> u16 {
@@ -11998,7 +11998,7 @@ impl WarmUpExerciseName {
             WarmUpExerciseName::WalkingLegCradles => 28,
             WarmUpExerciseName::Walkout => 29,
             WarmUpExerciseName::WalkoutFromPushUpPosition => 30,
-            WarmUpExerciseName::UnknownVariant(value) => *value
+            WarmUpExerciseName::UnknownVariant(value) => *value,
         }
     }
 }
@@ -12019,7 +12019,7 @@ impl RunExerciseName {
             1 => RunExerciseName::Walk,
             2 => RunExerciseName::Jog,
             3 => RunExerciseName::Sprint,
-            _ => RunExerciseName::UnknownVariant(value)
+            _ => RunExerciseName::UnknownVariant(value),
         }
     }
     pub fn as_u16(&self) -> u16 {
@@ -12028,7 +12028,7 @@ impl RunExerciseName {
             RunExerciseName::Walk => 1,
             RunExerciseName::Jog => 2,
             RunExerciseName::Sprint => 3,
-            RunExerciseName::UnknownVariant(value) => *value
+            RunExerciseName::UnknownVariant(value) => *value,
         }
     }
 }
@@ -12049,7 +12049,7 @@ impl WaterType {
             1 => WaterType::Salt,
             2 => WaterType::En13319,
             3 => WaterType::Custom,
-            _ => WaterType::UnknownVariant(value)
+            _ => WaterType::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -12058,7 +12058,7 @@ impl WaterType {
             WaterType::Salt => 1,
             WaterType::En13319 => 2,
             WaterType::Custom => 3,
-            WaterType::UnknownVariant(value) => *value
+            WaterType::UnknownVariant(value) => *value,
         }
     }
 }
@@ -12073,13 +12073,13 @@ impl TissueModelType {
     pub fn from_u8(value: u8) -> TissueModelType {
         match value {
             0 => TissueModelType::Zhl16c,
-            _ => TissueModelType::UnknownVariant(value)
+            _ => TissueModelType::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
             TissueModelType::Zhl16c => 0,
-            TissueModelType::UnknownVariant(value) => *value
+            TissueModelType::UnknownVariant(value) => *value,
         }
     }
 }
@@ -12098,7 +12098,7 @@ impl DiveGasStatus {
             0 => DiveGasStatus::Disabled,
             1 => DiveGasStatus::Enabled,
             2 => DiveGasStatus::BackupOnly,
-            _ => DiveGasStatus::UnknownVariant(value)
+            _ => DiveGasStatus::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -12106,7 +12106,7 @@ impl DiveGasStatus {
             DiveGasStatus::Disabled => 0,
             DiveGasStatus::Enabled => 1,
             DiveGasStatus::BackupOnly => 2,
-            DiveGasStatus::UnknownVariant(value) => *value
+            DiveGasStatus::UnknownVariant(value) => *value,
         }
     }
 }
@@ -12123,14 +12123,14 @@ impl DiveAlarmType {
         match value {
             0 => DiveAlarmType::Depth,
             1 => DiveAlarmType::Time,
-            _ => DiveAlarmType::UnknownVariant(value)
+            _ => DiveAlarmType::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
             DiveAlarmType::Depth => 0,
             DiveAlarmType::Time => 1,
-            DiveAlarmType::UnknownVariant(value) => *value
+            DiveAlarmType::UnknownVariant(value) => *value,
         }
     }
 }
@@ -12147,14 +12147,14 @@ impl DiveBacklightMode {
         match value {
             0 => DiveBacklightMode::AtDepth,
             1 => DiveBacklightMode::AlwaysOn,
-            _ => DiveBacklightMode::UnknownVariant(value)
+            _ => DiveBacklightMode::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
             DiveBacklightMode::AtDepth => 0,
             DiveBacklightMode::AlwaysOn => 1,
-            DiveBacklightMode::UnknownVariant(value) => *value
+            DiveBacklightMode::UnknownVariant(value) => *value,
         }
     }
 }
@@ -12171,14 +12171,14 @@ impl FaveroProduct {
         match value {
             10 => FaveroProduct::AssiomaUno,
             12 => FaveroProduct::AssiomaDuo,
-            _ => FaveroProduct::UnknownVariant(value)
+            _ => FaveroProduct::UnknownVariant(value),
         }
     }
     pub fn as_u16(&self) -> u16 {
         match &self {
             FaveroProduct::AssiomaUno => 10,
             FaveroProduct::AssiomaDuo => 12,
-            FaveroProduct::UnknownVariant(value) => *value
+            FaveroProduct::UnknownVariant(value) => *value,
         }
     }
 }
@@ -12197,7 +12197,7 @@ impl ClimbProEvent {
             0 => ClimbProEvent::Approach,
             1 => ClimbProEvent::Start,
             2 => ClimbProEvent::Complete,
-            _ => ClimbProEvent::UnknownVariant(value)
+            _ => ClimbProEvent::UnknownVariant(value),
         }
     }
     pub fn as_u8(&self) -> u8 {
@@ -12205,8 +12205,7 @@ impl ClimbProEvent {
             ClimbProEvent::Approach => 0,
             ClimbProEvent::Start => 1,
             ClimbProEvent::Complete => 2,
-            ClimbProEvent::UnknownVariant(value) => *value
+            ClimbProEvent::UnknownVariant(value) => *value,
         }
     }
 }
-
