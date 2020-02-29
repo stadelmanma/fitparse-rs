@@ -8,6 +8,7 @@
 ///   Also profiles are configurable and vary on SDK release I think so I'll need a way to customize
 ///   that
 use crate::objects::*;
+use crate::profile::field_types::MesgNum;
 use nom::bytes::complete::{tag, take};
 use nom::combinator::cond;
 use nom::error::ErrorKind;
@@ -172,7 +173,7 @@ fn definition_message(input: &[u8], contains_developer_data: bool) -> IResult<&[
         input,
         FitMessage::Definition {
             byte_order,
-            global_message_number,
+            global_message_number: MesgNum::from_u16(global_message_number),
             number_of_fields,
             field_definitions,
             number_of_developer_fields,

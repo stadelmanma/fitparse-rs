@@ -1,4 +1,5 @@
 /// Defines the data structures needed to represent a parsed FIT file.
+use crate::profile::field_types::MesgNum;
 use nom::number::Endianness;
 
 /// Defines a FIT file's contents
@@ -74,7 +75,7 @@ pub enum FitMessage {
     /// available for the field size, no single message may be defined that is larger than 255 bytes.
     Definition {
         byte_order: Endianness,
-        global_message_number: u16,
+        global_message_number: MesgNum,
         number_of_fields: u8,
         field_definitions: Vec<FieldDefinition>,
         number_of_developer_fields: u8,
