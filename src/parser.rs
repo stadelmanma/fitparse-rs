@@ -21,6 +21,111 @@ use nom::{i16, i32, i64, u16, u32, u64};
 use std::collections::HashMap;
 use std::fmt::Display;
 
+pub enum FitMessageType {
+    Data,
+    Definition
+}
+
+/// FIT message headers are a single byte long and come in two forms, Normal and CompressedTimestamp.
+///
+/// The value of the bits inside is different for the two message header types but for simplicity
+/// we treat them the same here and make the time_offset optionnal.
+struct FitMessageHeader {
+    contains_developer_data: bool,
+    local_message_type: u8,
+    message_type: FitMessageType,
+    time_offset: Option<u8>,
+}
+
+/// The definition message is used to create an association between the local message type
+/// contained in the record header, and a Global Message Number (mesg_num) that relates to the
+/// global FIT message. Although 1 byte is available for the number of fields and 1 byte is
+/// available for the field size, no single message may be defined that is larger than 255 bytes.
+#[derive(Clone, Debug)]
+struct FitDefinitionMessage {
+    byte_order: Endianness,
+    global_message_number: MesgNum,
+    number_of_fields: u8,
+    field_definitions: Vec<FieldDefinition>,
+    number_of_developer_fields: u8,
+    developer_field_definitions: Vec<DeveloperFieldDefinition>,
+}
+
+/// Stores a vector of raw fields described by the preceding Definition message, a Definition message
+/// must come before any Data message. The data here will be transfomed into a FitDataRecord using
+/// the information from it's defintion message and the MessageInfo struct from the FIT profile
+#[derive(Clone, Debug)]
+struct FitDataMessage {
+    data_fields: Vec<Option<DataFieldValue>>,
+}
+
+/// The Field Definition bytes are used to specify which FIT fields of the global FIT message are to
+/// be included in the upcoming data message in this instance. Any subsequent data messages of a
+/// particular local message type are considered to be using the format described by the definition
+/// message of matching local message type. All FIT messages and their respective FIT fields are
+/// listed in the global FIT profile. Each Field Definition consists of 3 bytes.
+#[derive(Clone, Debug)]
+struct FieldDefinition {
+    pub field_definition_number: u8, //  could possibly be an enum (ie. field_type) but this is per-message type
+    pub size: u8, // which might make things messy (i.e. umpteen different enums of enums)
+    pub base_type: BaseType,
+}
+
+/// Developer data fields allow for files to define the meaning of data without requiring changes to
+/// the FIT profile being used. Rather than having information like Field Name, Units, and Base Type
+/// encoded into the profile this information is included in 2 special global messages that act as
+/// meta-data for the decode process. The developer data field description is used to map data
+/// within a data message to the appropriate meta-data.
+#[derive(Clone, Debug)]
+pub struct DeveloperFieldDefinition {
+    pub field_number: u8,
+    pub size: u8,
+    pub developer_data_index: u8,
+}
+
+/// Developer data ID messages are used to uniquely identify developer data field sources, a FIT
+/// file can contain data for up to 255 unique developers. These messages must occur before any
+/// related field description messages.
+#[derive(Clone, Debug)]
+pub struct DeveloperDataIdMessage {
+    pub application_id: [u8; 16],
+    pub developer_data_index: u8,
+}
+
+/// Field description messages define the meaning of data within a dev field, a FIT file can
+/// contain up to 255 unique fields per developer. These messages must occur in the file before
+/// any related data is added.
+#[derive(Clone, Debug)]
+pub struct DeveloperFieldDescription {
+    pub developer_data_index: u8,
+    pub field_definition_number: u8,
+    pub fit_base_type_id: u8,
+    pub field_name: String, // max size 64 bytes
+    pub units: String,      // max size 16 bytes
+    pub native_field_num: u8,
+}
+
+#[derive(Clone, Copy, Debug)]
+pub enum BaseType {
+    Enum = 0x00,
+    SInt8 = 0x01,
+    UInt8 = 0x02,
+    SInt16 = 0x83,
+    UInt16 = 0x84,
+    SInt32 = 0x85,
+    UInt32 = 0x86,
+    String = 0x07,
+    Float32 = 0x88,
+    Float64 = 0x89,
+    UInt8z = 0x0A,
+    UInt16z = 0x8B,
+    UInt32z = 0x8C,
+    Byte = 0x0D,
+    SInt64 = 0x8E,
+    UInt64 = 0x8F,
+    UInt64z = 0x90,
+}
+
 pub fn parse_file(input: &[u8]) -> IResult<&[u8], FitFile> {
     fit_file(input)
 }
@@ -28,14 +133,14 @@ pub fn parse_file(input: &[u8]) -> IResult<&[u8], FitFile> {
 /// Parse a FIT file
 fn fit_file(input: &[u8]) -> IResult<&[u8], FitFile> {
     let (input, header) = fit_file_header(input)?;
-    let (input, messages) = parse_messages(input)?;
+    let (input, records) = parse_records(input)?;
     let (input, crc) = le_u16(input)?;
 
     Ok((
         input,
         FitFile {
             header,
-            messages,
+            records,
             crc,
         },
     ))
@@ -67,90 +172,89 @@ fn fit_file_header(input: &[u8]) -> IResult<&[u8], FitFileHeader> {
 /// All messages are returned in the order that they were written in but we use a local definition
 /// message mapping to decode the data messages since local_message_type numbers can be redefined
 /// throughout the file. This contiues until we reach the 2 byte CRC at the end of the input stream
-fn parse_messages(input: &[u8]) -> IResult<&[u8], Vec<FitDataRecord>> {
-    let mut definitions: HashMap<u8, FitMessage> = HashMap::new();
-    let mut messages = Vec::new();
+fn parse_records(input: &[u8]) -> IResult<&[u8], Vec<FitDataRecord>> {
+    let mut definitions: HashMap<u8, FitDefinitionMessage> = HashMap::new();
+    let mut records = Vec::new();
     let mut input = input.clone();
     while input.len() > 2 {
         match fit_data_record(input.clone(), &mut definitions) {
             Err(e) => return Err(e),
-            Ok((new_inp, o)) => {
+            Ok((new_inp, rec)) => {
                 if new_inp == input {
                     return Err(nom::Err::Error((input, ErrorKind::Many1)));
                 }
 
                 input = new_inp;
-                messages.push(o);
+                records.push(rec);
             }
         }
     }
 
-    Ok((input, messages))
+    Ok((input, records))
 }
 
 /// parse a single FIT data record which can define further fields or actaully cotain data itself
+///
+/// This function recurses if the message read was a defintion message since there should always be
+/// data after a defintion message in a complete FIT file because all defintion messages must occur
+/// before the data messages that use them are read. A defintion message at the end wouldn't serve
+/// a purpose.
 fn fit_data_record<'a>(
     input: &'a [u8],
-    definitions: &mut HashMap<u8, FitMessage>,
+    definitions: &mut HashMap<u8, FitDefinitionMessage>,
 ) -> IResult<&'a [u8], FitDataRecord> {
     let (input, header) = message_header(input)?;
-    let (input, message) = match &header {
-        FitMessageHeader::Normal {
-            message_type,
-            contains_developer_data,
-            local_message_type,
-        } => match message_type {
-            FitMessageType::Definition => definition_message(input, *contains_developer_data)?,
-            FitMessageType::Data => data_message(input, definitions.get(local_message_type))?,
+    match &header.message_type {
+        FitMessageType::Data => {
+            let (input, message) = data_message(input, definitions.get(&header.local_message_type))?;
+            let fields = Vec::new(); // TODO implement stuff to process message fields
+            Ok((input, FitDataRecord{ time_offset: header.time_offset, fields }))
         },
-        FitMessageHeader::CompressedTimestamp {
-            local_message_type, ..
-        } => data_message(input, definitions.get(local_message_type))?,
-    };
-    let record = FitDataRecord { header, message };
-    if let FitMessageHeader::Normal {
-        message_type: FitMessageType::Definition,
-        local_message_type,
-        ..
-    } = &record.header
-    {
-        definitions.insert(*local_message_type, record.message.clone());
+        FitMessageType::Definition => {
+            let (input, message) = definition_message(input, header.contains_developer_data)?;
+            definitions.insert(header.local_message_type, message);
+            fit_data_record(input.clone(), definitions)
+        }
     }
-
-    Ok((input, record))
 }
 
 /// Parse the header of a single FIT message
 fn message_header(input: &[u8]) -> IResult<&[u8], FitMessageHeader> {
     let (input, msg_header_byte) = le_u8(input)?;
+    let contains_developer_data: bool;
+    let local_message_type: u8;
+    let message_type: FitMessageType;
+    let time_offset: Option<u8>;
 
     if msg_header_byte & 0x80 == 0x80 {
-        Ok((
-            &input[1..],
-            FitMessageHeader::CompressedTimestamp {
-                local_message_type: (msg_header_byte >> 5) & 0x3, // bits 5-6,
-                time_offset: msg_header_byte & 0x1F,
-            },
-        ))
-    } else {
-        let msg_type = if (msg_header_byte & 0x40) == 0x40 {
-            FitMessageType::Definition
-        } else {
-            FitMessageType::Data
-        };
-        Ok((
-            input,
-            FitMessageHeader::Normal {
-                message_type: msg_type,
-                contains_developer_data: msg_header_byte & 0x20 == 0x20,
-                local_message_type: msg_header_byte & 0xF,
-            },
-        ))
+        // compressed timestamp header
+        contains_developer_data = false;
+        local_message_type = (msg_header_byte >> 5) & 0x3; // bits 5-6
+        message_type = FitMessageType::Data;
+        time_offset = Some(msg_header_byte & 0x1F);
     }
+    else if (msg_header_byte & 0x40) == 0x40 {
+        contains_developer_data = msg_header_byte & 0x20 == 0x20;
+        local_message_type = msg_header_byte & 0xF;
+        message_type = FitMessageType::Definition;
+        time_offset = None;
+    }
+    else {
+        // developer data bit is reserved for Data messages and should be 0, so we don't check it
+        contains_developer_data = false;
+        local_message_type = msg_header_byte & 0xF;
+        message_type = FitMessageType::Data;
+        time_offset = None;
+    }
+
+    Ok((
+        input,
+        FitMessageHeader {contains_developer_data, local_message_type, message_type, time_offset},
+    ))
 }
 
 /// parse a definition message
-fn definition_message(input: &[u8], contains_developer_data: bool) -> IResult<&[u8], FitMessage> {
+fn definition_message(input: &[u8], contains_developer_data: bool) -> IResult<&[u8], FitDefinitionMessage> {
     let (input, _) = take(1usize)(input)?;
     let (input, arch_byte) = le_u8(input)?;
     let byte_order = if arch_byte == 1 {
@@ -171,7 +275,7 @@ fn definition_message(input: &[u8], contains_developer_data: bool) -> IResult<&[
 
     Ok((
         input,
-        FitMessage::Definition {
+        FitDefinitionMessage {
             byte_order,
             global_message_number: MesgNum::from_u16(global_message_number),
             number_of_fields,
@@ -184,30 +288,22 @@ fn definition_message(input: &[u8], contains_developer_data: bool) -> IResult<&[
 
 fn data_message<'a>(
     input: &'a [u8],
-    definition: Option<&FitMessage>,
-) -> IResult<&'a [u8], FitMessage> {
+    definition: Option<&FitDefinitionMessage>,
+) -> IResult<&'a [u8], FitDataMessage> {
     if let Some(def_mesg) = definition {
-        if let FitMessage::Definition {
-            field_definitions,
-            number_of_developer_fields,
-            byte_order,
-            ..
-        } = def_mesg
-        {
-            let mut data_fields = Vec::new();
-            let mut input = input;
-            for field_def in field_definitions {
-                let (i, value) =
-                    data_field_value(input, field_def.base_type, *byte_order, field_def.size)?;
-                data_fields.push(value);
-                input = i;
-            }
-            if *number_of_developer_fields != 0u8 {
-                panic!("Not Implemented: number_of_developer_fields > 0")
-            }
-
-            return Ok((input, FitMessage::Data { data_fields }));
+        let mut data_fields = Vec::new();
+        let mut input = input;
+        for field_def in &def_mesg.field_definitions {
+            let (i, value) =
+                data_field_value(input, field_def.base_type, def_mesg.byte_order, field_def.size)?;
+            data_fields.push(value);
+            input = i;
         }
+        if def_mesg.number_of_developer_fields != 0u8 {
+            panic!("Not Implemented: number_of_developer_fields > 0")
+        }
+
+        return Ok((input, FitDataMessage{ data_fields }));
     }
 
     Err(nom::Err::Failure((input, ErrorKind::Verify)))
