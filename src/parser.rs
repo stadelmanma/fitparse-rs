@@ -340,12 +340,19 @@ fn process_data_fields(
         {
             if let Some(value) = dat_value {
                 if let Some(field_info) = mesg_info.get_field(def_field.field_definition_number) {
+                    let scaled_value = if field_info.scale() != 1.0 || field_info.offset() != 0.0 {
+                        field_info.rescale_value(value)
+                    }
+                    else {
+                        value.clone()
+                    };
+
                     data_fields.push(DataField {
                         name: field_info.name().to_string(),
                         units: field_info.units().to_string(),
                         scale: field_info.scale(),
                         offset: field_info.offset(),
-                        value: value.clone(), // TODO apply scale and offset if needed
+                        value: scaled_value,
                         raw_value: value.clone(),
                     });
                 } else {

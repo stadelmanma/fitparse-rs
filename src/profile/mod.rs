@@ -1,3 +1,4 @@
+use crate::objects::DataFieldValue;
 use std::collections::HashMap;
 
 pub mod field_types;
@@ -50,8 +51,27 @@ impl FieldInfo {
         self.offset
     }
 
-    pub fn rescale_value(&self, value: i64) -> f64 {
-        (value as f64) * self.scale - self.offset
+    /// Rescale value using the scale and offset, only numeric fields get rescaled
+    pub fn rescale_value(&self, value: &DataFieldValue) -> DataFieldValue {
+        match value {
+            DataFieldValue::Enum(_) => value.clone(),
+            DataFieldValue::SInt8(val) => DataFieldValue::Float64((*val as f64) / self.scale - self.offset),
+            DataFieldValue::UInt8(val) => DataFieldValue::Float64((*val as f64) / self.scale - self.offset),
+            DataFieldValue::SInt16(val) => DataFieldValue::Float64((*val as f64) / self.scale - self.offset),
+            DataFieldValue::UInt16(val) => DataFieldValue::Float64((*val as f64) / self.scale - self.offset),
+            DataFieldValue::SInt32(val) => DataFieldValue::Float64((*val as f64) / self.scale - self.offset),
+            DataFieldValue::UInt32(val) => DataFieldValue::Float64((*val as f64) / self.scale - self.offset),
+            DataFieldValue::String(_) => value.clone(),
+            DataFieldValue::Float32(val) =>  DataFieldValue::Float64((*val as f64) / self.scale - self.offset),
+            DataFieldValue::Float64(val) => DataFieldValue::Float64(*val / self.scale - self.offset),
+            DataFieldValue::UInt8z(val) => DataFieldValue::Float64((*val as f64) / self.scale - self.offset),
+            DataFieldValue::UInt16z(val) => DataFieldValue::Float64((*val as f64) / self.scale - self.offset),
+            DataFieldValue::UInt32z(val) => DataFieldValue::Float64((*val as f64) / self.scale - self.offset),
+            DataFieldValue::Byte(_) => value.clone(),
+            DataFieldValue::SInt64(val) => DataFieldValue::Float64((*val as f64) / self.scale - self.offset),
+            DataFieldValue::UInt64(val) => DataFieldValue::Float64((*val as f64) / self.scale - self.offset),
+            DataFieldValue::UInt64z(val) => DataFieldValue::Float64((*val as f64) / self.scale - self.offset),
+        }
     }
 }
 
