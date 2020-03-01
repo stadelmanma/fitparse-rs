@@ -23,7 +23,7 @@ use std::fmt::Display;
 
 pub enum FitMessageType {
     Data,
-    Definition
+    Definition,
 }
 
 /// FIT message headers are a single byte long and come in two forms, Normal and CompressedTimestamp.
@@ -56,7 +56,7 @@ struct FitDefinitionMessage {
 /// the information from it's defintion message and the MessageInfo struct from the FIT profile
 #[derive(Clone, Debug)]
 struct FitDataMessage {
-    data_fields: Vec<Option<DataFieldValue>>,
+    fields: Vec<Option<DataFieldValue>>,
 }
 
 /// The Field Definition bytes are used to specify which FIT fields of the global FIT message are to
@@ -206,10 +206,21 @@ fn fit_data_record<'a>(
     let (input, header) = message_header(input)?;
     match &header.message_type {
         FitMessageType::Data => {
-            let (input, message) = data_message(input, definitions.get(&header.local_message_type))?;
-            let fields = Vec::new(); // TODO implement stuff to process message fields
-            Ok((input, FitDataRecord{ time_offset: header.time_offset, fields }))
-        },
+            if let Some(def_mesg) = definitions.get(&header.local_message_type) {
+                let (input, data_mesg) = data_message(input, def_mesg)?;
+                let fields = process_data_fields(data_mesg, def_mesg);
+                Ok((
+                    input,
+                    FitDataRecord {
+                        kind: def_mesg.global_message_number,
+                        time_offset: header.time_offset,
+                        fields,
+                    },
+                ))
+            } else {
+                Err(nom::Err::Failure((input, ErrorKind::Verify)))
+            }
+        }
         FitMessageType::Definition => {
             let (input, message) = definition_message(input, header.contains_developer_data)?;
             definitions.insert(header.local_message_type, message);
@@ -232,14 +243,12 @@ fn message_header(input: &[u8]) -> IResult<&[u8], FitMessageHeader> {
         local_message_type = (msg_header_byte >> 5) & 0x3; // bits 5-6
         message_type = FitMessageType::Data;
         time_offset = Some(msg_header_byte & 0x1F);
-    }
-    else if (msg_header_byte & 0x40) == 0x40 {
+    } else if (msg_header_byte & 0x40) == 0x40 {
         contains_developer_data = msg_header_byte & 0x20 == 0x20;
         local_message_type = msg_header_byte & 0xF;
         message_type = FitMessageType::Definition;
         time_offset = None;
-    }
-    else {
+    } else {
         // developer data bit is reserved for Data messages and should be 0, so we don't check it
         contains_developer_data = false;
         local_message_type = msg_header_byte & 0xF;
@@ -249,12 +258,20 @@ fn message_header(input: &[u8]) -> IResult<&[u8], FitMessageHeader> {
 
     Ok((
         input,
-        FitMessageHeader {contains_developer_data, local_message_type, message_type, time_offset},
+        FitMessageHeader {
+            contains_developer_data,
+            local_message_type,
+            message_type,
+            time_offset,
+        },
     ))
 }
 
 /// parse a definition message
-fn definition_message(input: &[u8], contains_developer_data: bool) -> IResult<&[u8], FitDefinitionMessage> {
+fn definition_message(
+    input: &[u8],
+    contains_developer_data: bool,
+) -> IResult<&[u8], FitDefinitionMessage> {
     let (input, _) = take(1usize)(input)?;
     let (input, arch_byte) = le_u8(input)?;
     let byte_order = if arch_byte == 1 {
@@ -288,25 +305,85 @@ fn definition_message(input: &[u8], contains_developer_data: bool) -> IResult<&[
 
 fn data_message<'a>(
     input: &'a [u8],
-    definition: Option<&FitDefinitionMessage>,
+    def_mesg: &FitDefinitionMessage,
 ) -> IResult<&'a [u8], FitDataMessage> {
-    if let Some(def_mesg) = definition {
-        let mut data_fields = Vec::new();
-        let mut input = input;
-        for field_def in &def_mesg.field_definitions {
-            let (i, value) =
-                data_field_value(input, field_def.base_type, def_mesg.byte_order, field_def.size)?;
-            data_fields.push(value);
-            input = i;
-        }
-        if def_mesg.number_of_developer_fields != 0u8 {
-            panic!("Not Implemented: number_of_developer_fields > 0")
-        }
-
-        return Ok((input, FitDataMessage{ data_fields }));
+    let mut fields = Vec::new();
+    let mut input = input;
+    for field_def in &def_mesg.field_definitions {
+        let (i, value) = data_field_value(
+            input,
+            field_def.base_type,
+            def_mesg.byte_order,
+            field_def.size,
+        )?;
+        fields.push(value);
+        input = i;
+    }
+    if def_mesg.number_of_developer_fields != 0u8 {
+        panic!("Not Implemented: number_of_developer_fields > 0")
     }
 
-    Err(nom::Err::Failure((input, ErrorKind::Verify)))
+    return Ok((input, FitDataMessage { fields }));
+}
+
+fn process_data_fields(
+    data_mesg: FitDataMessage,
+    def_mesg: &FitDefinitionMessage,
+) -> Vec<DataField> {
+    let mesg_info = def_mesg.global_message_number.message_info();
+    let mut data_fields = Vec::new();
+    if let Some(mesg_info) = mesg_info {
+        for (def_field, dat_value) in def_mesg
+            .field_definitions
+            .iter()
+            .zip(data_mesg.fields.iter())
+        {
+            if let Some(value) = dat_value {
+                if let Some(field_info) = mesg_info.get_field(def_field.field_definition_number) {
+                    data_fields.push(DataField {
+                        name: field_info.name().to_string(),
+                        units: field_info.units().to_string(),
+                        scale: field_info.scale(),
+                        offset: field_info.offset(),
+                        value: value.clone(), // TODO apply scale and offset if needed
+                        raw_value: value.clone(),
+                    });
+                } else {
+                    data_fields.push(unknown_field(def_field.field_definition_number, &value));
+                }
+            }
+        }
+    } else {
+        // use placeholder data for unknown fields
+        for (def_field, dat_value) in def_mesg
+            .field_definitions
+            .iter()
+            .zip(data_mesg.fields.iter())
+        {
+            if let Some(value) = dat_value {
+                // we skip invalid fields
+                data_fields.push(unknown_field(def_field.field_definition_number, &value));
+            }
+        }
+    }
+
+    if def_mesg.number_of_developer_fields != 0u8 {
+        panic!("Not Implemented: number_of_developer_fields > 0")
+    }
+
+    data_fields
+}
+
+// Create an "unknown" field as a placeholder if we don't have any message information
+fn unknown_field(field_def_num: u8, value: &DataFieldValue) -> DataField {
+    DataField {
+        name: format!("unknown_field_{}", field_def_num),
+        units: "".to_string(),
+        scale: 1.0,
+        offset: 0.0,
+        value: value.clone(),
+        raw_value: value.clone(),
+    }
 }
 
 fn field_definition(input: &[u8]) -> IResult<&[u8], FieldDefinition> {

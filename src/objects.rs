@@ -1,4 +1,5 @@
 /// Defines the data structures needed to represent a parsed FIT file.
+use crate::profile::field_types::MesgNum;
 
 /// Defines a FIT file's contents
 #[derive(Clone, Debug)]
@@ -40,6 +41,7 @@ pub struct FitFileHeader {
 /// field entirely
 #[derive(Clone, Debug)]
 pub struct FitDataRecord {
+    pub kind: MesgNum,
     pub time_offset: Option<u8>,
     pub fields: Vec<DataField>,
 }
@@ -51,12 +53,12 @@ pub struct FitDataRecord {
 /// exactly how I'll get the value from the FieldType yet
 #[derive(Clone, Debug)]
 pub struct DataField {
-    name: String,
-    units: String,
-    scale: f64,
-    offset: f64,
-    value: DataFieldValue,
-    raw_value: DataFieldValue
+    pub name: String,
+    pub units: String,
+    pub scale: f64,
+    pub offset: f64,
+    pub value: DataFieldValue,
+    pub raw_value: DataFieldValue,
 }
 
 /// Contains arbitrary data in the defined format.

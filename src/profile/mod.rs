@@ -42,6 +42,14 @@ impl FieldInfo {
         self.units
     }
 
+    pub fn scale(&self) -> f64 {
+        self.scale
+    }
+
+    pub fn offset(&self) -> f64 {
+        self.offset
+    }
+
     pub fn rescale_value(&self, value: i64) -> f64 {
         (value as f64) * self.scale - self.offset
     }
