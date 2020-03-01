@@ -206,7 +206,10 @@ fn create_field_info_struct(row: &[DataType], out: &mut File) -> Result<(), std:
     let def_num = match row[1] {
         DataType::Float(v) => v as u8,
         DataType::Int(v) => v as u8,
-        _ => panic!(format!("Field defintiton number must be an interger, row={:?}.", row))
+        _ => panic!(format!(
+            "Field defintiton number must be an interger, row={:?}.",
+            row
+        )),
     };
 
     write!(
@@ -273,8 +276,8 @@ fn process_messages(sheet: Range<DataType>, out: &mut File) -> Result<(), std::i
             }
 
             if let Some(v) = row[0].get_string() {
-                mesg_name = titlecase_string(v);
-                mesg_fns.insert(mesg_name.clone(), format!("{}_message()", v));
+                mesg_name = v.to_string();
+                mesg_fns.insert(titlecase_string(v), format!("{}_message()", v));
                 write!(out, "fn {}_message() -> MessageInfo {{\n", v)?;
                 write!(out, "    let mut fields = HashMap::new();\n\n")?;
                 add_close_brace = true;
@@ -290,7 +293,6 @@ fn process_messages(sheet: Range<DataType>, out: &mut File) -> Result<(), std::i
 
     Ok(())
 }
-
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let profile_fname = "vendor/FitSDK/Profile.xlsx";
@@ -328,13 +330,16 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     // call rustfmt on the two generated files to cleanup auto-gen code
     Command::new("rustfmt")
-                     .arg(&field_types_fname)
-                     .status()
-                     .expect(&format!("failed to execute rustfmt on {}", field_types_fname));
+        .arg(&field_types_fname)
+        .status()
+        .expect(&format!(
+            "failed to execute rustfmt on {}",
+            field_types_fname
+        ));
     Command::new("rustfmt")
-                     .arg(&messages_fname)
-                     .status()
-                     .expect(&format!("failed to execute rustfmt on {}", messages_fname));
+        .arg(&messages_fname)
+        .status()
+        .expect(&format!("failed to execute rustfmt on {}", messages_fname));
 
     Ok(())
 }

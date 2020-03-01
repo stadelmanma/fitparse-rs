@@ -77,7 +77,7 @@ fn file_id_message() -> MessageInfo {
     fields.insert(8, field);
 
     MessageInfo {
-        name: "FileId",
+        name: "file_id",
         fields: fields,
     }
 }
@@ -106,7 +106,7 @@ fn file_creator_message() -> MessageInfo {
     fields.insert(1, field);
 
     MessageInfo {
-        name: "FileCreator",
+        name: "file_creator",
         fields: fields,
     }
 }
@@ -185,7 +185,7 @@ fn timestamp_correlation_message() -> MessageInfo {
     fields.insert(5, field);
 
     MessageInfo {
-        name: "TimestampCorrelation",
+        name: "timestamp_correlation",
         fields: fields,
     }
 }
@@ -224,7 +224,7 @@ fn software_message() -> MessageInfo {
     fields.insert(5, field);
 
     MessageInfo {
-        name: "Software",
+        name: "software",
         fields: fields,
     }
 }
@@ -253,7 +253,7 @@ fn slave_device_message() -> MessageInfo {
     fields.insert(1, field);
 
     MessageInfo {
-        name: "SlaveDevice",
+        name: "slave_device",
         fields: fields,
     }
 }
@@ -302,7 +302,7 @@ fn capabilities_message() -> MessageInfo {
     fields.insert(23, field);
 
     MessageInfo {
-        name: "Capabilities",
+        name: "capabilities",
         fields: fields,
     }
 }
@@ -371,7 +371,7 @@ fn file_capabilities_message() -> MessageInfo {
     fields.insert(4, field);
 
     MessageInfo {
-        name: "FileCapabilities",
+        name: "file_capabilities",
         fields: fields,
     }
 }
@@ -430,7 +430,7 @@ fn mesg_capabilities_message() -> MessageInfo {
     fields.insert(3, field);
 
     MessageInfo {
-        name: "MesgCapabilities",
+        name: "mesg_capabilities",
         fields: fields,
     }
 }
@@ -489,7 +489,7 @@ fn field_capabilities_message() -> MessageInfo {
     fields.insert(3, field);
 
     MessageInfo {
-        name: "FieldCapabilities",
+        name: "field_capabilities",
         fields: fields,
     }
 }
@@ -728,7 +728,7 @@ fn device_settings_message() -> MessageInfo {
     fields.insert(134, field);
 
     MessageInfo {
-        name: "DeviceSettings",
+        name: "device_settings",
         fields: fields,
     }
 }
@@ -1027,7 +1027,7 @@ fn user_profile_message() -> MessageInfo {
     fields.insert(49, field);
 
     MessageInfo {
-        name: "UserProfile",
+        name: "user_profile",
         fields: fields,
     }
 }
@@ -1086,7 +1086,7 @@ fn hrm_profile_message() -> MessageInfo {
     fields.insert(3, field);
 
     MessageInfo {
-        name: "HrmProfile",
+        name: "hrm_profile",
         fields: fields,
     }
 }
@@ -1175,7 +1175,7 @@ fn sdm_profile_message() -> MessageInfo {
     fields.insert(7, field);
 
     MessageInfo {
-        name: "SdmProfile",
+        name: "sdm_profile",
         fields: fields,
     }
 }
@@ -1504,7 +1504,7 @@ fn bike_profile_message() -> MessageInfo {
     fields.insert(44, field);
 
     MessageInfo {
-        name: "BikeProfile",
+        name: "bike_profile",
         fields: fields,
     }
 }
@@ -1643,7 +1643,7 @@ fn connectivity_message() -> MessageInfo {
     fields.insert(12, field);
 
     MessageInfo {
-        name: "Connectivity",
+        name: "connectivity",
         fields: fields,
     }
 }
@@ -1682,7 +1682,7 @@ fn watchface_settings_message() -> MessageInfo {
     fields.insert(1, field);
 
     MessageInfo {
-        name: "WatchfaceSettings",
+        name: "watchface_settings",
         fields: fields,
     }
 }
@@ -1711,7 +1711,7 @@ fn ohr_settings_message() -> MessageInfo {
     fields.insert(0, field);
 
     MessageInfo {
-        name: "OhrSettings",
+        name: "ohr_settings",
         fields: fields,
     }
 }
@@ -1770,7 +1770,7 @@ fn zones_target_message() -> MessageInfo {
     fields.insert(7, field);
 
     MessageInfo {
-        name: "ZonesTarget",
+        name: "zones_target",
         fields: fields,
     }
 }
@@ -1809,7 +1809,7 @@ fn sport_message() -> MessageInfo {
     fields.insert(3, field);
 
     MessageInfo {
-        name: "Sport",
+        name: "sport",
         fields: fields,
     }
 }
@@ -1848,7 +1848,7 @@ fn hr_zone_message() -> MessageInfo {
     fields.insert(2, field);
 
     MessageInfo {
-        name: "HrZone",
+        name: "hr_zone",
         fields: fields,
     }
 }
@@ -1887,7 +1887,7 @@ fn speed_zone_message() -> MessageInfo {
     fields.insert(1, field);
 
     MessageInfo {
-        name: "SpeedZone",
+        name: "speed_zone",
         fields: fields,
     }
 }
@@ -1926,7 +1926,7 @@ fn cadence_zone_message() -> MessageInfo {
     fields.insert(1, field);
 
     MessageInfo {
-        name: "CadenceZone",
+        name: "cadence_zone",
         fields: fields,
     }
 }
@@ -1965,7 +1965,7 @@ fn power_zone_message() -> MessageInfo {
     fields.insert(2, field);
 
     MessageInfo {
-        name: "PowerZone",
+        name: "power_zone",
         fields: fields,
     }
 }
@@ -2014,7 +2014,7 @@ fn met_zone_message() -> MessageInfo {
     fields.insert(3, field);
 
     MessageInfo {
-        name: "MetZone",
+        name: "met_zone",
         fields: fields,
     }
 }
@@ -2243,7 +2243,7 @@ fn dive_settings_message() -> MessageInfo {
     fields.insert(20, field);
 
     MessageInfo {
-        name: "DiveSettings",
+        name: "dive_settings",
         fields: fields,
     }
 }
@@ -2322,7 +2322,7 @@ fn dive_alarm_message() -> MessageInfo {
     fields.insert(5, field);
 
     MessageInfo {
-        name: "DiveAlarm",
+        name: "dive_alarm",
         fields: fields,
     }
 }
@@ -2371,7 +2371,7 @@ fn dive_gas_message() -> MessageInfo {
     fields.insert(2, field);
 
     MessageInfo {
-        name: "DiveGas",
+        name: "dive_gas",
         fields: fields,
     }
 }
@@ -2510,7 +2510,7 @@ fn goal_message() -> MessageInfo {
     fields.insert(11, field);
 
     MessageInfo {
-        name: "Goal",
+        name: "goal",
         fields: fields,
     }
 }
@@ -2599,7 +2599,7 @@ fn activity_message() -> MessageInfo {
     fields.insert(6, field);
 
     MessageInfo {
-        name: "Activity",
+        name: "activity",
         fields: fields,
     }
 }
@@ -3848,7 +3848,7 @@ fn session_message() -> MessageInfo {
     fields.insert(187, field);
 
     MessageInfo {
-        name: "Session",
+        name: "session",
         fields: fields,
     }
 }
@@ -4967,7 +4967,7 @@ fn lap_message() -> MessageInfo {
     fields.insert(154, field);
 
     MessageInfo {
-        name: "Lap",
+        name: "lap",
         fields: fields,
     }
 }
@@ -5156,7 +5156,7 @@ fn length_message() -> MessageInfo {
     fields.insert(21, field);
 
     MessageInfo {
-        name: "Length",
+        name: "length",
         fields: fields,
     }
 }
@@ -5896,7 +5896,7 @@ m",
     fields.insert(120, field);
 
     MessageInfo {
-        name: "Record",
+        name: "record",
         fields: fields,
     }
 }
@@ -6035,7 +6035,7 @@ fn event_message() -> MessageInfo {
     fields.insert(13, field);
 
     MessageInfo {
-        name: "Event",
+        name: "event",
         fields: fields,
     }
 }
@@ -6224,7 +6224,7 @@ fn device_info_message() -> MessageInfo {
     fields.insert(27, field);
 
     MessageInfo {
-        name: "DeviceInfo",
+        name: "device_info",
         fields: fields,
     }
 }
@@ -6293,7 +6293,7 @@ fn training_file_message() -> MessageInfo {
     fields.insert(4, field);
 
     MessageInfo {
-        name: "TrainingFile",
+        name: "training_file",
         fields: fields,
     }
 }
@@ -6312,7 +6312,7 @@ fn hrv_message() -> MessageInfo {
     fields.insert(0, field);
 
     MessageInfo {
-        name: "Hrv",
+        name: "hrv",
         fields: fields,
     }
 }
@@ -6481,7 +6481,7 @@ fn weather_conditions_message() -> MessageInfo {
     fields.insert(14, field);
 
     MessageInfo {
-        name: "WeatherConditions",
+        name: "weather_conditions",
         fields: fields,
     }
 }
@@ -6550,7 +6550,7 @@ fn weather_alert_message() -> MessageInfo {
     fields.insert(4, field);
 
     MessageInfo {
-        name: "WeatherAlert",
+        name: "weather_alert",
         fields: fields,
     }
 }
@@ -6649,7 +6649,7 @@ fn gps_metadata_message() -> MessageInfo {
     fields.insert(7, field);
 
     MessageInfo {
-        name: "GpsMetadata",
+        name: "gps_metadata",
         fields: fields,
     }
 }
@@ -6708,7 +6708,7 @@ fn camera_event_message() -> MessageInfo {
     fields.insert(3, field);
 
     MessageInfo {
-        name: "CameraEvent",
+        name: "camera_event",
         fields: fields,
     }
 }
@@ -6807,7 +6807,7 @@ fn gyroscope_data_message() -> MessageInfo {
     fields.insert(7, field);
 
     MessageInfo {
-        name: "GyroscopeData",
+        name: "gyroscope_data",
         fields: fields,
     }
 }
@@ -6936,7 +6936,7 @@ fn accelerometer_data_message() -> MessageInfo {
     fields.insert(10, field);
 
     MessageInfo {
-        name: "AccelerometerData",
+        name: "accelerometer_data",
         fields: fields,
     }
 }
@@ -7035,7 +7035,7 @@ fn magnetometer_data_message() -> MessageInfo {
     fields.insert(7, field);
 
     MessageInfo {
-        name: "MagnetometerData",
+        name: "magnetometer_data",
         fields: fields,
     }
 }
@@ -7084,7 +7084,7 @@ fn barometer_data_message() -> MessageInfo {
     fields.insert(2, field);
 
     MessageInfo {
-        name: "BarometerData",
+        name: "barometer_data",
         fields: fields,
     }
 }
@@ -7163,7 +7163,7 @@ fn three_d_sensor_calibration_message() -> MessageInfo {
     fields.insert(5, field);
 
     MessageInfo {
-        name: "ThreeDSensorCalibration",
+        name: "three_d_sensor_calibration",
         fields: fields,
     }
 }
@@ -7232,7 +7232,7 @@ fn one_d_sensor_calibration_message() -> MessageInfo {
     fields.insert(4, field);
 
     MessageInfo {
-        name: "OneDSensorCalibration",
+        name: "one_d_sensor_calibration",
         fields: fields,
     }
 }
@@ -7271,7 +7271,7 @@ fn video_frame_message() -> MessageInfo {
     fields.insert(1, field);
 
     MessageInfo {
-        name: "VideoFrame",
+        name: "video_frame",
         fields: fields,
     }
 }
@@ -7370,7 +7370,7 @@ fn obdii_data_message() -> MessageInfo {
     fields.insert(7, field);
 
     MessageInfo {
-        name: "ObdiiData",
+        name: "obdii_data",
         fields: fields,
     }
 }
@@ -7409,7 +7409,7 @@ fn nmea_sentence_message() -> MessageInfo {
     fields.insert(1, field);
 
     MessageInfo {
-        name: "NmeaSentence",
+        name: "nmea_sentence",
         fields: fields,
     }
 }
@@ -7538,7 +7538,7 @@ fn aviation_attitude_message() -> MessageInfo {
     fields.insert(10, field);
 
     MessageInfo {
-        name: "AviationAttitude",
+        name: "aviation_attitude",
         fields: fields,
     }
 }
@@ -7577,7 +7577,7 @@ fn video_message() -> MessageInfo {
     fields.insert(2, field);
 
     MessageInfo {
-        name: "Video",
+        name: "video",
         fields: fields,
     }
 }
@@ -7616,7 +7616,7 @@ fn video_title_message() -> MessageInfo {
     fields.insert(1, field);
 
     MessageInfo {
-        name: "VideoTitle",
+        name: "video_title",
         fields: fields,
     }
 }
@@ -7655,7 +7655,7 @@ fn video_description_message() -> MessageInfo {
     fields.insert(1, field);
 
     MessageInfo {
-        name: "VideoDescription",
+        name: "video_description",
         fields: fields,
     }
 }
@@ -7734,7 +7734,7 @@ fn video_clip_message() -> MessageInfo {
     fields.insert(7, field);
 
     MessageInfo {
-        name: "VideoClip",
+        name: "video_clip",
         fields: fields,
     }
 }
@@ -7853,7 +7853,7 @@ fn set_message() -> MessageInfo {
     fields.insert(11, field);
 
     MessageInfo {
-        name: "Set",
+        name: "set",
         fields: fields,
     }
 }
@@ -7962,7 +7962,7 @@ fn jump_message() -> MessageInfo {
     fields.insert(8, field);
 
     MessageInfo {
-        name: "Jump",
+        name: "jump",
         fields: fields,
     }
 }
@@ -8011,7 +8011,7 @@ fn course_message() -> MessageInfo {
     fields.insert(7, field);
 
     MessageInfo {
-        name: "Course",
+        name: "course",
         fields: fields,
     }
 }
@@ -8100,7 +8100,7 @@ fn course_point_message() -> MessageInfo {
     fields.insert(8, field);
 
     MessageInfo {
-        name: "CoursePoint",
+        name: "course_point",
         fields: fields,
     }
 }
@@ -8199,7 +8199,7 @@ fn segment_id_message() -> MessageInfo {
     fields.insert(8, field);
 
     MessageInfo {
-        name: "SegmentId",
+        name: "segment_id",
         fields: fields,
     }
 }
@@ -8278,7 +8278,7 @@ fn segment_leaderboard_entry_message() -> MessageInfo {
     fields.insert(5, field);
 
     MessageInfo {
-        name: "SegmentLeaderboardEntry",
+        name: "segment_leaderboard_entry",
         fields: fields,
     }
 }
@@ -8347,7 +8347,7 @@ fn segment_point_message() -> MessageInfo {
     fields.insert(5, field);
 
     MessageInfo {
-        name: "SegmentPoint",
+        name: "segment_point",
         fields: fields,
     }
 }
@@ -9256,7 +9256,7 @@ fn segment_lap_message() -> MessageInfo {
     fields.insert(87, field);
 
     MessageInfo {
-        name: "SegmentLap",
+        name: "segment_lap",
         fields: fields,
     }
 }
@@ -9355,7 +9355,7 @@ fn segment_file_message() -> MessageInfo {
     fields.insert(11, field);
 
     MessageInfo {
-        name: "SegmentFile",
+        name: "segment_file",
         fields: fields,
     }
 }
@@ -9434,7 +9434,7 @@ fn workout_message() -> MessageInfo {
     fields.insert(15, field);
 
     MessageInfo {
-        name: "Workout",
+        name: "workout",
         fields: fields,
     }
 }
@@ -9513,7 +9513,7 @@ fn workout_session_message() -> MessageInfo {
     fields.insert(5, field);
 
     MessageInfo {
-        name: "WorkoutSession",
+        name: "workout_session",
         fields: fields,
     }
 }
@@ -9672,7 +9672,7 @@ fn workout_step_message() -> MessageInfo {
     fields.insert(13, field);
 
     MessageInfo {
-        name: "WorkoutStep",
+        name: "workout_step",
         fields: fields,
     }
 }
@@ -9721,7 +9721,7 @@ fn exercise_title_message() -> MessageInfo {
     fields.insert(2, field);
 
     MessageInfo {
-        name: "ExerciseTitle",
+        name: "exercise_title",
         fields: fields,
     }
 }
@@ -9800,7 +9800,7 @@ fn schedule_message() -> MessageInfo {
     fields.insert(6, field);
 
     MessageInfo {
-        name: "Schedule",
+        name: "schedule",
         fields: fields,
     }
 }
@@ -9909,7 +9909,7 @@ fn totals_message() -> MessageInfo {
     fields.insert(9, field);
 
     MessageInfo {
-        name: "Totals",
+        name: "totals",
         fields: fields,
     }
 }
@@ -10048,7 +10048,7 @@ fn weight_scale_message() -> MessageInfo {
     fields.insert(12, field);
 
     MessageInfo {
-        name: "WeightScale",
+        name: "weight_scale",
         fields: fields,
     }
 }
@@ -10167,7 +10167,7 @@ fn blood_pressure_message() -> MessageInfo {
     fields.insert(9, field);
 
     MessageInfo {
-        name: "BloodPressure",
+        name: "blood_pressure",
         fields: fields,
     }
 }
@@ -10236,7 +10236,7 @@ fn monitoring_info_message() -> MessageInfo {
     fields.insert(5, field);
 
     MessageInfo {
-        name: "MonitoringInfo",
+        name: "monitoring_info",
         fields: fields,
     }
 }
@@ -10535,7 +10535,7 @@ fn monitoring_message() -> MessageInfo {
     fields.insert(34, field);
 
     MessageInfo {
-        name: "Monitoring",
+        name: "monitoring",
         fields: fields,
     }
 }
@@ -10604,7 +10604,7 @@ fn hr_message() -> MessageInfo {
     fields.insert(10, field);
 
     MessageInfo {
-        name: "Hr",
+        name: "hr",
         fields: fields,
     }
 }
@@ -10633,7 +10633,7 @@ fn stress_level_message() -> MessageInfo {
     fields.insert(1, field);
 
     MessageInfo {
-        name: "StressLevel",
+        name: "stress_level",
         fields: fields,
     }
 }
@@ -10682,7 +10682,7 @@ fn memo_glob_message() -> MessageInfo {
     fields.insert(2, field);
 
     MessageInfo {
-        name: "MemoGlob",
+        name: "memo_glob",
         fields: fields,
     }
 }
@@ -10741,7 +10741,7 @@ fn ant_channel_id_message() -> MessageInfo {
     fields.insert(4, field);
 
     MessageInfo {
-        name: "AntChannelId",
+        name: "ant_channel_id",
         fields: fields,
     }
 }
@@ -10810,7 +10810,7 @@ fn ant_rx_message() -> MessageInfo {
     fields.insert(4, field);
 
     MessageInfo {
-        name: "AntRx",
+        name: "ant_rx",
         fields: fields,
     }
 }
@@ -10879,7 +10879,7 @@ fn ant_tx_message() -> MessageInfo {
     fields.insert(4, field);
 
     MessageInfo {
-        name: "AntTx",
+        name: "ant_tx",
         fields: fields,
     }
 }
@@ -10928,7 +10928,7 @@ fn exd_screen_configuration_message() -> MessageInfo {
     fields.insert(3, field);
 
     MessageInfo {
-        name: "ExdScreenConfiguration",
+        name: "exd_screen_configuration",
         fields: fields,
     }
 }
@@ -10997,7 +10997,7 @@ fn exd_data_field_configuration_message() -> MessageInfo {
     fields.insert(5, field);
 
     MessageInfo {
-        name: "ExdDataFieldConfiguration",
+        name: "exd_data_field_configuration",
         fields: fields,
     }
 }
@@ -11116,7 +11116,7 @@ fn exd_data_concept_configuration_message() -> MessageInfo {
     fields.insert(11, field);
 
     MessageInfo {
-        name: "ExdDataConceptConfiguration",
+        name: "exd_data_concept_configuration",
         fields: fields,
     }
 }
@@ -11265,7 +11265,7 @@ fn field_description_message() -> MessageInfo {
     fields.insert(15, field);
 
     MessageInfo {
-        name: "FieldDescription",
+        name: "field_description",
         fields: fields,
     }
 }
@@ -11324,7 +11324,7 @@ fn developer_data_id_message() -> MessageInfo {
     fields.insert(4, field);
 
     MessageInfo {
-        name: "DeveloperDataId",
+        name: "developer_data_id",
         fields: fields,
     }
 }
@@ -11463,7 +11463,7 @@ fn dive_summary_message() -> MessageInfo {
     fields.insert(11, field);
 
     MessageInfo {
-        name: "DiveSummary",
+        name: "dive_summary",
         fields: fields,
     }
 }
@@ -11542,7 +11542,7 @@ fn climb_pro_message() -> MessageInfo {
     fields.insert(5, field);
 
     MessageInfo {
-        name: "ClimbPro",
+        name: "climb_pro",
         fields: fields,
     }
 }
