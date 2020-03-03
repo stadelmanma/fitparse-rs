@@ -51,6 +51,9 @@ impl File {
             _ => File::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> File {
+        File::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             File::Device => 1,
@@ -269,6 +272,9 @@ impl MesgNum {
             _ => MesgNum::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> MesgNum {
+        MesgNum::from_u16(value as u16)
+    }
     pub fn as_u16(&self) -> u16 {
         match &self {
             MesgNum::FileId => 0,
@@ -381,6 +387,9 @@ impl Checksum {
             _ => Checksum::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> Checksum {
+        Checksum::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             Checksum::Clear => 0,
@@ -406,6 +415,9 @@ impl FileFlags {
             8 => FileFlags::Erase,
             _ => FileFlags::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> FileFlags {
+        FileFlags::from_u8(value as u8)
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
@@ -434,6 +446,9 @@ impl MesgCount {
             _ => MesgCount::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> MesgCount {
+        MesgCount::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             MesgCount::NumPerFile => 0,
@@ -457,6 +472,9 @@ impl DateTime {
             _ => DateTime::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> DateTime {
+        DateTime::from_u32(value as u32)
+    }
     pub fn as_u32(&self) -> u32 {
         match &self {
             DateTime::Min => 268435456,
@@ -477,6 +495,9 @@ impl LocalDateTime {
             268435456 => LocalDateTime::Min,
             _ => LocalDateTime::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> LocalDateTime {
+        LocalDateTime::from_u32(value as u32)
     }
     pub fn as_u32(&self) -> u32 {
         match &self {
@@ -503,6 +524,9 @@ impl MessageIndex {
             _ => MessageIndex::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> MessageIndex {
+        MessageIndex::from_u16(value as u16)
+    }
     pub fn as_u16(&self) -> u16 {
         match &self {
             MessageIndex::Mask => 4095,
@@ -526,6 +550,9 @@ impl DeviceIndex {
             _ => DeviceIndex::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> DeviceIndex {
+        DeviceIndex::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             DeviceIndex::Creator => 0,
@@ -548,6 +575,9 @@ impl Gender {
             1 => Gender::Male,
             _ => Gender::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> Gender {
+        Gender::from_u8(value as u8)
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
@@ -647,6 +677,9 @@ impl Language {
             _ => Language::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> Language {
+        Language::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             Language::English => 0,
@@ -720,6 +753,9 @@ impl LanguageBits0 {
             _ => LanguageBits0::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> LanguageBits0 {
+        LanguageBits0::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             LanguageBits0::English => 1,
@@ -761,6 +797,9 @@ impl LanguageBits1 {
             128 => LanguageBits1::Slovakian,
             _ => LanguageBits1::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> LanguageBits1 {
+        LanguageBits1::from_u8(value as u8)
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
@@ -804,6 +843,9 @@ impl LanguageBits2 {
             _ => LanguageBits2::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> LanguageBits2 {
+        LanguageBits2::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             LanguageBits2::Slovenian => 1,
@@ -846,6 +888,9 @@ impl LanguageBits3 {
             _ => LanguageBits3::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> LanguageBits3 {
+        LanguageBits3::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             LanguageBits3::Bulgarian => 1,
@@ -883,6 +928,9 @@ impl LanguageBits4 {
             32 => LanguageBits4::Mongolian,
             _ => LanguageBits4::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> LanguageBits4 {
+        LanguageBits4::from_u8(value as u8)
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
@@ -1120,6 +1168,9 @@ impl TimeZone {
             _ => TimeZone::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> TimeZone {
+        TimeZone::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             TimeZone::Almaty => 0,
@@ -1250,6 +1301,9 @@ impl DisplayMeasure {
             _ => DisplayMeasure::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> DisplayMeasure {
+        DisplayMeasure::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             DisplayMeasure::Metric => 0,
@@ -1277,6 +1331,9 @@ impl DisplayHeart {
             _ => DisplayHeart::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> DisplayHeart {
+        DisplayHeart::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             DisplayHeart::Bpm => 0,
@@ -1301,6 +1358,9 @@ impl DisplayPower {
             1 => DisplayPower::PercentFtp,
             _ => DisplayPower::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> DisplayPower {
+        DisplayPower::from_u8(value as u8)
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
@@ -1406,6 +1466,9 @@ impl DisplayPosition {
             _ => DisplayPosition::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> DisplayPosition {
+        DisplayPosition::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             DisplayPosition::Degree => 0,
@@ -1471,6 +1534,9 @@ impl Switch {
             2 => Switch::Auto,
             _ => Switch::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> Switch {
+        Switch::from_u8(value as u8)
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
@@ -1593,6 +1659,9 @@ impl Sport {
             _ => Sport::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> Sport {
+        Sport::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             Sport::Generic => 0,
@@ -1677,6 +1746,9 @@ impl SportBits0 {
             _ => SportBits0::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> SportBits0 {
+        SportBits0::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             SportBits0::Generic => 1,
@@ -1718,6 +1790,9 @@ impl SportBits1 {
             128 => SportBits1::Rowing,
             _ => SportBits1::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> SportBits1 {
+        SportBits1::from_u8(value as u8)
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
@@ -1761,6 +1836,9 @@ impl SportBits2 {
             _ => SportBits2::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> SportBits2 {
+        SportBits2::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             SportBits2::Mountaineering => 1,
@@ -1802,6 +1880,9 @@ impl SportBits3 {
             128 => SportBits3::RockClimbing,
             _ => SportBits3::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> SportBits3 {
+        SportBits3::from_u8(value as u8)
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
@@ -1845,6 +1926,9 @@ impl SportBits4 {
             _ => SportBits4::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> SportBits4 {
+        SportBits4::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             SportBits4::Sailing => 1,
@@ -1887,6 +1971,9 @@ impl SportBits5 {
             _ => SportBits5::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> SportBits5 {
+        SportBits5::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             SportBits5::WaterSkiing => 1,
@@ -1914,6 +2001,9 @@ impl SportBits6 {
             1 => SportBits6::FloorClimbing,
             _ => SportBits6::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> SportBits6 {
+        SportBits6::from_u8(value as u8)
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
@@ -2056,6 +2146,9 @@ impl SubSport {
             _ => SubSport::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> SubSport {
+        SubSport::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             SubSport::Generic => 0,
@@ -2153,6 +2246,9 @@ impl SportEvent {
             _ => SportEvent::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> SportEvent {
+        SportEvent::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             SportEvent::Uncategorized => 0,
@@ -2184,6 +2280,9 @@ impl Activity {
             _ => Activity::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> Activity {
+        Activity::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             Activity::Manual => 0,
@@ -2211,6 +2310,9 @@ impl Intensity {
             3 => Intensity::Cooldown,
             _ => Intensity::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> Intensity {
+        Intensity::from_u8(value as u8)
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
@@ -2241,6 +2343,9 @@ impl SessionTrigger {
             3 => SessionTrigger::FitnessEquipment,
             _ => SessionTrigger::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> SessionTrigger {
+        SessionTrigger::from_u8(value as u8)
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
@@ -2277,6 +2382,9 @@ impl AutolapTrigger {
             6 => AutolapTrigger::Off,
             _ => AutolapTrigger::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> AutolapTrigger {
+        AutolapTrigger::from_u8(value as u8)
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
@@ -2321,6 +2429,9 @@ impl LapTrigger {
             _ => LapTrigger::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> LapTrigger {
+        LapTrigger::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             LapTrigger::Manual => 0,
@@ -2360,6 +2471,9 @@ impl TimeMode {
             _ => TimeMode::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> TimeMode {
+        TimeMode::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             TimeMode::Hour12 => 0,
@@ -2398,6 +2512,9 @@ impl BacklightMode {
             _ => BacklightMode::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> BacklightMode {
+        BacklightMode::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             BacklightMode::Off => 0,
@@ -2427,6 +2544,9 @@ impl DateMode {
             _ => DateMode::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> DateMode {
+        DateMode::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             DateMode::DayMonth => 0,
@@ -2448,6 +2568,9 @@ impl BacklightTimeout {
             0 => BacklightTimeout::Infinite,
             _ => BacklightTimeout::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> BacklightTimeout {
+        BacklightTimeout::from_u8(value as u8)
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
@@ -2540,6 +2663,9 @@ impl Event {
             _ => Event::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> Event {
+        Event::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             Event::Timer => 0,
@@ -2614,6 +2740,9 @@ impl EventType {
             _ => EventType::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> EventType {
+        EventType::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             EventType::Start => 0,
@@ -2648,6 +2777,9 @@ impl TimerTrigger {
             _ => TimerTrigger::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> TimerTrigger {
+        TimerTrigger::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             TimerTrigger::Manual => 0,
@@ -2676,6 +2808,9 @@ impl FitnessEquipmentState {
             3 => FitnessEquipmentState::Unknown,
             _ => FitnessEquipmentState::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> FitnessEquipmentState {
+        FitnessEquipmentState::from_u8(value as u8)
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
@@ -2707,6 +2842,9 @@ impl Tone {
             _ => Tone::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> Tone {
+        Tone::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             Tone::Off => 0,
@@ -2737,6 +2875,9 @@ impl Autoscroll {
             _ => Autoscroll::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> Autoscroll {
+        Autoscroll::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             Autoscroll::None => 0,
@@ -2765,6 +2906,9 @@ impl ActivityClass {
             _ => ActivityClass::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> ActivityClass {
+        ActivityClass::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             ActivityClass::LevelMax => 100,
@@ -2792,6 +2936,9 @@ impl HrZoneCalc {
             _ => HrZoneCalc::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> HrZoneCalc {
+        HrZoneCalc::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             HrZoneCalc::Custom => 0,
@@ -2816,6 +2963,9 @@ impl PwrZoneCalc {
             1 => PwrZoneCalc::PercentFtp,
             _ => PwrZoneCalc::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> PwrZoneCalc {
+        PwrZoneCalc::from_u8(value as u8)
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
@@ -2897,6 +3047,9 @@ impl WktStepDuration {
             _ => WktStepDuration::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> WktStepDuration {
+        WktStepDuration::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             WktStepDuration::Time => 0,
@@ -2973,6 +3126,9 @@ impl WktStepTarget {
             _ => WktStepTarget::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> WktStepTarget {
+        WktStepTarget::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             WktStepTarget::Speed => 0,
@@ -3019,6 +3175,9 @@ impl Goal {
             _ => Goal::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> Goal {
+        Goal::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             Goal::Time => 0,
@@ -3056,6 +3215,9 @@ impl GoalRecurrence {
             _ => GoalRecurrence::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> GoalRecurrence {
+        GoalRecurrence::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             GoalRecurrence::Off => 0,
@@ -3086,6 +3248,9 @@ impl GoalSource {
             _ => GoalSource::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> GoalSource {
+        GoalSource::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             GoalSource::Auto => 0,
@@ -3110,6 +3275,9 @@ impl Schedule {
             1 => Schedule::Course,
             _ => Schedule::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> Schedule {
+        Schedule::from_u8(value as u8)
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
@@ -3182,6 +3350,9 @@ impl CoursePoint {
             25 => CoursePoint::SegmentEnd,
             _ => CoursePoint::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> CoursePoint {
+        CoursePoint::from_u8(value as u8)
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
@@ -3576,6 +3747,9 @@ impl Manufacturer {
             5759 => Manufacturer::Actigraphcorp,
             _ => Manufacturer::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> Manufacturer {
+        Manufacturer::from_u16(value as u16)
     }
     pub fn as_u16(&self) -> u16 {
         match &self {
@@ -4150,6 +4324,9 @@ impl GarminProduct {
             _ => GarminProduct::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> GarminProduct {
+        GarminProduct::from_u16(value as u16)
+    }
     pub fn as_u16(&self) -> u16 {
         match &self {
             GarminProduct::Hrm1 => 1,
@@ -4406,6 +4583,9 @@ impl AntplusDeviceType {
             _ => AntplusDeviceType::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> AntplusDeviceType {
+        AntplusDeviceType::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             AntplusDeviceType::Antfs => 1,
@@ -4455,6 +4635,9 @@ impl AntNetwork {
             3 => AntNetwork::Private,
             _ => AntNetwork::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> AntNetwork {
+        AntNetwork::from_u8(value as u8)
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
@@ -4506,6 +4689,9 @@ impl WorkoutCapabilities {
             _ => WorkoutCapabilities::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> WorkoutCapabilities {
+        WorkoutCapabilities::from_u32(value as u32)
+    }
     pub fn as_u32(&self) -> u32 {
         match &self {
             WorkoutCapabilities::Interval => 1,
@@ -4552,6 +4738,9 @@ impl BatteryStatus {
             _ => BatteryStatus::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> BatteryStatus {
+        BatteryStatus::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             BatteryStatus::New => 1,
@@ -4580,6 +4769,9 @@ impl HrType {
             1 => HrType::Irregular,
             _ => HrType::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> HrType {
+        HrType::from_u8(value as u8)
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
@@ -4623,6 +4815,9 @@ impl CourseCapabilities {
             _ => CourseCapabilities::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> CourseCapabilities {
+        CourseCapabilities::from_u32(value as u32)
+    }
     pub fn as_u32(&self) -> u32 {
         match &self {
             CourseCapabilities::Processed => 1,
@@ -4654,6 +4849,9 @@ impl Weight {
             _ => Weight::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> Weight {
+        Weight::from_u16(value as u16)
+    }
     pub fn as_u16(&self) -> u16 {
         match &self {
             Weight::Calculating => 65534,
@@ -4675,6 +4873,9 @@ impl WorkoutHr {
             _ => WorkoutHr::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> WorkoutHr {
+        WorkoutHr::from_u32(value as u32)
+    }
     pub fn as_u32(&self) -> u32 {
         match &self {
             WorkoutHr::BpmOffset => 100,
@@ -4695,6 +4896,9 @@ impl WorkoutPower {
             1000 => WorkoutPower::WattsOffset,
             _ => WorkoutPower::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> WorkoutPower {
+        WorkoutPower::from_u32(value as u32)
     }
     pub fn as_u32(&self) -> u32 {
         match &self {
@@ -4724,6 +4928,9 @@ impl BpStatus {
             4 => BpStatus::ErrorIrregularHeartRate,
             _ => BpStatus::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> BpStatus {
+        BpStatus::from_u8(value as u8)
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
@@ -4759,6 +4966,9 @@ impl UserLocalId {
             65534 => UserLocalId::PortableMax,
             _ => UserLocalId::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> UserLocalId {
+        UserLocalId::from_u16(value as u16)
     }
     pub fn as_u16(&self) -> u16 {
         match &self {
@@ -4797,6 +5007,9 @@ impl SwimStroke {
             6 => SwimStroke::Im,
             _ => SwimStroke::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> SwimStroke {
+        SwimStroke::from_u8(value as u8)
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
@@ -4840,6 +5053,9 @@ impl ActivityType {
             254 => ActivityType::All,
             _ => ActivityType::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> ActivityType {
+        ActivityType::from_u8(value as u8)
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
@@ -4908,6 +5124,9 @@ impl ActivitySubtype {
             _ => ActivitySubtype::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> ActivitySubtype {
+        ActivitySubtype::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             ActivitySubtype::Generic => 0,
@@ -4952,6 +5171,9 @@ impl ActivityLevel {
             _ => ActivityLevel::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> ActivityLevel {
+        ActivityLevel::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             ActivityLevel::Low => 0,
@@ -4977,6 +5199,9 @@ impl Side {
             _ => Side::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> Side {
+        Side::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             Side::Right => 0,
@@ -5000,6 +5225,9 @@ impl LeftRightBalance {
             128 => LeftRightBalance::Right,
             _ => LeftRightBalance::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> LeftRightBalance {
+        LeftRightBalance::from_u8(value as u8)
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
@@ -5025,6 +5253,9 @@ impl LeftRightBalance100 {
             _ => LeftRightBalance100::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> LeftRightBalance100 {
+        LeftRightBalance100::from_u16(value as u16)
+    }
     pub fn as_u16(&self) -> u16 {
         match &self {
             LeftRightBalance100::Mask => 16383,
@@ -5048,6 +5279,9 @@ impl LengthType {
             1 => LengthType::Active,
             _ => LengthType::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> LengthType {
+        LengthType::from_u8(value as u8)
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
@@ -5082,6 +5316,9 @@ impl DayOfWeek {
             6 => DayOfWeek::Saturday,
             _ => DayOfWeek::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> DayOfWeek {
+        DayOfWeek::from_u8(value as u8)
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
@@ -5172,6 +5409,9 @@ impl ConnectivityCapabilities {
             _ => ConnectivityCapabilities::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> ConnectivityCapabilities {
+        ConnectivityCapabilities::from_u32(value as u32)
+    }
     pub fn as_u32(&self) -> u32 {
         match &self {
             ConnectivityCapabilities::Bluetooth => 1,
@@ -5227,6 +5467,9 @@ impl WeatherReport {
             2 => WeatherReport::DailyForecast,
             _ => WeatherReport::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> WeatherReport {
+        WeatherReport::from_u8(value as u8)
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
@@ -5291,6 +5534,9 @@ impl WeatherStatus {
             _ => WeatherStatus::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> WeatherStatus {
+        WeatherStatus::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             WeatherStatus::Clear => 0,
@@ -5339,6 +5585,9 @@ impl WeatherSeverity {
             4 => WeatherSeverity::Statement,
             _ => WeatherSeverity::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> WeatherSeverity {
+        WeatherSeverity::from_u8(value as u8)
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
@@ -5533,6 +5782,9 @@ impl WeatherSevereType {
             _ => WeatherSevereType::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> WeatherSevereType {
+        WeatherSevereType::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             WeatherSevereType::Unspecified => 0,
@@ -5636,6 +5888,9 @@ impl TimeIntoDay {
             _ => TimeIntoDay::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> TimeIntoDay {
+        TimeIntoDay::from_u32(value as u32)
+    }
     pub fn as_u32(&self) -> u32 {
         match &self {
             TimeIntoDay::UnknownVariant(value) => *value,
@@ -5653,6 +5908,9 @@ impl LocaltimeIntoDay {
         match value {
             _ => LocaltimeIntoDay::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> LocaltimeIntoDay {
+        LocaltimeIntoDay::from_u32(value as u32)
     }
     pub fn as_u32(&self) -> u32 {
         match &self {
@@ -5683,6 +5941,9 @@ impl StrokeType {
             5 => StrokeType::Smash,
             _ => StrokeType::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> StrokeType {
+        StrokeType::from_u8(value as u8)
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
@@ -5788,6 +6049,9 @@ impl BodyLocation {
             _ => BodyLocation::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> BodyLocation {
+        BodyLocation::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             BodyLocation::LeftLeg => 0,
@@ -5850,6 +6114,9 @@ impl SegmentLapStatus {
             _ => SegmentLapStatus::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> SegmentLapStatus {
+        SegmentLapStatus::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             SegmentLapStatus::End => 0,
@@ -5892,6 +6159,9 @@ impl SegmentLeaderboardType {
             _ => SegmentLeaderboardType::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> SegmentLeaderboardType {
+        SegmentLeaderboardType::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             SegmentLeaderboardType::Overall => 0,
@@ -5927,6 +6197,9 @@ impl SegmentDeleteStatus {
             _ => SegmentDeleteStatus::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> SegmentDeleteStatus {
+        SegmentDeleteStatus::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             SegmentDeleteStatus::DoNotDelete => 0,
@@ -5951,6 +6224,9 @@ impl SegmentSelectionType {
             1 => SegmentSelectionType::Suggested,
             _ => SegmentSelectionType::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> SegmentSelectionType {
+        SegmentSelectionType::from_u8(value as u8)
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
@@ -5984,6 +6260,9 @@ impl SourceType {
             _ => SourceType::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> SourceType {
+        SourceType::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             SourceType::Ant => 0,
@@ -6007,6 +6286,9 @@ impl LocalDeviceType {
         match value {
             _ => LocalDeviceType::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> LocalDeviceType {
+        LocalDeviceType::from_u8(value as u8)
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
@@ -6035,6 +6317,9 @@ impl DisplayOrientation {
             4 => DisplayOrientation::LandscapeFlipped,
             _ => DisplayOrientation::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> DisplayOrientation {
+        DisplayOrientation::from_u8(value as u8)
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
@@ -6071,6 +6356,9 @@ impl WorkoutEquipment {
             _ => WorkoutEquipment::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> WorkoutEquipment {
+        WorkoutEquipment::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             WorkoutEquipment::None => 0,
@@ -6103,6 +6391,9 @@ impl WatchfaceMode {
             _ => WatchfaceMode::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> WatchfaceMode {
+        WatchfaceMode::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             WatchfaceMode::Digital => 0,
@@ -6131,6 +6422,9 @@ impl DigitalWatchfaceLayout {
             _ => DigitalWatchfaceLayout::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> DigitalWatchfaceLayout {
+        DigitalWatchfaceLayout::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             DigitalWatchfaceLayout::Traditional => 0,
@@ -6157,6 +6451,9 @@ impl AnalogWatchfaceLayout {
             2 => AnalogWatchfaceLayout::Modern,
             _ => AnalogWatchfaceLayout::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> AnalogWatchfaceLayout {
+        AnalogWatchfaceLayout::from_u8(value as u8)
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
@@ -6187,6 +6484,9 @@ impl RiderPositionType {
             _ => RiderPositionType::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> RiderPositionType {
+        RiderPositionType::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             RiderPositionType::Seated => 0,
@@ -6216,6 +6516,9 @@ impl PowerPhaseType {
             3 => PowerPhaseType::PowerPhaseCenter,
             _ => PowerPhaseType::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> PowerPhaseType {
+        PowerPhaseType::from_u8(value as u8)
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
@@ -6265,6 +6568,9 @@ impl CameraEventType {
             _ => CameraEventType::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> CameraEventType {
+        CameraEventType::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             CameraEventType::VideoStart => 0,
@@ -6304,6 +6610,9 @@ impl SensorType {
             _ => SensorType::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> SensorType {
+        SensorType::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             SensorType::Accelerometer => 0,
@@ -6333,6 +6642,9 @@ impl BikeLightNetworkConfigType {
             6 => BikeLightNetworkConfigType::Trail,
             _ => BikeLightNetworkConfigType::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> BikeLightNetworkConfigType {
+        BikeLightNetworkConfigType::from_u8(value as u8)
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
@@ -6364,6 +6676,9 @@ impl CommTimeoutType {
             _ => CommTimeoutType::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> CommTimeoutType {
+        CommTimeoutType::from_u16(value as u16)
+    }
     pub fn as_u16(&self) -> u16 {
         match &self {
             CommTimeoutType::WildcardPairingTimeout => 0,
@@ -6394,6 +6709,9 @@ impl CameraOrientationType {
             _ => CameraOrientationType::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> CameraOrientationType {
+        CameraOrientationType::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             CameraOrientationType::CameraOrientation0 => 0,
@@ -6423,6 +6741,9 @@ impl AttitudeStage {
             3 => AttitudeStage::Valid,
             _ => AttitudeStage::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> AttitudeStage {
+        AttitudeStage::from_u8(value as u8)
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
@@ -6472,6 +6793,9 @@ impl AttitudeValidity {
             _ => AttitudeValidity::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> AttitudeValidity {
+        AttitudeValidity::from_u16(value as u16)
+    }
     pub fn as_u16(&self) -> u16 {
         match &self {
             AttitudeValidity::TrackAngleHeadingValid => 1,
@@ -6513,6 +6837,9 @@ impl AutoSyncFrequency {
             _ => AutoSyncFrequency::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> AutoSyncFrequency {
+        AutoSyncFrequency::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             AutoSyncFrequency::Never => 0,
@@ -6551,6 +6878,9 @@ impl ExdLayout {
             7 => ExdLayout::HalfHorizontalTopSplit,
             _ => ExdLayout::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> ExdLayout {
+        ExdLayout::from_u8(value as u8)
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
@@ -6599,6 +6929,9 @@ impl ExdDisplayType {
             10 => ExdDisplayType::Gauge,
             _ => ExdDisplayType::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> ExdDisplayType {
+        ExdDisplayType::from_u8(value as u8)
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
@@ -6728,6 +7061,9 @@ impl ExdDataUnits {
             49 => ExdDataUnits::EightCardinal,
             _ => ExdDataUnits::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> ExdDataUnits {
+        ExdDataUnits::from_u8(value as u8)
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
@@ -6884,6 +7220,9 @@ impl ExdQualifiers {
             250 => ExdQualifiers::Zone1,
             _ => ExdQualifiers::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> ExdQualifiers {
+        ExdQualifiers::from_u8(value as u8)
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
@@ -7141,6 +7480,9 @@ impl ExdDescriptors {
             _ => ExdDescriptors::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> ExdDescriptors {
+        ExdDescriptors::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             ExdDescriptors::BikeLightBatteryStatus => 0,
@@ -7270,6 +7612,9 @@ impl AutoActivityDetect {
             _ => AutoActivityDetect::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> AutoActivityDetect {
+        AutoActivityDetect::from_u32(value as u32)
+    }
     pub fn as_u32(&self) -> u32 {
         match &self {
             AutoActivityDetect::None => 0,
@@ -7310,6 +7655,9 @@ impl SupportedExdScreenLayouts {
             128 => SupportedExdScreenLayouts::HalfHorizontalTopSplit,
             _ => SupportedExdScreenLayouts::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> SupportedExdScreenLayouts {
+        SupportedExdScreenLayouts::from_u32(value as u32)
     }
     pub fn as_u32(&self) -> u32 {
         match &self {
@@ -7370,6 +7718,9 @@ impl FitBaseType {
             144 => FitBaseType::Uint64z,
             _ => FitBaseType::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> FitBaseType {
+        FitBaseType::from_u8(value as u8)
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
@@ -7482,6 +7833,9 @@ impl TurnType {
             _ => TurnType::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> TurnType {
+        TurnType::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             TurnType::ArrivingIdx => 0,
@@ -7542,6 +7896,9 @@ impl BikeLightBeamAngleMode {
             _ => BikeLightBeamAngleMode::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> BikeLightBeamAngleMode {
+        BikeLightBeamAngleMode::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             BikeLightBeamAngleMode::Manual => 0,
@@ -7568,6 +7925,9 @@ impl FitBaseUnit {
             _ => FitBaseUnit::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> FitBaseUnit {
+        FitBaseUnit::from_u16(value as u16)
+    }
     pub fn as_u16(&self) -> u16 {
         match &self {
             FitBaseUnit::Other => 0,
@@ -7592,6 +7952,9 @@ impl SetType {
             1 => SetType::Active,
             _ => SetType::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> SetType {
+        SetType::from_u8(value as u8)
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
@@ -7680,6 +8043,9 @@ impl ExerciseCategory {
             65534 => ExerciseCategory::Unknown,
             _ => ExerciseCategory::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> ExerciseCategory {
+        ExerciseCategory::from_u16(value as u16)
     }
     pub fn as_u16(&self) -> u16 {
         match &self {
@@ -7787,6 +8153,9 @@ impl BenchPressExerciseName {
             _ => BenchPressExerciseName::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> BenchPressExerciseName {
+        BenchPressExerciseName::from_u16(value as u16)
+    }
     pub fn as_u16(&self) -> u16 {
         match &self {
             BenchPressExerciseName::AlternatingDumbbellChestPressOnSwissBall => 0,
@@ -7874,6 +8243,9 @@ impl CalfRaiseExerciseName {
             _ => CalfRaiseExerciseName::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> CalfRaiseExerciseName {
+        CalfRaiseExerciseName::from_u16(value as u16)
+    }
     pub fn as_u16(&self) -> u16 {
         match &self {
             CalfRaiseExerciseName::Name3WayCalfRaise => 0,
@@ -7957,6 +8329,9 @@ impl CardioExerciseName {
             _ => CardioExerciseName::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> CardioExerciseName {
+        CardioExerciseName::from_u16(value as u16)
+    }
     pub fn as_u16(&self) -> u16 {
         match &self {
             CardioExerciseName::BobAndWeaveCircle => 0,
@@ -8006,6 +8381,9 @@ impl CarryExerciseName {
             4 => CarryExerciseName::OverheadCarry,
             _ => CarryExerciseName::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> CarryExerciseName {
+        CarryExerciseName::from_u16(value as u16)
     }
     pub fn as_u16(&self) -> u16 {
         match &self {
@@ -8075,6 +8453,9 @@ impl ChopExerciseName {
             22 => ChopExerciseName::StandingStabilityReverseChop,
             _ => ChopExerciseName::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> ChopExerciseName {
+        ChopExerciseName::from_u16(value as u16)
     }
     pub fn as_u16(&self) -> u16 {
         match &self {
@@ -8262,6 +8643,9 @@ impl CoreExerciseName {
             72 => CoreExerciseName::TheHundred,
             _ => CoreExerciseName::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> CoreExerciseName {
+        CoreExerciseName::from_u16(value as u16)
     }
     pub fn as_u16(&self) -> u16 {
         match &self {
@@ -8524,6 +8908,9 @@ impl CrunchExerciseName {
             _ => CrunchExerciseName::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> CrunchExerciseName {
+        CrunchExerciseName::from_u16(value as u16)
+    }
     pub fn as_u16(&self) -> u16 {
         match &self {
             CrunchExerciseName::BicycleCrunch => 0,
@@ -8715,6 +9102,9 @@ impl CurlExerciseName {
             _ => CurlExerciseName::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> CurlExerciseName {
+        CurlExerciseName::from_u16(value as u16)
+    }
     pub fn as_u16(&self) -> u16 {
         match &self {
             CurlExerciseName::AlternatingDumbbellBicepsCurl => 0,
@@ -8815,6 +9205,9 @@ impl DeadliftExerciseName {
             _ => DeadliftExerciseName::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> DeadliftExerciseName {
+        DeadliftExerciseName::from_u16(value as u16)
+    }
     pub fn as_u16(&self) -> u16 {
         match &self {
             DeadliftExerciseName::BarbellDeadlift => 0,
@@ -8871,6 +9264,9 @@ impl FlyeExerciseName {
             9 => FlyeExerciseName::HugATree,
             _ => FlyeExerciseName::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> FlyeExerciseName {
+        FlyeExerciseName::from_u16(value as u16)
     }
     pub fn as_u16(&self) -> u16 {
         match &self {
@@ -8999,6 +9395,9 @@ impl HipRaiseExerciseName {
             49 => HipRaiseExerciseName::LegLiftInExternalRotation,
             _ => HipRaiseExerciseName::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> HipRaiseExerciseName {
+        HipRaiseExerciseName::from_u16(value as u16)
     }
     pub fn as_u16(&self) -> u16 {
         match &self {
@@ -9136,6 +9535,9 @@ impl HipStabilityExerciseName {
             _ => HipStabilityExerciseName::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> HipStabilityExerciseName {
+        HipStabilityExerciseName::from_u16(value as u16)
+    }
     pub fn as_u16(&self) -> u16 {
         match &self {
             HipStabilityExerciseName::BandSideLyingLegRaise => 0,
@@ -9193,6 +9595,9 @@ impl HipSwingExerciseName {
             2 => HipSwingExerciseName::StepOutSwing,
             _ => HipSwingExerciseName::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> HipSwingExerciseName {
+        HipSwingExerciseName::from_u16(value as u16)
     }
     pub fn as_u16(&self) -> u16 {
         match &self {
@@ -9294,6 +9699,9 @@ impl HyperextensionExerciseName {
             39 => HyperextensionExerciseName::SupineFloorBarre,
             _ => HyperextensionExerciseName::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> HyperextensionExerciseName {
+        HyperextensionExerciseName::from_u16(value as u16)
     }
     pub fn as_u16(&self) -> u16 {
         match &self {
@@ -9421,6 +9829,9 @@ impl LateralRaiseExerciseName {
             _ => LateralRaiseExerciseName::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> LateralRaiseExerciseName {
+        LateralRaiseExerciseName::from_u16(value as u16)
+    }
     pub fn as_u16(&self) -> u16 {
         match &self {
             LateralRaiseExerciseName::Name45DegreeCableExternalRotation => 0,
@@ -9497,6 +9908,9 @@ impl LegCurlExerciseName {
             _ => LegCurlExerciseName::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> LegCurlExerciseName {
+        LegCurlExerciseName::from_u16(value as u16)
+    }
     pub fn as_u16(&self) -> u16 {
         match &self {
             LegCurlExerciseName::LegCurl => 0,
@@ -9570,6 +9984,9 @@ impl LegRaiseExerciseName {
             21 => LegRaiseExerciseName::WeightedLateralStepover,
             _ => LegRaiseExerciseName::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> LegRaiseExerciseName {
+        LegRaiseExerciseName::from_u16(value as u16)
     }
     pub fn as_u16(&self) -> u16 {
         match &self {
@@ -9773,6 +10190,9 @@ impl LungeExerciseName {
             _ => LungeExerciseName::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> LungeExerciseName {
+        LungeExerciseName::from_u16(value as u16)
+    }
     pub fn as_u16(&self) -> u16 {
         match &self {
             LungeExerciseName::OverheadLunge => 0,
@@ -9913,6 +10333,9 @@ impl OlympicLiftExerciseName {
             20 => OlympicLiftExerciseName::SquatCleanAndJerk,
             _ => OlympicLiftExerciseName::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> OlympicLiftExerciseName {
+        OlympicLiftExerciseName::from_u16(value as u16)
     }
     pub fn as_u16(&self) -> u16 {
         match &self {
@@ -10223,6 +10646,9 @@ impl PlankExerciseName {
             _ => PlankExerciseName::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> PlankExerciseName {
+        PlankExerciseName::from_u16(value as u16)
+    }
     pub fn as_u16(&self) -> u16 {
         match &self {
             PlankExerciseName::Name45DegreePlank => 0,
@@ -10442,6 +10868,9 @@ impl PlyoExerciseName {
             _ => PlyoExerciseName::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> PlyoExerciseName {
+        PlyoExerciseName::from_u16(value as u16)
+    }
     pub fn as_u16(&self) -> u16 {
         match &self {
             PlyoExerciseName::AlternatingJumpLunge => 0,
@@ -10570,6 +10999,9 @@ impl PullUpExerciseName {
             38 => PullUpExerciseName::PullUp,
             _ => PullUpExerciseName::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> PullUpExerciseName {
+        PullUpExerciseName::from_u16(value as u16)
     }
     pub fn as_u16(&self) -> u16 {
         match &self {
@@ -10786,6 +11218,9 @@ impl PushUpExerciseName {
             _ => PushUpExerciseName::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> PushUpExerciseName {
+        PushUpExerciseName::from_u16(value as u16)
+    }
     pub fn as_u16(&self) -> u16 {
         match &self {
             PushUpExerciseName::ChestPressWithBand => 0,
@@ -10951,6 +11386,9 @@ impl RowExerciseName {
             _ => RowExerciseName::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> RowExerciseName {
+        RowExerciseName::from_u16(value as u16)
+    }
     pub fn as_u16(&self) -> u16 {
         match &self {
             RowExerciseName::BarbellStraightLegDeadliftToRow => 0,
@@ -11050,6 +11488,9 @@ impl ShoulderPressExerciseName {
             23 => ShoulderPressExerciseName::WeightPlateFrontRaise,
             _ => ShoulderPressExerciseName::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> ShoulderPressExerciseName {
+        ShoulderPressExerciseName::from_u16(value as u16)
     }
     pub fn as_u16(&self) -> u16 {
         match &self {
@@ -11159,6 +11600,9 @@ impl ShoulderStabilityExerciseName {
             _ => ShoulderStabilityExerciseName::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> ShoulderStabilityExerciseName {
+        ShoulderStabilityExerciseName::from_u16(value as u16)
+    }
     pub fn as_u16(&self) -> u16 {
         match &self {
             ShoulderStabilityExerciseName::Name90DegreeCableExternalRotation => 0,
@@ -11243,6 +11687,9 @@ impl ShrugExerciseName {
             16 => ShrugExerciseName::WideGripJumpShrug,
             _ => ShrugExerciseName::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> ShrugExerciseName {
+        ShrugExerciseName::from_u16(value as u16)
     }
     pub fn as_u16(&self) -> u16 {
         match &self {
@@ -11354,6 +11801,9 @@ impl SitUpExerciseName {
             37 => SitUpExerciseName::SitUp,
             _ => SitUpExerciseName::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> SitUpExerciseName {
+        SitUpExerciseName::from_u16(value as u16)
     }
     pub fn as_u16(&self) -> u16 {
         match &self {
@@ -11595,6 +12045,9 @@ impl SquatExerciseName {
             _ => SquatExerciseName::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> SquatExerciseName {
+        SquatExerciseName::from_u16(value as u16)
+    }
     pub fn as_u16(&self) -> u16 {
         match &self {
             SquatExerciseName::LegPress => 0,
@@ -11731,6 +12184,9 @@ impl TotalBodyExerciseName {
             _ => TotalBodyExerciseName::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> TotalBodyExerciseName {
+        TotalBodyExerciseName::from_u16(value as u16)
+    }
     pub fn as_u16(&self) -> u16 {
         match &self {
             TotalBodyExerciseName::Burpee => 0,
@@ -11843,6 +12299,9 @@ impl TricepsExtensionExerciseName {
             40 => TricepsExtensionExerciseName::WeightedDip,
             _ => TricepsExtensionExerciseName::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> TricepsExtensionExerciseName {
+        TricepsExtensionExerciseName::from_u16(value as u16)
     }
     pub fn as_u16(&self) -> u16 {
         match &self {
@@ -11965,6 +12424,9 @@ impl WarmUpExerciseName {
             _ => WarmUpExerciseName::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> WarmUpExerciseName {
+        WarmUpExerciseName::from_u16(value as u16)
+    }
     pub fn as_u16(&self) -> u16 {
         match &self {
             WarmUpExerciseName::QuadrupedRocking => 0,
@@ -12022,6 +12484,9 @@ impl RunExerciseName {
             _ => RunExerciseName::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> RunExerciseName {
+        RunExerciseName::from_u16(value as u16)
+    }
     pub fn as_u16(&self) -> u16 {
         match &self {
             RunExerciseName::Run => 0,
@@ -12052,6 +12517,9 @@ impl WaterType {
             _ => WaterType::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> WaterType {
+        WaterType::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             WaterType::Fresh => 0,
@@ -12075,6 +12543,9 @@ impl TissueModelType {
             0 => TissueModelType::Zhl16c,
             _ => TissueModelType::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> TissueModelType {
+        TissueModelType::from_u8(value as u8)
     }
     pub fn as_u8(&self) -> u8 {
         match &self {
@@ -12101,6 +12572,9 @@ impl DiveGasStatus {
             _ => DiveGasStatus::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> DiveGasStatus {
+        DiveGasStatus::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             DiveGasStatus::Disabled => 0,
@@ -12126,6 +12600,9 @@ impl DiveAlarmType {
             _ => DiveAlarmType::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> DiveAlarmType {
+        DiveAlarmType::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             DiveAlarmType::Depth => 0,
@@ -12150,6 +12627,9 @@ impl DiveBacklightMode {
             _ => DiveBacklightMode::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> DiveBacklightMode {
+        DiveBacklightMode::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             DiveBacklightMode::AtDepth => 0,
@@ -12173,6 +12653,9 @@ impl FaveroProduct {
             12 => FaveroProduct::AssiomaDuo,
             _ => FaveroProduct::UnknownVariant(value),
         }
+    }
+    pub fn from_i64(value: i64) -> FaveroProduct {
+        FaveroProduct::from_u16(value as u16)
     }
     pub fn as_u16(&self) -> u16 {
         match &self {
@@ -12200,6 +12683,9 @@ impl ClimbProEvent {
             _ => ClimbProEvent::UnknownVariant(value),
         }
     }
+    pub fn from_i64(value: i64) -> ClimbProEvent {
+        ClimbProEvent::from_u8(value as u8)
+    }
     pub fn as_u8(&self) -> u8 {
         match &self {
             ClimbProEvent::Approach => 0,
@@ -12208,4 +12694,190 @@ impl ClimbProEvent {
             ClimbProEvent::UnknownVariant(value) => *value,
         }
     }
+}
+
+/// Describe all possible data types within of a field
+///
+/// The Enum type's value is actually an enum of enums.
+#[derive(Clone, Copy, Debug)]
+pub enum FieldDataType {
+    Bool,
+    SInt8,
+    UInt8,
+    SInt16,
+    UInt16,
+    SInt32,
+    UInt32,
+    String,
+    Float32,
+    Float64,
+    UInt8z,
+    UInt16z,
+    UInt32z,
+    Byte,
+    SInt64,
+    UInt64,
+    UInt64z,
+    File,
+    MesgNum,
+    Checksum,
+    FileFlags,
+    MesgCount,
+    DateTime,
+    LocalDateTime,
+    MessageIndex,
+    DeviceIndex,
+    Gender,
+    Language,
+    LanguageBits0,
+    LanguageBits1,
+    LanguageBits2,
+    LanguageBits3,
+    LanguageBits4,
+    TimeZone,
+    DisplayMeasure,
+    DisplayHeart,
+    DisplayPower,
+    DisplayPosition,
+    Switch,
+    Sport,
+    SportBits0,
+    SportBits1,
+    SportBits2,
+    SportBits3,
+    SportBits4,
+    SportBits5,
+    SportBits6,
+    SubSport,
+    SportEvent,
+    Activity,
+    Intensity,
+    SessionTrigger,
+    AutolapTrigger,
+    LapTrigger,
+    TimeMode,
+    BacklightMode,
+    DateMode,
+    BacklightTimeout,
+    Event,
+    EventType,
+    TimerTrigger,
+    FitnessEquipmentState,
+    Tone,
+    Autoscroll,
+    ActivityClass,
+    HrZoneCalc,
+    PwrZoneCalc,
+    WktStepDuration,
+    WktStepTarget,
+    Goal,
+    GoalRecurrence,
+    GoalSource,
+    Schedule,
+    CoursePoint,
+    Manufacturer,
+    GarminProduct,
+    AntplusDeviceType,
+    AntNetwork,
+    WorkoutCapabilities,
+    BatteryStatus,
+    HrType,
+    CourseCapabilities,
+    Weight,
+    WorkoutHr,
+    WorkoutPower,
+    BpStatus,
+    UserLocalId,
+    SwimStroke,
+    ActivityType,
+    ActivitySubtype,
+    ActivityLevel,
+    Side,
+    LeftRightBalance,
+    LeftRightBalance100,
+    LengthType,
+    DayOfWeek,
+    ConnectivityCapabilities,
+    WeatherReport,
+    WeatherStatus,
+    WeatherSeverity,
+    WeatherSevereType,
+    TimeIntoDay,
+    LocaltimeIntoDay,
+    StrokeType,
+    BodyLocation,
+    SegmentLapStatus,
+    SegmentLeaderboardType,
+    SegmentDeleteStatus,
+    SegmentSelectionType,
+    SourceType,
+    LocalDeviceType,
+    DisplayOrientation,
+    WorkoutEquipment,
+    WatchfaceMode,
+    DigitalWatchfaceLayout,
+    AnalogWatchfaceLayout,
+    RiderPositionType,
+    PowerPhaseType,
+    CameraEventType,
+    SensorType,
+    BikeLightNetworkConfigType,
+    CommTimeoutType,
+    CameraOrientationType,
+    AttitudeStage,
+    AttitudeValidity,
+    AutoSyncFrequency,
+    ExdLayout,
+    ExdDisplayType,
+    ExdDataUnits,
+    ExdQualifiers,
+    ExdDescriptors,
+    AutoActivityDetect,
+    SupportedExdScreenLayouts,
+    FitBaseType,
+    TurnType,
+    BikeLightBeamAngleMode,
+    FitBaseUnit,
+    SetType,
+    ExerciseCategory,
+    BenchPressExerciseName,
+    CalfRaiseExerciseName,
+    CardioExerciseName,
+    CarryExerciseName,
+    ChopExerciseName,
+    CoreExerciseName,
+    CrunchExerciseName,
+    CurlExerciseName,
+    DeadliftExerciseName,
+    FlyeExerciseName,
+    HipRaiseExerciseName,
+    HipStabilityExerciseName,
+    HipSwingExerciseName,
+    HyperextensionExerciseName,
+    LateralRaiseExerciseName,
+    LegCurlExerciseName,
+    LegRaiseExerciseName,
+    LungeExerciseName,
+    OlympicLiftExerciseName,
+    PlankExerciseName,
+    PlyoExerciseName,
+    PullUpExerciseName,
+    PushUpExerciseName,
+    RowExerciseName,
+    ShoulderPressExerciseName,
+    ShoulderStabilityExerciseName,
+    ShrugExerciseName,
+    SitUpExerciseName,
+    SquatExerciseName,
+    TotalBodyExerciseName,
+    TricepsExtensionExerciseName,
+    WarmUpExerciseName,
+    RunExerciseName,
+    WaterType,
+    TissueModelType,
+    DiveGasStatus,
+    DiveAlarmType,
+    DiveBacklightMode,
+    FaveroProduct,
+    ClimbProEvent,
 }

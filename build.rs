@@ -44,6 +44,29 @@ fn base_type_to_rust_type(base_type_str: &str) -> &'static str {
     }
 }
 
+/// match the field type string to a simple type or an enum
+fn field_type_str_to_field_type(field_type_str: &str) -> String {
+    match field_type_str {
+        "sint8" => "FieldDataType::SInt8".to_string(),
+        "uint8" => "FieldDataType::UInt8".to_string(),
+        "sint16" => "FieldDataType::SInt16".to_string(),
+        "uint16" => "FieldDataType::UInt16".to_string(),
+        "sint32" => "FieldDataType::SInt32".to_string(),
+        "uint32" => "FieldDataType::UInt32".to_string(),
+        "string" => "FieldDataType::String".to_string(),
+        "float32" => "FieldDataType::Float32".to_string(),
+        "float64" => "FieldDataType::Float64".to_string(),
+        "uint8z" => "FieldDataType::UInt8z".to_string(),
+        "uint16z" => "FieldDataType::UInt16z".to_string(),
+        "uint32z" => "FieldDataType::UInt32z".to_string(),
+        "byte" => "FieldDataType::Byte".to_string(),
+        "sint64" => "FieldDataType::SInt64".to_string(),
+        "uint64" => "FieldDataType::UInt64".to_string(),
+        "uint64z" => "FieldDataType::UInt64z".to_string(),
+        _ => format!("FieldDataType::{}", titlecase_string(field_type_str)),
+    }
+}
+
 /// Output an enum variant to the field types output file
 fn write_variant_line(
     out: &mut File,
@@ -88,6 +111,10 @@ fn generate_enum_impl(
     write!(out, "        }}\n")?;
     write!(out, "    }}\n")?;
 
+    write!(out, "    pub fn from_i64(value: i64) -> {} {{\n", enum_name)?;
+    write!(out, "        {0}::from_{1}(value as {1})\n", enum_name, rust_type)?;
+    write!(out, "    }}\n")?;
+
     write!(out, "    pub fn as_{0}(&self) -> {0} {{\n", rust_type)?;
     write!(out, "        match &self {{\n")?;
     for (enum_val, var_name) in variant_map.iter() {
@@ -110,25 +137,65 @@ fn generate_enum_impl(
     Ok(())
 }
 
+fn end_field_type_enum(enum_name: &str, rust_type: &str, variant_map: &BTreeMap<i64, String>, out: &mut File) -> Result<(), std::io::Error> {
+    write!(out, "    UnknownVariant({}),\n", rust_type)?;
+    write!(out, "}}\n\n")?;
+    generate_enum_impl(&enum_name, &rust_type, &variant_map, out)?;
+
+    Ok(())
+}
+
+fn generate_main_field_type_enum(field_enums: &[String], out: &mut File)  -> Result<(), std::io::Error> {
+    write!(out, "
+/// Describe all possible data types within of a field
+///
+/// The Enum type's value is actually an enum of enums.
+#[derive(Clone, Copy, Debug)]
+pub enum FieldDataType {{
+    Bool,
+    SInt8,
+    UInt8,
+    SInt16,
+    UInt16,
+    SInt32,
+    UInt32,
+    String,
+    Float32,
+    Float64,
+    UInt8z,
+    UInt16z,
+    UInt32z,
+    Byte,
+    SInt64,
+    UInt64,
+    UInt64z,\n")?;
+    for enum_name in field_enums {
+        write!(out, "    {0},\n", enum_name)?;
+    }
+    write!(out, "}}\n\n")?;
+
+    Ok(())
+}
+
 fn process_types(sheet: Range<DataType>, out: &mut File) -> Result<(), std::io::Error> {
     let mut rust_type = "";
     let mut enum_name = String::new();
     let mut add_close_brace = false;
     let mut variant_map = BTreeMap::new();
+    let mut field_enums = Vec::new();
 
     for row in sheet.rows().skip(1) {
         // begin new enum
         if !row[0].is_empty() {
             if add_close_brace {
-                write!(out, "    UnknownVariant({}),\n", rust_type)?;
-                write!(out, "}}\n\n")?;
-                generate_enum_impl(&enum_name, &rust_type, &variant_map, out)?;
+                end_field_type_enum(&enum_name, &rust_type, &variant_map, out)?;
                 variant_map.clear();
             }
 
             // extract enum name
             if let Some(v) = row[0].get_string() {
                 enum_name = titlecase_string(v);
+                field_enums.push(enum_name.clone());
             } else {
                 panic!(format!("Enum type name must be a string row={:?}.", row));
             }
@@ -181,9 +248,9 @@ fn process_types(sheet: Range<DataType>, out: &mut File) -> Result<(), std::io::
         }
     }
     // ouput info for final enum
-    write!(out, "    UnknownVariant({}),\n", rust_type)?;
-    write!(out, "}}\n\n")?;
-    generate_enum_impl(&enum_name, &rust_type, &variant_map, out)?;
+    end_field_type_enum(&enum_name, &rust_type, &variant_map, out)?;
+
+    generate_main_field_type_enum(&field_enums, out)?;
 
     Ok(())
 }
@@ -211,12 +278,17 @@ fn create_field_info_struct(row: &[DataType], out: &mut File) -> Result<(), std:
             row
         )),
     };
+    let field_type = match row[3].get_string() {
+        Some(v) => field_type_str_to_field_type(v),
+        None => panic!(format!("Field type must be a string, row={:?}.", row))
+    };
+
 
     write!(
         out,
         "    let field = FieldInfo {{
         name: \"{}\",
-        field_type: \"{}\",
+        field_type: {},
         def_number: {},
         scale: {:.6},
         offset: {:.6},
@@ -225,9 +297,7 @@ fn create_field_info_struct(row: &[DataType], out: &mut File) -> Result<(), std:
         row[2]
             .get_string()
             .expect(&format!("Field name must be a string, row={:?}.", row)),
-        row[3]
-            .get_string()
-            .expect(&format!("Field type must be a string, row={:?}.", row)),
+        field_type,
         def_num,
         row[6].get_float().unwrap_or(1.0),
         row[7].get_float().unwrap_or(0.0),
@@ -320,8 +390,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         "/// Auto generated profile from FIT SDK Release: XXX\n"
     )?;
     write!(file, "use std::collections::HashMap;\n")?;
-    write!(file, "use super::{{MessageInfo, FieldInfo}};\n")?;
-    write!(file, "use super::field_types::MesgNum;\n\n")?;
+    write!(file, "use super::{{MessageInfo, FieldDataType, FieldInfo}};\n")?;
+    write!(file, "use super::field_types::*;\n\n")?;
     if let Some(Ok(sheet)) = excel.worksheet_range("Messages") {
         process_messages(sheet, &mut file)?;
     } else {
