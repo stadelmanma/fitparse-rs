@@ -112,7 +112,11 @@ fn generate_enum_impl(
     write!(out, "    }}\n")?;
 
     write!(out, "    pub fn from_i64(value: i64) -> {} {{\n", enum_name)?;
-    write!(out, "        {0}::from_{1}(value as {1})\n", enum_name, rust_type)?;
+    write!(
+        out,
+        "        {0}::from_{1}(value as {1})\n",
+        enum_name, rust_type
+    )?;
     write!(out, "    }}\n")?;
 
     write!(out, "    pub fn as_{0}(&self) -> {0} {{\n", rust_type)?;
@@ -132,12 +136,34 @@ fn generate_enum_impl(
     write!(out, "        }}\n")?;
     write!(out, "    }}\n")?;
 
+    write!(out, "    pub fn to_string(&self) -> String {{\n")?;
+    write!(out, "        match &self {{\n")?;
+    for var_name in variant_map.values() {
+        write!(
+            out,
+            "            {0}::{1} => \"{1}\".to_string(),\n",
+            enum_name, var_name
+        )?;
+    }
+    write!(
+        out,
+        "            {}::UnknownVariant(value) => format!(\"UnknownVariant{{}}\", *value)\n",
+        enum_name
+    )?;
+    write!(out, "        }}\n")?;
+    write!(out, "    }}\n")?;
+
     write!(out, "}}\n\n")?;
 
     Ok(())
 }
 
-fn end_field_type_enum(enum_name: &str, rust_type: &str, variant_map: &BTreeMap<i64, String>, out: &mut File) -> Result<(), std::io::Error> {
+fn end_field_type_enum(
+    enum_name: &str,
+    rust_type: &str,
+    variant_map: &BTreeMap<i64, String>,
+    out: &mut File,
+) -> Result<(), std::io::Error> {
     write!(out, "    UnknownVariant({}),\n", rust_type)?;
     write!(out, "}}\n\n")?;
     generate_enum_impl(&enum_name, &rust_type, &variant_map, out)?;
@@ -145,9 +171,14 @@ fn end_field_type_enum(enum_name: &str, rust_type: &str, variant_map: &BTreeMap<
     Ok(())
 }
 
-fn generate_main_field_type_enum(field_enums: &[String], out: &mut File)  -> Result<(), std::io::Error> {
-    write!(out, "
-/// Describe all possible data types within of a field
+fn generate_main_field_type_enum(
+    field_enums: &[String],
+    out: &mut File,
+) -> Result<(), std::io::Error> {
+    write!(
+        out,
+        "
+/// Describe all possible data types of a field
 ///
 /// The Enum type's value is actually an enum of enums.
 #[derive(Clone, Copy, Debug)]
@@ -168,11 +199,39 @@ pub enum FieldDataType {{
     Byte,
     SInt64,
     UInt64,
-    UInt64z,\n")?;
+    UInt64z,\n"
+    )?;
     for enum_name in field_enums {
         write!(out, "    {0},\n", enum_name)?;
     }
     write!(out, "}}\n\n")?;
+
+    write!(out, "impl FieldDataType {{\n")?;
+    write!(out, "    pub fn is_enum_type(&self) -> bool {{\n")?;
+    write!(out, "        match self {{\n")?;
+    for enum_name in field_enums {
+        write!(out, "            FieldDataType::{0} => true,\n", enum_name)?;
+    }
+    write!(out, "            _ => false,\n")?;
+    write!(out, "        }}\n")?;
+    write!(out, "    }}\n")?;
+    write!(out, "}}\n")?;
+
+    write!(
+        out,
+        "pub fn get_field_variant_as_string(field_type: FieldDataType , value: i64) -> String {{\n"
+    )?;
+    write!(out, "    match field_type {{\n")?;
+    for enum_name in field_enums {
+        write!(
+            out,
+            "        FieldDataType::{0} => {0}::from_i64(value).to_string(),\n",
+            enum_name
+        )?;
+    }
+    write!(out, "        _ => format!(\"Undefined{{}}\", value),\n")?;
+    write!(out, "    }}\n")?;
+    write!(out, "}}\n")?;
 
     Ok(())
 }
@@ -280,9 +339,8 @@ fn create_field_info_struct(row: &[DataType], out: &mut File) -> Result<(), std:
     };
     let field_type = match row[3].get_string() {
         Some(v) => field_type_str_to_field_type(v),
-        None => panic!(format!("Field type must be a string, row={:?}.", row))
+        None => panic!(format!("Field type must be a string, row={:?}.", row)),
     };
-
 
     write!(
         out,
@@ -390,7 +448,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         "/// Auto generated profile from FIT SDK Release: XXX\n"
     )?;
     write!(file, "use std::collections::HashMap;\n")?;
-    write!(file, "use super::{{MessageInfo, FieldDataType, FieldInfo}};\n")?;
+    write!(
+        file,
+        "use super::{{MessageInfo, FieldDataType, FieldInfo}};\n"
+    )?;
     write!(file, "use super::field_types::*;\n\n")?;
     if let Some(Ok(sheet)) = excel.worksheet_range("Messages") {
         process_messages(sheet, &mut file)?;

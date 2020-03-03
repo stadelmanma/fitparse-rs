@@ -105,4 +105,45 @@ impl DataFieldValue {
             DataFieldValue::UInt64z(val) => *val != 0x0,
         }
     }
+
+    pub fn as_f64(&self) -> Option<f64> {
+        match self {
+            DataFieldValue::SInt8(val) => Some(*val as f64),
+            DataFieldValue::UInt8(val) => Some(*val as f64),
+            DataFieldValue::SInt16(val) => Some(*val as f64),
+            DataFieldValue::UInt16(val) => Some(*val as f64),
+            DataFieldValue::SInt32(val) => Some(*val as f64),
+            DataFieldValue::UInt32(val) => Some(*val as f64),
+            DataFieldValue::Float32(val) => Some(*val as f64),
+            DataFieldValue::Float64(val) => Some(*val as f64),
+            DataFieldValue::UInt8z(val) => Some(*val as f64),
+            DataFieldValue::UInt16z(val) => Some(*val as f64),
+            DataFieldValue::UInt32z(val) => Some(*val as f64),
+            DataFieldValue::SInt64(val) => Some(*val as f64),
+            DataFieldValue::UInt64(val) => Some(*val as f64),
+            DataFieldValue::UInt64z(val) => Some(*val as f64),
+            _ => None,
+        }
+    }
+
+    pub fn as_i64(&self) -> Option<i64> {
+        match self {
+            DataFieldValue::Enum(val) => Some(*val as i64),
+            DataFieldValue::SInt8(val) => Some(*val as i64),
+            DataFieldValue::UInt8(val) => Some(*val as i64),
+            DataFieldValue::SInt16(val) => Some(*val as i64),
+            DataFieldValue::UInt16(val) => Some(*val as i64),
+            DataFieldValue::SInt32(val) => Some(*val as i64),
+            DataFieldValue::UInt32(val) => Some(*val as i64),
+            DataFieldValue::Float32(val) => Some(*val as i64),
+            DataFieldValue::Float64(val) => Some(*val as i64),
+            DataFieldValue::UInt8z(val) => Some(*val as i64),
+            DataFieldValue::UInt16z(val) => Some(*val as i64),
+            DataFieldValue::UInt32z(val) => Some(*val as i64),
+            DataFieldValue::SInt64(val) => Some(*val as i64),
+            DataFieldValue::UInt64(val) => Some(*val as i64),
+            DataFieldValue::UInt64z(val) => Some(*val as i64),
+            _ => None,
+        }
+    }
 }
