@@ -24,7 +24,6 @@ pub enum File {
     MfgRangeMax,      // 0xF7 - 0xFE reserved for manufacturer specific file types
     UnknownVariant(u8),
 }
-
 impl File {
     pub fn from_u8(value: u8) -> File {
         match value {
@@ -81,27 +80,27 @@ impl File {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            File::Device => "Device".to_string(),
-            File::Settings => "Settings".to_string(),
-            File::Sport => "Sport".to_string(),
-            File::Activity => "Activity".to_string(),
-            File::Workout => "Workout".to_string(),
-            File::Course => "Course".to_string(),
-            File::Schedules => "Schedules".to_string(),
-            File::Weight => "Weight".to_string(),
-            File::Totals => "Totals".to_string(),
-            File::Goals => "Goals".to_string(),
-            File::BloodPressure => "BloodPressure".to_string(),
-            File::MonitoringA => "MonitoringA".to_string(),
-            File::ActivitySummary => "ActivitySummary".to_string(),
-            File::MonitoringDaily => "MonitoringDaily".to_string(),
-            File::MonitoringB => "MonitoringB".to_string(),
-            File::Segment => "Segment".to_string(),
-            File::SegmentList => "SegmentList".to_string(),
-            File::ExdConfiguration => "ExdConfiguration".to_string(),
-            File::MfgRangeMin => "MfgRangeMin".to_string(),
-            File::MfgRangeMax => "MfgRangeMax".to_string(),
-            File::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            File::Device => "device".to_string(),
+            File::Settings => "settings".to_string(),
+            File::Sport => "sport".to_string(),
+            File::Activity => "activity".to_string(),
+            File::Workout => "workout".to_string(),
+            File::Course => "course".to_string(),
+            File::Schedules => "schedules".to_string(),
+            File::Weight => "weight".to_string(),
+            File::Totals => "totals".to_string(),
+            File::Goals => "goals".to_string(),
+            File::BloodPressure => "blood_pressure".to_string(),
+            File::MonitoringA => "monitoring_a".to_string(),
+            File::ActivitySummary => "activity_summary".to_string(),
+            File::MonitoringDaily => "monitoring_daily".to_string(),
+            File::MonitoringB => "monitoring_b".to_string(),
+            File::Segment => "segment".to_string(),
+            File::SegmentList => "segment_list".to_string(),
+            File::ExdConfiguration => "exd_configuration".to_string(),
+            File::MfgRangeMin => "mfg_range_min".to_string(),
+            File::MfgRangeMax => "mfg_range_max".to_string(),
+            File::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -200,7 +199,6 @@ pub enum MesgNum {
     MfgRangeMax, // 0xFF00 - 0xFFFE reserved for manufacturer specific messages
     UnknownVariant(u16),
 }
-
 impl MesgNum {
     pub fn from_u16(value: u16) -> MesgNum {
         match value {
@@ -397,97 +395,97 @@ impl MesgNum {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            MesgNum::FileId => "FileId".to_string(),
-            MesgNum::Capabilities => "Capabilities".to_string(),
-            MesgNum::DeviceSettings => "DeviceSettings".to_string(),
-            MesgNum::UserProfile => "UserProfile".to_string(),
-            MesgNum::HrmProfile => "HrmProfile".to_string(),
-            MesgNum::SdmProfile => "SdmProfile".to_string(),
-            MesgNum::BikeProfile => "BikeProfile".to_string(),
-            MesgNum::ZonesTarget => "ZonesTarget".to_string(),
-            MesgNum::HrZone => "HrZone".to_string(),
-            MesgNum::PowerZone => "PowerZone".to_string(),
-            MesgNum::MetZone => "MetZone".to_string(),
-            MesgNum::Sport => "Sport".to_string(),
-            MesgNum::Goal => "Goal".to_string(),
-            MesgNum::Session => "Session".to_string(),
-            MesgNum::Lap => "Lap".to_string(),
-            MesgNum::Record => "Record".to_string(),
-            MesgNum::Event => "Event".to_string(),
-            MesgNum::DeviceInfo => "DeviceInfo".to_string(),
-            MesgNum::Workout => "Workout".to_string(),
-            MesgNum::WorkoutStep => "WorkoutStep".to_string(),
-            MesgNum::Schedule => "Schedule".to_string(),
-            MesgNum::WeightScale => "WeightScale".to_string(),
-            MesgNum::Course => "Course".to_string(),
-            MesgNum::CoursePoint => "CoursePoint".to_string(),
-            MesgNum::Totals => "Totals".to_string(),
-            MesgNum::Activity => "Activity".to_string(),
-            MesgNum::Software => "Software".to_string(),
-            MesgNum::FileCapabilities => "FileCapabilities".to_string(),
-            MesgNum::MesgCapabilities => "MesgCapabilities".to_string(),
-            MesgNum::FieldCapabilities => "FieldCapabilities".to_string(),
-            MesgNum::FileCreator => "FileCreator".to_string(),
-            MesgNum::BloodPressure => "BloodPressure".to_string(),
-            MesgNum::SpeedZone => "SpeedZone".to_string(),
-            MesgNum::Monitoring => "Monitoring".to_string(),
-            MesgNum::TrainingFile => "TrainingFile".to_string(),
-            MesgNum::Hrv => "Hrv".to_string(),
-            MesgNum::AntRx => "AntRx".to_string(),
-            MesgNum::AntTx => "AntTx".to_string(),
-            MesgNum::AntChannelId => "AntChannelId".to_string(),
-            MesgNum::Length => "Length".to_string(),
-            MesgNum::MonitoringInfo => "MonitoringInfo".to_string(),
-            MesgNum::Pad => "Pad".to_string(),
-            MesgNum::SlaveDevice => "SlaveDevice".to_string(),
-            MesgNum::Connectivity => "Connectivity".to_string(),
-            MesgNum::WeatherConditions => "WeatherConditions".to_string(),
-            MesgNum::WeatherAlert => "WeatherAlert".to_string(),
-            MesgNum::CadenceZone => "CadenceZone".to_string(),
-            MesgNum::Hr => "Hr".to_string(),
-            MesgNum::SegmentLap => "SegmentLap".to_string(),
-            MesgNum::MemoGlob => "MemoGlob".to_string(),
-            MesgNum::SegmentId => "SegmentId".to_string(),
-            MesgNum::SegmentLeaderboardEntry => "SegmentLeaderboardEntry".to_string(),
-            MesgNum::SegmentPoint => "SegmentPoint".to_string(),
-            MesgNum::SegmentFile => "SegmentFile".to_string(),
-            MesgNum::WorkoutSession => "WorkoutSession".to_string(),
-            MesgNum::WatchfaceSettings => "WatchfaceSettings".to_string(),
-            MesgNum::GpsMetadata => "GpsMetadata".to_string(),
-            MesgNum::CameraEvent => "CameraEvent".to_string(),
-            MesgNum::TimestampCorrelation => "TimestampCorrelation".to_string(),
-            MesgNum::GyroscopeData => "GyroscopeData".to_string(),
-            MesgNum::AccelerometerData => "AccelerometerData".to_string(),
-            MesgNum::ThreeDSensorCalibration => "ThreeDSensorCalibration".to_string(),
-            MesgNum::VideoFrame => "VideoFrame".to_string(),
-            MesgNum::ObdiiData => "ObdiiData".to_string(),
-            MesgNum::NmeaSentence => "NmeaSentence".to_string(),
-            MesgNum::AviationAttitude => "AviationAttitude".to_string(),
-            MesgNum::Video => "Video".to_string(),
-            MesgNum::VideoTitle => "VideoTitle".to_string(),
-            MesgNum::VideoDescription => "VideoDescription".to_string(),
-            MesgNum::VideoClip => "VideoClip".to_string(),
-            MesgNum::OhrSettings => "OhrSettings".to_string(),
-            MesgNum::ExdScreenConfiguration => "ExdScreenConfiguration".to_string(),
-            MesgNum::ExdDataFieldConfiguration => "ExdDataFieldConfiguration".to_string(),
-            MesgNum::ExdDataConceptConfiguration => "ExdDataConceptConfiguration".to_string(),
-            MesgNum::FieldDescription => "FieldDescription".to_string(),
-            MesgNum::DeveloperDataId => "DeveloperDataId".to_string(),
-            MesgNum::MagnetometerData => "MagnetometerData".to_string(),
-            MesgNum::BarometerData => "BarometerData".to_string(),
-            MesgNum::OneDSensorCalibration => "OneDSensorCalibration".to_string(),
-            MesgNum::Set => "Set".to_string(),
-            MesgNum::StressLevel => "StressLevel".to_string(),
-            MesgNum::DiveSettings => "DiveSettings".to_string(),
-            MesgNum::DiveGas => "DiveGas".to_string(),
-            MesgNum::DiveAlarm => "DiveAlarm".to_string(),
-            MesgNum::ExerciseTitle => "ExerciseTitle".to_string(),
-            MesgNum::DiveSummary => "DiveSummary".to_string(),
-            MesgNum::Jump => "Jump".to_string(),
-            MesgNum::ClimbPro => "ClimbPro".to_string(),
-            MesgNum::MfgRangeMin => "MfgRangeMin".to_string(),
-            MesgNum::MfgRangeMax => "MfgRangeMax".to_string(),
-            MesgNum::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            MesgNum::FileId => "file_id".to_string(),
+            MesgNum::Capabilities => "capabilities".to_string(),
+            MesgNum::DeviceSettings => "device_settings".to_string(),
+            MesgNum::UserProfile => "user_profile".to_string(),
+            MesgNum::HrmProfile => "hrm_profile".to_string(),
+            MesgNum::SdmProfile => "sdm_profile".to_string(),
+            MesgNum::BikeProfile => "bike_profile".to_string(),
+            MesgNum::ZonesTarget => "zones_target".to_string(),
+            MesgNum::HrZone => "hr_zone".to_string(),
+            MesgNum::PowerZone => "power_zone".to_string(),
+            MesgNum::MetZone => "met_zone".to_string(),
+            MesgNum::Sport => "sport".to_string(),
+            MesgNum::Goal => "goal".to_string(),
+            MesgNum::Session => "session".to_string(),
+            MesgNum::Lap => "lap".to_string(),
+            MesgNum::Record => "record".to_string(),
+            MesgNum::Event => "event".to_string(),
+            MesgNum::DeviceInfo => "device_info".to_string(),
+            MesgNum::Workout => "workout".to_string(),
+            MesgNum::WorkoutStep => "workout_step".to_string(),
+            MesgNum::Schedule => "schedule".to_string(),
+            MesgNum::WeightScale => "weight_scale".to_string(),
+            MesgNum::Course => "course".to_string(),
+            MesgNum::CoursePoint => "course_point".to_string(),
+            MesgNum::Totals => "totals".to_string(),
+            MesgNum::Activity => "activity".to_string(),
+            MesgNum::Software => "software".to_string(),
+            MesgNum::FileCapabilities => "file_capabilities".to_string(),
+            MesgNum::MesgCapabilities => "mesg_capabilities".to_string(),
+            MesgNum::FieldCapabilities => "field_capabilities".to_string(),
+            MesgNum::FileCreator => "file_creator".to_string(),
+            MesgNum::BloodPressure => "blood_pressure".to_string(),
+            MesgNum::SpeedZone => "speed_zone".to_string(),
+            MesgNum::Monitoring => "monitoring".to_string(),
+            MesgNum::TrainingFile => "training_file".to_string(),
+            MesgNum::Hrv => "hrv".to_string(),
+            MesgNum::AntRx => "ant_rx".to_string(),
+            MesgNum::AntTx => "ant_tx".to_string(),
+            MesgNum::AntChannelId => "ant_channel_id".to_string(),
+            MesgNum::Length => "length".to_string(),
+            MesgNum::MonitoringInfo => "monitoring_info".to_string(),
+            MesgNum::Pad => "pad".to_string(),
+            MesgNum::SlaveDevice => "slave_device".to_string(),
+            MesgNum::Connectivity => "connectivity".to_string(),
+            MesgNum::WeatherConditions => "weather_conditions".to_string(),
+            MesgNum::WeatherAlert => "weather_alert".to_string(),
+            MesgNum::CadenceZone => "cadence_zone".to_string(),
+            MesgNum::Hr => "hr".to_string(),
+            MesgNum::SegmentLap => "segment_lap".to_string(),
+            MesgNum::MemoGlob => "memo_glob".to_string(),
+            MesgNum::SegmentId => "segment_id".to_string(),
+            MesgNum::SegmentLeaderboardEntry => "segment_leaderboard_entry".to_string(),
+            MesgNum::SegmentPoint => "segment_point".to_string(),
+            MesgNum::SegmentFile => "segment_file".to_string(),
+            MesgNum::WorkoutSession => "workout_session".to_string(),
+            MesgNum::WatchfaceSettings => "watchface_settings".to_string(),
+            MesgNum::GpsMetadata => "gps_metadata".to_string(),
+            MesgNum::CameraEvent => "camera_event".to_string(),
+            MesgNum::TimestampCorrelation => "timestamp_correlation".to_string(),
+            MesgNum::GyroscopeData => "gyroscope_data".to_string(),
+            MesgNum::AccelerometerData => "accelerometer_data".to_string(),
+            MesgNum::ThreeDSensorCalibration => "three_d_sensor_calibration".to_string(),
+            MesgNum::VideoFrame => "video_frame".to_string(),
+            MesgNum::ObdiiData => "obdii_data".to_string(),
+            MesgNum::NmeaSentence => "nmea_sentence".to_string(),
+            MesgNum::AviationAttitude => "aviation_attitude".to_string(),
+            MesgNum::Video => "video".to_string(),
+            MesgNum::VideoTitle => "video_title".to_string(),
+            MesgNum::VideoDescription => "video_description".to_string(),
+            MesgNum::VideoClip => "video_clip".to_string(),
+            MesgNum::OhrSettings => "ohr_settings".to_string(),
+            MesgNum::ExdScreenConfiguration => "exd_screen_configuration".to_string(),
+            MesgNum::ExdDataFieldConfiguration => "exd_data_field_configuration".to_string(),
+            MesgNum::ExdDataConceptConfiguration => "exd_data_concept_configuration".to_string(),
+            MesgNum::FieldDescription => "field_description".to_string(),
+            MesgNum::DeveloperDataId => "developer_data_id".to_string(),
+            MesgNum::MagnetometerData => "magnetometer_data".to_string(),
+            MesgNum::BarometerData => "barometer_data".to_string(),
+            MesgNum::OneDSensorCalibration => "one_d_sensor_calibration".to_string(),
+            MesgNum::Set => "set".to_string(),
+            MesgNum::StressLevel => "stress_level".to_string(),
+            MesgNum::DiveSettings => "dive_settings".to_string(),
+            MesgNum::DiveGas => "dive_gas".to_string(),
+            MesgNum::DiveAlarm => "dive_alarm".to_string(),
+            MesgNum::ExerciseTitle => "exercise_title".to_string(),
+            MesgNum::DiveSummary => "dive_summary".to_string(),
+            MesgNum::Jump => "jump".to_string(),
+            MesgNum::ClimbPro => "climb_pro".to_string(),
+            MesgNum::MfgRangeMin => "mfg_range_min".to_string(),
+            MesgNum::MfgRangeMax => "mfg_range_max".to_string(),
+            MesgNum::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -498,7 +496,6 @@ pub enum Checksum {
     Ok, // Set to mark checksum as valid if computes to invalid values 0 or 0xFF.  Checksum can also be set to ok to save encoding computation time.
     UnknownVariant(u8),
 }
-
 impl Checksum {
     pub fn from_u8(value: u8) -> Checksum {
         match value {
@@ -519,9 +516,9 @@ impl Checksum {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            Checksum::Clear => "Clear".to_string(),
-            Checksum::Ok => "Ok".to_string(),
-            Checksum::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            Checksum::Clear => "clear".to_string(),
+            Checksum::Ok => "ok".to_string(),
+            Checksum::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -533,7 +530,6 @@ pub enum FileFlags {
     Erase,
     UnknownVariant(u8),
 }
-
 impl FileFlags {
     pub fn from_u8(value: u8) -> FileFlags {
         match value {
@@ -556,10 +552,10 @@ impl FileFlags {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            FileFlags::Read => "Read".to_string(),
-            FileFlags::Write => "Write".to_string(),
-            FileFlags::Erase => "Erase".to_string(),
-            FileFlags::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            FileFlags::Read => "read".to_string(),
+            FileFlags::Write => "write".to_string(),
+            FileFlags::Erase => "erase".to_string(),
+            FileFlags::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -571,7 +567,6 @@ pub enum MesgCount {
     MaxPerFileType,
     UnknownVariant(u8),
 }
-
 impl MesgCount {
     pub fn from_u8(value: u8) -> MesgCount {
         match value {
@@ -594,10 +589,10 @@ impl MesgCount {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            MesgCount::NumPerFile => "NumPerFile".to_string(),
-            MesgCount::MaxPerFile => "MaxPerFile".to_string(),
-            MesgCount::MaxPerFileType => "MaxPerFileType".to_string(),
-            MesgCount::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            MesgCount::NumPerFile => "num_per_file".to_string(),
+            MesgCount::MaxPerFile => "max_per_file".to_string(),
+            MesgCount::MaxPerFileType => "max_per_file_type".to_string(),
+            MesgCount::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -607,7 +602,6 @@ pub enum DateTime {
     Min, // if date_time is < 0x10000000 then it is system time (seconds from device power on)
     UnknownVariant(u32),
 }
-
 impl DateTime {
     pub fn from_u32(value: u32) -> DateTime {
         match value {
@@ -626,8 +620,8 @@ impl DateTime {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            DateTime::Min => "Min".to_string(),
-            DateTime::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            DateTime::Min => "min".to_string(),
+            DateTime::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -637,7 +631,6 @@ pub enum LocalDateTime {
     Min, // if date_time is < 0x10000000 then it is system time (seconds from device power on)
     UnknownVariant(u32),
 }
-
 impl LocalDateTime {
     pub fn from_u32(value: u32) -> LocalDateTime {
         match value {
@@ -656,20 +649,19 @@ impl LocalDateTime {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            LocalDateTime::Min => "Min".to_string(),
-            LocalDateTime::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            LocalDateTime::Min => "min".to_string(),
+            LocalDateTime::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
 
 #[derive(Clone, Copy, Debug)]
 pub enum MessageIndex {
-    Selected, // message is selected if set
-    Reserved, // reserved (default 0)
     Mask,     // index
+    Reserved, // reserved (default 0)
+    Selected, // message is selected if set
     UnknownVariant(u16),
 }
-
 impl MessageIndex {
     pub fn from_u16(value: u16) -> MessageIndex {
         match value {
@@ -692,10 +684,10 @@ impl MessageIndex {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            MessageIndex::Mask => "Mask".to_string(),
-            MessageIndex::Reserved => "Reserved".to_string(),
-            MessageIndex::Selected => "Selected".to_string(),
-            MessageIndex::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            MessageIndex::Mask => "mask".to_string(),
+            MessageIndex::Reserved => "reserved".to_string(),
+            MessageIndex::Selected => "selected".to_string(),
+            MessageIndex::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -705,7 +697,6 @@ pub enum DeviceIndex {
     Creator, // Creator of the file is always device index 0.
     UnknownVariant(u8),
 }
-
 impl DeviceIndex {
     pub fn from_u8(value: u8) -> DeviceIndex {
         match value {
@@ -724,8 +715,8 @@ impl DeviceIndex {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            DeviceIndex::Creator => "Creator".to_string(),
-            DeviceIndex::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            DeviceIndex::Creator => "creator".to_string(),
+            DeviceIndex::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -736,7 +727,6 @@ pub enum Gender {
     Male,
     UnknownVariant(u8),
 }
-
 impl Gender {
     pub fn from_u8(value: u8) -> Gender {
         match value {
@@ -757,9 +747,9 @@ impl Gender {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            Gender::Female => "Female".to_string(),
-            Gender::Male => "Male".to_string(),
-            Gender::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            Gender::Female => "female".to_string(),
+            Gender::Male => "male".to_string(),
+            Gender::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -807,7 +797,6 @@ pub enum Language {
     Custom,
     UnknownVariant(u8),
 }
-
 impl Language {
     pub fn from_u8(value: u8) -> Language {
         match value {
@@ -902,46 +891,46 @@ impl Language {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            Language::English => "English".to_string(),
-            Language::French => "French".to_string(),
-            Language::Italian => "Italian".to_string(),
-            Language::German => "German".to_string(),
-            Language::Spanish => "Spanish".to_string(),
-            Language::Croatian => "Croatian".to_string(),
-            Language::Czech => "Czech".to_string(),
-            Language::Danish => "Danish".to_string(),
-            Language::Dutch => "Dutch".to_string(),
-            Language::Finnish => "Finnish".to_string(),
-            Language::Greek => "Greek".to_string(),
-            Language::Hungarian => "Hungarian".to_string(),
-            Language::Norwegian => "Norwegian".to_string(),
-            Language::Polish => "Polish".to_string(),
-            Language::Portuguese => "Portuguese".to_string(),
-            Language::Slovakian => "Slovakian".to_string(),
-            Language::Slovenian => "Slovenian".to_string(),
-            Language::Swedish => "Swedish".to_string(),
-            Language::Russian => "Russian".to_string(),
-            Language::Turkish => "Turkish".to_string(),
-            Language::Latvian => "Latvian".to_string(),
-            Language::Ukrainian => "Ukrainian".to_string(),
-            Language::Arabic => "Arabic".to_string(),
-            Language::Farsi => "Farsi".to_string(),
-            Language::Bulgarian => "Bulgarian".to_string(),
-            Language::Romanian => "Romanian".to_string(),
-            Language::Chinese => "Chinese".to_string(),
-            Language::Japanese => "Japanese".to_string(),
-            Language::Korean => "Korean".to_string(),
-            Language::Taiwanese => "Taiwanese".to_string(),
-            Language::Thai => "Thai".to_string(),
-            Language::Hebrew => "Hebrew".to_string(),
-            Language::BrazilianPortuguese => "BrazilianPortuguese".to_string(),
-            Language::Indonesian => "Indonesian".to_string(),
-            Language::Malaysian => "Malaysian".to_string(),
-            Language::Vietnamese => "Vietnamese".to_string(),
-            Language::Burmese => "Burmese".to_string(),
-            Language::Mongolian => "Mongolian".to_string(),
-            Language::Custom => "Custom".to_string(),
-            Language::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            Language::English => "english".to_string(),
+            Language::French => "french".to_string(),
+            Language::Italian => "italian".to_string(),
+            Language::German => "german".to_string(),
+            Language::Spanish => "spanish".to_string(),
+            Language::Croatian => "croatian".to_string(),
+            Language::Czech => "czech".to_string(),
+            Language::Danish => "danish".to_string(),
+            Language::Dutch => "dutch".to_string(),
+            Language::Finnish => "finnish".to_string(),
+            Language::Greek => "greek".to_string(),
+            Language::Hungarian => "hungarian".to_string(),
+            Language::Norwegian => "norwegian".to_string(),
+            Language::Polish => "polish".to_string(),
+            Language::Portuguese => "portuguese".to_string(),
+            Language::Slovakian => "slovakian".to_string(),
+            Language::Slovenian => "slovenian".to_string(),
+            Language::Swedish => "swedish".to_string(),
+            Language::Russian => "russian".to_string(),
+            Language::Turkish => "turkish".to_string(),
+            Language::Latvian => "latvian".to_string(),
+            Language::Ukrainian => "ukrainian".to_string(),
+            Language::Arabic => "arabic".to_string(),
+            Language::Farsi => "farsi".to_string(),
+            Language::Bulgarian => "bulgarian".to_string(),
+            Language::Romanian => "romanian".to_string(),
+            Language::Chinese => "chinese".to_string(),
+            Language::Japanese => "japanese".to_string(),
+            Language::Korean => "korean".to_string(),
+            Language::Taiwanese => "taiwanese".to_string(),
+            Language::Thai => "thai".to_string(),
+            Language::Hebrew => "hebrew".to_string(),
+            Language::BrazilianPortuguese => "brazilian_portuguese".to_string(),
+            Language::Indonesian => "indonesian".to_string(),
+            Language::Malaysian => "malaysian".to_string(),
+            Language::Vietnamese => "vietnamese".to_string(),
+            Language::Burmese => "burmese".to_string(),
+            Language::Mongolian => "mongolian".to_string(),
+            Language::Custom => "custom".to_string(),
+            Language::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -958,7 +947,6 @@ pub enum LanguageBits0 {
     Danish,
     UnknownVariant(u8),
 }
-
 impl LanguageBits0 {
     pub fn from_u8(value: u8) -> LanguageBits0 {
         match value {
@@ -991,15 +979,15 @@ impl LanguageBits0 {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            LanguageBits0::English => "English".to_string(),
-            LanguageBits0::French => "French".to_string(),
-            LanguageBits0::Italian => "Italian".to_string(),
-            LanguageBits0::German => "German".to_string(),
-            LanguageBits0::Spanish => "Spanish".to_string(),
-            LanguageBits0::Croatian => "Croatian".to_string(),
-            LanguageBits0::Czech => "Czech".to_string(),
-            LanguageBits0::Danish => "Danish".to_string(),
-            LanguageBits0::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            LanguageBits0::English => "english".to_string(),
+            LanguageBits0::French => "french".to_string(),
+            LanguageBits0::Italian => "italian".to_string(),
+            LanguageBits0::German => "german".to_string(),
+            LanguageBits0::Spanish => "spanish".to_string(),
+            LanguageBits0::Croatian => "croatian".to_string(),
+            LanguageBits0::Czech => "czech".to_string(),
+            LanguageBits0::Danish => "danish".to_string(),
+            LanguageBits0::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -1016,7 +1004,6 @@ pub enum LanguageBits1 {
     Slovakian,
     UnknownVariant(u8),
 }
-
 impl LanguageBits1 {
     pub fn from_u8(value: u8) -> LanguageBits1 {
         match value {
@@ -1049,15 +1036,15 @@ impl LanguageBits1 {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            LanguageBits1::Dutch => "Dutch".to_string(),
-            LanguageBits1::Finnish => "Finnish".to_string(),
-            LanguageBits1::Greek => "Greek".to_string(),
-            LanguageBits1::Hungarian => "Hungarian".to_string(),
-            LanguageBits1::Norwegian => "Norwegian".to_string(),
-            LanguageBits1::Polish => "Polish".to_string(),
-            LanguageBits1::Portuguese => "Portuguese".to_string(),
-            LanguageBits1::Slovakian => "Slovakian".to_string(),
-            LanguageBits1::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            LanguageBits1::Dutch => "dutch".to_string(),
+            LanguageBits1::Finnish => "finnish".to_string(),
+            LanguageBits1::Greek => "greek".to_string(),
+            LanguageBits1::Hungarian => "hungarian".to_string(),
+            LanguageBits1::Norwegian => "norwegian".to_string(),
+            LanguageBits1::Polish => "polish".to_string(),
+            LanguageBits1::Portuguese => "portuguese".to_string(),
+            LanguageBits1::Slovakian => "slovakian".to_string(),
+            LanguageBits1::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -1074,7 +1061,6 @@ pub enum LanguageBits2 {
     Farsi,
     UnknownVariant(u8),
 }
-
 impl LanguageBits2 {
     pub fn from_u8(value: u8) -> LanguageBits2 {
         match value {
@@ -1107,15 +1093,15 @@ impl LanguageBits2 {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            LanguageBits2::Slovenian => "Slovenian".to_string(),
-            LanguageBits2::Swedish => "Swedish".to_string(),
-            LanguageBits2::Russian => "Russian".to_string(),
-            LanguageBits2::Turkish => "Turkish".to_string(),
-            LanguageBits2::Latvian => "Latvian".to_string(),
-            LanguageBits2::Ukrainian => "Ukrainian".to_string(),
-            LanguageBits2::Arabic => "Arabic".to_string(),
-            LanguageBits2::Farsi => "Farsi".to_string(),
-            LanguageBits2::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            LanguageBits2::Slovenian => "slovenian".to_string(),
+            LanguageBits2::Swedish => "swedish".to_string(),
+            LanguageBits2::Russian => "russian".to_string(),
+            LanguageBits2::Turkish => "turkish".to_string(),
+            LanguageBits2::Latvian => "latvian".to_string(),
+            LanguageBits2::Ukrainian => "ukrainian".to_string(),
+            LanguageBits2::Arabic => "arabic".to_string(),
+            LanguageBits2::Farsi => "farsi".to_string(),
+            LanguageBits2::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -1132,7 +1118,6 @@ pub enum LanguageBits3 {
     Hebrew,
     UnknownVariant(u8),
 }
-
 impl LanguageBits3 {
     pub fn from_u8(value: u8) -> LanguageBits3 {
         match value {
@@ -1165,15 +1150,15 @@ impl LanguageBits3 {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            LanguageBits3::Bulgarian => "Bulgarian".to_string(),
-            LanguageBits3::Romanian => "Romanian".to_string(),
-            LanguageBits3::Chinese => "Chinese".to_string(),
-            LanguageBits3::Japanese => "Japanese".to_string(),
-            LanguageBits3::Korean => "Korean".to_string(),
-            LanguageBits3::Taiwanese => "Taiwanese".to_string(),
-            LanguageBits3::Thai => "Thai".to_string(),
-            LanguageBits3::Hebrew => "Hebrew".to_string(),
-            LanguageBits3::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            LanguageBits3::Bulgarian => "bulgarian".to_string(),
+            LanguageBits3::Romanian => "romanian".to_string(),
+            LanguageBits3::Chinese => "chinese".to_string(),
+            LanguageBits3::Japanese => "japanese".to_string(),
+            LanguageBits3::Korean => "korean".to_string(),
+            LanguageBits3::Taiwanese => "taiwanese".to_string(),
+            LanguageBits3::Thai => "thai".to_string(),
+            LanguageBits3::Hebrew => "hebrew".to_string(),
+            LanguageBits3::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -1188,7 +1173,6 @@ pub enum LanguageBits4 {
     Mongolian,
     UnknownVariant(u8),
 }
-
 impl LanguageBits4 {
     pub fn from_u8(value: u8) -> LanguageBits4 {
         match value {
@@ -1217,13 +1201,13 @@ impl LanguageBits4 {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            LanguageBits4::BrazilianPortuguese => "BrazilianPortuguese".to_string(),
-            LanguageBits4::Indonesian => "Indonesian".to_string(),
-            LanguageBits4::Malaysian => "Malaysian".to_string(),
-            LanguageBits4::Vietnamese => "Vietnamese".to_string(),
-            LanguageBits4::Burmese => "Burmese".to_string(),
-            LanguageBits4::Mongolian => "Mongolian".to_string(),
-            LanguageBits4::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            LanguageBits4::BrazilianPortuguese => "brazilian_portuguese".to_string(),
+            LanguageBits4::Indonesian => "indonesian".to_string(),
+            LanguageBits4::Malaysian => "malaysian".to_string(),
+            LanguageBits4::Vietnamese => "vietnamese".to_string(),
+            LanguageBits4::Burmese => "burmese".to_string(),
+            LanguageBits4::Mongolian => "mongolian".to_string(),
+            LanguageBits4::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -1338,7 +1322,6 @@ pub enum TimeZone {
     Automatic,
     UnknownVariant(u8),
 }
-
 impl TimeZone {
     pub fn from_u8(value: u8) -> TimeZone {
         match value {
@@ -1567,113 +1550,113 @@ impl TimeZone {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            TimeZone::Almaty => "Almaty".to_string(),
-            TimeZone::Bangkok => "Bangkok".to_string(),
-            TimeZone::Bombay => "Bombay".to_string(),
-            TimeZone::Brasilia => "Brasilia".to_string(),
-            TimeZone::Cairo => "Cairo".to_string(),
-            TimeZone::CapeVerdeIs => "CapeVerdeIs".to_string(),
-            TimeZone::Darwin => "Darwin".to_string(),
-            TimeZone::Eniwetok => "Eniwetok".to_string(),
-            TimeZone::Fiji => "Fiji".to_string(),
-            TimeZone::HongKong => "HongKong".to_string(),
-            TimeZone::Islamabad => "Islamabad".to_string(),
-            TimeZone::Kabul => "Kabul".to_string(),
-            TimeZone::Magadan => "Magadan".to_string(),
-            TimeZone::MidAtlantic => "MidAtlantic".to_string(),
-            TimeZone::Moscow => "Moscow".to_string(),
-            TimeZone::Muscat => "Muscat".to_string(),
-            TimeZone::Newfoundland => "Newfoundland".to_string(),
-            TimeZone::Samoa => "Samoa".to_string(),
-            TimeZone::Sydney => "Sydney".to_string(),
-            TimeZone::Tehran => "Tehran".to_string(),
-            TimeZone::Tokyo => "Tokyo".to_string(),
-            TimeZone::UsAlaska => "UsAlaska".to_string(),
-            TimeZone::UsAtlantic => "UsAtlantic".to_string(),
-            TimeZone::UsCentral => "UsCentral".to_string(),
-            TimeZone::UsEastern => "UsEastern".to_string(),
-            TimeZone::UsHawaii => "UsHawaii".to_string(),
-            TimeZone::UsMountain => "UsMountain".to_string(),
-            TimeZone::UsPacific => "UsPacific".to_string(),
-            TimeZone::Other => "Other".to_string(),
-            TimeZone::Auckland => "Auckland".to_string(),
-            TimeZone::Kathmandu => "Kathmandu".to_string(),
-            TimeZone::EuropeWesternWet => "EuropeWesternWet".to_string(),
-            TimeZone::EuropeCentralCet => "EuropeCentralCet".to_string(),
-            TimeZone::EuropeEasternEet => "EuropeEasternEet".to_string(),
-            TimeZone::Jakarta => "Jakarta".to_string(),
-            TimeZone::Perth => "Perth".to_string(),
-            TimeZone::Adelaide => "Adelaide".to_string(),
-            TimeZone::Brisbane => "Brisbane".to_string(),
-            TimeZone::Tasmania => "Tasmania".to_string(),
-            TimeZone::Iceland => "Iceland".to_string(),
-            TimeZone::Amsterdam => "Amsterdam".to_string(),
-            TimeZone::Athens => "Athens".to_string(),
-            TimeZone::Barcelona => "Barcelona".to_string(),
-            TimeZone::Berlin => "Berlin".to_string(),
-            TimeZone::Brussels => "Brussels".to_string(),
-            TimeZone::Budapest => "Budapest".to_string(),
-            TimeZone::Copenhagen => "Copenhagen".to_string(),
-            TimeZone::Dublin => "Dublin".to_string(),
-            TimeZone::Helsinki => "Helsinki".to_string(),
-            TimeZone::Lisbon => "Lisbon".to_string(),
-            TimeZone::London => "London".to_string(),
-            TimeZone::Madrid => "Madrid".to_string(),
-            TimeZone::Munich => "Munich".to_string(),
-            TimeZone::Oslo => "Oslo".to_string(),
-            TimeZone::Paris => "Paris".to_string(),
-            TimeZone::Prague => "Prague".to_string(),
-            TimeZone::Reykjavik => "Reykjavik".to_string(),
-            TimeZone::Rome => "Rome".to_string(),
-            TimeZone::Stockholm => "Stockholm".to_string(),
-            TimeZone::Vienna => "Vienna".to_string(),
-            TimeZone::Warsaw => "Warsaw".to_string(),
-            TimeZone::Zurich => "Zurich".to_string(),
-            TimeZone::Quebec => "Quebec".to_string(),
-            TimeZone::Ontario => "Ontario".to_string(),
-            TimeZone::Manitoba => "Manitoba".to_string(),
-            TimeZone::Saskatchewan => "Saskatchewan".to_string(),
-            TimeZone::Alberta => "Alberta".to_string(),
-            TimeZone::BritishColumbia => "BritishColumbia".to_string(),
-            TimeZone::Boise => "Boise".to_string(),
-            TimeZone::Boston => "Boston".to_string(),
-            TimeZone::Chicago => "Chicago".to_string(),
-            TimeZone::Dallas => "Dallas".to_string(),
-            TimeZone::Denver => "Denver".to_string(),
-            TimeZone::KansasCity => "KansasCity".to_string(),
-            TimeZone::LasVegas => "LasVegas".to_string(),
-            TimeZone::LosAngeles => "LosAngeles".to_string(),
-            TimeZone::Miami => "Miami".to_string(),
-            TimeZone::Minneapolis => "Minneapolis".to_string(),
-            TimeZone::NewYork => "NewYork".to_string(),
-            TimeZone::NewOrleans => "NewOrleans".to_string(),
-            TimeZone::Phoenix => "Phoenix".to_string(),
-            TimeZone::SantaFe => "SantaFe".to_string(),
-            TimeZone::Seattle => "Seattle".to_string(),
-            TimeZone::WashingtonDc => "WashingtonDc".to_string(),
-            TimeZone::UsArizona => "UsArizona".to_string(),
-            TimeZone::Chita => "Chita".to_string(),
-            TimeZone::Ekaterinburg => "Ekaterinburg".to_string(),
-            TimeZone::Irkutsk => "Irkutsk".to_string(),
-            TimeZone::Kaliningrad => "Kaliningrad".to_string(),
-            TimeZone::Krasnoyarsk => "Krasnoyarsk".to_string(),
-            TimeZone::Novosibirsk => "Novosibirsk".to_string(),
-            TimeZone::PetropavlovskKamchatskiy => "PetropavlovskKamchatskiy".to_string(),
-            TimeZone::Samara => "Samara".to_string(),
-            TimeZone::Vladivostok => "Vladivostok".to_string(),
-            TimeZone::MexicoCentral => "MexicoCentral".to_string(),
-            TimeZone::MexicoMountain => "MexicoMountain".to_string(),
-            TimeZone::MexicoPacific => "MexicoPacific".to_string(),
-            TimeZone::CapeTown => "CapeTown".to_string(),
-            TimeZone::Winkhoek => "Winkhoek".to_string(),
-            TimeZone::Lagos => "Lagos".to_string(),
-            TimeZone::Riyahd => "Riyahd".to_string(),
-            TimeZone::Venezuela => "Venezuela".to_string(),
-            TimeZone::AustraliaLh => "AustraliaLh".to_string(),
-            TimeZone::Santiago => "Santiago".to_string(),
-            TimeZone::Manual => "Manual".to_string(),
-            TimeZone::Automatic => "Automatic".to_string(),
-            TimeZone::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            TimeZone::Almaty => "almaty".to_string(),
+            TimeZone::Bangkok => "bangkok".to_string(),
+            TimeZone::Bombay => "bombay".to_string(),
+            TimeZone::Brasilia => "brasilia".to_string(),
+            TimeZone::Cairo => "cairo".to_string(),
+            TimeZone::CapeVerdeIs => "cape_verde_is".to_string(),
+            TimeZone::Darwin => "darwin".to_string(),
+            TimeZone::Eniwetok => "eniwetok".to_string(),
+            TimeZone::Fiji => "fiji".to_string(),
+            TimeZone::HongKong => "hong_kong".to_string(),
+            TimeZone::Islamabad => "islamabad".to_string(),
+            TimeZone::Kabul => "kabul".to_string(),
+            TimeZone::Magadan => "magadan".to_string(),
+            TimeZone::MidAtlantic => "mid_atlantic".to_string(),
+            TimeZone::Moscow => "moscow".to_string(),
+            TimeZone::Muscat => "muscat".to_string(),
+            TimeZone::Newfoundland => "newfoundland".to_string(),
+            TimeZone::Samoa => "samoa".to_string(),
+            TimeZone::Sydney => "sydney".to_string(),
+            TimeZone::Tehran => "tehran".to_string(),
+            TimeZone::Tokyo => "tokyo".to_string(),
+            TimeZone::UsAlaska => "us_alaska".to_string(),
+            TimeZone::UsAtlantic => "us_atlantic".to_string(),
+            TimeZone::UsCentral => "us_central".to_string(),
+            TimeZone::UsEastern => "us_eastern".to_string(),
+            TimeZone::UsHawaii => "us_hawaii".to_string(),
+            TimeZone::UsMountain => "us_mountain".to_string(),
+            TimeZone::UsPacific => "us_pacific".to_string(),
+            TimeZone::Other => "other".to_string(),
+            TimeZone::Auckland => "auckland".to_string(),
+            TimeZone::Kathmandu => "kathmandu".to_string(),
+            TimeZone::EuropeWesternWet => "europe_western_wet".to_string(),
+            TimeZone::EuropeCentralCet => "europe_central_cet".to_string(),
+            TimeZone::EuropeEasternEet => "europe_eastern_eet".to_string(),
+            TimeZone::Jakarta => "jakarta".to_string(),
+            TimeZone::Perth => "perth".to_string(),
+            TimeZone::Adelaide => "adelaide".to_string(),
+            TimeZone::Brisbane => "brisbane".to_string(),
+            TimeZone::Tasmania => "tasmania".to_string(),
+            TimeZone::Iceland => "iceland".to_string(),
+            TimeZone::Amsterdam => "amsterdam".to_string(),
+            TimeZone::Athens => "athens".to_string(),
+            TimeZone::Barcelona => "barcelona".to_string(),
+            TimeZone::Berlin => "berlin".to_string(),
+            TimeZone::Brussels => "brussels".to_string(),
+            TimeZone::Budapest => "budapest".to_string(),
+            TimeZone::Copenhagen => "copenhagen".to_string(),
+            TimeZone::Dublin => "dublin".to_string(),
+            TimeZone::Helsinki => "helsinki".to_string(),
+            TimeZone::Lisbon => "lisbon".to_string(),
+            TimeZone::London => "london".to_string(),
+            TimeZone::Madrid => "madrid".to_string(),
+            TimeZone::Munich => "munich".to_string(),
+            TimeZone::Oslo => "oslo".to_string(),
+            TimeZone::Paris => "paris".to_string(),
+            TimeZone::Prague => "prague".to_string(),
+            TimeZone::Reykjavik => "reykjavik".to_string(),
+            TimeZone::Rome => "rome".to_string(),
+            TimeZone::Stockholm => "stockholm".to_string(),
+            TimeZone::Vienna => "vienna".to_string(),
+            TimeZone::Warsaw => "warsaw".to_string(),
+            TimeZone::Zurich => "zurich".to_string(),
+            TimeZone::Quebec => "quebec".to_string(),
+            TimeZone::Ontario => "ontario".to_string(),
+            TimeZone::Manitoba => "manitoba".to_string(),
+            TimeZone::Saskatchewan => "saskatchewan".to_string(),
+            TimeZone::Alberta => "alberta".to_string(),
+            TimeZone::BritishColumbia => "british_columbia".to_string(),
+            TimeZone::Boise => "boise".to_string(),
+            TimeZone::Boston => "boston".to_string(),
+            TimeZone::Chicago => "chicago".to_string(),
+            TimeZone::Dallas => "dallas".to_string(),
+            TimeZone::Denver => "denver".to_string(),
+            TimeZone::KansasCity => "kansas_city".to_string(),
+            TimeZone::LasVegas => "las_vegas".to_string(),
+            TimeZone::LosAngeles => "los_angeles".to_string(),
+            TimeZone::Miami => "miami".to_string(),
+            TimeZone::Minneapolis => "minneapolis".to_string(),
+            TimeZone::NewYork => "new_york".to_string(),
+            TimeZone::NewOrleans => "new_orleans".to_string(),
+            TimeZone::Phoenix => "phoenix".to_string(),
+            TimeZone::SantaFe => "santa_fe".to_string(),
+            TimeZone::Seattle => "seattle".to_string(),
+            TimeZone::WashingtonDc => "washington_dc".to_string(),
+            TimeZone::UsArizona => "us_arizona".to_string(),
+            TimeZone::Chita => "chita".to_string(),
+            TimeZone::Ekaterinburg => "ekaterinburg".to_string(),
+            TimeZone::Irkutsk => "irkutsk".to_string(),
+            TimeZone::Kaliningrad => "kaliningrad".to_string(),
+            TimeZone::Krasnoyarsk => "krasnoyarsk".to_string(),
+            TimeZone::Novosibirsk => "novosibirsk".to_string(),
+            TimeZone::PetropavlovskKamchatskiy => "petropavlovsk_kamchatskiy".to_string(),
+            TimeZone::Samara => "samara".to_string(),
+            TimeZone::Vladivostok => "vladivostok".to_string(),
+            TimeZone::MexicoCentral => "mexico_central".to_string(),
+            TimeZone::MexicoMountain => "mexico_mountain".to_string(),
+            TimeZone::MexicoPacific => "mexico_pacific".to_string(),
+            TimeZone::CapeTown => "cape_town".to_string(),
+            TimeZone::Winkhoek => "winkhoek".to_string(),
+            TimeZone::Lagos => "lagos".to_string(),
+            TimeZone::Riyahd => "riyahd".to_string(),
+            TimeZone::Venezuela => "venezuela".to_string(),
+            TimeZone::AustraliaLh => "australia_lh".to_string(),
+            TimeZone::Santiago => "santiago".to_string(),
+            TimeZone::Manual => "manual".to_string(),
+            TimeZone::Automatic => "automatic".to_string(),
+            TimeZone::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -1685,7 +1668,6 @@ pub enum DisplayMeasure {
     Nautical,
     UnknownVariant(u8),
 }
-
 impl DisplayMeasure {
     pub fn from_u8(value: u8) -> DisplayMeasure {
         match value {
@@ -1708,10 +1690,10 @@ impl DisplayMeasure {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            DisplayMeasure::Metric => "Metric".to_string(),
-            DisplayMeasure::Statute => "Statute".to_string(),
-            DisplayMeasure::Nautical => "Nautical".to_string(),
-            DisplayMeasure::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            DisplayMeasure::Metric => "metric".to_string(),
+            DisplayMeasure::Statute => "statute".to_string(),
+            DisplayMeasure::Nautical => "nautical".to_string(),
+            DisplayMeasure::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -1723,7 +1705,6 @@ pub enum DisplayHeart {
     Reserve,
     UnknownVariant(u8),
 }
-
 impl DisplayHeart {
     pub fn from_u8(value: u8) -> DisplayHeart {
         match value {
@@ -1746,10 +1727,10 @@ impl DisplayHeart {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            DisplayHeart::Bpm => "Bpm".to_string(),
-            DisplayHeart::Max => "Max".to_string(),
-            DisplayHeart::Reserve => "Reserve".to_string(),
-            DisplayHeart::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            DisplayHeart::Bpm => "bpm".to_string(),
+            DisplayHeart::Max => "max".to_string(),
+            DisplayHeart::Reserve => "reserve".to_string(),
+            DisplayHeart::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -1760,7 +1741,6 @@ pub enum DisplayPower {
     PercentFtp,
     UnknownVariant(u8),
 }
-
 impl DisplayPower {
     pub fn from_u8(value: u8) -> DisplayPower {
         match value {
@@ -1781,9 +1761,9 @@ impl DisplayPower {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            DisplayPower::Watts => "Watts".to_string(),
-            DisplayPower::PercentFtp => "PercentFtp".to_string(),
-            DisplayPower::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            DisplayPower::Watts => "watts".to_string(),
+            DisplayPower::PercentFtp => "percent_ftp".to_string(),
+            DisplayPower::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -1834,7 +1814,6 @@ pub enum DisplayPosition {
     SwedishRef99Grid,     // Reference Grid 99 TM (Swedish)
     UnknownVariant(u8),
 }
-
 impl DisplayPosition {
     pub fn from_u8(value: u8) -> DisplayPosition {
         match value {
@@ -1935,49 +1914,49 @@ impl DisplayPosition {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            DisplayPosition::Degree => "Degree".to_string(),
-            DisplayPosition::DegreeMinute => "DegreeMinute".to_string(),
-            DisplayPosition::DegreeMinuteSecond => "DegreeMinuteSecond".to_string(),
-            DisplayPosition::AustrianGrid => "AustrianGrid".to_string(),
-            DisplayPosition::BritishGrid => "BritishGrid".to_string(),
-            DisplayPosition::DutchGrid => "DutchGrid".to_string(),
-            DisplayPosition::HungarianGrid => "HungarianGrid".to_string(),
-            DisplayPosition::FinnishGrid => "FinnishGrid".to_string(),
-            DisplayPosition::GermanGrid => "GermanGrid".to_string(),
-            DisplayPosition::IcelandicGrid => "IcelandicGrid".to_string(),
-            DisplayPosition::IndonesianEquatorial => "IndonesianEquatorial".to_string(),
-            DisplayPosition::IndonesianIrian => "IndonesianIrian".to_string(),
-            DisplayPosition::IndonesianSouthern => "IndonesianSouthern".to_string(),
-            DisplayPosition::IndiaZone0 => "IndiaZone0".to_string(),
-            DisplayPosition::IndiaZoneIA => "IndiaZoneIA".to_string(),
-            DisplayPosition::IndiaZoneIB => "IndiaZoneIB".to_string(),
-            DisplayPosition::IndiaZoneIIA => "IndiaZoneIIA".to_string(),
-            DisplayPosition::IndiaZoneIIB => "IndiaZoneIIB".to_string(),
-            DisplayPosition::IndiaZoneIIIA => "IndiaZoneIIIA".to_string(),
-            DisplayPosition::IndiaZoneIIIB => "IndiaZoneIIIB".to_string(),
-            DisplayPosition::IndiaZoneIVA => "IndiaZoneIVA".to_string(),
-            DisplayPosition::IndiaZoneIVB => "IndiaZoneIVB".to_string(),
-            DisplayPosition::IrishTransverse => "IrishTransverse".to_string(),
-            DisplayPosition::IrishGrid => "IrishGrid".to_string(),
-            DisplayPosition::Loran => "Loran".to_string(),
-            DisplayPosition::MaidenheadGrid => "MaidenheadGrid".to_string(),
-            DisplayPosition::MgrsGrid => "MgrsGrid".to_string(),
-            DisplayPosition::NewZealandGrid => "NewZealandGrid".to_string(),
-            DisplayPosition::NewZealandTransverse => "NewZealandTransverse".to_string(),
-            DisplayPosition::QatarGrid => "QatarGrid".to_string(),
-            DisplayPosition::ModifiedSwedishGrid => "ModifiedSwedishGrid".to_string(),
-            DisplayPosition::SwedishGrid => "SwedishGrid".to_string(),
-            DisplayPosition::SouthAfricanGrid => "SouthAfricanGrid".to_string(),
-            DisplayPosition::SwissGrid => "SwissGrid".to_string(),
-            DisplayPosition::TaiwanGrid => "TaiwanGrid".to_string(),
-            DisplayPosition::UnitedStatesGrid => "UnitedStatesGrid".to_string(),
-            DisplayPosition::UtmUpsGrid => "UtmUpsGrid".to_string(),
-            DisplayPosition::WestMalayan => "WestMalayan".to_string(),
-            DisplayPosition::BorneoRso => "BorneoRso".to_string(),
-            DisplayPosition::EstonianGrid => "EstonianGrid".to_string(),
-            DisplayPosition::LatvianGrid => "LatvianGrid".to_string(),
-            DisplayPosition::SwedishRef99Grid => "SwedishRef99Grid".to_string(),
-            DisplayPosition::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            DisplayPosition::Degree => "degree".to_string(),
+            DisplayPosition::DegreeMinute => "degree_minute".to_string(),
+            DisplayPosition::DegreeMinuteSecond => "degree_minute_second".to_string(),
+            DisplayPosition::AustrianGrid => "austrian_grid".to_string(),
+            DisplayPosition::BritishGrid => "british_grid".to_string(),
+            DisplayPosition::DutchGrid => "dutch_grid".to_string(),
+            DisplayPosition::HungarianGrid => "hungarian_grid".to_string(),
+            DisplayPosition::FinnishGrid => "finnish_grid".to_string(),
+            DisplayPosition::GermanGrid => "german_grid".to_string(),
+            DisplayPosition::IcelandicGrid => "icelandic_grid".to_string(),
+            DisplayPosition::IndonesianEquatorial => "indonesian_equatorial".to_string(),
+            DisplayPosition::IndonesianIrian => "indonesian_irian".to_string(),
+            DisplayPosition::IndonesianSouthern => "indonesian_southern".to_string(),
+            DisplayPosition::IndiaZone0 => "india_zone_0".to_string(),
+            DisplayPosition::IndiaZoneIA => "india_zone_IA".to_string(),
+            DisplayPosition::IndiaZoneIB => "india_zone_IB".to_string(),
+            DisplayPosition::IndiaZoneIIA => "india_zone_IIA".to_string(),
+            DisplayPosition::IndiaZoneIIB => "india_zone_IIB".to_string(),
+            DisplayPosition::IndiaZoneIIIA => "india_zone_IIIA".to_string(),
+            DisplayPosition::IndiaZoneIIIB => "india_zone_IIIB".to_string(),
+            DisplayPosition::IndiaZoneIVA => "india_zone_IVA".to_string(),
+            DisplayPosition::IndiaZoneIVB => "india_zone_IVB".to_string(),
+            DisplayPosition::IrishTransverse => "irish_transverse".to_string(),
+            DisplayPosition::IrishGrid => "irish_grid".to_string(),
+            DisplayPosition::Loran => "loran".to_string(),
+            DisplayPosition::MaidenheadGrid => "maidenhead_grid".to_string(),
+            DisplayPosition::MgrsGrid => "mgrs_grid".to_string(),
+            DisplayPosition::NewZealandGrid => "new_zealand_grid".to_string(),
+            DisplayPosition::NewZealandTransverse => "new_zealand_transverse".to_string(),
+            DisplayPosition::QatarGrid => "qatar_grid".to_string(),
+            DisplayPosition::ModifiedSwedishGrid => "modified_swedish_grid".to_string(),
+            DisplayPosition::SwedishGrid => "swedish_grid".to_string(),
+            DisplayPosition::SouthAfricanGrid => "south_african_grid".to_string(),
+            DisplayPosition::SwissGrid => "swiss_grid".to_string(),
+            DisplayPosition::TaiwanGrid => "taiwan_grid".to_string(),
+            DisplayPosition::UnitedStatesGrid => "united_states_grid".to_string(),
+            DisplayPosition::UtmUpsGrid => "utm_ups_grid".to_string(),
+            DisplayPosition::WestMalayan => "west_malayan".to_string(),
+            DisplayPosition::BorneoRso => "borneo_rso".to_string(),
+            DisplayPosition::EstonianGrid => "estonian_grid".to_string(),
+            DisplayPosition::LatvianGrid => "latvian_grid".to_string(),
+            DisplayPosition::SwedishRef99Grid => "swedish_ref_99_grid".to_string(),
+            DisplayPosition::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -1989,7 +1968,6 @@ pub enum Switch {
     Auto,
     UnknownVariant(u8),
 }
-
 impl Switch {
     pub fn from_u8(value: u8) -> Switch {
         match value {
@@ -2012,10 +1990,10 @@ impl Switch {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            Switch::Off => "Off".to_string(),
-            Switch::On => "On".to_string(),
-            Switch::Auto => "Auto".to_string(),
-            Switch::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            Switch::Off => "off".to_string(),
+            Switch::On => "on".to_string(),
+            Switch::Auto => "auto".to_string(),
+            Switch::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -2074,7 +2052,6 @@ pub enum Sport {
     All, // All is for goals only to include all sports.
     UnknownVariant(u8),
 }
-
 impl Sport {
     pub fn from_u8(value: u8) -> Sport {
         match value {
@@ -2191,57 +2168,57 @@ impl Sport {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            Sport::Generic => "Generic".to_string(),
-            Sport::Running => "Running".to_string(),
-            Sport::Cycling => "Cycling".to_string(),
-            Sport::Transition => "Transition".to_string(),
-            Sport::FitnessEquipment => "FitnessEquipment".to_string(),
-            Sport::Swimming => "Swimming".to_string(),
-            Sport::Basketball => "Basketball".to_string(),
-            Sport::Soccer => "Soccer".to_string(),
-            Sport::Tennis => "Tennis".to_string(),
-            Sport::AmericanFootball => "AmericanFootball".to_string(),
-            Sport::Training => "Training".to_string(),
-            Sport::Walking => "Walking".to_string(),
-            Sport::CrossCountrySkiing => "CrossCountrySkiing".to_string(),
-            Sport::AlpineSkiing => "AlpineSkiing".to_string(),
-            Sport::Snowboarding => "Snowboarding".to_string(),
-            Sport::Rowing => "Rowing".to_string(),
-            Sport::Mountaineering => "Mountaineering".to_string(),
-            Sport::Hiking => "Hiking".to_string(),
-            Sport::Multisport => "Multisport".to_string(),
-            Sport::Paddling => "Paddling".to_string(),
-            Sport::Flying => "Flying".to_string(),
-            Sport::EBiking => "EBiking".to_string(),
-            Sport::Motorcycling => "Motorcycling".to_string(),
-            Sport::Boating => "Boating".to_string(),
-            Sport::Driving => "Driving".to_string(),
-            Sport::Golf => "Golf".to_string(),
-            Sport::HangGliding => "HangGliding".to_string(),
-            Sport::HorsebackRiding => "HorsebackRiding".to_string(),
-            Sport::Hunting => "Hunting".to_string(),
-            Sport::Fishing => "Fishing".to_string(),
-            Sport::InlineSkating => "InlineSkating".to_string(),
-            Sport::RockClimbing => "RockClimbing".to_string(),
-            Sport::Sailing => "Sailing".to_string(),
-            Sport::IceSkating => "IceSkating".to_string(),
-            Sport::SkyDiving => "SkyDiving".to_string(),
-            Sport::Snowshoeing => "Snowshoeing".to_string(),
-            Sport::Snowmobiling => "Snowmobiling".to_string(),
-            Sport::StandUpPaddleboarding => "StandUpPaddleboarding".to_string(),
-            Sport::Surfing => "Surfing".to_string(),
-            Sport::Wakeboarding => "Wakeboarding".to_string(),
-            Sport::WaterSkiing => "WaterSkiing".to_string(),
-            Sport::Kayaking => "Kayaking".to_string(),
-            Sport::Rafting => "Rafting".to_string(),
-            Sport::Windsurfing => "Windsurfing".to_string(),
-            Sport::Kitesurfing => "Kitesurfing".to_string(),
-            Sport::Tactical => "Tactical".to_string(),
-            Sport::Jumpmaster => "Jumpmaster".to_string(),
-            Sport::Boxing => "Boxing".to_string(),
-            Sport::FloorClimbing => "FloorClimbing".to_string(),
-            Sport::All => "All".to_string(),
-            Sport::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            Sport::Generic => "generic".to_string(),
+            Sport::Running => "running".to_string(),
+            Sport::Cycling => "cycling".to_string(),
+            Sport::Transition => "transition".to_string(),
+            Sport::FitnessEquipment => "fitness_equipment".to_string(),
+            Sport::Swimming => "swimming".to_string(),
+            Sport::Basketball => "basketball".to_string(),
+            Sport::Soccer => "soccer".to_string(),
+            Sport::Tennis => "tennis".to_string(),
+            Sport::AmericanFootball => "american_football".to_string(),
+            Sport::Training => "training".to_string(),
+            Sport::Walking => "walking".to_string(),
+            Sport::CrossCountrySkiing => "cross_country_skiing".to_string(),
+            Sport::AlpineSkiing => "alpine_skiing".to_string(),
+            Sport::Snowboarding => "snowboarding".to_string(),
+            Sport::Rowing => "rowing".to_string(),
+            Sport::Mountaineering => "mountaineering".to_string(),
+            Sport::Hiking => "hiking".to_string(),
+            Sport::Multisport => "multisport".to_string(),
+            Sport::Paddling => "paddling".to_string(),
+            Sport::Flying => "flying".to_string(),
+            Sport::EBiking => "e_biking".to_string(),
+            Sport::Motorcycling => "motorcycling".to_string(),
+            Sport::Boating => "boating".to_string(),
+            Sport::Driving => "driving".to_string(),
+            Sport::Golf => "golf".to_string(),
+            Sport::HangGliding => "hang_gliding".to_string(),
+            Sport::HorsebackRiding => "horseback_riding".to_string(),
+            Sport::Hunting => "hunting".to_string(),
+            Sport::Fishing => "fishing".to_string(),
+            Sport::InlineSkating => "inline_skating".to_string(),
+            Sport::RockClimbing => "rock_climbing".to_string(),
+            Sport::Sailing => "sailing".to_string(),
+            Sport::IceSkating => "ice_skating".to_string(),
+            Sport::SkyDiving => "sky_diving".to_string(),
+            Sport::Snowshoeing => "snowshoeing".to_string(),
+            Sport::Snowmobiling => "snowmobiling".to_string(),
+            Sport::StandUpPaddleboarding => "stand_up_paddleboarding".to_string(),
+            Sport::Surfing => "surfing".to_string(),
+            Sport::Wakeboarding => "wakeboarding".to_string(),
+            Sport::WaterSkiing => "water_skiing".to_string(),
+            Sport::Kayaking => "kayaking".to_string(),
+            Sport::Rafting => "rafting".to_string(),
+            Sport::Windsurfing => "windsurfing".to_string(),
+            Sport::Kitesurfing => "kitesurfing".to_string(),
+            Sport::Tactical => "tactical".to_string(),
+            Sport::Jumpmaster => "jumpmaster".to_string(),
+            Sport::Boxing => "boxing".to_string(),
+            Sport::FloorClimbing => "floor_climbing".to_string(),
+            Sport::All => "all".to_string(),
+            Sport::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -2258,7 +2235,6 @@ pub enum SportBits0 {
     Soccer,
     UnknownVariant(u8),
 }
-
 impl SportBits0 {
     pub fn from_u8(value: u8) -> SportBits0 {
         match value {
@@ -2291,15 +2267,15 @@ impl SportBits0 {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            SportBits0::Generic => "Generic".to_string(),
-            SportBits0::Running => "Running".to_string(),
-            SportBits0::Cycling => "Cycling".to_string(),
-            SportBits0::Transition => "Transition".to_string(),
-            SportBits0::FitnessEquipment => "FitnessEquipment".to_string(),
-            SportBits0::Swimming => "Swimming".to_string(),
-            SportBits0::Basketball => "Basketball".to_string(),
-            SportBits0::Soccer => "Soccer".to_string(),
-            SportBits0::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            SportBits0::Generic => "generic".to_string(),
+            SportBits0::Running => "running".to_string(),
+            SportBits0::Cycling => "cycling".to_string(),
+            SportBits0::Transition => "transition".to_string(),
+            SportBits0::FitnessEquipment => "fitness_equipment".to_string(),
+            SportBits0::Swimming => "swimming".to_string(),
+            SportBits0::Basketball => "basketball".to_string(),
+            SportBits0::Soccer => "soccer".to_string(),
+            SportBits0::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -2316,7 +2292,6 @@ pub enum SportBits1 {
     Rowing,
     UnknownVariant(u8),
 }
-
 impl SportBits1 {
     pub fn from_u8(value: u8) -> SportBits1 {
         match value {
@@ -2349,15 +2324,15 @@ impl SportBits1 {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            SportBits1::Tennis => "Tennis".to_string(),
-            SportBits1::AmericanFootball => "AmericanFootball".to_string(),
-            SportBits1::Training => "Training".to_string(),
-            SportBits1::Walking => "Walking".to_string(),
-            SportBits1::CrossCountrySkiing => "CrossCountrySkiing".to_string(),
-            SportBits1::AlpineSkiing => "AlpineSkiing".to_string(),
-            SportBits1::Snowboarding => "Snowboarding".to_string(),
-            SportBits1::Rowing => "Rowing".to_string(),
-            SportBits1::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            SportBits1::Tennis => "tennis".to_string(),
+            SportBits1::AmericanFootball => "american_football".to_string(),
+            SportBits1::Training => "training".to_string(),
+            SportBits1::Walking => "walking".to_string(),
+            SportBits1::CrossCountrySkiing => "cross_country_skiing".to_string(),
+            SportBits1::AlpineSkiing => "alpine_skiing".to_string(),
+            SportBits1::Snowboarding => "snowboarding".to_string(),
+            SportBits1::Rowing => "rowing".to_string(),
+            SportBits1::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -2374,7 +2349,6 @@ pub enum SportBits2 {
     Boating,
     UnknownVariant(u8),
 }
-
 impl SportBits2 {
     pub fn from_u8(value: u8) -> SportBits2 {
         match value {
@@ -2407,15 +2381,15 @@ impl SportBits2 {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            SportBits2::Mountaineering => "Mountaineering".to_string(),
-            SportBits2::Hiking => "Hiking".to_string(),
-            SportBits2::Multisport => "Multisport".to_string(),
-            SportBits2::Paddling => "Paddling".to_string(),
-            SportBits2::Flying => "Flying".to_string(),
-            SportBits2::EBiking => "EBiking".to_string(),
-            SportBits2::Motorcycling => "Motorcycling".to_string(),
-            SportBits2::Boating => "Boating".to_string(),
-            SportBits2::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            SportBits2::Mountaineering => "mountaineering".to_string(),
+            SportBits2::Hiking => "hiking".to_string(),
+            SportBits2::Multisport => "multisport".to_string(),
+            SportBits2::Paddling => "paddling".to_string(),
+            SportBits2::Flying => "flying".to_string(),
+            SportBits2::EBiking => "e_biking".to_string(),
+            SportBits2::Motorcycling => "motorcycling".to_string(),
+            SportBits2::Boating => "boating".to_string(),
+            SportBits2::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -2432,7 +2406,6 @@ pub enum SportBits3 {
     RockClimbing,
     UnknownVariant(u8),
 }
-
 impl SportBits3 {
     pub fn from_u8(value: u8) -> SportBits3 {
         match value {
@@ -2465,15 +2438,15 @@ impl SportBits3 {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            SportBits3::Driving => "Driving".to_string(),
-            SportBits3::Golf => "Golf".to_string(),
-            SportBits3::HangGliding => "HangGliding".to_string(),
-            SportBits3::HorsebackRiding => "HorsebackRiding".to_string(),
-            SportBits3::Hunting => "Hunting".to_string(),
-            SportBits3::Fishing => "Fishing".to_string(),
-            SportBits3::InlineSkating => "InlineSkating".to_string(),
-            SportBits3::RockClimbing => "RockClimbing".to_string(),
-            SportBits3::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            SportBits3::Driving => "driving".to_string(),
+            SportBits3::Golf => "golf".to_string(),
+            SportBits3::HangGliding => "hang_gliding".to_string(),
+            SportBits3::HorsebackRiding => "horseback_riding".to_string(),
+            SportBits3::Hunting => "hunting".to_string(),
+            SportBits3::Fishing => "fishing".to_string(),
+            SportBits3::InlineSkating => "inline_skating".to_string(),
+            SportBits3::RockClimbing => "rock_climbing".to_string(),
+            SportBits3::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -2490,7 +2463,6 @@ pub enum SportBits4 {
     Wakeboarding,
     UnknownVariant(u8),
 }
-
 impl SportBits4 {
     pub fn from_u8(value: u8) -> SportBits4 {
         match value {
@@ -2523,15 +2495,15 @@ impl SportBits4 {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            SportBits4::Sailing => "Sailing".to_string(),
-            SportBits4::IceSkating => "IceSkating".to_string(),
-            SportBits4::SkyDiving => "SkyDiving".to_string(),
-            SportBits4::Snowshoeing => "Snowshoeing".to_string(),
-            SportBits4::Snowmobiling => "Snowmobiling".to_string(),
-            SportBits4::StandUpPaddleboarding => "StandUpPaddleboarding".to_string(),
-            SportBits4::Surfing => "Surfing".to_string(),
-            SportBits4::Wakeboarding => "Wakeboarding".to_string(),
-            SportBits4::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            SportBits4::Sailing => "sailing".to_string(),
+            SportBits4::IceSkating => "ice_skating".to_string(),
+            SportBits4::SkyDiving => "sky_diving".to_string(),
+            SportBits4::Snowshoeing => "snowshoeing".to_string(),
+            SportBits4::Snowmobiling => "snowmobiling".to_string(),
+            SportBits4::StandUpPaddleboarding => "stand_up_paddleboarding".to_string(),
+            SportBits4::Surfing => "surfing".to_string(),
+            SportBits4::Wakeboarding => "wakeboarding".to_string(),
+            SportBits4::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -2548,7 +2520,6 @@ pub enum SportBits5 {
     Boxing,
     UnknownVariant(u8),
 }
-
 impl SportBits5 {
     pub fn from_u8(value: u8) -> SportBits5 {
         match value {
@@ -2581,15 +2552,15 @@ impl SportBits5 {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            SportBits5::WaterSkiing => "WaterSkiing".to_string(),
-            SportBits5::Kayaking => "Kayaking".to_string(),
-            SportBits5::Rafting => "Rafting".to_string(),
-            SportBits5::Windsurfing => "Windsurfing".to_string(),
-            SportBits5::Kitesurfing => "Kitesurfing".to_string(),
-            SportBits5::Tactical => "Tactical".to_string(),
-            SportBits5::Jumpmaster => "Jumpmaster".to_string(),
-            SportBits5::Boxing => "Boxing".to_string(),
-            SportBits5::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            SportBits5::WaterSkiing => "water_skiing".to_string(),
+            SportBits5::Kayaking => "kayaking".to_string(),
+            SportBits5::Rafting => "rafting".to_string(),
+            SportBits5::Windsurfing => "windsurfing".to_string(),
+            SportBits5::Kitesurfing => "kitesurfing".to_string(),
+            SportBits5::Tactical => "tactical".to_string(),
+            SportBits5::Jumpmaster => "jumpmaster".to_string(),
+            SportBits5::Boxing => "boxing".to_string(),
+            SportBits5::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -2599,7 +2570,6 @@ pub enum SportBits6 {
     FloorClimbing,
     UnknownVariant(u8),
 }
-
 impl SportBits6 {
     pub fn from_u8(value: u8) -> SportBits6 {
         match value {
@@ -2618,8 +2588,8 @@ impl SportBits6 {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            SportBits6::FloorClimbing => "FloorClimbing".to_string(),
-            SportBits6::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            SportBits6::FloorClimbing => "floor_climbing".to_string(),
+            SportBits6::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -2689,7 +2659,6 @@ pub enum SubSport {
     All,
     UnknownVariant(u8),
 }
-
 impl SubSport {
     pub fn from_u8(value: u8) -> SubSport {
         match value {
@@ -2828,68 +2797,68 @@ impl SubSport {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            SubSport::Generic => "Generic".to_string(),
-            SubSport::Treadmill => "Treadmill".to_string(),
-            SubSport::Street => "Street".to_string(),
-            SubSport::Trail => "Trail".to_string(),
-            SubSport::Track => "Track".to_string(),
-            SubSport::Spin => "Spin".to_string(),
-            SubSport::IndoorCycling => "IndoorCycling".to_string(),
-            SubSport::Road => "Road".to_string(),
-            SubSport::Mountain => "Mountain".to_string(),
-            SubSport::Downhill => "Downhill".to_string(),
-            SubSport::Recumbent => "Recumbent".to_string(),
-            SubSport::Cyclocross => "Cyclocross".to_string(),
-            SubSport::HandCycling => "HandCycling".to_string(),
-            SubSport::TrackCycling => "TrackCycling".to_string(),
-            SubSport::IndoorRowing => "IndoorRowing".to_string(),
-            SubSport::Elliptical => "Elliptical".to_string(),
-            SubSport::StairClimbing => "StairClimbing".to_string(),
-            SubSport::LapSwimming => "LapSwimming".to_string(),
-            SubSport::OpenWater => "OpenWater".to_string(),
-            SubSport::FlexibilityTraining => "FlexibilityTraining".to_string(),
-            SubSport::StrengthTraining => "StrengthTraining".to_string(),
-            SubSport::WarmUp => "WarmUp".to_string(),
-            SubSport::Match => "Match".to_string(),
-            SubSport::Exercise => "Exercise".to_string(),
-            SubSport::Challenge => "Challenge".to_string(),
-            SubSport::IndoorSkiing => "IndoorSkiing".to_string(),
-            SubSport::CardioTraining => "CardioTraining".to_string(),
-            SubSport::IndoorWalking => "IndoorWalking".to_string(),
-            SubSport::EBikeFitness => "EBikeFitness".to_string(),
-            SubSport::Bmx => "Bmx".to_string(),
-            SubSport::CasualWalking => "CasualWalking".to_string(),
-            SubSport::SpeedWalking => "SpeedWalking".to_string(),
-            SubSport::BikeToRunTransition => "BikeToRunTransition".to_string(),
-            SubSport::RunToBikeTransition => "RunToBikeTransition".to_string(),
-            SubSport::SwimToBikeTransition => "SwimToBikeTransition".to_string(),
-            SubSport::Atv => "Atv".to_string(),
-            SubSport::Motocross => "Motocross".to_string(),
-            SubSport::Backcountry => "Backcountry".to_string(),
-            SubSport::Resort => "Resort".to_string(),
-            SubSport::RcDrone => "RcDrone".to_string(),
-            SubSport::Wingsuit => "Wingsuit".to_string(),
-            SubSport::Whitewater => "Whitewater".to_string(),
-            SubSport::SkateSkiing => "SkateSkiing".to_string(),
-            SubSport::Yoga => "Yoga".to_string(),
-            SubSport::Pilates => "Pilates".to_string(),
-            SubSport::IndoorRunning => "IndoorRunning".to_string(),
-            SubSport::GravelCycling => "GravelCycling".to_string(),
-            SubSport::EBikeMountain => "EBikeMountain".to_string(),
-            SubSport::Commuting => "Commuting".to_string(),
-            SubSport::MixedSurface => "MixedSurface".to_string(),
-            SubSport::Navigate => "Navigate".to_string(),
-            SubSport::TrackMe => "TrackMe".to_string(),
-            SubSport::Map => "Map".to_string(),
-            SubSport::SingleGasDiving => "SingleGasDiving".to_string(),
-            SubSport::MultiGasDiving => "MultiGasDiving".to_string(),
-            SubSport::GaugeDiving => "GaugeDiving".to_string(),
-            SubSport::ApneaDiving => "ApneaDiving".to_string(),
-            SubSport::ApneaHunting => "ApneaHunting".to_string(),
-            SubSport::VirtualActivity => "VirtualActivity".to_string(),
-            SubSport::Obstacle => "Obstacle".to_string(),
-            SubSport::All => "All".to_string(),
-            SubSport::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            SubSport::Generic => "generic".to_string(),
+            SubSport::Treadmill => "treadmill".to_string(),
+            SubSport::Street => "street".to_string(),
+            SubSport::Trail => "trail".to_string(),
+            SubSport::Track => "track".to_string(),
+            SubSport::Spin => "spin".to_string(),
+            SubSport::IndoorCycling => "indoor_cycling".to_string(),
+            SubSport::Road => "road".to_string(),
+            SubSport::Mountain => "mountain".to_string(),
+            SubSport::Downhill => "downhill".to_string(),
+            SubSport::Recumbent => "recumbent".to_string(),
+            SubSport::Cyclocross => "cyclocross".to_string(),
+            SubSport::HandCycling => "hand_cycling".to_string(),
+            SubSport::TrackCycling => "track_cycling".to_string(),
+            SubSport::IndoorRowing => "indoor_rowing".to_string(),
+            SubSport::Elliptical => "elliptical".to_string(),
+            SubSport::StairClimbing => "stair_climbing".to_string(),
+            SubSport::LapSwimming => "lap_swimming".to_string(),
+            SubSport::OpenWater => "open_water".to_string(),
+            SubSport::FlexibilityTraining => "flexibility_training".to_string(),
+            SubSport::StrengthTraining => "strength_training".to_string(),
+            SubSport::WarmUp => "warm_up".to_string(),
+            SubSport::Match => "match".to_string(),
+            SubSport::Exercise => "exercise".to_string(),
+            SubSport::Challenge => "challenge".to_string(),
+            SubSport::IndoorSkiing => "indoor_skiing".to_string(),
+            SubSport::CardioTraining => "cardio_training".to_string(),
+            SubSport::IndoorWalking => "indoor_walking".to_string(),
+            SubSport::EBikeFitness => "e_bike_fitness".to_string(),
+            SubSport::Bmx => "bmx".to_string(),
+            SubSport::CasualWalking => "casual_walking".to_string(),
+            SubSport::SpeedWalking => "speed_walking".to_string(),
+            SubSport::BikeToRunTransition => "bike_to_run_transition".to_string(),
+            SubSport::RunToBikeTransition => "run_to_bike_transition".to_string(),
+            SubSport::SwimToBikeTransition => "swim_to_bike_transition".to_string(),
+            SubSport::Atv => "atv".to_string(),
+            SubSport::Motocross => "motocross".to_string(),
+            SubSport::Backcountry => "backcountry".to_string(),
+            SubSport::Resort => "resort".to_string(),
+            SubSport::RcDrone => "rc_drone".to_string(),
+            SubSport::Wingsuit => "wingsuit".to_string(),
+            SubSport::Whitewater => "whitewater".to_string(),
+            SubSport::SkateSkiing => "skate_skiing".to_string(),
+            SubSport::Yoga => "yoga".to_string(),
+            SubSport::Pilates => "pilates".to_string(),
+            SubSport::IndoorRunning => "indoor_running".to_string(),
+            SubSport::GravelCycling => "gravel_cycling".to_string(),
+            SubSport::EBikeMountain => "e_bike_mountain".to_string(),
+            SubSport::Commuting => "commuting".to_string(),
+            SubSport::MixedSurface => "mixed_surface".to_string(),
+            SubSport::Navigate => "navigate".to_string(),
+            SubSport::TrackMe => "track_me".to_string(),
+            SubSport::Map => "map".to_string(),
+            SubSport::SingleGasDiving => "single_gas_diving".to_string(),
+            SubSport::MultiGasDiving => "multi_gas_diving".to_string(),
+            SubSport::GaugeDiving => "gauge_diving".to_string(),
+            SubSport::ApneaDiving => "apnea_diving".to_string(),
+            SubSport::ApneaHunting => "apnea_hunting".to_string(),
+            SubSport::VirtualActivity => "virtual_activity".to_string(),
+            SubSport::Obstacle => "obstacle".to_string(),
+            SubSport::All => "all".to_string(),
+            SubSport::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -2907,7 +2876,6 @@ pub enum SportEvent {
     Touring,
     UnknownVariant(u8),
 }
-
 impl SportEvent {
     pub fn from_u8(value: u8) -> SportEvent {
         match value {
@@ -2942,16 +2910,16 @@ impl SportEvent {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            SportEvent::Uncategorized => "Uncategorized".to_string(),
-            SportEvent::Geocaching => "Geocaching".to_string(),
-            SportEvent::Fitness => "Fitness".to_string(),
-            SportEvent::Recreation => "Recreation".to_string(),
-            SportEvent::Race => "Race".to_string(),
-            SportEvent::SpecialEvent => "SpecialEvent".to_string(),
-            SportEvent::Training => "Training".to_string(),
-            SportEvent::Transportation => "Transportation".to_string(),
-            SportEvent::Touring => "Touring".to_string(),
-            SportEvent::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            SportEvent::Uncategorized => "uncategorized".to_string(),
+            SportEvent::Geocaching => "geocaching".to_string(),
+            SportEvent::Fitness => "fitness".to_string(),
+            SportEvent::Recreation => "recreation".to_string(),
+            SportEvent::Race => "race".to_string(),
+            SportEvent::SpecialEvent => "special_event".to_string(),
+            SportEvent::Training => "training".to_string(),
+            SportEvent::Transportation => "transportation".to_string(),
+            SportEvent::Touring => "touring".to_string(),
+            SportEvent::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -2962,7 +2930,6 @@ pub enum Activity {
     AutoMultiSport,
     UnknownVariant(u8),
 }
-
 impl Activity {
     pub fn from_u8(value: u8) -> Activity {
         match value {
@@ -2983,9 +2950,9 @@ impl Activity {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            Activity::Manual => "Manual".to_string(),
-            Activity::AutoMultiSport => "AutoMultiSport".to_string(),
-            Activity::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            Activity::Manual => "manual".to_string(),
+            Activity::AutoMultiSport => "auto_multi_sport".to_string(),
+            Activity::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -2998,7 +2965,6 @@ pub enum Intensity {
     Cooldown,
     UnknownVariant(u8),
 }
-
 impl Intensity {
     pub fn from_u8(value: u8) -> Intensity {
         match value {
@@ -3023,11 +2989,11 @@ impl Intensity {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            Intensity::Active => "Active".to_string(),
-            Intensity::Rest => "Rest".to_string(),
-            Intensity::Warmup => "Warmup".to_string(),
-            Intensity::Cooldown => "Cooldown".to_string(),
-            Intensity::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            Intensity::Active => "active".to_string(),
+            Intensity::Rest => "rest".to_string(),
+            Intensity::Warmup => "warmup".to_string(),
+            Intensity::Cooldown => "cooldown".to_string(),
+            Intensity::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -3040,7 +3006,6 @@ pub enum SessionTrigger {
     FitnessEquipment, // Auto sport change caused by user linking to fitness equipment.
     UnknownVariant(u8),
 }
-
 impl SessionTrigger {
     pub fn from_u8(value: u8) -> SessionTrigger {
         match value {
@@ -3065,11 +3030,11 @@ impl SessionTrigger {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            SessionTrigger::ActivityEnd => "ActivityEnd".to_string(),
-            SessionTrigger::Manual => "Manual".to_string(),
-            SessionTrigger::AutoMultiSport => "AutoMultiSport".to_string(),
-            SessionTrigger::FitnessEquipment => "FitnessEquipment".to_string(),
-            SessionTrigger::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            SessionTrigger::ActivityEnd => "activity_end".to_string(),
+            SessionTrigger::Manual => "manual".to_string(),
+            SessionTrigger::AutoMultiSport => "auto_multi_sport".to_string(),
+            SessionTrigger::FitnessEquipment => "fitness_equipment".to_string(),
+            SessionTrigger::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -3085,7 +3050,6 @@ pub enum AutolapTrigger {
     Off,
     UnknownVariant(u8),
 }
-
 impl AutolapTrigger {
     pub fn from_u8(value: u8) -> AutolapTrigger {
         match value {
@@ -3116,14 +3080,14 @@ impl AutolapTrigger {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            AutolapTrigger::Time => "Time".to_string(),
-            AutolapTrigger::Distance => "Distance".to_string(),
-            AutolapTrigger::PositionStart => "PositionStart".to_string(),
-            AutolapTrigger::PositionLap => "PositionLap".to_string(),
-            AutolapTrigger::PositionWaypoint => "PositionWaypoint".to_string(),
-            AutolapTrigger::PositionMarked => "PositionMarked".to_string(),
-            AutolapTrigger::Off => "Off".to_string(),
-            AutolapTrigger::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            AutolapTrigger::Time => "time".to_string(),
+            AutolapTrigger::Distance => "distance".to_string(),
+            AutolapTrigger::PositionStart => "position_start".to_string(),
+            AutolapTrigger::PositionLap => "position_lap".to_string(),
+            AutolapTrigger::PositionWaypoint => "position_waypoint".to_string(),
+            AutolapTrigger::PositionMarked => "position_marked".to_string(),
+            AutolapTrigger::Off => "off".to_string(),
+            AutolapTrigger::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -3141,7 +3105,6 @@ pub enum LapTrigger {
     FitnessEquipment,
     UnknownVariant(u8),
 }
-
 impl LapTrigger {
     pub fn from_u8(value: u8) -> LapTrigger {
         match value {
@@ -3176,16 +3139,16 @@ impl LapTrigger {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            LapTrigger::Manual => "Manual".to_string(),
-            LapTrigger::Time => "Time".to_string(),
-            LapTrigger::Distance => "Distance".to_string(),
-            LapTrigger::PositionStart => "PositionStart".to_string(),
-            LapTrigger::PositionLap => "PositionLap".to_string(),
-            LapTrigger::PositionWaypoint => "PositionWaypoint".to_string(),
-            LapTrigger::PositionMarked => "PositionMarked".to_string(),
-            LapTrigger::SessionEnd => "SessionEnd".to_string(),
-            LapTrigger::FitnessEquipment => "FitnessEquipment".to_string(),
-            LapTrigger::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            LapTrigger::Manual => "manual".to_string(),
+            LapTrigger::Time => "time".to_string(),
+            LapTrigger::Distance => "distance".to_string(),
+            LapTrigger::PositionStart => "position_start".to_string(),
+            LapTrigger::PositionLap => "position_lap".to_string(),
+            LapTrigger::PositionWaypoint => "position_waypoint".to_string(),
+            LapTrigger::PositionMarked => "position_marked".to_string(),
+            LapTrigger::SessionEnd => "session_end".to_string(),
+            LapTrigger::FitnessEquipment => "fitness_equipment".to_string(),
+            LapTrigger::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -3200,7 +3163,6 @@ pub enum TimeMode {
     Utc,
     UnknownVariant(u8),
 }
-
 impl TimeMode {
     pub fn from_u8(value: u8) -> TimeMode {
         match value {
@@ -3229,13 +3191,13 @@ impl TimeMode {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            TimeMode::Hour12 => "Hour12".to_string(),
-            TimeMode::Hour24 => "Hour24".to_string(),
-            TimeMode::Military => "Military".to_string(),
-            TimeMode::Hour12WithSeconds => "Hour12WithSeconds".to_string(),
-            TimeMode::Hour24WithSeconds => "Hour24WithSeconds".to_string(),
-            TimeMode::Utc => "Utc".to_string(),
-            TimeMode::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            TimeMode::Hour12 => "hour12".to_string(),
+            TimeMode::Hour24 => "hour24".to_string(),
+            TimeMode::Military => "military".to_string(),
+            TimeMode::Hour12WithSeconds => "hour_12_with_seconds".to_string(),
+            TimeMode::Hour24WithSeconds => "hour_24_with_seconds".to_string(),
+            TimeMode::Utc => "utc".to_string(),
+            TimeMode::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -3251,7 +3213,6 @@ pub enum BacklightMode {
     KeyAndMessagesAndSmartNotifications,
     UnknownVariant(u8),
 }
-
 impl BacklightMode {
     pub fn from_u8(value: u8) -> BacklightMode {
         match value {
@@ -3282,16 +3243,16 @@ impl BacklightMode {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            BacklightMode::Off => "Off".to_string(),
-            BacklightMode::Manual => "Manual".to_string(),
-            BacklightMode::KeyAndMessages => "KeyAndMessages".to_string(),
-            BacklightMode::AutoBrightness => "AutoBrightness".to_string(),
-            BacklightMode::SmartNotifications => "SmartNotifications".to_string(),
-            BacklightMode::KeyAndMessagesNight => "KeyAndMessagesNight".to_string(),
+            BacklightMode::Off => "off".to_string(),
+            BacklightMode::Manual => "manual".to_string(),
+            BacklightMode::KeyAndMessages => "key_and_messages".to_string(),
+            BacklightMode::AutoBrightness => "auto_brightness".to_string(),
+            BacklightMode::SmartNotifications => "smart_notifications".to_string(),
+            BacklightMode::KeyAndMessagesNight => "key_and_messages_night".to_string(),
             BacklightMode::KeyAndMessagesAndSmartNotifications => {
-                "KeyAndMessagesAndSmartNotifications".to_string()
+                "key_and_messages_and_smart_notifications".to_string()
             }
-            BacklightMode::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            BacklightMode::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -3302,7 +3263,6 @@ pub enum DateMode {
     MonthDay,
     UnknownVariant(u8),
 }
-
 impl DateMode {
     pub fn from_u8(value: u8) -> DateMode {
         match value {
@@ -3323,9 +3283,9 @@ impl DateMode {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            DateMode::DayMonth => "DayMonth".to_string(),
-            DateMode::MonthDay => "MonthDay".to_string(),
-            DateMode::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            DateMode::DayMonth => "day_month".to_string(),
+            DateMode::MonthDay => "month_day".to_string(),
+            DateMode::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -3335,7 +3295,6 @@ pub enum BacklightTimeout {
     Infinite, // Backlight stays on forever.
     UnknownVariant(u8),
 }
-
 impl BacklightTimeout {
     pub fn from_u8(value: u8) -> BacklightTimeout {
         match value {
@@ -3354,8 +3313,8 @@ impl BacklightTimeout {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            BacklightTimeout::Infinite => "Infinite".to_string(),
-            BacklightTimeout::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            BacklightTimeout::Infinite => "infinite".to_string(),
+            BacklightTimeout::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -3400,7 +3359,6 @@ pub enum Event {
     CommTimeout,          // marker
     UnknownVariant(u8),
 }
-
 impl Event {
     pub fn from_u8(value: u8) -> Event {
         match value {
@@ -3489,43 +3447,43 @@ impl Event {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            Event::Timer => "Timer".to_string(),
-            Event::Workout => "Workout".to_string(),
-            Event::WorkoutStep => "WorkoutStep".to_string(),
-            Event::PowerDown => "PowerDown".to_string(),
-            Event::PowerUp => "PowerUp".to_string(),
-            Event::OffCourse => "OffCourse".to_string(),
-            Event::Session => "Session".to_string(),
-            Event::Lap => "Lap".to_string(),
-            Event::CoursePoint => "CoursePoint".to_string(),
-            Event::Battery => "Battery".to_string(),
-            Event::VirtualPartnerPace => "VirtualPartnerPace".to_string(),
-            Event::HrHighAlert => "HrHighAlert".to_string(),
-            Event::HrLowAlert => "HrLowAlert".to_string(),
-            Event::SpeedHighAlert => "SpeedHighAlert".to_string(),
-            Event::SpeedLowAlert => "SpeedLowAlert".to_string(),
-            Event::CadHighAlert => "CadHighAlert".to_string(),
-            Event::CadLowAlert => "CadLowAlert".to_string(),
-            Event::PowerHighAlert => "PowerHighAlert".to_string(),
-            Event::PowerLowAlert => "PowerLowAlert".to_string(),
-            Event::RecoveryHr => "RecoveryHr".to_string(),
-            Event::BatteryLow => "BatteryLow".to_string(),
-            Event::TimeDurationAlert => "TimeDurationAlert".to_string(),
-            Event::DistanceDurationAlert => "DistanceDurationAlert".to_string(),
-            Event::CalorieDurationAlert => "CalorieDurationAlert".to_string(),
-            Event::Activity => "Activity".to_string(),
-            Event::FitnessEquipment => "FitnessEquipment".to_string(),
-            Event::Length => "Length".to_string(),
-            Event::UserMarker => "UserMarker".to_string(),
-            Event::SportPoint => "SportPoint".to_string(),
-            Event::Calibration => "Calibration".to_string(),
-            Event::FrontGearChange => "FrontGearChange".to_string(),
-            Event::RearGearChange => "RearGearChange".to_string(),
-            Event::RiderPositionChange => "RiderPositionChange".to_string(),
-            Event::ElevHighAlert => "ElevHighAlert".to_string(),
-            Event::ElevLowAlert => "ElevLowAlert".to_string(),
-            Event::CommTimeout => "CommTimeout".to_string(),
-            Event::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            Event::Timer => "timer".to_string(),
+            Event::Workout => "workout".to_string(),
+            Event::WorkoutStep => "workout_step".to_string(),
+            Event::PowerDown => "power_down".to_string(),
+            Event::PowerUp => "power_up".to_string(),
+            Event::OffCourse => "off_course".to_string(),
+            Event::Session => "session".to_string(),
+            Event::Lap => "lap".to_string(),
+            Event::CoursePoint => "course_point".to_string(),
+            Event::Battery => "battery".to_string(),
+            Event::VirtualPartnerPace => "virtual_partner_pace".to_string(),
+            Event::HrHighAlert => "hr_high_alert".to_string(),
+            Event::HrLowAlert => "hr_low_alert".to_string(),
+            Event::SpeedHighAlert => "speed_high_alert".to_string(),
+            Event::SpeedLowAlert => "speed_low_alert".to_string(),
+            Event::CadHighAlert => "cad_high_alert".to_string(),
+            Event::CadLowAlert => "cad_low_alert".to_string(),
+            Event::PowerHighAlert => "power_high_alert".to_string(),
+            Event::PowerLowAlert => "power_low_alert".to_string(),
+            Event::RecoveryHr => "recovery_hr".to_string(),
+            Event::BatteryLow => "battery_low".to_string(),
+            Event::TimeDurationAlert => "time_duration_alert".to_string(),
+            Event::DistanceDurationAlert => "distance_duration_alert".to_string(),
+            Event::CalorieDurationAlert => "calorie_duration_alert".to_string(),
+            Event::Activity => "activity".to_string(),
+            Event::FitnessEquipment => "fitness_equipment".to_string(),
+            Event::Length => "length".to_string(),
+            Event::UserMarker => "user_marker".to_string(),
+            Event::SportPoint => "sport_point".to_string(),
+            Event::Calibration => "calibration".to_string(),
+            Event::FrontGearChange => "front_gear_change".to_string(),
+            Event::RearGearChange => "rear_gear_change".to_string(),
+            Event::RiderPositionChange => "rider_position_change".to_string(),
+            Event::ElevHighAlert => "elev_high_alert".to_string(),
+            Event::ElevLowAlert => "elev_low_alert".to_string(),
+            Event::CommTimeout => "comm_timeout".to_string(),
+            Event::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -3544,7 +3502,6 @@ pub enum EventType {
     StopDisableAll,
     UnknownVariant(u8),
 }
-
 impl EventType {
     pub fn from_u8(value: u8) -> EventType {
         match value {
@@ -3581,17 +3538,17 @@ impl EventType {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            EventType::Start => "Start".to_string(),
-            EventType::Stop => "Stop".to_string(),
-            EventType::ConsecutiveDepreciated => "ConsecutiveDepreciated".to_string(),
-            EventType::Marker => "Marker".to_string(),
-            EventType::StopAll => "StopAll".to_string(),
-            EventType::BeginDepreciated => "BeginDepreciated".to_string(),
-            EventType::EndDepreciated => "EndDepreciated".to_string(),
-            EventType::EndAllDepreciated => "EndAllDepreciated".to_string(),
-            EventType::StopDisable => "StopDisable".to_string(),
-            EventType::StopDisableAll => "StopDisableAll".to_string(),
-            EventType::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            EventType::Start => "start".to_string(),
+            EventType::Stop => "stop".to_string(),
+            EventType::ConsecutiveDepreciated => "consecutive_depreciated".to_string(),
+            EventType::Marker => "marker".to_string(),
+            EventType::StopAll => "stop_all".to_string(),
+            EventType::BeginDepreciated => "begin_depreciated".to_string(),
+            EventType::EndDepreciated => "end_depreciated".to_string(),
+            EventType::EndAllDepreciated => "end_all_depreciated".to_string(),
+            EventType::StopDisable => "stop_disable".to_string(),
+            EventType::StopDisableAll => "stop_disable_all".to_string(),
+            EventType::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -3603,7 +3560,6 @@ pub enum TimerTrigger {
     FitnessEquipment,
     UnknownVariant(u8),
 }
-
 impl TimerTrigger {
     pub fn from_u8(value: u8) -> TimerTrigger {
         match value {
@@ -3626,10 +3582,10 @@ impl TimerTrigger {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            TimerTrigger::Manual => "Manual".to_string(),
-            TimerTrigger::Auto => "Auto".to_string(),
-            TimerTrigger::FitnessEquipment => "FitnessEquipment".to_string(),
-            TimerTrigger::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            TimerTrigger::Manual => "manual".to_string(),
+            TimerTrigger::Auto => "auto".to_string(),
+            TimerTrigger::FitnessEquipment => "fitness_equipment".to_string(),
+            TimerTrigger::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -3642,7 +3598,6 @@ pub enum FitnessEquipmentState {
     Unknown, // lost connection to fitness equipment
     UnknownVariant(u8),
 }
-
 impl FitnessEquipmentState {
     pub fn from_u8(value: u8) -> FitnessEquipmentState {
         match value {
@@ -3667,11 +3622,11 @@ impl FitnessEquipmentState {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            FitnessEquipmentState::Ready => "Ready".to_string(),
-            FitnessEquipmentState::InUse => "InUse".to_string(),
-            FitnessEquipmentState::Paused => "Paused".to_string(),
-            FitnessEquipmentState::Unknown => "Unknown".to_string(),
-            FitnessEquipmentState::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            FitnessEquipmentState::Ready => "ready".to_string(),
+            FitnessEquipmentState::InUse => "in_use".to_string(),
+            FitnessEquipmentState::Paused => "paused".to_string(),
+            FitnessEquipmentState::Unknown => "unknown".to_string(),
+            FitnessEquipmentState::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -3684,7 +3639,6 @@ pub enum Tone {
     ToneAndVibrate,
     UnknownVariant(u8),
 }
-
 impl Tone {
     pub fn from_u8(value: u8) -> Tone {
         match value {
@@ -3709,11 +3663,11 @@ impl Tone {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            Tone::Off => "Off".to_string(),
-            Tone::Tone => "Tone".to_string(),
-            Tone::Vibrate => "Vibrate".to_string(),
-            Tone::ToneAndVibrate => "ToneAndVibrate".to_string(),
-            Tone::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            Tone::Off => "off".to_string(),
+            Tone::Tone => "tone".to_string(),
+            Tone::Vibrate => "vibrate".to_string(),
+            Tone::ToneAndVibrate => "tone_and_vibrate".to_string(),
+            Tone::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -3726,7 +3680,6 @@ pub enum Autoscroll {
     Fast,
     UnknownVariant(u8),
 }
-
 impl Autoscroll {
     pub fn from_u8(value: u8) -> Autoscroll {
         match value {
@@ -3751,23 +3704,22 @@ impl Autoscroll {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            Autoscroll::None => "None".to_string(),
-            Autoscroll::Slow => "Slow".to_string(),
-            Autoscroll::Medium => "Medium".to_string(),
-            Autoscroll::Fast => "Fast".to_string(),
-            Autoscroll::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            Autoscroll::None => "none".to_string(),
+            Autoscroll::Slow => "slow".to_string(),
+            Autoscroll::Medium => "medium".to_string(),
+            Autoscroll::Fast => "fast".to_string(),
+            Autoscroll::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
 
 #[derive(Clone, Copy, Debug)]
 pub enum ActivityClass {
-    Level, // 0 to 100
     LevelMax,
+    Level, // 0 to 100
     Athlete,
     UnknownVariant(u8),
 }
-
 impl ActivityClass {
     pub fn from_u8(value: u8) -> ActivityClass {
         match value {
@@ -3790,10 +3742,10 @@ impl ActivityClass {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            ActivityClass::LevelMax => "LevelMax".to_string(),
-            ActivityClass::Level => "Level".to_string(),
-            ActivityClass::Athlete => "Athlete".to_string(),
-            ActivityClass::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            ActivityClass::LevelMax => "level_max".to_string(),
+            ActivityClass::Level => "level".to_string(),
+            ActivityClass::Athlete => "athlete".to_string(),
+            ActivityClass::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -3805,7 +3757,6 @@ pub enum HrZoneCalc {
     PercentHrr,
     UnknownVariant(u8),
 }
-
 impl HrZoneCalc {
     pub fn from_u8(value: u8) -> HrZoneCalc {
         match value {
@@ -3828,10 +3779,10 @@ impl HrZoneCalc {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            HrZoneCalc::Custom => "Custom".to_string(),
-            HrZoneCalc::PercentMaxHr => "PercentMaxHr".to_string(),
-            HrZoneCalc::PercentHrr => "PercentHrr".to_string(),
-            HrZoneCalc::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            HrZoneCalc::Custom => "custom".to_string(),
+            HrZoneCalc::PercentMaxHr => "percent_max_hr".to_string(),
+            HrZoneCalc::PercentHrr => "percent_hrr".to_string(),
+            HrZoneCalc::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -3842,7 +3793,6 @@ pub enum PwrZoneCalc {
     PercentFtp,
     UnknownVariant(u8),
 }
-
 impl PwrZoneCalc {
     pub fn from_u8(value: u8) -> PwrZoneCalc {
         match value {
@@ -3863,9 +3813,9 @@ impl PwrZoneCalc {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            PwrZoneCalc::Custom => "Custom".to_string(),
-            PwrZoneCalc::PercentFtp => "PercentFtp".to_string(),
-            PwrZoneCalc::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            PwrZoneCalc::Custom => "custom".to_string(),
+            PwrZoneCalc::PercentFtp => "percent_ftp".to_string(),
+            PwrZoneCalc::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -3904,7 +3854,6 @@ pub enum WktStepDuration {
     Reps,
     UnknownVariant(u8),
 }
-
 impl WktStepDuration {
     pub fn from_u8(value: u8) -> WktStepDuration {
         match value {
@@ -3981,45 +3930,45 @@ impl WktStepDuration {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            WktStepDuration::Time => "Time".to_string(),
-            WktStepDuration::Distance => "Distance".to_string(),
-            WktStepDuration::HrLessThan => "HrLessThan".to_string(),
-            WktStepDuration::HrGreaterThan => "HrGreaterThan".to_string(),
-            WktStepDuration::Calories => "Calories".to_string(),
-            WktStepDuration::Open => "Open".to_string(),
-            WktStepDuration::RepeatUntilStepsCmplt => "RepeatUntilStepsCmplt".to_string(),
-            WktStepDuration::RepeatUntilTime => "RepeatUntilTime".to_string(),
-            WktStepDuration::RepeatUntilDistance => "RepeatUntilDistance".to_string(),
-            WktStepDuration::RepeatUntilCalories => "RepeatUntilCalories".to_string(),
-            WktStepDuration::RepeatUntilHrLessThan => "RepeatUntilHrLessThan".to_string(),
-            WktStepDuration::RepeatUntilHrGreaterThan => "RepeatUntilHrGreaterThan".to_string(),
-            WktStepDuration::RepeatUntilPowerLessThan => "RepeatUntilPowerLessThan".to_string(),
+            WktStepDuration::Time => "time".to_string(),
+            WktStepDuration::Distance => "distance".to_string(),
+            WktStepDuration::HrLessThan => "hr_less_than".to_string(),
+            WktStepDuration::HrGreaterThan => "hr_greater_than".to_string(),
+            WktStepDuration::Calories => "calories".to_string(),
+            WktStepDuration::Open => "open".to_string(),
+            WktStepDuration::RepeatUntilStepsCmplt => "repeat_until_steps_cmplt".to_string(),
+            WktStepDuration::RepeatUntilTime => "repeat_until_time".to_string(),
+            WktStepDuration::RepeatUntilDistance => "repeat_until_distance".to_string(),
+            WktStepDuration::RepeatUntilCalories => "repeat_until_calories".to_string(),
+            WktStepDuration::RepeatUntilHrLessThan => "repeat_until_hr_less_than".to_string(),
+            WktStepDuration::RepeatUntilHrGreaterThan => "repeat_until_hr_greater_than".to_string(),
+            WktStepDuration::RepeatUntilPowerLessThan => "repeat_until_power_less_than".to_string(),
             WktStepDuration::RepeatUntilPowerGreaterThan => {
-                "RepeatUntilPowerGreaterThan".to_string()
+                "repeat_until_power_greater_than".to_string()
             }
-            WktStepDuration::PowerLessThan => "PowerLessThan".to_string(),
-            WktStepDuration::PowerGreaterThan => "PowerGreaterThan".to_string(),
-            WktStepDuration::TrainingPeaksTss => "TrainingPeaksTss".to_string(),
+            WktStepDuration::PowerLessThan => "power_less_than".to_string(),
+            WktStepDuration::PowerGreaterThan => "power_greater_than".to_string(),
+            WktStepDuration::TrainingPeaksTss => "training_peaks_tss".to_string(),
             WktStepDuration::RepeatUntilPowerLastLapLessThan => {
-                "RepeatUntilPowerLastLapLessThan".to_string()
+                "repeat_until_power_last_lap_less_than".to_string()
             }
             WktStepDuration::RepeatUntilMaxPowerLastLapLessThan => {
-                "RepeatUntilMaxPowerLastLapLessThan".to_string()
+                "repeat_until_max_power_last_lap_less_than".to_string()
             }
-            WktStepDuration::Power3sLessThan => "Power3sLessThan".to_string(),
-            WktStepDuration::Power10sLessThan => "Power10sLessThan".to_string(),
-            WktStepDuration::Power30sLessThan => "Power30sLessThan".to_string(),
-            WktStepDuration::Power3sGreaterThan => "Power3sGreaterThan".to_string(),
-            WktStepDuration::Power10sGreaterThan => "Power10sGreaterThan".to_string(),
-            WktStepDuration::Power30sGreaterThan => "Power30sGreaterThan".to_string(),
-            WktStepDuration::PowerLapLessThan => "PowerLapLessThan".to_string(),
-            WktStepDuration::PowerLapGreaterThan => "PowerLapGreaterThan".to_string(),
+            WktStepDuration::Power3sLessThan => "power_3s_less_than".to_string(),
+            WktStepDuration::Power10sLessThan => "power_10s_less_than".to_string(),
+            WktStepDuration::Power30sLessThan => "power_30s_less_than".to_string(),
+            WktStepDuration::Power3sGreaterThan => "power_3s_greater_than".to_string(),
+            WktStepDuration::Power10sGreaterThan => "power_10s_greater_than".to_string(),
+            WktStepDuration::Power30sGreaterThan => "power_30s_greater_than".to_string(),
+            WktStepDuration::PowerLapLessThan => "power_lap_less_than".to_string(),
+            WktStepDuration::PowerLapGreaterThan => "power_lap_greater_than".to_string(),
             WktStepDuration::RepeatUntilTrainingPeaksTss => {
-                "RepeatUntilTrainingPeaksTss".to_string()
+                "repeat_until_training_peaks_tss".to_string()
             }
-            WktStepDuration::RepetitionTime => "RepetitionTime".to_string(),
-            WktStepDuration::Reps => "Reps".to_string(),
-            WktStepDuration::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            WktStepDuration::RepetitionTime => "repetition_time".to_string(),
+            WktStepDuration::Reps => "reps".to_string(),
+            WktStepDuration::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -4042,7 +3991,6 @@ pub enum WktStepTarget {
     HeartRateLap,
     UnknownVariant(u8),
 }
-
 impl WktStepTarget {
     pub fn from_u8(value: u8) -> WktStepTarget {
         match value {
@@ -4087,21 +4035,21 @@ impl WktStepTarget {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            WktStepTarget::Speed => "Speed".to_string(),
-            WktStepTarget::HeartRate => "HeartRate".to_string(),
-            WktStepTarget::Open => "Open".to_string(),
-            WktStepTarget::Cadence => "Cadence".to_string(),
-            WktStepTarget::Power => "Power".to_string(),
-            WktStepTarget::Grade => "Grade".to_string(),
-            WktStepTarget::Resistance => "Resistance".to_string(),
-            WktStepTarget::Power3s => "Power3s".to_string(),
-            WktStepTarget::Power10s => "Power10s".to_string(),
-            WktStepTarget::Power30s => "Power30s".to_string(),
-            WktStepTarget::PowerLap => "PowerLap".to_string(),
-            WktStepTarget::SwimStroke => "SwimStroke".to_string(),
-            WktStepTarget::SpeedLap => "SpeedLap".to_string(),
-            WktStepTarget::HeartRateLap => "HeartRateLap".to_string(),
-            WktStepTarget::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            WktStepTarget::Speed => "speed".to_string(),
+            WktStepTarget::HeartRate => "heart_rate".to_string(),
+            WktStepTarget::Open => "open".to_string(),
+            WktStepTarget::Cadence => "cadence".to_string(),
+            WktStepTarget::Power => "power".to_string(),
+            WktStepTarget::Grade => "grade".to_string(),
+            WktStepTarget::Resistance => "resistance".to_string(),
+            WktStepTarget::Power3s => "power_3s".to_string(),
+            WktStepTarget::Power10s => "power_10s".to_string(),
+            WktStepTarget::Power30s => "power_30s".to_string(),
+            WktStepTarget::PowerLap => "power_lap".to_string(),
+            WktStepTarget::SwimStroke => "swim_stroke".to_string(),
+            WktStepTarget::SpeedLap => "speed_lap".to_string(),
+            WktStepTarget::HeartRateLap => "heart_rate_lap".to_string(),
+            WktStepTarget::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -4117,7 +4065,6 @@ pub enum Goal {
     ActiveMinutes,
     UnknownVariant(u8),
 }
-
 impl Goal {
     pub fn from_u8(value: u8) -> Goal {
         match value {
@@ -4148,14 +4095,14 @@ impl Goal {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            Goal::Time => "Time".to_string(),
-            Goal::Distance => "Distance".to_string(),
-            Goal::Calories => "Calories".to_string(),
-            Goal::Frequency => "Frequency".to_string(),
-            Goal::Steps => "Steps".to_string(),
-            Goal::Ascent => "Ascent".to_string(),
-            Goal::ActiveMinutes => "ActiveMinutes".to_string(),
-            Goal::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            Goal::Time => "time".to_string(),
+            Goal::Distance => "distance".to_string(),
+            Goal::Calories => "calories".to_string(),
+            Goal::Frequency => "frequency".to_string(),
+            Goal::Steps => "steps".to_string(),
+            Goal::Ascent => "ascent".to_string(),
+            Goal::ActiveMinutes => "active_minutes".to_string(),
+            Goal::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -4170,7 +4117,6 @@ pub enum GoalRecurrence {
     Custom,
     UnknownVariant(u8),
 }
-
 impl GoalRecurrence {
     pub fn from_u8(value: u8) -> GoalRecurrence {
         match value {
@@ -4199,13 +4145,13 @@ impl GoalRecurrence {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            GoalRecurrence::Off => "Off".to_string(),
-            GoalRecurrence::Daily => "Daily".to_string(),
-            GoalRecurrence::Weekly => "Weekly".to_string(),
-            GoalRecurrence::Monthly => "Monthly".to_string(),
-            GoalRecurrence::Yearly => "Yearly".to_string(),
-            GoalRecurrence::Custom => "Custom".to_string(),
-            GoalRecurrence::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            GoalRecurrence::Off => "off".to_string(),
+            GoalRecurrence::Daily => "daily".to_string(),
+            GoalRecurrence::Weekly => "weekly".to_string(),
+            GoalRecurrence::Monthly => "monthly".to_string(),
+            GoalRecurrence::Yearly => "yearly".to_string(),
+            GoalRecurrence::Custom => "custom".to_string(),
+            GoalRecurrence::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -4217,7 +4163,6 @@ pub enum GoalSource {
     User,      // Manually generated
     UnknownVariant(u8),
 }
-
 impl GoalSource {
     pub fn from_u8(value: u8) -> GoalSource {
         match value {
@@ -4240,10 +4185,10 @@ impl GoalSource {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            GoalSource::Auto => "Auto".to_string(),
-            GoalSource::Community => "Community".to_string(),
-            GoalSource::User => "User".to_string(),
-            GoalSource::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            GoalSource::Auto => "auto".to_string(),
+            GoalSource::Community => "community".to_string(),
+            GoalSource::User => "user".to_string(),
+            GoalSource::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -4254,7 +4199,6 @@ pub enum Schedule {
     Course,
     UnknownVariant(u8),
 }
-
 impl Schedule {
     pub fn from_u8(value: u8) -> Schedule {
         match value {
@@ -4275,9 +4219,9 @@ impl Schedule {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            Schedule::Workout => "Workout".to_string(),
-            Schedule::Course => "Course".to_string(),
-            Schedule::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            Schedule::Workout => "workout".to_string(),
+            Schedule::Course => "course".to_string(),
+            Schedule::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -4312,7 +4256,6 @@ pub enum CoursePoint {
     SegmentEnd,
     UnknownVariant(u8),
 }
-
 impl CoursePoint {
     pub fn from_u8(value: u8) -> CoursePoint {
         match value {
@@ -4381,33 +4324,33 @@ impl CoursePoint {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            CoursePoint::Generic => "Generic".to_string(),
-            CoursePoint::Summit => "Summit".to_string(),
-            CoursePoint::Valley => "Valley".to_string(),
-            CoursePoint::Water => "Water".to_string(),
-            CoursePoint::Food => "Food".to_string(),
-            CoursePoint::Danger => "Danger".to_string(),
-            CoursePoint::Left => "Left".to_string(),
-            CoursePoint::Right => "Right".to_string(),
-            CoursePoint::Straight => "Straight".to_string(),
-            CoursePoint::FirstAid => "FirstAid".to_string(),
-            CoursePoint::FourthCategory => "FourthCategory".to_string(),
-            CoursePoint::ThirdCategory => "ThirdCategory".to_string(),
-            CoursePoint::SecondCategory => "SecondCategory".to_string(),
-            CoursePoint::FirstCategory => "FirstCategory".to_string(),
-            CoursePoint::HorsCategory => "HorsCategory".to_string(),
-            CoursePoint::Sprint => "Sprint".to_string(),
-            CoursePoint::LeftFork => "LeftFork".to_string(),
-            CoursePoint::RightFork => "RightFork".to_string(),
-            CoursePoint::MiddleFork => "MiddleFork".to_string(),
-            CoursePoint::SlightLeft => "SlightLeft".to_string(),
-            CoursePoint::SharpLeft => "SharpLeft".to_string(),
-            CoursePoint::SlightRight => "SlightRight".to_string(),
-            CoursePoint::SharpRight => "SharpRight".to_string(),
-            CoursePoint::UTurn => "UTurn".to_string(),
-            CoursePoint::SegmentStart => "SegmentStart".to_string(),
-            CoursePoint::SegmentEnd => "SegmentEnd".to_string(),
-            CoursePoint::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            CoursePoint::Generic => "generic".to_string(),
+            CoursePoint::Summit => "summit".to_string(),
+            CoursePoint::Valley => "valley".to_string(),
+            CoursePoint::Water => "water".to_string(),
+            CoursePoint::Food => "food".to_string(),
+            CoursePoint::Danger => "danger".to_string(),
+            CoursePoint::Left => "left".to_string(),
+            CoursePoint::Right => "right".to_string(),
+            CoursePoint::Straight => "straight".to_string(),
+            CoursePoint::FirstAid => "first_aid".to_string(),
+            CoursePoint::FourthCategory => "fourth_category".to_string(),
+            CoursePoint::ThirdCategory => "third_category".to_string(),
+            CoursePoint::SecondCategory => "second_category".to_string(),
+            CoursePoint::FirstCategory => "first_category".to_string(),
+            CoursePoint::HorsCategory => "hors_category".to_string(),
+            CoursePoint::Sprint => "sprint".to_string(),
+            CoursePoint::LeftFork => "left_fork".to_string(),
+            CoursePoint::RightFork => "right_fork".to_string(),
+            CoursePoint::MiddleFork => "middle_fork".to_string(),
+            CoursePoint::SlightLeft => "slight_left".to_string(),
+            CoursePoint::SharpLeft => "sharp_left".to_string(),
+            CoursePoint::SlightRight => "slight_right".to_string(),
+            CoursePoint::SharpRight => "sharp_right".to_string(),
+            CoursePoint::UTurn => "u_turn".to_string(),
+            CoursePoint::SegmentStart => "segment_start".to_string(),
+            CoursePoint::SegmentEnd => "segment_end".to_string(),
+            CoursePoint::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -4591,7 +4534,6 @@ pub enum Manufacturer {
     Actigraphcorp,
     UnknownVariant(u16),
 }
-
 impl Manufacturer {
     pub fn from_u16(value: u16) -> Manufacturer {
         match value {
@@ -4958,182 +4900,182 @@ impl Manufacturer {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            Manufacturer::Garmin => "Garmin".to_string(),
-            Manufacturer::GarminFr405Antfs => "GarminFr405Antfs".to_string(),
-            Manufacturer::Zephyr => "Zephyr".to_string(),
-            Manufacturer::Dayton => "Dayton".to_string(),
-            Manufacturer::Idt => "Idt".to_string(),
-            Manufacturer::Srm => "Srm".to_string(),
-            Manufacturer::Quarq => "Quarq".to_string(),
-            Manufacturer::Ibike => "Ibike".to_string(),
-            Manufacturer::Saris => "Saris".to_string(),
-            Manufacturer::SparkHk => "SparkHk".to_string(),
-            Manufacturer::Tanita => "Tanita".to_string(),
-            Manufacturer::Echowell => "Echowell".to_string(),
-            Manufacturer::DynastreamOem => "DynastreamOem".to_string(),
-            Manufacturer::Nautilus => "Nautilus".to_string(),
-            Manufacturer::Dynastream => "Dynastream".to_string(),
-            Manufacturer::Timex => "Timex".to_string(),
-            Manufacturer::Metrigear => "Metrigear".to_string(),
-            Manufacturer::Xelic => "Xelic".to_string(),
-            Manufacturer::Beurer => "Beurer".to_string(),
-            Manufacturer::Cardiosport => "Cardiosport".to_string(),
-            Manufacturer::AAndD => "AAndD".to_string(),
-            Manufacturer::Hmm => "Hmm".to_string(),
-            Manufacturer::Suunto => "Suunto".to_string(),
-            Manufacturer::ThitaElektronik => "ThitaElektronik".to_string(),
-            Manufacturer::Gpulse => "Gpulse".to_string(),
-            Manufacturer::CleanMobile => "CleanMobile".to_string(),
-            Manufacturer::PedalBrain => "PedalBrain".to_string(),
-            Manufacturer::Peaksware => "Peaksware".to_string(),
-            Manufacturer::Saxonar => "Saxonar".to_string(),
-            Manufacturer::LemondFitness => "LemondFitness".to_string(),
-            Manufacturer::Dexcom => "Dexcom".to_string(),
-            Manufacturer::WahooFitness => "WahooFitness".to_string(),
-            Manufacturer::OctaneFitness => "OctaneFitness".to_string(),
-            Manufacturer::Archinoetics => "Archinoetics".to_string(),
-            Manufacturer::TheHurtBox => "TheHurtBox".to_string(),
-            Manufacturer::CitizenSystems => "CitizenSystems".to_string(),
-            Manufacturer::Magellan => "Magellan".to_string(),
-            Manufacturer::Osynce => "Osynce".to_string(),
-            Manufacturer::Holux => "Holux".to_string(),
-            Manufacturer::Concept2 => "Concept2".to_string(),
-            Manufacturer::OneGiantLeap => "OneGiantLeap".to_string(),
-            Manufacturer::AceSensor => "AceSensor".to_string(),
-            Manufacturer::BrimBrothers => "BrimBrothers".to_string(),
-            Manufacturer::Xplova => "Xplova".to_string(),
-            Manufacturer::PerceptionDigital => "PerceptionDigital".to_string(),
-            Manufacturer::Bf1systems => "Bf1systems".to_string(),
-            Manufacturer::Pioneer => "Pioneer".to_string(),
-            Manufacturer::Spantec => "Spantec".to_string(),
-            Manufacturer::Metalogics => "Metalogics".to_string(),
-            Manufacturer::Name4iiiis => "Name4iiiis".to_string(),
-            Manufacturer::SeikoEpson => "SeikoEpson".to_string(),
-            Manufacturer::SeikoEpsonOem => "SeikoEpsonOem".to_string(),
-            Manufacturer::IforPowell => "IforPowell".to_string(),
-            Manufacturer::MaxwellGuider => "MaxwellGuider".to_string(),
-            Manufacturer::StarTrac => "StarTrac".to_string(),
-            Manufacturer::Breakaway => "Breakaway".to_string(),
-            Manufacturer::AlatechTechnologyLtd => "AlatechTechnologyLtd".to_string(),
-            Manufacturer::MioTechnologyEurope => "MioTechnologyEurope".to_string(),
-            Manufacturer::Rotor => "Rotor".to_string(),
-            Manufacturer::Geonaute => "Geonaute".to_string(),
-            Manufacturer::IdBike => "IdBike".to_string(),
-            Manufacturer::Specialized => "Specialized".to_string(),
-            Manufacturer::Wtek => "Wtek".to_string(),
-            Manufacturer::PhysicalEnterprises => "PhysicalEnterprises".to_string(),
-            Manufacturer::NorthPoleEngineering => "NorthPoleEngineering".to_string(),
-            Manufacturer::Bkool => "Bkool".to_string(),
-            Manufacturer::Cateye => "Cateye".to_string(),
-            Manufacturer::StagesCycling => "StagesCycling".to_string(),
-            Manufacturer::Sigmasport => "Sigmasport".to_string(),
-            Manufacturer::Tomtom => "Tomtom".to_string(),
-            Manufacturer::Peripedal => "Peripedal".to_string(),
-            Manufacturer::Wattbike => "Wattbike".to_string(),
-            Manufacturer::Moxy => "Moxy".to_string(),
-            Manufacturer::Ciclosport => "Ciclosport".to_string(),
-            Manufacturer::Powerbahn => "Powerbahn".to_string(),
-            Manufacturer::AcornProjectsAps => "AcornProjectsAps".to_string(),
-            Manufacturer::Lifebeam => "Lifebeam".to_string(),
-            Manufacturer::Bontrager => "Bontrager".to_string(),
-            Manufacturer::Wellgo => "Wellgo".to_string(),
-            Manufacturer::Scosche => "Scosche".to_string(),
-            Manufacturer::Magura => "Magura".to_string(),
-            Manufacturer::Woodway => "Woodway".to_string(),
-            Manufacturer::Elite => "Elite".to_string(),
-            Manufacturer::NielsenKellerman => "NielsenKellerman".to_string(),
-            Manufacturer::DkCity => "DkCity".to_string(),
-            Manufacturer::Tacx => "Tacx".to_string(),
-            Manufacturer::DirectionTechnology => "DirectionTechnology".to_string(),
-            Manufacturer::Magtonic => "Magtonic".to_string(),
-            Manufacturer::Name1partcarbon => "Name1partcarbon".to_string(),
-            Manufacturer::InsideRideTechnologies => "InsideRideTechnologies".to_string(),
-            Manufacturer::SoundOfMotion => "SoundOfMotion".to_string(),
-            Manufacturer::Stryd => "Stryd".to_string(),
-            Manufacturer::Icg => "Icg".to_string(),
+            Manufacturer::Garmin => "garmin".to_string(),
+            Manufacturer::GarminFr405Antfs => "garmin_fr405_antfs".to_string(),
+            Manufacturer::Zephyr => "zephyr".to_string(),
+            Manufacturer::Dayton => "dayton".to_string(),
+            Manufacturer::Idt => "idt".to_string(),
+            Manufacturer::Srm => "srm".to_string(),
+            Manufacturer::Quarq => "quarq".to_string(),
+            Manufacturer::Ibike => "ibike".to_string(),
+            Manufacturer::Saris => "saris".to_string(),
+            Manufacturer::SparkHk => "spark_hk".to_string(),
+            Manufacturer::Tanita => "tanita".to_string(),
+            Manufacturer::Echowell => "echowell".to_string(),
+            Manufacturer::DynastreamOem => "dynastream_oem".to_string(),
+            Manufacturer::Nautilus => "nautilus".to_string(),
+            Manufacturer::Dynastream => "dynastream".to_string(),
+            Manufacturer::Timex => "timex".to_string(),
+            Manufacturer::Metrigear => "metrigear".to_string(),
+            Manufacturer::Xelic => "xelic".to_string(),
+            Manufacturer::Beurer => "beurer".to_string(),
+            Manufacturer::Cardiosport => "cardiosport".to_string(),
+            Manufacturer::AAndD => "a_and_d".to_string(),
+            Manufacturer::Hmm => "hmm".to_string(),
+            Manufacturer::Suunto => "suunto".to_string(),
+            Manufacturer::ThitaElektronik => "thita_elektronik".to_string(),
+            Manufacturer::Gpulse => "gpulse".to_string(),
+            Manufacturer::CleanMobile => "clean_mobile".to_string(),
+            Manufacturer::PedalBrain => "pedal_brain".to_string(),
+            Manufacturer::Peaksware => "peaksware".to_string(),
+            Manufacturer::Saxonar => "saxonar".to_string(),
+            Manufacturer::LemondFitness => "lemond_fitness".to_string(),
+            Manufacturer::Dexcom => "dexcom".to_string(),
+            Manufacturer::WahooFitness => "wahoo_fitness".to_string(),
+            Manufacturer::OctaneFitness => "octane_fitness".to_string(),
+            Manufacturer::Archinoetics => "archinoetics".to_string(),
+            Manufacturer::TheHurtBox => "the_hurt_box".to_string(),
+            Manufacturer::CitizenSystems => "citizen_systems".to_string(),
+            Manufacturer::Magellan => "magellan".to_string(),
+            Manufacturer::Osynce => "osynce".to_string(),
+            Manufacturer::Holux => "holux".to_string(),
+            Manufacturer::Concept2 => "concept2".to_string(),
+            Manufacturer::OneGiantLeap => "one_giant_leap".to_string(),
+            Manufacturer::AceSensor => "ace_sensor".to_string(),
+            Manufacturer::BrimBrothers => "brim_brothers".to_string(),
+            Manufacturer::Xplova => "xplova".to_string(),
+            Manufacturer::PerceptionDigital => "perception_digital".to_string(),
+            Manufacturer::Bf1systems => "bf1systems".to_string(),
+            Manufacturer::Pioneer => "pioneer".to_string(),
+            Manufacturer::Spantec => "spantec".to_string(),
+            Manufacturer::Metalogics => "metalogics".to_string(),
+            Manufacturer::Name4iiiis => "4iiiis".to_string(),
+            Manufacturer::SeikoEpson => "seiko_epson".to_string(),
+            Manufacturer::SeikoEpsonOem => "seiko_epson_oem".to_string(),
+            Manufacturer::IforPowell => "ifor_powell".to_string(),
+            Manufacturer::MaxwellGuider => "maxwell_guider".to_string(),
+            Manufacturer::StarTrac => "star_trac".to_string(),
+            Manufacturer::Breakaway => "breakaway".to_string(),
+            Manufacturer::AlatechTechnologyLtd => "alatech_technology_ltd".to_string(),
+            Manufacturer::MioTechnologyEurope => "mio_technology_europe".to_string(),
+            Manufacturer::Rotor => "rotor".to_string(),
+            Manufacturer::Geonaute => "geonaute".to_string(),
+            Manufacturer::IdBike => "id_bike".to_string(),
+            Manufacturer::Specialized => "specialized".to_string(),
+            Manufacturer::Wtek => "wtek".to_string(),
+            Manufacturer::PhysicalEnterprises => "physical_enterprises".to_string(),
+            Manufacturer::NorthPoleEngineering => "north_pole_engineering".to_string(),
+            Manufacturer::Bkool => "bkool".to_string(),
+            Manufacturer::Cateye => "cateye".to_string(),
+            Manufacturer::StagesCycling => "stages_cycling".to_string(),
+            Manufacturer::Sigmasport => "sigmasport".to_string(),
+            Manufacturer::Tomtom => "tomtom".to_string(),
+            Manufacturer::Peripedal => "peripedal".to_string(),
+            Manufacturer::Wattbike => "wattbike".to_string(),
+            Manufacturer::Moxy => "moxy".to_string(),
+            Manufacturer::Ciclosport => "ciclosport".to_string(),
+            Manufacturer::Powerbahn => "powerbahn".to_string(),
+            Manufacturer::AcornProjectsAps => "acorn_projects_aps".to_string(),
+            Manufacturer::Lifebeam => "lifebeam".to_string(),
+            Manufacturer::Bontrager => "bontrager".to_string(),
+            Manufacturer::Wellgo => "wellgo".to_string(),
+            Manufacturer::Scosche => "scosche".to_string(),
+            Manufacturer::Magura => "magura".to_string(),
+            Manufacturer::Woodway => "woodway".to_string(),
+            Manufacturer::Elite => "elite".to_string(),
+            Manufacturer::NielsenKellerman => "nielsen_kellerman".to_string(),
+            Manufacturer::DkCity => "dk_city".to_string(),
+            Manufacturer::Tacx => "tacx".to_string(),
+            Manufacturer::DirectionTechnology => "direction_technology".to_string(),
+            Manufacturer::Magtonic => "magtonic".to_string(),
+            Manufacturer::Name1partcarbon => "1partcarbon".to_string(),
+            Manufacturer::InsideRideTechnologies => "inside_ride_technologies".to_string(),
+            Manufacturer::SoundOfMotion => "sound_of_motion".to_string(),
+            Manufacturer::Stryd => "stryd".to_string(),
+            Manufacturer::Icg => "icg".to_string(),
             Manufacturer::MiPulse => "MiPulse".to_string(),
-            Manufacturer::BsxAthletics => "BsxAthletics".to_string(),
-            Manufacturer::Look => "Look".to_string(),
-            Manufacturer::CampagnoloSrl => "CampagnoloSrl".to_string(),
-            Manufacturer::BodyBikeSmart => "BodyBikeSmart".to_string(),
-            Manufacturer::Praxisworks => "Praxisworks".to_string(),
-            Manufacturer::LimitsTechnology => "LimitsTechnology".to_string(),
-            Manufacturer::TopactionTechnology => "TopactionTechnology".to_string(),
-            Manufacturer::Cosinuss => "Cosinuss".to_string(),
-            Manufacturer::Fitcare => "Fitcare".to_string(),
-            Manufacturer::Magene => "Magene".to_string(),
-            Manufacturer::GiantManufacturingCo => "GiantManufacturingCo".to_string(),
-            Manufacturer::Tigrasport => "Tigrasport".to_string(),
-            Manufacturer::Salutron => "Salutron".to_string(),
-            Manufacturer::Technogym => "Technogym".to_string(),
-            Manufacturer::BrytonSensors => "BrytonSensors".to_string(),
-            Manufacturer::LatitudeLimited => "LatitudeLimited".to_string(),
-            Manufacturer::SoaringTechnology => "SoaringTechnology".to_string(),
-            Manufacturer::Igpsport => "Igpsport".to_string(),
-            Manufacturer::Thinkrider => "Thinkrider".to_string(),
-            Manufacturer::GopherSport => "GopherSport".to_string(),
-            Manufacturer::Waterrower => "Waterrower".to_string(),
-            Manufacturer::Orangetheory => "Orangetheory".to_string(),
-            Manufacturer::Inpeak => "Inpeak".to_string(),
-            Manufacturer::Kinetic => "Kinetic".to_string(),
-            Manufacturer::JohnsonHealthTech => "JohnsonHealthTech".to_string(),
-            Manufacturer::PolarElectro => "PolarElectro".to_string(),
-            Manufacturer::Seesense => "Seesense".to_string(),
-            Manufacturer::NciTechnology => "NciTechnology".to_string(),
-            Manufacturer::Iqsquare => "Iqsquare".to_string(),
-            Manufacturer::Leomo => "Leomo".to_string(),
-            Manufacturer::IfitCom => "IfitCom".to_string(),
-            Manufacturer::CorosByte => "CorosByte".to_string(),
-            Manufacturer::VersaDesign => "VersaDesign".to_string(),
-            Manufacturer::Chileaf => "Chileaf".to_string(),
-            Manufacturer::Development => "Development".to_string(),
-            Manufacturer::Healthandlife => "Healthandlife".to_string(),
-            Manufacturer::Lezyne => "Lezyne".to_string(),
-            Manufacturer::ScribeLabs => "ScribeLabs".to_string(),
-            Manufacturer::Zwift => "Zwift".to_string(),
-            Manufacturer::Watteam => "Watteam".to_string(),
-            Manufacturer::Recon => "Recon".to_string(),
-            Manufacturer::FaveroElectronics => "FaveroElectronics".to_string(),
-            Manufacturer::Dynovelo => "Dynovelo".to_string(),
-            Manufacturer::Strava => "Strava".to_string(),
-            Manufacturer::Precor => "Precor".to_string(),
-            Manufacturer::Bryton => "Bryton".to_string(),
-            Manufacturer::Sram => "Sram".to_string(),
-            Manufacturer::Navman => "Navman".to_string(),
-            Manufacturer::Cobi => "Cobi".to_string(),
-            Manufacturer::Spivi => "Spivi".to_string(),
-            Manufacturer::MioMagellan => "MioMagellan".to_string(),
-            Manufacturer::Evesports => "Evesports".to_string(),
-            Manufacturer::SensitivusGauge => "SensitivusGauge".to_string(),
-            Manufacturer::Podoon => "Podoon".to_string(),
-            Manufacturer::LifeTimeFitness => "LifeTimeFitness".to_string(),
-            Manufacturer::FalcoEMotors => "FalcoEMotors".to_string(),
-            Manufacturer::Minoura => "Minoura".to_string(),
-            Manufacturer::Cycliq => "Cycliq".to_string(),
-            Manufacturer::Luxottica => "Luxottica".to_string(),
-            Manufacturer::TrainerRoad => "TrainerRoad".to_string(),
-            Manufacturer::TheSufferfest => "TheSufferfest".to_string(),
-            Manufacturer::Fullspeedahead => "Fullspeedahead".to_string(),
-            Manufacturer::Virtualtraining => "Virtualtraining".to_string(),
-            Manufacturer::Feedbacksports => "Feedbacksports".to_string(),
-            Manufacturer::Omata => "Omata".to_string(),
-            Manufacturer::Vdo => "Vdo".to_string(),
-            Manufacturer::Magneticdays => "Magneticdays".to_string(),
-            Manufacturer::Hammerhead => "Hammerhead".to_string(),
-            Manufacturer::KineticByKurt => "KineticByKurt".to_string(),
-            Manufacturer::Shapelog => "Shapelog".to_string(),
-            Manufacturer::Dabuziduo => "Dabuziduo".to_string(),
-            Manufacturer::Jetblack => "Jetblack".to_string(),
-            Manufacturer::Coros => "Coros".to_string(),
-            Manufacturer::Virtugo => "Virtugo".to_string(),
-            Manufacturer::Velosense => "Velosense".to_string(),
-            Manufacturer::Cycligentinc => "Cycligentinc".to_string(),
-            Manufacturer::Trailforks => "Trailforks".to_string(),
-            Manufacturer::MahleEbikemotion => "MahleEbikemotion".to_string(),
-            Manufacturer::Nurvv => "Nurvv".to_string(),
-            Manufacturer::Microprogram => "Microprogram".to_string(),
-            Manufacturer::Actigraphcorp => "Actigraphcorp".to_string(),
-            Manufacturer::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            Manufacturer::BsxAthletics => "bsx_athletics".to_string(),
+            Manufacturer::Look => "look".to_string(),
+            Manufacturer::CampagnoloSrl => "campagnolo_srl".to_string(),
+            Manufacturer::BodyBikeSmart => "body_bike_smart".to_string(),
+            Manufacturer::Praxisworks => "praxisworks".to_string(),
+            Manufacturer::LimitsTechnology => "limits_technology".to_string(),
+            Manufacturer::TopactionTechnology => "topaction_technology".to_string(),
+            Manufacturer::Cosinuss => "cosinuss".to_string(),
+            Manufacturer::Fitcare => "fitcare".to_string(),
+            Manufacturer::Magene => "magene".to_string(),
+            Manufacturer::GiantManufacturingCo => "giant_manufacturing_co".to_string(),
+            Manufacturer::Tigrasport => "tigrasport".to_string(),
+            Manufacturer::Salutron => "salutron".to_string(),
+            Manufacturer::Technogym => "technogym".to_string(),
+            Manufacturer::BrytonSensors => "bryton_sensors".to_string(),
+            Manufacturer::LatitudeLimited => "latitude_limited".to_string(),
+            Manufacturer::SoaringTechnology => "soaring_technology".to_string(),
+            Manufacturer::Igpsport => "igpsport".to_string(),
+            Manufacturer::Thinkrider => "thinkrider".to_string(),
+            Manufacturer::GopherSport => "gopher_sport".to_string(),
+            Manufacturer::Waterrower => "waterrower".to_string(),
+            Manufacturer::Orangetheory => "orangetheory".to_string(),
+            Manufacturer::Inpeak => "inpeak".to_string(),
+            Manufacturer::Kinetic => "kinetic".to_string(),
+            Manufacturer::JohnsonHealthTech => "johnson_health_tech".to_string(),
+            Manufacturer::PolarElectro => "polar_electro".to_string(),
+            Manufacturer::Seesense => "seesense".to_string(),
+            Manufacturer::NciTechnology => "nci_technology".to_string(),
+            Manufacturer::Iqsquare => "iqsquare".to_string(),
+            Manufacturer::Leomo => "leomo".to_string(),
+            Manufacturer::IfitCom => "ifit_com".to_string(),
+            Manufacturer::CorosByte => "coros_byte".to_string(),
+            Manufacturer::VersaDesign => "versa_design".to_string(),
+            Manufacturer::Chileaf => "chileaf".to_string(),
+            Manufacturer::Development => "development".to_string(),
+            Manufacturer::Healthandlife => "healthandlife".to_string(),
+            Manufacturer::Lezyne => "lezyne".to_string(),
+            Manufacturer::ScribeLabs => "scribe_labs".to_string(),
+            Manufacturer::Zwift => "zwift".to_string(),
+            Manufacturer::Watteam => "watteam".to_string(),
+            Manufacturer::Recon => "recon".to_string(),
+            Manufacturer::FaveroElectronics => "favero_electronics".to_string(),
+            Manufacturer::Dynovelo => "dynovelo".to_string(),
+            Manufacturer::Strava => "strava".to_string(),
+            Manufacturer::Precor => "precor".to_string(),
+            Manufacturer::Bryton => "bryton".to_string(),
+            Manufacturer::Sram => "sram".to_string(),
+            Manufacturer::Navman => "navman".to_string(),
+            Manufacturer::Cobi => "cobi".to_string(),
+            Manufacturer::Spivi => "spivi".to_string(),
+            Manufacturer::MioMagellan => "mio_magellan".to_string(),
+            Manufacturer::Evesports => "evesports".to_string(),
+            Manufacturer::SensitivusGauge => "sensitivus_gauge".to_string(),
+            Manufacturer::Podoon => "podoon".to_string(),
+            Manufacturer::LifeTimeFitness => "life_time_fitness".to_string(),
+            Manufacturer::FalcoEMotors => "falco_e_motors".to_string(),
+            Manufacturer::Minoura => "minoura".to_string(),
+            Manufacturer::Cycliq => "cycliq".to_string(),
+            Manufacturer::Luxottica => "luxottica".to_string(),
+            Manufacturer::TrainerRoad => "trainer_road".to_string(),
+            Manufacturer::TheSufferfest => "the_sufferfest".to_string(),
+            Manufacturer::Fullspeedahead => "fullspeedahead".to_string(),
+            Manufacturer::Virtualtraining => "virtualtraining".to_string(),
+            Manufacturer::Feedbacksports => "feedbacksports".to_string(),
+            Manufacturer::Omata => "omata".to_string(),
+            Manufacturer::Vdo => "vdo".to_string(),
+            Manufacturer::Magneticdays => "magneticdays".to_string(),
+            Manufacturer::Hammerhead => "hammerhead".to_string(),
+            Manufacturer::KineticByKurt => "kinetic_by_kurt".to_string(),
+            Manufacturer::Shapelog => "shapelog".to_string(),
+            Manufacturer::Dabuziduo => "dabuziduo".to_string(),
+            Manufacturer::Jetblack => "jetblack".to_string(),
+            Manufacturer::Coros => "coros".to_string(),
+            Manufacturer::Virtugo => "virtugo".to_string(),
+            Manufacturer::Velosense => "velosense".to_string(),
+            Manufacturer::Cycligentinc => "cycligentinc".to_string(),
+            Manufacturer::Trailforks => "trailforks".to_string(),
+            Manufacturer::MahleEbikemotion => "mahle_ebikemotion".to_string(),
+            Manufacturer::Nurvv => "nurvv".to_string(),
+            Manufacturer::Microprogram => "microprogram".to_string(),
+            Manufacturer::Actigraphcorp => "actigraphcorp".to_string(),
+            Manufacturer::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -5300,9 +5242,9 @@ pub enum GarminProduct {
     Fr935,
     Fenix5,
     Vivoactive3,
+    Edge1030,
     Foretrex601701,
     VivoMoveHr,
-    Edge1030,
     ApproachZ80,
     VivoSmart3Apac,
     VivoSportApac,
@@ -5332,7 +5274,6 @@ pub enum GarminProduct {
     Connect, // Garmin Connect website
     UnknownVariant(u16),
 }
-
 impl GarminProduct {
     pub fn from_u16(value: u16) -> GarminProduct {
         match value {
@@ -5729,197 +5670,201 @@ impl GarminProduct {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            GarminProduct::Hrm1 => "Hrm1".to_string(),
-            GarminProduct::Axh01 => "Axh01".to_string(),
-            GarminProduct::Axb01 => "Axb01".to_string(),
-            GarminProduct::Axb02 => "Axb02".to_string(),
-            GarminProduct::Hrm2ss => "Hrm2ss".to_string(),
-            GarminProduct::DsiAlf02 => "DsiAlf02".to_string(),
-            GarminProduct::Hrm3ss => "Hrm3ss".to_string(),
-            GarminProduct::HrmRunSingleByteProductId => "HrmRunSingleByteProductId".to_string(),
-            GarminProduct::Bsm => "Bsm".to_string(),
-            GarminProduct::Bcm => "Bcm".to_string(),
-            GarminProduct::Axs01 => "Axs01".to_string(),
-            GarminProduct::HrmTriSingleByteProductId => "HrmTriSingleByteProductId".to_string(),
-            GarminProduct::Fr225SingleByteProductId => "Fr225SingleByteProductId".to_string(),
-            GarminProduct::Fr301China => "Fr301China".to_string(),
-            GarminProduct::Fr301Japan => "Fr301Japan".to_string(),
-            GarminProduct::Fr301Korea => "Fr301Korea".to_string(),
-            GarminProduct::Fr301Taiwan => "Fr301Taiwan".to_string(),
-            GarminProduct::Fr405 => "Fr405".to_string(),
-            GarminProduct::Fr50 => "Fr50".to_string(),
-            GarminProduct::Fr405Japan => "Fr405Japan".to_string(),
-            GarminProduct::Fr60 => "Fr60".to_string(),
-            GarminProduct::DsiAlf01 => "DsiAlf01".to_string(),
-            GarminProduct::Fr310xt => "Fr310xt".to_string(),
-            GarminProduct::Edge500 => "Edge500".to_string(),
-            GarminProduct::Fr110 => "Fr110".to_string(),
-            GarminProduct::Edge800 => "Edge800".to_string(),
-            GarminProduct::Edge500Taiwan => "Edge500Taiwan".to_string(),
-            GarminProduct::Edge500Japan => "Edge500Japan".to_string(),
-            GarminProduct::Chirp => "Chirp".to_string(),
-            GarminProduct::Fr110Japan => "Fr110Japan".to_string(),
-            GarminProduct::Edge200 => "Edge200".to_string(),
-            GarminProduct::Fr910xt => "Fr910xt".to_string(),
-            GarminProduct::Edge800Taiwan => "Edge800Taiwan".to_string(),
-            GarminProduct::Edge800Japan => "Edge800Japan".to_string(),
-            GarminProduct::Alf04 => "Alf04".to_string(),
-            GarminProduct::Fr610 => "Fr610".to_string(),
-            GarminProduct::Fr210Japan => "Fr210Japan".to_string(),
-            GarminProduct::VectorSs => "VectorSs".to_string(),
-            GarminProduct::VectorCp => "VectorCp".to_string(),
-            GarminProduct::Edge800China => "Edge800China".to_string(),
-            GarminProduct::Edge500China => "Edge500China".to_string(),
-            GarminProduct::Fr610Japan => "Fr610Japan".to_string(),
-            GarminProduct::Edge500Korea => "Edge500Korea".to_string(),
-            GarminProduct::Fr70 => "Fr70".to_string(),
-            GarminProduct::Fr310xt4t => "Fr310xt4t".to_string(),
-            GarminProduct::Amx => "Amx".to_string(),
-            GarminProduct::Fr10 => "Fr10".to_string(),
-            GarminProduct::Edge800Korea => "Edge800Korea".to_string(),
-            GarminProduct::Swim => "Swim".to_string(),
-            GarminProduct::Fr910xtChina => "Fr910xtChina".to_string(),
-            GarminProduct::Fenix => "Fenix".to_string(),
-            GarminProduct::Edge200Taiwan => "Edge200Taiwan".to_string(),
-            GarminProduct::Edge510 => "Edge510".to_string(),
-            GarminProduct::Edge810 => "Edge810".to_string(),
-            GarminProduct::Tempe => "Tempe".to_string(),
-            GarminProduct::Fr910xtJapan => "Fr910xtJapan".to_string(),
-            GarminProduct::Fr620 => "Fr620".to_string(),
-            GarminProduct::Fr220 => "Fr220".to_string(),
-            GarminProduct::Fr910xtKorea => "Fr910xtKorea".to_string(),
-            GarminProduct::Fr10Japan => "Fr10Japan".to_string(),
-            GarminProduct::Edge810Japan => "Edge810Japan".to_string(),
-            GarminProduct::VirbElite => "VirbElite".to_string(),
-            GarminProduct::EdgeTouring => "EdgeTouring".to_string(),
-            GarminProduct::Edge510Japan => "Edge510Japan".to_string(),
-            GarminProduct::HrmTri => "HrmTri".to_string(),
-            GarminProduct::HrmRun => "HrmRun".to_string(),
-            GarminProduct::Fr920xt => "Fr920xt".to_string(),
-            GarminProduct::Edge510Asia => "Edge510Asia".to_string(),
-            GarminProduct::Edge810China => "Edge810China".to_string(),
-            GarminProduct::Edge810Taiwan => "Edge810Taiwan".to_string(),
-            GarminProduct::Edge1000 => "Edge1000".to_string(),
-            GarminProduct::VivoFit => "VivoFit".to_string(),
-            GarminProduct::VirbRemote => "VirbRemote".to_string(),
-            GarminProduct::VivoKi => "VivoKi".to_string(),
-            GarminProduct::Fr15 => "Fr15".to_string(),
-            GarminProduct::VivoActive => "VivoActive".to_string(),
-            GarminProduct::Edge510Korea => "Edge510Korea".to_string(),
-            GarminProduct::Fr620Japan => "Fr620Japan".to_string(),
-            GarminProduct::Fr620China => "Fr620China".to_string(),
-            GarminProduct::Fr220Japan => "Fr220Japan".to_string(),
-            GarminProduct::Fr220China => "Fr220China".to_string(),
-            GarminProduct::ApproachS6 => "ApproachS6".to_string(),
-            GarminProduct::VivoSmart => "VivoSmart".to_string(),
-            GarminProduct::Fenix2 => "Fenix2".to_string(),
-            GarminProduct::Epix => "Epix".to_string(),
-            GarminProduct::Fenix3 => "Fenix3".to_string(),
-            GarminProduct::Edge1000Taiwan => "Edge1000Taiwan".to_string(),
-            GarminProduct::Edge1000Japan => "Edge1000Japan".to_string(),
-            GarminProduct::Fr15Japan => "Fr15Japan".to_string(),
-            GarminProduct::Edge520 => "Edge520".to_string(),
-            GarminProduct::Edge1000China => "Edge1000China".to_string(),
-            GarminProduct::Fr620Russia => "Fr620Russia".to_string(),
-            GarminProduct::Fr220Russia => "Fr220Russia".to_string(),
-            GarminProduct::VectorS => "VectorS".to_string(),
-            GarminProduct::Edge1000Korea => "Edge1000Korea".to_string(),
-            GarminProduct::Fr920xtTaiwan => "Fr920xtTaiwan".to_string(),
-            GarminProduct::Fr920xtChina => "Fr920xtChina".to_string(),
-            GarminProduct::Fr920xtJapan => "Fr920xtJapan".to_string(),
-            GarminProduct::Virbx => "Virbx".to_string(),
-            GarminProduct::VivoSmartApac => "VivoSmartApac".to_string(),
-            GarminProduct::EtrexTouch => "EtrexTouch".to_string(),
-            GarminProduct::Edge25 => "Edge25".to_string(),
-            GarminProduct::Fr25 => "Fr25".to_string(),
-            GarminProduct::VivoFit2 => "VivoFit2".to_string(),
-            GarminProduct::Fr225 => "Fr225".to_string(),
-            GarminProduct::Fr630 => "Fr630".to_string(),
-            GarminProduct::Fr230 => "Fr230".to_string(),
-            GarminProduct::Fr735xt => "Fr735xt".to_string(),
-            GarminProduct::VivoActiveApac => "VivoActiveApac".to_string(),
-            GarminProduct::Vector2 => "Vector2".to_string(),
-            GarminProduct::Vector2s => "Vector2s".to_string(),
-            GarminProduct::Virbxe => "Virbxe".to_string(),
-            GarminProduct::Fr620Taiwan => "Fr620Taiwan".to_string(),
-            GarminProduct::Fr220Taiwan => "Fr220Taiwan".to_string(),
-            GarminProduct::Truswing => "Truswing".to_string(),
-            GarminProduct::Fenix3China => "Fenix3China".to_string(),
-            GarminProduct::Fenix3Twn => "Fenix3Twn".to_string(),
-            GarminProduct::VariaHeadlight => "VariaHeadlight".to_string(),
-            GarminProduct::VariaTaillightOld => "VariaTaillightOld".to_string(),
-            GarminProduct::EdgeExplore1000 => "EdgeExplore1000".to_string(),
-            GarminProduct::Fr225Asia => "Fr225Asia".to_string(),
-            GarminProduct::VariaRadarTaillight => "VariaRadarTaillight".to_string(),
-            GarminProduct::VariaRadarDisplay => "VariaRadarDisplay".to_string(),
-            GarminProduct::Edge20 => "Edge20".to_string(),
-            GarminProduct::D2Bravo => "D2Bravo".to_string(),
-            GarminProduct::ApproachS20 => "ApproachS20".to_string(),
-            GarminProduct::VariaRemote => "VariaRemote".to_string(),
-            GarminProduct::ApproachX40 => "ApproachX40".to_string(),
-            GarminProduct::Hrm4Run => "Hrm4Run".to_string(),
-            GarminProduct::VivoActiveHr => "VivoActiveHr".to_string(),
-            GarminProduct::VivoSmartGpsHr => "VivoSmartGpsHr".to_string(),
-            GarminProduct::VivoSmartHr => "VivoSmartHr".to_string(),
-            GarminProduct::VivoMove => "VivoMove".to_string(),
-            GarminProduct::VariaVision => "VariaVision".to_string(),
-            GarminProduct::VivoFit3 => "VivoFit3".to_string(),
-            GarminProduct::Fenix3Hr => "Fenix3Hr".to_string(),
-            GarminProduct::VirbUltra30 => "VirbUltra30".to_string(),
-            GarminProduct::IndexSmartScale => "IndexSmartScale".to_string(),
-            GarminProduct::Fr235 => "Fr235".to_string(),
-            GarminProduct::Fenix3Chronos => "Fenix3Chronos".to_string(),
-            GarminProduct::Oregon7xx => "Oregon7xx".to_string(),
-            GarminProduct::Rino7xx => "Rino7xx".to_string(),
-            GarminProduct::Nautix => "Nautix".to_string(),
-            GarminProduct::Edge820 => "Edge820".to_string(),
-            GarminProduct::EdgeExplore820 => "EdgeExplore820".to_string(),
-            GarminProduct::Fr735xtApac => "Fr735xtApac".to_string(),
-            GarminProduct::Fr735xtJapan => "Fr735xtJapan".to_string(),
-            GarminProduct::Fenix5s => "Fenix5s".to_string(),
-            GarminProduct::D2BravoTitanium => "D2BravoTitanium".to_string(),
-            GarminProduct::VariaUt800 => "VariaUt800".to_string(),
-            GarminProduct::RunningDynamicsPod => "RunningDynamicsPod".to_string(),
-            GarminProduct::Fenix5x => "Fenix5x".to_string(),
-            GarminProduct::VivoFitJr => "VivoFitJr".to_string(),
-            GarminProduct::VivoSmart3 => "VivoSmart3".to_string(),
-            GarminProduct::VivoSport => "VivoSport".to_string(),
-            GarminProduct::ApproachS60 => "ApproachS60".to_string(),
-            GarminProduct::Virb360 => "Virb360".to_string(),
-            GarminProduct::Fr935 => "Fr935".to_string(),
-            GarminProduct::Fenix5 => "Fenix5".to_string(),
-            GarminProduct::Vivoactive3 => "Vivoactive3".to_string(),
-            GarminProduct::Edge1030 => "Edge1030".to_string(),
-            GarminProduct::Foretrex601701 => "Foretrex601701".to_string(),
-            GarminProduct::VivoMoveHr => "VivoMoveHr".to_string(),
-            GarminProduct::ApproachZ80 => "ApproachZ80".to_string(),
-            GarminProduct::VivoSmart3Apac => "VivoSmart3Apac".to_string(),
-            GarminProduct::VivoSportApac => "VivoSportApac".to_string(),
-            GarminProduct::Descent => "Descent".to_string(),
-            GarminProduct::Fr645 => "Fr645".to_string(),
-            GarminProduct::Fr645m => "Fr645m".to_string(),
-            GarminProduct::Fenix5sPlus => "Fenix5sPlus".to_string(),
-            GarminProduct::Edge130 => "Edge130".to_string(),
-            GarminProduct::Vivosmart4 => "Vivosmart4".to_string(),
-            GarminProduct::ApproachX10 => "ApproachX10".to_string(),
-            GarminProduct::Vivoactive3mW => "Vivoactive3mW".to_string(),
-            GarminProduct::EdgeExplore => "EdgeExplore".to_string(),
-            GarminProduct::Gpsmap66 => "Gpsmap66".to_string(),
-            GarminProduct::ApproachS10 => "ApproachS10".to_string(),
-            GarminProduct::Vivoactive3mL => "Vivoactive3mL".to_string(),
-            GarminProduct::ApproachG80 => "ApproachG80".to_string(),
-            GarminProduct::Fenix5Plus => "Fenix5Plus".to_string(),
-            GarminProduct::Fenix5xPlus => "Fenix5xPlus".to_string(),
-            GarminProduct::Edge520Plus => "Edge520Plus".to_string(),
-            GarminProduct::HrmDual => "HrmDual".to_string(),
-            GarminProduct::ApproachS40 => "ApproachS40".to_string(),
-            GarminProduct::Sdm4 => "Sdm4".to_string(),
-            GarminProduct::EdgeRemote => "EdgeRemote".to_string(),
-            GarminProduct::TrainingCenter => "TrainingCenter".to_string(),
-            GarminProduct::ConnectiqSimulator => "ConnectiqSimulator".to_string(),
-            GarminProduct::AndroidAntplusPlugin => "AndroidAntplusPlugin".to_string(),
-            GarminProduct::Connect => "Connect".to_string(),
-            GarminProduct::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            GarminProduct::Hrm1 => "hrm1".to_string(),
+            GarminProduct::Axh01 => "axh01".to_string(),
+            GarminProduct::Axb01 => "axb01".to_string(),
+            GarminProduct::Axb02 => "axb02".to_string(),
+            GarminProduct::Hrm2ss => "hrm2ss".to_string(),
+            GarminProduct::DsiAlf02 => "dsi_alf02".to_string(),
+            GarminProduct::Hrm3ss => "hrm3ss".to_string(),
+            GarminProduct::HrmRunSingleByteProductId => {
+                "hrm_run_single_byte_product_id".to_string()
+            }
+            GarminProduct::Bsm => "bsm".to_string(),
+            GarminProduct::Bcm => "bcm".to_string(),
+            GarminProduct::Axs01 => "axs01".to_string(),
+            GarminProduct::HrmTriSingleByteProductId => {
+                "hrm_tri_single_byte_product_id".to_string()
+            }
+            GarminProduct::Fr225SingleByteProductId => "fr225_single_byte_product_id".to_string(),
+            GarminProduct::Fr301China => "fr301_china".to_string(),
+            GarminProduct::Fr301Japan => "fr301_japan".to_string(),
+            GarminProduct::Fr301Korea => "fr301_korea".to_string(),
+            GarminProduct::Fr301Taiwan => "fr301_taiwan".to_string(),
+            GarminProduct::Fr405 => "fr405".to_string(),
+            GarminProduct::Fr50 => "fr50".to_string(),
+            GarminProduct::Fr405Japan => "fr405_japan".to_string(),
+            GarminProduct::Fr60 => "fr60".to_string(),
+            GarminProduct::DsiAlf01 => "dsi_alf01".to_string(),
+            GarminProduct::Fr310xt => "fr310xt".to_string(),
+            GarminProduct::Edge500 => "edge500".to_string(),
+            GarminProduct::Fr110 => "fr110".to_string(),
+            GarminProduct::Edge800 => "edge800".to_string(),
+            GarminProduct::Edge500Taiwan => "edge500_taiwan".to_string(),
+            GarminProduct::Edge500Japan => "edge500_japan".to_string(),
+            GarminProduct::Chirp => "chirp".to_string(),
+            GarminProduct::Fr110Japan => "fr110_japan".to_string(),
+            GarminProduct::Edge200 => "edge200".to_string(),
+            GarminProduct::Fr910xt => "fr910xt".to_string(),
+            GarminProduct::Edge800Taiwan => "edge800_taiwan".to_string(),
+            GarminProduct::Edge800Japan => "edge800_japan".to_string(),
+            GarminProduct::Alf04 => "alf04".to_string(),
+            GarminProduct::Fr610 => "fr610".to_string(),
+            GarminProduct::Fr210Japan => "fr210_japan".to_string(),
+            GarminProduct::VectorSs => "vector_ss".to_string(),
+            GarminProduct::VectorCp => "vector_cp".to_string(),
+            GarminProduct::Edge800China => "edge800_china".to_string(),
+            GarminProduct::Edge500China => "edge500_china".to_string(),
+            GarminProduct::Fr610Japan => "fr610_japan".to_string(),
+            GarminProduct::Edge500Korea => "edge500_korea".to_string(),
+            GarminProduct::Fr70 => "fr70".to_string(),
+            GarminProduct::Fr310xt4t => "fr310xt_4t".to_string(),
+            GarminProduct::Amx => "amx".to_string(),
+            GarminProduct::Fr10 => "fr10".to_string(),
+            GarminProduct::Edge800Korea => "edge800_korea".to_string(),
+            GarminProduct::Swim => "swim".to_string(),
+            GarminProduct::Fr910xtChina => "fr910xt_china".to_string(),
+            GarminProduct::Fenix => "fenix".to_string(),
+            GarminProduct::Edge200Taiwan => "edge200_taiwan".to_string(),
+            GarminProduct::Edge510 => "edge510".to_string(),
+            GarminProduct::Edge810 => "edge810".to_string(),
+            GarminProduct::Tempe => "tempe".to_string(),
+            GarminProduct::Fr910xtJapan => "fr910xt_japan".to_string(),
+            GarminProduct::Fr620 => "fr620".to_string(),
+            GarminProduct::Fr220 => "fr220".to_string(),
+            GarminProduct::Fr910xtKorea => "fr910xt_korea".to_string(),
+            GarminProduct::Fr10Japan => "fr10_japan".to_string(),
+            GarminProduct::Edge810Japan => "edge810_japan".to_string(),
+            GarminProduct::VirbElite => "virb_elite".to_string(),
+            GarminProduct::EdgeTouring => "edge_touring".to_string(),
+            GarminProduct::Edge510Japan => "edge510_japan".to_string(),
+            GarminProduct::HrmTri => "hrm_tri".to_string(),
+            GarminProduct::HrmRun => "hrm_run".to_string(),
+            GarminProduct::Fr920xt => "fr920xt".to_string(),
+            GarminProduct::Edge510Asia => "edge510_asia".to_string(),
+            GarminProduct::Edge810China => "edge810_china".to_string(),
+            GarminProduct::Edge810Taiwan => "edge810_taiwan".to_string(),
+            GarminProduct::Edge1000 => "edge1000".to_string(),
+            GarminProduct::VivoFit => "vivo_fit".to_string(),
+            GarminProduct::VirbRemote => "virb_remote".to_string(),
+            GarminProduct::VivoKi => "vivo_ki".to_string(),
+            GarminProduct::Fr15 => "fr15".to_string(),
+            GarminProduct::VivoActive => "vivo_active".to_string(),
+            GarminProduct::Edge510Korea => "edge510_korea".to_string(),
+            GarminProduct::Fr620Japan => "fr620_japan".to_string(),
+            GarminProduct::Fr620China => "fr620_china".to_string(),
+            GarminProduct::Fr220Japan => "fr220_japan".to_string(),
+            GarminProduct::Fr220China => "fr220_china".to_string(),
+            GarminProduct::ApproachS6 => "approach_s6".to_string(),
+            GarminProduct::VivoSmart => "vivo_smart".to_string(),
+            GarminProduct::Fenix2 => "fenix2".to_string(),
+            GarminProduct::Epix => "epix".to_string(),
+            GarminProduct::Fenix3 => "fenix3".to_string(),
+            GarminProduct::Edge1000Taiwan => "edge1000_taiwan".to_string(),
+            GarminProduct::Edge1000Japan => "edge1000_japan".to_string(),
+            GarminProduct::Fr15Japan => "fr15_japan".to_string(),
+            GarminProduct::Edge520 => "edge520".to_string(),
+            GarminProduct::Edge1000China => "edge1000_china".to_string(),
+            GarminProduct::Fr620Russia => "fr620_russia".to_string(),
+            GarminProduct::Fr220Russia => "fr220_russia".to_string(),
+            GarminProduct::VectorS => "vector_s".to_string(),
+            GarminProduct::Edge1000Korea => "edge1000_korea".to_string(),
+            GarminProduct::Fr920xtTaiwan => "fr920xt_taiwan".to_string(),
+            GarminProduct::Fr920xtChina => "fr920xt_china".to_string(),
+            GarminProduct::Fr920xtJapan => "fr920xt_japan".to_string(),
+            GarminProduct::Virbx => "virbx".to_string(),
+            GarminProduct::VivoSmartApac => "vivo_smart_apac".to_string(),
+            GarminProduct::EtrexTouch => "etrex_touch".to_string(),
+            GarminProduct::Edge25 => "edge25".to_string(),
+            GarminProduct::Fr25 => "fr25".to_string(),
+            GarminProduct::VivoFit2 => "vivo_fit2".to_string(),
+            GarminProduct::Fr225 => "fr225".to_string(),
+            GarminProduct::Fr630 => "fr630".to_string(),
+            GarminProduct::Fr230 => "fr230".to_string(),
+            GarminProduct::Fr735xt => "fr735xt".to_string(),
+            GarminProduct::VivoActiveApac => "vivo_active_apac".to_string(),
+            GarminProduct::Vector2 => "vector_2".to_string(),
+            GarminProduct::Vector2s => "vector_2s".to_string(),
+            GarminProduct::Virbxe => "virbxe".to_string(),
+            GarminProduct::Fr620Taiwan => "fr620_taiwan".to_string(),
+            GarminProduct::Fr220Taiwan => "fr220_taiwan".to_string(),
+            GarminProduct::Truswing => "truswing".to_string(),
+            GarminProduct::Fenix3China => "fenix3_china".to_string(),
+            GarminProduct::Fenix3Twn => "fenix3_twn".to_string(),
+            GarminProduct::VariaHeadlight => "varia_headlight".to_string(),
+            GarminProduct::VariaTaillightOld => "varia_taillight_old".to_string(),
+            GarminProduct::EdgeExplore1000 => "edge_explore_1000".to_string(),
+            GarminProduct::Fr225Asia => "fr225_asia".to_string(),
+            GarminProduct::VariaRadarTaillight => "varia_radar_taillight".to_string(),
+            GarminProduct::VariaRadarDisplay => "varia_radar_display".to_string(),
+            GarminProduct::Edge20 => "edge20".to_string(),
+            GarminProduct::D2Bravo => "d2_bravo".to_string(),
+            GarminProduct::ApproachS20 => "approach_s20".to_string(),
+            GarminProduct::VariaRemote => "varia_remote".to_string(),
+            GarminProduct::ApproachX40 => "approach_x40".to_string(),
+            GarminProduct::Hrm4Run => "hrm4_run".to_string(),
+            GarminProduct::VivoActiveHr => "vivo_active_hr".to_string(),
+            GarminProduct::VivoSmartGpsHr => "vivo_smart_gps_hr".to_string(),
+            GarminProduct::VivoSmartHr => "vivo_smart_hr".to_string(),
+            GarminProduct::VivoMove => "vivo_move".to_string(),
+            GarminProduct::VariaVision => "varia_vision".to_string(),
+            GarminProduct::VivoFit3 => "vivo_fit3".to_string(),
+            GarminProduct::Fenix3Hr => "fenix3_hr".to_string(),
+            GarminProduct::VirbUltra30 => "virb_ultra_30".to_string(),
+            GarminProduct::IndexSmartScale => "index_smart_scale".to_string(),
+            GarminProduct::Fr235 => "fr235".to_string(),
+            GarminProduct::Fenix3Chronos => "fenix3_chronos".to_string(),
+            GarminProduct::Oregon7xx => "oregon7xx".to_string(),
+            GarminProduct::Rino7xx => "rino7xx".to_string(),
+            GarminProduct::Nautix => "nautix".to_string(),
+            GarminProduct::Edge820 => "edge_820".to_string(),
+            GarminProduct::EdgeExplore820 => "edge_explore_820".to_string(),
+            GarminProduct::Fr735xtApac => "fr735xt_apac".to_string(),
+            GarminProduct::Fr735xtJapan => "fr735xt_japan".to_string(),
+            GarminProduct::Fenix5s => "fenix5s".to_string(),
+            GarminProduct::D2BravoTitanium => "d2_bravo_titanium".to_string(),
+            GarminProduct::VariaUt800 => "varia_ut800".to_string(),
+            GarminProduct::RunningDynamicsPod => "running_dynamics_pod".to_string(),
+            GarminProduct::Fenix5x => "fenix5x".to_string(),
+            GarminProduct::VivoFitJr => "vivo_fit_jr".to_string(),
+            GarminProduct::VivoSmart3 => "vivo_smart3".to_string(),
+            GarminProduct::VivoSport => "vivo_sport".to_string(),
+            GarminProduct::ApproachS60 => "approach_s60".to_string(),
+            GarminProduct::Virb360 => "virb_360".to_string(),
+            GarminProduct::Fr935 => "fr935".to_string(),
+            GarminProduct::Fenix5 => "fenix5".to_string(),
+            GarminProduct::Vivoactive3 => "vivoactive3".to_string(),
+            GarminProduct::Edge1030 => "edge_1030".to_string(),
+            GarminProduct::Foretrex601701 => "foretrex_601_701".to_string(),
+            GarminProduct::VivoMoveHr => "vivo_move_hr".to_string(),
+            GarminProduct::ApproachZ80 => "approach_z80".to_string(),
+            GarminProduct::VivoSmart3Apac => "vivo_smart3_apac".to_string(),
+            GarminProduct::VivoSportApac => "vivo_sport_apac".to_string(),
+            GarminProduct::Descent => "descent".to_string(),
+            GarminProduct::Fr645 => "fr645".to_string(),
+            GarminProduct::Fr645m => "fr645m".to_string(),
+            GarminProduct::Fenix5sPlus => "fenix5s_plus".to_string(),
+            GarminProduct::Edge130 => "Edge_130".to_string(),
+            GarminProduct::Vivosmart4 => "vivosmart_4".to_string(),
+            GarminProduct::ApproachX10 => "approach_x10".to_string(),
+            GarminProduct::Vivoactive3mW => "vivoactive3m_w".to_string(),
+            GarminProduct::EdgeExplore => "edge_explore".to_string(),
+            GarminProduct::Gpsmap66 => "gpsmap66".to_string(),
+            GarminProduct::ApproachS10 => "approach_s10".to_string(),
+            GarminProduct::Vivoactive3mL => "vivoactive3m_l".to_string(),
+            GarminProduct::ApproachG80 => "approach_g80".to_string(),
+            GarminProduct::Fenix5Plus => "fenix5_plus".to_string(),
+            GarminProduct::Fenix5xPlus => "fenix5x_plus".to_string(),
+            GarminProduct::Edge520Plus => "edge_520_plus".to_string(),
+            GarminProduct::HrmDual => "hrm_dual".to_string(),
+            GarminProduct::ApproachS40 => "approach_s40".to_string(),
+            GarminProduct::Sdm4 => "sdm4".to_string(),
+            GarminProduct::EdgeRemote => "edge_remote".to_string(),
+            GarminProduct::TrainingCenter => "training_center".to_string(),
+            GarminProduct::ConnectiqSimulator => "connectiq_simulator".to_string(),
+            GarminProduct::AndroidAntplusPlugin => "android_antplus_plugin".to_string(),
+            GarminProduct::Connect => "connect".to_string(),
+            GarminProduct::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -5952,7 +5897,6 @@ pub enum AntplusDeviceType {
     StrideSpeedDistance,
     UnknownVariant(u8),
 }
-
 impl AntplusDeviceType {
     pub fn from_u8(value: u8) -> AntplusDeviceType {
         match value {
@@ -6017,31 +5961,31 @@ impl AntplusDeviceType {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            AntplusDeviceType::Antfs => "Antfs".to_string(),
-            AntplusDeviceType::BikePower => "BikePower".to_string(),
-            AntplusDeviceType::EnvironmentSensorLegacy => "EnvironmentSensorLegacy".to_string(),
-            AntplusDeviceType::MultiSportSpeedDistance => "MultiSportSpeedDistance".to_string(),
-            AntplusDeviceType::Control => "Control".to_string(),
-            AntplusDeviceType::FitnessEquipment => "FitnessEquipment".to_string(),
-            AntplusDeviceType::BloodPressure => "BloodPressure".to_string(),
-            AntplusDeviceType::GeocacheNode => "GeocacheNode".to_string(),
-            AntplusDeviceType::LightElectricVehicle => "LightElectricVehicle".to_string(),
-            AntplusDeviceType::EnvSensor => "EnvSensor".to_string(),
-            AntplusDeviceType::Racquet => "Racquet".to_string(),
-            AntplusDeviceType::ControlHub => "ControlHub".to_string(),
-            AntplusDeviceType::MuscleOxygen => "MuscleOxygen".to_string(),
-            AntplusDeviceType::BikeLightMain => "BikeLightMain".to_string(),
-            AntplusDeviceType::BikeLightShared => "BikeLightShared".to_string(),
-            AntplusDeviceType::Exd => "Exd".to_string(),
-            AntplusDeviceType::BikeRadar => "BikeRadar".to_string(),
-            AntplusDeviceType::BikeAero => "BikeAero".to_string(),
-            AntplusDeviceType::WeightScale => "WeightScale".to_string(),
-            AntplusDeviceType::HeartRate => "HeartRate".to_string(),
-            AntplusDeviceType::BikeSpeedCadence => "BikeSpeedCadence".to_string(),
-            AntplusDeviceType::BikeCadence => "BikeCadence".to_string(),
-            AntplusDeviceType::BikeSpeed => "BikeSpeed".to_string(),
-            AntplusDeviceType::StrideSpeedDistance => "StrideSpeedDistance".to_string(),
-            AntplusDeviceType::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            AntplusDeviceType::Antfs => "antfs".to_string(),
+            AntplusDeviceType::BikePower => "bike_power".to_string(),
+            AntplusDeviceType::EnvironmentSensorLegacy => "environment_sensor_legacy".to_string(),
+            AntplusDeviceType::MultiSportSpeedDistance => "multi_sport_speed_distance".to_string(),
+            AntplusDeviceType::Control => "control".to_string(),
+            AntplusDeviceType::FitnessEquipment => "fitness_equipment".to_string(),
+            AntplusDeviceType::BloodPressure => "blood_pressure".to_string(),
+            AntplusDeviceType::GeocacheNode => "geocache_node".to_string(),
+            AntplusDeviceType::LightElectricVehicle => "light_electric_vehicle".to_string(),
+            AntplusDeviceType::EnvSensor => "env_sensor".to_string(),
+            AntplusDeviceType::Racquet => "racquet".to_string(),
+            AntplusDeviceType::ControlHub => "control_hub".to_string(),
+            AntplusDeviceType::MuscleOxygen => "muscle_oxygen".to_string(),
+            AntplusDeviceType::BikeLightMain => "bike_light_main".to_string(),
+            AntplusDeviceType::BikeLightShared => "bike_light_shared".to_string(),
+            AntplusDeviceType::Exd => "exd".to_string(),
+            AntplusDeviceType::BikeRadar => "bike_radar".to_string(),
+            AntplusDeviceType::BikeAero => "bike_aero".to_string(),
+            AntplusDeviceType::WeightScale => "weight_scale".to_string(),
+            AntplusDeviceType::HeartRate => "heart_rate".to_string(),
+            AntplusDeviceType::BikeSpeedCadence => "bike_speed_cadence".to_string(),
+            AntplusDeviceType::BikeCadence => "bike_cadence".to_string(),
+            AntplusDeviceType::BikeSpeed => "bike_speed".to_string(),
+            AntplusDeviceType::StrideSpeedDistance => "stride_speed_distance".to_string(),
+            AntplusDeviceType::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -6054,7 +5998,6 @@ pub enum AntNetwork {
     Private,
     UnknownVariant(u8),
 }
-
 impl AntNetwork {
     pub fn from_u8(value: u8) -> AntNetwork {
         match value {
@@ -6079,11 +6022,11 @@ impl AntNetwork {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            AntNetwork::Public => "Public".to_string(),
-            AntNetwork::Antplus => "Antplus".to_string(),
-            AntNetwork::Antfs => "Antfs".to_string(),
-            AntNetwork::Private => "Private".to_string(),
-            AntNetwork::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            AntNetwork::Public => "public".to_string(),
+            AntNetwork::Antplus => "antplus".to_string(),
+            AntNetwork::Antfs => "antfs".to_string(),
+            AntNetwork::Private => "private".to_string(),
+            AntNetwork::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -6106,7 +6049,6 @@ pub enum WorkoutCapabilities {
     Protected,
     UnknownVariant(u32),
 }
-
 impl WorkoutCapabilities {
     pub fn from_u32(value: u32) -> WorkoutCapabilities {
         match value {
@@ -6151,21 +6093,21 @@ impl WorkoutCapabilities {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            WorkoutCapabilities::Interval => "Interval".to_string(),
-            WorkoutCapabilities::Custom => "Custom".to_string(),
-            WorkoutCapabilities::FitnessEquipment => "FitnessEquipment".to_string(),
-            WorkoutCapabilities::Firstbeat => "Firstbeat".to_string(),
-            WorkoutCapabilities::NewLeaf => "NewLeaf".to_string(),
-            WorkoutCapabilities::Tcx => "Tcx".to_string(),
-            WorkoutCapabilities::Speed => "Speed".to_string(),
-            WorkoutCapabilities::HeartRate => "HeartRate".to_string(),
-            WorkoutCapabilities::Distance => "Distance".to_string(),
-            WorkoutCapabilities::Cadence => "Cadence".to_string(),
-            WorkoutCapabilities::Power => "Power".to_string(),
-            WorkoutCapabilities::Grade => "Grade".to_string(),
-            WorkoutCapabilities::Resistance => "Resistance".to_string(),
-            WorkoutCapabilities::Protected => "Protected".to_string(),
-            WorkoutCapabilities::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            WorkoutCapabilities::Interval => "interval".to_string(),
+            WorkoutCapabilities::Custom => "custom".to_string(),
+            WorkoutCapabilities::FitnessEquipment => "fitness_equipment".to_string(),
+            WorkoutCapabilities::Firstbeat => "firstbeat".to_string(),
+            WorkoutCapabilities::NewLeaf => "new_leaf".to_string(),
+            WorkoutCapabilities::Tcx => "tcx".to_string(),
+            WorkoutCapabilities::Speed => "speed".to_string(),
+            WorkoutCapabilities::HeartRate => "heart_rate".to_string(),
+            WorkoutCapabilities::Distance => "distance".to_string(),
+            WorkoutCapabilities::Cadence => "cadence".to_string(),
+            WorkoutCapabilities::Power => "power".to_string(),
+            WorkoutCapabilities::Grade => "grade".to_string(),
+            WorkoutCapabilities::Resistance => "resistance".to_string(),
+            WorkoutCapabilities::Protected => "protected".to_string(),
+            WorkoutCapabilities::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -6181,7 +6123,6 @@ pub enum BatteryStatus {
     Unknown,
     UnknownVariant(u8),
 }
-
 impl BatteryStatus {
     pub fn from_u8(value: u8) -> BatteryStatus {
         match value {
@@ -6212,14 +6153,14 @@ impl BatteryStatus {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            BatteryStatus::New => "New".to_string(),
-            BatteryStatus::Good => "Good".to_string(),
-            BatteryStatus::Ok => "Ok".to_string(),
-            BatteryStatus::Low => "Low".to_string(),
-            BatteryStatus::Critical => "Critical".to_string(),
-            BatteryStatus::Charging => "Charging".to_string(),
-            BatteryStatus::Unknown => "Unknown".to_string(),
-            BatteryStatus::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            BatteryStatus::New => "new".to_string(),
+            BatteryStatus::Good => "good".to_string(),
+            BatteryStatus::Ok => "ok".to_string(),
+            BatteryStatus::Low => "low".to_string(),
+            BatteryStatus::Critical => "critical".to_string(),
+            BatteryStatus::Charging => "charging".to_string(),
+            BatteryStatus::Unknown => "unknown".to_string(),
+            BatteryStatus::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -6230,7 +6171,6 @@ pub enum HrType {
     Irregular,
     UnknownVariant(u8),
 }
-
 impl HrType {
     pub fn from_u8(value: u8) -> HrType {
         match value {
@@ -6251,9 +6191,9 @@ impl HrType {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            HrType::Normal => "Normal".to_string(),
-            HrType::Irregular => "Irregular".to_string(),
-            HrType::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            HrType::Normal => "normal".to_string(),
+            HrType::Irregular => "irregular".to_string(),
+            HrType::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -6273,7 +6213,6 @@ pub enum CourseCapabilities {
     Bikeway,
     UnknownVariant(u32),
 }
-
 impl CourseCapabilities {
     pub fn from_u32(value: u32) -> CourseCapabilities {
         match value {
@@ -6312,18 +6251,18 @@ impl CourseCapabilities {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            CourseCapabilities::Processed => "Processed".to_string(),
-            CourseCapabilities::Valid => "Valid".to_string(),
-            CourseCapabilities::Time => "Time".to_string(),
-            CourseCapabilities::Distance => "Distance".to_string(),
-            CourseCapabilities::Position => "Position".to_string(),
-            CourseCapabilities::HeartRate => "HeartRate".to_string(),
-            CourseCapabilities::Power => "Power".to_string(),
-            CourseCapabilities::Cadence => "Cadence".to_string(),
-            CourseCapabilities::Training => "Training".to_string(),
-            CourseCapabilities::Navigation => "Navigation".to_string(),
-            CourseCapabilities::Bikeway => "Bikeway".to_string(),
-            CourseCapabilities::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            CourseCapabilities::Processed => "processed".to_string(),
+            CourseCapabilities::Valid => "valid".to_string(),
+            CourseCapabilities::Time => "time".to_string(),
+            CourseCapabilities::Distance => "distance".to_string(),
+            CourseCapabilities::Position => "position".to_string(),
+            CourseCapabilities::HeartRate => "heart_rate".to_string(),
+            CourseCapabilities::Power => "power".to_string(),
+            CourseCapabilities::Cadence => "cadence".to_string(),
+            CourseCapabilities::Training => "training".to_string(),
+            CourseCapabilities::Navigation => "navigation".to_string(),
+            CourseCapabilities::Bikeway => "bikeway".to_string(),
+            CourseCapabilities::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -6333,7 +6272,6 @@ pub enum Weight {
     Calculating,
     UnknownVariant(u16),
 }
-
 impl Weight {
     pub fn from_u16(value: u16) -> Weight {
         match value {
@@ -6352,8 +6290,8 @@ impl Weight {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            Weight::Calculating => "Calculating".to_string(),
-            Weight::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            Weight::Calculating => "calculating".to_string(),
+            Weight::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -6363,7 +6301,6 @@ pub enum WorkoutHr {
     BpmOffset,
     UnknownVariant(u32),
 }
-
 impl WorkoutHr {
     pub fn from_u32(value: u32) -> WorkoutHr {
         match value {
@@ -6382,8 +6319,8 @@ impl WorkoutHr {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            WorkoutHr::BpmOffset => "BpmOffset".to_string(),
-            WorkoutHr::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            WorkoutHr::BpmOffset => "bpm_offset".to_string(),
+            WorkoutHr::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -6393,7 +6330,6 @@ pub enum WorkoutPower {
     WattsOffset,
     UnknownVariant(u32),
 }
-
 impl WorkoutPower {
     pub fn from_u32(value: u32) -> WorkoutPower {
         match value {
@@ -6412,8 +6348,8 @@ impl WorkoutPower {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            WorkoutPower::WattsOffset => "WattsOffset".to_string(),
-            WorkoutPower::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            WorkoutPower::WattsOffset => "watts_offset".to_string(),
+            WorkoutPower::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -6427,7 +6363,6 @@ pub enum BpStatus {
     ErrorIrregularHeartRate,
     UnknownVariant(u8),
 }
-
 impl BpStatus {
     pub fn from_u8(value: u8) -> BpStatus {
         match value {
@@ -6454,12 +6389,12 @@ impl BpStatus {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            BpStatus::NoError => "NoError".to_string(),
-            BpStatus::ErrorIncompleteData => "ErrorIncompleteData".to_string(),
-            BpStatus::ErrorNoMeasurement => "ErrorNoMeasurement".to_string(),
-            BpStatus::ErrorDataOutOfRange => "ErrorDataOutOfRange".to_string(),
-            BpStatus::ErrorIrregularHeartRate => "ErrorIrregularHeartRate".to_string(),
-            BpStatus::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            BpStatus::NoError => "no_error".to_string(),
+            BpStatus::ErrorIncompleteData => "error_incomplete_data".to_string(),
+            BpStatus::ErrorNoMeasurement => "error_no_measurement".to_string(),
+            BpStatus::ErrorDataOutOfRange => "error_data_out_of_range".to_string(),
+            BpStatus::ErrorIrregularHeartRate => "error_irregular_heart_rate".to_string(),
+            BpStatus::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -6474,7 +6409,6 @@ pub enum UserLocalId {
     PortableMax,
     UnknownVariant(u16),
 }
-
 impl UserLocalId {
     pub fn from_u16(value: u16) -> UserLocalId {
         match value {
@@ -6503,13 +6437,13 @@ impl UserLocalId {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            UserLocalId::LocalMin => "LocalMin".to_string(),
-            UserLocalId::LocalMax => "LocalMax".to_string(),
-            UserLocalId::StationaryMin => "StationaryMin".to_string(),
-            UserLocalId::StationaryMax => "StationaryMax".to_string(),
-            UserLocalId::PortableMin => "PortableMin".to_string(),
-            UserLocalId::PortableMax => "PortableMax".to_string(),
-            UserLocalId::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            UserLocalId::LocalMin => "local_min".to_string(),
+            UserLocalId::LocalMax => "local_max".to_string(),
+            UserLocalId::StationaryMin => "stationary_min".to_string(),
+            UserLocalId::StationaryMax => "stationary_max".to_string(),
+            UserLocalId::PortableMin => "portable_min".to_string(),
+            UserLocalId::PortableMax => "portable_max".to_string(),
+            UserLocalId::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -6525,7 +6459,6 @@ pub enum SwimStroke {
     Im, // IM is a mixed interval containing the same number of lengths for each of: Butterfly, Backstroke, Breaststroke, Freestyle, swam in that order.
     UnknownVariant(u8),
 }
-
 impl SwimStroke {
     pub fn from_u8(value: u8) -> SwimStroke {
         match value {
@@ -6556,14 +6489,14 @@ impl SwimStroke {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            SwimStroke::Freestyle => "Freestyle".to_string(),
-            SwimStroke::Backstroke => "Backstroke".to_string(),
-            SwimStroke::Breaststroke => "Breaststroke".to_string(),
-            SwimStroke::Butterfly => "Butterfly".to_string(),
-            SwimStroke::Drill => "Drill".to_string(),
-            SwimStroke::Mixed => "Mixed".to_string(),
-            SwimStroke::Im => "Im".to_string(),
-            SwimStroke::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            SwimStroke::Freestyle => "freestyle".to_string(),
+            SwimStroke::Backstroke => "backstroke".to_string(),
+            SwimStroke::Breaststroke => "breaststroke".to_string(),
+            SwimStroke::Butterfly => "butterfly".to_string(),
+            SwimStroke::Drill => "drill".to_string(),
+            SwimStroke::Mixed => "mixed".to_string(),
+            SwimStroke::Im => "im".to_string(),
+            SwimStroke::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -6581,7 +6514,6 @@ pub enum ActivityType {
     All, // All is for goals only to include all sports.
     UnknownVariant(u8),
 }
-
 impl ActivityType {
     pub fn from_u8(value: u8) -> ActivityType {
         match value {
@@ -6616,16 +6548,16 @@ impl ActivityType {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            ActivityType::Generic => "Generic".to_string(),
-            ActivityType::Running => "Running".to_string(),
-            ActivityType::Cycling => "Cycling".to_string(),
-            ActivityType::Transition => "Transition".to_string(),
-            ActivityType::FitnessEquipment => "FitnessEquipment".to_string(),
-            ActivityType::Swimming => "Swimming".to_string(),
-            ActivityType::Walking => "Walking".to_string(),
-            ActivityType::Sedentary => "Sedentary".to_string(),
-            ActivityType::All => "All".to_string(),
-            ActivityType::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            ActivityType::Generic => "generic".to_string(),
+            ActivityType::Running => "running".to_string(),
+            ActivityType::Cycling => "cycling".to_string(),
+            ActivityType::Transition => "transition".to_string(),
+            ActivityType::FitnessEquipment => "fitness_equipment".to_string(),
+            ActivityType::Swimming => "swimming".to_string(),
+            ActivityType::Walking => "walking".to_string(),
+            ActivityType::Sedentary => "sedentary".to_string(),
+            ActivityType::All => "all".to_string(),
+            ActivityType::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -6654,7 +6586,6 @@ pub enum ActivitySubtype {
     All,
     UnknownVariant(u8),
 }
-
 impl ActivitySubtype {
     pub fn from_u8(value: u8) -> ActivitySubtype {
         match value {
@@ -6711,27 +6642,27 @@ impl ActivitySubtype {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            ActivitySubtype::Generic => "Generic".to_string(),
-            ActivitySubtype::Treadmill => "Treadmill".to_string(),
-            ActivitySubtype::Street => "Street".to_string(),
-            ActivitySubtype::Trail => "Trail".to_string(),
-            ActivitySubtype::Track => "Track".to_string(),
-            ActivitySubtype::Spin => "Spin".to_string(),
-            ActivitySubtype::IndoorCycling => "IndoorCycling".to_string(),
-            ActivitySubtype::Road => "Road".to_string(),
-            ActivitySubtype::Mountain => "Mountain".to_string(),
-            ActivitySubtype::Downhill => "Downhill".to_string(),
-            ActivitySubtype::Recumbent => "Recumbent".to_string(),
-            ActivitySubtype::Cyclocross => "Cyclocross".to_string(),
-            ActivitySubtype::HandCycling => "HandCycling".to_string(),
-            ActivitySubtype::TrackCycling => "TrackCycling".to_string(),
-            ActivitySubtype::IndoorRowing => "IndoorRowing".to_string(),
-            ActivitySubtype::Elliptical => "Elliptical".to_string(),
-            ActivitySubtype::StairClimbing => "StairClimbing".to_string(),
-            ActivitySubtype::LapSwimming => "LapSwimming".to_string(),
-            ActivitySubtype::OpenWater => "OpenWater".to_string(),
-            ActivitySubtype::All => "All".to_string(),
-            ActivitySubtype::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            ActivitySubtype::Generic => "generic".to_string(),
+            ActivitySubtype::Treadmill => "treadmill".to_string(),
+            ActivitySubtype::Street => "street".to_string(),
+            ActivitySubtype::Trail => "trail".to_string(),
+            ActivitySubtype::Track => "track".to_string(),
+            ActivitySubtype::Spin => "spin".to_string(),
+            ActivitySubtype::IndoorCycling => "indoor_cycling".to_string(),
+            ActivitySubtype::Road => "road".to_string(),
+            ActivitySubtype::Mountain => "mountain".to_string(),
+            ActivitySubtype::Downhill => "downhill".to_string(),
+            ActivitySubtype::Recumbent => "recumbent".to_string(),
+            ActivitySubtype::Cyclocross => "cyclocross".to_string(),
+            ActivitySubtype::HandCycling => "hand_cycling".to_string(),
+            ActivitySubtype::TrackCycling => "track_cycling".to_string(),
+            ActivitySubtype::IndoorRowing => "indoor_rowing".to_string(),
+            ActivitySubtype::Elliptical => "elliptical".to_string(),
+            ActivitySubtype::StairClimbing => "stair_climbing".to_string(),
+            ActivitySubtype::LapSwimming => "lap_swimming".to_string(),
+            ActivitySubtype::OpenWater => "open_water".to_string(),
+            ActivitySubtype::All => "all".to_string(),
+            ActivitySubtype::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -6743,7 +6674,6 @@ pub enum ActivityLevel {
     High,
     UnknownVariant(u8),
 }
-
 impl ActivityLevel {
     pub fn from_u8(value: u8) -> ActivityLevel {
         match value {
@@ -6766,10 +6696,10 @@ impl ActivityLevel {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            ActivityLevel::Low => "Low".to_string(),
-            ActivityLevel::Medium => "Medium".to_string(),
-            ActivityLevel::High => "High".to_string(),
-            ActivityLevel::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            ActivityLevel::Low => "low".to_string(),
+            ActivityLevel::Medium => "medium".to_string(),
+            ActivityLevel::High => "high".to_string(),
+            ActivityLevel::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -6780,7 +6710,6 @@ pub enum Side {
     Left,
     UnknownVariant(u8),
 }
-
 impl Side {
     pub fn from_u8(value: u8) -> Side {
         match value {
@@ -6801,9 +6730,9 @@ impl Side {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            Side::Right => "Right".to_string(),
-            Side::Left => "Left".to_string(),
-            Side::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            Side::Right => "right".to_string(),
+            Side::Left => "left".to_string(),
+            Side::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -6814,7 +6743,6 @@ pub enum LeftRightBalance {
     Right, // data corresponds to right if set, otherwise unknown
     UnknownVariant(u8),
 }
-
 impl LeftRightBalance {
     pub fn from_u8(value: u8) -> LeftRightBalance {
         match value {
@@ -6835,9 +6763,9 @@ impl LeftRightBalance {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            LeftRightBalance::Mask => "Mask".to_string(),
-            LeftRightBalance::Right => "Right".to_string(),
-            LeftRightBalance::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            LeftRightBalance::Mask => "mask".to_string(),
+            LeftRightBalance::Right => "right".to_string(),
+            LeftRightBalance::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -6848,7 +6776,6 @@ pub enum LeftRightBalance100 {
     Right, // data corresponds to right if set, otherwise unknown
     UnknownVariant(u16),
 }
-
 impl LeftRightBalance100 {
     pub fn from_u16(value: u16) -> LeftRightBalance100 {
         match value {
@@ -6869,9 +6796,9 @@ impl LeftRightBalance100 {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            LeftRightBalance100::Mask => "Mask".to_string(),
-            LeftRightBalance100::Right => "Right".to_string(),
-            LeftRightBalance100::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            LeftRightBalance100::Mask => "mask".to_string(),
+            LeftRightBalance100::Right => "right".to_string(),
+            LeftRightBalance100::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -6882,7 +6809,6 @@ pub enum LengthType {
     Active, // Length with strokes.
     UnknownVariant(u8),
 }
-
 impl LengthType {
     pub fn from_u8(value: u8) -> LengthType {
         match value {
@@ -6903,9 +6829,9 @@ impl LengthType {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            LengthType::Idle => "Idle".to_string(),
-            LengthType::Active => "Active".to_string(),
-            LengthType::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            LengthType::Idle => "idle".to_string(),
+            LengthType::Active => "active".to_string(),
+            LengthType::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -6921,7 +6847,6 @@ pub enum DayOfWeek {
     Saturday,
     UnknownVariant(u8),
 }
-
 impl DayOfWeek {
     pub fn from_u8(value: u8) -> DayOfWeek {
         match value {
@@ -6952,14 +6877,14 @@ impl DayOfWeek {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            DayOfWeek::Sunday => "Sunday".to_string(),
-            DayOfWeek::Monday => "Monday".to_string(),
-            DayOfWeek::Tuesday => "Tuesday".to_string(),
-            DayOfWeek::Wednesday => "Wednesday".to_string(),
-            DayOfWeek::Thursday => "Thursday".to_string(),
-            DayOfWeek::Friday => "Friday".to_string(),
-            DayOfWeek::Saturday => "Saturday".to_string(),
-            DayOfWeek::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            DayOfWeek::Sunday => "sunday".to_string(),
+            DayOfWeek::Monday => "monday".to_string(),
+            DayOfWeek::Tuesday => "tuesday".to_string(),
+            DayOfWeek::Wednesday => "wednesday".to_string(),
+            DayOfWeek::Thursday => "thursday".to_string(),
+            DayOfWeek::Friday => "friday".to_string(),
+            DayOfWeek::Saturday => "saturday".to_string(),
+            DayOfWeek::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -7000,7 +6925,6 @@ pub enum ConnectivityCapabilities {
     InstantInput,       // Device supports instant input feature
     UnknownVariant(u32),
 }
-
 impl ConnectivityCapabilities {
     pub fn from_u32(value: u32) -> ConnectivityCapabilities {
         match value {
@@ -7081,49 +7005,53 @@ impl ConnectivityCapabilities {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            ConnectivityCapabilities::Bluetooth => "Bluetooth".to_string(),
-            ConnectivityCapabilities::BluetoothLe => "BluetoothLe".to_string(),
-            ConnectivityCapabilities::Ant => "Ant".to_string(),
-            ConnectivityCapabilities::ActivityUpload => "ActivityUpload".to_string(),
-            ConnectivityCapabilities::CourseDownload => "CourseDownload".to_string(),
-            ConnectivityCapabilities::WorkoutDownload => "WorkoutDownload".to_string(),
-            ConnectivityCapabilities::LiveTrack => "LiveTrack".to_string(),
-            ConnectivityCapabilities::WeatherConditions => "WeatherConditions".to_string(),
-            ConnectivityCapabilities::WeatherAlerts => "WeatherAlerts".to_string(),
-            ConnectivityCapabilities::GpsEphemerisDownload => "GpsEphemerisDownload".to_string(),
-            ConnectivityCapabilities::ExplicitArchive => "ExplicitArchive".to_string(),
-            ConnectivityCapabilities::SetupIncomplete => "SetupIncomplete".to_string(),
+            ConnectivityCapabilities::Bluetooth => "bluetooth".to_string(),
+            ConnectivityCapabilities::BluetoothLe => "bluetooth_le".to_string(),
+            ConnectivityCapabilities::Ant => "ant".to_string(),
+            ConnectivityCapabilities::ActivityUpload => "activity_upload".to_string(),
+            ConnectivityCapabilities::CourseDownload => "course_download".to_string(),
+            ConnectivityCapabilities::WorkoutDownload => "workout_download".to_string(),
+            ConnectivityCapabilities::LiveTrack => "live_track".to_string(),
+            ConnectivityCapabilities::WeatherConditions => "weather_conditions".to_string(),
+            ConnectivityCapabilities::WeatherAlerts => "weather_alerts".to_string(),
+            ConnectivityCapabilities::GpsEphemerisDownload => "gps_ephemeris_download".to_string(),
+            ConnectivityCapabilities::ExplicitArchive => "explicit_archive".to_string(),
+            ConnectivityCapabilities::SetupIncomplete => "setup_incomplete".to_string(),
             ConnectivityCapabilities::ContinueSyncAfterSoftwareUpdate => {
-                "ContinueSyncAfterSoftwareUpdate".to_string()
+                "continue_sync_after_software_update".to_string()
             }
-            ConnectivityCapabilities::ConnectIqAppDownload => "ConnectIqAppDownload".to_string(),
-            ConnectivityCapabilities::GolfCourseDownload => "GolfCourseDownload".to_string(),
-            ConnectivityCapabilities::DeviceInitiatesSync => "DeviceInitiatesSync".to_string(),
+            ConnectivityCapabilities::ConnectIqAppDownload => "connect_iq_app_download".to_string(),
+            ConnectivityCapabilities::GolfCourseDownload => "golf_course_download".to_string(),
+            ConnectivityCapabilities::DeviceInitiatesSync => "device_initiates_sync".to_string(),
             ConnectivityCapabilities::ConnectIqWatchAppDownload => {
-                "ConnectIqWatchAppDownload".to_string()
+                "connect_iq_watch_app_download".to_string()
             }
             ConnectivityCapabilities::ConnectIqWidgetDownload => {
-                "ConnectIqWidgetDownload".to_string()
+                "connect_iq_widget_download".to_string()
             }
             ConnectivityCapabilities::ConnectIqWatchFaceDownload => {
-                "ConnectIqWatchFaceDownload".to_string()
+                "connect_iq_watch_face_download".to_string()
             }
             ConnectivityCapabilities::ConnectIqDataFieldDownload => {
-                "ConnectIqDataFieldDownload".to_string()
+                "connect_iq_data_field_download".to_string()
             }
-            ConnectivityCapabilities::ConnectIqAppManagment => "ConnectIqAppManagment".to_string(),
-            ConnectivityCapabilities::SwingSensor => "SwingSensor".to_string(),
-            ConnectivityCapabilities::SwingSensorRemote => "SwingSensorRemote".to_string(),
-            ConnectivityCapabilities::IncidentDetection => "IncidentDetection".to_string(),
-            ConnectivityCapabilities::AudioPrompts => "AudioPrompts".to_string(),
-            ConnectivityCapabilities::WifiVerification => "WifiVerification".to_string(),
-            ConnectivityCapabilities::TrueUp => "TrueUp".to_string(),
-            ConnectivityCapabilities::FindMyWatch => "FindMyWatch".to_string(),
-            ConnectivityCapabilities::RemoteManualSync => "RemoteManualSync".to_string(),
-            ConnectivityCapabilities::LiveTrackAutoStart => "LiveTrackAutoStart".to_string(),
-            ConnectivityCapabilities::LiveTrackMessaging => "LiveTrackMessaging".to_string(),
-            ConnectivityCapabilities::InstantInput => "InstantInput".to_string(),
-            ConnectivityCapabilities::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            ConnectivityCapabilities::ConnectIqAppManagment => {
+                "connect_iq_app_managment".to_string()
+            }
+            ConnectivityCapabilities::SwingSensor => "swing_sensor".to_string(),
+            ConnectivityCapabilities::SwingSensorRemote => "swing_sensor_remote".to_string(),
+            ConnectivityCapabilities::IncidentDetection => "incident_detection".to_string(),
+            ConnectivityCapabilities::AudioPrompts => "audio_prompts".to_string(),
+            ConnectivityCapabilities::WifiVerification => "wifi_verification".to_string(),
+            ConnectivityCapabilities::TrueUp => "true_up".to_string(),
+            ConnectivityCapabilities::FindMyWatch => "find_my_watch".to_string(),
+            ConnectivityCapabilities::RemoteManualSync => "remote_manual_sync".to_string(),
+            ConnectivityCapabilities::LiveTrackAutoStart => "live_track_auto_start".to_string(),
+            ConnectivityCapabilities::LiveTrackMessaging => "live_track_messaging".to_string(),
+            ConnectivityCapabilities::InstantInput => "instant_input".to_string(),
+            ConnectivityCapabilities::UnknownVariant(value) => {
+                format!("unknown_variant_{}", *value)
+            }
         }
     }
 }
@@ -7131,16 +7059,15 @@ impl ConnectivityCapabilities {
 #[derive(Clone, Copy, Debug)]
 pub enum WeatherReport {
     Current,
-    Forecast, // Deprecated use hourly_forecast instead
+    HourlyForecast,
     DailyForecast,
     UnknownVariant(u8),
 }
-
 impl WeatherReport {
     pub fn from_u8(value: u8) -> WeatherReport {
         match value {
             0 => WeatherReport::Current,
-            1 => WeatherReport::Forecast,
+            1 => WeatherReport::HourlyForecast,
             2 => WeatherReport::DailyForecast,
             _ => WeatherReport::UnknownVariant(value),
         }
@@ -7151,17 +7078,17 @@ impl WeatherReport {
     pub fn as_u8(&self) -> u8 {
         match &self {
             WeatherReport::Current => 0,
-            WeatherReport::Forecast => 1,
+            WeatherReport::HourlyForecast => 1,
             WeatherReport::DailyForecast => 2,
             WeatherReport::UnknownVariant(value) => *value,
         }
     }
     pub fn to_string(&self) -> String {
         match &self {
-            WeatherReport::Current => "Current".to_string(),
-            WeatherReport::Forecast => "Forecast".to_string(),
-            WeatherReport::DailyForecast => "DailyForecast".to_string(),
-            WeatherReport::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            WeatherReport::Current => "current".to_string(),
+            WeatherReport::HourlyForecast => "hourly_forecast".to_string(),
+            WeatherReport::DailyForecast => "daily_forecast".to_string(),
+            WeatherReport::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -7191,7 +7118,6 @@ pub enum WeatherStatus {
     Cloudy,
     UnknownVariant(u8),
 }
-
 impl WeatherStatus {
     pub fn from_u8(value: u8) -> WeatherStatus {
         match value {
@@ -7250,28 +7176,28 @@ impl WeatherStatus {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            WeatherStatus::Clear => "Clear".to_string(),
-            WeatherStatus::PartlyCloudy => "PartlyCloudy".to_string(),
-            WeatherStatus::MostlyCloudy => "MostlyCloudy".to_string(),
-            WeatherStatus::Rain => "Rain".to_string(),
-            WeatherStatus::Snow => "Snow".to_string(),
-            WeatherStatus::Windy => "Windy".to_string(),
-            WeatherStatus::Thunderstorms => "Thunderstorms".to_string(),
-            WeatherStatus::WintryMix => "WintryMix".to_string(),
-            WeatherStatus::Fog => "Fog".to_string(),
-            WeatherStatus::Hazy => "Hazy".to_string(),
-            WeatherStatus::Hail => "Hail".to_string(),
-            WeatherStatus::ScatteredShowers => "ScatteredShowers".to_string(),
-            WeatherStatus::ScatteredThunderstorms => "ScatteredThunderstorms".to_string(),
-            WeatherStatus::UnknownPrecipitation => "UnknownPrecipitation".to_string(),
-            WeatherStatus::LightRain => "LightRain".to_string(),
-            WeatherStatus::HeavyRain => "HeavyRain".to_string(),
-            WeatherStatus::LightSnow => "LightSnow".to_string(),
-            WeatherStatus::HeavySnow => "HeavySnow".to_string(),
-            WeatherStatus::LightRainSnow => "LightRainSnow".to_string(),
-            WeatherStatus::HeavyRainSnow => "HeavyRainSnow".to_string(),
-            WeatherStatus::Cloudy => "Cloudy".to_string(),
-            WeatherStatus::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            WeatherStatus::Clear => "clear".to_string(),
+            WeatherStatus::PartlyCloudy => "partly_cloudy".to_string(),
+            WeatherStatus::MostlyCloudy => "mostly_cloudy".to_string(),
+            WeatherStatus::Rain => "rain".to_string(),
+            WeatherStatus::Snow => "snow".to_string(),
+            WeatherStatus::Windy => "windy".to_string(),
+            WeatherStatus::Thunderstorms => "thunderstorms".to_string(),
+            WeatherStatus::WintryMix => "wintry_mix".to_string(),
+            WeatherStatus::Fog => "fog".to_string(),
+            WeatherStatus::Hazy => "hazy".to_string(),
+            WeatherStatus::Hail => "hail".to_string(),
+            WeatherStatus::ScatteredShowers => "scattered_showers".to_string(),
+            WeatherStatus::ScatteredThunderstorms => "scattered_thunderstorms".to_string(),
+            WeatherStatus::UnknownPrecipitation => "unknown_precipitation".to_string(),
+            WeatherStatus::LightRain => "light_rain".to_string(),
+            WeatherStatus::HeavyRain => "heavy_rain".to_string(),
+            WeatherStatus::LightSnow => "light_snow".to_string(),
+            WeatherStatus::HeavySnow => "heavy_snow".to_string(),
+            WeatherStatus::LightRainSnow => "light_rain_snow".to_string(),
+            WeatherStatus::HeavyRainSnow => "heavy_rain_snow".to_string(),
+            WeatherStatus::Cloudy => "cloudy".to_string(),
+            WeatherStatus::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -7285,7 +7211,6 @@ pub enum WeatherSeverity {
     Statement,
     UnknownVariant(u8),
 }
-
 impl WeatherSeverity {
     pub fn from_u8(value: u8) -> WeatherSeverity {
         match value {
@@ -7312,12 +7237,12 @@ impl WeatherSeverity {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            WeatherSeverity::Unknown => "Unknown".to_string(),
-            WeatherSeverity::Warning => "Warning".to_string(),
-            WeatherSeverity::Watch => "Watch".to_string(),
-            WeatherSeverity::Advisory => "Advisory".to_string(),
-            WeatherSeverity::Statement => "Statement".to_string(),
-            WeatherSeverity::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            WeatherSeverity::Unknown => "unknown".to_string(),
+            WeatherSeverity::Warning => "warning".to_string(),
+            WeatherSeverity::Watch => "watch".to_string(),
+            WeatherSeverity::Advisory => "advisory".to_string(),
+            WeatherSeverity::Statement => "statement".to_string(),
+            WeatherSeverity::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -7411,7 +7336,6 @@ pub enum WeatherSevereType {
     SpecialWeather,
     UnknownVariant(u8),
 }
-
 impl WeatherSevereType {
     pub fn from_u8(value: u8) -> WeatherSevereType {
         match value {
@@ -7598,144 +7522,92 @@ impl WeatherSevereType {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            WeatherSevereType::Unspecified => "Unspecified".to_string(),
-            WeatherSevereType::Tornado => "Tornado".to_string(),
-            WeatherSevereType::Tsunami => "Tsunami".to_string(),
-            WeatherSevereType::Hurricane => "Hurricane".to_string(),
-            WeatherSevereType::ExtremeWind => "ExtremeWind".to_string(),
-            WeatherSevereType::Typhoon => "Typhoon".to_string(),
-            WeatherSevereType::InlandHurricane => "InlandHurricane".to_string(),
-            WeatherSevereType::HurricaneForceWind => "HurricaneForceWind".to_string(),
-            WeatherSevereType::Waterspout => "Waterspout".to_string(),
-            WeatherSevereType::SevereThunderstorm => "SevereThunderstorm".to_string(),
-            WeatherSevereType::WreckhouseWinds => "WreckhouseWinds".to_string(),
-            WeatherSevereType::LesSuetesWind => "LesSuetesWind".to_string(),
-            WeatherSevereType::Avalanche => "Avalanche".to_string(),
-            WeatherSevereType::FlashFlood => "FlashFlood".to_string(),
-            WeatherSevereType::TropicalStorm => "TropicalStorm".to_string(),
-            WeatherSevereType::InlandTropicalStorm => "InlandTropicalStorm".to_string(),
-            WeatherSevereType::Blizzard => "Blizzard".to_string(),
-            WeatherSevereType::IceStorm => "IceStorm".to_string(),
-            WeatherSevereType::FreezingRain => "FreezingRain".to_string(),
-            WeatherSevereType::DebrisFlow => "DebrisFlow".to_string(),
-            WeatherSevereType::FlashFreeze => "FlashFreeze".to_string(),
-            WeatherSevereType::DustStorm => "DustStorm".to_string(),
-            WeatherSevereType::HighWind => "HighWind".to_string(),
-            WeatherSevereType::WinterStorm => "WinterStorm".to_string(),
-            WeatherSevereType::HeavyFreezingSpray => "HeavyFreezingSpray".to_string(),
-            WeatherSevereType::ExtremeCold => "ExtremeCold".to_string(),
-            WeatherSevereType::WindChill => "WindChill".to_string(),
-            WeatherSevereType::ColdWave => "ColdWave".to_string(),
-            WeatherSevereType::HeavySnowAlert => "HeavySnowAlert".to_string(),
-            WeatherSevereType::LakeEffectBlowingSnow => "LakeEffectBlowingSnow".to_string(),
-            WeatherSevereType::SnowSquall => "SnowSquall".to_string(),
-            WeatherSevereType::LakeEffectSnow => "LakeEffectSnow".to_string(),
-            WeatherSevereType::WinterWeather => "WinterWeather".to_string(),
-            WeatherSevereType::Sleet => "Sleet".to_string(),
-            WeatherSevereType::Snowfall => "Snowfall".to_string(),
-            WeatherSevereType::SnowAndBlowingSnow => "SnowAndBlowingSnow".to_string(),
-            WeatherSevereType::BlowingSnow => "BlowingSnow".to_string(),
-            WeatherSevereType::SnowAlert => "SnowAlert".to_string(),
-            WeatherSevereType::ArcticOutflow => "ArcticOutflow".to_string(),
-            WeatherSevereType::FreezingDrizzle => "FreezingDrizzle".to_string(),
-            WeatherSevereType::Storm => "Storm".to_string(),
-            WeatherSevereType::StormSurge => "StormSurge".to_string(),
-            WeatherSevereType::Rainfall => "Rainfall".to_string(),
-            WeatherSevereType::ArealFlood => "ArealFlood".to_string(),
-            WeatherSevereType::CoastalFlood => "CoastalFlood".to_string(),
-            WeatherSevereType::LakeshoreFlood => "LakeshoreFlood".to_string(),
-            WeatherSevereType::ExcessiveHeat => "ExcessiveHeat".to_string(),
-            WeatherSevereType::Heat => "Heat".to_string(),
-            WeatherSevereType::Weather => "Weather".to_string(),
-            WeatherSevereType::HighHeatAndHumidity => "HighHeatAndHumidity".to_string(),
-            WeatherSevereType::HumidexAndHealth => "HumidexAndHealth".to_string(),
-            WeatherSevereType::Humidex => "Humidex".to_string(),
-            WeatherSevereType::Gale => "Gale".to_string(),
-            WeatherSevereType::FreezingSpray => "FreezingSpray".to_string(),
-            WeatherSevereType::SpecialMarine => "SpecialMarine".to_string(),
-            WeatherSevereType::Squall => "Squall".to_string(),
-            WeatherSevereType::StrongWind => "StrongWind".to_string(),
-            WeatherSevereType::LakeWind => "LakeWind".to_string(),
-            WeatherSevereType::MarineWeather => "MarineWeather".to_string(),
-            WeatherSevereType::Wind => "Wind".to_string(),
-            WeatherSevereType::SmallCraftHazardousSeas => "SmallCraftHazardousSeas".to_string(),
-            WeatherSevereType::HazardousSeas => "HazardousSeas".to_string(),
-            WeatherSevereType::SmallCraft => "SmallCraft".to_string(),
-            WeatherSevereType::SmallCraftWinds => "SmallCraftWinds".to_string(),
-            WeatherSevereType::SmallCraftRoughBar => "SmallCraftRoughBar".to_string(),
-            WeatherSevereType::HighWaterLevel => "HighWaterLevel".to_string(),
-            WeatherSevereType::Ashfall => "Ashfall".to_string(),
-            WeatherSevereType::FreezingFog => "FreezingFog".to_string(),
-            WeatherSevereType::DenseFog => "DenseFog".to_string(),
-            WeatherSevereType::DenseSmoke => "DenseSmoke".to_string(),
-            WeatherSevereType::BlowingDust => "BlowingDust".to_string(),
-            WeatherSevereType::HardFreeze => "HardFreeze".to_string(),
-            WeatherSevereType::Freeze => "Freeze".to_string(),
-            WeatherSevereType::Frost => "Frost".to_string(),
-            WeatherSevereType::FireWeather => "FireWeather".to_string(),
-            WeatherSevereType::Flood => "Flood".to_string(),
-            WeatherSevereType::RipTide => "RipTide".to_string(),
-            WeatherSevereType::HighSurf => "HighSurf".to_string(),
-            WeatherSevereType::Smog => "Smog".to_string(),
-            WeatherSevereType::AirQuality => "AirQuality".to_string(),
-            WeatherSevereType::BriskWind => "BriskWind".to_string(),
-            WeatherSevereType::AirStagnation => "AirStagnation".to_string(),
-            WeatherSevereType::LowWater => "LowWater".to_string(),
-            WeatherSevereType::Hydrological => "Hydrological".to_string(),
-            WeatherSevereType::SpecialWeather => "SpecialWeather".to_string(),
-            WeatherSevereType::UnknownVariant(value) => format!("UnknownVariant{}", *value),
-        }
-    }
-}
-
-#[derive(Clone, Copy, Debug)]
-pub enum TimeIntoDay {
-    UnknownVariant(u32),
-}
-
-impl TimeIntoDay {
-    pub fn from_u32(value: u32) -> TimeIntoDay {
-        match value {
-            _ => TimeIntoDay::UnknownVariant(value),
-        }
-    }
-    pub fn from_i64(value: i64) -> TimeIntoDay {
-        TimeIntoDay::from_u32(value as u32)
-    }
-    pub fn as_u32(&self) -> u32 {
-        match &self {
-            TimeIntoDay::UnknownVariant(value) => *value,
-        }
-    }
-    pub fn to_string(&self) -> String {
-        match &self {
-            TimeIntoDay::UnknownVariant(value) => format!("UnknownVariant{}", *value),
-        }
-    }
-}
-
-#[derive(Clone, Copy, Debug)]
-pub enum LocaltimeIntoDay {
-    UnknownVariant(u32),
-}
-
-impl LocaltimeIntoDay {
-    pub fn from_u32(value: u32) -> LocaltimeIntoDay {
-        match value {
-            _ => LocaltimeIntoDay::UnknownVariant(value),
-        }
-    }
-    pub fn from_i64(value: i64) -> LocaltimeIntoDay {
-        LocaltimeIntoDay::from_u32(value as u32)
-    }
-    pub fn as_u32(&self) -> u32 {
-        match &self {
-            LocaltimeIntoDay::UnknownVariant(value) => *value,
-        }
-    }
-    pub fn to_string(&self) -> String {
-        match &self {
-            LocaltimeIntoDay::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            WeatherSevereType::Unspecified => "unspecified".to_string(),
+            WeatherSevereType::Tornado => "tornado".to_string(),
+            WeatherSevereType::Tsunami => "tsunami".to_string(),
+            WeatherSevereType::Hurricane => "hurricane".to_string(),
+            WeatherSevereType::ExtremeWind => "extreme_wind".to_string(),
+            WeatherSevereType::Typhoon => "typhoon".to_string(),
+            WeatherSevereType::InlandHurricane => "inland_hurricane".to_string(),
+            WeatherSevereType::HurricaneForceWind => "hurricane_force_wind".to_string(),
+            WeatherSevereType::Waterspout => "waterspout".to_string(),
+            WeatherSevereType::SevereThunderstorm => "severe_thunderstorm".to_string(),
+            WeatherSevereType::WreckhouseWinds => "wreckhouse_winds".to_string(),
+            WeatherSevereType::LesSuetesWind => "les_suetes_wind".to_string(),
+            WeatherSevereType::Avalanche => "avalanche".to_string(),
+            WeatherSevereType::FlashFlood => "flash_flood".to_string(),
+            WeatherSevereType::TropicalStorm => "tropical_storm".to_string(),
+            WeatherSevereType::InlandTropicalStorm => "inland_tropical_storm".to_string(),
+            WeatherSevereType::Blizzard => "blizzard".to_string(),
+            WeatherSevereType::IceStorm => "ice_storm".to_string(),
+            WeatherSevereType::FreezingRain => "freezing_rain".to_string(),
+            WeatherSevereType::DebrisFlow => "debris_flow".to_string(),
+            WeatherSevereType::FlashFreeze => "flash_freeze".to_string(),
+            WeatherSevereType::DustStorm => "dust_storm".to_string(),
+            WeatherSevereType::HighWind => "high_wind".to_string(),
+            WeatherSevereType::WinterStorm => "winter_storm".to_string(),
+            WeatherSevereType::HeavyFreezingSpray => "heavy_freezing_spray".to_string(),
+            WeatherSevereType::ExtremeCold => "extreme_cold".to_string(),
+            WeatherSevereType::WindChill => "wind_chill".to_string(),
+            WeatherSevereType::ColdWave => "cold_wave".to_string(),
+            WeatherSevereType::HeavySnowAlert => "heavy_snow_alert".to_string(),
+            WeatherSevereType::LakeEffectBlowingSnow => "lake_effect_blowing_snow".to_string(),
+            WeatherSevereType::SnowSquall => "snow_squall".to_string(),
+            WeatherSevereType::LakeEffectSnow => "lake_effect_snow".to_string(),
+            WeatherSevereType::WinterWeather => "winter_weather".to_string(),
+            WeatherSevereType::Sleet => "sleet".to_string(),
+            WeatherSevereType::Snowfall => "snowfall".to_string(),
+            WeatherSevereType::SnowAndBlowingSnow => "snow_and_blowing_snow".to_string(),
+            WeatherSevereType::BlowingSnow => "blowing_snow".to_string(),
+            WeatherSevereType::SnowAlert => "snow_alert".to_string(),
+            WeatherSevereType::ArcticOutflow => "arctic_outflow".to_string(),
+            WeatherSevereType::FreezingDrizzle => "freezing_drizzle".to_string(),
+            WeatherSevereType::Storm => "storm".to_string(),
+            WeatherSevereType::StormSurge => "storm_surge".to_string(),
+            WeatherSevereType::Rainfall => "rainfall".to_string(),
+            WeatherSevereType::ArealFlood => "areal_flood".to_string(),
+            WeatherSevereType::CoastalFlood => "coastal_flood".to_string(),
+            WeatherSevereType::LakeshoreFlood => "lakeshore_flood".to_string(),
+            WeatherSevereType::ExcessiveHeat => "excessive_heat".to_string(),
+            WeatherSevereType::Heat => "heat".to_string(),
+            WeatherSevereType::Weather => "weather".to_string(),
+            WeatherSevereType::HighHeatAndHumidity => "high_heat_and_humidity".to_string(),
+            WeatherSevereType::HumidexAndHealth => "humidex_and_health".to_string(),
+            WeatherSevereType::Humidex => "humidex".to_string(),
+            WeatherSevereType::Gale => "gale".to_string(),
+            WeatherSevereType::FreezingSpray => "freezing_spray".to_string(),
+            WeatherSevereType::SpecialMarine => "special_marine".to_string(),
+            WeatherSevereType::Squall => "squall".to_string(),
+            WeatherSevereType::StrongWind => "strong_wind".to_string(),
+            WeatherSevereType::LakeWind => "lake_wind".to_string(),
+            WeatherSevereType::MarineWeather => "marine_weather".to_string(),
+            WeatherSevereType::Wind => "wind".to_string(),
+            WeatherSevereType::SmallCraftHazardousSeas => "small_craft_hazardous_seas".to_string(),
+            WeatherSevereType::HazardousSeas => "hazardous_seas".to_string(),
+            WeatherSevereType::SmallCraft => "small_craft".to_string(),
+            WeatherSevereType::SmallCraftWinds => "small_craft_winds".to_string(),
+            WeatherSevereType::SmallCraftRoughBar => "small_craft_rough_bar".to_string(),
+            WeatherSevereType::HighWaterLevel => "high_water_level".to_string(),
+            WeatherSevereType::Ashfall => "ashfall".to_string(),
+            WeatherSevereType::FreezingFog => "freezing_fog".to_string(),
+            WeatherSevereType::DenseFog => "dense_fog".to_string(),
+            WeatherSevereType::DenseSmoke => "dense_smoke".to_string(),
+            WeatherSevereType::BlowingDust => "blowing_dust".to_string(),
+            WeatherSevereType::HardFreeze => "hard_freeze".to_string(),
+            WeatherSevereType::Freeze => "freeze".to_string(),
+            WeatherSevereType::Frost => "frost".to_string(),
+            WeatherSevereType::FireWeather => "fire_weather".to_string(),
+            WeatherSevereType::Flood => "flood".to_string(),
+            WeatherSevereType::RipTide => "rip_tide".to_string(),
+            WeatherSevereType::HighSurf => "high_surf".to_string(),
+            WeatherSevereType::Smog => "smog".to_string(),
+            WeatherSevereType::AirQuality => "air_quality".to_string(),
+            WeatherSevereType::BriskWind => "brisk_wind".to_string(),
+            WeatherSevereType::AirStagnation => "air_stagnation".to_string(),
+            WeatherSevereType::LowWater => "low_water".to_string(),
+            WeatherSevereType::Hydrological => "hydrological".to_string(),
+            WeatherSevereType::SpecialWeather => "special_weather".to_string(),
+            WeatherSevereType::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -7750,7 +7622,6 @@ pub enum StrokeType {
     Smash,
     UnknownVariant(u8),
 }
-
 impl StrokeType {
     pub fn from_u8(value: u8) -> StrokeType {
         match value {
@@ -7779,13 +7650,13 @@ impl StrokeType {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            StrokeType::NoEvent => "NoEvent".to_string(),
-            StrokeType::Other => "Other".to_string(),
-            StrokeType::Serve => "Serve".to_string(),
-            StrokeType::Forehand => "Forehand".to_string(),
-            StrokeType::Backhand => "Backhand".to_string(),
-            StrokeType::Smash => "Smash".to_string(),
-            StrokeType::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            StrokeType::NoEvent => "no_event".to_string(),
+            StrokeType::Other => "other".to_string(),
+            StrokeType::Serve => "serve".to_string(),
+            StrokeType::Forehand => "forehand".to_string(),
+            StrokeType::Backhand => "backhand".to_string(),
+            StrokeType::Smash => "smash".to_string(),
+            StrokeType::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -7834,7 +7705,6 @@ pub enum BodyLocation {
     WaistRight,
     UnknownVariant(u8),
 }
-
 impl BodyLocation {
     pub fn from_u8(value: u8) -> BodyLocation {
         match value {
@@ -7931,47 +7801,47 @@ impl BodyLocation {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            BodyLocation::LeftLeg => "LeftLeg".to_string(),
-            BodyLocation::LeftCalf => "LeftCalf".to_string(),
-            BodyLocation::LeftShin => "LeftShin".to_string(),
-            BodyLocation::LeftHamstring => "LeftHamstring".to_string(),
-            BodyLocation::LeftQuad => "LeftQuad".to_string(),
-            BodyLocation::LeftGlute => "LeftGlute".to_string(),
-            BodyLocation::RightLeg => "RightLeg".to_string(),
-            BodyLocation::RightCalf => "RightCalf".to_string(),
-            BodyLocation::RightShin => "RightShin".to_string(),
-            BodyLocation::RightHamstring => "RightHamstring".to_string(),
-            BodyLocation::RightQuad => "RightQuad".to_string(),
-            BodyLocation::RightGlute => "RightGlute".to_string(),
-            BodyLocation::TorsoBack => "TorsoBack".to_string(),
-            BodyLocation::LeftLowerBack => "LeftLowerBack".to_string(),
-            BodyLocation::LeftUpperBack => "LeftUpperBack".to_string(),
-            BodyLocation::RightLowerBack => "RightLowerBack".to_string(),
-            BodyLocation::RightUpperBack => "RightUpperBack".to_string(),
-            BodyLocation::TorsoFront => "TorsoFront".to_string(),
-            BodyLocation::LeftAbdomen => "LeftAbdomen".to_string(),
-            BodyLocation::LeftChest => "LeftChest".to_string(),
-            BodyLocation::RightAbdomen => "RightAbdomen".to_string(),
-            BodyLocation::RightChest => "RightChest".to_string(),
-            BodyLocation::LeftArm => "LeftArm".to_string(),
-            BodyLocation::LeftShoulder => "LeftShoulder".to_string(),
-            BodyLocation::LeftBicep => "LeftBicep".to_string(),
-            BodyLocation::LeftTricep => "LeftTricep".to_string(),
-            BodyLocation::LeftBrachioradialis => "LeftBrachioradialis".to_string(),
-            BodyLocation::LeftForearmExtensors => "LeftForearmExtensors".to_string(),
-            BodyLocation::RightArm => "RightArm".to_string(),
-            BodyLocation::RightShoulder => "RightShoulder".to_string(),
-            BodyLocation::RightBicep => "RightBicep".to_string(),
-            BodyLocation::RightTricep => "RightTricep".to_string(),
-            BodyLocation::RightBrachioradialis => "RightBrachioradialis".to_string(),
-            BodyLocation::RightForearmExtensors => "RightForearmExtensors".to_string(),
-            BodyLocation::Neck => "Neck".to_string(),
-            BodyLocation::Throat => "Throat".to_string(),
-            BodyLocation::WaistMidBack => "WaistMidBack".to_string(),
-            BodyLocation::WaistFront => "WaistFront".to_string(),
-            BodyLocation::WaistLeft => "WaistLeft".to_string(),
-            BodyLocation::WaistRight => "WaistRight".to_string(),
-            BodyLocation::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            BodyLocation::LeftLeg => "left_leg".to_string(),
+            BodyLocation::LeftCalf => "left_calf".to_string(),
+            BodyLocation::LeftShin => "left_shin".to_string(),
+            BodyLocation::LeftHamstring => "left_hamstring".to_string(),
+            BodyLocation::LeftQuad => "left_quad".to_string(),
+            BodyLocation::LeftGlute => "left_glute".to_string(),
+            BodyLocation::RightLeg => "right_leg".to_string(),
+            BodyLocation::RightCalf => "right_calf".to_string(),
+            BodyLocation::RightShin => "right_shin".to_string(),
+            BodyLocation::RightHamstring => "right_hamstring".to_string(),
+            BodyLocation::RightQuad => "right_quad".to_string(),
+            BodyLocation::RightGlute => "right_glute".to_string(),
+            BodyLocation::TorsoBack => "torso_back".to_string(),
+            BodyLocation::LeftLowerBack => "left_lower_back".to_string(),
+            BodyLocation::LeftUpperBack => "left_upper_back".to_string(),
+            BodyLocation::RightLowerBack => "right_lower_back".to_string(),
+            BodyLocation::RightUpperBack => "right_upper_back".to_string(),
+            BodyLocation::TorsoFront => "torso_front".to_string(),
+            BodyLocation::LeftAbdomen => "left_abdomen".to_string(),
+            BodyLocation::LeftChest => "left_chest".to_string(),
+            BodyLocation::RightAbdomen => "right_abdomen".to_string(),
+            BodyLocation::RightChest => "right_chest".to_string(),
+            BodyLocation::LeftArm => "left_arm".to_string(),
+            BodyLocation::LeftShoulder => "left_shoulder".to_string(),
+            BodyLocation::LeftBicep => "left_bicep".to_string(),
+            BodyLocation::LeftTricep => "left_tricep".to_string(),
+            BodyLocation::LeftBrachioradialis => "left_brachioradialis".to_string(),
+            BodyLocation::LeftForearmExtensors => "left_forearm_extensors".to_string(),
+            BodyLocation::RightArm => "right_arm".to_string(),
+            BodyLocation::RightShoulder => "right_shoulder".to_string(),
+            BodyLocation::RightBicep => "right_bicep".to_string(),
+            BodyLocation::RightTricep => "right_tricep".to_string(),
+            BodyLocation::RightBrachioradialis => "right_brachioradialis".to_string(),
+            BodyLocation::RightForearmExtensors => "right_forearm_extensors".to_string(),
+            BodyLocation::Neck => "neck".to_string(),
+            BodyLocation::Throat => "throat".to_string(),
+            BodyLocation::WaistMidBack => "waist_mid_back".to_string(),
+            BodyLocation::WaistFront => "waist_front".to_string(),
+            BodyLocation::WaistLeft => "waist_left".to_string(),
+            BodyLocation::WaistRight => "waist_right".to_string(),
+            BodyLocation::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -7982,7 +7852,6 @@ pub enum SegmentLapStatus {
     Fail,
     UnknownVariant(u8),
 }
-
 impl SegmentLapStatus {
     pub fn from_u8(value: u8) -> SegmentLapStatus {
         match value {
@@ -8003,9 +7872,9 @@ impl SegmentLapStatus {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            SegmentLapStatus::End => "End".to_string(),
-            SegmentLapStatus::Fail => "Fail".to_string(),
-            SegmentLapStatus::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            SegmentLapStatus::End => "end".to_string(),
+            SegmentLapStatus::Fail => "fail".to_string(),
+            SegmentLapStatus::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -8025,7 +7894,6 @@ pub enum SegmentLeaderboardType {
     ClubLeader,
     UnknownVariant(u8),
 }
-
 impl SegmentLeaderboardType {
     pub fn from_u8(value: u8) -> SegmentLeaderboardType {
         match value {
@@ -8064,18 +7932,18 @@ impl SegmentLeaderboardType {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            SegmentLeaderboardType::Overall => "Overall".to_string(),
-            SegmentLeaderboardType::PersonalBest => "PersonalBest".to_string(),
-            SegmentLeaderboardType::Connections => "Connections".to_string(),
-            SegmentLeaderboardType::Group => "Group".to_string(),
-            SegmentLeaderboardType::Challenger => "Challenger".to_string(),
-            SegmentLeaderboardType::Kom => "Kom".to_string(),
-            SegmentLeaderboardType::Qom => "Qom".to_string(),
-            SegmentLeaderboardType::Pr => "Pr".to_string(),
-            SegmentLeaderboardType::Goal => "Goal".to_string(),
-            SegmentLeaderboardType::Rival => "Rival".to_string(),
-            SegmentLeaderboardType::ClubLeader => "ClubLeader".to_string(),
-            SegmentLeaderboardType::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            SegmentLeaderboardType::Overall => "overall".to_string(),
+            SegmentLeaderboardType::PersonalBest => "personal_best".to_string(),
+            SegmentLeaderboardType::Connections => "connections".to_string(),
+            SegmentLeaderboardType::Group => "group".to_string(),
+            SegmentLeaderboardType::Challenger => "challenger".to_string(),
+            SegmentLeaderboardType::Kom => "kom".to_string(),
+            SegmentLeaderboardType::Qom => "qom".to_string(),
+            SegmentLeaderboardType::Pr => "pr".to_string(),
+            SegmentLeaderboardType::Goal => "goal".to_string(),
+            SegmentLeaderboardType::Rival => "rival".to_string(),
+            SegmentLeaderboardType::ClubLeader => "club_leader".to_string(),
+            SegmentLeaderboardType::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -8087,7 +7955,6 @@ pub enum SegmentDeleteStatus {
     DeleteAll,
     UnknownVariant(u8),
 }
-
 impl SegmentDeleteStatus {
     pub fn from_u8(value: u8) -> SegmentDeleteStatus {
         match value {
@@ -8110,10 +7977,10 @@ impl SegmentDeleteStatus {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            SegmentDeleteStatus::DoNotDelete => "DoNotDelete".to_string(),
-            SegmentDeleteStatus::DeleteOne => "DeleteOne".to_string(),
-            SegmentDeleteStatus::DeleteAll => "DeleteAll".to_string(),
-            SegmentDeleteStatus::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            SegmentDeleteStatus::DoNotDelete => "do_not_delete".to_string(),
+            SegmentDeleteStatus::DeleteOne => "delete_one".to_string(),
+            SegmentDeleteStatus::DeleteAll => "delete_all".to_string(),
+            SegmentDeleteStatus::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -8124,7 +7991,6 @@ pub enum SegmentSelectionType {
     Suggested,
     UnknownVariant(u8),
 }
-
 impl SegmentSelectionType {
     pub fn from_u8(value: u8) -> SegmentSelectionType {
         match value {
@@ -8145,9 +8011,9 @@ impl SegmentSelectionType {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            SegmentSelectionType::Starred => "Starred".to_string(),
-            SegmentSelectionType::Suggested => "Suggested".to_string(),
-            SegmentSelectionType::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            SegmentSelectionType::Starred => "starred".to_string(),
+            SegmentSelectionType::Suggested => "suggested".to_string(),
+            SegmentSelectionType::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -8162,7 +8028,6 @@ pub enum SourceType {
     Local,              // Onboard device
     UnknownVariant(u8),
 }
-
 impl SourceType {
     pub fn from_u8(value: u8) -> SourceType {
         match value {
@@ -8191,39 +8056,13 @@ impl SourceType {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            SourceType::Ant => "Ant".to_string(),
-            SourceType::Antplus => "Antplus".to_string(),
-            SourceType::Bluetooth => "Bluetooth".to_string(),
-            SourceType::BluetoothLowEnergy => "BluetoothLowEnergy".to_string(),
-            SourceType::Wifi => "Wifi".to_string(),
-            SourceType::Local => "Local".to_string(),
-            SourceType::UnknownVariant(value) => format!("UnknownVariant{}", *value),
-        }
-    }
-}
-
-#[derive(Clone, Copy, Debug)]
-pub enum LocalDeviceType {
-    UnknownVariant(u8),
-}
-
-impl LocalDeviceType {
-    pub fn from_u8(value: u8) -> LocalDeviceType {
-        match value {
-            _ => LocalDeviceType::UnknownVariant(value),
-        }
-    }
-    pub fn from_i64(value: i64) -> LocalDeviceType {
-        LocalDeviceType::from_u8(value as u8)
-    }
-    pub fn as_u8(&self) -> u8 {
-        match &self {
-            LocalDeviceType::UnknownVariant(value) => *value,
-        }
-    }
-    pub fn to_string(&self) -> String {
-        match &self {
-            LocalDeviceType::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            SourceType::Ant => "ant".to_string(),
+            SourceType::Antplus => "antplus".to_string(),
+            SourceType::Bluetooth => "bluetooth".to_string(),
+            SourceType::BluetoothLowEnergy => "bluetooth_low_energy".to_string(),
+            SourceType::Wifi => "wifi".to_string(),
+            SourceType::Local => "local".to_string(),
+            SourceType::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -8237,7 +8076,6 @@ pub enum DisplayOrientation {
     LandscapeFlipped, // landscape mode but rotated 180 degrees
     UnknownVariant(u8),
 }
-
 impl DisplayOrientation {
     pub fn from_u8(value: u8) -> DisplayOrientation {
         match value {
@@ -8264,12 +8102,12 @@ impl DisplayOrientation {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            DisplayOrientation::Auto => "Auto".to_string(),
-            DisplayOrientation::Portrait => "Portrait".to_string(),
-            DisplayOrientation::Landscape => "Landscape".to_string(),
-            DisplayOrientation::PortraitFlipped => "PortraitFlipped".to_string(),
-            DisplayOrientation::LandscapeFlipped => "LandscapeFlipped".to_string(),
-            DisplayOrientation::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            DisplayOrientation::Auto => "auto".to_string(),
+            DisplayOrientation::Portrait => "portrait".to_string(),
+            DisplayOrientation::Landscape => "landscape".to_string(),
+            DisplayOrientation::PortraitFlipped => "portrait_flipped".to_string(),
+            DisplayOrientation::LandscapeFlipped => "landscape_flipped".to_string(),
+            DisplayOrientation::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -8284,7 +8122,6 @@ pub enum WorkoutEquipment {
     SwimSnorkel,
     UnknownVariant(u8),
 }
-
 impl WorkoutEquipment {
     pub fn from_u8(value: u8) -> WorkoutEquipment {
         match value {
@@ -8313,13 +8150,13 @@ impl WorkoutEquipment {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            WorkoutEquipment::None => "None".to_string(),
-            WorkoutEquipment::SwimFins => "SwimFins".to_string(),
-            WorkoutEquipment::SwimKickboard => "SwimKickboard".to_string(),
-            WorkoutEquipment::SwimPaddles => "SwimPaddles".to_string(),
-            WorkoutEquipment::SwimPullBuoy => "SwimPullBuoy".to_string(),
-            WorkoutEquipment::SwimSnorkel => "SwimSnorkel".to_string(),
-            WorkoutEquipment::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            WorkoutEquipment::None => "none".to_string(),
+            WorkoutEquipment::SwimFins => "swim_fins".to_string(),
+            WorkoutEquipment::SwimKickboard => "swim_kickboard".to_string(),
+            WorkoutEquipment::SwimPaddles => "swim_paddles".to_string(),
+            WorkoutEquipment::SwimPullBuoy => "swim_pull_buoy".to_string(),
+            WorkoutEquipment::SwimSnorkel => "swim_snorkel".to_string(),
+            WorkoutEquipment::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -8332,7 +8169,6 @@ pub enum WatchfaceMode {
     Disabled,
     UnknownVariant(u8),
 }
-
 impl WatchfaceMode {
     pub fn from_u8(value: u8) -> WatchfaceMode {
         match value {
@@ -8357,11 +8193,11 @@ impl WatchfaceMode {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            WatchfaceMode::Digital => "Digital".to_string(),
-            WatchfaceMode::Analog => "Analog".to_string(),
-            WatchfaceMode::ConnectIq => "ConnectIq".to_string(),
-            WatchfaceMode::Disabled => "Disabled".to_string(),
-            WatchfaceMode::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            WatchfaceMode::Digital => "digital".to_string(),
+            WatchfaceMode::Analog => "analog".to_string(),
+            WatchfaceMode::ConnectIq => "connect_iq".to_string(),
+            WatchfaceMode::Disabled => "disabled".to_string(),
+            WatchfaceMode::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -8373,7 +8209,6 @@ pub enum DigitalWatchfaceLayout {
     Bold,
     UnknownVariant(u8),
 }
-
 impl DigitalWatchfaceLayout {
     pub fn from_u8(value: u8) -> DigitalWatchfaceLayout {
         match value {
@@ -8396,10 +8231,10 @@ impl DigitalWatchfaceLayout {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            DigitalWatchfaceLayout::Traditional => "Traditional".to_string(),
-            DigitalWatchfaceLayout::Modern => "Modern".to_string(),
-            DigitalWatchfaceLayout::Bold => "Bold".to_string(),
-            DigitalWatchfaceLayout::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            DigitalWatchfaceLayout::Traditional => "traditional".to_string(),
+            DigitalWatchfaceLayout::Modern => "modern".to_string(),
+            DigitalWatchfaceLayout::Bold => "bold".to_string(),
+            DigitalWatchfaceLayout::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -8411,7 +8246,6 @@ pub enum AnalogWatchfaceLayout {
     Modern,
     UnknownVariant(u8),
 }
-
 impl AnalogWatchfaceLayout {
     pub fn from_u8(value: u8) -> AnalogWatchfaceLayout {
         match value {
@@ -8434,10 +8268,10 @@ impl AnalogWatchfaceLayout {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            AnalogWatchfaceLayout::Minimal => "Minimal".to_string(),
-            AnalogWatchfaceLayout::Traditional => "Traditional".to_string(),
-            AnalogWatchfaceLayout::Modern => "Modern".to_string(),
-            AnalogWatchfaceLayout::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            AnalogWatchfaceLayout::Minimal => "minimal".to_string(),
+            AnalogWatchfaceLayout::Traditional => "traditional".to_string(),
+            AnalogWatchfaceLayout::Modern => "modern".to_string(),
+            AnalogWatchfaceLayout::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -8450,7 +8284,6 @@ pub enum RiderPositionType {
     TransitionToStanding,
     UnknownVariant(u8),
 }
-
 impl RiderPositionType {
     pub fn from_u8(value: u8) -> RiderPositionType {
         match value {
@@ -8475,11 +8308,11 @@ impl RiderPositionType {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            RiderPositionType::Seated => "Seated".to_string(),
-            RiderPositionType::Standing => "Standing".to_string(),
-            RiderPositionType::TransitionToSeated => "TransitionToSeated".to_string(),
-            RiderPositionType::TransitionToStanding => "TransitionToStanding".to_string(),
-            RiderPositionType::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            RiderPositionType::Seated => "seated".to_string(),
+            RiderPositionType::Standing => "standing".to_string(),
+            RiderPositionType::TransitionToSeated => "transition_to_seated".to_string(),
+            RiderPositionType::TransitionToStanding => "transition_to_standing".to_string(),
+            RiderPositionType::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -8492,7 +8325,6 @@ pub enum PowerPhaseType {
     PowerPhaseCenter,
     UnknownVariant(u8),
 }
-
 impl PowerPhaseType {
     pub fn from_u8(value: u8) -> PowerPhaseType {
         match value {
@@ -8517,11 +8349,11 @@ impl PowerPhaseType {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            PowerPhaseType::PowerPhaseStartAngle => "PowerPhaseStartAngle".to_string(),
-            PowerPhaseType::PowerPhaseEndAngle => "PowerPhaseEndAngle".to_string(),
-            PowerPhaseType::PowerPhaseArcLength => "PowerPhaseArcLength".to_string(),
-            PowerPhaseType::PowerPhaseCenter => "PowerPhaseCenter".to_string(),
-            PowerPhaseType::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            PowerPhaseType::PowerPhaseStartAngle => "power_phase_start_angle".to_string(),
+            PowerPhaseType::PowerPhaseEndAngle => "power_phase_end_angle".to_string(),
+            PowerPhaseType::PowerPhaseArcLength => "power_phase_arc_length".to_string(),
+            PowerPhaseType::PowerPhaseCenter => "power_phase_center".to_string(),
+            PowerPhaseType::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -8543,7 +8375,6 @@ pub enum CameraEventType {
     VideoSecondStreamResume,
     UnknownVariant(u8),
 }
-
 impl CameraEventType {
     pub fn from_u8(value: u8) -> CameraEventType {
         match value {
@@ -8586,22 +8417,22 @@ impl CameraEventType {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            CameraEventType::VideoStart => "VideoStart".to_string(),
-            CameraEventType::VideoSplit => "VideoSplit".to_string(),
-            CameraEventType::VideoEnd => "VideoEnd".to_string(),
-            CameraEventType::PhotoTaken => "PhotoTaken".to_string(),
-            CameraEventType::VideoSecondStreamStart => "VideoSecondStreamStart".to_string(),
-            CameraEventType::VideoSecondStreamSplit => "VideoSecondStreamSplit".to_string(),
-            CameraEventType::VideoSecondStreamEnd => "VideoSecondStreamEnd".to_string(),
-            CameraEventType::VideoSplitStart => "VideoSplitStart".to_string(),
+            CameraEventType::VideoStart => "video_start".to_string(),
+            CameraEventType::VideoSplit => "video_split".to_string(),
+            CameraEventType::VideoEnd => "video_end".to_string(),
+            CameraEventType::PhotoTaken => "photo_taken".to_string(),
+            CameraEventType::VideoSecondStreamStart => "video_second_stream_start".to_string(),
+            CameraEventType::VideoSecondStreamSplit => "video_second_stream_split".to_string(),
+            CameraEventType::VideoSecondStreamEnd => "video_second_stream_end".to_string(),
+            CameraEventType::VideoSplitStart => "video_split_start".to_string(),
             CameraEventType::VideoSecondStreamSplitStart => {
-                "VideoSecondStreamSplitStart".to_string()
+                "video_second_stream_split_start".to_string()
             }
-            CameraEventType::VideoPause => "VideoPause".to_string(),
-            CameraEventType::VideoSecondStreamPause => "VideoSecondStreamPause".to_string(),
-            CameraEventType::VideoResume => "VideoResume".to_string(),
-            CameraEventType::VideoSecondStreamResume => "VideoSecondStreamResume".to_string(),
-            CameraEventType::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            CameraEventType::VideoPause => "video_pause".to_string(),
+            CameraEventType::VideoSecondStreamPause => "video_second_stream_pause".to_string(),
+            CameraEventType::VideoResume => "video_resume".to_string(),
+            CameraEventType::VideoSecondStreamResume => "video_second_stream_resume".to_string(),
+            CameraEventType::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -8614,7 +8445,6 @@ pub enum SensorType {
     Barometer,
     UnknownVariant(u8),
 }
-
 impl SensorType {
     pub fn from_u8(value: u8) -> SensorType {
         match value {
@@ -8639,11 +8469,11 @@ impl SensorType {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            SensorType::Accelerometer => "Accelerometer".to_string(),
-            SensorType::Gyroscope => "Gyroscope".to_string(),
-            SensorType::Compass => "Compass".to_string(),
-            SensorType::Barometer => "Barometer".to_string(),
-            SensorType::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            SensorType::Accelerometer => "accelerometer".to_string(),
+            SensorType::Gyroscope => "gyroscope".to_string(),
+            SensorType::Compass => "compass".to_string(),
+            SensorType::Barometer => "barometer".to_string(),
+            SensorType::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -8656,7 +8486,6 @@ pub enum BikeLightNetworkConfigType {
     Trail,
     UnknownVariant(u8),
 }
-
 impl BikeLightNetworkConfigType {
     pub fn from_u8(value: u8) -> BikeLightNetworkConfigType {
         match value {
@@ -8681,12 +8510,12 @@ impl BikeLightNetworkConfigType {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            BikeLightNetworkConfigType::Auto => "Auto".to_string(),
-            BikeLightNetworkConfigType::Individual => "Individual".to_string(),
-            BikeLightNetworkConfigType::HighVisibility => "HighVisibility".to_string(),
-            BikeLightNetworkConfigType::Trail => "Trail".to_string(),
+            BikeLightNetworkConfigType::Auto => "auto".to_string(),
+            BikeLightNetworkConfigType::Individual => "individual".to_string(),
+            BikeLightNetworkConfigType::HighVisibility => "high_visibility".to_string(),
+            BikeLightNetworkConfigType::Trail => "trail".to_string(),
             BikeLightNetworkConfigType::UnknownVariant(value) => {
-                format!("UnknownVariant{}", *value)
+                format!("unknown_variant_{}", *value)
             }
         }
     }
@@ -8700,7 +8529,6 @@ pub enum CommTimeoutType {
     ConnectionTimeout,      // Connection closed due to extended bad communications
     UnknownVariant(u16),
 }
-
 impl CommTimeoutType {
     pub fn from_u16(value: u16) -> CommTimeoutType {
         match value {
@@ -8725,11 +8553,11 @@ impl CommTimeoutType {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            CommTimeoutType::WildcardPairingTimeout => "WildcardPairingTimeout".to_string(),
-            CommTimeoutType::PairingTimeout => "PairingTimeout".to_string(),
-            CommTimeoutType::ConnectionLost => "ConnectionLost".to_string(),
-            CommTimeoutType::ConnectionTimeout => "ConnectionTimeout".to_string(),
-            CommTimeoutType::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            CommTimeoutType::WildcardPairingTimeout => "wildcard_pairing_timeout".to_string(),
+            CommTimeoutType::PairingTimeout => "pairing_timeout".to_string(),
+            CommTimeoutType::ConnectionLost => "connection_lost".to_string(),
+            CommTimeoutType::ConnectionTimeout => "connection_timeout".to_string(),
+            CommTimeoutType::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -8742,7 +8570,6 @@ pub enum CameraOrientationType {
     CameraOrientation270,
     UnknownVariant(u8),
 }
-
 impl CameraOrientationType {
     pub fn from_u8(value: u8) -> CameraOrientationType {
         match value {
@@ -8767,11 +8594,11 @@ impl CameraOrientationType {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            CameraOrientationType::CameraOrientation0 => "CameraOrientation0".to_string(),
-            CameraOrientationType::CameraOrientation90 => "CameraOrientation90".to_string(),
-            CameraOrientationType::CameraOrientation180 => "CameraOrientation180".to_string(),
-            CameraOrientationType::CameraOrientation270 => "CameraOrientation270".to_string(),
-            CameraOrientationType::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            CameraOrientationType::CameraOrientation0 => "camera_orientation_0".to_string(),
+            CameraOrientationType::CameraOrientation90 => "camera_orientation_90".to_string(),
+            CameraOrientationType::CameraOrientation180 => "camera_orientation_180".to_string(),
+            CameraOrientationType::CameraOrientation270 => "camera_orientation_270".to_string(),
+            CameraOrientationType::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -8784,7 +8611,6 @@ pub enum AttitudeStage {
     Valid,
     UnknownVariant(u8),
 }
-
 impl AttitudeStage {
     pub fn from_u8(value: u8) -> AttitudeStage {
         match value {
@@ -8809,11 +8635,11 @@ impl AttitudeStage {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            AttitudeStage::Failed => "Failed".to_string(),
-            AttitudeStage::Aligning => "Aligning".to_string(),
-            AttitudeStage::Degraded => "Degraded".to_string(),
-            AttitudeStage::Valid => "Valid".to_string(),
-            AttitudeStage::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            AttitudeStage::Failed => "failed".to_string(),
+            AttitudeStage::Aligning => "aligning".to_string(),
+            AttitudeStage::Degraded => "degraded".to_string(),
+            AttitudeStage::Valid => "valid".to_string(),
+            AttitudeStage::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -8835,7 +8661,6 @@ pub enum AttitudeValidity {
     MagneticHeading,
     UnknownVariant(u16),
 }
-
 impl AttitudeValidity {
     pub fn from_u16(value: u16) -> AttitudeValidity {
         match value {
@@ -8878,20 +8703,20 @@ impl AttitudeValidity {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            AttitudeValidity::TrackAngleHeadingValid => "TrackAngleHeadingValid".to_string(),
-            AttitudeValidity::PitchValid => "PitchValid".to_string(),
-            AttitudeValidity::RollValid => "RollValid".to_string(),
-            AttitudeValidity::LateralBodyAccelValid => "LateralBodyAccelValid".to_string(),
-            AttitudeValidity::NormalBodyAccelValid => "NormalBodyAccelValid".to_string(),
-            AttitudeValidity::TurnRateValid => "TurnRateValid".to_string(),
-            AttitudeValidity::HwFail => "HwFail".to_string(),
-            AttitudeValidity::MagInvalid => "MagInvalid".to_string(),
-            AttitudeValidity::NoGps => "NoGps".to_string(),
-            AttitudeValidity::GpsInvalid => "GpsInvalid".to_string(),
-            AttitudeValidity::SolutionCoasting => "SolutionCoasting".to_string(),
-            AttitudeValidity::TrueTrackAngle => "TrueTrackAngle".to_string(),
-            AttitudeValidity::MagneticHeading => "MagneticHeading".to_string(),
-            AttitudeValidity::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            AttitudeValidity::TrackAngleHeadingValid => "track_angle_heading_valid".to_string(),
+            AttitudeValidity::PitchValid => "pitch_valid".to_string(),
+            AttitudeValidity::RollValid => "roll_valid".to_string(),
+            AttitudeValidity::LateralBodyAccelValid => "lateral_body_accel_valid".to_string(),
+            AttitudeValidity::NormalBodyAccelValid => "normal_body_accel_valid".to_string(),
+            AttitudeValidity::TurnRateValid => "turn_rate_valid".to_string(),
+            AttitudeValidity::HwFail => "hw_fail".to_string(),
+            AttitudeValidity::MagInvalid => "mag_invalid".to_string(),
+            AttitudeValidity::NoGps => "no_gps".to_string(),
+            AttitudeValidity::GpsInvalid => "gps_invalid".to_string(),
+            AttitudeValidity::SolutionCoasting => "solution_coasting".to_string(),
+            AttitudeValidity::TrueTrackAngle => "true_track_angle".to_string(),
+            AttitudeValidity::MagneticHeading => "magnetic_heading".to_string(),
+            AttitudeValidity::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -8905,7 +8730,6 @@ pub enum AutoSyncFrequency {
     Remote,
     UnknownVariant(u8),
 }
-
 impl AutoSyncFrequency {
     pub fn from_u8(value: u8) -> AutoSyncFrequency {
         match value {
@@ -8932,12 +8756,12 @@ impl AutoSyncFrequency {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            AutoSyncFrequency::Never => "Never".to_string(),
-            AutoSyncFrequency::Occasionally => "Occasionally".to_string(),
-            AutoSyncFrequency::Frequent => "Frequent".to_string(),
-            AutoSyncFrequency::OnceADay => "OnceADay".to_string(),
-            AutoSyncFrequency::Remote => "Remote".to_string(),
-            AutoSyncFrequency::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            AutoSyncFrequency::Never => "never".to_string(),
+            AutoSyncFrequency::Occasionally => "occasionally".to_string(),
+            AutoSyncFrequency::Frequent => "frequent".to_string(),
+            AutoSyncFrequency::OnceADay => "once_a_day".to_string(),
+            AutoSyncFrequency::Remote => "remote".to_string(),
+            AutoSyncFrequency::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -8954,7 +8778,6 @@ pub enum ExdLayout {
     HalfHorizontalTopSplit,
     UnknownVariant(u8),
 }
-
 impl ExdLayout {
     pub fn from_u8(value: u8) -> ExdLayout {
         match value {
@@ -8987,15 +8810,15 @@ impl ExdLayout {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            ExdLayout::FullScreen => "FullScreen".to_string(),
-            ExdLayout::HalfVertical => "HalfVertical".to_string(),
-            ExdLayout::HalfHorizontal => "HalfHorizontal".to_string(),
-            ExdLayout::HalfVerticalRightSplit => "HalfVerticalRightSplit".to_string(),
-            ExdLayout::HalfHorizontalBottomSplit => "HalfHorizontalBottomSplit".to_string(),
-            ExdLayout::FullQuarterSplit => "FullQuarterSplit".to_string(),
-            ExdLayout::HalfVerticalLeftSplit => "HalfVerticalLeftSplit".to_string(),
-            ExdLayout::HalfHorizontalTopSplit => "HalfHorizontalTopSplit".to_string(),
-            ExdLayout::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            ExdLayout::FullScreen => "full_screen".to_string(),
+            ExdLayout::HalfVertical => "half_vertical".to_string(),
+            ExdLayout::HalfHorizontal => "half_horizontal".to_string(),
+            ExdLayout::HalfVerticalRightSplit => "half_vertical_right_split".to_string(),
+            ExdLayout::HalfHorizontalBottomSplit => "half_horizontal_bottom_split".to_string(),
+            ExdLayout::FullQuarterSplit => "full_quarter_split".to_string(),
+            ExdLayout::HalfVerticalLeftSplit => "half_vertical_left_split".to_string(),
+            ExdLayout::HalfHorizontalTopSplit => "half_horizontal_top_split".to_string(),
+            ExdLayout::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -9015,7 +8838,6 @@ pub enum ExdDisplayType {
     Gauge,
     UnknownVariant(u8),
 }
-
 impl ExdDisplayType {
     pub fn from_u8(value: u8) -> ExdDisplayType {
         match value {
@@ -9054,18 +8876,18 @@ impl ExdDisplayType {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            ExdDisplayType::Numerical => "Numerical".to_string(),
-            ExdDisplayType::Simple => "Simple".to_string(),
-            ExdDisplayType::Graph => "Graph".to_string(),
-            ExdDisplayType::Bar => "Bar".to_string(),
-            ExdDisplayType::CircleGraph => "CircleGraph".to_string(),
-            ExdDisplayType::VirtualPartner => "VirtualPartner".to_string(),
-            ExdDisplayType::Balance => "Balance".to_string(),
-            ExdDisplayType::StringList => "StringList".to_string(),
-            ExdDisplayType::String => "String".to_string(),
-            ExdDisplayType::SimpleDynamicIcon => "SimpleDynamicIcon".to_string(),
-            ExdDisplayType::Gauge => "Gauge".to_string(),
-            ExdDisplayType::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            ExdDisplayType::Numerical => "numerical".to_string(),
+            ExdDisplayType::Simple => "simple".to_string(),
+            ExdDisplayType::Graph => "graph".to_string(),
+            ExdDisplayType::Bar => "bar".to_string(),
+            ExdDisplayType::CircleGraph => "circle_graph".to_string(),
+            ExdDisplayType::VirtualPartner => "virtual_partner".to_string(),
+            ExdDisplayType::Balance => "balance".to_string(),
+            ExdDisplayType::StringList => "string_list".to_string(),
+            ExdDisplayType::String => "string".to_string(),
+            ExdDisplayType::SimpleDynamicIcon => "simple_dynamic_icon".to_string(),
+            ExdDisplayType::Gauge => "gauge".to_string(),
+            ExdDisplayType::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -9124,7 +8946,6 @@ pub enum ExdDataUnits {
     EightCardinal,
     UnknownVariant(u8),
 }
-
 impl ExdDataUnits {
     pub fn from_u8(value: u8) -> ExdDataUnits {
         match value {
@@ -9241,59 +9062,63 @@ impl ExdDataUnits {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            ExdDataUnits::NoUnits => "NoUnits".to_string(),
-            ExdDataUnits::Laps => "Laps".to_string(),
-            ExdDataUnits::MilesPerHour => "MilesPerHour".to_string(),
-            ExdDataUnits::KilometersPerHour => "KilometersPerHour".to_string(),
-            ExdDataUnits::FeetPerHour => "FeetPerHour".to_string(),
-            ExdDataUnits::MetersPerHour => "MetersPerHour".to_string(),
-            ExdDataUnits::DegreesCelsius => "DegreesCelsius".to_string(),
-            ExdDataUnits::DegreesFarenheit => "DegreesFarenheit".to_string(),
-            ExdDataUnits::Zone => "Zone".to_string(),
-            ExdDataUnits::Gear => "Gear".to_string(),
-            ExdDataUnits::Rpm => "Rpm".to_string(),
-            ExdDataUnits::Bpm => "Bpm".to_string(),
-            ExdDataUnits::Degrees => "Degrees".to_string(),
-            ExdDataUnits::Millimeters => "Millimeters".to_string(),
-            ExdDataUnits::Meters => "Meters".to_string(),
-            ExdDataUnits::Kilometers => "Kilometers".to_string(),
-            ExdDataUnits::Feet => "Feet".to_string(),
-            ExdDataUnits::Yards => "Yards".to_string(),
-            ExdDataUnits::Kilofeet => "Kilofeet".to_string(),
-            ExdDataUnits::Miles => "Miles".to_string(),
-            ExdDataUnits::Time => "Time".to_string(),
-            ExdDataUnits::EnumTurnType => "EnumTurnType".to_string(),
-            ExdDataUnits::Percent => "Percent".to_string(),
-            ExdDataUnits::Watts => "Watts".to_string(),
-            ExdDataUnits::WattsPerKilogram => "WattsPerKilogram".to_string(),
-            ExdDataUnits::EnumBatteryStatus => "EnumBatteryStatus".to_string(),
-            ExdDataUnits::EnumBikeLightBeamAngleMode => "EnumBikeLightBeamAngleMode".to_string(),
-            ExdDataUnits::EnumBikeLightBatteryStatus => "EnumBikeLightBatteryStatus".to_string(),
-            ExdDataUnits::EnumBikeLightNetworkConfigType => {
-                "EnumBikeLightNetworkConfigType".to_string()
+            ExdDataUnits::NoUnits => "no_units".to_string(),
+            ExdDataUnits::Laps => "laps".to_string(),
+            ExdDataUnits::MilesPerHour => "miles_per_hour".to_string(),
+            ExdDataUnits::KilometersPerHour => "kilometers_per_hour".to_string(),
+            ExdDataUnits::FeetPerHour => "feet_per_hour".to_string(),
+            ExdDataUnits::MetersPerHour => "meters_per_hour".to_string(),
+            ExdDataUnits::DegreesCelsius => "degrees_celsius".to_string(),
+            ExdDataUnits::DegreesFarenheit => "degrees_farenheit".to_string(),
+            ExdDataUnits::Zone => "zone".to_string(),
+            ExdDataUnits::Gear => "gear".to_string(),
+            ExdDataUnits::Rpm => "rpm".to_string(),
+            ExdDataUnits::Bpm => "bpm".to_string(),
+            ExdDataUnits::Degrees => "degrees".to_string(),
+            ExdDataUnits::Millimeters => "millimeters".to_string(),
+            ExdDataUnits::Meters => "meters".to_string(),
+            ExdDataUnits::Kilometers => "kilometers".to_string(),
+            ExdDataUnits::Feet => "feet".to_string(),
+            ExdDataUnits::Yards => "yards".to_string(),
+            ExdDataUnits::Kilofeet => "kilofeet".to_string(),
+            ExdDataUnits::Miles => "miles".to_string(),
+            ExdDataUnits::Time => "time".to_string(),
+            ExdDataUnits::EnumTurnType => "enum_turn_type".to_string(),
+            ExdDataUnits::Percent => "percent".to_string(),
+            ExdDataUnits::Watts => "watts".to_string(),
+            ExdDataUnits::WattsPerKilogram => "watts_per_kilogram".to_string(),
+            ExdDataUnits::EnumBatteryStatus => "enum_battery_status".to_string(),
+            ExdDataUnits::EnumBikeLightBeamAngleMode => {
+                "enum_bike_light_beam_angle_mode".to_string()
             }
-            ExdDataUnits::Lights => "Lights".to_string(),
-            ExdDataUnits::Seconds => "Seconds".to_string(),
-            ExdDataUnits::Minutes => "Minutes".to_string(),
-            ExdDataUnits::Hours => "Hours".to_string(),
-            ExdDataUnits::Calories => "Calories".to_string(),
-            ExdDataUnits::Kilojoules => "Kilojoules".to_string(),
-            ExdDataUnits::Milliseconds => "Milliseconds".to_string(),
-            ExdDataUnits::SecondPerMile => "SecondPerMile".to_string(),
-            ExdDataUnits::SecondPerKilometer => "SecondPerKilometer".to_string(),
-            ExdDataUnits::Centimeter => "Centimeter".to_string(),
-            ExdDataUnits::EnumCoursePoint => "EnumCoursePoint".to_string(),
-            ExdDataUnits::Bradians => "Bradians".to_string(),
-            ExdDataUnits::EnumSport => "EnumSport".to_string(),
-            ExdDataUnits::InchesHg => "InchesHg".to_string(),
-            ExdDataUnits::MmHg => "MmHg".to_string(),
-            ExdDataUnits::Mbars => "Mbars".to_string(),
-            ExdDataUnits::HectoPascals => "HectoPascals".to_string(),
-            ExdDataUnits::FeetPerMin => "FeetPerMin".to_string(),
-            ExdDataUnits::MetersPerMin => "MetersPerMin".to_string(),
-            ExdDataUnits::MetersPerSec => "MetersPerSec".to_string(),
-            ExdDataUnits::EightCardinal => "EightCardinal".to_string(),
-            ExdDataUnits::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            ExdDataUnits::EnumBikeLightBatteryStatus => {
+                "enum_bike_light_battery_status".to_string()
+            }
+            ExdDataUnits::EnumBikeLightNetworkConfigType => {
+                "enum_bike_light_network_config_type".to_string()
+            }
+            ExdDataUnits::Lights => "lights".to_string(),
+            ExdDataUnits::Seconds => "seconds".to_string(),
+            ExdDataUnits::Minutes => "minutes".to_string(),
+            ExdDataUnits::Hours => "hours".to_string(),
+            ExdDataUnits::Calories => "calories".to_string(),
+            ExdDataUnits::Kilojoules => "kilojoules".to_string(),
+            ExdDataUnits::Milliseconds => "milliseconds".to_string(),
+            ExdDataUnits::SecondPerMile => "second_per_mile".to_string(),
+            ExdDataUnits::SecondPerKilometer => "second_per_kilometer".to_string(),
+            ExdDataUnits::Centimeter => "centimeter".to_string(),
+            ExdDataUnits::EnumCoursePoint => "enum_course_point".to_string(),
+            ExdDataUnits::Bradians => "bradians".to_string(),
+            ExdDataUnits::EnumSport => "enum_sport".to_string(),
+            ExdDataUnits::InchesHg => "inches_hg".to_string(),
+            ExdDataUnits::MmHg => "mm_hg".to_string(),
+            ExdDataUnits::Mbars => "mbars".to_string(),
+            ExdDataUnits::HectoPascals => "hecto_pascals".to_string(),
+            ExdDataUnits::FeetPerMin => "feet_per_min".to_string(),
+            ExdDataUnits::MetersPerMin => "meters_per_min".to_string(),
+            ExdDataUnits::MetersPerSec => "meters_per_sec".to_string(),
+            ExdDataUnits::EightCardinal => "eight_cardinal".to_string(),
+            ExdDataUnits::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -9346,7 +9171,6 @@ pub enum ExdQualifiers {
     Zone1,
     UnknownVariant(u8),
 }
-
 impl ExdQualifiers {
     pub fn from_u8(value: u8) -> ExdQualifiers {
         match value {
@@ -9451,51 +9275,51 @@ impl ExdQualifiers {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            ExdQualifiers::NoQualifier => "NoQualifier".to_string(),
-            ExdQualifiers::Instantaneous => "Instantaneous".to_string(),
-            ExdQualifiers::Average => "Average".to_string(),
-            ExdQualifiers::Lap => "Lap".to_string(),
-            ExdQualifiers::Maximum => "Maximum".to_string(),
-            ExdQualifiers::MaximumAverage => "MaximumAverage".to_string(),
-            ExdQualifiers::MaximumLap => "MaximumLap".to_string(),
-            ExdQualifiers::LastLap => "LastLap".to_string(),
-            ExdQualifiers::AverageLap => "AverageLap".to_string(),
-            ExdQualifiers::ToDestination => "ToDestination".to_string(),
-            ExdQualifiers::ToGo => "ToGo".to_string(),
-            ExdQualifiers::ToNext => "ToNext".to_string(),
-            ExdQualifiers::NextCoursePoint => "NextCoursePoint".to_string(),
-            ExdQualifiers::Total => "Total".to_string(),
-            ExdQualifiers::ThreeSecondAverage => "ThreeSecondAverage".to_string(),
-            ExdQualifiers::TenSecondAverage => "TenSecondAverage".to_string(),
-            ExdQualifiers::ThirtySecondAverage => "ThirtySecondAverage".to_string(),
-            ExdQualifiers::PercentMaximum => "PercentMaximum".to_string(),
-            ExdQualifiers::PercentMaximumAverage => "PercentMaximumAverage".to_string(),
-            ExdQualifiers::LapPercentMaximum => "LapPercentMaximum".to_string(),
-            ExdQualifiers::Elapsed => "Elapsed".to_string(),
-            ExdQualifiers::Sunrise => "Sunrise".to_string(),
-            ExdQualifiers::Sunset => "Sunset".to_string(),
-            ExdQualifiers::ComparedToVirtualPartner => "ComparedToVirtualPartner".to_string(),
-            ExdQualifiers::Maximum24h => "Maximum24h".to_string(),
-            ExdQualifiers::Minimum24h => "Minimum24h".to_string(),
-            ExdQualifiers::Minimum => "Minimum".to_string(),
-            ExdQualifiers::First => "First".to_string(),
-            ExdQualifiers::Second => "Second".to_string(),
-            ExdQualifiers::Third => "Third".to_string(),
-            ExdQualifiers::Shifter => "Shifter".to_string(),
-            ExdQualifiers::LastSport => "LastSport".to_string(),
-            ExdQualifiers::Moving => "Moving".to_string(),
-            ExdQualifiers::Stopped => "Stopped".to_string(),
-            ExdQualifiers::EstimatedTotal => "EstimatedTotal".to_string(),
-            ExdQualifiers::Zone9 => "Zone9".to_string(),
-            ExdQualifiers::Zone8 => "Zone8".to_string(),
-            ExdQualifiers::Zone7 => "Zone7".to_string(),
-            ExdQualifiers::Zone6 => "Zone6".to_string(),
-            ExdQualifiers::Zone5 => "Zone5".to_string(),
-            ExdQualifiers::Zone4 => "Zone4".to_string(),
-            ExdQualifiers::Zone3 => "Zone3".to_string(),
-            ExdQualifiers::Zone2 => "Zone2".to_string(),
-            ExdQualifiers::Zone1 => "Zone1".to_string(),
-            ExdQualifiers::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            ExdQualifiers::NoQualifier => "no_qualifier".to_string(),
+            ExdQualifiers::Instantaneous => "instantaneous".to_string(),
+            ExdQualifiers::Average => "average".to_string(),
+            ExdQualifiers::Lap => "lap".to_string(),
+            ExdQualifiers::Maximum => "maximum".to_string(),
+            ExdQualifiers::MaximumAverage => "maximum_average".to_string(),
+            ExdQualifiers::MaximumLap => "maximum_lap".to_string(),
+            ExdQualifiers::LastLap => "last_lap".to_string(),
+            ExdQualifiers::AverageLap => "average_lap".to_string(),
+            ExdQualifiers::ToDestination => "to_destination".to_string(),
+            ExdQualifiers::ToGo => "to_go".to_string(),
+            ExdQualifiers::ToNext => "to_next".to_string(),
+            ExdQualifiers::NextCoursePoint => "next_course_point".to_string(),
+            ExdQualifiers::Total => "total".to_string(),
+            ExdQualifiers::ThreeSecondAverage => "three_second_average".to_string(),
+            ExdQualifiers::TenSecondAverage => "ten_second_average".to_string(),
+            ExdQualifiers::ThirtySecondAverage => "thirty_second_average".to_string(),
+            ExdQualifiers::PercentMaximum => "percent_maximum".to_string(),
+            ExdQualifiers::PercentMaximumAverage => "percent_maximum_average".to_string(),
+            ExdQualifiers::LapPercentMaximum => "lap_percent_maximum".to_string(),
+            ExdQualifiers::Elapsed => "elapsed".to_string(),
+            ExdQualifiers::Sunrise => "sunrise".to_string(),
+            ExdQualifiers::Sunset => "sunset".to_string(),
+            ExdQualifiers::ComparedToVirtualPartner => "compared_to_virtual_partner".to_string(),
+            ExdQualifiers::Maximum24h => "maximum_24h".to_string(),
+            ExdQualifiers::Minimum24h => "minimum_24h".to_string(),
+            ExdQualifiers::Minimum => "minimum".to_string(),
+            ExdQualifiers::First => "first".to_string(),
+            ExdQualifiers::Second => "second".to_string(),
+            ExdQualifiers::Third => "third".to_string(),
+            ExdQualifiers::Shifter => "shifter".to_string(),
+            ExdQualifiers::LastSport => "last_sport".to_string(),
+            ExdQualifiers::Moving => "moving".to_string(),
+            ExdQualifiers::Stopped => "stopped".to_string(),
+            ExdQualifiers::EstimatedTotal => "estimated_total".to_string(),
+            ExdQualifiers::Zone9 => "zone_9".to_string(),
+            ExdQualifiers::Zone8 => "zone_8".to_string(),
+            ExdQualifiers::Zone7 => "zone_7".to_string(),
+            ExdQualifiers::Zone6 => "zone_6".to_string(),
+            ExdQualifiers::Zone5 => "zone_5".to_string(),
+            ExdQualifiers::Zone4 => "zone_4".to_string(),
+            ExdQualifiers::Zone3 => "zone_3".to_string(),
+            ExdQualifiers::Zone2 => "zone_2".to_string(),
+            ExdQualifiers::Zone1 => "zone_1".to_string(),
+            ExdQualifiers::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -9601,7 +9425,6 @@ pub enum ExdDescriptors {
     Vam,
     UnknownVariant(u8),
 }
-
 impl ExdDescriptors {
     pub fn from_u8(value: u8) -> ExdDescriptors {
         match value {
@@ -9812,112 +9635,118 @@ impl ExdDescriptors {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            ExdDescriptors::BikeLightBatteryStatus => "BikeLightBatteryStatus".to_string(),
-            ExdDescriptors::BeamAngleStatus => "BeamAngleStatus".to_string(),
-            ExdDescriptors::BateryLevel => "BateryLevel".to_string(),
-            ExdDescriptors::LightNetworkMode => "LightNetworkMode".to_string(),
-            ExdDescriptors::NumberLightsConnected => "NumberLightsConnected".to_string(),
-            ExdDescriptors::Cadence => "Cadence".to_string(),
-            ExdDescriptors::Distance => "Distance".to_string(),
-            ExdDescriptors::EstimatedTimeOfArrival => "EstimatedTimeOfArrival".to_string(),
-            ExdDescriptors::Heading => "Heading".to_string(),
-            ExdDescriptors::Time => "Time".to_string(),
-            ExdDescriptors::BatteryLevel => "BatteryLevel".to_string(),
-            ExdDescriptors::TrainerResistance => "TrainerResistance".to_string(),
-            ExdDescriptors::TrainerTargetPower => "TrainerTargetPower".to_string(),
-            ExdDescriptors::TimeSeated => "TimeSeated".to_string(),
-            ExdDescriptors::TimeStanding => "TimeStanding".to_string(),
-            ExdDescriptors::Elevation => "Elevation".to_string(),
-            ExdDescriptors::Grade => "Grade".to_string(),
-            ExdDescriptors::Ascent => "Ascent".to_string(),
-            ExdDescriptors::Descent => "Descent".to_string(),
-            ExdDescriptors::VerticalSpeed => "VerticalSpeed".to_string(),
-            ExdDescriptors::Di2BatteryLevel => "Di2BatteryLevel".to_string(),
-            ExdDescriptors::FrontGear => "FrontGear".to_string(),
-            ExdDescriptors::RearGear => "RearGear".to_string(),
-            ExdDescriptors::GearRatio => "GearRatio".to_string(),
-            ExdDescriptors::HeartRate => "HeartRate".to_string(),
-            ExdDescriptors::HeartRateZone => "HeartRateZone".to_string(),
-            ExdDescriptors::TimeInHeartRateZone => "TimeInHeartRateZone".to_string(),
-            ExdDescriptors::HeartRateReserve => "HeartRateReserve".to_string(),
-            ExdDescriptors::Calories => "Calories".to_string(),
-            ExdDescriptors::GpsAccuracy => "GpsAccuracy".to_string(),
-            ExdDescriptors::GpsSignalStrength => "GpsSignalStrength".to_string(),
-            ExdDescriptors::Temperature => "Temperature".to_string(),
-            ExdDescriptors::TimeOfDay => "TimeOfDay".to_string(),
-            ExdDescriptors::Balance => "Balance".to_string(),
-            ExdDescriptors::PedalSmoothness => "PedalSmoothness".to_string(),
-            ExdDescriptors::Power => "Power".to_string(),
-            ExdDescriptors::FunctionalThresholdPower => "FunctionalThresholdPower".to_string(),
-            ExdDescriptors::IntensityFactor => "IntensityFactor".to_string(),
-            ExdDescriptors::Work => "Work".to_string(),
-            ExdDescriptors::PowerRatio => "PowerRatio".to_string(),
-            ExdDescriptors::NormalizedPower => "NormalizedPower".to_string(),
-            ExdDescriptors::TrainingStressScore => "TrainingStressScore".to_string(),
-            ExdDescriptors::TimeOnZone => "TimeOnZone".to_string(),
-            ExdDescriptors::Speed => "Speed".to_string(),
-            ExdDescriptors::Laps => "Laps".to_string(),
-            ExdDescriptors::Reps => "Reps".to_string(),
-            ExdDescriptors::WorkoutStep => "WorkoutStep".to_string(),
-            ExdDescriptors::CourseDistance => "CourseDistance".to_string(),
-            ExdDescriptors::NavigationDistance => "NavigationDistance".to_string(),
+            ExdDescriptors::BikeLightBatteryStatus => "bike_light_battery_status".to_string(),
+            ExdDescriptors::BeamAngleStatus => "beam_angle_status".to_string(),
+            ExdDescriptors::BateryLevel => "batery_level".to_string(),
+            ExdDescriptors::LightNetworkMode => "light_network_mode".to_string(),
+            ExdDescriptors::NumberLightsConnected => "number_lights_connected".to_string(),
+            ExdDescriptors::Cadence => "cadence".to_string(),
+            ExdDescriptors::Distance => "distance".to_string(),
+            ExdDescriptors::EstimatedTimeOfArrival => "estimated_time_of_arrival".to_string(),
+            ExdDescriptors::Heading => "heading".to_string(),
+            ExdDescriptors::Time => "time".to_string(),
+            ExdDescriptors::BatteryLevel => "battery_level".to_string(),
+            ExdDescriptors::TrainerResistance => "trainer_resistance".to_string(),
+            ExdDescriptors::TrainerTargetPower => "trainer_target_power".to_string(),
+            ExdDescriptors::TimeSeated => "time_seated".to_string(),
+            ExdDescriptors::TimeStanding => "time_standing".to_string(),
+            ExdDescriptors::Elevation => "elevation".to_string(),
+            ExdDescriptors::Grade => "grade".to_string(),
+            ExdDescriptors::Ascent => "ascent".to_string(),
+            ExdDescriptors::Descent => "descent".to_string(),
+            ExdDescriptors::VerticalSpeed => "vertical_speed".to_string(),
+            ExdDescriptors::Di2BatteryLevel => "di2_battery_level".to_string(),
+            ExdDescriptors::FrontGear => "front_gear".to_string(),
+            ExdDescriptors::RearGear => "rear_gear".to_string(),
+            ExdDescriptors::GearRatio => "gear_ratio".to_string(),
+            ExdDescriptors::HeartRate => "heart_rate".to_string(),
+            ExdDescriptors::HeartRateZone => "heart_rate_zone".to_string(),
+            ExdDescriptors::TimeInHeartRateZone => "time_in_heart_rate_zone".to_string(),
+            ExdDescriptors::HeartRateReserve => "heart_rate_reserve".to_string(),
+            ExdDescriptors::Calories => "calories".to_string(),
+            ExdDescriptors::GpsAccuracy => "gps_accuracy".to_string(),
+            ExdDescriptors::GpsSignalStrength => "gps_signal_strength".to_string(),
+            ExdDescriptors::Temperature => "temperature".to_string(),
+            ExdDescriptors::TimeOfDay => "time_of_day".to_string(),
+            ExdDescriptors::Balance => "balance".to_string(),
+            ExdDescriptors::PedalSmoothness => "pedal_smoothness".to_string(),
+            ExdDescriptors::Power => "power".to_string(),
+            ExdDescriptors::FunctionalThresholdPower => "functional_threshold_power".to_string(),
+            ExdDescriptors::IntensityFactor => "intensity_factor".to_string(),
+            ExdDescriptors::Work => "work".to_string(),
+            ExdDescriptors::PowerRatio => "power_ratio".to_string(),
+            ExdDescriptors::NormalizedPower => "normalized_power".to_string(),
+            ExdDescriptors::TrainingStressScore => "training_stress_Score".to_string(),
+            ExdDescriptors::TimeOnZone => "time_on_zone".to_string(),
+            ExdDescriptors::Speed => "speed".to_string(),
+            ExdDescriptors::Laps => "laps".to_string(),
+            ExdDescriptors::Reps => "reps".to_string(),
+            ExdDescriptors::WorkoutStep => "workout_step".to_string(),
+            ExdDescriptors::CourseDistance => "course_distance".to_string(),
+            ExdDescriptors::NavigationDistance => "navigation_distance".to_string(),
             ExdDescriptors::CourseEstimatedTimeOfArrival => {
-                "CourseEstimatedTimeOfArrival".to_string()
+                "course_estimated_time_of_arrival".to_string()
             }
             ExdDescriptors::NavigationEstimatedTimeOfArrival => {
-                "NavigationEstimatedTimeOfArrival".to_string()
+                "navigation_estimated_time_of_arrival".to_string()
             }
-            ExdDescriptors::CourseTime => "CourseTime".to_string(),
-            ExdDescriptors::NavigationTime => "NavigationTime".to_string(),
-            ExdDescriptors::CourseHeading => "CourseHeading".to_string(),
-            ExdDescriptors::NavigationHeading => "NavigationHeading".to_string(),
-            ExdDescriptors::PowerZone => "PowerZone".to_string(),
-            ExdDescriptors::TorqueEffectiveness => "TorqueEffectiveness".to_string(),
-            ExdDescriptors::TimerTime => "TimerTime".to_string(),
-            ExdDescriptors::PowerWeightRatio => "PowerWeightRatio".to_string(),
-            ExdDescriptors::LeftPlatformCenterOffset => "LeftPlatformCenterOffset".to_string(),
-            ExdDescriptors::RightPlatformCenterOffset => "RightPlatformCenterOffset".to_string(),
-            ExdDescriptors::LeftPowerPhaseStartAngle => "LeftPowerPhaseStartAngle".to_string(),
-            ExdDescriptors::RightPowerPhaseStartAngle => "RightPowerPhaseStartAngle".to_string(),
-            ExdDescriptors::LeftPowerPhaseFinishAngle => "LeftPowerPhaseFinishAngle".to_string(),
-            ExdDescriptors::RightPowerPhaseFinishAngle => "RightPowerPhaseFinishAngle".to_string(),
-            ExdDescriptors::Gears => "Gears".to_string(),
-            ExdDescriptors::Pace => "Pace".to_string(),
-            ExdDescriptors::TrainingEffect => "TrainingEffect".to_string(),
-            ExdDescriptors::VerticalOscillation => "VerticalOscillation".to_string(),
-            ExdDescriptors::VerticalRatio => "VerticalRatio".to_string(),
-            ExdDescriptors::GroundContactTime => "GroundContactTime".to_string(),
+            ExdDescriptors::CourseTime => "course_time".to_string(),
+            ExdDescriptors::NavigationTime => "navigation_time".to_string(),
+            ExdDescriptors::CourseHeading => "course_heading".to_string(),
+            ExdDescriptors::NavigationHeading => "navigation_heading".to_string(),
+            ExdDescriptors::PowerZone => "power_zone".to_string(),
+            ExdDescriptors::TorqueEffectiveness => "torque_effectiveness".to_string(),
+            ExdDescriptors::TimerTime => "timer_time".to_string(),
+            ExdDescriptors::PowerWeightRatio => "power_weight_ratio".to_string(),
+            ExdDescriptors::LeftPlatformCenterOffset => "left_platform_center_offset".to_string(),
+            ExdDescriptors::RightPlatformCenterOffset => "right_platform_center_offset".to_string(),
+            ExdDescriptors::LeftPowerPhaseStartAngle => "left_power_phase_start_angle".to_string(),
+            ExdDescriptors::RightPowerPhaseStartAngle => {
+                "right_power_phase_start_angle".to_string()
+            }
+            ExdDescriptors::LeftPowerPhaseFinishAngle => {
+                "left_power_phase_finish_angle".to_string()
+            }
+            ExdDescriptors::RightPowerPhaseFinishAngle => {
+                "right_power_phase_finish_angle".to_string()
+            }
+            ExdDescriptors::Gears => "gears".to_string(),
+            ExdDescriptors::Pace => "pace".to_string(),
+            ExdDescriptors::TrainingEffect => "training_effect".to_string(),
+            ExdDescriptors::VerticalOscillation => "vertical_oscillation".to_string(),
+            ExdDescriptors::VerticalRatio => "vertical_ratio".to_string(),
+            ExdDescriptors::GroundContactTime => "ground_contact_time".to_string(),
             ExdDescriptors::LeftGroundContactTimeBalance => {
-                "LeftGroundContactTimeBalance".to_string()
+                "left_ground_contact_time_balance".to_string()
             }
             ExdDescriptors::RightGroundContactTimeBalance => {
-                "RightGroundContactTimeBalance".to_string()
+                "right_ground_contact_time_balance".to_string()
             }
-            ExdDescriptors::StrideLength => "StrideLength".to_string(),
-            ExdDescriptors::RunningCadence => "RunningCadence".to_string(),
-            ExdDescriptors::PerformanceCondition => "PerformanceCondition".to_string(),
-            ExdDescriptors::CourseType => "CourseType".to_string(),
-            ExdDescriptors::TimeInPowerZone => "TimeInPowerZone".to_string(),
-            ExdDescriptors::NavigationTurn => "NavigationTurn".to_string(),
-            ExdDescriptors::CourseLocation => "CourseLocation".to_string(),
-            ExdDescriptors::NavigationLocation => "NavigationLocation".to_string(),
-            ExdDescriptors::Compass => "Compass".to_string(),
-            ExdDescriptors::GearCombo => "GearCombo".to_string(),
-            ExdDescriptors::MuscleOxygen => "MuscleOxygen".to_string(),
-            ExdDescriptors::Icon => "Icon".to_string(),
-            ExdDescriptors::CompassHeading => "CompassHeading".to_string(),
-            ExdDescriptors::GpsHeading => "GpsHeading".to_string(),
-            ExdDescriptors::GpsElevation => "GpsElevation".to_string(),
-            ExdDescriptors::AnaerobicTrainingEffect => "AnaerobicTrainingEffect".to_string(),
-            ExdDescriptors::Course => "Course".to_string(),
-            ExdDescriptors::OffCourse => "OffCourse".to_string(),
-            ExdDescriptors::GlideRatio => "GlideRatio".to_string(),
-            ExdDescriptors::VerticalDistance => "VerticalDistance".to_string(),
-            ExdDescriptors::Vmg => "Vmg".to_string(),
-            ExdDescriptors::AmbientPressure => "AmbientPressure".to_string(),
-            ExdDescriptors::Pressure => "Pressure".to_string(),
-            ExdDescriptors::Vam => "Vam".to_string(),
-            ExdDescriptors::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            ExdDescriptors::StrideLength => "stride_length".to_string(),
+            ExdDescriptors::RunningCadence => "running_cadence".to_string(),
+            ExdDescriptors::PerformanceCondition => "performance_condition".to_string(),
+            ExdDescriptors::CourseType => "course_type".to_string(),
+            ExdDescriptors::TimeInPowerZone => "time_in_power_zone".to_string(),
+            ExdDescriptors::NavigationTurn => "navigation_turn".to_string(),
+            ExdDescriptors::CourseLocation => "course_location".to_string(),
+            ExdDescriptors::NavigationLocation => "navigation_location".to_string(),
+            ExdDescriptors::Compass => "compass".to_string(),
+            ExdDescriptors::GearCombo => "gear_combo".to_string(),
+            ExdDescriptors::MuscleOxygen => "muscle_oxygen".to_string(),
+            ExdDescriptors::Icon => "icon".to_string(),
+            ExdDescriptors::CompassHeading => "compass_heading".to_string(),
+            ExdDescriptors::GpsHeading => "gps_heading".to_string(),
+            ExdDescriptors::GpsElevation => "gps_elevation".to_string(),
+            ExdDescriptors::AnaerobicTrainingEffect => "anaerobic_training_effect".to_string(),
+            ExdDescriptors::Course => "course".to_string(),
+            ExdDescriptors::OffCourse => "off_course".to_string(),
+            ExdDescriptors::GlideRatio => "glide_ratio".to_string(),
+            ExdDescriptors::VerticalDistance => "vertical_distance".to_string(),
+            ExdDescriptors::Vmg => "vmg".to_string(),
+            ExdDescriptors::AmbientPressure => "ambient_pressure".to_string(),
+            ExdDescriptors::Pressure => "pressure".to_string(),
+            ExdDescriptors::Vam => "vam".to_string(),
+            ExdDescriptors::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -9933,7 +9762,6 @@ pub enum AutoActivityDetect {
     Sedentary,
     UnknownVariant(u32),
 }
-
 impl AutoActivityDetect {
     pub fn from_u32(value: u32) -> AutoActivityDetect {
         match value {
@@ -9964,14 +9792,14 @@ impl AutoActivityDetect {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            AutoActivityDetect::None => "None".to_string(),
-            AutoActivityDetect::Running => "Running".to_string(),
-            AutoActivityDetect::Cycling => "Cycling".to_string(),
-            AutoActivityDetect::Swimming => "Swimming".to_string(),
-            AutoActivityDetect::Walking => "Walking".to_string(),
-            AutoActivityDetect::Elliptical => "Elliptical".to_string(),
-            AutoActivityDetect::Sedentary => "Sedentary".to_string(),
-            AutoActivityDetect::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            AutoActivityDetect::None => "none".to_string(),
+            AutoActivityDetect::Running => "running".to_string(),
+            AutoActivityDetect::Cycling => "cycling".to_string(),
+            AutoActivityDetect::Swimming => "swimming".to_string(),
+            AutoActivityDetect::Walking => "walking".to_string(),
+            AutoActivityDetect::Elliptical => "elliptical".to_string(),
+            AutoActivityDetect::Sedentary => "sedentary".to_string(),
+            AutoActivityDetect::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -9988,7 +9816,6 @@ pub enum SupportedExdScreenLayouts {
     HalfHorizontalTopSplit,
     UnknownVariant(u32),
 }
-
 impl SupportedExdScreenLayouts {
     pub fn from_u32(value: u32) -> SupportedExdScreenLayouts {
         match value {
@@ -10021,21 +9848,25 @@ impl SupportedExdScreenLayouts {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            SupportedExdScreenLayouts::FullScreen => "FullScreen".to_string(),
-            SupportedExdScreenLayouts::HalfVertical => "HalfVertical".to_string(),
-            SupportedExdScreenLayouts::HalfHorizontal => "HalfHorizontal".to_string(),
+            SupportedExdScreenLayouts::FullScreen => "full_screen".to_string(),
+            SupportedExdScreenLayouts::HalfVertical => "half_vertical".to_string(),
+            SupportedExdScreenLayouts::HalfHorizontal => "half_horizontal".to_string(),
             SupportedExdScreenLayouts::HalfVerticalRightSplit => {
-                "HalfVerticalRightSplit".to_string()
+                "half_vertical_right_split".to_string()
             }
             SupportedExdScreenLayouts::HalfHorizontalBottomSplit => {
-                "HalfHorizontalBottomSplit".to_string()
+                "half_horizontal_bottom_split".to_string()
             }
-            SupportedExdScreenLayouts::FullQuarterSplit => "FullQuarterSplit".to_string(),
-            SupportedExdScreenLayouts::HalfVerticalLeftSplit => "HalfVerticalLeftSplit".to_string(),
+            SupportedExdScreenLayouts::FullQuarterSplit => "full_quarter_split".to_string(),
+            SupportedExdScreenLayouts::HalfVerticalLeftSplit => {
+                "half_vertical_left_split".to_string()
+            }
             SupportedExdScreenLayouts::HalfHorizontalTopSplit => {
-                "HalfHorizontalTopSplit".to_string()
+                "half_horizontal_top_split".to_string()
             }
-            SupportedExdScreenLayouts::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            SupportedExdScreenLayouts::UnknownVariant(value) => {
+                format!("unknown_variant_{}", *value)
+            }
         }
     }
 }
@@ -10045,23 +9876,22 @@ pub enum FitBaseType {
     Enum,
     Sint8,
     Uint8,
+    String,
+    Uint8z,
+    Byte,
     Sint16,
     Uint16,
     Sint32,
     Uint32,
-    String,
     Float32,
     Float64,
-    Uint8z,
     Uint16z,
     Uint32z,
-    Byte,
     Sint64,
     Uint64,
     Uint64z,
     UnknownVariant(u8),
 }
-
 impl FitBaseType {
     pub fn from_u8(value: u8) -> FitBaseType {
         match value {
@@ -10112,24 +9942,24 @@ impl FitBaseType {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            FitBaseType::Enum => "Enum".to_string(),
-            FitBaseType::Sint8 => "Sint8".to_string(),
-            FitBaseType::Uint8 => "Uint8".to_string(),
-            FitBaseType::String => "String".to_string(),
-            FitBaseType::Uint8z => "Uint8z".to_string(),
-            FitBaseType::Byte => "Byte".to_string(),
-            FitBaseType::Sint16 => "Sint16".to_string(),
-            FitBaseType::Uint16 => "Uint16".to_string(),
-            FitBaseType::Sint32 => "Sint32".to_string(),
-            FitBaseType::Uint32 => "Uint32".to_string(),
-            FitBaseType::Float32 => "Float32".to_string(),
-            FitBaseType::Float64 => "Float64".to_string(),
-            FitBaseType::Uint16z => "Uint16z".to_string(),
-            FitBaseType::Uint32z => "Uint32z".to_string(),
-            FitBaseType::Sint64 => "Sint64".to_string(),
-            FitBaseType::Uint64 => "Uint64".to_string(),
-            FitBaseType::Uint64z => "Uint64z".to_string(),
-            FitBaseType::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            FitBaseType::Enum => "enum".to_string(),
+            FitBaseType::Sint8 => "sint8".to_string(),
+            FitBaseType::Uint8 => "uint8".to_string(),
+            FitBaseType::String => "string".to_string(),
+            FitBaseType::Uint8z => "uint8z".to_string(),
+            FitBaseType::Byte => "byte".to_string(),
+            FitBaseType::Sint16 => "sint16".to_string(),
+            FitBaseType::Uint16 => "uint16".to_string(),
+            FitBaseType::Sint32 => "sint32".to_string(),
+            FitBaseType::Uint32 => "uint32".to_string(),
+            FitBaseType::Float32 => "float32".to_string(),
+            FitBaseType::Float64 => "float64".to_string(),
+            FitBaseType::Uint16z => "uint16z".to_string(),
+            FitBaseType::Uint32z => "uint32z".to_string(),
+            FitBaseType::Sint64 => "sint64".to_string(),
+            FitBaseType::Uint64 => "uint64".to_string(),
+            FitBaseType::Uint64z => "uint64z".to_string(),
+            FitBaseType::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -10176,7 +10006,6 @@ pub enum TurnType {
     IconIdxCnt,
     UnknownVariant(u8),
 }
-
 impl TurnType {
     pub fn from_u8(value: u8) -> TurnType {
         match value {
@@ -10269,45 +10098,45 @@ impl TurnType {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            TurnType::ArrivingIdx => "ArrivingIdx".to_string(),
-            TurnType::ArrivingLeftIdx => "ArrivingLeftIdx".to_string(),
-            TurnType::ArrivingRightIdx => "ArrivingRightIdx".to_string(),
-            TurnType::ArrivingViaIdx => "ArrivingViaIdx".to_string(),
-            TurnType::ArrivingViaLeftIdx => "ArrivingViaLeftIdx".to_string(),
-            TurnType::ArrivingViaRightIdx => "ArrivingViaRightIdx".to_string(),
-            TurnType::BearKeepLeftIdx => "BearKeepLeftIdx".to_string(),
-            TurnType::BearKeepRightIdx => "BearKeepRightIdx".to_string(),
-            TurnType::ContinueIdx => "ContinueIdx".to_string(),
-            TurnType::ExitLeftIdx => "ExitLeftIdx".to_string(),
-            TurnType::ExitRightIdx => "ExitRightIdx".to_string(),
-            TurnType::FerryIdx => "FerryIdx".to_string(),
-            TurnType::Roundabout45Idx => "Roundabout45Idx".to_string(),
-            TurnType::Roundabout90Idx => "Roundabout90Idx".to_string(),
-            TurnType::Roundabout135Idx => "Roundabout135Idx".to_string(),
-            TurnType::Roundabout180Idx => "Roundabout180Idx".to_string(),
-            TurnType::Roundabout225Idx => "Roundabout225Idx".to_string(),
-            TurnType::Roundabout270Idx => "Roundabout270Idx".to_string(),
-            TurnType::Roundabout315Idx => "Roundabout315Idx".to_string(),
-            TurnType::Roundabout360Idx => "Roundabout360Idx".to_string(),
-            TurnType::RoundaboutNeg45Idx => "RoundaboutNeg45Idx".to_string(),
-            TurnType::RoundaboutNeg90Idx => "RoundaboutNeg90Idx".to_string(),
-            TurnType::RoundaboutNeg135Idx => "RoundaboutNeg135Idx".to_string(),
-            TurnType::RoundaboutNeg180Idx => "RoundaboutNeg180Idx".to_string(),
-            TurnType::RoundaboutNeg225Idx => "RoundaboutNeg225Idx".to_string(),
-            TurnType::RoundaboutNeg270Idx => "RoundaboutNeg270Idx".to_string(),
-            TurnType::RoundaboutNeg315Idx => "RoundaboutNeg315Idx".to_string(),
-            TurnType::RoundaboutNeg360Idx => "RoundaboutNeg360Idx".to_string(),
-            TurnType::RoundaboutGenericIdx => "RoundaboutGenericIdx".to_string(),
-            TurnType::RoundaboutNegGenericIdx => "RoundaboutNegGenericIdx".to_string(),
-            TurnType::SharpTurnLeftIdx => "SharpTurnLeftIdx".to_string(),
-            TurnType::SharpTurnRightIdx => "SharpTurnRightIdx".to_string(),
-            TurnType::TurnLeftIdx => "TurnLeftIdx".to_string(),
-            TurnType::TurnRightIdx => "TurnRightIdx".to_string(),
-            TurnType::UturnLeftIdx => "UturnLeftIdx".to_string(),
-            TurnType::UturnRightIdx => "UturnRightIdx".to_string(),
-            TurnType::IconInvIdx => "IconInvIdx".to_string(),
-            TurnType::IconIdxCnt => "IconIdxCnt".to_string(),
-            TurnType::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            TurnType::ArrivingIdx => "arriving_idx".to_string(),
+            TurnType::ArrivingLeftIdx => "arriving_left_idx".to_string(),
+            TurnType::ArrivingRightIdx => "arriving_right_idx".to_string(),
+            TurnType::ArrivingViaIdx => "arriving_via_idx".to_string(),
+            TurnType::ArrivingViaLeftIdx => "arriving_via_left_idx".to_string(),
+            TurnType::ArrivingViaRightIdx => "arriving_via_right_idx".to_string(),
+            TurnType::BearKeepLeftIdx => "bear_keep_left_idx".to_string(),
+            TurnType::BearKeepRightIdx => "bear_keep_right_idx".to_string(),
+            TurnType::ContinueIdx => "continue_idx".to_string(),
+            TurnType::ExitLeftIdx => "exit_left_idx".to_string(),
+            TurnType::ExitRightIdx => "exit_right_idx".to_string(),
+            TurnType::FerryIdx => "ferry_idx".to_string(),
+            TurnType::Roundabout45Idx => "roundabout_45_idx".to_string(),
+            TurnType::Roundabout90Idx => "roundabout_90_idx".to_string(),
+            TurnType::Roundabout135Idx => "roundabout_135_idx".to_string(),
+            TurnType::Roundabout180Idx => "roundabout_180_idx".to_string(),
+            TurnType::Roundabout225Idx => "roundabout_225_idx".to_string(),
+            TurnType::Roundabout270Idx => "roundabout_270_idx".to_string(),
+            TurnType::Roundabout315Idx => "roundabout_315_idx".to_string(),
+            TurnType::Roundabout360Idx => "roundabout_360_idx".to_string(),
+            TurnType::RoundaboutNeg45Idx => "roundabout_neg_45_idx".to_string(),
+            TurnType::RoundaboutNeg90Idx => "roundabout_neg_90_idx".to_string(),
+            TurnType::RoundaboutNeg135Idx => "roundabout_neg_135_idx".to_string(),
+            TurnType::RoundaboutNeg180Idx => "roundabout_neg_180_idx".to_string(),
+            TurnType::RoundaboutNeg225Idx => "roundabout_neg_225_idx".to_string(),
+            TurnType::RoundaboutNeg270Idx => "roundabout_neg_270_idx".to_string(),
+            TurnType::RoundaboutNeg315Idx => "roundabout_neg_315_idx".to_string(),
+            TurnType::RoundaboutNeg360Idx => "roundabout_neg_360_idx".to_string(),
+            TurnType::RoundaboutGenericIdx => "roundabout_generic_idx".to_string(),
+            TurnType::RoundaboutNegGenericIdx => "roundabout_neg_generic_idx".to_string(),
+            TurnType::SharpTurnLeftIdx => "sharp_turn_left_idx".to_string(),
+            TurnType::SharpTurnRightIdx => "sharp_turn_right_idx".to_string(),
+            TurnType::TurnLeftIdx => "turn_left_idx".to_string(),
+            TurnType::TurnRightIdx => "turn_right_idx".to_string(),
+            TurnType::UturnLeftIdx => "uturn_left_idx".to_string(),
+            TurnType::UturnRightIdx => "uturn_right_idx".to_string(),
+            TurnType::IconInvIdx => "icon_inv_idx".to_string(),
+            TurnType::IconIdxCnt => "icon_idx_cnt".to_string(),
+            TurnType::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -10318,7 +10147,6 @@ pub enum BikeLightBeamAngleMode {
     Auto,
     UnknownVariant(u8),
 }
-
 impl BikeLightBeamAngleMode {
     pub fn from_u8(value: u8) -> BikeLightBeamAngleMode {
         match value {
@@ -10339,9 +10167,9 @@ impl BikeLightBeamAngleMode {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            BikeLightBeamAngleMode::Manual => "Manual".to_string(),
-            BikeLightBeamAngleMode::Auto => "Auto".to_string(),
-            BikeLightBeamAngleMode::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            BikeLightBeamAngleMode::Manual => "manual".to_string(),
+            BikeLightBeamAngleMode::Auto => "auto".to_string(),
+            BikeLightBeamAngleMode::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -10353,7 +10181,6 @@ pub enum FitBaseUnit {
     Pound,
     UnknownVariant(u16),
 }
-
 impl FitBaseUnit {
     pub fn from_u16(value: u16) -> FitBaseUnit {
         match value {
@@ -10376,10 +10203,10 @@ impl FitBaseUnit {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            FitBaseUnit::Other => "Other".to_string(),
-            FitBaseUnit::Kilogram => "Kilogram".to_string(),
-            FitBaseUnit::Pound => "Pound".to_string(),
-            FitBaseUnit::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            FitBaseUnit::Other => "other".to_string(),
+            FitBaseUnit::Kilogram => "kilogram".to_string(),
+            FitBaseUnit::Pound => "pound".to_string(),
+            FitBaseUnit::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -10390,7 +10217,6 @@ pub enum SetType {
     Active,
     UnknownVariant(u8),
 }
-
 impl SetType {
     pub fn from_u8(value: u8) -> SetType {
         match value {
@@ -10411,9 +10237,9 @@ impl SetType {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            SetType::Rest => "Rest".to_string(),
-            SetType::Active => "Active".to_string(),
-            SetType::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            SetType::Rest => "rest".to_string(),
+            SetType::Active => "active".to_string(),
+            SetType::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -10456,7 +10282,6 @@ pub enum ExerciseCategory {
     Unknown,
     UnknownVariant(u16),
 }
-
 impl ExerciseCategory {
     pub fn from_u16(value: u16) -> ExerciseCategory {
         match value {
@@ -10541,41 +10366,41 @@ impl ExerciseCategory {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            ExerciseCategory::BenchPress => "BenchPress".to_string(),
-            ExerciseCategory::CalfRaise => "CalfRaise".to_string(),
-            ExerciseCategory::Cardio => "Cardio".to_string(),
-            ExerciseCategory::Carry => "Carry".to_string(),
-            ExerciseCategory::Chop => "Chop".to_string(),
-            ExerciseCategory::Core => "Core".to_string(),
-            ExerciseCategory::Crunch => "Crunch".to_string(),
-            ExerciseCategory::Curl => "Curl".to_string(),
-            ExerciseCategory::Deadlift => "Deadlift".to_string(),
-            ExerciseCategory::Flye => "Flye".to_string(),
-            ExerciseCategory::HipRaise => "HipRaise".to_string(),
-            ExerciseCategory::HipStability => "HipStability".to_string(),
-            ExerciseCategory::HipSwing => "HipSwing".to_string(),
-            ExerciseCategory::Hyperextension => "Hyperextension".to_string(),
-            ExerciseCategory::LateralRaise => "LateralRaise".to_string(),
-            ExerciseCategory::LegCurl => "LegCurl".to_string(),
-            ExerciseCategory::LegRaise => "LegRaise".to_string(),
-            ExerciseCategory::Lunge => "Lunge".to_string(),
-            ExerciseCategory::OlympicLift => "OlympicLift".to_string(),
-            ExerciseCategory::Plank => "Plank".to_string(),
-            ExerciseCategory::Plyo => "Plyo".to_string(),
-            ExerciseCategory::PullUp => "PullUp".to_string(),
-            ExerciseCategory::PushUp => "PushUp".to_string(),
-            ExerciseCategory::Row => "Row".to_string(),
-            ExerciseCategory::ShoulderPress => "ShoulderPress".to_string(),
-            ExerciseCategory::ShoulderStability => "ShoulderStability".to_string(),
-            ExerciseCategory::Shrug => "Shrug".to_string(),
-            ExerciseCategory::SitUp => "SitUp".to_string(),
-            ExerciseCategory::Squat => "Squat".to_string(),
-            ExerciseCategory::TotalBody => "TotalBody".to_string(),
-            ExerciseCategory::TricepsExtension => "TricepsExtension".to_string(),
-            ExerciseCategory::WarmUp => "WarmUp".to_string(),
-            ExerciseCategory::Run => "Run".to_string(),
-            ExerciseCategory::Unknown => "Unknown".to_string(),
-            ExerciseCategory::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            ExerciseCategory::BenchPress => "bench_press".to_string(),
+            ExerciseCategory::CalfRaise => "calf_raise".to_string(),
+            ExerciseCategory::Cardio => "cardio".to_string(),
+            ExerciseCategory::Carry => "carry".to_string(),
+            ExerciseCategory::Chop => "chop".to_string(),
+            ExerciseCategory::Core => "core".to_string(),
+            ExerciseCategory::Crunch => "crunch".to_string(),
+            ExerciseCategory::Curl => "curl".to_string(),
+            ExerciseCategory::Deadlift => "deadlift".to_string(),
+            ExerciseCategory::Flye => "flye".to_string(),
+            ExerciseCategory::HipRaise => "hip_raise".to_string(),
+            ExerciseCategory::HipStability => "hip_stability".to_string(),
+            ExerciseCategory::HipSwing => "hip_swing".to_string(),
+            ExerciseCategory::Hyperextension => "hyperextension".to_string(),
+            ExerciseCategory::LateralRaise => "lateral_raise".to_string(),
+            ExerciseCategory::LegCurl => "leg_curl".to_string(),
+            ExerciseCategory::LegRaise => "leg_raise".to_string(),
+            ExerciseCategory::Lunge => "lunge".to_string(),
+            ExerciseCategory::OlympicLift => "olympic_lift".to_string(),
+            ExerciseCategory::Plank => "plank".to_string(),
+            ExerciseCategory::Plyo => "plyo".to_string(),
+            ExerciseCategory::PullUp => "pull_up".to_string(),
+            ExerciseCategory::PushUp => "push_up".to_string(),
+            ExerciseCategory::Row => "row".to_string(),
+            ExerciseCategory::ShoulderPress => "shoulder_press".to_string(),
+            ExerciseCategory::ShoulderStability => "shoulder_stability".to_string(),
+            ExerciseCategory::Shrug => "shrug".to_string(),
+            ExerciseCategory::SitUp => "sit_up".to_string(),
+            ExerciseCategory::Squat => "squat".to_string(),
+            ExerciseCategory::TotalBody => "total_body".to_string(),
+            ExerciseCategory::TricepsExtension => "triceps_extension".to_string(),
+            ExerciseCategory::WarmUp => "warm_up".to_string(),
+            ExerciseCategory::Run => "run".to_string(),
+            ExerciseCategory::Unknown => "unknown".to_string(),
+            ExerciseCategory::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -10611,7 +10436,6 @@ pub enum BenchPressExerciseName {
     AlternatingDumbbellChestPress,
     UnknownVariant(u16),
 }
-
 impl BenchPressExerciseName {
     pub fn from_u16(value: u16) -> BenchPressExerciseName {
         match value {
@@ -10683,69 +10507,73 @@ impl BenchPressExerciseName {
     pub fn to_string(&self) -> String {
         match &self {
             BenchPressExerciseName::AlternatingDumbbellChestPressOnSwissBall => {
-                "AlternatingDumbbellChestPressOnSwissBall".to_string()
+                "alternating_dumbbell_chest_press_on_swiss_ball".to_string()
             }
-            BenchPressExerciseName::BarbellBenchPress => "BarbellBenchPress".to_string(),
-            BenchPressExerciseName::BarbellBoardBenchPress => "BarbellBoardBenchPress".to_string(),
-            BenchPressExerciseName::BarbellFloorPress => "BarbellFloorPress".to_string(),
+            BenchPressExerciseName::BarbellBenchPress => "barbell_bench_press".to_string(),
+            BenchPressExerciseName::BarbellBoardBenchPress => {
+                "barbell_board_bench_press".to_string()
+            }
+            BenchPressExerciseName::BarbellFloorPress => "barbell_floor_press".to_string(),
             BenchPressExerciseName::CloseGripBarbellBenchPress => {
-                "CloseGripBarbellBenchPress".to_string()
+                "close_grip_barbell_bench_press".to_string()
             }
             BenchPressExerciseName::DeclineDumbbellBenchPress => {
-                "DeclineDumbbellBenchPress".to_string()
+                "decline_dumbbell_bench_press".to_string()
             }
-            BenchPressExerciseName::DumbbellBenchPress => "DumbbellBenchPress".to_string(),
-            BenchPressExerciseName::DumbbellFloorPress => "DumbbellFloorPress".to_string(),
+            BenchPressExerciseName::DumbbellBenchPress => "dumbbell_bench_press".to_string(),
+            BenchPressExerciseName::DumbbellFloorPress => "dumbbell_floor_press".to_string(),
             BenchPressExerciseName::InclineBarbellBenchPress => {
-                "InclineBarbellBenchPress".to_string()
+                "incline_barbell_bench_press".to_string()
             }
             BenchPressExerciseName::InclineDumbbellBenchPress => {
-                "InclineDumbbellBenchPress".to_string()
+                "incline_dumbbell_bench_press".to_string()
             }
             BenchPressExerciseName::InclineSmithMachineBenchPress => {
-                "InclineSmithMachineBenchPress".to_string()
+                "incline_smith_machine_bench_press".to_string()
             }
             BenchPressExerciseName::IsometricBarbellBenchPress => {
-                "IsometricBarbellBenchPress".to_string()
+                "isometric_barbell_bench_press".to_string()
             }
-            BenchPressExerciseName::KettlebellChestPress => "KettlebellChestPress".to_string(),
+            BenchPressExerciseName::KettlebellChestPress => "kettlebell_chest_press".to_string(),
             BenchPressExerciseName::NeutralGripDumbbellBenchPress => {
-                "NeutralGripDumbbellBenchPress".to_string()
+                "neutral_grip_dumbbell_bench_press".to_string()
             }
             BenchPressExerciseName::NeutralGripDumbbellInclineBenchPress => {
-                "NeutralGripDumbbellInclineBenchPress".to_string()
+                "neutral_grip_dumbbell_incline_bench_press".to_string()
             }
-            BenchPressExerciseName::OneArmFloorPress => "OneArmFloorPress".to_string(),
+            BenchPressExerciseName::OneArmFloorPress => "one_arm_floor_press".to_string(),
             BenchPressExerciseName::WeightedOneArmFloorPress => {
-                "WeightedOneArmFloorPress".to_string()
+                "weighted_one_arm_floor_press".to_string()
             }
-            BenchPressExerciseName::PartialLockout => "PartialLockout".to_string(),
+            BenchPressExerciseName::PartialLockout => "partial_lockout".to_string(),
             BenchPressExerciseName::ReverseGripBarbellBenchPress => {
-                "ReverseGripBarbellBenchPress".to_string()
+                "reverse_grip_barbell_bench_press".to_string()
             }
             BenchPressExerciseName::ReverseGripInclineBenchPress => {
-                "ReverseGripInclineBenchPress".to_string()
+                "reverse_grip_incline_bench_press".to_string()
             }
             BenchPressExerciseName::SingleArmCableChestPress => {
-                "SingleArmCableChestPress".to_string()
+                "single_arm_cable_chest_press".to_string()
             }
             BenchPressExerciseName::SingleArmDumbbellBenchPress => {
-                "SingleArmDumbbellBenchPress".to_string()
+                "single_arm_dumbbell_bench_press".to_string()
             }
-            BenchPressExerciseName::SmithMachineBenchPress => "SmithMachineBenchPress".to_string(),
+            BenchPressExerciseName::SmithMachineBenchPress => {
+                "smith_machine_bench_press".to_string()
+            }
             BenchPressExerciseName::SwissBallDumbbellChestPress => {
-                "SwissBallDumbbellChestPress".to_string()
+                "swiss_ball_dumbbell_chest_press".to_string()
             }
             BenchPressExerciseName::TripleStopBarbellBenchPress => {
-                "TripleStopBarbellBenchPress".to_string()
+                "triple_stop_barbell_bench_press".to_string()
             }
             BenchPressExerciseName::WideGripBarbellBenchPress => {
-                "WideGripBarbellBenchPress".to_string()
+                "wide_grip_barbell_bench_press".to_string()
             }
             BenchPressExerciseName::AlternatingDumbbellChestPress => {
-                "AlternatingDumbbellChestPress".to_string()
+                "alternating_dumbbell_chest_press".to_string()
             }
-            BenchPressExerciseName::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            BenchPressExerciseName::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -10775,7 +10603,6 @@ pub enum CalfRaiseExerciseName {
     StandingDumbbellCalfRaise,
     UnknownVariant(u16),
 }
-
 impl CalfRaiseExerciseName {
     pub fn from_u16(value: u16) -> CalfRaiseExerciseName {
         match value {
@@ -10834,54 +10661,62 @@ impl CalfRaiseExerciseName {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            CalfRaiseExerciseName::Name3WayCalfRaise => "Name3WayCalfRaise".to_string(),
+            CalfRaiseExerciseName::Name3WayCalfRaise => "3_way_calf_raise".to_string(),
             CalfRaiseExerciseName::Name3WayWeightedCalfRaise => {
-                "Name3WayWeightedCalfRaise".to_string()
+                "3_way_weighted_calf_raise".to_string()
             }
             CalfRaiseExerciseName::Name3WaySingleLegCalfRaise => {
-                "Name3WaySingleLegCalfRaise".to_string()
+                "3_way_single_leg_calf_raise".to_string()
             }
             CalfRaiseExerciseName::Name3WayWeightedSingleLegCalfRaise => {
-                "Name3WayWeightedSingleLegCalfRaise".to_string()
+                "3_way_weighted_single_leg_calf_raise".to_string()
             }
-            CalfRaiseExerciseName::DonkeyCalfRaise => "DonkeyCalfRaise".to_string(),
-            CalfRaiseExerciseName::WeightedDonkeyCalfRaise => "WeightedDonkeyCalfRaise".to_string(),
-            CalfRaiseExerciseName::SeatedCalfRaise => "SeatedCalfRaise".to_string(),
-            CalfRaiseExerciseName::WeightedSeatedCalfRaise => "WeightedSeatedCalfRaise".to_string(),
-            CalfRaiseExerciseName::SeatedDumbbellToeRaise => "SeatedDumbbellToeRaise".to_string(),
+            CalfRaiseExerciseName::DonkeyCalfRaise => "donkey_calf_raise".to_string(),
+            CalfRaiseExerciseName::WeightedDonkeyCalfRaise => {
+                "weighted_donkey_calf_raise".to_string()
+            }
+            CalfRaiseExerciseName::SeatedCalfRaise => "seated_calf_raise".to_string(),
+            CalfRaiseExerciseName::WeightedSeatedCalfRaise => {
+                "weighted_seated_calf_raise".to_string()
+            }
+            CalfRaiseExerciseName::SeatedDumbbellToeRaise => {
+                "seated_dumbbell_toe_raise".to_string()
+            }
             CalfRaiseExerciseName::SingleLegBentKneeCalfRaise => {
-                "SingleLegBentKneeCalfRaise".to_string()
+                "single_leg_bent_knee_calf_raise".to_string()
             }
             CalfRaiseExerciseName::WeightedSingleLegBentKneeCalfRaise => {
-                "WeightedSingleLegBentKneeCalfRaise".to_string()
+                "weighted_single_leg_bent_knee_calf_raise".to_string()
             }
-            CalfRaiseExerciseName::SingleLegDeclinePushUp => "SingleLegDeclinePushUp".to_string(),
+            CalfRaiseExerciseName::SingleLegDeclinePushUp => {
+                "single_leg_decline_push_up".to_string()
+            }
             CalfRaiseExerciseName::SingleLegDonkeyCalfRaise => {
-                "SingleLegDonkeyCalfRaise".to_string()
+                "single_leg_donkey_calf_raise".to_string()
             }
             CalfRaiseExerciseName::WeightedSingleLegDonkeyCalfRaise => {
-                "WeightedSingleLegDonkeyCalfRaise".to_string()
+                "weighted_single_leg_donkey_calf_raise".to_string()
             }
             CalfRaiseExerciseName::SingleLegHipRaiseWithKneeHold => {
-                "SingleLegHipRaiseWithKneeHold".to_string()
+                "single_leg_hip_raise_with_knee_hold".to_string()
             }
             CalfRaiseExerciseName::SingleLegStandingCalfRaise => {
-                "SingleLegStandingCalfRaise".to_string()
+                "single_leg_standing_calf_raise".to_string()
             }
             CalfRaiseExerciseName::SingleLegStandingDumbbellCalfRaise => {
-                "SingleLegStandingDumbbellCalfRaise".to_string()
+                "single_leg_standing_dumbbell_calf_raise".to_string()
             }
             CalfRaiseExerciseName::StandingBarbellCalfRaise => {
-                "StandingBarbellCalfRaise".to_string()
+                "standing_barbell_calf_raise".to_string()
             }
-            CalfRaiseExerciseName::StandingCalfRaise => "StandingCalfRaise".to_string(),
+            CalfRaiseExerciseName::StandingCalfRaise => "standing_calf_raise".to_string(),
             CalfRaiseExerciseName::WeightedStandingCalfRaise => {
-                "WeightedStandingCalfRaise".to_string()
+                "weighted_standing_calf_raise".to_string()
             }
             CalfRaiseExerciseName::StandingDumbbellCalfRaise => {
-                "StandingDumbbellCalfRaise".to_string()
+                "standing_dumbbell_calf_raise".to_string()
             }
-            CalfRaiseExerciseName::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            CalfRaiseExerciseName::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -10912,7 +10747,6 @@ pub enum CardioExerciseName {
     WeightedTripleUnder,
     UnknownVariant(u16),
 }
-
 impl CardioExerciseName {
     pub fn from_u16(value: u16) -> CardioExerciseName {
         match value {
@@ -10973,33 +10807,33 @@ impl CardioExerciseName {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            CardioExerciseName::BobAndWeaveCircle => "BobAndWeaveCircle".to_string(),
+            CardioExerciseName::BobAndWeaveCircle => "bob_and_weave_circle".to_string(),
             CardioExerciseName::WeightedBobAndWeaveCircle => {
-                "WeightedBobAndWeaveCircle".to_string()
+                "weighted_bob_and_weave_circle".to_string()
             }
-            CardioExerciseName::CardioCoreCrawl => "CardioCoreCrawl".to_string(),
-            CardioExerciseName::WeightedCardioCoreCrawl => "WeightedCardioCoreCrawl".to_string(),
-            CardioExerciseName::DoubleUnder => "DoubleUnder".to_string(),
-            CardioExerciseName::WeightedDoubleUnder => "WeightedDoubleUnder".to_string(),
-            CardioExerciseName::JumpRope => "JumpRope".to_string(),
-            CardioExerciseName::WeightedJumpRope => "WeightedJumpRope".to_string(),
-            CardioExerciseName::JumpRopeCrossover => "JumpRopeCrossover".to_string(),
+            CardioExerciseName::CardioCoreCrawl => "cardio_core_crawl".to_string(),
+            CardioExerciseName::WeightedCardioCoreCrawl => "weighted_cardio_core_crawl".to_string(),
+            CardioExerciseName::DoubleUnder => "double_under".to_string(),
+            CardioExerciseName::WeightedDoubleUnder => "weighted_double_under".to_string(),
+            CardioExerciseName::JumpRope => "jump_rope".to_string(),
+            CardioExerciseName::WeightedJumpRope => "weighted_jump_rope".to_string(),
+            CardioExerciseName::JumpRopeCrossover => "jump_rope_crossover".to_string(),
             CardioExerciseName::WeightedJumpRopeCrossover => {
-                "WeightedJumpRopeCrossover".to_string()
+                "weighted_jump_rope_crossover".to_string()
             }
-            CardioExerciseName::JumpRopeJog => "JumpRopeJog".to_string(),
-            CardioExerciseName::WeightedJumpRopeJog => "WeightedJumpRopeJog".to_string(),
-            CardioExerciseName::JumpingJacks => "JumpingJacks".to_string(),
-            CardioExerciseName::WeightedJumpingJacks => "WeightedJumpingJacks".to_string(),
-            CardioExerciseName::SkiMoguls => "SkiMoguls".to_string(),
-            CardioExerciseName::WeightedSkiMoguls => "WeightedSkiMoguls".to_string(),
-            CardioExerciseName::SplitJacks => "SplitJacks".to_string(),
-            CardioExerciseName::WeightedSplitJacks => "WeightedSplitJacks".to_string(),
-            CardioExerciseName::SquatJacks => "SquatJacks".to_string(),
-            CardioExerciseName::WeightedSquatJacks => "WeightedSquatJacks".to_string(),
-            CardioExerciseName::TripleUnder => "TripleUnder".to_string(),
-            CardioExerciseName::WeightedTripleUnder => "WeightedTripleUnder".to_string(),
-            CardioExerciseName::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            CardioExerciseName::JumpRopeJog => "jump_rope_jog".to_string(),
+            CardioExerciseName::WeightedJumpRopeJog => "weighted_jump_rope_jog".to_string(),
+            CardioExerciseName::JumpingJacks => "jumping_jacks".to_string(),
+            CardioExerciseName::WeightedJumpingJacks => "weighted_jumping_jacks".to_string(),
+            CardioExerciseName::SkiMoguls => "ski_moguls".to_string(),
+            CardioExerciseName::WeightedSkiMoguls => "weighted_ski_moguls".to_string(),
+            CardioExerciseName::SplitJacks => "split_jacks".to_string(),
+            CardioExerciseName::WeightedSplitJacks => "weighted_split_jacks".to_string(),
+            CardioExerciseName::SquatJacks => "squat_jacks".to_string(),
+            CardioExerciseName::WeightedSquatJacks => "weighted_squat_jacks".to_string(),
+            CardioExerciseName::TripleUnder => "triple_under".to_string(),
+            CardioExerciseName::WeightedTripleUnder => "weighted_triple_under".to_string(),
+            CardioExerciseName::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -11013,7 +10847,6 @@ pub enum CarryExerciseName {
     OverheadCarry,
     UnknownVariant(u16),
 }
-
 impl CarryExerciseName {
     pub fn from_u16(value: u16) -> CarryExerciseName {
         match value {
@@ -11040,12 +10873,12 @@ impl CarryExerciseName {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            CarryExerciseName::BarHolds => "BarHolds".to_string(),
-            CarryExerciseName::FarmersWalk => "FarmersWalk".to_string(),
-            CarryExerciseName::FarmersWalkOnToes => "FarmersWalkOnToes".to_string(),
-            CarryExerciseName::HexDumbbellHold => "HexDumbbellHold".to_string(),
-            CarryExerciseName::OverheadCarry => "OverheadCarry".to_string(),
-            CarryExerciseName::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            CarryExerciseName::BarHolds => "bar_holds".to_string(),
+            CarryExerciseName::FarmersWalk => "farmers_walk".to_string(),
+            CarryExerciseName::FarmersWalkOnToes => "farmers_walk_on_toes".to_string(),
+            CarryExerciseName::HexDumbbellHold => "hex_dumbbell_hold".to_string(),
+            CarryExerciseName::OverheadCarry => "overhead_carry".to_string(),
+            CarryExerciseName::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -11077,7 +10910,6 @@ pub enum ChopExerciseName {
     StandingStabilityReverseChop,
     UnknownVariant(u16),
 }
-
 impl ChopExerciseName {
     pub fn from_u16(value: u16) -> ChopExerciseName {
         match value {
@@ -11140,46 +10972,48 @@ impl ChopExerciseName {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            ChopExerciseName::CablePullThrough => "CablePullThrough".to_string(),
-            ChopExerciseName::CableRotationalLift => "CableRotationalLift".to_string(),
-            ChopExerciseName::CableWoodchop => "CableWoodchop".to_string(),
-            ChopExerciseName::CrossChopToKnee => "CrossChopToKnee".to_string(),
-            ChopExerciseName::WeightedCrossChopToKnee => "WeightedCrossChopToKnee".to_string(),
-            ChopExerciseName::DumbbellChop => "DumbbellChop".to_string(),
-            ChopExerciseName::HalfKneelingRotation => "HalfKneelingRotation".to_string(),
+            ChopExerciseName::CablePullThrough => "cable_pull_through".to_string(),
+            ChopExerciseName::CableRotationalLift => "cable_rotational_lift".to_string(),
+            ChopExerciseName::CableWoodchop => "cable_woodchop".to_string(),
+            ChopExerciseName::CrossChopToKnee => "cross_chop_to_knee".to_string(),
+            ChopExerciseName::WeightedCrossChopToKnee => "weighted_cross_chop_to_knee".to_string(),
+            ChopExerciseName::DumbbellChop => "dumbbell_chop".to_string(),
+            ChopExerciseName::HalfKneelingRotation => "half_kneeling_rotation".to_string(),
             ChopExerciseName::WeightedHalfKneelingRotation => {
-                "WeightedHalfKneelingRotation".to_string()
+                "weighted_half_kneeling_rotation".to_string()
             }
             ChopExerciseName::HalfKneelingRotationalChop => {
-                "HalfKneelingRotationalChop".to_string()
+                "half_kneeling_rotational_chop".to_string()
             }
             ChopExerciseName::HalfKneelingRotationalReverseChop => {
-                "HalfKneelingRotationalReverseChop".to_string()
+                "half_kneeling_rotational_reverse_chop".to_string()
             }
-            ChopExerciseName::HalfKneelingStabilityChop => "HalfKneelingStabilityChop".to_string(),
+            ChopExerciseName::HalfKneelingStabilityChop => {
+                "half_kneeling_stability_chop".to_string()
+            }
             ChopExerciseName::HalfKneelingStabilityReverseChop => {
-                "HalfKneelingStabilityReverseChop".to_string()
+                "half_kneeling_stability_reverse_chop".to_string()
             }
-            ChopExerciseName::KneelingRotationalChop => "KneelingRotationalChop".to_string(),
+            ChopExerciseName::KneelingRotationalChop => "kneeling_rotational_chop".to_string(),
             ChopExerciseName::KneelingRotationalReverseChop => {
-                "KneelingRotationalReverseChop".to_string()
+                "kneeling_rotational_reverse_chop".to_string()
             }
-            ChopExerciseName::KneelingStabilityChop => "KneelingStabilityChop".to_string(),
-            ChopExerciseName::KneelingWoodchopper => "KneelingWoodchopper".to_string(),
-            ChopExerciseName::MedicineBallWoodChops => "MedicineBallWoodChops".to_string(),
-            ChopExerciseName::PowerSquatChops => "PowerSquatChops".to_string(),
-            ChopExerciseName::WeightedPowerSquatChops => "WeightedPowerSquatChops".to_string(),
-            ChopExerciseName::StandingRotationalChop => "StandingRotationalChop".to_string(),
+            ChopExerciseName::KneelingStabilityChop => "kneeling_stability_chop".to_string(),
+            ChopExerciseName::KneelingWoodchopper => "kneeling_woodchopper".to_string(),
+            ChopExerciseName::MedicineBallWoodChops => "medicine_ball_wood_chops".to_string(),
+            ChopExerciseName::PowerSquatChops => "power_squat_chops".to_string(),
+            ChopExerciseName::WeightedPowerSquatChops => "weighted_power_squat_chops".to_string(),
+            ChopExerciseName::StandingRotationalChop => "standing_rotational_chop".to_string(),
             ChopExerciseName::StandingSplitRotationalChop => {
-                "StandingSplitRotationalChop".to_string()
+                "standing_split_rotational_chop".to_string()
             }
             ChopExerciseName::StandingSplitRotationalReverseChop => {
-                "StandingSplitRotationalReverseChop".to_string()
+                "standing_split_rotational_reverse_chop".to_string()
             }
             ChopExerciseName::StandingStabilityReverseChop => {
-                "StandingStabilityReverseChop".to_string()
+                "standing_stability_reverse_chop".to_string()
             }
-            ChopExerciseName::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            ChopExerciseName::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -11261,7 +11095,6 @@ pub enum CoreExerciseName {
     TheHundred,
     UnknownVariant(u16),
 }
-
 impl CoreExerciseName {
     pub fn from_u16(value: u16) -> CoreExerciseName {
         match value {
@@ -11424,92 +11257,98 @@ impl CoreExerciseName {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            CoreExerciseName::AbsJabs => "AbsJabs".to_string(),
-            CoreExerciseName::WeightedAbsJabs => "WeightedAbsJabs".to_string(),
-            CoreExerciseName::AlternatingPlateReach => "AlternatingPlateReach".to_string(),
-            CoreExerciseName::BarbellRollout => "BarbellRollout".to_string(),
-            CoreExerciseName::WeightedBarbellRollout => "WeightedBarbellRollout".to_string(),
-            CoreExerciseName::BodyBarObliqueTwist => "BodyBarObliqueTwist".to_string(),
-            CoreExerciseName::CableCorePress => "CableCorePress".to_string(),
-            CoreExerciseName::CableSideBend => "CableSideBend".to_string(),
-            CoreExerciseName::SideBend => "SideBend".to_string(),
-            CoreExerciseName::WeightedSideBend => "WeightedSideBend".to_string(),
-            CoreExerciseName::CrescentCircle => "CrescentCircle".to_string(),
-            CoreExerciseName::WeightedCrescentCircle => "WeightedCrescentCircle".to_string(),
-            CoreExerciseName::CyclingRussianTwist => "CyclingRussianTwist".to_string(),
+            CoreExerciseName::AbsJabs => "abs_jabs".to_string(),
+            CoreExerciseName::WeightedAbsJabs => "weighted_abs_jabs".to_string(),
+            CoreExerciseName::AlternatingPlateReach => "alternating_plate_reach".to_string(),
+            CoreExerciseName::BarbellRollout => "barbell_rollout".to_string(),
+            CoreExerciseName::WeightedBarbellRollout => "weighted_barbell_rollout".to_string(),
+            CoreExerciseName::BodyBarObliqueTwist => "body_bar_oblique_twist".to_string(),
+            CoreExerciseName::CableCorePress => "cable_core_press".to_string(),
+            CoreExerciseName::CableSideBend => "cable_side_bend".to_string(),
+            CoreExerciseName::SideBend => "side_bend".to_string(),
+            CoreExerciseName::WeightedSideBend => "weighted_side_bend".to_string(),
+            CoreExerciseName::CrescentCircle => "crescent_circle".to_string(),
+            CoreExerciseName::WeightedCrescentCircle => "weighted_crescent_circle".to_string(),
+            CoreExerciseName::CyclingRussianTwist => "cycling_russian_twist".to_string(),
             CoreExerciseName::WeightedCyclingRussianTwist => {
-                "WeightedCyclingRussianTwist".to_string()
+                "weighted_cycling_russian_twist".to_string()
             }
-            CoreExerciseName::ElevatedFeetRussianTwist => "ElevatedFeetRussianTwist".to_string(),
+            CoreExerciseName::ElevatedFeetRussianTwist => "elevated_feet_russian_twist".to_string(),
             CoreExerciseName::WeightedElevatedFeetRussianTwist => {
-                "WeightedElevatedFeetRussianTwist".to_string()
+                "weighted_elevated_feet_russian_twist".to_string()
             }
-            CoreExerciseName::HalfTurkishGetUp => "HalfTurkishGetUp".to_string(),
-            CoreExerciseName::KettlebellWindmill => "KettlebellWindmill".to_string(),
-            CoreExerciseName::KneelingAbWheel => "KneelingAbWheel".to_string(),
-            CoreExerciseName::WeightedKneelingAbWheel => "WeightedKneelingAbWheel".to_string(),
-            CoreExerciseName::ModifiedFrontLever => "ModifiedFrontLever".to_string(),
-            CoreExerciseName::OpenKneeTucks => "OpenKneeTucks".to_string(),
-            CoreExerciseName::WeightedOpenKneeTucks => "WeightedOpenKneeTucks".to_string(),
-            CoreExerciseName::SideAbsLegLift => "SideAbsLegLift".to_string(),
-            CoreExerciseName::WeightedSideAbsLegLift => "WeightedSideAbsLegLift".to_string(),
-            CoreExerciseName::SwissBallJackknife => "SwissBallJackknife".to_string(),
+            CoreExerciseName::HalfTurkishGetUp => "half_turkish_get_up".to_string(),
+            CoreExerciseName::KettlebellWindmill => "kettlebell_windmill".to_string(),
+            CoreExerciseName::KneelingAbWheel => "kneeling_ab_wheel".to_string(),
+            CoreExerciseName::WeightedKneelingAbWheel => "weighted_kneeling_ab_wheel".to_string(),
+            CoreExerciseName::ModifiedFrontLever => "modified_front_lever".to_string(),
+            CoreExerciseName::OpenKneeTucks => "open_knee_tucks".to_string(),
+            CoreExerciseName::WeightedOpenKneeTucks => "weighted_open_knee_tucks".to_string(),
+            CoreExerciseName::SideAbsLegLift => "side_abs_leg_lift".to_string(),
+            CoreExerciseName::WeightedSideAbsLegLift => "weighted_side_abs_leg_lift".to_string(),
+            CoreExerciseName::SwissBallJackknife => "swiss_ball_jackknife".to_string(),
             CoreExerciseName::WeightedSwissBallJackknife => {
-                "WeightedSwissBallJackknife".to_string()
+                "weighted_swiss_ball_jackknife".to_string()
             }
-            CoreExerciseName::SwissBallPike => "SwissBallPike".to_string(),
-            CoreExerciseName::WeightedSwissBallPike => "WeightedSwissBallPike".to_string(),
-            CoreExerciseName::SwissBallRollout => "SwissBallRollout".to_string(),
-            CoreExerciseName::WeightedSwissBallRollout => "WeightedSwissBallRollout".to_string(),
-            CoreExerciseName::TriangleHipPress => "TriangleHipPress".to_string(),
-            CoreExerciseName::WeightedTriangleHipPress => "WeightedTriangleHipPress".to_string(),
-            CoreExerciseName::TrxSuspendedJackknife => "TrxSuspendedJackknife".to_string(),
+            CoreExerciseName::SwissBallPike => "swiss_ball_pike".to_string(),
+            CoreExerciseName::WeightedSwissBallPike => "weighted_swiss_ball_pike".to_string(),
+            CoreExerciseName::SwissBallRollout => "swiss_ball_rollout".to_string(),
+            CoreExerciseName::WeightedSwissBallRollout => "weighted_swiss_ball_rollout".to_string(),
+            CoreExerciseName::TriangleHipPress => "triangle_hip_press".to_string(),
+            CoreExerciseName::WeightedTriangleHipPress => "weighted_triangle_hip_press".to_string(),
+            CoreExerciseName::TrxSuspendedJackknife => "trx_suspended_jackknife".to_string(),
             CoreExerciseName::WeightedTrxSuspendedJackknife => {
-                "WeightedTrxSuspendedJackknife".to_string()
+                "weighted_trx_suspended_jackknife".to_string()
             }
-            CoreExerciseName::UBoat => "UBoat".to_string(),
-            CoreExerciseName::WeightedUBoat => "WeightedUBoat".to_string(),
-            CoreExerciseName::WindmillSwitches => "WindmillSwitches".to_string(),
-            CoreExerciseName::WeightedWindmillSwitches => "WeightedWindmillSwitches".to_string(),
-            CoreExerciseName::AlternatingSlideOut => "AlternatingSlideOut".to_string(),
+            CoreExerciseName::UBoat => "u_boat".to_string(),
+            CoreExerciseName::WeightedUBoat => "weighted_u_boat".to_string(),
+            CoreExerciseName::WindmillSwitches => "windmill_switches".to_string(),
+            CoreExerciseName::WeightedWindmillSwitches => "weighted_windmill_switches".to_string(),
+            CoreExerciseName::AlternatingSlideOut => "alternating_slide_out".to_string(),
             CoreExerciseName::WeightedAlternatingSlideOut => {
-                "WeightedAlternatingSlideOut".to_string()
+                "weighted_alternating_slide_out".to_string()
             }
-            CoreExerciseName::GhdBackExtensions => "GhdBackExtensions".to_string(),
-            CoreExerciseName::WeightedGhdBackExtensions => "WeightedGhdBackExtensions".to_string(),
-            CoreExerciseName::OverheadWalk => "OverheadWalk".to_string(),
-            CoreExerciseName::Inchworm => "Inchworm".to_string(),
+            CoreExerciseName::GhdBackExtensions => "ghd_back_extensions".to_string(),
+            CoreExerciseName::WeightedGhdBackExtensions => {
+                "weighted_ghd_back_extensions".to_string()
+            }
+            CoreExerciseName::OverheadWalk => "overhead_walk".to_string(),
+            CoreExerciseName::Inchworm => "inchworm".to_string(),
             CoreExerciseName::WeightedModifiedFrontLever => {
-                "WeightedModifiedFrontLever".to_string()
+                "weighted_modified_front_lever".to_string()
             }
-            CoreExerciseName::RussianTwist => "RussianTwist".to_string(),
-            CoreExerciseName::AbdominalLegRotations => "AbdominalLegRotations".to_string(),
-            CoreExerciseName::ArmAndLegExtensionOnKnees => "ArmAndLegExtensionOnKnees".to_string(),
-            CoreExerciseName::Bicycle => "Bicycle".to_string(),
-            CoreExerciseName::BicepCurlWithLegExtension => "BicepCurlWithLegExtension".to_string(),
-            CoreExerciseName::CatCow => "CatCow".to_string(),
-            CoreExerciseName::Corkscrew => "Corkscrew".to_string(),
-            CoreExerciseName::CrissCross => "CrissCross".to_string(),
-            CoreExerciseName::CrissCrossWithBall => "CrissCrossWithBall".to_string(),
-            CoreExerciseName::DoubleLegStretch => "DoubleLegStretch".to_string(),
-            CoreExerciseName::KneeFolds => "KneeFolds".to_string(),
-            CoreExerciseName::LowerLift => "LowerLift".to_string(),
-            CoreExerciseName::NeckPull => "NeckPull".to_string(),
-            CoreExerciseName::PelvicClocks => "PelvicClocks".to_string(),
-            CoreExerciseName::RollOver => "RollOver".to_string(),
-            CoreExerciseName::RollUp => "RollUp".to_string(),
-            CoreExerciseName::Rolling => "Rolling".to_string(),
-            CoreExerciseName::Rowing1 => "Rowing1".to_string(),
-            CoreExerciseName::Rowing2 => "Rowing2".to_string(),
-            CoreExerciseName::Scissors => "Scissors".to_string(),
-            CoreExerciseName::SingleLegCircles => "SingleLegCircles".to_string(),
-            CoreExerciseName::SingleLegStretch => "SingleLegStretch".to_string(),
-            CoreExerciseName::SnakeTwist1And2 => "SnakeTwist1And2".to_string(),
-            CoreExerciseName::Swan => "Swan".to_string(),
-            CoreExerciseName::Swimming => "Swimming".to_string(),
-            CoreExerciseName::Teaser => "Teaser".to_string(),
-            CoreExerciseName::TheHundred => "TheHundred".to_string(),
-            CoreExerciseName::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            CoreExerciseName::RussianTwist => "russian_twist".to_string(),
+            CoreExerciseName::AbdominalLegRotations => "abdominal_leg_rotations".to_string(),
+            CoreExerciseName::ArmAndLegExtensionOnKnees => {
+                "arm_and_leg_extension_on_knees".to_string()
+            }
+            CoreExerciseName::Bicycle => "bicycle".to_string(),
+            CoreExerciseName::BicepCurlWithLegExtension => {
+                "bicep_curl_with_leg_extension".to_string()
+            }
+            CoreExerciseName::CatCow => "cat_cow".to_string(),
+            CoreExerciseName::Corkscrew => "corkscrew".to_string(),
+            CoreExerciseName::CrissCross => "criss_cross".to_string(),
+            CoreExerciseName::CrissCrossWithBall => "criss_cross_with_ball".to_string(),
+            CoreExerciseName::DoubleLegStretch => "double_leg_stretch".to_string(),
+            CoreExerciseName::KneeFolds => "knee_folds".to_string(),
+            CoreExerciseName::LowerLift => "lower_lift".to_string(),
+            CoreExerciseName::NeckPull => "neck_pull".to_string(),
+            CoreExerciseName::PelvicClocks => "pelvic_clocks".to_string(),
+            CoreExerciseName::RollOver => "roll_over".to_string(),
+            CoreExerciseName::RollUp => "roll_up".to_string(),
+            CoreExerciseName::Rolling => "rolling".to_string(),
+            CoreExerciseName::Rowing1 => "rowing_1".to_string(),
+            CoreExerciseName::Rowing2 => "rowing_2".to_string(),
+            CoreExerciseName::Scissors => "scissors".to_string(),
+            CoreExerciseName::SingleLegCircles => "single_leg_circles".to_string(),
+            CoreExerciseName::SingleLegStretch => "single_leg_stretch".to_string(),
+            CoreExerciseName::SnakeTwist1And2 => "snake_twist_1_and_2".to_string(),
+            CoreExerciseName::Swan => "swan".to_string(),
+            CoreExerciseName::Swimming => "swimming".to_string(),
+            CoreExerciseName::Teaser => "teaser".to_string(),
+            CoreExerciseName::TheHundred => "the_hundred".to_string(),
+            CoreExerciseName::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -11603,7 +11442,6 @@ pub enum CrunchExerciseName {
     StraightLegCrunchWithBall,
     UnknownVariant(u16),
 }
-
 impl CrunchExerciseName {
     pub fn from_u16(value: u16) -> CrunchExerciseName {
         match value {
@@ -11790,148 +11628,152 @@ impl CrunchExerciseName {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            CrunchExerciseName::BicycleCrunch => "BicycleCrunch".to_string(),
-            CrunchExerciseName::CableCrunch => "CableCrunch".to_string(),
-            CrunchExerciseName::CircularArmCrunch => "CircularArmCrunch".to_string(),
-            CrunchExerciseName::CrossedArmsCrunch => "CrossedArmsCrunch".to_string(),
+            CrunchExerciseName::BicycleCrunch => "bicycle_crunch".to_string(),
+            CrunchExerciseName::CableCrunch => "cable_crunch".to_string(),
+            CrunchExerciseName::CircularArmCrunch => "circular_arm_crunch".to_string(),
+            CrunchExerciseName::CrossedArmsCrunch => "crossed_arms_crunch".to_string(),
             CrunchExerciseName::WeightedCrossedArmsCrunch => {
-                "WeightedCrossedArmsCrunch".to_string()
+                "weighted_crossed_arms_crunch".to_string()
             }
-            CrunchExerciseName::CrossLegReverseCrunch => "CrossLegReverseCrunch".to_string(),
+            CrunchExerciseName::CrossLegReverseCrunch => "cross_leg_reverse_crunch".to_string(),
             CrunchExerciseName::WeightedCrossLegReverseCrunch => {
-                "WeightedCrossLegReverseCrunch".to_string()
+                "weighted_cross_leg_reverse_crunch".to_string()
             }
-            CrunchExerciseName::CrunchChop => "CrunchChop".to_string(),
-            CrunchExerciseName::WeightedCrunchChop => "WeightedCrunchChop".to_string(),
-            CrunchExerciseName::DoubleCrunch => "DoubleCrunch".to_string(),
-            CrunchExerciseName::WeightedDoubleCrunch => "WeightedDoubleCrunch".to_string(),
-            CrunchExerciseName::ElbowToKneeCrunch => "ElbowToKneeCrunch".to_string(),
+            CrunchExerciseName::CrunchChop => "crunch_chop".to_string(),
+            CrunchExerciseName::WeightedCrunchChop => "weighted_crunch_chop".to_string(),
+            CrunchExerciseName::DoubleCrunch => "double_crunch".to_string(),
+            CrunchExerciseName::WeightedDoubleCrunch => "weighted_double_crunch".to_string(),
+            CrunchExerciseName::ElbowToKneeCrunch => "elbow_to_knee_crunch".to_string(),
             CrunchExerciseName::WeightedElbowToKneeCrunch => {
-                "WeightedElbowToKneeCrunch".to_string()
+                "weighted_elbow_to_knee_crunch".to_string()
             }
-            CrunchExerciseName::FlutterKicks => "FlutterKicks".to_string(),
-            CrunchExerciseName::WeightedFlutterKicks => "WeightedFlutterKicks".to_string(),
+            CrunchExerciseName::FlutterKicks => "flutter_kicks".to_string(),
+            CrunchExerciseName::WeightedFlutterKicks => "weighted_flutter_kicks".to_string(),
             CrunchExerciseName::FoamRollerReverseCrunchOnBench => {
-                "FoamRollerReverseCrunchOnBench".to_string()
+                "foam_roller_reverse_crunch_on_bench".to_string()
             }
             CrunchExerciseName::WeightedFoamRollerReverseCrunchOnBench => {
-                "WeightedFoamRollerReverseCrunchOnBench".to_string()
+                "weighted_foam_roller_reverse_crunch_on_bench".to_string()
             }
             CrunchExerciseName::FoamRollerReverseCrunchWithDumbbell => {
-                "FoamRollerReverseCrunchWithDumbbell".to_string()
+                "foam_roller_reverse_crunch_with_dumbbell".to_string()
             }
             CrunchExerciseName::FoamRollerReverseCrunchWithMedicineBall => {
-                "FoamRollerReverseCrunchWithMedicineBall".to_string()
+                "foam_roller_reverse_crunch_with_medicine_ball".to_string()
             }
-            CrunchExerciseName::FrogPress => "FrogPress".to_string(),
+            CrunchExerciseName::FrogPress => "frog_press".to_string(),
             CrunchExerciseName::HangingKneeRaiseObliqueCrunch => {
-                "HangingKneeRaiseObliqueCrunch".to_string()
+                "hanging_knee_raise_oblique_crunch".to_string()
             }
             CrunchExerciseName::WeightedHangingKneeRaiseObliqueCrunch => {
-                "WeightedHangingKneeRaiseObliqueCrunch".to_string()
+                "weighted_hanging_knee_raise_oblique_crunch".to_string()
             }
-            CrunchExerciseName::HipCrossover => "HipCrossover".to_string(),
-            CrunchExerciseName::WeightedHipCrossover => "WeightedHipCrossover".to_string(),
-            CrunchExerciseName::HollowRock => "HollowRock".to_string(),
-            CrunchExerciseName::WeightedHollowRock => "WeightedHollowRock".to_string(),
-            CrunchExerciseName::InclineReverseCrunch => "InclineReverseCrunch".to_string(),
+            CrunchExerciseName::HipCrossover => "hip_crossover".to_string(),
+            CrunchExerciseName::WeightedHipCrossover => "weighted_hip_crossover".to_string(),
+            CrunchExerciseName::HollowRock => "hollow_rock".to_string(),
+            CrunchExerciseName::WeightedHollowRock => "weighted_hollow_rock".to_string(),
+            CrunchExerciseName::InclineReverseCrunch => "incline_reverse_crunch".to_string(),
             CrunchExerciseName::WeightedInclineReverseCrunch => {
-                "WeightedInclineReverseCrunch".to_string()
+                "weighted_incline_reverse_crunch".to_string()
             }
-            CrunchExerciseName::KneelingCableCrunch => "KneelingCableCrunch".to_string(),
-            CrunchExerciseName::KneelingCrossCrunch => "KneelingCrossCrunch".to_string(),
+            CrunchExerciseName::KneelingCableCrunch => "kneeling_cable_crunch".to_string(),
+            CrunchExerciseName::KneelingCrossCrunch => "kneeling_cross_crunch".to_string(),
             CrunchExerciseName::WeightedKneelingCrossCrunch => {
-                "WeightedKneelingCrossCrunch".to_string()
+                "weighted_kneeling_cross_crunch".to_string()
             }
             CrunchExerciseName::KneelingObliqueCableCrunch => {
-                "KneelingObliqueCableCrunch".to_string()
+                "kneeling_oblique_cable_crunch".to_string()
             }
-            CrunchExerciseName::KneesToElbow => "KneesToElbow".to_string(),
-            CrunchExerciseName::LegExtensions => "LegExtensions".to_string(),
-            CrunchExerciseName::WeightedLegExtensions => "WeightedLegExtensions".to_string(),
-            CrunchExerciseName::LegLevers => "LegLevers".to_string(),
-            CrunchExerciseName::McgillCurlUp => "McgillCurlUp".to_string(),
-            CrunchExerciseName::WeightedMcgillCurlUp => "WeightedMcgillCurlUp".to_string(),
+            CrunchExerciseName::KneesToElbow => "knees_to_elbow".to_string(),
+            CrunchExerciseName::LegExtensions => "leg_extensions".to_string(),
+            CrunchExerciseName::WeightedLegExtensions => "weighted_leg_extensions".to_string(),
+            CrunchExerciseName::LegLevers => "leg_levers".to_string(),
+            CrunchExerciseName::McgillCurlUp => "mcgill_curl_up".to_string(),
+            CrunchExerciseName::WeightedMcgillCurlUp => "weighted_mcgill_curl_up".to_string(),
             CrunchExerciseName::ModifiedPilatesRollUpWithBall => {
-                "ModifiedPilatesRollUpWithBall".to_string()
+                "modified_pilates_roll_up_with_ball".to_string()
             }
             CrunchExerciseName::WeightedModifiedPilatesRollUpWithBall => {
-                "WeightedModifiedPilatesRollUpWithBall".to_string()
+                "weighted_modified_pilates_roll_up_with_ball".to_string()
             }
-            CrunchExerciseName::PilatesCrunch => "PilatesCrunch".to_string(),
-            CrunchExerciseName::WeightedPilatesCrunch => "WeightedPilatesCrunch".to_string(),
-            CrunchExerciseName::PilatesRollUpWithBall => "PilatesRollUpWithBall".to_string(),
+            CrunchExerciseName::PilatesCrunch => "pilates_crunch".to_string(),
+            CrunchExerciseName::WeightedPilatesCrunch => "weighted_pilates_crunch".to_string(),
+            CrunchExerciseName::PilatesRollUpWithBall => "pilates_roll_up_with_ball".to_string(),
             CrunchExerciseName::WeightedPilatesRollUpWithBall => {
-                "WeightedPilatesRollUpWithBall".to_string()
+                "weighted_pilates_roll_up_with_ball".to_string()
             }
-            CrunchExerciseName::RaisedLegsCrunch => "RaisedLegsCrunch".to_string(),
-            CrunchExerciseName::WeightedRaisedLegsCrunch => "WeightedRaisedLegsCrunch".to_string(),
-            CrunchExerciseName::ReverseCrunch => "ReverseCrunch".to_string(),
-            CrunchExerciseName::WeightedReverseCrunch => "WeightedReverseCrunch".to_string(),
-            CrunchExerciseName::ReverseCrunchOnABench => "ReverseCrunchOnABench".to_string(),
+            CrunchExerciseName::RaisedLegsCrunch => "raised_legs_crunch".to_string(),
+            CrunchExerciseName::WeightedRaisedLegsCrunch => {
+                "weighted_raised_legs_crunch".to_string()
+            }
+            CrunchExerciseName::ReverseCrunch => "reverse_crunch".to_string(),
+            CrunchExerciseName::WeightedReverseCrunch => "weighted_reverse_crunch".to_string(),
+            CrunchExerciseName::ReverseCrunchOnABench => "reverse_crunch_on_a_bench".to_string(),
             CrunchExerciseName::WeightedReverseCrunchOnABench => {
-                "WeightedReverseCrunchOnABench".to_string()
+                "weighted_reverse_crunch_on_a_bench".to_string()
             }
-            CrunchExerciseName::ReverseCurlAndLift => "ReverseCurlAndLift".to_string(),
+            CrunchExerciseName::ReverseCurlAndLift => "reverse_curl_and_lift".to_string(),
             CrunchExerciseName::WeightedReverseCurlAndLift => {
-                "WeightedReverseCurlAndLift".to_string()
+                "weighted_reverse_curl_and_lift".to_string()
             }
-            CrunchExerciseName::RotationalLift => "RotationalLift".to_string(),
-            CrunchExerciseName::WeightedRotationalLift => "WeightedRotationalLift".to_string(),
+            CrunchExerciseName::RotationalLift => "rotational_lift".to_string(),
+            CrunchExerciseName::WeightedRotationalLift => "weighted_rotational_lift".to_string(),
             CrunchExerciseName::SeatedAlternatingReverseCrunch => {
-                "SeatedAlternatingReverseCrunch".to_string()
+                "seated_alternating_reverse_crunch".to_string()
             }
             CrunchExerciseName::WeightedSeatedAlternatingReverseCrunch => {
-                "WeightedSeatedAlternatingReverseCrunch".to_string()
+                "weighted_seated_alternating_reverse_crunch".to_string()
             }
-            CrunchExerciseName::SeatedLegU => "SeatedLegU".to_string(),
-            CrunchExerciseName::WeightedSeatedLegU => "WeightedSeatedLegU".to_string(),
-            CrunchExerciseName::SideToSideCrunchAndWeave => "SideToSideCrunchAndWeave".to_string(),
+            CrunchExerciseName::SeatedLegU => "seated_leg_u".to_string(),
+            CrunchExerciseName::WeightedSeatedLegU => "weighted_seated_leg_u".to_string(),
+            CrunchExerciseName::SideToSideCrunchAndWeave => {
+                "side_to_side_crunch_and_weave".to_string()
+            }
             CrunchExerciseName::WeightedSideToSideCrunchAndWeave => {
-                "WeightedSideToSideCrunchAndWeave".to_string()
+                "weighted_side_to_side_crunch_and_weave".to_string()
             }
-            CrunchExerciseName::SingleLegReverseCrunch => "SingleLegReverseCrunch".to_string(),
+            CrunchExerciseName::SingleLegReverseCrunch => "single_leg_reverse_crunch".to_string(),
             CrunchExerciseName::WeightedSingleLegReverseCrunch => {
-                "WeightedSingleLegReverseCrunch".to_string()
+                "weighted_single_leg_reverse_crunch".to_string()
             }
-            CrunchExerciseName::SkaterCrunchCross => "SkaterCrunchCross".to_string(),
+            CrunchExerciseName::SkaterCrunchCross => "skater_crunch_cross".to_string(),
             CrunchExerciseName::WeightedSkaterCrunchCross => {
-                "WeightedSkaterCrunchCross".to_string()
+                "weighted_skater_crunch_cross".to_string()
             }
-            CrunchExerciseName::StandingCableCrunch => "StandingCableCrunch".to_string(),
-            CrunchExerciseName::StandingSideCrunch => "StandingSideCrunch".to_string(),
-            CrunchExerciseName::StepClimb => "StepClimb".to_string(),
-            CrunchExerciseName::WeightedStepClimb => "WeightedStepClimb".to_string(),
-            CrunchExerciseName::SwissBallCrunch => "SwissBallCrunch".to_string(),
-            CrunchExerciseName::SwissBallReverseCrunch => "SwissBallReverseCrunch".to_string(),
+            CrunchExerciseName::StandingCableCrunch => "standing_cable_crunch".to_string(),
+            CrunchExerciseName::StandingSideCrunch => "standing_side_crunch".to_string(),
+            CrunchExerciseName::StepClimb => "step_climb".to_string(),
+            CrunchExerciseName::WeightedStepClimb => "weighted_step_climb".to_string(),
+            CrunchExerciseName::SwissBallCrunch => "swiss_ball_crunch".to_string(),
+            CrunchExerciseName::SwissBallReverseCrunch => "swiss_ball_reverse_crunch".to_string(),
             CrunchExerciseName::WeightedSwissBallReverseCrunch => {
-                "WeightedSwissBallReverseCrunch".to_string()
+                "weighted_swiss_ball_reverse_crunch".to_string()
             }
-            CrunchExerciseName::SwissBallRussianTwist => "SwissBallRussianTwist".to_string(),
+            CrunchExerciseName::SwissBallRussianTwist => "swiss_ball_russian_twist".to_string(),
             CrunchExerciseName::WeightedSwissBallRussianTwist => {
-                "WeightedSwissBallRussianTwist".to_string()
+                "weighted_swiss_ball_russian_twist".to_string()
             }
-            CrunchExerciseName::SwissBallSideCrunch => "SwissBallSideCrunch".to_string(),
+            CrunchExerciseName::SwissBallSideCrunch => "swiss_ball_side_crunch".to_string(),
             CrunchExerciseName::WeightedSwissBallSideCrunch => {
-                "WeightedSwissBallSideCrunch".to_string()
+                "weighted_swiss_ball_side_crunch".to_string()
             }
             CrunchExerciseName::ThoracicCrunchesOnFoamRoller => {
-                "ThoracicCrunchesOnFoamRoller".to_string()
+                "thoracic_crunches_on_foam_roller".to_string()
             }
             CrunchExerciseName::WeightedThoracicCrunchesOnFoamRoller => {
-                "WeightedThoracicCrunchesOnFoamRoller".to_string()
+                "weighted_thoracic_crunches_on_foam_roller".to_string()
             }
-            CrunchExerciseName::TricepsCrunch => "TricepsCrunch".to_string(),
-            CrunchExerciseName::WeightedBicycleCrunch => "WeightedBicycleCrunch".to_string(),
-            CrunchExerciseName::WeightedCrunch => "WeightedCrunch".to_string(),
-            CrunchExerciseName::WeightedSwissBallCrunch => "WeightedSwissBallCrunch".to_string(),
-            CrunchExerciseName::ToesToBar => "ToesToBar".to_string(),
-            CrunchExerciseName::WeightedToesToBar => "WeightedToesToBar".to_string(),
-            CrunchExerciseName::Crunch => "Crunch".to_string(),
+            CrunchExerciseName::TricepsCrunch => "triceps_crunch".to_string(),
+            CrunchExerciseName::WeightedBicycleCrunch => "weighted_bicycle_crunch".to_string(),
+            CrunchExerciseName::WeightedCrunch => "weighted_crunch".to_string(),
+            CrunchExerciseName::WeightedSwissBallCrunch => "weighted_swiss_ball_crunch".to_string(),
+            CrunchExerciseName::ToesToBar => "toes_to_bar".to_string(),
+            CrunchExerciseName::WeightedToesToBar => "weighted_toes_to_bar".to_string(),
+            CrunchExerciseName::Crunch => "crunch".to_string(),
             CrunchExerciseName::StraightLegCrunchWithBall => {
-                "StraightLegCrunchWithBall".to_string()
+                "straight_leg_crunch_with_ball".to_string()
             }
-            CrunchExerciseName::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            CrunchExerciseName::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -11984,7 +11826,6 @@ pub enum CurlExerciseName {
     WideGripEzBarBicepsCurl,
     UnknownVariant(u16),
 }
-
 impl CurlExerciseName {
     pub fn from_u16(value: u16) -> CurlExerciseName {
         match value {
@@ -12090,84 +11931,92 @@ impl CurlExerciseName {
     pub fn to_string(&self) -> String {
         match &self {
             CurlExerciseName::AlternatingDumbbellBicepsCurl => {
-                "AlternatingDumbbellBicepsCurl".to_string()
+                "alternating_dumbbell_biceps_curl".to_string()
             }
             CurlExerciseName::AlternatingDumbbellBicepsCurlOnSwissBall => {
-                "AlternatingDumbbellBicepsCurlOnSwissBall".to_string()
+                "alternating_dumbbell_biceps_curl_on_swiss_ball".to_string()
             }
             CurlExerciseName::AlternatingInclineDumbbellBicepsCurl => {
-                "AlternatingInclineDumbbellBicepsCurl".to_string()
+                "alternating_incline_dumbbell_biceps_curl".to_string()
             }
-            CurlExerciseName::BarbellBicepsCurl => "BarbellBicepsCurl".to_string(),
-            CurlExerciseName::BarbellReverseWristCurl => "BarbellReverseWristCurl".to_string(),
-            CurlExerciseName::BarbellWristCurl => "BarbellWristCurl".to_string(),
+            CurlExerciseName::BarbellBicepsCurl => "barbell_biceps_curl".to_string(),
+            CurlExerciseName::BarbellReverseWristCurl => "barbell_reverse_wrist_curl".to_string(),
+            CurlExerciseName::BarbellWristCurl => "barbell_wrist_curl".to_string(),
             CurlExerciseName::BehindTheBackBarbellReverseWristCurl => {
-                "BehindTheBackBarbellReverseWristCurl".to_string()
+                "behind_the_back_barbell_reverse_wrist_curl".to_string()
             }
             CurlExerciseName::BehindTheBackOneArmCableCurl => {
-                "BehindTheBackOneArmCableCurl".to_string()
+                "behind_the_back_one_arm_cable_curl".to_string()
             }
-            CurlExerciseName::CableBicepsCurl => "CableBicepsCurl".to_string(),
-            CurlExerciseName::CableHammerCurl => "CableHammerCurl".to_string(),
-            CurlExerciseName::CheatingBarbellBicepsCurl => "CheatingBarbellBicepsCurl".to_string(),
-            CurlExerciseName::CloseGripEzBarBicepsCurl => "CloseGripEzBarBicepsCurl".to_string(),
+            CurlExerciseName::CableBicepsCurl => "cable_biceps_curl".to_string(),
+            CurlExerciseName::CableHammerCurl => "cable_hammer_curl".to_string(),
+            CurlExerciseName::CheatingBarbellBicepsCurl => {
+                "cheating_barbell_biceps_curl".to_string()
+            }
+            CurlExerciseName::CloseGripEzBarBicepsCurl => {
+                "close_grip_ez_bar_biceps_curl".to_string()
+            }
             CurlExerciseName::CrossBodyDumbbellHammerCurl => {
-                "CrossBodyDumbbellHammerCurl".to_string()
+                "cross_body_dumbbell_hammer_curl".to_string()
             }
-            CurlExerciseName::DeadHangBicepsCurl => "DeadHangBicepsCurl".to_string(),
-            CurlExerciseName::DeclineHammerCurl => "DeclineHammerCurl".to_string(),
+            CurlExerciseName::DeadHangBicepsCurl => "dead_hang_biceps_curl".to_string(),
+            CurlExerciseName::DeclineHammerCurl => "decline_hammer_curl".to_string(),
             CurlExerciseName::DumbbellBicepsCurlWithStaticHold => {
-                "DumbbellBicepsCurlWithStaticHold".to_string()
+                "dumbbell_biceps_curl_with_static_hold".to_string()
             }
-            CurlExerciseName::DumbbellHammerCurl => "DumbbellHammerCurl".to_string(),
-            CurlExerciseName::DumbbellReverseWristCurl => "DumbbellReverseWristCurl".to_string(),
-            CurlExerciseName::DumbbellWristCurl => "DumbbellWristCurl".to_string(),
-            CurlExerciseName::EzBarPreacherCurl => "EzBarPreacherCurl".to_string(),
-            CurlExerciseName::ForwardBendBicepsCurl => "ForwardBendBicepsCurl".to_string(),
-            CurlExerciseName::HammerCurlToPress => "HammerCurlToPress".to_string(),
-            CurlExerciseName::InclineDumbbellBicepsCurl => "InclineDumbbellBicepsCurl".to_string(),
+            CurlExerciseName::DumbbellHammerCurl => "dumbbell_hammer_curl".to_string(),
+            CurlExerciseName::DumbbellReverseWristCurl => "dumbbell_reverse_wrist_curl".to_string(),
+            CurlExerciseName::DumbbellWristCurl => "dumbbell_wrist_curl".to_string(),
+            CurlExerciseName::EzBarPreacherCurl => "ez_bar_preacher_curl".to_string(),
+            CurlExerciseName::ForwardBendBicepsCurl => "forward_bend_biceps_curl".to_string(),
+            CurlExerciseName::HammerCurlToPress => "hammer_curl_to_press".to_string(),
+            CurlExerciseName::InclineDumbbellBicepsCurl => {
+                "incline_dumbbell_biceps_curl".to_string()
+            }
             CurlExerciseName::InclineOffsetThumbDumbbellCurl => {
-                "InclineOffsetThumbDumbbellCurl".to_string()
+                "incline_offset_thumb_dumbbell_curl".to_string()
             }
-            CurlExerciseName::KettlebellBicepsCurl => "KettlebellBicepsCurl".to_string(),
+            CurlExerciseName::KettlebellBicepsCurl => "kettlebell_biceps_curl".to_string(),
             CurlExerciseName::LyingConcentrationCableCurl => {
-                "LyingConcentrationCableCurl".to_string()
+                "lying_concentration_cable_curl".to_string()
             }
-            CurlExerciseName::OneArmPreacherCurl => "OneArmPreacherCurl".to_string(),
-            CurlExerciseName::PlatePinchCurl => "PlatePinchCurl".to_string(),
-            CurlExerciseName::PreacherCurlWithCable => "PreacherCurlWithCable".to_string(),
-            CurlExerciseName::ReverseEzBarCurl => "ReverseEzBarCurl".to_string(),
-            CurlExerciseName::ReverseGripWristCurl => "ReverseGripWristCurl".to_string(),
+            CurlExerciseName::OneArmPreacherCurl => "one_arm_preacher_curl".to_string(),
+            CurlExerciseName::PlatePinchCurl => "plate_pinch_curl".to_string(),
+            CurlExerciseName::PreacherCurlWithCable => "preacher_curl_with_cable".to_string(),
+            CurlExerciseName::ReverseEzBarCurl => "reverse_ez_bar_curl".to_string(),
+            CurlExerciseName::ReverseGripWristCurl => "reverse_grip_wrist_curl".to_string(),
             CurlExerciseName::ReverseGripBarbellBicepsCurl => {
-                "ReverseGripBarbellBicepsCurl".to_string()
+                "reverse_grip_barbell_biceps_curl".to_string()
             }
             CurlExerciseName::SeatedAlternatingDumbbellBicepsCurl => {
-                "SeatedAlternatingDumbbellBicepsCurl".to_string()
+                "seated_alternating_dumbbell_biceps_curl".to_string()
             }
-            CurlExerciseName::SeatedDumbbellBicepsCurl => "SeatedDumbbellBicepsCurl".to_string(),
-            CurlExerciseName::SeatedReverseDumbbellCurl => "SeatedReverseDumbbellCurl".to_string(),
+            CurlExerciseName::SeatedDumbbellBicepsCurl => "seated_dumbbell_biceps_curl".to_string(),
+            CurlExerciseName::SeatedReverseDumbbellCurl => {
+                "seated_reverse_dumbbell_curl".to_string()
+            }
             CurlExerciseName::SplitStanceOffsetPinkyDumbbellCurl => {
-                "SplitStanceOffsetPinkyDumbbellCurl".to_string()
+                "split_stance_offset_pinky_dumbbell_curl".to_string()
             }
             CurlExerciseName::StandingAlternatingDumbbellCurls => {
-                "StandingAlternatingDumbbellCurls".to_string()
+                "standing_alternating_dumbbell_curls".to_string()
             }
             CurlExerciseName::StandingDumbbellBicepsCurl => {
-                "StandingDumbbellBicepsCurl".to_string()
+                "standing_dumbbell_biceps_curl".to_string()
             }
-            CurlExerciseName::StandingEzBarBicepsCurl => "StandingEzBarBicepsCurl".to_string(),
-            CurlExerciseName::StaticCurl => "StaticCurl".to_string(),
+            CurlExerciseName::StandingEzBarBicepsCurl => "standing_ez_bar_biceps_curl".to_string(),
+            CurlExerciseName::StaticCurl => "static_curl".to_string(),
             CurlExerciseName::SwissBallDumbbellOverheadTricepsExtension => {
-                "SwissBallDumbbellOverheadTricepsExtension".to_string()
+                "swiss_ball_dumbbell_overhead_triceps_extension".to_string()
             }
             CurlExerciseName::SwissBallEzBarPreacherCurl => {
-                "SwissBallEzBarPreacherCurl".to_string()
+                "swiss_ball_ez_bar_preacher_curl".to_string()
             }
             CurlExerciseName::TwistingStandingDumbbellBicepsCurl => {
-                "TwistingStandingDumbbellBicepsCurl".to_string()
+                "twisting_standing_dumbbell_biceps_curl".to_string()
             }
-            CurlExerciseName::WideGripEzBarBicepsCurl => "WideGripEzBarBicepsCurl".to_string(),
-            CurlExerciseName::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            CurlExerciseName::WideGripEzBarBicepsCurl => "wide_grip_ez_bar_biceps_curl".to_string(),
+            CurlExerciseName::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -12195,7 +12044,6 @@ pub enum DeadliftExerciseName {
     WideGripBarbellDeadlift,
     UnknownVariant(u16),
 }
-
 impl DeadliftExerciseName {
     pub fn from_u16(value: u16) -> DeadliftExerciseName {
         match value {
@@ -12250,42 +12098,44 @@ impl DeadliftExerciseName {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            DeadliftExerciseName::BarbellDeadlift => "BarbellDeadlift".to_string(),
+            DeadliftExerciseName::BarbellDeadlift => "barbell_deadlift".to_string(),
             DeadliftExerciseName::BarbellStraightLegDeadlift => {
-                "BarbellStraightLegDeadlift".to_string()
+                "barbell_straight_leg_deadlift".to_string()
             }
-            DeadliftExerciseName::DumbbellDeadlift => "DumbbellDeadlift".to_string(),
+            DeadliftExerciseName::DumbbellDeadlift => "dumbbell_deadlift".to_string(),
             DeadliftExerciseName::DumbbellSingleLegDeadliftToRow => {
-                "DumbbellSingleLegDeadliftToRow".to_string()
+                "dumbbell_single_leg_deadlift_to_row".to_string()
             }
             DeadliftExerciseName::DumbbellStraightLegDeadlift => {
-                "DumbbellStraightLegDeadlift".to_string()
+                "dumbbell_straight_leg_deadlift".to_string()
             }
-            DeadliftExerciseName::KettlebellFloorToShelf => "KettlebellFloorToShelf".to_string(),
-            DeadliftExerciseName::OneArmOneLegDeadlift => "OneArmOneLegDeadlift".to_string(),
-            DeadliftExerciseName::RackPull => "RackPull".to_string(),
+            DeadliftExerciseName::KettlebellFloorToShelf => "kettlebell_floor_to_shelf".to_string(),
+            DeadliftExerciseName::OneArmOneLegDeadlift => "one_arm_one_leg_deadlift".to_string(),
+            DeadliftExerciseName::RackPull => "rack_pull".to_string(),
             DeadliftExerciseName::RotationalDumbbellStraightLegDeadlift => {
-                "RotationalDumbbellStraightLegDeadlift".to_string()
+                "rotational_dumbbell_straight_leg_deadlift".to_string()
             }
-            DeadliftExerciseName::SingleArmDeadlift => "SingleArmDeadlift".to_string(),
+            DeadliftExerciseName::SingleArmDeadlift => "single_arm_deadlift".to_string(),
             DeadliftExerciseName::SingleLegBarbellDeadlift => {
-                "SingleLegBarbellDeadlift".to_string()
+                "single_leg_barbell_deadlift".to_string()
             }
             DeadliftExerciseName::SingleLegBarbellStraightLegDeadlift => {
-                "SingleLegBarbellStraightLegDeadlift".to_string()
+                "single_leg_barbell_straight_leg_deadlift".to_string()
             }
             DeadliftExerciseName::SingleLegDeadliftWithBarbell => {
-                "SingleLegDeadliftWithBarbell".to_string()
+                "single_leg_deadlift_with_barbell".to_string()
             }
-            DeadliftExerciseName::SingleLegRdlCircuit => "SingleLegRdlCircuit".to_string(),
+            DeadliftExerciseName::SingleLegRdlCircuit => "single_leg_rdl_circuit".to_string(),
             DeadliftExerciseName::SingleLegRomanianDeadliftWithDumbbell => {
-                "SingleLegRomanianDeadliftWithDumbbell".to_string()
+                "single_leg_romanian_deadlift_with_dumbbell".to_string()
             }
-            DeadliftExerciseName::SumoDeadlift => "SumoDeadlift".to_string(),
-            DeadliftExerciseName::SumoDeadliftHighPull => "SumoDeadliftHighPull".to_string(),
-            DeadliftExerciseName::TrapBarDeadlift => "TrapBarDeadlift".to_string(),
-            DeadliftExerciseName::WideGripBarbellDeadlift => "WideGripBarbellDeadlift".to_string(),
-            DeadliftExerciseName::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            DeadliftExerciseName::SumoDeadlift => "sumo_deadlift".to_string(),
+            DeadliftExerciseName::SumoDeadliftHighPull => "sumo_deadlift_high_pull".to_string(),
+            DeadliftExerciseName::TrapBarDeadlift => "trap_bar_deadlift".to_string(),
+            DeadliftExerciseName::WideGripBarbellDeadlift => {
+                "wide_grip_barbell_deadlift".to_string()
+            }
+            DeadliftExerciseName::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -12304,7 +12154,6 @@ pub enum FlyeExerciseName {
     HugATree,
     UnknownVariant(u16),
 }
-
 impl FlyeExerciseName {
     pub fn from_u16(value: u16) -> FlyeExerciseName {
         match value {
@@ -12341,19 +12190,19 @@ impl FlyeExerciseName {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            FlyeExerciseName::CableCrossover => "CableCrossover".to_string(),
-            FlyeExerciseName::DeclineDumbbellFlye => "DeclineDumbbellFlye".to_string(),
-            FlyeExerciseName::DumbbellFlye => "DumbbellFlye".to_string(),
-            FlyeExerciseName::InclineDumbbellFlye => "InclineDumbbellFlye".to_string(),
-            FlyeExerciseName::KettlebellFlye => "KettlebellFlye".to_string(),
-            FlyeExerciseName::KneelingRearFlye => "KneelingRearFlye".to_string(),
+            FlyeExerciseName::CableCrossover => "cable_crossover".to_string(),
+            FlyeExerciseName::DeclineDumbbellFlye => "decline_dumbbell_flye".to_string(),
+            FlyeExerciseName::DumbbellFlye => "dumbbell_flye".to_string(),
+            FlyeExerciseName::InclineDumbbellFlye => "incline_dumbbell_flye".to_string(),
+            FlyeExerciseName::KettlebellFlye => "kettlebell_flye".to_string(),
+            FlyeExerciseName::KneelingRearFlye => "kneeling_rear_flye".to_string(),
             FlyeExerciseName::SingleArmStandingCableReverseFlye => {
-                "SingleArmStandingCableReverseFlye".to_string()
+                "single_arm_standing_cable_reverse_flye".to_string()
             }
-            FlyeExerciseName::SwissBallDumbbellFlye => "SwissBallDumbbellFlye".to_string(),
-            FlyeExerciseName::ArmRotations => "ArmRotations".to_string(),
-            FlyeExerciseName::HugATree => "HugATree".to_string(),
-            FlyeExerciseName::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            FlyeExerciseName::SwissBallDumbbellFlye => "swiss_ball_dumbbell_flye".to_string(),
+            FlyeExerciseName::ArmRotations => "arm_rotations".to_string(),
+            FlyeExerciseName::HugATree => "hug_a_tree".to_string(),
+            FlyeExerciseName::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -12412,7 +12261,6 @@ pub enum HipRaiseExerciseName {
     LegLiftInExternalRotation,
     UnknownVariant(u16),
 }
-
 impl HipRaiseExerciseName {
     pub fn from_u16(value: u16) -> HipRaiseExerciseName {
         match value {
@@ -12529,117 +12377,125 @@ impl HipRaiseExerciseName {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            HipRaiseExerciseName::BarbellHipThrustOnFloor => "BarbellHipThrustOnFloor".to_string(),
+            HipRaiseExerciseName::BarbellHipThrustOnFloor => {
+                "barbell_hip_thrust_on_floor".to_string()
+            }
             HipRaiseExerciseName::BarbellHipThrustWithBench => {
-                "BarbellHipThrustWithBench".to_string()
+                "barbell_hip_thrust_with_bench".to_string()
             }
             HipRaiseExerciseName::BentKneeSwissBallReverseHipRaise => {
-                "BentKneeSwissBallReverseHipRaise".to_string()
+                "bent_knee_swiss_ball_reverse_hip_raise".to_string()
             }
             HipRaiseExerciseName::WeightedBentKneeSwissBallReverseHipRaise => {
-                "WeightedBentKneeSwissBallReverseHipRaise".to_string()
+                "weighted_bent_knee_swiss_ball_reverse_hip_raise".to_string()
             }
-            HipRaiseExerciseName::BridgeWithLegExtension => "BridgeWithLegExtension".to_string(),
+            HipRaiseExerciseName::BridgeWithLegExtension => "bridge_with_leg_extension".to_string(),
             HipRaiseExerciseName::WeightedBridgeWithLegExtension => {
-                "WeightedBridgeWithLegExtension".to_string()
+                "weighted_bridge_with_leg_extension".to_string()
             }
-            HipRaiseExerciseName::ClamBridge => "ClamBridge".to_string(),
-            HipRaiseExerciseName::FrontKickTabletop => "FrontKickTabletop".to_string(),
+            HipRaiseExerciseName::ClamBridge => "clam_bridge".to_string(),
+            HipRaiseExerciseName::FrontKickTabletop => "front_kick_tabletop".to_string(),
             HipRaiseExerciseName::WeightedFrontKickTabletop => {
-                "WeightedFrontKickTabletop".to_string()
+                "weighted_front_kick_tabletop".to_string()
             }
-            HipRaiseExerciseName::HipExtensionAndCross => "HipExtensionAndCross".to_string(),
+            HipRaiseExerciseName::HipExtensionAndCross => "hip_extension_and_cross".to_string(),
             HipRaiseExerciseName::WeightedHipExtensionAndCross => {
-                "WeightedHipExtensionAndCross".to_string()
+                "weighted_hip_extension_and_cross".to_string()
             }
-            HipRaiseExerciseName::HipRaise => "HipRaise".to_string(),
-            HipRaiseExerciseName::WeightedHipRaise => "WeightedHipRaise".to_string(),
+            HipRaiseExerciseName::HipRaise => "hip_raise".to_string(),
+            HipRaiseExerciseName::WeightedHipRaise => "weighted_hip_raise".to_string(),
             HipRaiseExerciseName::HipRaiseWithFeetOnSwissBall => {
-                "HipRaiseWithFeetOnSwissBall".to_string()
+                "hip_raise_with_feet_on_swiss_ball".to_string()
             }
             HipRaiseExerciseName::WeightedHipRaiseWithFeetOnSwissBall => {
-                "WeightedHipRaiseWithFeetOnSwissBall".to_string()
+                "weighted_hip_raise_with_feet_on_swiss_ball".to_string()
             }
             HipRaiseExerciseName::HipRaiseWithHeadOnBosuBall => {
-                "HipRaiseWithHeadOnBosuBall".to_string()
+                "hip_raise_with_head_on_bosu_ball".to_string()
             }
             HipRaiseExerciseName::WeightedHipRaiseWithHeadOnBosuBall => {
-                "WeightedHipRaiseWithHeadOnBosuBall".to_string()
+                "weighted_hip_raise_with_head_on_bosu_ball".to_string()
             }
             HipRaiseExerciseName::HipRaiseWithHeadOnSwissBall => {
-                "HipRaiseWithHeadOnSwissBall".to_string()
+                "hip_raise_with_head_on_swiss_ball".to_string()
             }
             HipRaiseExerciseName::WeightedHipRaiseWithHeadOnSwissBall => {
-                "WeightedHipRaiseWithHeadOnSwissBall".to_string()
+                "weighted_hip_raise_with_head_on_swiss_ball".to_string()
             }
-            HipRaiseExerciseName::HipRaiseWithKneeSqueeze => "HipRaiseWithKneeSqueeze".to_string(),
+            HipRaiseExerciseName::HipRaiseWithKneeSqueeze => {
+                "hip_raise_with_knee_squeeze".to_string()
+            }
             HipRaiseExerciseName::WeightedHipRaiseWithKneeSqueeze => {
-                "WeightedHipRaiseWithKneeSqueeze".to_string()
+                "weighted_hip_raise_with_knee_squeeze".to_string()
             }
-            HipRaiseExerciseName::InclineRearLegExtension => "InclineRearLegExtension".to_string(),
+            HipRaiseExerciseName::InclineRearLegExtension => {
+                "incline_rear_leg_extension".to_string()
+            }
             HipRaiseExerciseName::WeightedInclineRearLegExtension => {
-                "WeightedInclineRearLegExtension".to_string()
+                "weighted_incline_rear_leg_extension".to_string()
             }
-            HipRaiseExerciseName::KettlebellSwing => "KettlebellSwing".to_string(),
-            HipRaiseExerciseName::MarchingHipRaise => "MarchingHipRaise".to_string(),
+            HipRaiseExerciseName::KettlebellSwing => "kettlebell_swing".to_string(),
+            HipRaiseExerciseName::MarchingHipRaise => "marching_hip_raise".to_string(),
             HipRaiseExerciseName::WeightedMarchingHipRaise => {
-                "WeightedMarchingHipRaise".to_string()
+                "weighted_marching_hip_raise".to_string()
             }
             HipRaiseExerciseName::MarchingHipRaiseWithFeetOnASwissBall => {
-                "MarchingHipRaiseWithFeetOnASwissBall".to_string()
+                "marching_hip_raise_with_feet_on_a_swiss_ball".to_string()
             }
             HipRaiseExerciseName::WeightedMarchingHipRaiseWithFeetOnASwissBall => {
-                "WeightedMarchingHipRaiseWithFeetOnASwissBall".to_string()
+                "weighted_marching_hip_raise_with_feet_on_a_swiss_ball".to_string()
             }
-            HipRaiseExerciseName::ReverseHipRaise => "ReverseHipRaise".to_string(),
-            HipRaiseExerciseName::WeightedReverseHipRaise => "WeightedReverseHipRaise".to_string(),
-            HipRaiseExerciseName::SingleLegHipRaise => "SingleLegHipRaise".to_string(),
+            HipRaiseExerciseName::ReverseHipRaise => "reverse_hip_raise".to_string(),
+            HipRaiseExerciseName::WeightedReverseHipRaise => {
+                "weighted_reverse_hip_raise".to_string()
+            }
+            HipRaiseExerciseName::SingleLegHipRaise => "single_leg_hip_raise".to_string(),
             HipRaiseExerciseName::WeightedSingleLegHipRaise => {
-                "WeightedSingleLegHipRaise".to_string()
+                "weighted_single_leg_hip_raise".to_string()
             }
             HipRaiseExerciseName::SingleLegHipRaiseWithFootOnBench => {
-                "SingleLegHipRaiseWithFootOnBench".to_string()
+                "single_leg_hip_raise_with_foot_on_bench".to_string()
             }
             HipRaiseExerciseName::WeightedSingleLegHipRaiseWithFootOnBench => {
-                "WeightedSingleLegHipRaiseWithFootOnBench".to_string()
+                "weighted_single_leg_hip_raise_with_foot_on_bench".to_string()
             }
             HipRaiseExerciseName::SingleLegHipRaiseWithFootOnBosuBall => {
-                "SingleLegHipRaiseWithFootOnBosuBall".to_string()
+                "single_leg_hip_raise_with_foot_on_bosu_ball".to_string()
             }
             HipRaiseExerciseName::WeightedSingleLegHipRaiseWithFootOnBosuBall => {
-                "WeightedSingleLegHipRaiseWithFootOnBosuBall".to_string()
+                "weighted_single_leg_hip_raise_with_foot_on_bosu_ball".to_string()
             }
             HipRaiseExerciseName::SingleLegHipRaiseWithFootOnFoamRoller => {
-                "SingleLegHipRaiseWithFootOnFoamRoller".to_string()
+                "single_leg_hip_raise_with_foot_on_foam_roller".to_string()
             }
             HipRaiseExerciseName::WeightedSingleLegHipRaiseWithFootOnFoamRoller => {
-                "WeightedSingleLegHipRaiseWithFootOnFoamRoller".to_string()
+                "weighted_single_leg_hip_raise_with_foot_on_foam_roller".to_string()
             }
             HipRaiseExerciseName::SingleLegHipRaiseWithFootOnMedicineBall => {
-                "SingleLegHipRaiseWithFootOnMedicineBall".to_string()
+                "single_leg_hip_raise_with_foot_on_medicine_ball".to_string()
             }
             HipRaiseExerciseName::WeightedSingleLegHipRaiseWithFootOnMedicineBall => {
-                "WeightedSingleLegHipRaiseWithFootOnMedicineBall".to_string()
+                "weighted_single_leg_hip_raise_with_foot_on_medicine_ball".to_string()
             }
             HipRaiseExerciseName::SingleLegHipRaiseWithHeadOnBosuBall => {
-                "SingleLegHipRaiseWithHeadOnBosuBall".to_string()
+                "single_leg_hip_raise_with_head_on_bosu_ball".to_string()
             }
             HipRaiseExerciseName::WeightedSingleLegHipRaiseWithHeadOnBosuBall => {
-                "WeightedSingleLegHipRaiseWithHeadOnBosuBall".to_string()
+                "weighted_single_leg_hip_raise_with_head_on_bosu_ball".to_string()
             }
-            HipRaiseExerciseName::WeightedClamBridge => "WeightedClamBridge".to_string(),
+            HipRaiseExerciseName::WeightedClamBridge => "weighted_clam_bridge".to_string(),
             HipRaiseExerciseName::SingleLegSwissBallHipRaiseAndLegCurl => {
-                "SingleLegSwissBallHipRaiseAndLegCurl".to_string()
+                "single_leg_swiss_ball_hip_raise_and_leg_curl".to_string()
             }
-            HipRaiseExerciseName::Clams => "Clams".to_string(),
-            HipRaiseExerciseName::InnerThighCircles => "InnerThighCircles".to_string(),
-            HipRaiseExerciseName::InnerThighSideLift => "InnerThighSideLift".to_string(),
-            HipRaiseExerciseName::LegCircles => "LegCircles".to_string(),
-            HipRaiseExerciseName::LegLift => "LegLift".to_string(),
+            HipRaiseExerciseName::Clams => "clams".to_string(),
+            HipRaiseExerciseName::InnerThighCircles => "inner_thigh_circles".to_string(),
+            HipRaiseExerciseName::InnerThighSideLift => "inner_thigh_side_lift".to_string(),
+            HipRaiseExerciseName::LegCircles => "leg_circles".to_string(),
+            HipRaiseExerciseName::LegLift => "leg_lift".to_string(),
             HipRaiseExerciseName::LegLiftInExternalRotation => {
-                "LegLiftInExternalRotation".to_string()
+                "leg_lift_in_external_rotation".to_string()
             }
-            HipRaiseExerciseName::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            HipRaiseExerciseName::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -12682,7 +12538,6 @@ pub enum HipStabilityExerciseName {
     WeightedSupineHipInternalRotation,
     UnknownVariant(u16),
 }
-
 impl HipStabilityExerciseName {
     pub fn from_u16(value: u16) -> HipStabilityExerciseName {
         match value {
@@ -12767,75 +12622,81 @@ impl HipStabilityExerciseName {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            HipStabilityExerciseName::BandSideLyingLegRaise => "BandSideLyingLegRaise".to_string(),
-            HipStabilityExerciseName::DeadBug => "DeadBug".to_string(),
-            HipStabilityExerciseName::WeightedDeadBug => "WeightedDeadBug".to_string(),
-            HipStabilityExerciseName::ExternalHipRaise => "ExternalHipRaise".to_string(),
+            HipStabilityExerciseName::BandSideLyingLegRaise => {
+                "band_side_lying_leg_raise".to_string()
+            }
+            HipStabilityExerciseName::DeadBug => "dead_bug".to_string(),
+            HipStabilityExerciseName::WeightedDeadBug => "weighted_dead_bug".to_string(),
+            HipStabilityExerciseName::ExternalHipRaise => "external_hip_raise".to_string(),
             HipStabilityExerciseName::WeightedExternalHipRaise => {
-                "WeightedExternalHipRaise".to_string()
+                "weighted_external_hip_raise".to_string()
             }
-            HipStabilityExerciseName::FireHydrantKicks => "FireHydrantKicks".to_string(),
+            HipStabilityExerciseName::FireHydrantKicks => "fire_hydrant_kicks".to_string(),
             HipStabilityExerciseName::WeightedFireHydrantKicks => {
-                "WeightedFireHydrantKicks".to_string()
+                "weighted_fire_hydrant_kicks".to_string()
             }
-            HipStabilityExerciseName::HipCircles => "HipCircles".to_string(),
-            HipStabilityExerciseName::WeightedHipCircles => "WeightedHipCircles".to_string(),
-            HipStabilityExerciseName::InnerThighLift => "InnerThighLift".to_string(),
+            HipStabilityExerciseName::HipCircles => "hip_circles".to_string(),
+            HipStabilityExerciseName::WeightedHipCircles => "weighted_hip_circles".to_string(),
+            HipStabilityExerciseName::InnerThighLift => "inner_thigh_lift".to_string(),
             HipStabilityExerciseName::WeightedInnerThighLift => {
-                "WeightedInnerThighLift".to_string()
+                "weighted_inner_thigh_lift".to_string()
             }
             HipStabilityExerciseName::LateralWalksWithBandAtAnkles => {
-                "LateralWalksWithBandAtAnkles".to_string()
+                "lateral_walks_with_band_at_ankles".to_string()
             }
-            HipStabilityExerciseName::PretzelSideKick => "PretzelSideKick".to_string(),
+            HipStabilityExerciseName::PretzelSideKick => "pretzel_side_kick".to_string(),
             HipStabilityExerciseName::WeightedPretzelSideKick => {
-                "WeightedPretzelSideKick".to_string()
+                "weighted_pretzel_side_kick".to_string()
             }
             HipStabilityExerciseName::ProneHipInternalRotation => {
-                "ProneHipInternalRotation".to_string()
+                "prone_hip_internal_rotation".to_string()
             }
             HipStabilityExerciseName::WeightedProneHipInternalRotation => {
-                "WeightedProneHipInternalRotation".to_string()
+                "weighted_prone_hip_internal_rotation".to_string()
             }
-            HipStabilityExerciseName::Quadruped => "Quadruped".to_string(),
-            HipStabilityExerciseName::QuadrupedHipExtension => "QuadrupedHipExtension".to_string(),
+            HipStabilityExerciseName::Quadruped => "quadruped".to_string(),
+            HipStabilityExerciseName::QuadrupedHipExtension => {
+                "quadruped_hip_extension".to_string()
+            }
             HipStabilityExerciseName::WeightedQuadrupedHipExtension => {
-                "WeightedQuadrupedHipExtension".to_string()
+                "weighted_quadruped_hip_extension".to_string()
             }
-            HipStabilityExerciseName::QuadrupedWithLegLift => "QuadrupedWithLegLift".to_string(),
+            HipStabilityExerciseName::QuadrupedWithLegLift => "quadruped_with_leg_lift".to_string(),
             HipStabilityExerciseName::WeightedQuadrupedWithLegLift => {
-                "WeightedQuadrupedWithLegLift".to_string()
+                "weighted_quadruped_with_leg_lift".to_string()
             }
-            HipStabilityExerciseName::SideLyingLegRaise => "SideLyingLegRaise".to_string(),
+            HipStabilityExerciseName::SideLyingLegRaise => "side_lying_leg_raise".to_string(),
             HipStabilityExerciseName::WeightedSideLyingLegRaise => {
-                "WeightedSideLyingLegRaise".to_string()
+                "weighted_side_lying_leg_raise".to_string()
             }
-            HipStabilityExerciseName::SlidingHipAdduction => "SlidingHipAdduction".to_string(),
+            HipStabilityExerciseName::SlidingHipAdduction => "sliding_hip_adduction".to_string(),
             HipStabilityExerciseName::WeightedSlidingHipAdduction => {
-                "WeightedSlidingHipAdduction".to_string()
+                "weighted_sliding_hip_adduction".to_string()
             }
-            HipStabilityExerciseName::StandingAdduction => "StandingAdduction".to_string(),
+            HipStabilityExerciseName::StandingAdduction => "standing_adduction".to_string(),
             HipStabilityExerciseName::WeightedStandingAdduction => {
-                "WeightedStandingAdduction".to_string()
+                "weighted_standing_adduction".to_string()
             }
             HipStabilityExerciseName::StandingCableHipAbduction => {
-                "StandingCableHipAbduction".to_string()
+                "standing_cable_hip_abduction".to_string()
             }
-            HipStabilityExerciseName::StandingHipAbduction => "StandingHipAbduction".to_string(),
+            HipStabilityExerciseName::StandingHipAbduction => "standing_hip_abduction".to_string(),
             HipStabilityExerciseName::WeightedStandingHipAbduction => {
-                "WeightedStandingHipAbduction".to_string()
+                "weighted_standing_hip_abduction".to_string()
             }
-            HipStabilityExerciseName::StandingRearLegRaise => "StandingRearLegRaise".to_string(),
+            HipStabilityExerciseName::StandingRearLegRaise => "standing_rear_leg_raise".to_string(),
             HipStabilityExerciseName::WeightedStandingRearLegRaise => {
-                "WeightedStandingRearLegRaise".to_string()
+                "weighted_standing_rear_leg_raise".to_string()
             }
             HipStabilityExerciseName::SupineHipInternalRotation => {
-                "SupineHipInternalRotation".to_string()
+                "supine_hip_internal_rotation".to_string()
             }
             HipStabilityExerciseName::WeightedSupineHipInternalRotation => {
-                "WeightedSupineHipInternalRotation".to_string()
+                "weighted_supine_hip_internal_rotation".to_string()
             }
-            HipStabilityExerciseName::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            HipStabilityExerciseName::UnknownVariant(value) => {
+                format!("unknown_variant_{}", *value)
+            }
         }
     }
 }
@@ -12847,7 +12708,6 @@ pub enum HipSwingExerciseName {
     StepOutSwing,
     UnknownVariant(u16),
 }
-
 impl HipSwingExerciseName {
     pub fn from_u16(value: u16) -> HipSwingExerciseName {
         match value {
@@ -12871,11 +12731,11 @@ impl HipSwingExerciseName {
     pub fn to_string(&self) -> String {
         match &self {
             HipSwingExerciseName::SingleArmKettlebellSwing => {
-                "SingleArmKettlebellSwing".to_string()
+                "single_arm_kettlebell_swing".to_string()
             }
-            HipSwingExerciseName::SingleArmDumbbellSwing => "SingleArmDumbbellSwing".to_string(),
-            HipSwingExerciseName::StepOutSwing => "StepOutSwing".to_string(),
-            HipSwingExerciseName::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            HipSwingExerciseName::SingleArmDumbbellSwing => "single_arm_dumbbell_swing".to_string(),
+            HipSwingExerciseName::StepOutSwing => "step_out_swing".to_string(),
+            HipSwingExerciseName::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -12924,7 +12784,6 @@ pub enum HyperextensionExerciseName {
     SupineFloorBarre,
     UnknownVariant(u16),
 }
-
 impl HyperextensionExerciseName {
     pub fn from_u16(value: u16) -> HyperextensionExerciseName {
         match value {
@@ -13022,89 +12881,89 @@ impl HyperextensionExerciseName {
     pub fn to_string(&self) -> String {
         match &self {
             HyperextensionExerciseName::BackExtensionWithOppositeArmAndLegReach => {
-                "BackExtensionWithOppositeArmAndLegReach".to_string()
+                "back_extension_with_opposite_arm_and_leg_reach".to_string()
             }
             HyperextensionExerciseName::WeightedBackExtensionWithOppositeArmAndLegReach => {
-                "WeightedBackExtensionWithOppositeArmAndLegReach".to_string()
+                "weighted_back_extension_with_opposite_arm_and_leg_reach".to_string()
             }
-            HyperextensionExerciseName::BaseRotations => "BaseRotations".to_string(),
+            HyperextensionExerciseName::BaseRotations => "base_rotations".to_string(),
             HyperextensionExerciseName::WeightedBaseRotations => {
-                "WeightedBaseRotations".to_string()
+                "weighted_base_rotations".to_string()
             }
             HyperextensionExerciseName::BentKneeReverseHyperextension => {
-                "BentKneeReverseHyperextension".to_string()
+                "bent_knee_reverse_hyperextension".to_string()
             }
             HyperextensionExerciseName::WeightedBentKneeReverseHyperextension => {
-                "WeightedBentKneeReverseHyperextension".to_string()
+                "weighted_bent_knee_reverse_hyperextension".to_string()
             }
-            HyperextensionExerciseName::HollowHoldAndRoll => "HollowHoldAndRoll".to_string(),
+            HyperextensionExerciseName::HollowHoldAndRoll => "hollow_hold_and_roll".to_string(),
             HyperextensionExerciseName::WeightedHollowHoldAndRoll => {
-                "WeightedHollowHoldAndRoll".to_string()
+                "weighted_hollow_hold_and_roll".to_string()
             }
-            HyperextensionExerciseName::Kicks => "Kicks".to_string(),
-            HyperextensionExerciseName::WeightedKicks => "WeightedKicks".to_string(),
-            HyperextensionExerciseName::KneeRaises => "KneeRaises".to_string(),
-            HyperextensionExerciseName::WeightedKneeRaises => "WeightedKneeRaises".to_string(),
-            HyperextensionExerciseName::KneelingSuperman => "KneelingSuperman".to_string(),
+            HyperextensionExerciseName::Kicks => "kicks".to_string(),
+            HyperextensionExerciseName::WeightedKicks => "weighted_kicks".to_string(),
+            HyperextensionExerciseName::KneeRaises => "knee_raises".to_string(),
+            HyperextensionExerciseName::WeightedKneeRaises => "weighted_knee_raises".to_string(),
+            HyperextensionExerciseName::KneelingSuperman => "kneeling_superman".to_string(),
             HyperextensionExerciseName::WeightedKneelingSuperman => {
-                "WeightedKneelingSuperman".to_string()
+                "weighted_kneeling_superman".to_string()
             }
-            HyperextensionExerciseName::LatPullDownWithRow => "LatPullDownWithRow".to_string(),
+            HyperextensionExerciseName::LatPullDownWithRow => "lat_pull_down_with_row".to_string(),
             HyperextensionExerciseName::MedicineBallDeadliftToReach => {
-                "MedicineBallDeadliftToReach".to_string()
+                "medicine_ball_deadlift_to_reach".to_string()
             }
-            HyperextensionExerciseName::OneArmOneLegRow => "OneArmOneLegRow".to_string(),
-            HyperextensionExerciseName::OneArmRowWithBand => "OneArmRowWithBand".to_string(),
+            HyperextensionExerciseName::OneArmOneLegRow => "one_arm_one_leg_row".to_string(),
+            HyperextensionExerciseName::OneArmRowWithBand => "one_arm_row_with_band".to_string(),
             HyperextensionExerciseName::OverheadLungeWithMedicineBall => {
-                "OverheadLungeWithMedicineBall".to_string()
+                "overhead_lunge_with_medicine_ball".to_string()
             }
-            HyperextensionExerciseName::PlankKneeTucks => "PlankKneeTucks".to_string(),
+            HyperextensionExerciseName::PlankKneeTucks => "plank_knee_tucks".to_string(),
             HyperextensionExerciseName::WeightedPlankKneeTucks => {
-                "WeightedPlankKneeTucks".to_string()
+                "weighted_plank_knee_tucks".to_string()
             }
-            HyperextensionExerciseName::SideStep => "SideStep".to_string(),
-            HyperextensionExerciseName::WeightedSideStep => "WeightedSideStep".to_string(),
+            HyperextensionExerciseName::SideStep => "side_step".to_string(),
+            HyperextensionExerciseName::WeightedSideStep => "weighted_side_step".to_string(),
             HyperextensionExerciseName::SingleLegBackExtension => {
-                "SingleLegBackExtension".to_string()
+                "single_leg_back_extension".to_string()
             }
             HyperextensionExerciseName::WeightedSingleLegBackExtension => {
-                "WeightedSingleLegBackExtension".to_string()
+                "weighted_single_leg_back_extension".to_string()
             }
-            HyperextensionExerciseName::SpineExtension => "SpineExtension".to_string(),
+            HyperextensionExerciseName::SpineExtension => "spine_extension".to_string(),
             HyperextensionExerciseName::WeightedSpineExtension => {
-                "WeightedSpineExtension".to_string()
+                "weighted_spine_extension".to_string()
             }
-            HyperextensionExerciseName::StaticBackExtension => "StaticBackExtension".to_string(),
+            HyperextensionExerciseName::StaticBackExtension => "static_back_extension".to_string(),
             HyperextensionExerciseName::WeightedStaticBackExtension => {
-                "WeightedStaticBackExtension".to_string()
+                "weighted_static_back_extension".to_string()
             }
-            HyperextensionExerciseName::SupermanFromFloor => "SupermanFromFloor".to_string(),
+            HyperextensionExerciseName::SupermanFromFloor => "superman_from_floor".to_string(),
             HyperextensionExerciseName::WeightedSupermanFromFloor => {
-                "WeightedSupermanFromFloor".to_string()
+                "weighted_superman_from_floor".to_string()
             }
             HyperextensionExerciseName::SwissBallBackExtension => {
-                "SwissBallBackExtension".to_string()
+                "swiss_ball_back_extension".to_string()
             }
             HyperextensionExerciseName::WeightedSwissBallBackExtension => {
-                "WeightedSwissBallBackExtension".to_string()
+                "weighted_swiss_ball_back_extension".to_string()
             }
             HyperextensionExerciseName::SwissBallHyperextension => {
-                "SwissBallHyperextension".to_string()
+                "swiss_ball_hyperextension".to_string()
             }
             HyperextensionExerciseName::WeightedSwissBallHyperextension => {
-                "WeightedSwissBallHyperextension".to_string()
+                "weighted_swiss_ball_hyperextension".to_string()
             }
             HyperextensionExerciseName::SwissBallOppositeArmAndLegLift => {
-                "SwissBallOppositeArmAndLegLift".to_string()
+                "swiss_ball_opposite_arm_and_leg_lift".to_string()
             }
             HyperextensionExerciseName::WeightedSwissBallOppositeArmAndLegLift => {
-                "WeightedSwissBallOppositeArmAndLegLift".to_string()
+                "weighted_swiss_ball_opposite_arm_and_leg_lift".to_string()
             }
-            HyperextensionExerciseName::SupermanOnSwissBall => "SupermanOnSwissBall".to_string(),
-            HyperextensionExerciseName::Cobra => "Cobra".to_string(),
-            HyperextensionExerciseName::SupineFloorBarre => "SupineFloorBarre".to_string(),
+            HyperextensionExerciseName::SupermanOnSwissBall => "superman_on_swiss_ball".to_string(),
+            HyperextensionExerciseName::Cobra => "cobra".to_string(),
+            HyperextensionExerciseName::SupineFloorBarre => "supine_floor_barre".to_string(),
             HyperextensionExerciseName::UnknownVariant(value) => {
-                format!("UnknownVariant{}", *value)
+                format!("unknown_variant_{}", *value)
             }
         }
     }
@@ -13148,7 +13007,6 @@ pub enum LateralRaiseExerciseName {
     ShavingTheHead,
     UnknownVariant(u16),
 }
-
 impl LateralRaiseExerciseName {
     pub fn from_u16(value: u16) -> LateralRaiseExerciseName {
         match value {
@@ -13234,54 +13092,60 @@ impl LateralRaiseExerciseName {
     pub fn to_string(&self) -> String {
         match &self {
             LateralRaiseExerciseName::Name45DegreeCableExternalRotation => {
-                "Name45DegreeCableExternalRotation".to_string()
+                "45_degree_cable_external_rotation".to_string()
             }
             LateralRaiseExerciseName::AlternatingLateralRaiseWithStaticHold => {
-                "AlternatingLateralRaiseWithStaticHold".to_string()
+                "alternating_lateral_raise_with_static_hold".to_string()
             }
-            LateralRaiseExerciseName::BarMuscleUp => "BarMuscleUp".to_string(),
-            LateralRaiseExerciseName::BentOverLateralRaise => "BentOverLateralRaise".to_string(),
-            LateralRaiseExerciseName::CableDiagonalRaise => "CableDiagonalRaise".to_string(),
-            LateralRaiseExerciseName::CableFrontRaise => "CableFrontRaise".to_string(),
-            LateralRaiseExerciseName::CalorieRow => "CalorieRow".to_string(),
-            LateralRaiseExerciseName::ComboShoulderRaise => "ComboShoulderRaise".to_string(),
-            LateralRaiseExerciseName::DumbbellDiagonalRaise => "DumbbellDiagonalRaise".to_string(),
-            LateralRaiseExerciseName::DumbbellVRaise => "DumbbellVRaise".to_string(),
-            LateralRaiseExerciseName::FrontRaise => "FrontRaise".to_string(),
+            LateralRaiseExerciseName::BarMuscleUp => "bar_muscle_up".to_string(),
+            LateralRaiseExerciseName::BentOverLateralRaise => "bent_over_lateral_raise".to_string(),
+            LateralRaiseExerciseName::CableDiagonalRaise => "cable_diagonal_raise".to_string(),
+            LateralRaiseExerciseName::CableFrontRaise => "cable_front_raise".to_string(),
+            LateralRaiseExerciseName::CalorieRow => "calorie_row".to_string(),
+            LateralRaiseExerciseName::ComboShoulderRaise => "combo_shoulder_raise".to_string(),
+            LateralRaiseExerciseName::DumbbellDiagonalRaise => {
+                "dumbbell_diagonal_raise".to_string()
+            }
+            LateralRaiseExerciseName::DumbbellVRaise => "dumbbell_v_raise".to_string(),
+            LateralRaiseExerciseName::FrontRaise => "front_raise".to_string(),
             LateralRaiseExerciseName::LeaningDumbbellLateralRaise => {
-                "LeaningDumbbellLateralRaise".to_string()
+                "leaning_dumbbell_lateral_raise".to_string()
             }
-            LateralRaiseExerciseName::LyingDumbbellRaise => "LyingDumbbellRaise".to_string(),
-            LateralRaiseExerciseName::MuscleUp => "MuscleUp".to_string(),
+            LateralRaiseExerciseName::LyingDumbbellRaise => "lying_dumbbell_raise".to_string(),
+            LateralRaiseExerciseName::MuscleUp => "muscle_up".to_string(),
             LateralRaiseExerciseName::OneArmCableLateralRaise => {
-                "OneArmCableLateralRaise".to_string()
+                "one_arm_cable_lateral_raise".to_string()
             }
             LateralRaiseExerciseName::OverhandGripRearLateralRaise => {
-                "OverhandGripRearLateralRaise".to_string()
+                "overhand_grip_rear_lateral_raise".to_string()
             }
-            LateralRaiseExerciseName::PlateRaises => "PlateRaises".to_string(),
-            LateralRaiseExerciseName::RingDip => "RingDip".to_string(),
-            LateralRaiseExerciseName::WeightedRingDip => "WeightedRingDip".to_string(),
-            LateralRaiseExerciseName::RingMuscleUp => "RingMuscleUp".to_string(),
-            LateralRaiseExerciseName::WeightedRingMuscleUp => "WeightedRingMuscleUp".to_string(),
-            LateralRaiseExerciseName::RopeClimb => "RopeClimb".to_string(),
-            LateralRaiseExerciseName::WeightedRopeClimb => "WeightedRopeClimb".to_string(),
-            LateralRaiseExerciseName::Scaption => "Scaption".to_string(),
-            LateralRaiseExerciseName::SeatedLateralRaise => "SeatedLateralRaise".to_string(),
+            LateralRaiseExerciseName::PlateRaises => "plate_raises".to_string(),
+            LateralRaiseExerciseName::RingDip => "ring_dip".to_string(),
+            LateralRaiseExerciseName::WeightedRingDip => "weighted_ring_dip".to_string(),
+            LateralRaiseExerciseName::RingMuscleUp => "ring_muscle_up".to_string(),
+            LateralRaiseExerciseName::WeightedRingMuscleUp => "weighted_ring_muscle_up".to_string(),
+            LateralRaiseExerciseName::RopeClimb => "rope_climb".to_string(),
+            LateralRaiseExerciseName::WeightedRopeClimb => "weighted_rope_climb".to_string(),
+            LateralRaiseExerciseName::Scaption => "scaption".to_string(),
+            LateralRaiseExerciseName::SeatedLateralRaise => "seated_lateral_raise".to_string(),
             LateralRaiseExerciseName::SeatedRearLateralRaise => {
-                "SeatedRearLateralRaise".to_string()
+                "seated_rear_lateral_raise".to_string()
             }
-            LateralRaiseExerciseName::SideLyingLateralRaise => "SideLyingLateralRaise".to_string(),
-            LateralRaiseExerciseName::StandingLift => "StandingLift".to_string(),
-            LateralRaiseExerciseName::SuspendedRow => "SuspendedRow".to_string(),
+            LateralRaiseExerciseName::SideLyingLateralRaise => {
+                "side_lying_lateral_raise".to_string()
+            }
+            LateralRaiseExerciseName::StandingLift => "standing_lift".to_string(),
+            LateralRaiseExerciseName::SuspendedRow => "suspended_row".to_string(),
             LateralRaiseExerciseName::UnderhandGripRearLateralRaise => {
-                "UnderhandGripRearLateralRaise".to_string()
+                "underhand_grip_rear_lateral_raise".to_string()
             }
-            LateralRaiseExerciseName::WallSlide => "WallSlide".to_string(),
-            LateralRaiseExerciseName::WeightedWallSlide => "WeightedWallSlide".to_string(),
-            LateralRaiseExerciseName::ArmCircles => "ArmCircles".to_string(),
-            LateralRaiseExerciseName::ShavingTheHead => "ShavingTheHead".to_string(),
-            LateralRaiseExerciseName::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            LateralRaiseExerciseName::WallSlide => "wall_slide".to_string(),
+            LateralRaiseExerciseName::WeightedWallSlide => "weighted_wall_slide".to_string(),
+            LateralRaiseExerciseName::ArmCircles => "arm_circles".to_string(),
+            LateralRaiseExerciseName::ShavingTheHead => "shaving_the_head".to_string(),
+            LateralRaiseExerciseName::UnknownVariant(value) => {
+                format!("unknown_variant_{}", *value)
+            }
         }
     }
 }
@@ -13302,7 +13166,6 @@ pub enum LegCurlExerciseName {
     ZercherGoodMorning,
     UnknownVariant(u16),
 }
-
 impl LegCurlExerciseName {
     pub fn from_u16(value: u16) -> LegCurlExerciseName {
         match value {
@@ -13343,25 +13206,31 @@ impl LegCurlExerciseName {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            LegCurlExerciseName::LegCurl => "LegCurl".to_string(),
-            LegCurlExerciseName::WeightedLegCurl => "WeightedLegCurl".to_string(),
-            LegCurlExerciseName::GoodMorning => "GoodMorning".to_string(),
-            LegCurlExerciseName::SeatedBarbellGoodMorning => "SeatedBarbellGoodMorning".to_string(),
-            LegCurlExerciseName::SingleLegBarbellGoodMorning => {
-                "SingleLegBarbellGoodMorning".to_string()
+            LegCurlExerciseName::LegCurl => "leg_curl".to_string(),
+            LegCurlExerciseName::WeightedLegCurl => "weighted_leg_curl".to_string(),
+            LegCurlExerciseName::GoodMorning => "good_morning".to_string(),
+            LegCurlExerciseName::SeatedBarbellGoodMorning => {
+                "seated_barbell_good_morning".to_string()
             }
-            LegCurlExerciseName::SingleLegSlidingLegCurl => "SingleLegSlidingLegCurl".to_string(),
-            LegCurlExerciseName::SlidingLegCurl => "SlidingLegCurl".to_string(),
-            LegCurlExerciseName::SplitBarbellGoodMorning => "SplitBarbellGoodMorning".to_string(),
-            LegCurlExerciseName::SplitStanceExtension => "SplitStanceExtension".to_string(),
+            LegCurlExerciseName::SingleLegBarbellGoodMorning => {
+                "single_leg_barbell_good_morning".to_string()
+            }
+            LegCurlExerciseName::SingleLegSlidingLegCurl => {
+                "single_leg_sliding_leg_curl".to_string()
+            }
+            LegCurlExerciseName::SlidingLegCurl => "sliding_leg_curl".to_string(),
+            LegCurlExerciseName::SplitBarbellGoodMorning => {
+                "split_barbell_good_morning".to_string()
+            }
+            LegCurlExerciseName::SplitStanceExtension => "split_stance_extension".to_string(),
             LegCurlExerciseName::StaggeredStanceGoodMorning => {
-                "StaggeredStanceGoodMorning".to_string()
+                "staggered_stance_good_morning".to_string()
             }
             LegCurlExerciseName::SwissBallHipRaiseAndLegCurl => {
-                "SwissBallHipRaiseAndLegCurl".to_string()
+                "swiss_ball_hip_raise_and_leg_curl".to_string()
             }
-            LegCurlExerciseName::ZercherGoodMorning => "ZercherGoodMorning".to_string(),
-            LegCurlExerciseName::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            LegCurlExerciseName::ZercherGoodMorning => "zercher_good_morning".to_string(),
+            LegCurlExerciseName::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -13392,7 +13261,6 @@ pub enum LegRaiseExerciseName {
     WeightedLateralStepover,
     UnknownVariant(u16),
 }
-
 impl LegRaiseExerciseName {
     pub fn from_u16(value: u16) -> LegRaiseExerciseName {
         match value {
@@ -13453,45 +13321,51 @@ impl LegRaiseExerciseName {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            LegRaiseExerciseName::HangingKneeRaise => "HangingKneeRaise".to_string(),
-            LegRaiseExerciseName::HangingLegRaise => "HangingLegRaise".to_string(),
-            LegRaiseExerciseName::WeightedHangingLegRaise => "WeightedHangingLegRaise".to_string(),
-            LegRaiseExerciseName::HangingSingleLegRaise => "HangingSingleLegRaise".to_string(),
+            LegRaiseExerciseName::HangingKneeRaise => "hanging_knee_raise".to_string(),
+            LegRaiseExerciseName::HangingLegRaise => "hanging_leg_raise".to_string(),
+            LegRaiseExerciseName::WeightedHangingLegRaise => {
+                "weighted_hanging_leg_raise".to_string()
+            }
+            LegRaiseExerciseName::HangingSingleLegRaise => "hanging_single_leg_raise".to_string(),
             LegRaiseExerciseName::WeightedHangingSingleLegRaise => {
-                "WeightedHangingSingleLegRaise".to_string()
+                "weighted_hanging_single_leg_raise".to_string()
             }
-            LegRaiseExerciseName::KettlebellLegRaises => "KettlebellLegRaises".to_string(),
-            LegRaiseExerciseName::LegLoweringDrill => "LegLoweringDrill".to_string(),
+            LegRaiseExerciseName::KettlebellLegRaises => "kettlebell_leg_raises".to_string(),
+            LegRaiseExerciseName::LegLoweringDrill => "leg_lowering_drill".to_string(),
             LegRaiseExerciseName::WeightedLegLoweringDrill => {
-                "WeightedLegLoweringDrill".to_string()
+                "weighted_leg_lowering_drill".to_string()
             }
-            LegRaiseExerciseName::LyingStraightLegRaise => "LyingStraightLegRaise".to_string(),
+            LegRaiseExerciseName::LyingStraightLegRaise => "lying_straight_leg_raise".to_string(),
             LegRaiseExerciseName::WeightedLyingStraightLegRaise => {
-                "WeightedLyingStraightLegRaise".to_string()
+                "weighted_lying_straight_leg_raise".to_string()
             }
-            LegRaiseExerciseName::MedicineBallLegDrops => "MedicineBallLegDrops".to_string(),
-            LegRaiseExerciseName::QuadrupedLegRaise => "QuadrupedLegRaise".to_string(),
+            LegRaiseExerciseName::MedicineBallLegDrops => "medicine_ball_leg_drops".to_string(),
+            LegRaiseExerciseName::QuadrupedLegRaise => "quadruped_leg_raise".to_string(),
             LegRaiseExerciseName::WeightedQuadrupedLegRaise => {
-                "WeightedQuadrupedLegRaise".to_string()
+                "weighted_quadruped_leg_raise".to_string()
             }
-            LegRaiseExerciseName::ReverseLegRaise => "ReverseLegRaise".to_string(),
-            LegRaiseExerciseName::WeightedReverseLegRaise => "WeightedReverseLegRaise".to_string(),
+            LegRaiseExerciseName::ReverseLegRaise => "reverse_leg_raise".to_string(),
+            LegRaiseExerciseName::WeightedReverseLegRaise => {
+                "weighted_reverse_leg_raise".to_string()
+            }
             LegRaiseExerciseName::ReverseLegRaiseOnSwissBall => {
-                "ReverseLegRaiseOnSwissBall".to_string()
+                "reverse_leg_raise_on_swiss_ball".to_string()
             }
             LegRaiseExerciseName::WeightedReverseLegRaiseOnSwissBall => {
-                "WeightedReverseLegRaiseOnSwissBall".to_string()
+                "weighted_reverse_leg_raise_on_swiss_ball".to_string()
             }
-            LegRaiseExerciseName::SingleLegLoweringDrill => "SingleLegLoweringDrill".to_string(),
+            LegRaiseExerciseName::SingleLegLoweringDrill => "single_leg_lowering_drill".to_string(),
             LegRaiseExerciseName::WeightedSingleLegLoweringDrill => {
-                "WeightedSingleLegLoweringDrill".to_string()
+                "weighted_single_leg_lowering_drill".to_string()
             }
             LegRaiseExerciseName::WeightedHangingKneeRaise => {
-                "WeightedHangingKneeRaise".to_string()
+                "weighted_hanging_knee_raise".to_string()
             }
-            LegRaiseExerciseName::LateralStepover => "LateralStepover".to_string(),
-            LegRaiseExerciseName::WeightedLateralStepover => "WeightedLateralStepover".to_string(),
-            LegRaiseExerciseName::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            LegRaiseExerciseName::LateralStepover => "lateral_stepover".to_string(),
+            LegRaiseExerciseName::WeightedLateralStepover => {
+                "weighted_lateral_stepover".to_string()
+            }
+            LegRaiseExerciseName::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -13581,7 +13455,6 @@ pub enum LungeExerciseName {
     WideGripOverheadBarbellSplitSquat,
     UnknownVariant(u16),
 }
-
 impl LungeExerciseName {
     pub fn from_u16(value: u16) -> LungeExerciseName {
         match value {
@@ -13760,144 +13633,150 @@ impl LungeExerciseName {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            LungeExerciseName::OverheadLunge => "OverheadLunge".to_string(),
-            LungeExerciseName::LungeMatrix => "LungeMatrix".to_string(),
-            LungeExerciseName::WeightedLungeMatrix => "WeightedLungeMatrix".to_string(),
+            LungeExerciseName::OverheadLunge => "overhead_lunge".to_string(),
+            LungeExerciseName::LungeMatrix => "lunge_matrix".to_string(),
+            LungeExerciseName::WeightedLungeMatrix => "weighted_lunge_matrix".to_string(),
             LungeExerciseName::AlternatingBarbellForwardLunge => {
-                "AlternatingBarbellForwardLunge".to_string()
+                "alternating_barbell_forward_lunge".to_string()
             }
             LungeExerciseName::AlternatingDumbbellLungeWithReach => {
-                "AlternatingDumbbellLungeWithReach".to_string()
+                "alternating_dumbbell_lunge_with_reach".to_string()
             }
             LungeExerciseName::BackFootElevatedDumbbellSplitSquat => {
-                "BackFootElevatedDumbbellSplitSquat".to_string()
+                "back_foot_elevated_dumbbell_split_squat".to_string()
             }
-            LungeExerciseName::BarbellBoxLunge => "BarbellBoxLunge".to_string(),
+            LungeExerciseName::BarbellBoxLunge => "barbell_box_lunge".to_string(),
             LungeExerciseName::BarbellBulgarianSplitSquat => {
-                "BarbellBulgarianSplitSquat".to_string()
+                "barbell_bulgarian_split_squat".to_string()
             }
-            LungeExerciseName::BarbellCrossoverLunge => "BarbellCrossoverLunge".to_string(),
-            LungeExerciseName::BarbellFrontSplitSquat => "BarbellFrontSplitSquat".to_string(),
-            LungeExerciseName::BarbellLunge => "BarbellLunge".to_string(),
-            LungeExerciseName::BarbellReverseLunge => "BarbellReverseLunge".to_string(),
-            LungeExerciseName::BarbellSideLunge => "BarbellSideLunge".to_string(),
-            LungeExerciseName::BarbellSplitSquat => "BarbellSplitSquat".to_string(),
-            LungeExerciseName::CoreControlRearLunge => "CoreControlRearLunge".to_string(),
-            LungeExerciseName::DiagonalLunge => "DiagonalLunge".to_string(),
-            LungeExerciseName::DropLunge => "DropLunge".to_string(),
-            LungeExerciseName::DumbbellBoxLunge => "DumbbellBoxLunge".to_string(),
+            LungeExerciseName::BarbellCrossoverLunge => "barbell_crossover_lunge".to_string(),
+            LungeExerciseName::BarbellFrontSplitSquat => "barbell_front_split_squat".to_string(),
+            LungeExerciseName::BarbellLunge => "barbell_lunge".to_string(),
+            LungeExerciseName::BarbellReverseLunge => "barbell_reverse_lunge".to_string(),
+            LungeExerciseName::BarbellSideLunge => "barbell_side_lunge".to_string(),
+            LungeExerciseName::BarbellSplitSquat => "barbell_split_squat".to_string(),
+            LungeExerciseName::CoreControlRearLunge => "core_control_rear_lunge".to_string(),
+            LungeExerciseName::DiagonalLunge => "diagonal_lunge".to_string(),
+            LungeExerciseName::DropLunge => "drop_lunge".to_string(),
+            LungeExerciseName::DumbbellBoxLunge => "dumbbell_box_lunge".to_string(),
             LungeExerciseName::DumbbellBulgarianSplitSquat => {
-                "DumbbellBulgarianSplitSquat".to_string()
+                "dumbbell_bulgarian_split_squat".to_string()
             }
-            LungeExerciseName::DumbbellCrossoverLunge => "DumbbellCrossoverLunge".to_string(),
-            LungeExerciseName::DumbbellDiagonalLunge => "DumbbellDiagonalLunge".to_string(),
-            LungeExerciseName::DumbbellLunge => "DumbbellLunge".to_string(),
-            LungeExerciseName::DumbbellLungeAndRotation => "DumbbellLungeAndRotation".to_string(),
+            LungeExerciseName::DumbbellCrossoverLunge => "dumbbell_crossover_lunge".to_string(),
+            LungeExerciseName::DumbbellDiagonalLunge => "dumbbell_diagonal_lunge".to_string(),
+            LungeExerciseName::DumbbellLunge => "dumbbell_lunge".to_string(),
+            LungeExerciseName::DumbbellLungeAndRotation => {
+                "dumbbell_lunge_and_rotation".to_string()
+            }
             LungeExerciseName::DumbbellOverheadBulgarianSplitSquat => {
-                "DumbbellOverheadBulgarianSplitSquat".to_string()
+                "dumbbell_overhead_bulgarian_split_squat".to_string()
             }
             LungeExerciseName::DumbbellReverseLungeToHighKneeAndPress => {
-                "DumbbellReverseLungeToHighKneeAndPress".to_string()
+                "dumbbell_reverse_lunge_to_high_knee_and_press".to_string()
             }
-            LungeExerciseName::DumbbellSideLunge => "DumbbellSideLunge".to_string(),
+            LungeExerciseName::DumbbellSideLunge => "dumbbell_side_lunge".to_string(),
             LungeExerciseName::ElevatedFrontFootBarbellSplitSquat => {
-                "ElevatedFrontFootBarbellSplitSquat".to_string()
+                "elevated_front_foot_barbell_split_squat".to_string()
             }
             LungeExerciseName::FrontFootElevatedDumbbellSplitSquat => {
-                "FrontFootElevatedDumbbellSplitSquat".to_string()
+                "front_foot_elevated_dumbbell_split_squat".to_string()
             }
-            LungeExerciseName::GunslingerLunge => "GunslingerLunge".to_string(),
-            LungeExerciseName::LawnmowerLunge => "LawnmowerLunge".to_string(),
+            LungeExerciseName::GunslingerLunge => "gunslinger_lunge".to_string(),
+            LungeExerciseName::LawnmowerLunge => "lawnmower_lunge".to_string(),
             LungeExerciseName::LowLungeWithIsometricAdduction => {
-                "LowLungeWithIsometricAdduction".to_string()
+                "low_lunge_with_isometric_adduction".to_string()
             }
-            LungeExerciseName::LowSideToSideLunge => "LowSideToSideLunge".to_string(),
-            LungeExerciseName::Lunge => "Lunge".to_string(),
-            LungeExerciseName::WeightedLunge => "WeightedLunge".to_string(),
-            LungeExerciseName::LungeWithArmReach => "LungeWithArmReach".to_string(),
-            LungeExerciseName::LungeWithDiagonalReach => "LungeWithDiagonalReach".to_string(),
-            LungeExerciseName::LungeWithSideBend => "LungeWithSideBend".to_string(),
-            LungeExerciseName::OffsetDumbbellLunge => "OffsetDumbbellLunge".to_string(),
+            LungeExerciseName::LowSideToSideLunge => "low_side_to_side_lunge".to_string(),
+            LungeExerciseName::Lunge => "lunge".to_string(),
+            LungeExerciseName::WeightedLunge => "weighted_lunge".to_string(),
+            LungeExerciseName::LungeWithArmReach => "lunge_with_arm_reach".to_string(),
+            LungeExerciseName::LungeWithDiagonalReach => "lunge_with_diagonal_reach".to_string(),
+            LungeExerciseName::LungeWithSideBend => "lunge_with_side_bend".to_string(),
+            LungeExerciseName::OffsetDumbbellLunge => "offset_dumbbell_lunge".to_string(),
             LungeExerciseName::OffsetDumbbellReverseLunge => {
-                "OffsetDumbbellReverseLunge".to_string()
+                "offset_dumbbell_reverse_lunge".to_string()
             }
             LungeExerciseName::OverheadBulgarianSplitSquat => {
-                "OverheadBulgarianSplitSquat".to_string()
+                "overhead_bulgarian_split_squat".to_string()
             }
             LungeExerciseName::OverheadDumbbellReverseLunge => {
-                "OverheadDumbbellReverseLunge".to_string()
+                "overhead_dumbbell_reverse_lunge".to_string()
             }
             LungeExerciseName::OverheadDumbbellSplitSquat => {
-                "OverheadDumbbellSplitSquat".to_string()
+                "overhead_dumbbell_split_squat".to_string()
             }
-            LungeExerciseName::OverheadLungeWithRotation => "OverheadLungeWithRotation".to_string(),
-            LungeExerciseName::ReverseBarbellBoxLunge => "ReverseBarbellBoxLunge".to_string(),
-            LungeExerciseName::ReverseBoxLunge => "ReverseBoxLunge".to_string(),
-            LungeExerciseName::ReverseDumbbellBoxLunge => "ReverseDumbbellBoxLunge".to_string(),
+            LungeExerciseName::OverheadLungeWithRotation => {
+                "overhead_lunge_with_rotation".to_string()
+            }
+            LungeExerciseName::ReverseBarbellBoxLunge => "reverse_barbell_box_lunge".to_string(),
+            LungeExerciseName::ReverseBoxLunge => "reverse_box_lunge".to_string(),
+            LungeExerciseName::ReverseDumbbellBoxLunge => "reverse_dumbbell_box_lunge".to_string(),
             LungeExerciseName::ReverseDumbbellCrossoverLunge => {
-                "ReverseDumbbellCrossoverLunge".to_string()
+                "reverse_dumbbell_crossover_lunge".to_string()
             }
             LungeExerciseName::ReverseDumbbellDiagonalLunge => {
-                "ReverseDumbbellDiagonalLunge".to_string()
+                "reverse_dumbbell_diagonal_lunge".to_string()
             }
-            LungeExerciseName::ReverseLungeWithReachBack => "ReverseLungeWithReachBack".to_string(),
+            LungeExerciseName::ReverseLungeWithReachBack => {
+                "reverse_lunge_with_reach_back".to_string()
+            }
             LungeExerciseName::WeightedReverseLungeWithReachBack => {
-                "WeightedReverseLungeWithReachBack".to_string()
+                "weighted_reverse_lunge_with_reach_back".to_string()
             }
             LungeExerciseName::ReverseLungeWithTwistAndOverheadReach => {
-                "ReverseLungeWithTwistAndOverheadReach".to_string()
+                "reverse_lunge_with_twist_and_overhead_reach".to_string()
             }
             LungeExerciseName::WeightedReverseLungeWithTwistAndOverheadReach => {
-                "WeightedReverseLungeWithTwistAndOverheadReach".to_string()
+                "weighted_reverse_lunge_with_twist_and_overhead_reach".to_string()
             }
-            LungeExerciseName::ReverseSlidingBoxLunge => "ReverseSlidingBoxLunge".to_string(),
+            LungeExerciseName::ReverseSlidingBoxLunge => "reverse_sliding_box_lunge".to_string(),
             LungeExerciseName::WeightedReverseSlidingBoxLunge => {
-                "WeightedReverseSlidingBoxLunge".to_string()
+                "weighted_reverse_sliding_box_lunge".to_string()
             }
-            LungeExerciseName::ReverseSlidingLunge => "ReverseSlidingLunge".to_string(),
+            LungeExerciseName::ReverseSlidingLunge => "reverse_sliding_lunge".to_string(),
             LungeExerciseName::WeightedReverseSlidingLunge => {
-                "WeightedReverseSlidingLunge".to_string()
+                "weighted_reverse_sliding_lunge".to_string()
             }
-            LungeExerciseName::RunnersLungeToBalance => "RunnersLungeToBalance".to_string(),
+            LungeExerciseName::RunnersLungeToBalance => "runners_lunge_to_balance".to_string(),
             LungeExerciseName::WeightedRunnersLungeToBalance => {
-                "WeightedRunnersLungeToBalance".to_string()
+                "weighted_runners_lunge_to_balance".to_string()
             }
-            LungeExerciseName::ShiftingSideLunge => "ShiftingSideLunge".to_string(),
-            LungeExerciseName::SideAndCrossoverLunge => "SideAndCrossoverLunge".to_string(),
+            LungeExerciseName::ShiftingSideLunge => "shifting_side_lunge".to_string(),
+            LungeExerciseName::SideAndCrossoverLunge => "side_and_crossover_lunge".to_string(),
             LungeExerciseName::WeightedSideAndCrossoverLunge => {
-                "WeightedSideAndCrossoverLunge".to_string()
+                "weighted_side_and_crossover_lunge".to_string()
             }
-            LungeExerciseName::SideLunge => "SideLunge".to_string(),
-            LungeExerciseName::WeightedSideLunge => "WeightedSideLunge".to_string(),
-            LungeExerciseName::SideLungeAndPress => "SideLungeAndPress".to_string(),
-            LungeExerciseName::SideLungeJumpOff => "SideLungeJumpOff".to_string(),
-            LungeExerciseName::SideLungeSweep => "SideLungeSweep".to_string(),
-            LungeExerciseName::WeightedSideLungeSweep => "WeightedSideLungeSweep".to_string(),
-            LungeExerciseName::SideLungeToCrossoverTap => "SideLungeToCrossoverTap".to_string(),
+            LungeExerciseName::SideLunge => "side_lunge".to_string(),
+            LungeExerciseName::WeightedSideLunge => "weighted_side_lunge".to_string(),
+            LungeExerciseName::SideLungeAndPress => "side_lunge_and_press".to_string(),
+            LungeExerciseName::SideLungeJumpOff => "side_lunge_jump_off".to_string(),
+            LungeExerciseName::SideLungeSweep => "side_lunge_sweep".to_string(),
+            LungeExerciseName::WeightedSideLungeSweep => "weighted_side_lunge_sweep".to_string(),
+            LungeExerciseName::SideLungeToCrossoverTap => "side_lunge_to_crossover_tap".to_string(),
             LungeExerciseName::WeightedSideLungeToCrossoverTap => {
-                "WeightedSideLungeToCrossoverTap".to_string()
+                "weighted_side_lunge_to_crossover_tap".to_string()
             }
-            LungeExerciseName::SideToSideLungeChops => "SideToSideLungeChops".to_string(),
+            LungeExerciseName::SideToSideLungeChops => "side_to_side_lunge_chops".to_string(),
             LungeExerciseName::WeightedSideToSideLungeChops => {
-                "WeightedSideToSideLungeChops".to_string()
+                "weighted_side_to_side_lunge_chops".to_string()
             }
-            LungeExerciseName::SiffJumpLunge => "SiffJumpLunge".to_string(),
-            LungeExerciseName::WeightedSiffJumpLunge => "WeightedSiffJumpLunge".to_string(),
+            LungeExerciseName::SiffJumpLunge => "siff_jump_lunge".to_string(),
+            LungeExerciseName::WeightedSiffJumpLunge => "weighted_siff_jump_lunge".to_string(),
             LungeExerciseName::SingleArmReverseLungeAndPress => {
-                "SingleArmReverseLungeAndPress".to_string()
+                "single_arm_reverse_lunge_and_press".to_string()
             }
-            LungeExerciseName::SlidingLateralLunge => "SlidingLateralLunge".to_string(),
+            LungeExerciseName::SlidingLateralLunge => "sliding_lateral_lunge".to_string(),
             LungeExerciseName::WeightedSlidingLateralLunge => {
-                "WeightedSlidingLateralLunge".to_string()
+                "weighted_sliding_lateral_lunge".to_string()
             }
-            LungeExerciseName::WalkingBarbellLunge => "WalkingBarbellLunge".to_string(),
-            LungeExerciseName::WalkingDumbbellLunge => "WalkingDumbbellLunge".to_string(),
-            LungeExerciseName::WalkingLunge => "WalkingLunge".to_string(),
-            LungeExerciseName::WeightedWalkingLunge => "WeightedWalkingLunge".to_string(),
+            LungeExerciseName::WalkingBarbellLunge => "walking_barbell_lunge".to_string(),
+            LungeExerciseName::WalkingDumbbellLunge => "walking_dumbbell_lunge".to_string(),
+            LungeExerciseName::WalkingLunge => "walking_lunge".to_string(),
+            LungeExerciseName::WeightedWalkingLunge => "weighted_walking_lunge".to_string(),
             LungeExerciseName::WideGripOverheadBarbellSplitSquat => {
-                "WideGripOverheadBarbellSplitSquat".to_string()
+                "wide_grip_overhead_barbell_split_squat".to_string()
             }
-            LungeExerciseName::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            LungeExerciseName::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -13927,7 +13806,6 @@ pub enum OlympicLiftExerciseName {
     SquatCleanAndJerk,
     UnknownVariant(u16),
 }
-
 impl OlympicLiftExerciseName {
     pub fn from_u16(value: u16) -> OlympicLiftExerciseName {
         match value {
@@ -13986,34 +13864,40 @@ impl OlympicLiftExerciseName {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            OlympicLiftExerciseName::BarbellHangPowerClean => "BarbellHangPowerClean".to_string(),
-            OlympicLiftExerciseName::BarbellHangSquatClean => "BarbellHangSquatClean".to_string(),
-            OlympicLiftExerciseName::BarbellPowerClean => "BarbellPowerClean".to_string(),
-            OlympicLiftExerciseName::BarbellPowerSnatch => "BarbellPowerSnatch".to_string(),
-            OlympicLiftExerciseName::BarbellSquatClean => "BarbellSquatClean".to_string(),
-            OlympicLiftExerciseName::CleanAndJerk => "CleanAndJerk".to_string(),
-            OlympicLiftExerciseName::BarbellHangPowerSnatch => "BarbellHangPowerSnatch".to_string(),
-            OlympicLiftExerciseName::BarbellHangPull => "BarbellHangPull".to_string(),
-            OlympicLiftExerciseName::BarbellHighPull => "BarbellHighPull".to_string(),
-            OlympicLiftExerciseName::BarbellSnatch => "BarbellSnatch".to_string(),
-            OlympicLiftExerciseName::BarbellSplitJerk => "BarbellSplitJerk".to_string(),
-            OlympicLiftExerciseName::Clean => "Clean".to_string(),
-            OlympicLiftExerciseName::DumbbellClean => "DumbbellClean".to_string(),
-            OlympicLiftExerciseName::DumbbellHangPull => "DumbbellHangPull".to_string(),
+            OlympicLiftExerciseName::BarbellHangPowerClean => {
+                "barbell_hang_power_clean".to_string()
+            }
+            OlympicLiftExerciseName::BarbellHangSquatClean => {
+                "barbell_hang_squat_clean".to_string()
+            }
+            OlympicLiftExerciseName::BarbellPowerClean => "barbell_power_clean".to_string(),
+            OlympicLiftExerciseName::BarbellPowerSnatch => "barbell_power_snatch".to_string(),
+            OlympicLiftExerciseName::BarbellSquatClean => "barbell_squat_clean".to_string(),
+            OlympicLiftExerciseName::CleanAndJerk => "clean_and_jerk".to_string(),
+            OlympicLiftExerciseName::BarbellHangPowerSnatch => {
+                "barbell_hang_power_snatch".to_string()
+            }
+            OlympicLiftExerciseName::BarbellHangPull => "barbell_hang_pull".to_string(),
+            OlympicLiftExerciseName::BarbellHighPull => "barbell_high_pull".to_string(),
+            OlympicLiftExerciseName::BarbellSnatch => "barbell_snatch".to_string(),
+            OlympicLiftExerciseName::BarbellSplitJerk => "barbell_split_jerk".to_string(),
+            OlympicLiftExerciseName::Clean => "clean".to_string(),
+            OlympicLiftExerciseName::DumbbellClean => "dumbbell_clean".to_string(),
+            OlympicLiftExerciseName::DumbbellHangPull => "dumbbell_hang_pull".to_string(),
             OlympicLiftExerciseName::OneHandDumbbellSplitSnatch => {
-                "OneHandDumbbellSplitSnatch".to_string()
+                "one_hand_dumbbell_split_snatch".to_string()
             }
-            OlympicLiftExerciseName::PushJerk => "PushJerk".to_string(),
+            OlympicLiftExerciseName::PushJerk => "push_jerk".to_string(),
             OlympicLiftExerciseName::SingleArmDumbbellSnatch => {
-                "SingleArmDumbbellSnatch".to_string()
+                "single_arm_dumbbell_snatch".to_string()
             }
-            OlympicLiftExerciseName::SingleArmHangSnatch => "SingleArmHangSnatch".to_string(),
+            OlympicLiftExerciseName::SingleArmHangSnatch => "single_arm_hang_snatch".to_string(),
             OlympicLiftExerciseName::SingleArmKettlebellSnatch => {
-                "SingleArmKettlebellSnatch".to_string()
+                "single_arm_kettlebell_snatch".to_string()
             }
-            OlympicLiftExerciseName::SplitJerk => "SplitJerk".to_string(),
-            OlympicLiftExerciseName::SquatCleanAndJerk => "SquatCleanAndJerk".to_string(),
-            OlympicLiftExerciseName::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            OlympicLiftExerciseName::SplitJerk => "split_jerk".to_string(),
+            OlympicLiftExerciseName::SquatCleanAndJerk => "squat_clean_and_jerk".to_string(),
+            OlympicLiftExerciseName::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -14157,7 +14041,6 @@ pub enum PlankExerciseName {
     ReversePlankWithLegPull,
     UnknownVariant(u16),
 }
-
 impl PlankExerciseName {
     pub fn from_u16(value: u16) -> PlankExerciseName {
         match value {
@@ -14444,252 +14327,274 @@ impl PlankExerciseName {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            PlankExerciseName::Name45DegreePlank => "Name45DegreePlank".to_string(),
-            PlankExerciseName::Weighted45DegreePlank => "Weighted45DegreePlank".to_string(),
-            PlankExerciseName::Name90DegreeStaticHold => "Name90DegreeStaticHold".to_string(),
+            PlankExerciseName::Name45DegreePlank => "45_degree_plank".to_string(),
+            PlankExerciseName::Weighted45DegreePlank => "weighted_45_degree_plank".to_string(),
+            PlankExerciseName::Name90DegreeStaticHold => "90_degree_static_hold".to_string(),
             PlankExerciseName::Weighted90DegreeStaticHold => {
-                "Weighted90DegreeStaticHold".to_string()
+                "weighted_90_degree_static_hold".to_string()
             }
-            PlankExerciseName::BearCrawl => "BearCrawl".to_string(),
-            PlankExerciseName::WeightedBearCrawl => "WeightedBearCrawl".to_string(),
-            PlankExerciseName::CrossBodyMountainClimber => "CrossBodyMountainClimber".to_string(),
+            PlankExerciseName::BearCrawl => "bear_crawl".to_string(),
+            PlankExerciseName::WeightedBearCrawl => "weighted_bear_crawl".to_string(),
+            PlankExerciseName::CrossBodyMountainClimber => {
+                "cross_body_mountain_climber".to_string()
+            }
             PlankExerciseName::WeightedCrossBodyMountainClimber => {
-                "WeightedCrossBodyMountainClimber".to_string()
+                "weighted_cross_body_mountain_climber".to_string()
             }
-            PlankExerciseName::ElbowPlankPikeJacks => "ElbowPlankPikeJacks".to_string(),
+            PlankExerciseName::ElbowPlankPikeJacks => "elbow_plank_pike_jacks".to_string(),
             PlankExerciseName::WeightedElbowPlankPikeJacks => {
-                "WeightedElbowPlankPikeJacks".to_string()
+                "weighted_elbow_plank_pike_jacks".to_string()
             }
-            PlankExerciseName::ElevatedFeetPlank => "ElevatedFeetPlank".to_string(),
-            PlankExerciseName::WeightedElevatedFeetPlank => "WeightedElevatedFeetPlank".to_string(),
-            PlankExerciseName::ElevatorAbs => "ElevatorAbs".to_string(),
-            PlankExerciseName::WeightedElevatorAbs => "WeightedElevatorAbs".to_string(),
-            PlankExerciseName::ExtendedPlank => "ExtendedPlank".to_string(),
-            PlankExerciseName::WeightedExtendedPlank => "WeightedExtendedPlank".to_string(),
-            PlankExerciseName::FullPlankPasseTwist => "FullPlankPasseTwist".to_string(),
+            PlankExerciseName::ElevatedFeetPlank => "elevated_feet_plank".to_string(),
+            PlankExerciseName::WeightedElevatedFeetPlank => {
+                "weighted_elevated_feet_plank".to_string()
+            }
+            PlankExerciseName::ElevatorAbs => "elevator_abs".to_string(),
+            PlankExerciseName::WeightedElevatorAbs => "weighted_elevator_abs".to_string(),
+            PlankExerciseName::ExtendedPlank => "extended_plank".to_string(),
+            PlankExerciseName::WeightedExtendedPlank => "weighted_extended_plank".to_string(),
+            PlankExerciseName::FullPlankPasseTwist => "full_plank_passe_twist".to_string(),
             PlankExerciseName::WeightedFullPlankPasseTwist => {
-                "WeightedFullPlankPasseTwist".to_string()
+                "weighted_full_plank_passe_twist".to_string()
             }
-            PlankExerciseName::InchingElbowPlank => "InchingElbowPlank".to_string(),
-            PlankExerciseName::WeightedInchingElbowPlank => "WeightedInchingElbowPlank".to_string(),
-            PlankExerciseName::InchwormToSidePlank => "InchwormToSidePlank".to_string(),
+            PlankExerciseName::InchingElbowPlank => "inching_elbow_plank".to_string(),
+            PlankExerciseName::WeightedInchingElbowPlank => {
+                "weighted_inching_elbow_plank".to_string()
+            }
+            PlankExerciseName::InchwormToSidePlank => "inchworm_to_side_plank".to_string(),
             PlankExerciseName::WeightedInchwormToSidePlank => {
-                "WeightedInchwormToSidePlank".to_string()
+                "weighted_inchworm_to_side_plank".to_string()
             }
-            PlankExerciseName::KneelingPlank => "KneelingPlank".to_string(),
-            PlankExerciseName::WeightedKneelingPlank => "WeightedKneelingPlank".to_string(),
+            PlankExerciseName::KneelingPlank => "kneeling_plank".to_string(),
+            PlankExerciseName::WeightedKneelingPlank => "weighted_kneeling_plank".to_string(),
             PlankExerciseName::KneelingSidePlankWithLegLift => {
-                "KneelingSidePlankWithLegLift".to_string()
+                "kneeling_side_plank_with_leg_lift".to_string()
             }
             PlankExerciseName::WeightedKneelingSidePlankWithLegLift => {
-                "WeightedKneelingSidePlankWithLegLift".to_string()
+                "weighted_kneeling_side_plank_with_leg_lift".to_string()
             }
-            PlankExerciseName::LateralRoll => "LateralRoll".to_string(),
-            PlankExerciseName::WeightedLateralRoll => "WeightedLateralRoll".to_string(),
-            PlankExerciseName::LyingReversePlank => "LyingReversePlank".to_string(),
-            PlankExerciseName::WeightedLyingReversePlank => "WeightedLyingReversePlank".to_string(),
+            PlankExerciseName::LateralRoll => "lateral_roll".to_string(),
+            PlankExerciseName::WeightedLateralRoll => "weighted_lateral_roll".to_string(),
+            PlankExerciseName::LyingReversePlank => "lying_reverse_plank".to_string(),
+            PlankExerciseName::WeightedLyingReversePlank => {
+                "weighted_lying_reverse_plank".to_string()
+            }
             PlankExerciseName::MedicineBallMountainClimber => {
-                "MedicineBallMountainClimber".to_string()
+                "medicine_ball_mountain_climber".to_string()
             }
             PlankExerciseName::WeightedMedicineBallMountainClimber => {
-                "WeightedMedicineBallMountainClimber".to_string()
+                "weighted_medicine_ball_mountain_climber".to_string()
             }
             PlankExerciseName::ModifiedMountainClimberAndExtension => {
-                "ModifiedMountainClimberAndExtension".to_string()
+                "modified_mountain_climber_and_extension".to_string()
             }
             PlankExerciseName::WeightedModifiedMountainClimberAndExtension => {
-                "WeightedModifiedMountainClimberAndExtension".to_string()
+                "weighted_modified_mountain_climber_and_extension".to_string()
             }
-            PlankExerciseName::MountainClimber => "MountainClimber".to_string(),
-            PlankExerciseName::WeightedMountainClimber => "WeightedMountainClimber".to_string(),
+            PlankExerciseName::MountainClimber => "mountain_climber".to_string(),
+            PlankExerciseName::WeightedMountainClimber => "weighted_mountain_climber".to_string(),
             PlankExerciseName::MountainClimberOnSlidingDiscs => {
-                "MountainClimberOnSlidingDiscs".to_string()
+                "mountain_climber_on_sliding_discs".to_string()
             }
             PlankExerciseName::WeightedMountainClimberOnSlidingDiscs => {
-                "WeightedMountainClimberOnSlidingDiscs".to_string()
+                "weighted_mountain_climber_on_sliding_discs".to_string()
             }
             PlankExerciseName::MountainClimberWithFeetOnBosuBall => {
-                "MountainClimberWithFeetOnBosuBall".to_string()
+                "mountain_climber_with_feet_on_bosu_ball".to_string()
             }
             PlankExerciseName::WeightedMountainClimberWithFeetOnBosuBall => {
-                "WeightedMountainClimberWithFeetOnBosuBall".to_string()
+                "weighted_mountain_climber_with_feet_on_bosu_ball".to_string()
             }
             PlankExerciseName::MountainClimberWithHandsOnBench => {
-                "MountainClimberWithHandsOnBench".to_string()
+                "mountain_climber_with_hands_on_bench".to_string()
             }
             PlankExerciseName::MountainClimberWithHandsOnSwissBall => {
-                "MountainClimberWithHandsOnSwissBall".to_string()
+                "mountain_climber_with_hands_on_swiss_ball".to_string()
             }
             PlankExerciseName::WeightedMountainClimberWithHandsOnSwissBall => {
-                "WeightedMountainClimberWithHandsOnSwissBall".to_string()
+                "weighted_mountain_climber_with_hands_on_swiss_ball".to_string()
             }
-            PlankExerciseName::Plank => "Plank".to_string(),
+            PlankExerciseName::Plank => "plank".to_string(),
             PlankExerciseName::PlankJacksWithFeetOnSlidingDiscs => {
-                "PlankJacksWithFeetOnSlidingDiscs".to_string()
+                "plank_jacks_with_feet_on_sliding_discs".to_string()
             }
             PlankExerciseName::WeightedPlankJacksWithFeetOnSlidingDiscs => {
-                "WeightedPlankJacksWithFeetOnSlidingDiscs".to_string()
+                "weighted_plank_jacks_with_feet_on_sliding_discs".to_string()
             }
-            PlankExerciseName::PlankKneeTwist => "PlankKneeTwist".to_string(),
-            PlankExerciseName::WeightedPlankKneeTwist => "WeightedPlankKneeTwist".to_string(),
-            PlankExerciseName::PlankPikeJumps => "PlankPikeJumps".to_string(),
-            PlankExerciseName::WeightedPlankPikeJumps => "WeightedPlankPikeJumps".to_string(),
-            PlankExerciseName::PlankPikes => "PlankPikes".to_string(),
-            PlankExerciseName::WeightedPlankPikes => "WeightedPlankPikes".to_string(),
-            PlankExerciseName::PlankToStandUp => "PlankToStandUp".to_string(),
-            PlankExerciseName::WeightedPlankToStandUp => "WeightedPlankToStandUp".to_string(),
-            PlankExerciseName::PlankWithArmRaise => "PlankWithArmRaise".to_string(),
-            PlankExerciseName::WeightedPlankWithArmRaise => "WeightedPlankWithArmRaise".to_string(),
-            PlankExerciseName::PlankWithKneeToElbow => "PlankWithKneeToElbow".to_string(),
+            PlankExerciseName::PlankKneeTwist => "plank_knee_twist".to_string(),
+            PlankExerciseName::WeightedPlankKneeTwist => "weighted_plank_knee_twist".to_string(),
+            PlankExerciseName::PlankPikeJumps => "plank_pike_jumps".to_string(),
+            PlankExerciseName::WeightedPlankPikeJumps => "weighted_plank_pike_jumps".to_string(),
+            PlankExerciseName::PlankPikes => "plank_pikes".to_string(),
+            PlankExerciseName::WeightedPlankPikes => "weighted_plank_pikes".to_string(),
+            PlankExerciseName::PlankToStandUp => "plank_to_stand_up".to_string(),
+            PlankExerciseName::WeightedPlankToStandUp => "weighted_plank_to_stand_up".to_string(),
+            PlankExerciseName::PlankWithArmRaise => "plank_with_arm_raise".to_string(),
+            PlankExerciseName::WeightedPlankWithArmRaise => {
+                "weighted_plank_with_arm_raise".to_string()
+            }
+            PlankExerciseName::PlankWithKneeToElbow => "plank_with_knee_to_elbow".to_string(),
             PlankExerciseName::WeightedPlankWithKneeToElbow => {
-                "WeightedPlankWithKneeToElbow".to_string()
+                "weighted_plank_with_knee_to_elbow".to_string()
             }
-            PlankExerciseName::PlankWithObliqueCrunch => "PlankWithObliqueCrunch".to_string(),
+            PlankExerciseName::PlankWithObliqueCrunch => "plank_with_oblique_crunch".to_string(),
             PlankExerciseName::WeightedPlankWithObliqueCrunch => {
-                "WeightedPlankWithObliqueCrunch".to_string()
+                "weighted_plank_with_oblique_crunch".to_string()
             }
-            PlankExerciseName::PlyometricSidePlank => "PlyometricSidePlank".to_string(),
+            PlankExerciseName::PlyometricSidePlank => "plyometric_side_plank".to_string(),
             PlankExerciseName::WeightedPlyometricSidePlank => {
-                "WeightedPlyometricSidePlank".to_string()
+                "weighted_plyometric_side_plank".to_string()
             }
-            PlankExerciseName::RollingSidePlank => "RollingSidePlank".to_string(),
-            PlankExerciseName::WeightedRollingSidePlank => "WeightedRollingSidePlank".to_string(),
-            PlankExerciseName::SideKickPlank => "SideKickPlank".to_string(),
-            PlankExerciseName::WeightedSideKickPlank => "WeightedSideKickPlank".to_string(),
-            PlankExerciseName::SidePlank => "SidePlank".to_string(),
-            PlankExerciseName::WeightedSidePlank => "WeightedSidePlank".to_string(),
-            PlankExerciseName::SidePlankAndRow => "SidePlankAndRow".to_string(),
-            PlankExerciseName::WeightedSidePlankAndRow => "WeightedSidePlankAndRow".to_string(),
-            PlankExerciseName::SidePlankLift => "SidePlankLift".to_string(),
-            PlankExerciseName::WeightedSidePlankLift => "WeightedSidePlankLift".to_string(),
+            PlankExerciseName::RollingSidePlank => "rolling_side_plank".to_string(),
+            PlankExerciseName::WeightedRollingSidePlank => {
+                "weighted_rolling_side_plank".to_string()
+            }
+            PlankExerciseName::SideKickPlank => "side_kick_plank".to_string(),
+            PlankExerciseName::WeightedSideKickPlank => "weighted_side_kick_plank".to_string(),
+            PlankExerciseName::SidePlank => "side_plank".to_string(),
+            PlankExerciseName::WeightedSidePlank => "weighted_side_plank".to_string(),
+            PlankExerciseName::SidePlankAndRow => "side_plank_and_row".to_string(),
+            PlankExerciseName::WeightedSidePlankAndRow => "weighted_side_plank_and_row".to_string(),
+            PlankExerciseName::SidePlankLift => "side_plank_lift".to_string(),
+            PlankExerciseName::WeightedSidePlankLift => "weighted_side_plank_lift".to_string(),
             PlankExerciseName::SidePlankWithElbowOnBosuBall => {
-                "SidePlankWithElbowOnBosuBall".to_string()
+                "side_plank_with_elbow_on_bosu_ball".to_string()
             }
             PlankExerciseName::WeightedSidePlankWithElbowOnBosuBall => {
-                "WeightedSidePlankWithElbowOnBosuBall".to_string()
+                "weighted_side_plank_with_elbow_on_bosu_ball".to_string()
             }
-            PlankExerciseName::SidePlankWithFeetOnBench => "SidePlankWithFeetOnBench".to_string(),
+            PlankExerciseName::SidePlankWithFeetOnBench => {
+                "side_plank_with_feet_on_bench".to_string()
+            }
             PlankExerciseName::WeightedSidePlankWithFeetOnBench => {
-                "WeightedSidePlankWithFeetOnBench".to_string()
+                "weighted_side_plank_with_feet_on_bench".to_string()
             }
-            PlankExerciseName::SidePlankWithKneeCircle => "SidePlankWithKneeCircle".to_string(),
+            PlankExerciseName::SidePlankWithKneeCircle => "side_plank_with_knee_circle".to_string(),
             PlankExerciseName::WeightedSidePlankWithKneeCircle => {
-                "WeightedSidePlankWithKneeCircle".to_string()
+                "weighted_side_plank_with_knee_circle".to_string()
             }
-            PlankExerciseName::SidePlankWithKneeTuck => "SidePlankWithKneeTuck".to_string(),
+            PlankExerciseName::SidePlankWithKneeTuck => "side_plank_with_knee_tuck".to_string(),
             PlankExerciseName::WeightedSidePlankWithKneeTuck => {
-                "WeightedSidePlankWithKneeTuck".to_string()
+                "weighted_side_plank_with_knee_tuck".to_string()
             }
-            PlankExerciseName::SidePlankWithLegLift => "SidePlankWithLegLift".to_string(),
+            PlankExerciseName::SidePlankWithLegLift => "side_plank_with_leg_lift".to_string(),
             PlankExerciseName::WeightedSidePlankWithLegLift => {
-                "WeightedSidePlankWithLegLift".to_string()
+                "weighted_side_plank_with_leg_lift".to_string()
             }
-            PlankExerciseName::SidePlankWithReachUnder => "SidePlankWithReachUnder".to_string(),
+            PlankExerciseName::SidePlankWithReachUnder => "side_plank_with_reach_under".to_string(),
             PlankExerciseName::WeightedSidePlankWithReachUnder => {
-                "WeightedSidePlankWithReachUnder".to_string()
+                "weighted_side_plank_with_reach_under".to_string()
             }
             PlankExerciseName::SingleLegElevatedFeetPlank => {
-                "SingleLegElevatedFeetPlank".to_string()
+                "single_leg_elevated_feet_plank".to_string()
             }
             PlankExerciseName::WeightedSingleLegElevatedFeetPlank => {
-                "WeightedSingleLegElevatedFeetPlank".to_string()
+                "weighted_single_leg_elevated_feet_plank".to_string()
             }
-            PlankExerciseName::SingleLegFlexAndExtend => "SingleLegFlexAndExtend".to_string(),
+            PlankExerciseName::SingleLegFlexAndExtend => "single_leg_flex_and_extend".to_string(),
             PlankExerciseName::WeightedSingleLegFlexAndExtend => {
-                "WeightedSingleLegFlexAndExtend".to_string()
+                "weighted_single_leg_flex_and_extend".to_string()
             }
-            PlankExerciseName::SingleLegSidePlank => "SingleLegSidePlank".to_string(),
+            PlankExerciseName::SingleLegSidePlank => "single_leg_side_plank".to_string(),
             PlankExerciseName::WeightedSingleLegSidePlank => {
-                "WeightedSingleLegSidePlank".to_string()
+                "weighted_single_leg_side_plank".to_string()
             }
-            PlankExerciseName::SpidermanPlank => "SpidermanPlank".to_string(),
-            PlankExerciseName::WeightedSpidermanPlank => "WeightedSpidermanPlank".to_string(),
-            PlankExerciseName::StraightArmPlank => "StraightArmPlank".to_string(),
-            PlankExerciseName::WeightedStraightArmPlank => "WeightedStraightArmPlank".to_string(),
+            PlankExerciseName::SpidermanPlank => "spiderman_plank".to_string(),
+            PlankExerciseName::WeightedSpidermanPlank => "weighted_spiderman_plank".to_string(),
+            PlankExerciseName::StraightArmPlank => "straight_arm_plank".to_string(),
+            PlankExerciseName::WeightedStraightArmPlank => {
+                "weighted_straight_arm_plank".to_string()
+            }
             PlankExerciseName::StraightArmPlankWithShoulderTouch => {
-                "StraightArmPlankWithShoulderTouch".to_string()
+                "straight_arm_plank_with_shoulder_touch".to_string()
             }
             PlankExerciseName::WeightedStraightArmPlankWithShoulderTouch => {
-                "WeightedStraightArmPlankWithShoulderTouch".to_string()
+                "weighted_straight_arm_plank_with_shoulder_touch".to_string()
             }
-            PlankExerciseName::SwissBallPlank => "SwissBallPlank".to_string(),
-            PlankExerciseName::WeightedSwissBallPlank => "WeightedSwissBallPlank".to_string(),
-            PlankExerciseName::SwissBallPlankLegLift => "SwissBallPlankLegLift".to_string(),
+            PlankExerciseName::SwissBallPlank => "swiss_ball_plank".to_string(),
+            PlankExerciseName::WeightedSwissBallPlank => "weighted_swiss_ball_plank".to_string(),
+            PlankExerciseName::SwissBallPlankLegLift => "swiss_ball_plank_leg_lift".to_string(),
             PlankExerciseName::WeightedSwissBallPlankLegLift => {
-                "WeightedSwissBallPlankLegLift".to_string()
+                "weighted_swiss_ball_plank_leg_lift".to_string()
             }
             PlankExerciseName::SwissBallPlankLegLiftAndHold => {
-                "SwissBallPlankLegLiftAndHold".to_string()
+                "swiss_ball_plank_leg_lift_and_hold".to_string()
             }
             PlankExerciseName::SwissBallPlankWithFeetOnBench => {
-                "SwissBallPlankWithFeetOnBench".to_string()
+                "swiss_ball_plank_with_feet_on_bench".to_string()
             }
             PlankExerciseName::WeightedSwissBallPlankWithFeetOnBench => {
-                "WeightedSwissBallPlankWithFeetOnBench".to_string()
+                "weighted_swiss_ball_plank_with_feet_on_bench".to_string()
             }
-            PlankExerciseName::SwissBallProneJackknife => "SwissBallProneJackknife".to_string(),
+            PlankExerciseName::SwissBallProneJackknife => "swiss_ball_prone_jackknife".to_string(),
             PlankExerciseName::WeightedSwissBallProneJackknife => {
-                "WeightedSwissBallProneJackknife".to_string()
+                "weighted_swiss_ball_prone_jackknife".to_string()
             }
-            PlankExerciseName::SwissBallSidePlank => "SwissBallSidePlank".to_string(),
+            PlankExerciseName::SwissBallSidePlank => "swiss_ball_side_plank".to_string(),
             PlankExerciseName::WeightedSwissBallSidePlank => {
-                "WeightedSwissBallSidePlank".to_string()
+                "weighted_swiss_ball_side_plank".to_string()
             }
-            PlankExerciseName::ThreeWayPlank => "ThreeWayPlank".to_string(),
-            PlankExerciseName::WeightedThreeWayPlank => "WeightedThreeWayPlank".to_string(),
-            PlankExerciseName::TowelPlankAndKneeIn => "TowelPlankAndKneeIn".to_string(),
+            PlankExerciseName::ThreeWayPlank => "three_way_plank".to_string(),
+            PlankExerciseName::WeightedThreeWayPlank => "weighted_three_way_plank".to_string(),
+            PlankExerciseName::TowelPlankAndKneeIn => "towel_plank_and_knee_in".to_string(),
             PlankExerciseName::WeightedTowelPlankAndKneeIn => {
-                "WeightedTowelPlankAndKneeIn".to_string()
+                "weighted_towel_plank_and_knee_in".to_string()
             }
-            PlankExerciseName::TStabilization => "TStabilization".to_string(),
-            PlankExerciseName::WeightedTStabilization => "WeightedTStabilization".to_string(),
-            PlankExerciseName::TurkishGetUpToSidePlank => "TurkishGetUpToSidePlank".to_string(),
+            PlankExerciseName::TStabilization => "t_stabilization".to_string(),
+            PlankExerciseName::WeightedTStabilization => "weighted_t_stabilization".to_string(),
+            PlankExerciseName::TurkishGetUpToSidePlank => {
+                "turkish_get_up_to_side_plank".to_string()
+            }
             PlankExerciseName::WeightedTurkishGetUpToSidePlank => {
-                "WeightedTurkishGetUpToSidePlank".to_string()
+                "weighted_turkish_get_up_to_side_plank".to_string()
             }
-            PlankExerciseName::TwoPointPlank => "TwoPointPlank".to_string(),
-            PlankExerciseName::WeightedTwoPointPlank => "WeightedTwoPointPlank".to_string(),
-            PlankExerciseName::WeightedPlank => "WeightedPlank".to_string(),
+            PlankExerciseName::TwoPointPlank => "two_point_plank".to_string(),
+            PlankExerciseName::WeightedTwoPointPlank => "weighted_two_point_plank".to_string(),
+            PlankExerciseName::WeightedPlank => "weighted_plank".to_string(),
             PlankExerciseName::WideStancePlankWithDiagonalArmLift => {
-                "WideStancePlankWithDiagonalArmLift".to_string()
+                "wide_stance_plank_with_diagonal_arm_lift".to_string()
             }
             PlankExerciseName::WeightedWideStancePlankWithDiagonalArmLift => {
-                "WeightedWideStancePlankWithDiagonalArmLift".to_string()
+                "weighted_wide_stance_plank_with_diagonal_arm_lift".to_string()
             }
             PlankExerciseName::WideStancePlankWithDiagonalLegLift => {
-                "WideStancePlankWithDiagonalLegLift".to_string()
+                "wide_stance_plank_with_diagonal_leg_lift".to_string()
             }
             PlankExerciseName::WeightedWideStancePlankWithDiagonalLegLift => {
-                "WeightedWideStancePlankWithDiagonalLegLift".to_string()
+                "weighted_wide_stance_plank_with_diagonal_leg_lift".to_string()
             }
             PlankExerciseName::WideStancePlankWithLegLift => {
-                "WideStancePlankWithLegLift".to_string()
+                "wide_stance_plank_with_leg_lift".to_string()
             }
             PlankExerciseName::WeightedWideStancePlankWithLegLift => {
-                "WeightedWideStancePlankWithLegLift".to_string()
+                "weighted_wide_stance_plank_with_leg_lift".to_string()
             }
             PlankExerciseName::WideStancePlankWithOppositeArmAndLegLift => {
-                "WideStancePlankWithOppositeArmAndLegLift".to_string()
+                "wide_stance_plank_with_opposite_arm_and_leg_lift".to_string()
             }
             PlankExerciseName::WeightedMountainClimberWithHandsOnBench => {
-                "WeightedMountainClimberWithHandsOnBench".to_string()
+                "weighted_mountain_climber_with_hands_on_bench".to_string()
             }
             PlankExerciseName::WeightedSwissBallPlankLegLiftAndHold => {
-                "WeightedSwissBallPlankLegLiftAndHold".to_string()
+                "weighted_swiss_ball_plank_leg_lift_and_hold".to_string()
             }
             PlankExerciseName::WeightedWideStancePlankWithOppositeArmAndLegLift => {
-                "WeightedWideStancePlankWithOppositeArmAndLegLift".to_string()
+                "weighted_wide_stance_plank_with_opposite_arm_and_leg_lift".to_string()
             }
-            PlankExerciseName::PlankWithFeetOnSwissBall => "PlankWithFeetOnSwissBall".to_string(),
+            PlankExerciseName::PlankWithFeetOnSwissBall => {
+                "plank_with_feet_on_swiss_ball".to_string()
+            }
             PlankExerciseName::SidePlankToPlankWithReachUnder => {
-                "SidePlankToPlankWithReachUnder".to_string()
+                "side_plank_to_plank_with_reach_under".to_string()
             }
-            PlankExerciseName::BridgeWithGluteLowerLift => "BridgeWithGluteLowerLift".to_string(),
-            PlankExerciseName::BridgeOneLegBridge => "BridgeOneLegBridge".to_string(),
-            PlankExerciseName::PlankWithArmVariations => "PlankWithArmVariations".to_string(),
-            PlankExerciseName::PlankWithLegLift => "PlankWithLegLift".to_string(),
-            PlankExerciseName::ReversePlankWithLegPull => "ReversePlankWithLegPull".to_string(),
-            PlankExerciseName::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            PlankExerciseName::BridgeWithGluteLowerLift => {
+                "bridge_with_glute_lower_lift".to_string()
+            }
+            PlankExerciseName::BridgeOneLegBridge => "bridge_one_leg_bridge".to_string(),
+            PlankExerciseName::PlankWithArmVariations => "plank_with_arm_variations".to_string(),
+            PlankExerciseName::PlankWithLegLift => "plank_with_leg_lift".to_string(),
+            PlankExerciseName::ReversePlankWithLegPull => "reverse_plank_with_leg_pull".to_string(),
+            PlankExerciseName::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -14731,7 +14636,6 @@ pub enum PlyoExerciseName {
     WeightedSquatJumpsInAndOut,
     UnknownVariant(u16),
 }
-
 impl PlyoExerciseName {
     pub fn from_u16(value: u16) -> PlyoExerciseName {
         match value {
@@ -14814,54 +14718,60 @@ impl PlyoExerciseName {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            PlyoExerciseName::AlternatingJumpLunge => "AlternatingJumpLunge".to_string(),
+            PlyoExerciseName::AlternatingJumpLunge => "alternating_jump_lunge".to_string(),
             PlyoExerciseName::WeightedAlternatingJumpLunge => {
-                "WeightedAlternatingJumpLunge".to_string()
+                "weighted_alternating_jump_lunge".to_string()
             }
-            PlyoExerciseName::BarbellJumpSquat => "BarbellJumpSquat".to_string(),
-            PlyoExerciseName::BodyWeightJumpSquat => "BodyWeightJumpSquat".to_string(),
-            PlyoExerciseName::WeightedJumpSquat => "WeightedJumpSquat".to_string(),
-            PlyoExerciseName::CrossKneeStrike => "CrossKneeStrike".to_string(),
-            PlyoExerciseName::WeightedCrossKneeStrike => "WeightedCrossKneeStrike".to_string(),
-            PlyoExerciseName::DepthJump => "DepthJump".to_string(),
-            PlyoExerciseName::WeightedDepthJump => "WeightedDepthJump".to_string(),
-            PlyoExerciseName::DumbbellJumpSquat => "DumbbellJumpSquat".to_string(),
-            PlyoExerciseName::DumbbellSplitJump => "DumbbellSplitJump".to_string(),
-            PlyoExerciseName::FrontKneeStrike => "FrontKneeStrike".to_string(),
-            PlyoExerciseName::WeightedFrontKneeStrike => "WeightedFrontKneeStrike".to_string(),
-            PlyoExerciseName::HighBoxJump => "HighBoxJump".to_string(),
-            PlyoExerciseName::WeightedHighBoxJump => "WeightedHighBoxJump".to_string(),
+            PlyoExerciseName::BarbellJumpSquat => "barbell_jump_squat".to_string(),
+            PlyoExerciseName::BodyWeightJumpSquat => "body_weight_jump_squat".to_string(),
+            PlyoExerciseName::WeightedJumpSquat => "weighted_jump_squat".to_string(),
+            PlyoExerciseName::CrossKneeStrike => "cross_knee_strike".to_string(),
+            PlyoExerciseName::WeightedCrossKneeStrike => "weighted_cross_knee_strike".to_string(),
+            PlyoExerciseName::DepthJump => "depth_jump".to_string(),
+            PlyoExerciseName::WeightedDepthJump => "weighted_depth_jump".to_string(),
+            PlyoExerciseName::DumbbellJumpSquat => "dumbbell_jump_squat".to_string(),
+            PlyoExerciseName::DumbbellSplitJump => "dumbbell_split_jump".to_string(),
+            PlyoExerciseName::FrontKneeStrike => "front_knee_strike".to_string(),
+            PlyoExerciseName::WeightedFrontKneeStrike => "weighted_front_knee_strike".to_string(),
+            PlyoExerciseName::HighBoxJump => "high_box_jump".to_string(),
+            PlyoExerciseName::WeightedHighBoxJump => "weighted_high_box_jump".to_string(),
             PlyoExerciseName::IsometricExplosiveBodyWeightJumpSquat => {
-                "IsometricExplosiveBodyWeightJumpSquat".to_string()
+                "isometric_explosive_body_weight_jump_squat".to_string()
             }
             PlyoExerciseName::WeightedIsometricExplosiveJumpSquat => {
-                "WeightedIsometricExplosiveJumpSquat".to_string()
+                "weighted_isometric_explosive_jump_squat".to_string()
             }
-            PlyoExerciseName::LateralLeapAndHop => "LateralLeapAndHop".to_string(),
-            PlyoExerciseName::WeightedLateralLeapAndHop => "WeightedLateralLeapAndHop".to_string(),
-            PlyoExerciseName::LateralPlyoSquats => "LateralPlyoSquats".to_string(),
-            PlyoExerciseName::WeightedLateralPlyoSquats => "WeightedLateralPlyoSquats".to_string(),
-            PlyoExerciseName::LateralSlide => "LateralSlide".to_string(),
-            PlyoExerciseName::WeightedLateralSlide => "WeightedLateralSlide".to_string(),
+            PlyoExerciseName::LateralLeapAndHop => "lateral_leap_and_hop".to_string(),
+            PlyoExerciseName::WeightedLateralLeapAndHop => {
+                "weighted_lateral_leap_and_hop".to_string()
+            }
+            PlyoExerciseName::LateralPlyoSquats => "lateral_plyo_squats".to_string(),
+            PlyoExerciseName::WeightedLateralPlyoSquats => {
+                "weighted_lateral_plyo_squats".to_string()
+            }
+            PlyoExerciseName::LateralSlide => "lateral_slide".to_string(),
+            PlyoExerciseName::WeightedLateralSlide => "weighted_lateral_slide".to_string(),
             PlyoExerciseName::MedicineBallOverheadThrows => {
-                "MedicineBallOverheadThrows".to_string()
+                "medicine_ball_overhead_throws".to_string()
             }
-            PlyoExerciseName::MedicineBallSideThrow => "MedicineBallSideThrow".to_string(),
-            PlyoExerciseName::MedicineBallSlam => "MedicineBallSlam".to_string(),
+            PlyoExerciseName::MedicineBallSideThrow => "medicine_ball_side_throw".to_string(),
+            PlyoExerciseName::MedicineBallSlam => "medicine_ball_slam".to_string(),
             PlyoExerciseName::SideToSideMedicineBallThrows => {
-                "SideToSideMedicineBallThrows".to_string()
+                "side_to_side_medicine_ball_throws".to_string()
             }
-            PlyoExerciseName::SideToSideShuffleJump => "SideToSideShuffleJump".to_string(),
+            PlyoExerciseName::SideToSideShuffleJump => "side_to_side_shuffle_jump".to_string(),
             PlyoExerciseName::WeightedSideToSideShuffleJump => {
-                "WeightedSideToSideShuffleJump".to_string()
+                "weighted_side_to_side_shuffle_jump".to_string()
             }
-            PlyoExerciseName::SquatJumpOntoBox => "SquatJumpOntoBox".to_string(),
-            PlyoExerciseName::WeightedSquatJumpOntoBox => "WeightedSquatJumpOntoBox".to_string(),
-            PlyoExerciseName::SquatJumpsInAndOut => "SquatJumpsInAndOut".to_string(),
+            PlyoExerciseName::SquatJumpOntoBox => "squat_jump_onto_box".to_string(),
+            PlyoExerciseName::WeightedSquatJumpOntoBox => {
+                "weighted_squat_jump_onto_box".to_string()
+            }
+            PlyoExerciseName::SquatJumpsInAndOut => "squat_jumps_in_and_out".to_string(),
             PlyoExerciseName::WeightedSquatJumpsInAndOut => {
-                "WeightedSquatJumpsInAndOut".to_string()
+                "weighted_squat_jumps_in_and_out".to_string()
             }
-            PlyoExerciseName::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            PlyoExerciseName::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -14909,7 +14819,6 @@ pub enum PullUpExerciseName {
     PullUp,
     UnknownVariant(u16),
 }
-
 impl PullUpExerciseName {
     pub fn from_u16(value: u16) -> PullUpExerciseName {
         match value {
@@ -15004,48 +14913,54 @@ impl PullUpExerciseName {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            PullUpExerciseName::BandedPullUps => "BandedPullUps".to_string(),
-            PullUpExerciseName::Name30DegreeLatPulldown => "Name30DegreeLatPulldown".to_string(),
-            PullUpExerciseName::BandAssistedChinUp => "BandAssistedChinUp".to_string(),
-            PullUpExerciseName::CloseGripChinUp => "CloseGripChinUp".to_string(),
-            PullUpExerciseName::WeightedCloseGripChinUp => "WeightedCloseGripChinUp".to_string(),
-            PullUpExerciseName::CloseGripLatPulldown => "CloseGripLatPulldown".to_string(),
-            PullUpExerciseName::CrossoverChinUp => "CrossoverChinUp".to_string(),
-            PullUpExerciseName::WeightedCrossoverChinUp => "WeightedCrossoverChinUp".to_string(),
-            PullUpExerciseName::EzBarPullover => "EzBarPullover".to_string(),
-            PullUpExerciseName::HangingHurdle => "HangingHurdle".to_string(),
-            PullUpExerciseName::WeightedHangingHurdle => "WeightedHangingHurdle".to_string(),
-            PullUpExerciseName::KneelingLatPulldown => "KneelingLatPulldown".to_string(),
-            PullUpExerciseName::KneelingUnderhandGripLatPulldown => {
-                "KneelingUnderhandGripLatPulldown".to_string()
+            PullUpExerciseName::BandedPullUps => "banded_pull_ups".to_string(),
+            PullUpExerciseName::Name30DegreeLatPulldown => "30_degree_lat_pulldown".to_string(),
+            PullUpExerciseName::BandAssistedChinUp => "band_assisted_chin_up".to_string(),
+            PullUpExerciseName::CloseGripChinUp => "close_grip_chin_up".to_string(),
+            PullUpExerciseName::WeightedCloseGripChinUp => {
+                "weighted_close_grip_chin_up".to_string()
             }
-            PullUpExerciseName::LatPulldown => "LatPulldown".to_string(),
-            PullUpExerciseName::MixedGripChinUp => "MixedGripChinUp".to_string(),
-            PullUpExerciseName::WeightedMixedGripChinUp => "WeightedMixedGripChinUp".to_string(),
-            PullUpExerciseName::MixedGripPullUp => "MixedGripPullUp".to_string(),
-            PullUpExerciseName::WeightedMixedGripPullUp => "WeightedMixedGripPullUp".to_string(),
-            PullUpExerciseName::ReverseGripPulldown => "ReverseGripPulldown".to_string(),
-            PullUpExerciseName::StandingCablePullover => "StandingCablePullover".to_string(),
-            PullUpExerciseName::StraightArmPulldown => "StraightArmPulldown".to_string(),
-            PullUpExerciseName::SwissBallEzBarPullover => "SwissBallEzBarPullover".to_string(),
-            PullUpExerciseName::TowelPullUp => "TowelPullUp".to_string(),
-            PullUpExerciseName::WeightedTowelPullUp => "WeightedTowelPullUp".to_string(),
-            PullUpExerciseName::WeightedPullUp => "WeightedPullUp".to_string(),
-            PullUpExerciseName::WideGripLatPulldown => "WideGripLatPulldown".to_string(),
-            PullUpExerciseName::WideGripPullUp => "WideGripPullUp".to_string(),
-            PullUpExerciseName::WeightedWideGripPullUp => "WeightedWideGripPullUp".to_string(),
-            PullUpExerciseName::BurpeePullUp => "BurpeePullUp".to_string(),
-            PullUpExerciseName::WeightedBurpeePullUp => "WeightedBurpeePullUp".to_string(),
-            PullUpExerciseName::JumpingPullUps => "JumpingPullUps".to_string(),
-            PullUpExerciseName::WeightedJumpingPullUps => "WeightedJumpingPullUps".to_string(),
-            PullUpExerciseName::KippingPullUp => "KippingPullUp".to_string(),
-            PullUpExerciseName::WeightedKippingPullUp => "WeightedKippingPullUp".to_string(),
-            PullUpExerciseName::LPullUp => "LPullUp".to_string(),
-            PullUpExerciseName::WeightedLPullUp => "WeightedLPullUp".to_string(),
-            PullUpExerciseName::SuspendedChinUp => "SuspendedChinUp".to_string(),
-            PullUpExerciseName::WeightedSuspendedChinUp => "WeightedSuspendedChinUp".to_string(),
-            PullUpExerciseName::PullUp => "PullUp".to_string(),
-            PullUpExerciseName::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            PullUpExerciseName::CloseGripLatPulldown => "close_grip_lat_pulldown".to_string(),
+            PullUpExerciseName::CrossoverChinUp => "crossover_chin_up".to_string(),
+            PullUpExerciseName::WeightedCrossoverChinUp => "weighted_crossover_chin_up".to_string(),
+            PullUpExerciseName::EzBarPullover => "ez_bar_pullover".to_string(),
+            PullUpExerciseName::HangingHurdle => "hanging_hurdle".to_string(),
+            PullUpExerciseName::WeightedHangingHurdle => "weighted_hanging_hurdle".to_string(),
+            PullUpExerciseName::KneelingLatPulldown => "kneeling_lat_pulldown".to_string(),
+            PullUpExerciseName::KneelingUnderhandGripLatPulldown => {
+                "kneeling_underhand_grip_lat_pulldown".to_string()
+            }
+            PullUpExerciseName::LatPulldown => "lat_pulldown".to_string(),
+            PullUpExerciseName::MixedGripChinUp => "mixed_grip_chin_up".to_string(),
+            PullUpExerciseName::WeightedMixedGripChinUp => {
+                "weighted_mixed_grip_chin_up".to_string()
+            }
+            PullUpExerciseName::MixedGripPullUp => "mixed_grip_pull_up".to_string(),
+            PullUpExerciseName::WeightedMixedGripPullUp => {
+                "weighted_mixed_grip_pull_up".to_string()
+            }
+            PullUpExerciseName::ReverseGripPulldown => "reverse_grip_pulldown".to_string(),
+            PullUpExerciseName::StandingCablePullover => "standing_cable_pullover".to_string(),
+            PullUpExerciseName::StraightArmPulldown => "straight_arm_pulldown".to_string(),
+            PullUpExerciseName::SwissBallEzBarPullover => "swiss_ball_ez_bar_pullover".to_string(),
+            PullUpExerciseName::TowelPullUp => "towel_pull_up".to_string(),
+            PullUpExerciseName::WeightedTowelPullUp => "weighted_towel_pull_up".to_string(),
+            PullUpExerciseName::WeightedPullUp => "weighted_pull_up".to_string(),
+            PullUpExerciseName::WideGripLatPulldown => "wide_grip_lat_pulldown".to_string(),
+            PullUpExerciseName::WideGripPullUp => "wide_grip_pull_up".to_string(),
+            PullUpExerciseName::WeightedWideGripPullUp => "weighted_wide_grip_pull_up".to_string(),
+            PullUpExerciseName::BurpeePullUp => "burpee_pull_up".to_string(),
+            PullUpExerciseName::WeightedBurpeePullUp => "weighted_burpee_pull_up".to_string(),
+            PullUpExerciseName::JumpingPullUps => "jumping_pull_ups".to_string(),
+            PullUpExerciseName::WeightedJumpingPullUps => "weighted_jumping_pull_ups".to_string(),
+            PullUpExerciseName::KippingPullUp => "kipping_pull_up".to_string(),
+            PullUpExerciseName::WeightedKippingPullUp => "weighted_kipping_pull_up".to_string(),
+            PullUpExerciseName::LPullUp => "l_pull_up".to_string(),
+            PullUpExerciseName::WeightedLPullUp => "weighted_l_pull_up".to_string(),
+            PullUpExerciseName::SuspendedChinUp => "suspended_chin_up".to_string(),
+            PullUpExerciseName::WeightedSuspendedChinUp => "weighted_suspended_chin_up".to_string(),
+            PullUpExerciseName::PullUp => "pull_up".to_string(),
+            PullUpExerciseName::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -15133,7 +15048,6 @@ pub enum PushUpExerciseName {
     PilatesPushup,
     UnknownVariant(u16),
 }
-
 impl PushUpExerciseName {
     pub fn from_u16(value: u16) -> PushUpExerciseName {
         match value {
@@ -15308,134 +15222,146 @@ impl PushUpExerciseName {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            PushUpExerciseName::ChestPressWithBand => "ChestPressWithBand".to_string(),
+            PushUpExerciseName::ChestPressWithBand => "chest_press_with_band".to_string(),
             PushUpExerciseName::AlternatingStaggeredPushUp => {
-                "AlternatingStaggeredPushUp".to_string()
+                "alternating_staggered_push_up".to_string()
             }
             PushUpExerciseName::WeightedAlternatingStaggeredPushUp => {
-                "WeightedAlternatingStaggeredPushUp".to_string()
+                "weighted_alternating_staggered_push_up".to_string()
             }
             PushUpExerciseName::AlternatingHandsMedicineBallPushUp => {
-                "AlternatingHandsMedicineBallPushUp".to_string()
+                "alternating_hands_medicine_ball_push_up".to_string()
             }
             PushUpExerciseName::WeightedAlternatingHandsMedicineBallPushUp => {
-                "WeightedAlternatingHandsMedicineBallPushUp".to_string()
+                "weighted_alternating_hands_medicine_ball_push_up".to_string()
             }
-            PushUpExerciseName::BosuBallPushUp => "BosuBallPushUp".to_string(),
-            PushUpExerciseName::WeightedBosuBallPushUp => "WeightedBosuBallPushUp".to_string(),
-            PushUpExerciseName::ClappingPushUp => "ClappingPushUp".to_string(),
-            PushUpExerciseName::WeightedClappingPushUp => "WeightedClappingPushUp".to_string(),
+            PushUpExerciseName::BosuBallPushUp => "bosu_ball_push_up".to_string(),
+            PushUpExerciseName::WeightedBosuBallPushUp => "weighted_bosu_ball_push_up".to_string(),
+            PushUpExerciseName::ClappingPushUp => "clapping_push_up".to_string(),
+            PushUpExerciseName::WeightedClappingPushUp => "weighted_clapping_push_up".to_string(),
             PushUpExerciseName::CloseGripMedicineBallPushUp => {
-                "CloseGripMedicineBallPushUp".to_string()
+                "close_grip_medicine_ball_push_up".to_string()
             }
             PushUpExerciseName::WeightedCloseGripMedicineBallPushUp => {
-                "WeightedCloseGripMedicineBallPushUp".to_string()
+                "weighted_close_grip_medicine_ball_push_up".to_string()
             }
-            PushUpExerciseName::CloseHandsPushUp => "CloseHandsPushUp".to_string(),
-            PushUpExerciseName::WeightedCloseHandsPushUp => "WeightedCloseHandsPushUp".to_string(),
-            PushUpExerciseName::DeclinePushUp => "DeclinePushUp".to_string(),
-            PushUpExerciseName::WeightedDeclinePushUp => "WeightedDeclinePushUp".to_string(),
-            PushUpExerciseName::DiamondPushUp => "DiamondPushUp".to_string(),
-            PushUpExerciseName::WeightedDiamondPushUp => "WeightedDiamondPushUp".to_string(),
-            PushUpExerciseName::ExplosiveCrossoverPushUp => "ExplosiveCrossoverPushUp".to_string(),
+            PushUpExerciseName::CloseHandsPushUp => "close_hands_push_up".to_string(),
+            PushUpExerciseName::WeightedCloseHandsPushUp => {
+                "weighted_close_hands_push_up".to_string()
+            }
+            PushUpExerciseName::DeclinePushUp => "decline_push_up".to_string(),
+            PushUpExerciseName::WeightedDeclinePushUp => "weighted_decline_push_up".to_string(),
+            PushUpExerciseName::DiamondPushUp => "diamond_push_up".to_string(),
+            PushUpExerciseName::WeightedDiamondPushUp => "weighted_diamond_push_up".to_string(),
+            PushUpExerciseName::ExplosiveCrossoverPushUp => {
+                "explosive_crossover_push_up".to_string()
+            }
             PushUpExerciseName::WeightedExplosiveCrossoverPushUp => {
-                "WeightedExplosiveCrossoverPushUp".to_string()
+                "weighted_explosive_crossover_push_up".to_string()
             }
-            PushUpExerciseName::ExplosivePushUp => "ExplosivePushUp".to_string(),
-            PushUpExerciseName::WeightedExplosivePushUp => "WeightedExplosivePushUp".to_string(),
+            PushUpExerciseName::ExplosivePushUp => "explosive_push_up".to_string(),
+            PushUpExerciseName::WeightedExplosivePushUp => "weighted_explosive_push_up".to_string(),
             PushUpExerciseName::FeetElevatedSideToSidePushUp => {
-                "FeetElevatedSideToSidePushUp".to_string()
+                "feet_elevated_side_to_side_push_up".to_string()
             }
             PushUpExerciseName::WeightedFeetElevatedSideToSidePushUp => {
-                "WeightedFeetElevatedSideToSidePushUp".to_string()
+                "weighted_feet_elevated_side_to_side_push_up".to_string()
             }
-            PushUpExerciseName::HandReleasePushUp => "HandReleasePushUp".to_string(),
+            PushUpExerciseName::HandReleasePushUp => "hand_release_push_up".to_string(),
             PushUpExerciseName::WeightedHandReleasePushUp => {
-                "WeightedHandReleasePushUp".to_string()
+                "weighted_hand_release_push_up".to_string()
             }
-            PushUpExerciseName::HandstandPushUp => "HandstandPushUp".to_string(),
-            PushUpExerciseName::WeightedHandstandPushUp => "WeightedHandstandPushUp".to_string(),
-            PushUpExerciseName::InclinePushUp => "InclinePushUp".to_string(),
-            PushUpExerciseName::WeightedInclinePushUp => "WeightedInclinePushUp".to_string(),
-            PushUpExerciseName::IsometricExplosivePushUp => "IsometricExplosivePushUp".to_string(),
+            PushUpExerciseName::HandstandPushUp => "handstand_push_up".to_string(),
+            PushUpExerciseName::WeightedHandstandPushUp => "weighted_handstand_push_up".to_string(),
+            PushUpExerciseName::InclinePushUp => "incline_push_up".to_string(),
+            PushUpExerciseName::WeightedInclinePushUp => "weighted_incline_push_up".to_string(),
+            PushUpExerciseName::IsometricExplosivePushUp => {
+                "isometric_explosive_push_up".to_string()
+            }
             PushUpExerciseName::WeightedIsometricExplosivePushUp => {
-                "WeightedIsometricExplosivePushUp".to_string()
+                "weighted_isometric_explosive_push_up".to_string()
             }
-            PushUpExerciseName::JudoPushUp => "JudoPushUp".to_string(),
-            PushUpExerciseName::WeightedJudoPushUp => "WeightedJudoPushUp".to_string(),
-            PushUpExerciseName::KneelingPushUp => "KneelingPushUp".to_string(),
-            PushUpExerciseName::WeightedKneelingPushUp => "WeightedKneelingPushUp".to_string(),
-            PushUpExerciseName::MedicineBallChestPass => "MedicineBallChestPass".to_string(),
-            PushUpExerciseName::MedicineBallPushUp => "MedicineBallPushUp".to_string(),
+            PushUpExerciseName::JudoPushUp => "judo_push_up".to_string(),
+            PushUpExerciseName::WeightedJudoPushUp => "weighted_judo_push_up".to_string(),
+            PushUpExerciseName::KneelingPushUp => "kneeling_push_up".to_string(),
+            PushUpExerciseName::WeightedKneelingPushUp => "weighted_kneeling_push_up".to_string(),
+            PushUpExerciseName::MedicineBallChestPass => "medicine_ball_chest_pass".to_string(),
+            PushUpExerciseName::MedicineBallPushUp => "medicine_ball_push_up".to_string(),
             PushUpExerciseName::WeightedMedicineBallPushUp => {
-                "WeightedMedicineBallPushUp".to_string()
+                "weighted_medicine_ball_push_up".to_string()
             }
-            PushUpExerciseName::OneArmPushUp => "OneArmPushUp".to_string(),
-            PushUpExerciseName::WeightedOneArmPushUp => "WeightedOneArmPushUp".to_string(),
-            PushUpExerciseName::WeightedPushUp => "WeightedPushUp".to_string(),
-            PushUpExerciseName::PushUpAndRow => "PushUpAndRow".to_string(),
-            PushUpExerciseName::WeightedPushUpAndRow => "WeightedPushUpAndRow".to_string(),
-            PushUpExerciseName::PushUpPlus => "PushUpPlus".to_string(),
-            PushUpExerciseName::WeightedPushUpPlus => "WeightedPushUpPlus".to_string(),
+            PushUpExerciseName::OneArmPushUp => "one_arm_push_up".to_string(),
+            PushUpExerciseName::WeightedOneArmPushUp => "weighted_one_arm_push_up".to_string(),
+            PushUpExerciseName::WeightedPushUp => "weighted_push_up".to_string(),
+            PushUpExerciseName::PushUpAndRow => "push_up_and_row".to_string(),
+            PushUpExerciseName::WeightedPushUpAndRow => "weighted_push_up_and_row".to_string(),
+            PushUpExerciseName::PushUpPlus => "push_up_plus".to_string(),
+            PushUpExerciseName::WeightedPushUpPlus => "weighted_push_up_plus".to_string(),
             PushUpExerciseName::PushUpWithFeetOnSwissBall => {
-                "PushUpWithFeetOnSwissBall".to_string()
+                "push_up_with_feet_on_swiss_ball".to_string()
             }
             PushUpExerciseName::WeightedPushUpWithFeetOnSwissBall => {
-                "WeightedPushUpWithFeetOnSwissBall".to_string()
+                "weighted_push_up_with_feet_on_swiss_ball".to_string()
             }
             PushUpExerciseName::PushUpWithOneHandOnMedicineBall => {
-                "PushUpWithOneHandOnMedicineBall".to_string()
+                "push_up_with_one_hand_on_medicine_ball".to_string()
             }
             PushUpExerciseName::WeightedPushUpWithOneHandOnMedicineBall => {
-                "WeightedPushUpWithOneHandOnMedicineBall".to_string()
+                "weighted_push_up_with_one_hand_on_medicine_ball".to_string()
             }
-            PushUpExerciseName::ShoulderPushUp => "ShoulderPushUp".to_string(),
-            PushUpExerciseName::WeightedShoulderPushUp => "WeightedShoulderPushUp".to_string(),
+            PushUpExerciseName::ShoulderPushUp => "shoulder_push_up".to_string(),
+            PushUpExerciseName::WeightedShoulderPushUp => "weighted_shoulder_push_up".to_string(),
             PushUpExerciseName::SingleArmMedicineBallPushUp => {
-                "SingleArmMedicineBallPushUp".to_string()
+                "single_arm_medicine_ball_push_up".to_string()
             }
             PushUpExerciseName::WeightedSingleArmMedicineBallPushUp => {
-                "WeightedSingleArmMedicineBallPushUp".to_string()
+                "weighted_single_arm_medicine_ball_push_up".to_string()
             }
-            PushUpExerciseName::SpidermanPushUp => "SpidermanPushUp".to_string(),
-            PushUpExerciseName::WeightedSpidermanPushUp => "WeightedSpidermanPushUp".to_string(),
-            PushUpExerciseName::StackedFeetPushUp => "StackedFeetPushUp".to_string(),
+            PushUpExerciseName::SpidermanPushUp => "spiderman_push_up".to_string(),
+            PushUpExerciseName::WeightedSpidermanPushUp => "weighted_spiderman_push_up".to_string(),
+            PushUpExerciseName::StackedFeetPushUp => "stacked_feet_push_up".to_string(),
             PushUpExerciseName::WeightedStackedFeetPushUp => {
-                "WeightedStackedFeetPushUp".to_string()
+                "weighted_stacked_feet_push_up".to_string()
             }
-            PushUpExerciseName::StaggeredHandsPushUp => "StaggeredHandsPushUp".to_string(),
+            PushUpExerciseName::StaggeredHandsPushUp => "staggered_hands_push_up".to_string(),
             PushUpExerciseName::WeightedStaggeredHandsPushUp => {
-                "WeightedStaggeredHandsPushUp".to_string()
+                "weighted_staggered_hands_push_up".to_string()
             }
-            PushUpExerciseName::SuspendedPushUp => "SuspendedPushUp".to_string(),
-            PushUpExerciseName::WeightedSuspendedPushUp => "WeightedSuspendedPushUp".to_string(),
-            PushUpExerciseName::SwissBallPushUp => "SwissBallPushUp".to_string(),
-            PushUpExerciseName::WeightedSwissBallPushUp => "WeightedSwissBallPushUp".to_string(),
-            PushUpExerciseName::SwissBallPushUpPlus => "SwissBallPushUpPlus".to_string(),
+            PushUpExerciseName::SuspendedPushUp => "suspended_push_up".to_string(),
+            PushUpExerciseName::WeightedSuspendedPushUp => "weighted_suspended_push_up".to_string(),
+            PushUpExerciseName::SwissBallPushUp => "swiss_ball_push_up".to_string(),
+            PushUpExerciseName::WeightedSwissBallPushUp => {
+                "weighted_swiss_ball_push_up".to_string()
+            }
+            PushUpExerciseName::SwissBallPushUpPlus => "swiss_ball_push_up_plus".to_string(),
             PushUpExerciseName::WeightedSwissBallPushUpPlus => {
-                "WeightedSwissBallPushUpPlus".to_string()
+                "weighted_swiss_ball_push_up_plus".to_string()
             }
-            PushUpExerciseName::TPushUp => "TPushUp".to_string(),
-            PushUpExerciseName::WeightedTPushUp => "WeightedTPushUp".to_string(),
-            PushUpExerciseName::TripleStopPushUp => "TripleStopPushUp".to_string(),
-            PushUpExerciseName::WeightedTripleStopPushUp => "WeightedTripleStopPushUp".to_string(),
-            PushUpExerciseName::WideHandsPushUp => "WideHandsPushUp".to_string(),
-            PushUpExerciseName::WeightedWideHandsPushUp => "WeightedWideHandsPushUp".to_string(),
+            PushUpExerciseName::TPushUp => "t_push_up".to_string(),
+            PushUpExerciseName::WeightedTPushUp => "weighted_t_push_up".to_string(),
+            PushUpExerciseName::TripleStopPushUp => "triple_stop_push_up".to_string(),
+            PushUpExerciseName::WeightedTripleStopPushUp => {
+                "weighted_triple_stop_push_up".to_string()
+            }
+            PushUpExerciseName::WideHandsPushUp => "wide_hands_push_up".to_string(),
+            PushUpExerciseName::WeightedWideHandsPushUp => {
+                "weighted_wide_hands_push_up".to_string()
+            }
             PushUpExerciseName::ParalletteHandstandPushUp => {
-                "ParalletteHandstandPushUp".to_string()
+                "parallette_handstand_push_up".to_string()
             }
             PushUpExerciseName::WeightedParalletteHandstandPushUp => {
-                "WeightedParalletteHandstandPushUp".to_string()
+                "weighted_parallette_handstand_push_up".to_string()
             }
-            PushUpExerciseName::RingHandstandPushUp => "RingHandstandPushUp".to_string(),
+            PushUpExerciseName::RingHandstandPushUp => "ring_handstand_push_up".to_string(),
             PushUpExerciseName::WeightedRingHandstandPushUp => {
-                "WeightedRingHandstandPushUp".to_string()
+                "weighted_ring_handstand_push_up".to_string()
             }
-            PushUpExerciseName::RingPushUp => "RingPushUp".to_string(),
-            PushUpExerciseName::WeightedRingPushUp => "WeightedRingPushUp".to_string(),
-            PushUpExerciseName::PushUp => "PushUp".to_string(),
-            PushUpExerciseName::PilatesPushup => "PilatesPushup".to_string(),
-            PushUpExerciseName::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            PushUpExerciseName::RingPushUp => "ring_push_up".to_string(),
+            PushUpExerciseName::WeightedRingPushUp => "weighted_ring_push_up".to_string(),
+            PushUpExerciseName::PushUp => "push_up".to_string(),
+            PushUpExerciseName::PilatesPushup => "pilates_pushup".to_string(),
+            PushUpExerciseName::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -15478,7 +15404,6 @@ pub enum RowExerciseName {
     WideGripSeatedCableRow,
     UnknownVariant(u16),
 }
-
 impl RowExerciseName {
     pub fn from_u16(value: u16) -> RowExerciseName {
         match value {
@@ -15564,66 +15489,66 @@ impl RowExerciseName {
     pub fn to_string(&self) -> String {
         match &self {
             RowExerciseName::BarbellStraightLegDeadliftToRow => {
-                "BarbellStraightLegDeadliftToRow".to_string()
+                "barbell_straight_leg_deadlift_to_row".to_string()
             }
-            RowExerciseName::CableRowStanding => "CableRowStanding".to_string(),
-            RowExerciseName::DumbbellRow => "DumbbellRow".to_string(),
-            RowExerciseName::ElevatedFeetInvertedRow => "ElevatedFeetInvertedRow".to_string(),
+            RowExerciseName::CableRowStanding => "cable_row_standing".to_string(),
+            RowExerciseName::DumbbellRow => "dumbbell_row".to_string(),
+            RowExerciseName::ElevatedFeetInvertedRow => "elevated_feet_inverted_row".to_string(),
             RowExerciseName::WeightedElevatedFeetInvertedRow => {
-                "WeightedElevatedFeetInvertedRow".to_string()
+                "weighted_elevated_feet_inverted_row".to_string()
             }
-            RowExerciseName::FacePull => "FacePull".to_string(),
+            RowExerciseName::FacePull => "face_pull".to_string(),
             RowExerciseName::FacePullWithExternalRotation => {
-                "FacePullWithExternalRotation".to_string()
+                "face_pull_with_external_rotation".to_string()
             }
             RowExerciseName::InvertedRowWithFeetOnSwissBall => {
-                "InvertedRowWithFeetOnSwissBall".to_string()
+                "inverted_row_with_feet_on_swiss_ball".to_string()
             }
             RowExerciseName::WeightedInvertedRowWithFeetOnSwissBall => {
-                "WeightedInvertedRowWithFeetOnSwissBall".to_string()
+                "weighted_inverted_row_with_feet_on_swiss_ball".to_string()
             }
-            RowExerciseName::KettlebellRow => "KettlebellRow".to_string(),
-            RowExerciseName::ModifiedInvertedRow => "ModifiedInvertedRow".to_string(),
+            RowExerciseName::KettlebellRow => "kettlebell_row".to_string(),
+            RowExerciseName::ModifiedInvertedRow => "modified_inverted_row".to_string(),
             RowExerciseName::WeightedModifiedInvertedRow => {
-                "WeightedModifiedInvertedRow".to_string()
+                "weighted_modified_inverted_row".to_string()
             }
             RowExerciseName::NeutralGripAlternatingDumbbellRow => {
-                "NeutralGripAlternatingDumbbellRow".to_string()
+                "neutral_grip_alternating_dumbbell_row".to_string()
             }
-            RowExerciseName::OneArmBentOverRow => "OneArmBentOverRow".to_string(),
-            RowExerciseName::OneLeggedDumbbellRow => "OneLeggedDumbbellRow".to_string(),
-            RowExerciseName::RenegadeRow => "RenegadeRow".to_string(),
-            RowExerciseName::ReverseGripBarbellRow => "ReverseGripBarbellRow".to_string(),
-            RowExerciseName::RopeHandleCableRow => "RopeHandleCableRow".to_string(),
-            RowExerciseName::SeatedCableRow => "SeatedCableRow".to_string(),
-            RowExerciseName::SeatedDumbbellRow => "SeatedDumbbellRow".to_string(),
-            RowExerciseName::SingleArmCableRow => "SingleArmCableRow".to_string(),
+            RowExerciseName::OneArmBentOverRow => "one_arm_bent_over_row".to_string(),
+            RowExerciseName::OneLeggedDumbbellRow => "one_legged_dumbbell_row".to_string(),
+            RowExerciseName::RenegadeRow => "renegade_row".to_string(),
+            RowExerciseName::ReverseGripBarbellRow => "reverse_grip_barbell_row".to_string(),
+            RowExerciseName::RopeHandleCableRow => "rope_handle_cable_row".to_string(),
+            RowExerciseName::SeatedCableRow => "seated_cable_row".to_string(),
+            RowExerciseName::SeatedDumbbellRow => "seated_dumbbell_row".to_string(),
+            RowExerciseName::SingleArmCableRow => "single_arm_cable_row".to_string(),
             RowExerciseName::SingleArmCableRowAndRotation => {
-                "SingleArmCableRowAndRotation".to_string()
+                "single_arm_cable_row_and_rotation".to_string()
             }
-            RowExerciseName::SingleArmInvertedRow => "SingleArmInvertedRow".to_string(),
+            RowExerciseName::SingleArmInvertedRow => "single_arm_inverted_row".to_string(),
             RowExerciseName::WeightedSingleArmInvertedRow => {
-                "WeightedSingleArmInvertedRow".to_string()
+                "weighted_single_arm_inverted_row".to_string()
             }
             RowExerciseName::SingleArmNeutralGripDumbbellRow => {
-                "SingleArmNeutralGripDumbbellRow".to_string()
+                "single_arm_neutral_grip_dumbbell_row".to_string()
             }
             RowExerciseName::SingleArmNeutralGripDumbbellRowAndRotation => {
-                "SingleArmNeutralGripDumbbellRowAndRotation".to_string()
+                "single_arm_neutral_grip_dumbbell_row_and_rotation".to_string()
             }
-            RowExerciseName::SuspendedInvertedRow => "SuspendedInvertedRow".to_string(),
+            RowExerciseName::SuspendedInvertedRow => "suspended_inverted_row".to_string(),
             RowExerciseName::WeightedSuspendedInvertedRow => {
-                "WeightedSuspendedInvertedRow".to_string()
+                "weighted_suspended_inverted_row".to_string()
             }
-            RowExerciseName::TBarRow => "TBarRow".to_string(),
-            RowExerciseName::TowelGripInvertedRow => "TowelGripInvertedRow".to_string(),
+            RowExerciseName::TBarRow => "t_bar_row".to_string(),
+            RowExerciseName::TowelGripInvertedRow => "towel_grip_inverted_row".to_string(),
             RowExerciseName::WeightedTowelGripInvertedRow => {
-                "WeightedTowelGripInvertedRow".to_string()
+                "weighted_towel_grip_inverted_row".to_string()
             }
-            RowExerciseName::UnderhandGripCableRow => "UnderhandGripCableRow".to_string(),
-            RowExerciseName::VGripCableRow => "VGripCableRow".to_string(),
-            RowExerciseName::WideGripSeatedCableRow => "WideGripSeatedCableRow".to_string(),
-            RowExerciseName::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            RowExerciseName::UnderhandGripCableRow => "underhand_grip_cable_row".to_string(),
+            RowExerciseName::VGripCableRow => "v_grip_cable_row".to_string(),
+            RowExerciseName::WideGripSeatedCableRow => "wide_grip_seated_cable_row".to_string(),
+            RowExerciseName::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -15656,7 +15581,6 @@ pub enum ShoulderPressExerciseName {
     WeightPlateFrontRaise,
     UnknownVariant(u16),
 }
-
 impl ShoulderPressExerciseName {
     pub fn from_u16(value: u16) -> ShoulderPressExerciseName {
         match value {
@@ -15722,58 +15646,66 @@ impl ShoulderPressExerciseName {
     pub fn to_string(&self) -> String {
         match &self {
             ShoulderPressExerciseName::AlternatingDumbbellShoulderPress => {
-                "AlternatingDumbbellShoulderPress".to_string()
+                "alternating_dumbbell_shoulder_press".to_string()
             }
-            ShoulderPressExerciseName::ArnoldPress => "ArnoldPress".to_string(),
+            ShoulderPressExerciseName::ArnoldPress => "arnold_press".to_string(),
             ShoulderPressExerciseName::BarbellFrontSquatToPushPress => {
-                "BarbellFrontSquatToPushPress".to_string()
+                "barbell_front_squat_to_push_press".to_string()
             }
-            ShoulderPressExerciseName::BarbellPushPress => "BarbellPushPress".to_string(),
-            ShoulderPressExerciseName::BarbellShoulderPress => "BarbellShoulderPress".to_string(),
-            ShoulderPressExerciseName::DeadCurlPress => "DeadCurlPress".to_string(),
+            ShoulderPressExerciseName::BarbellPushPress => "barbell_push_press".to_string(),
+            ShoulderPressExerciseName::BarbellShoulderPress => "barbell_shoulder_press".to_string(),
+            ShoulderPressExerciseName::DeadCurlPress => "dead_curl_press".to_string(),
             ShoulderPressExerciseName::DumbbellAlternatingShoulderPressAndTwist => {
-                "DumbbellAlternatingShoulderPressAndTwist".to_string()
+                "dumbbell_alternating_shoulder_press_and_twist".to_string()
             }
             ShoulderPressExerciseName::DumbbellHammerCurlToLungeToPress => {
-                "DumbbellHammerCurlToLungeToPress".to_string()
+                "dumbbell_hammer_curl_to_lunge_to_press".to_string()
             }
-            ShoulderPressExerciseName::DumbbellPushPress => "DumbbellPushPress".to_string(),
+            ShoulderPressExerciseName::DumbbellPushPress => "dumbbell_push_press".to_string(),
             ShoulderPressExerciseName::FloorInvertedShoulderPress => {
-                "FloorInvertedShoulderPress".to_string()
+                "floor_inverted_shoulder_press".to_string()
             }
             ShoulderPressExerciseName::WeightedFloorInvertedShoulderPress => {
-                "WeightedFloorInvertedShoulderPress".to_string()
+                "weighted_floor_inverted_shoulder_press".to_string()
             }
-            ShoulderPressExerciseName::InvertedShoulderPress => "InvertedShoulderPress".to_string(),
+            ShoulderPressExerciseName::InvertedShoulderPress => {
+                "inverted_shoulder_press".to_string()
+            }
             ShoulderPressExerciseName::WeightedInvertedShoulderPress => {
-                "WeightedInvertedShoulderPress".to_string()
+                "weighted_inverted_shoulder_press".to_string()
             }
-            ShoulderPressExerciseName::OneArmPushPress => "OneArmPushPress".to_string(),
-            ShoulderPressExerciseName::OverheadBarbellPress => "OverheadBarbellPress".to_string(),
-            ShoulderPressExerciseName::OverheadDumbbellPress => "OverheadDumbbellPress".to_string(),
+            ShoulderPressExerciseName::OneArmPushPress => "one_arm_push_press".to_string(),
+            ShoulderPressExerciseName::OverheadBarbellPress => "overhead_barbell_press".to_string(),
+            ShoulderPressExerciseName::OverheadDumbbellPress => {
+                "overhead_dumbbell_press".to_string()
+            }
             ShoulderPressExerciseName::SeatedBarbellShoulderPress => {
-                "SeatedBarbellShoulderPress".to_string()
+                "seated_barbell_shoulder_press".to_string()
             }
             ShoulderPressExerciseName::SeatedDumbbellShoulderPress => {
-                "SeatedDumbbellShoulderPress".to_string()
+                "seated_dumbbell_shoulder_press".to_string()
             }
             ShoulderPressExerciseName::SingleArmDumbbellShoulderPress => {
-                "SingleArmDumbbellShoulderPress".to_string()
+                "single_arm_dumbbell_shoulder_press".to_string()
             }
             ShoulderPressExerciseName::SingleArmStepUpAndPress => {
-                "SingleArmStepUpAndPress".to_string()
+                "single_arm_step_up_and_press".to_string()
             }
             ShoulderPressExerciseName::SmithMachineOverheadPress => {
-                "SmithMachineOverheadPress".to_string()
+                "smith_machine_overhead_press".to_string()
             }
             ShoulderPressExerciseName::SplitStanceHammerCurlToPress => {
-                "SplitStanceHammerCurlToPress".to_string()
+                "split_stance_hammer_curl_to_press".to_string()
             }
             ShoulderPressExerciseName::SwissBallDumbbellShoulderPress => {
-                "SwissBallDumbbellShoulderPress".to_string()
+                "swiss_ball_dumbbell_shoulder_press".to_string()
             }
-            ShoulderPressExerciseName::WeightPlateFrontRaise => "WeightPlateFrontRaise".to_string(),
-            ShoulderPressExerciseName::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            ShoulderPressExerciseName::WeightPlateFrontRaise => {
+                "weight_plate_front_raise".to_string()
+            }
+            ShoulderPressExerciseName::UnknownVariant(value) => {
+                format!("unknown_variant_{}", *value)
+            }
         }
     }
 }
@@ -15815,7 +15747,6 @@ pub enum ShoulderStabilityExerciseName {
     WeightedSwissBallYRaise,
     UnknownVariant(u16),
 }
-
 impl ShoulderStabilityExerciseName {
     pub fn from_u16(value: u16) -> ShoulderStabilityExerciseName {
         match value {
@@ -15899,74 +15830,80 @@ impl ShoulderStabilityExerciseName {
     pub fn to_string(&self) -> String {
         match &self {
             ShoulderStabilityExerciseName::Name90DegreeCableExternalRotation => {
-                "Name90DegreeCableExternalRotation".to_string()
+                "90_degree_cable_external_rotation".to_string()
             }
             ShoulderStabilityExerciseName::BandExternalRotation => {
-                "BandExternalRotation".to_string()
+                "band_external_rotation".to_string()
             }
             ShoulderStabilityExerciseName::BandInternalRotation => {
-                "BandInternalRotation".to_string()
+                "band_internal_rotation".to_string()
             }
             ShoulderStabilityExerciseName::BentArmLateralRaiseAndExternalRotation => {
-                "BentArmLateralRaiseAndExternalRotation".to_string()
+                "bent_arm_lateral_raise_and_external_rotation".to_string()
             }
             ShoulderStabilityExerciseName::CableExternalRotation => {
-                "CableExternalRotation".to_string()
+                "cable_external_rotation".to_string()
             }
             ShoulderStabilityExerciseName::DumbbellFacePullWithExternalRotation => {
-                "DumbbellFacePullWithExternalRotation".to_string()
+                "dumbbell_face_pull_with_external_rotation".to_string()
             }
-            ShoulderStabilityExerciseName::FloorIRaise => "FloorIRaise".to_string(),
-            ShoulderStabilityExerciseName::WeightedFloorIRaise => "WeightedFloorIRaise".to_string(),
-            ShoulderStabilityExerciseName::FloorTRaise => "FloorTRaise".to_string(),
-            ShoulderStabilityExerciseName::WeightedFloorTRaise => "WeightedFloorTRaise".to_string(),
-            ShoulderStabilityExerciseName::FloorYRaise => "FloorYRaise".to_string(),
-            ShoulderStabilityExerciseName::WeightedFloorYRaise => "WeightedFloorYRaise".to_string(),
-            ShoulderStabilityExerciseName::InclineIRaise => "InclineIRaise".to_string(),
+            ShoulderStabilityExerciseName::FloorIRaise => "floor_i_raise".to_string(),
+            ShoulderStabilityExerciseName::WeightedFloorIRaise => {
+                "weighted_floor_i_raise".to_string()
+            }
+            ShoulderStabilityExerciseName::FloorTRaise => "floor_t_raise".to_string(),
+            ShoulderStabilityExerciseName::WeightedFloorTRaise => {
+                "weighted_floor_t_raise".to_string()
+            }
+            ShoulderStabilityExerciseName::FloorYRaise => "floor_y_raise".to_string(),
+            ShoulderStabilityExerciseName::WeightedFloorYRaise => {
+                "weighted_floor_y_raise".to_string()
+            }
+            ShoulderStabilityExerciseName::InclineIRaise => "incline_i_raise".to_string(),
             ShoulderStabilityExerciseName::WeightedInclineIRaise => {
-                "WeightedInclineIRaise".to_string()
+                "weighted_incline_i_raise".to_string()
             }
-            ShoulderStabilityExerciseName::InclineLRaise => "InclineLRaise".to_string(),
+            ShoulderStabilityExerciseName::InclineLRaise => "incline_l_raise".to_string(),
             ShoulderStabilityExerciseName::WeightedInclineLRaise => {
-                "WeightedInclineLRaise".to_string()
+                "weighted_incline_l_raise".to_string()
             }
-            ShoulderStabilityExerciseName::InclineTRaise => "InclineTRaise".to_string(),
+            ShoulderStabilityExerciseName::InclineTRaise => "incline_t_raise".to_string(),
             ShoulderStabilityExerciseName::WeightedInclineTRaise => {
-                "WeightedInclineTRaise".to_string()
+                "weighted_incline_t_raise".to_string()
             }
-            ShoulderStabilityExerciseName::InclineWRaise => "InclineWRaise".to_string(),
+            ShoulderStabilityExerciseName::InclineWRaise => "incline_w_raise".to_string(),
             ShoulderStabilityExerciseName::WeightedInclineWRaise => {
-                "WeightedInclineWRaise".to_string()
+                "weighted_incline_w_raise".to_string()
             }
-            ShoulderStabilityExerciseName::InclineYRaise => "InclineYRaise".to_string(),
+            ShoulderStabilityExerciseName::InclineYRaise => "incline_y_raise".to_string(),
             ShoulderStabilityExerciseName::WeightedInclineYRaise => {
-                "WeightedInclineYRaise".to_string()
+                "weighted_incline_y_raise".to_string()
             }
             ShoulderStabilityExerciseName::LyingExternalRotation => {
-                "LyingExternalRotation".to_string()
+                "lying_external_rotation".to_string()
             }
             ShoulderStabilityExerciseName::SeatedDumbbellExternalRotation => {
-                "SeatedDumbbellExternalRotation".to_string()
+                "seated_dumbbell_external_rotation".to_string()
             }
-            ShoulderStabilityExerciseName::StandingLRaise => "StandingLRaise".to_string(),
-            ShoulderStabilityExerciseName::SwissBallIRaise => "SwissBallIRaise".to_string(),
+            ShoulderStabilityExerciseName::StandingLRaise => "standing_l_raise".to_string(),
+            ShoulderStabilityExerciseName::SwissBallIRaise => "swiss_ball_i_raise".to_string(),
             ShoulderStabilityExerciseName::WeightedSwissBallIRaise => {
-                "WeightedSwissBallIRaise".to_string()
+                "weighted_swiss_ball_i_raise".to_string()
             }
-            ShoulderStabilityExerciseName::SwissBallTRaise => "SwissBallTRaise".to_string(),
+            ShoulderStabilityExerciseName::SwissBallTRaise => "swiss_ball_t_raise".to_string(),
             ShoulderStabilityExerciseName::WeightedSwissBallTRaise => {
-                "WeightedSwissBallTRaise".to_string()
+                "weighted_swiss_ball_t_raise".to_string()
             }
-            ShoulderStabilityExerciseName::SwissBallWRaise => "SwissBallWRaise".to_string(),
+            ShoulderStabilityExerciseName::SwissBallWRaise => "swiss_ball_w_raise".to_string(),
             ShoulderStabilityExerciseName::WeightedSwissBallWRaise => {
-                "WeightedSwissBallWRaise".to_string()
+                "weighted_swiss_ball_w_raise".to_string()
             }
-            ShoulderStabilityExerciseName::SwissBallYRaise => "SwissBallYRaise".to_string(),
+            ShoulderStabilityExerciseName::SwissBallYRaise => "swiss_ball_y_raise".to_string(),
             ShoulderStabilityExerciseName::WeightedSwissBallYRaise => {
-                "WeightedSwissBallYRaise".to_string()
+                "weighted_swiss_ball_y_raise".to_string()
             }
             ShoulderStabilityExerciseName::UnknownVariant(value) => {
-                format!("UnknownVariant{}", *value)
+                format!("unknown_variant_{}", *value)
             }
         }
     }
@@ -15993,7 +15930,6 @@ pub enum ShrugExerciseName {
     WideGripJumpShrug,
     UnknownVariant(u16),
 }
-
 impl ShrugExerciseName {
     pub fn from_u16(value: u16) -> ShrugExerciseName {
         match value {
@@ -16044,28 +15980,28 @@ impl ShrugExerciseName {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            ShrugExerciseName::BarbellJumpShrug => "BarbellJumpShrug".to_string(),
-            ShrugExerciseName::BarbellShrug => "BarbellShrug".to_string(),
-            ShrugExerciseName::BarbellUprightRow => "BarbellUprightRow".to_string(),
+            ShrugExerciseName::BarbellJumpShrug => "barbell_jump_shrug".to_string(),
+            ShrugExerciseName::BarbellShrug => "barbell_shrug".to_string(),
+            ShrugExerciseName::BarbellUprightRow => "barbell_upright_row".to_string(),
             ShrugExerciseName::BehindTheBackSmithMachineShrug => {
-                "BehindTheBackSmithMachineShrug".to_string()
+                "behind_the_back_smith_machine_shrug".to_string()
             }
-            ShrugExerciseName::DumbbellJumpShrug => "DumbbellJumpShrug".to_string(),
-            ShrugExerciseName::DumbbellShrug => "DumbbellShrug".to_string(),
-            ShrugExerciseName::DumbbellUprightRow => "DumbbellUprightRow".to_string(),
-            ShrugExerciseName::InclineDumbbellShrug => "InclineDumbbellShrug".to_string(),
-            ShrugExerciseName::OverheadBarbellShrug => "OverheadBarbellShrug".to_string(),
-            ShrugExerciseName::OverheadDumbbellShrug => "OverheadDumbbellShrug".to_string(),
-            ShrugExerciseName::ScaptionAndShrug => "ScaptionAndShrug".to_string(),
-            ShrugExerciseName::ScapularRetraction => "ScapularRetraction".to_string(),
-            ShrugExerciseName::SerratusChairShrug => "SerratusChairShrug".to_string(),
+            ShrugExerciseName::DumbbellJumpShrug => "dumbbell_jump_shrug".to_string(),
+            ShrugExerciseName::DumbbellShrug => "dumbbell_shrug".to_string(),
+            ShrugExerciseName::DumbbellUprightRow => "dumbbell_upright_row".to_string(),
+            ShrugExerciseName::InclineDumbbellShrug => "incline_dumbbell_shrug".to_string(),
+            ShrugExerciseName::OverheadBarbellShrug => "overhead_barbell_shrug".to_string(),
+            ShrugExerciseName::OverheadDumbbellShrug => "overhead_dumbbell_shrug".to_string(),
+            ShrugExerciseName::ScaptionAndShrug => "scaption_and_shrug".to_string(),
+            ShrugExerciseName::ScapularRetraction => "scapular_retraction".to_string(),
+            ShrugExerciseName::SerratusChairShrug => "serratus_chair_shrug".to_string(),
             ShrugExerciseName::WeightedSerratusChairShrug => {
-                "WeightedSerratusChairShrug".to_string()
+                "weighted_serratus_chair_shrug".to_string()
             }
-            ShrugExerciseName::SerratusShrug => "SerratusShrug".to_string(),
-            ShrugExerciseName::WeightedSerratusShrug => "WeightedSerratusShrug".to_string(),
-            ShrugExerciseName::WideGripJumpShrug => "WideGripJumpShrug".to_string(),
-            ShrugExerciseName::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            ShrugExerciseName::SerratusShrug => "serratus_shrug".to_string(),
+            ShrugExerciseName::WeightedSerratusShrug => "weighted_serratus_shrug".to_string(),
+            ShrugExerciseName::WideGripJumpShrug => "wide_grip_jump_shrug".to_string(),
+            ShrugExerciseName::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -16112,7 +16048,6 @@ pub enum SitUpExerciseName {
     SitUp,
     UnknownVariant(u16),
 }
-
 impl SitUpExerciseName {
     pub fn from_u16(value: u16) -> SitUpExerciseName {
         match value {
@@ -16205,53 +16140,61 @@ impl SitUpExerciseName {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            SitUpExerciseName::AlternatingSitUp => "AlternatingSitUp".to_string(),
-            SitUpExerciseName::WeightedAlternatingSitUp => "WeightedAlternatingSitUp".to_string(),
-            SitUpExerciseName::BentKneeVUp => "BentKneeVUp".to_string(),
-            SitUpExerciseName::WeightedBentKneeVUp => "WeightedBentKneeVUp".to_string(),
-            SitUpExerciseName::ButterflySitUp => "ButterflySitUp".to_string(),
-            SitUpExerciseName::WeightedButterflySitup => "WeightedButterflySitup".to_string(),
-            SitUpExerciseName::CrossPunchRollUp => "CrossPunchRollUp".to_string(),
-            SitUpExerciseName::WeightedCrossPunchRollUp => "WeightedCrossPunchRollUp".to_string(),
-            SitUpExerciseName::CrossedArmsSitUp => "CrossedArmsSitUp".to_string(),
-            SitUpExerciseName::WeightedCrossedArmsSitUp => "WeightedCrossedArmsSitUp".to_string(),
-            SitUpExerciseName::GetUpSitUp => "GetUpSitUp".to_string(),
-            SitUpExerciseName::WeightedGetUpSitUp => "WeightedGetUpSitUp".to_string(),
-            SitUpExerciseName::HoveringSitUp => "HoveringSitUp".to_string(),
-            SitUpExerciseName::WeightedHoveringSitUp => "WeightedHoveringSitUp".to_string(),
-            SitUpExerciseName::KettlebellSitUp => "KettlebellSitUp".to_string(),
-            SitUpExerciseName::MedicineBallAlternatingVUp => {
-                "MedicineBallAlternatingVUp".to_string()
+            SitUpExerciseName::AlternatingSitUp => "alternating_sit_up".to_string(),
+            SitUpExerciseName::WeightedAlternatingSitUp => {
+                "weighted_alternating_sit_up".to_string()
             }
-            SitUpExerciseName::MedicineBallSitUp => "MedicineBallSitUp".to_string(),
-            SitUpExerciseName::MedicineBallVUp => "MedicineBallVUp".to_string(),
-            SitUpExerciseName::ModifiedSitUp => "ModifiedSitUp".to_string(),
-            SitUpExerciseName::NegativeSitUp => "NegativeSitUp".to_string(),
-            SitUpExerciseName::OneArmFullSitUp => "OneArmFullSitUp".to_string(),
-            SitUpExerciseName::RecliningCircle => "RecliningCircle".to_string(),
-            SitUpExerciseName::WeightedRecliningCircle => "WeightedRecliningCircle".to_string(),
-            SitUpExerciseName::ReverseCurlUp => "ReverseCurlUp".to_string(),
-            SitUpExerciseName::WeightedReverseCurlUp => "WeightedReverseCurlUp".to_string(),
+            SitUpExerciseName::BentKneeVUp => "bent_knee_v_up".to_string(),
+            SitUpExerciseName::WeightedBentKneeVUp => "weighted_bent_knee_v_up".to_string(),
+            SitUpExerciseName::ButterflySitUp => "butterfly_sit_up".to_string(),
+            SitUpExerciseName::WeightedButterflySitup => "weighted_butterfly_situp".to_string(),
+            SitUpExerciseName::CrossPunchRollUp => "cross_punch_roll_up".to_string(),
+            SitUpExerciseName::WeightedCrossPunchRollUp => {
+                "weighted_cross_punch_roll_up".to_string()
+            }
+            SitUpExerciseName::CrossedArmsSitUp => "crossed_arms_sit_up".to_string(),
+            SitUpExerciseName::WeightedCrossedArmsSitUp => {
+                "weighted_crossed_arms_sit_up".to_string()
+            }
+            SitUpExerciseName::GetUpSitUp => "get_up_sit_up".to_string(),
+            SitUpExerciseName::WeightedGetUpSitUp => "weighted_get_up_sit_up".to_string(),
+            SitUpExerciseName::HoveringSitUp => "hovering_sit_up".to_string(),
+            SitUpExerciseName::WeightedHoveringSitUp => "weighted_hovering_sit_up".to_string(),
+            SitUpExerciseName::KettlebellSitUp => "kettlebell_sit_up".to_string(),
+            SitUpExerciseName::MedicineBallAlternatingVUp => {
+                "medicine_ball_alternating_v_up".to_string()
+            }
+            SitUpExerciseName::MedicineBallSitUp => "medicine_ball_sit_up".to_string(),
+            SitUpExerciseName::MedicineBallVUp => "medicine_ball_v_up".to_string(),
+            SitUpExerciseName::ModifiedSitUp => "modified_sit_up".to_string(),
+            SitUpExerciseName::NegativeSitUp => "negative_sit_up".to_string(),
+            SitUpExerciseName::OneArmFullSitUp => "one_arm_full_sit_up".to_string(),
+            SitUpExerciseName::RecliningCircle => "reclining_circle".to_string(),
+            SitUpExerciseName::WeightedRecliningCircle => "weighted_reclining_circle".to_string(),
+            SitUpExerciseName::ReverseCurlUp => "reverse_curl_up".to_string(),
+            SitUpExerciseName::WeightedReverseCurlUp => "weighted_reverse_curl_up".to_string(),
             SitUpExerciseName::SingleLegSwissBallJackknife => {
-                "SingleLegSwissBallJackknife".to_string()
+                "single_leg_swiss_ball_jackknife".to_string()
             }
             SitUpExerciseName::WeightedSingleLegSwissBallJackknife => {
-                "WeightedSingleLegSwissBallJackknife".to_string()
+                "weighted_single_leg_swiss_ball_jackknife".to_string()
             }
-            SitUpExerciseName::TheTeaser => "TheTeaser".to_string(),
-            SitUpExerciseName::TheTeaserWeighted => "TheTeaserWeighted".to_string(),
-            SitUpExerciseName::ThreePartRollDown => "ThreePartRollDown".to_string(),
-            SitUpExerciseName::WeightedThreePartRollDown => "WeightedThreePartRollDown".to_string(),
-            SitUpExerciseName::VUp => "VUp".to_string(),
-            SitUpExerciseName::WeightedVUp => "WeightedVUp".to_string(),
+            SitUpExerciseName::TheTeaser => "the_teaser".to_string(),
+            SitUpExerciseName::TheTeaserWeighted => "the_teaser_weighted".to_string(),
+            SitUpExerciseName::ThreePartRollDown => "three_part_roll_down".to_string(),
+            SitUpExerciseName::WeightedThreePartRollDown => {
+                "weighted_three_part_roll_down".to_string()
+            }
+            SitUpExerciseName::VUp => "v_up".to_string(),
+            SitUpExerciseName::WeightedVUp => "weighted_v_up".to_string(),
             SitUpExerciseName::WeightedRussianTwistOnSwissBall => {
-                "WeightedRussianTwistOnSwissBall".to_string()
+                "weighted_russian_twist_on_swiss_ball".to_string()
             }
-            SitUpExerciseName::WeightedSitUp => "WeightedSitUp".to_string(),
-            SitUpExerciseName::XAbs => "XAbs".to_string(),
-            SitUpExerciseName::WeightedXAbs => "WeightedXAbs".to_string(),
-            SitUpExerciseName::SitUp => "SitUp".to_string(),
-            SitUpExerciseName::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            SitUpExerciseName::WeightedSitUp => "weighted_sit_up".to_string(),
+            SitUpExerciseName::XAbs => "x_abs".to_string(),
+            SitUpExerciseName::WeightedXAbs => "weighted_x_abs".to_string(),
+            SitUpExerciseName::SitUp => "sit_up".to_string(),
+            SitUpExerciseName::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -16352,7 +16295,6 @@ pub enum SquatExerciseName {
     ReleveStraightLegAndKneeBentWithOneLegVariation,
     UnknownVariant(u16),
 }
-
 impl SquatExerciseName {
     pub fn from_u16(value: u16) -> SquatExerciseName {
         match value {
@@ -16553,129 +16495,137 @@ impl SquatExerciseName {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            SquatExerciseName::LegPress => "LegPress".to_string(),
-            SquatExerciseName::BackSquatWithBodyBar => "BackSquatWithBodyBar".to_string(),
-            SquatExerciseName::BackSquats => "BackSquats".to_string(),
-            SquatExerciseName::WeightedBackSquats => "WeightedBackSquats".to_string(),
-            SquatExerciseName::BalancingSquat => "BalancingSquat".to_string(),
-            SquatExerciseName::WeightedBalancingSquat => "WeightedBalancingSquat".to_string(),
-            SquatExerciseName::BarbellBackSquat => "BarbellBackSquat".to_string(),
-            SquatExerciseName::BarbellBoxSquat => "BarbellBoxSquat".to_string(),
-            SquatExerciseName::BarbellFrontSquat => "BarbellFrontSquat".to_string(),
-            SquatExerciseName::BarbellHackSquat => "BarbellHackSquat".to_string(),
-            SquatExerciseName::BarbellHangSquatSnatch => "BarbellHangSquatSnatch".to_string(),
-            SquatExerciseName::BarbellLateralStepUp => "BarbellLateralStepUp".to_string(),
-            SquatExerciseName::BarbellQuarterSquat => "BarbellQuarterSquat".to_string(),
-            SquatExerciseName::BarbellSiffSquat => "BarbellSiffSquat".to_string(),
-            SquatExerciseName::BarbellSquatSnatch => "BarbellSquatSnatch".to_string(),
+            SquatExerciseName::LegPress => "leg_press".to_string(),
+            SquatExerciseName::BackSquatWithBodyBar => "back_squat_with_body_bar".to_string(),
+            SquatExerciseName::BackSquats => "back_squats".to_string(),
+            SquatExerciseName::WeightedBackSquats => "weighted_back_squats".to_string(),
+            SquatExerciseName::BalancingSquat => "balancing_squat".to_string(),
+            SquatExerciseName::WeightedBalancingSquat => "weighted_balancing_squat".to_string(),
+            SquatExerciseName::BarbellBackSquat => "barbell_back_squat".to_string(),
+            SquatExerciseName::BarbellBoxSquat => "barbell_box_squat".to_string(),
+            SquatExerciseName::BarbellFrontSquat => "barbell_front_squat".to_string(),
+            SquatExerciseName::BarbellHackSquat => "barbell_hack_squat".to_string(),
+            SquatExerciseName::BarbellHangSquatSnatch => "barbell_hang_squat_snatch".to_string(),
+            SquatExerciseName::BarbellLateralStepUp => "barbell_lateral_step_up".to_string(),
+            SquatExerciseName::BarbellQuarterSquat => "barbell_quarter_squat".to_string(),
+            SquatExerciseName::BarbellSiffSquat => "barbell_siff_squat".to_string(),
+            SquatExerciseName::BarbellSquatSnatch => "barbell_squat_snatch".to_string(),
             SquatExerciseName::BarbellSquatWithHeelsRaised => {
-                "BarbellSquatWithHeelsRaised".to_string()
+                "barbell_squat_with_heels_raised".to_string()
             }
-            SquatExerciseName::BarbellStepover => "BarbellStepover".to_string(),
-            SquatExerciseName::BarbellStepUp => "BarbellStepUp".to_string(),
+            SquatExerciseName::BarbellStepover => "barbell_stepover".to_string(),
+            SquatExerciseName::BarbellStepUp => "barbell_step_up".to_string(),
             SquatExerciseName::BenchSquatWithRotationalChop => {
-                "BenchSquatWithRotationalChop".to_string()
+                "bench_squat_with_rotational_chop".to_string()
             }
             SquatExerciseName::WeightedBenchSquatWithRotationalChop => {
-                "WeightedBenchSquatWithRotationalChop".to_string()
+                "weighted_bench_squat_with_rotational_chop".to_string()
             }
-            SquatExerciseName::BodyWeightWallSquat => "BodyWeightWallSquat".to_string(),
-            SquatExerciseName::WeightedWallSquat => "WeightedWallSquat".to_string(),
-            SquatExerciseName::BoxStepSquat => "BoxStepSquat".to_string(),
-            SquatExerciseName::WeightedBoxStepSquat => "WeightedBoxStepSquat".to_string(),
-            SquatExerciseName::BracedSquat => "BracedSquat".to_string(),
+            SquatExerciseName::BodyWeightWallSquat => "body_weight_wall_squat".to_string(),
+            SquatExerciseName::WeightedWallSquat => "weighted_wall_squat".to_string(),
+            SquatExerciseName::BoxStepSquat => "box_step_squat".to_string(),
+            SquatExerciseName::WeightedBoxStepSquat => "weighted_box_step_squat".to_string(),
+            SquatExerciseName::BracedSquat => "braced_squat".to_string(),
             SquatExerciseName::CrossedArmBarbellFrontSquat => {
-                "CrossedArmBarbellFrontSquat".to_string()
+                "crossed_arm_barbell_front_squat".to_string()
             }
-            SquatExerciseName::CrossoverDumbbellStepUp => "CrossoverDumbbellStepUp".to_string(),
-            SquatExerciseName::DumbbellFrontSquat => "DumbbellFrontSquat".to_string(),
-            SquatExerciseName::DumbbellSplitSquat => "DumbbellSplitSquat".to_string(),
-            SquatExerciseName::DumbbellSquat => "DumbbellSquat".to_string(),
-            SquatExerciseName::DumbbellSquatClean => "DumbbellSquatClean".to_string(),
-            SquatExerciseName::DumbbellStepover => "DumbbellStepover".to_string(),
-            SquatExerciseName::DumbbellStepUp => "DumbbellStepUp".to_string(),
-            SquatExerciseName::ElevatedSingleLegSquat => "ElevatedSingleLegSquat".to_string(),
+            SquatExerciseName::CrossoverDumbbellStepUp => "crossover_dumbbell_step_up".to_string(),
+            SquatExerciseName::DumbbellFrontSquat => "dumbbell_front_squat".to_string(),
+            SquatExerciseName::DumbbellSplitSquat => "dumbbell_split_squat".to_string(),
+            SquatExerciseName::DumbbellSquat => "dumbbell_squat".to_string(),
+            SquatExerciseName::DumbbellSquatClean => "dumbbell_squat_clean".to_string(),
+            SquatExerciseName::DumbbellStepover => "dumbbell_stepover".to_string(),
+            SquatExerciseName::DumbbellStepUp => "dumbbell_step_up".to_string(),
+            SquatExerciseName::ElevatedSingleLegSquat => "elevated_single_leg_squat".to_string(),
             SquatExerciseName::WeightedElevatedSingleLegSquat => {
-                "WeightedElevatedSingleLegSquat".to_string()
+                "weighted_elevated_single_leg_squat".to_string()
             }
-            SquatExerciseName::FigureFourSquats => "FigureFourSquats".to_string(),
-            SquatExerciseName::WeightedFigureFourSquats => "WeightedFigureFourSquats".to_string(),
-            SquatExerciseName::GobletSquat => "GobletSquat".to_string(),
-            SquatExerciseName::KettlebellSquat => "KettlebellSquat".to_string(),
-            SquatExerciseName::KettlebellSwingOverhead => "KettlebellSwingOverhead".to_string(),
+            SquatExerciseName::FigureFourSquats => "figure_four_squats".to_string(),
+            SquatExerciseName::WeightedFigureFourSquats => {
+                "weighted_figure_four_squats".to_string()
+            }
+            SquatExerciseName::GobletSquat => "goblet_squat".to_string(),
+            SquatExerciseName::KettlebellSquat => "kettlebell_squat".to_string(),
+            SquatExerciseName::KettlebellSwingOverhead => "kettlebell_swing_overhead".to_string(),
             SquatExerciseName::KettlebellSwingWithFlipToSquat => {
-                "KettlebellSwingWithFlipToSquat".to_string()
+                "kettlebell_swing_with_flip_to_squat".to_string()
             }
-            SquatExerciseName::LateralDumbbellStepUp => "LateralDumbbellStepUp".to_string(),
-            SquatExerciseName::OneLeggedSquat => "OneLeggedSquat".to_string(),
-            SquatExerciseName::OverheadDumbbellSquat => "OverheadDumbbellSquat".to_string(),
-            SquatExerciseName::OverheadSquat => "OverheadSquat".to_string(),
-            SquatExerciseName::PartialSingleLegSquat => "PartialSingleLegSquat".to_string(),
+            SquatExerciseName::LateralDumbbellStepUp => "lateral_dumbbell_step_up".to_string(),
+            SquatExerciseName::OneLeggedSquat => "one_legged_squat".to_string(),
+            SquatExerciseName::OverheadDumbbellSquat => "overhead_dumbbell_squat".to_string(),
+            SquatExerciseName::OverheadSquat => "overhead_squat".to_string(),
+            SquatExerciseName::PartialSingleLegSquat => "partial_single_leg_squat".to_string(),
             SquatExerciseName::WeightedPartialSingleLegSquat => {
-                "WeightedPartialSingleLegSquat".to_string()
+                "weighted_partial_single_leg_squat".to_string()
             }
-            SquatExerciseName::PistolSquat => "PistolSquat".to_string(),
-            SquatExerciseName::WeightedPistolSquat => "WeightedPistolSquat".to_string(),
-            SquatExerciseName::PlieSlides => "PlieSlides".to_string(),
-            SquatExerciseName::WeightedPlieSlides => "WeightedPlieSlides".to_string(),
-            SquatExerciseName::PlieSquat => "PlieSquat".to_string(),
-            SquatExerciseName::WeightedPlieSquat => "WeightedPlieSquat".to_string(),
-            SquatExerciseName::PrisonerSquat => "PrisonerSquat".to_string(),
-            SquatExerciseName::WeightedPrisonerSquat => "WeightedPrisonerSquat".to_string(),
-            SquatExerciseName::SingleLegBenchGetUp => "SingleLegBenchGetUp".to_string(),
+            SquatExerciseName::PistolSquat => "pistol_squat".to_string(),
+            SquatExerciseName::WeightedPistolSquat => "weighted_pistol_squat".to_string(),
+            SquatExerciseName::PlieSlides => "plie_slides".to_string(),
+            SquatExerciseName::WeightedPlieSlides => "weighted_plie_slides".to_string(),
+            SquatExerciseName::PlieSquat => "plie_squat".to_string(),
+            SquatExerciseName::WeightedPlieSquat => "weighted_plie_squat".to_string(),
+            SquatExerciseName::PrisonerSquat => "prisoner_squat".to_string(),
+            SquatExerciseName::WeightedPrisonerSquat => "weighted_prisoner_squat".to_string(),
+            SquatExerciseName::SingleLegBenchGetUp => "single_leg_bench_get_up".to_string(),
             SquatExerciseName::WeightedSingleLegBenchGetUp => {
-                "WeightedSingleLegBenchGetUp".to_string()
+                "weighted_single_leg_bench_get_up".to_string()
             }
-            SquatExerciseName::SingleLegBenchSquat => "SingleLegBenchSquat".to_string(),
+            SquatExerciseName::SingleLegBenchSquat => "single_leg_bench_squat".to_string(),
             SquatExerciseName::WeightedSingleLegBenchSquat => {
-                "WeightedSingleLegBenchSquat".to_string()
+                "weighted_single_leg_bench_squat".to_string()
             }
-            SquatExerciseName::SingleLegSquatOnSwissBall => "SingleLegSquatOnSwissBall".to_string(),
+            SquatExerciseName::SingleLegSquatOnSwissBall => {
+                "single_leg_squat_on_swiss_ball".to_string()
+            }
             SquatExerciseName::WeightedSingleLegSquatOnSwissBall => {
-                "WeightedSingleLegSquatOnSwissBall".to_string()
+                "weighted_single_leg_squat_on_swiss_ball".to_string()
             }
-            SquatExerciseName::Squat => "Squat".to_string(),
-            SquatExerciseName::WeightedSquat => "WeightedSquat".to_string(),
-            SquatExerciseName::SquatsWithBand => "SquatsWithBand".to_string(),
-            SquatExerciseName::StaggeredSquat => "StaggeredSquat".to_string(),
-            SquatExerciseName::WeightedStaggeredSquat => "WeightedStaggeredSquat".to_string(),
-            SquatExerciseName::StepUp => "StepUp".to_string(),
-            SquatExerciseName::WeightedStepUp => "WeightedStepUp".to_string(),
-            SquatExerciseName::SuitcaseSquats => "SuitcaseSquats".to_string(),
-            SquatExerciseName::SumoSquat => "SumoSquat".to_string(),
-            SquatExerciseName::SumoSquatSlideIn => "SumoSquatSlideIn".to_string(),
-            SquatExerciseName::WeightedSumoSquatSlideIn => "WeightedSumoSquatSlideIn".to_string(),
-            SquatExerciseName::SumoSquatToHighPull => "SumoSquatToHighPull".to_string(),
-            SquatExerciseName::SumoSquatToStand => "SumoSquatToStand".to_string(),
-            SquatExerciseName::WeightedSumoSquatToStand => "WeightedSumoSquatToStand".to_string(),
-            SquatExerciseName::SumoSquatWithRotation => "SumoSquatWithRotation".to_string(),
+            SquatExerciseName::Squat => "squat".to_string(),
+            SquatExerciseName::WeightedSquat => "weighted_squat".to_string(),
+            SquatExerciseName::SquatsWithBand => "squats_with_band".to_string(),
+            SquatExerciseName::StaggeredSquat => "staggered_squat".to_string(),
+            SquatExerciseName::WeightedStaggeredSquat => "weighted_staggered_squat".to_string(),
+            SquatExerciseName::StepUp => "step_up".to_string(),
+            SquatExerciseName::WeightedStepUp => "weighted_step_up".to_string(),
+            SquatExerciseName::SuitcaseSquats => "suitcase_squats".to_string(),
+            SquatExerciseName::SumoSquat => "sumo_squat".to_string(),
+            SquatExerciseName::SumoSquatSlideIn => "sumo_squat_slide_in".to_string(),
+            SquatExerciseName::WeightedSumoSquatSlideIn => {
+                "weighted_sumo_squat_slide_in".to_string()
+            }
+            SquatExerciseName::SumoSquatToHighPull => "sumo_squat_to_high_pull".to_string(),
+            SquatExerciseName::SumoSquatToStand => "sumo_squat_to_stand".to_string(),
+            SquatExerciseName::WeightedSumoSquatToStand => {
+                "weighted_sumo_squat_to_stand".to_string()
+            }
+            SquatExerciseName::SumoSquatWithRotation => "sumo_squat_with_rotation".to_string(),
             SquatExerciseName::WeightedSumoSquatWithRotation => {
-                "WeightedSumoSquatWithRotation".to_string()
+                "weighted_sumo_squat_with_rotation".to_string()
             }
             SquatExerciseName::SwissBallBodyWeightWallSquat => {
-                "SwissBallBodyWeightWallSquat".to_string()
+                "swiss_ball_body_weight_wall_squat".to_string()
             }
             SquatExerciseName::WeightedSwissBallWallSquat => {
-                "WeightedSwissBallWallSquat".to_string()
+                "weighted_swiss_ball_wall_squat".to_string()
             }
-            SquatExerciseName::Thrusters => "Thrusters".to_string(),
-            SquatExerciseName::UnevenSquat => "UnevenSquat".to_string(),
-            SquatExerciseName::WeightedUnevenSquat => "WeightedUnevenSquat".to_string(),
-            SquatExerciseName::WaistSlimmingSquat => "WaistSlimmingSquat".to_string(),
-            SquatExerciseName::WallBall => "WallBall".to_string(),
-            SquatExerciseName::WideStanceBarbellSquat => "WideStanceBarbellSquat".to_string(),
-            SquatExerciseName::WideStanceGobletSquat => "WideStanceGobletSquat".to_string(),
-            SquatExerciseName::ZercherSquat => "ZercherSquat".to_string(),
-            SquatExerciseName::KbsOverhead => "KbsOverhead".to_string(),
-            SquatExerciseName::SquatAndSideKick => "SquatAndSideKick".to_string(),
-            SquatExerciseName::SquatJumpsInNOut => "SquatJumpsInNOut".to_string(),
+            SquatExerciseName::Thrusters => "thrusters".to_string(),
+            SquatExerciseName::UnevenSquat => "uneven_squat".to_string(),
+            SquatExerciseName::WeightedUnevenSquat => "weighted_uneven_squat".to_string(),
+            SquatExerciseName::WaistSlimmingSquat => "waist_slimming_squat".to_string(),
+            SquatExerciseName::WallBall => "wall_ball".to_string(),
+            SquatExerciseName::WideStanceBarbellSquat => "wide_stance_barbell_squat".to_string(),
+            SquatExerciseName::WideStanceGobletSquat => "wide_stance_goblet_squat".to_string(),
+            SquatExerciseName::ZercherSquat => "zercher_squat".to_string(),
+            SquatExerciseName::KbsOverhead => "kbs_overhead".to_string(),
+            SquatExerciseName::SquatAndSideKick => "squat_and_side_kick".to_string(),
+            SquatExerciseName::SquatJumpsInNOut => "squat_jumps_in_n_out".to_string(),
             SquatExerciseName::PilatesPlieSquatsParallelTurnedOutFlatAndHeels => {
-                "PilatesPlieSquatsParallelTurnedOutFlatAndHeels".to_string()
+                "pilates_plie_squats_parallel_turned_out_flat_and_heels".to_string()
             }
             SquatExerciseName::ReleveStraightLegAndKneeBentWithOneLegVariation => {
-                "ReleveStraightLegAndKneeBentWithOneLegVariation".to_string()
+                "releve_straight_leg_and_knee_bent_with_one_leg_variation".to_string()
             }
-            SquatExerciseName::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            SquatExerciseName::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -16697,7 +16647,6 @@ pub enum TotalBodyExerciseName {
     WeightedStandingTRotationBalance,
     UnknownVariant(u16),
 }
-
 impl TotalBodyExerciseName {
     pub fn from_u16(value: u16) -> TotalBodyExerciseName {
         match value {
@@ -16740,26 +16689,26 @@ impl TotalBodyExerciseName {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            TotalBodyExerciseName::Burpee => "Burpee".to_string(),
-            TotalBodyExerciseName::WeightedBurpee => "WeightedBurpee".to_string(),
-            TotalBodyExerciseName::BurpeeBoxJump => "BurpeeBoxJump".to_string(),
-            TotalBodyExerciseName::WeightedBurpeeBoxJump => "WeightedBurpeeBoxJump".to_string(),
-            TotalBodyExerciseName::HighPullBurpee => "HighPullBurpee".to_string(),
-            TotalBodyExerciseName::ManMakers => "ManMakers".to_string(),
-            TotalBodyExerciseName::OneArmBurpee => "OneArmBurpee".to_string(),
-            TotalBodyExerciseName::SquatThrusts => "SquatThrusts".to_string(),
-            TotalBodyExerciseName::WeightedSquatThrusts => "WeightedSquatThrusts".to_string(),
-            TotalBodyExerciseName::SquatPlankPushUp => "SquatPlankPushUp".to_string(),
+            TotalBodyExerciseName::Burpee => "burpee".to_string(),
+            TotalBodyExerciseName::WeightedBurpee => "weighted_burpee".to_string(),
+            TotalBodyExerciseName::BurpeeBoxJump => "burpee_box_jump".to_string(),
+            TotalBodyExerciseName::WeightedBurpeeBoxJump => "weighted_burpee_box_jump".to_string(),
+            TotalBodyExerciseName::HighPullBurpee => "high_pull_burpee".to_string(),
+            TotalBodyExerciseName::ManMakers => "man_makers".to_string(),
+            TotalBodyExerciseName::OneArmBurpee => "one_arm_burpee".to_string(),
+            TotalBodyExerciseName::SquatThrusts => "squat_thrusts".to_string(),
+            TotalBodyExerciseName::WeightedSquatThrusts => "weighted_squat_thrusts".to_string(),
+            TotalBodyExerciseName::SquatPlankPushUp => "squat_plank_push_up".to_string(),
             TotalBodyExerciseName::WeightedSquatPlankPushUp => {
-                "WeightedSquatPlankPushUp".to_string()
+                "weighted_squat_plank_push_up".to_string()
             }
             TotalBodyExerciseName::StandingTRotationBalance => {
-                "StandingTRotationBalance".to_string()
+                "standing_t_rotation_balance".to_string()
             }
             TotalBodyExerciseName::WeightedStandingTRotationBalance => {
-                "WeightedStandingTRotationBalance".to_string()
+                "weighted_standing_t_rotation_balance".to_string()
             }
-            TotalBodyExerciseName::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            TotalBodyExerciseName::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -16809,7 +16758,6 @@ pub enum TricepsExtensionExerciseName {
     WeightedDip,
     UnknownVariant(u16),
 }
-
 impl TricepsExtensionExerciseName {
     pub fn from_u16(value: u16) -> TricepsExtensionExerciseName {
         match value {
@@ -16908,103 +16856,105 @@ impl TricepsExtensionExerciseName {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            TricepsExtensionExerciseName::BenchDip => "BenchDip".to_string(),
-            TricepsExtensionExerciseName::WeightedBenchDip => "WeightedBenchDip".to_string(),
-            TricepsExtensionExerciseName::BodyWeightDip => "BodyWeightDip".to_string(),
-            TricepsExtensionExerciseName::CableKickback => "CableKickback".to_string(),
+            TricepsExtensionExerciseName::BenchDip => "bench_dip".to_string(),
+            TricepsExtensionExerciseName::WeightedBenchDip => "weighted_bench_dip".to_string(),
+            TricepsExtensionExerciseName::BodyWeightDip => "body_weight_dip".to_string(),
+            TricepsExtensionExerciseName::CableKickback => "cable_kickback".to_string(),
             TricepsExtensionExerciseName::CableLyingTricepsExtension => {
-                "CableLyingTricepsExtension".to_string()
+                "cable_lying_triceps_extension".to_string()
             }
             TricepsExtensionExerciseName::CableOverheadTricepsExtension => {
-                "CableOverheadTricepsExtension".to_string()
+                "cable_overhead_triceps_extension".to_string()
             }
-            TricepsExtensionExerciseName::DumbbellKickback => "DumbbellKickback".to_string(),
+            TricepsExtensionExerciseName::DumbbellKickback => "dumbbell_kickback".to_string(),
             TricepsExtensionExerciseName::DumbbellLyingTricepsExtension => {
-                "DumbbellLyingTricepsExtension".to_string()
+                "dumbbell_lying_triceps_extension".to_string()
             }
             TricepsExtensionExerciseName::EzBarOverheadTricepsExtension => {
-                "EzBarOverheadTricepsExtension".to_string()
+                "ez_bar_overhead_triceps_extension".to_string()
             }
-            TricepsExtensionExerciseName::InclineDip => "InclineDip".to_string(),
-            TricepsExtensionExerciseName::WeightedInclineDip => "WeightedInclineDip".to_string(),
+            TricepsExtensionExerciseName::InclineDip => "incline_dip".to_string(),
+            TricepsExtensionExerciseName::WeightedInclineDip => "weighted_incline_dip".to_string(),
             TricepsExtensionExerciseName::InclineEzBarLyingTricepsExtension => {
-                "InclineEzBarLyingTricepsExtension".to_string()
+                "incline_ez_bar_lying_triceps_extension".to_string()
             }
             TricepsExtensionExerciseName::LyingDumbbellPulloverToExtension => {
-                "LyingDumbbellPulloverToExtension".to_string()
+                "lying_dumbbell_pullover_to_extension".to_string()
             }
             TricepsExtensionExerciseName::LyingEzBarTricepsExtension => {
-                "LyingEzBarTricepsExtension".to_string()
+                "lying_ez_bar_triceps_extension".to_string()
             }
             TricepsExtensionExerciseName::LyingTricepsExtensionToCloseGripBenchPress => {
-                "LyingTricepsExtensionToCloseGripBenchPress".to_string()
+                "lying_triceps_extension_to_close_grip_bench_press".to_string()
             }
             TricepsExtensionExerciseName::OverheadDumbbellTricepsExtension => {
-                "OverheadDumbbellTricepsExtension".to_string()
+                "overhead_dumbbell_triceps_extension".to_string()
             }
             TricepsExtensionExerciseName::RecliningTricepsPress => {
-                "RecliningTricepsPress".to_string()
+                "reclining_triceps_press".to_string()
             }
             TricepsExtensionExerciseName::ReverseGripPressdown => {
-                "ReverseGripPressdown".to_string()
+                "reverse_grip_pressdown".to_string()
             }
             TricepsExtensionExerciseName::ReverseGripTricepsPressdown => {
-                "ReverseGripTricepsPressdown".to_string()
+                "reverse_grip_triceps_pressdown".to_string()
             }
-            TricepsExtensionExerciseName::RopePressdown => "RopePressdown".to_string(),
+            TricepsExtensionExerciseName::RopePressdown => "rope_pressdown".to_string(),
             TricepsExtensionExerciseName::SeatedBarbellOverheadTricepsExtension => {
-                "SeatedBarbellOverheadTricepsExtension".to_string()
+                "seated_barbell_overhead_triceps_extension".to_string()
             }
             TricepsExtensionExerciseName::SeatedDumbbellOverheadTricepsExtension => {
-                "SeatedDumbbellOverheadTricepsExtension".to_string()
+                "seated_dumbbell_overhead_triceps_extension".to_string()
             }
             TricepsExtensionExerciseName::SeatedEzBarOverheadTricepsExtension => {
-                "SeatedEzBarOverheadTricepsExtension".to_string()
+                "seated_ez_bar_overhead_triceps_extension".to_string()
             }
             TricepsExtensionExerciseName::SeatedSingleArmOverheadDumbbellExtension => {
-                "SeatedSingleArmOverheadDumbbellExtension".to_string()
+                "seated_single_arm_overhead_dumbbell_extension".to_string()
             }
             TricepsExtensionExerciseName::SingleArmDumbbellOverheadTricepsExtension => {
-                "SingleArmDumbbellOverheadTricepsExtension".to_string()
+                "single_arm_dumbbell_overhead_triceps_extension".to_string()
             }
             TricepsExtensionExerciseName::SingleDumbbellSeatedOverheadTricepsExtension => {
-                "SingleDumbbellSeatedOverheadTricepsExtension".to_string()
+                "single_dumbbell_seated_overhead_triceps_extension".to_string()
             }
             TricepsExtensionExerciseName::SingleLegBenchDipAndKick => {
-                "SingleLegBenchDipAndKick".to_string()
+                "single_leg_bench_dip_and_kick".to_string()
             }
             TricepsExtensionExerciseName::WeightedSingleLegBenchDipAndKick => {
-                "WeightedSingleLegBenchDipAndKick".to_string()
+                "weighted_single_leg_bench_dip_and_kick".to_string()
             }
-            TricepsExtensionExerciseName::SingleLegDip => "SingleLegDip".to_string(),
+            TricepsExtensionExerciseName::SingleLegDip => "single_leg_dip".to_string(),
             TricepsExtensionExerciseName::WeightedSingleLegDip => {
-                "WeightedSingleLegDip".to_string()
+                "weighted_single_leg_dip".to_string()
             }
             TricepsExtensionExerciseName::StaticLyingTricepsExtension => {
-                "StaticLyingTricepsExtension".to_string()
+                "static_lying_triceps_extension".to_string()
             }
-            TricepsExtensionExerciseName::SuspendedDip => "SuspendedDip".to_string(),
+            TricepsExtensionExerciseName::SuspendedDip => "suspended_dip".to_string(),
             TricepsExtensionExerciseName::WeightedSuspendedDip => {
-                "WeightedSuspendedDip".to_string()
+                "weighted_suspended_dip".to_string()
             }
             TricepsExtensionExerciseName::SwissBallDumbbellLyingTricepsExtension => {
-                "SwissBallDumbbellLyingTricepsExtension".to_string()
+                "swiss_ball_dumbbell_lying_triceps_extension".to_string()
             }
             TricepsExtensionExerciseName::SwissBallEzBarLyingTricepsExtension => {
-                "SwissBallEzBarLyingTricepsExtension".to_string()
+                "swiss_ball_ez_bar_lying_triceps_extension".to_string()
             }
             TricepsExtensionExerciseName::SwissBallEzBarOverheadTricepsExtension => {
-                "SwissBallEzBarOverheadTricepsExtension".to_string()
+                "swiss_ball_ez_bar_overhead_triceps_extension".to_string()
             }
-            TricepsExtensionExerciseName::TabletopDip => "TabletopDip".to_string(),
-            TricepsExtensionExerciseName::WeightedTabletopDip => "WeightedTabletopDip".to_string(),
+            TricepsExtensionExerciseName::TabletopDip => "tabletop_dip".to_string(),
+            TricepsExtensionExerciseName::WeightedTabletopDip => {
+                "weighted_tabletop_dip".to_string()
+            }
             TricepsExtensionExerciseName::TricepsExtensionOnFloor => {
-                "TricepsExtensionOnFloor".to_string()
+                "triceps_extension_on_floor".to_string()
             }
-            TricepsExtensionExerciseName::TricepsPressdown => "TricepsPressdown".to_string(),
-            TricepsExtensionExerciseName::WeightedDip => "WeightedDip".to_string(),
+            TricepsExtensionExerciseName::TricepsPressdown => "triceps_pressdown".to_string(),
+            TricepsExtensionExerciseName::WeightedDip => "weighted_dip".to_string(),
             TricepsExtensionExerciseName::UnknownVariant(value) => {
-                format!("UnknownVariant{}", *value)
+                format!("unknown_variant_{}", *value)
             }
         }
     }
@@ -17045,7 +16995,6 @@ pub enum WarmUpExerciseName {
     WalkoutFromPushUpPosition,
     UnknownVariant(u16),
 }
-
 impl WarmUpExerciseName {
     pub fn from_u16(value: u16) -> WarmUpExerciseName {
         match value {
@@ -17124,48 +17073,52 @@ impl WarmUpExerciseName {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            WarmUpExerciseName::QuadrupedRocking => "QuadrupedRocking".to_string(),
-            WarmUpExerciseName::NeckTilts => "NeckTilts".to_string(),
-            WarmUpExerciseName::AnkleCircles => "AnkleCircles".to_string(),
+            WarmUpExerciseName::QuadrupedRocking => "quadruped_rocking".to_string(),
+            WarmUpExerciseName::NeckTilts => "neck_tilts".to_string(),
+            WarmUpExerciseName::AnkleCircles => "ankle_circles".to_string(),
             WarmUpExerciseName::AnkleDorsiflexionWithBand => {
-                "AnkleDorsiflexionWithBand".to_string()
+                "ankle_dorsiflexion_with_band".to_string()
             }
-            WarmUpExerciseName::AnkleInternalRotation => "AnkleInternalRotation".to_string(),
-            WarmUpExerciseName::ArmCircles => "ArmCircles".to_string(),
-            WarmUpExerciseName::BentOverReachToSky => "BentOverReachToSky".to_string(),
-            WarmUpExerciseName::CatCamel => "CatCamel".to_string(),
-            WarmUpExerciseName::ElbowToFootLunge => "ElbowToFootLunge".to_string(),
+            WarmUpExerciseName::AnkleInternalRotation => "ankle_internal_rotation".to_string(),
+            WarmUpExerciseName::ArmCircles => "arm_circles".to_string(),
+            WarmUpExerciseName::BentOverReachToSky => "bent_over_reach_to_sky".to_string(),
+            WarmUpExerciseName::CatCamel => "cat_camel".to_string(),
+            WarmUpExerciseName::ElbowToFootLunge => "elbow_to_foot_lunge".to_string(),
             WarmUpExerciseName::ForwardAndBackwardLegSwings => {
-                "ForwardAndBackwardLegSwings".to_string()
+                "forward_and_backward_leg_swings".to_string()
             }
-            WarmUpExerciseName::Groiners => "Groiners".to_string(),
-            WarmUpExerciseName::InvertedHamstringStretch => "InvertedHamstringStretch".to_string(),
-            WarmUpExerciseName::LateralDuckUnder => "LateralDuckUnder".to_string(),
-            WarmUpExerciseName::NeckRotations => "NeckRotations".to_string(),
-            WarmUpExerciseName::OppositeArmAndLegBalance => "OppositeArmAndLegBalance".to_string(),
-            WarmUpExerciseName::ReachRollAndLift => "ReachRollAndLift".to_string(),
-            WarmUpExerciseName::Scorpion => "Scorpion".to_string(),
-            WarmUpExerciseName::ShoulderCircles => "ShoulderCircles".to_string(),
-            WarmUpExerciseName::SideToSideLegSwings => "SideToSideLegSwings".to_string(),
-            WarmUpExerciseName::SleeperStretch => "SleeperStretch".to_string(),
-            WarmUpExerciseName::SlideOut => "SlideOut".to_string(),
-            WarmUpExerciseName::SwissBallHipCrossover => "SwissBallHipCrossover".to_string(),
+            WarmUpExerciseName::Groiners => "groiners".to_string(),
+            WarmUpExerciseName::InvertedHamstringStretch => {
+                "inverted_hamstring_stretch".to_string()
+            }
+            WarmUpExerciseName::LateralDuckUnder => "lateral_duck_under".to_string(),
+            WarmUpExerciseName::NeckRotations => "neck_rotations".to_string(),
+            WarmUpExerciseName::OppositeArmAndLegBalance => {
+                "opposite_arm_and_leg_balance".to_string()
+            }
+            WarmUpExerciseName::ReachRollAndLift => "reach_roll_and_lift".to_string(),
+            WarmUpExerciseName::Scorpion => "scorpion".to_string(),
+            WarmUpExerciseName::ShoulderCircles => "shoulder_circles".to_string(),
+            WarmUpExerciseName::SideToSideLegSwings => "side_to_side_leg_swings".to_string(),
+            WarmUpExerciseName::SleeperStretch => "sleeper_stretch".to_string(),
+            WarmUpExerciseName::SlideOut => "slide_out".to_string(),
+            WarmUpExerciseName::SwissBallHipCrossover => "swiss_ball_hip_crossover".to_string(),
             WarmUpExerciseName::SwissBallReachRollAndLift => {
-                "SwissBallReachRollAndLift".to_string()
+                "swiss_ball_reach_roll_and_lift".to_string()
             }
             WarmUpExerciseName::SwissBallWindshieldWipers => {
-                "SwissBallWindshieldWipers".to_string()
+                "swiss_ball_windshield_wipers".to_string()
             }
-            WarmUpExerciseName::ThoracicRotation => "ThoracicRotation".to_string(),
-            WarmUpExerciseName::WalkingHighKicks => "WalkingHighKicks".to_string(),
-            WarmUpExerciseName::WalkingHighKnees => "WalkingHighKnees".to_string(),
-            WarmUpExerciseName::WalkingKneeHugs => "WalkingKneeHugs".to_string(),
-            WarmUpExerciseName::WalkingLegCradles => "WalkingLegCradles".to_string(),
-            WarmUpExerciseName::Walkout => "Walkout".to_string(),
+            WarmUpExerciseName::ThoracicRotation => "thoracic_rotation".to_string(),
+            WarmUpExerciseName::WalkingHighKicks => "walking_high_kicks".to_string(),
+            WarmUpExerciseName::WalkingHighKnees => "walking_high_knees".to_string(),
+            WarmUpExerciseName::WalkingKneeHugs => "walking_knee_hugs".to_string(),
+            WarmUpExerciseName::WalkingLegCradles => "walking_leg_cradles".to_string(),
+            WarmUpExerciseName::Walkout => "walkout".to_string(),
             WarmUpExerciseName::WalkoutFromPushUpPosition => {
-                "WalkoutFromPushUpPosition".to_string()
+                "walkout_from_push_up_position".to_string()
             }
-            WarmUpExerciseName::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            WarmUpExerciseName::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -17178,7 +17131,6 @@ pub enum RunExerciseName {
     Sprint,
     UnknownVariant(u16),
 }
-
 impl RunExerciseName {
     pub fn from_u16(value: u16) -> RunExerciseName {
         match value {
@@ -17203,11 +17155,11 @@ impl RunExerciseName {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            RunExerciseName::Run => "Run".to_string(),
-            RunExerciseName::Walk => "Walk".to_string(),
-            RunExerciseName::Jog => "Jog".to_string(),
-            RunExerciseName::Sprint => "Sprint".to_string(),
-            RunExerciseName::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            RunExerciseName::Run => "run".to_string(),
+            RunExerciseName::Walk => "walk".to_string(),
+            RunExerciseName::Jog => "jog".to_string(),
+            RunExerciseName::Sprint => "sprint".to_string(),
+            RunExerciseName::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -17220,7 +17172,6 @@ pub enum WaterType {
     Custom,
     UnknownVariant(u8),
 }
-
 impl WaterType {
     pub fn from_u8(value: u8) -> WaterType {
         match value {
@@ -17245,11 +17196,11 @@ impl WaterType {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            WaterType::Fresh => "Fresh".to_string(),
-            WaterType::Salt => "Salt".to_string(),
-            WaterType::En13319 => "En13319".to_string(),
-            WaterType::Custom => "Custom".to_string(),
-            WaterType::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            WaterType::Fresh => "fresh".to_string(),
+            WaterType::Salt => "salt".to_string(),
+            WaterType::En13319 => "en13319".to_string(),
+            WaterType::Custom => "custom".to_string(),
+            WaterType::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -17259,7 +17210,6 @@ pub enum TissueModelType {
     Zhl16c, // Buhlmann's decompression algorithm, version C
     UnknownVariant(u8),
 }
-
 impl TissueModelType {
     pub fn from_u8(value: u8) -> TissueModelType {
         match value {
@@ -17278,8 +17228,8 @@ impl TissueModelType {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            TissueModelType::Zhl16c => "Zhl16c".to_string(),
-            TissueModelType::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            TissueModelType::Zhl16c => "zhl_16c".to_string(),
+            TissueModelType::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -17291,7 +17241,6 @@ pub enum DiveGasStatus {
     BackupOnly,
     UnknownVariant(u8),
 }
-
 impl DiveGasStatus {
     pub fn from_u8(value: u8) -> DiveGasStatus {
         match value {
@@ -17314,10 +17263,10 @@ impl DiveGasStatus {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            DiveGasStatus::Disabled => "Disabled".to_string(),
-            DiveGasStatus::Enabled => "Enabled".to_string(),
-            DiveGasStatus::BackupOnly => "BackupOnly".to_string(),
-            DiveGasStatus::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            DiveGasStatus::Disabled => "disabled".to_string(),
+            DiveGasStatus::Enabled => "enabled".to_string(),
+            DiveGasStatus::BackupOnly => "backup_only".to_string(),
+            DiveGasStatus::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -17328,7 +17277,6 @@ pub enum DiveAlarmType {
     Time,
     UnknownVariant(u8),
 }
-
 impl DiveAlarmType {
     pub fn from_u8(value: u8) -> DiveAlarmType {
         match value {
@@ -17349,9 +17297,9 @@ impl DiveAlarmType {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            DiveAlarmType::Depth => "Depth".to_string(),
-            DiveAlarmType::Time => "Time".to_string(),
-            DiveAlarmType::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            DiveAlarmType::Depth => "depth".to_string(),
+            DiveAlarmType::Time => "time".to_string(),
+            DiveAlarmType::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -17362,7 +17310,6 @@ pub enum DiveBacklightMode {
     AlwaysOn,
     UnknownVariant(u8),
 }
-
 impl DiveBacklightMode {
     pub fn from_u8(value: u8) -> DiveBacklightMode {
         match value {
@@ -17383,9 +17330,9 @@ impl DiveBacklightMode {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            DiveBacklightMode::AtDepth => "AtDepth".to_string(),
-            DiveBacklightMode::AlwaysOn => "AlwaysOn".to_string(),
-            DiveBacklightMode::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            DiveBacklightMode::AtDepth => "at_depth".to_string(),
+            DiveBacklightMode::AlwaysOn => "always_on".to_string(),
+            DiveBacklightMode::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -17396,7 +17343,6 @@ pub enum FaveroProduct {
     AssiomaDuo,
     UnknownVariant(u16),
 }
-
 impl FaveroProduct {
     pub fn from_u16(value: u16) -> FaveroProduct {
         match value {
@@ -17417,9 +17363,9 @@ impl FaveroProduct {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            FaveroProduct::AssiomaUno => "AssiomaUno".to_string(),
-            FaveroProduct::AssiomaDuo => "AssiomaDuo".to_string(),
-            FaveroProduct::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            FaveroProduct::AssiomaUno => "assioma_uno".to_string(),
+            FaveroProduct::AssiomaDuo => "assioma_duo".to_string(),
+            FaveroProduct::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -17431,7 +17377,6 @@ pub enum ClimbProEvent {
     Complete,
     UnknownVariant(u8),
 }
-
 impl ClimbProEvent {
     pub fn from_u8(value: u8) -> ClimbProEvent {
         match value {
@@ -17454,10 +17399,10 @@ impl ClimbProEvent {
     }
     pub fn to_string(&self) -> String {
         match &self {
-            ClimbProEvent::Approach => "Approach".to_string(),
-            ClimbProEvent::Start => "Start".to_string(),
-            ClimbProEvent::Complete => "Complete".to_string(),
-            ClimbProEvent::UnknownVariant(value) => format!("UnknownVariant{}", *value),
+            ClimbProEvent::Approach => "approach".to_string(),
+            ClimbProEvent::Start => "start".to_string(),
+            ClimbProEvent::Complete => "complete".to_string(),
+            ClimbProEvent::UnknownVariant(value) => format!("unknown_variant_{}", *value),
         }
     }
 }
@@ -17735,8 +17680,6 @@ impl FieldDataType {
             FieldDataType::WeatherStatus => true,
             FieldDataType::WeatherSeverity => true,
             FieldDataType::WeatherSevereType => true,
-            FieldDataType::TimeIntoDay => true,
-            FieldDataType::LocaltimeIntoDay => true,
             FieldDataType::StrokeType => true,
             FieldDataType::BodyLocation => true,
             FieldDataType::SegmentLapStatus => true,
@@ -17744,7 +17687,6 @@ impl FieldDataType {
             FieldDataType::SegmentDeleteStatus => true,
             FieldDataType::SegmentSelectionType => true,
             FieldDataType::SourceType => true,
-            FieldDataType::LocalDeviceType => true,
             FieldDataType::DisplayOrientation => true,
             FieldDataType::WorkoutEquipment => true,
             FieldDataType::WatchfaceMode => true,
@@ -17905,8 +17847,6 @@ pub fn get_field_variant_as_string(field_type: FieldDataType, value: i64) -> Str
         FieldDataType::WeatherStatus => WeatherStatus::from_i64(value).to_string(),
         FieldDataType::WeatherSeverity => WeatherSeverity::from_i64(value).to_string(),
         FieldDataType::WeatherSevereType => WeatherSevereType::from_i64(value).to_string(),
-        FieldDataType::TimeIntoDay => TimeIntoDay::from_i64(value).to_string(),
-        FieldDataType::LocaltimeIntoDay => LocaltimeIntoDay::from_i64(value).to_string(),
         FieldDataType::StrokeType => StrokeType::from_i64(value).to_string(),
         FieldDataType::BodyLocation => BodyLocation::from_i64(value).to_string(),
         FieldDataType::SegmentLapStatus => SegmentLapStatus::from_i64(value).to_string(),
@@ -17916,7 +17856,6 @@ pub fn get_field_variant_as_string(field_type: FieldDataType, value: i64) -> Str
         FieldDataType::SegmentDeleteStatus => SegmentDeleteStatus::from_i64(value).to_string(),
         FieldDataType::SegmentSelectionType => SegmentSelectionType::from_i64(value).to_string(),
         FieldDataType::SourceType => SourceType::from_i64(value).to_string(),
-        FieldDataType::LocalDeviceType => LocalDeviceType::from_i64(value).to_string(),
         FieldDataType::DisplayOrientation => DisplayOrientation::from_i64(value).to_string(),
         FieldDataType::WorkoutEquipment => WorkoutEquipment::from_i64(value).to_string(),
         FieldDataType::WatchfaceMode => WatchfaceMode::from_i64(value).to_string(),

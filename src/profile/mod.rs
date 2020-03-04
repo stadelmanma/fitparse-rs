@@ -83,3 +83,4 @@ impl FieldInfo {
 }
 
 // TODO how to handle subfields and reference fields?
+// TODO what about array types?
