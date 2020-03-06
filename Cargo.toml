@@ -8,5 +8,7 @@ edition = "2018"
 calamine = "0.16.1"
 
 [dependencies]
-chrono = "0.4"
+chrono = {version = "0.4", features = ["serde"] }
 nom = "5"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"

@@ -30,7 +30,7 @@ impl FieldTypeDefintion {
 
     /// Generate an enum from the field type variants
     fn generate_enum(&self, out: &mut File) -> Result<(), std::io::Error> {
-        write!(out, "#[derive(Clone, Copy, Debug)]\n")?;
+        write!(out, "#[derive(Clone, Copy, Debug, Serialize)]\n")?;
         write!(out, "pub enum {} {{\n", titlecase_string(&self.name))?;
         for variant in self.variant_map.values() {
             variant.write_variant_line(out)?;
@@ -63,7 +63,11 @@ impl FieldTypeDefintion {
         write!(out, "}}\n")?;
         write!(out, "}}\n")?;
 
-        write!(out, "pub fn from_i64(value: i64) -> {} {{\n", self.titlized_name)?;
+        write!(
+            out,
+            "pub fn from_i64(value: i64) -> {} {{\n",
+            self.titlized_name
+        )?;
         write!(
             out,
             "{0}::from_{1}(value as {1})\n",
@@ -82,7 +86,11 @@ impl FieldTypeDefintion {
                 variant.value
             )?;
         }
-        write!(out, "{}::UnknownVariant(value) => *value\n", self.titlized_name)?;
+        write!(
+            out,
+            "{}::UnknownVariant(value) => *value\n",
+            self.titlized_name
+        )?;
         write!(out, "}}\n")?;
         write!(out, "}}\n")?;
 
@@ -199,14 +207,12 @@ fn generate_main_field_type_enum(
     out: &mut File,
 ) -> Result<(), std::io::Error> {
     let base_types = vec![
-        "Bool", "SInt8", "UInt8", "SInt16", "UInt16", "SInt32", "UInt32", "String",
-        "Float32", "Float64", "UInt8z", "UInt16z", "UInt32z", "Byte", "SInt64", "UInt64",
-        "UInt64z",
+        "Bool", "SInt8", "UInt8", "SInt16", "UInt16", "SInt32", "UInt32", "String", "Float32",
+        "Float64", "UInt8z", "UInt16z", "UInt32z", "Byte", "SInt64", "UInt64", "UInt64z",
     ];
     let mut is_enum_force_false = HashSet::new();
     is_enum_force_false.insert("date_time".to_string());
     is_enum_force_false.insert("local_date_time".to_string());
-
 
     write!(
         out,
@@ -214,9 +220,10 @@ fn generate_main_field_type_enum(
 /// Describe all possible data types of a field
 ///
 /// The Enum type's value is actually an enum of enums.
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum FieldDataType {{
-")?;
+"
+    )?;
     for type_name in base_types {
         write!(out, " {},\n", type_name)?;
     }
@@ -231,7 +238,11 @@ pub enum FieldDataType {{
     write!(out, "        match self {{\n")?;
     for field_type in field_types {
         if !field_type.variant_map.is_empty() && !is_enum_force_false.contains(&field_type.name) {
-            write!(out, "FieldDataType::{} => true,\n", field_type.titlized_name)?;
+            write!(
+                out,
+                "FieldDataType::{} => true,\n",
+                field_type.titlized_name
+            )?;
         }
     }
     write!(out, "            _ => false,\n")?;
@@ -448,6 +459,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         file,
         "/// Auto generated profile from FIT SDK Release: XXX\n\n"
     )?;
+    write!(file, "use serde::Serialize;\n")?;
     if let Some(Ok(sheet)) = excel.worksheet_range("Types") {
         process_types(sheet, &mut file)?;
     } else {

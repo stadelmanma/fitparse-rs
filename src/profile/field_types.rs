@@ -1,6 +1,6 @@
 /// Auto generated profile from FIT SDK Release: XXX
-
-#[derive(Clone, Copy, Debug)]
+use serde::Serialize;
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum File {
     Device,          // Read only, single file. Must be in root directory.
     Settings,        // Read/write, single file. Directory=Settings
@@ -105,7 +105,7 @@ impl File {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum MesgNum {
     FileId,
     Capabilities,
@@ -490,7 +490,7 @@ impl MesgNum {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum Checksum {
     Clear, // Allows clear of checksum for flash memory where can only write 1 to 0 without erasing sector.
     Ok, // Set to mark checksum as valid if computes to invalid values 0 or 0xFF.  Checksum can also be set to ok to save encoding computation time.
@@ -523,7 +523,7 @@ impl Checksum {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum FileFlags {
     Read,
     Write,
@@ -560,7 +560,7 @@ impl FileFlags {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum MesgCount {
     NumPerFile,
     MaxPerFile,
@@ -597,7 +597,7 @@ impl MesgCount {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum DateTime {
     Min, // if date_time is < 0x10000000 then it is system time (seconds from device power on)
     UnknownVariant(u32),
@@ -626,7 +626,7 @@ impl DateTime {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum LocalDateTime {
     Min, // if date_time is < 0x10000000 then it is system time (seconds from device power on)
     UnknownVariant(u32),
@@ -655,7 +655,7 @@ impl LocalDateTime {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum MessageIndex {
     Mask,     // index
     Reserved, // reserved (default 0)
@@ -692,7 +692,7 @@ impl MessageIndex {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum DeviceIndex {
     Creator, // Creator of the file is always device index 0.
     UnknownVariant(u8),
@@ -721,7 +721,7 @@ impl DeviceIndex {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum Gender {
     Female,
     Male,
@@ -754,7 +754,7 @@ impl Gender {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum Language {
     English,
     French,
@@ -935,7 +935,7 @@ impl Language {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum LanguageBits0 {
     English,
     French,
@@ -992,7 +992,7 @@ impl LanguageBits0 {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum LanguageBits1 {
     Dutch,
     Finnish,
@@ -1049,7 +1049,7 @@ impl LanguageBits1 {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum LanguageBits2 {
     Slovenian,
     Swedish,
@@ -1106,7 +1106,7 @@ impl LanguageBits2 {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum LanguageBits3 {
     Bulgarian,
     Romanian,
@@ -1163,7 +1163,7 @@ impl LanguageBits3 {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum LanguageBits4 {
     BrazilianPortuguese,
     Indonesian,
@@ -1212,7 +1212,7 @@ impl LanguageBits4 {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum TimeZone {
     Almaty,
     Bangkok,
@@ -1661,7 +1661,7 @@ impl TimeZone {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum DisplayMeasure {
     Metric,
     Statute,
@@ -1698,7 +1698,7 @@ impl DisplayMeasure {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum DisplayHeart {
     Bpm,
     Max,
@@ -1735,7 +1735,7 @@ impl DisplayHeart {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum DisplayPower {
     Watts,
     PercentFtp,
@@ -1768,7 +1768,7 @@ impl DisplayPower {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum DisplayPosition {
     Degree,               // dd.dddddd
     DegreeMinute,         // dddmm.mmm
@@ -1961,7 +1961,7 @@ impl DisplayPosition {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum Switch {
     Off,
     On,
@@ -1998,7 +1998,7 @@ impl Switch {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum Sport {
     Generic,
     Running,
@@ -2223,7 +2223,7 @@ impl Sport {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum SportBits0 {
     Generic,
     Running,
@@ -2280,7 +2280,7 @@ impl SportBits0 {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum SportBits1 {
     Tennis,
     AmericanFootball,
@@ -2337,7 +2337,7 @@ impl SportBits1 {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum SportBits2 {
     Mountaineering,
     Hiking,
@@ -2394,7 +2394,7 @@ impl SportBits2 {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum SportBits3 {
     Driving,
     Golf,
@@ -2451,7 +2451,7 @@ impl SportBits3 {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum SportBits4 {
     Sailing,
     IceSkating,
@@ -2508,7 +2508,7 @@ impl SportBits4 {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum SportBits5 {
     WaterSkiing,
     Kayaking,
@@ -2565,7 +2565,7 @@ impl SportBits5 {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum SportBits6 {
     FloorClimbing,
     UnknownVariant(u8),
@@ -2594,7 +2594,7 @@ impl SportBits6 {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum SubSport {
     Generic,
     Treadmill,           // Run/Fitness Equipment
@@ -2863,7 +2863,7 @@ impl SubSport {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum SportEvent {
     Uncategorized,
     Geocaching,
@@ -2924,7 +2924,7 @@ impl SportEvent {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum Activity {
     Manual,
     AutoMultiSport,
@@ -2957,7 +2957,7 @@ impl Activity {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum Intensity {
     Active,
     Rest,
@@ -2998,7 +2998,7 @@ impl Intensity {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum SessionTrigger {
     ActivityEnd,
     Manual,           // User changed sport.
@@ -3039,7 +3039,7 @@ impl SessionTrigger {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum AutolapTrigger {
     Time,
     Distance,
@@ -3092,7 +3092,7 @@ impl AutolapTrigger {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum LapTrigger {
     Manual,
     Time,
@@ -3153,7 +3153,7 @@ impl LapTrigger {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum TimeMode {
     Hour12,
     Hour24,   // Does not use a leading zero and has a colon
@@ -3202,7 +3202,7 @@ impl TimeMode {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum BacklightMode {
     Off,
     Manual,
@@ -3257,7 +3257,7 @@ impl BacklightMode {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum DateMode {
     DayMonth,
     MonthDay,
@@ -3290,7 +3290,7 @@ impl DateMode {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum BacklightTimeout {
     Infinite, // Backlight stays on forever.
     UnknownVariant(u8),
@@ -3319,7 +3319,7 @@ impl BacklightTimeout {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum Event {
     Timer,                 // Group 0.  Start / stop_all
     Workout,               // start / stop
@@ -3488,7 +3488,7 @@ impl Event {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum EventType {
     Start,
     Stop,
@@ -3553,7 +3553,7 @@ impl EventType {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum TimerTrigger {
     Manual,
     Auto,
@@ -3590,7 +3590,7 @@ impl TimerTrigger {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum FitnessEquipmentState {
     Ready,
     InUse,
@@ -3631,7 +3631,7 @@ impl FitnessEquipmentState {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum Tone {
     Off,
     Tone,
@@ -3672,7 +3672,7 @@ impl Tone {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum Autoscroll {
     None,
     Slow,
@@ -3713,7 +3713,7 @@ impl Autoscroll {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum ActivityClass {
     LevelMax,
     Level, // 0 to 100
@@ -3750,7 +3750,7 @@ impl ActivityClass {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum HrZoneCalc {
     Custom,
     PercentMaxHr,
@@ -3787,7 +3787,7 @@ impl HrZoneCalc {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum PwrZoneCalc {
     Custom,
     PercentFtp,
@@ -3820,7 +3820,7 @@ impl PwrZoneCalc {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum WktStepDuration {
     Time,
     Distance,
@@ -3973,7 +3973,7 @@ impl WktStepDuration {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum WktStepTarget {
     Speed,
     HeartRate,
@@ -4054,7 +4054,7 @@ impl WktStepTarget {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum Goal {
     Time,
     Distance,
@@ -4107,7 +4107,7 @@ impl Goal {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum GoalRecurrence {
     Off,
     Daily,
@@ -4156,7 +4156,7 @@ impl GoalRecurrence {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum GoalSource {
     Auto,      // Device generated
     Community, // Social network sourced goal
@@ -4193,7 +4193,7 @@ impl GoalSource {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum Schedule {
     Workout,
     Course,
@@ -4226,7 +4226,7 @@ impl Schedule {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum CoursePoint {
     Generic,
     Summit,
@@ -4355,7 +4355,7 @@ impl CoursePoint {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum Manufacturer {
     Garmin,
     GarminFr405Antfs, // Do not use.  Used by FR405 for ANTFS man id.
@@ -5080,7 +5080,7 @@ impl Manufacturer {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum GarminProduct {
     Hrm1,
     Axh01, // AXH01 HRM chipset
@@ -5869,7 +5869,7 @@ impl GarminProduct {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum AntplusDeviceType {
     Antfs,
     BikePower,
@@ -5990,7 +5990,7 @@ impl AntplusDeviceType {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum AntNetwork {
     Public,
     Antplus,
@@ -6031,7 +6031,7 @@ impl AntNetwork {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum WorkoutCapabilities {
     Interval,
     Custom,
@@ -6112,7 +6112,7 @@ impl WorkoutCapabilities {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum BatteryStatus {
     New,
     Good,
@@ -6165,7 +6165,7 @@ impl BatteryStatus {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum HrType {
     Normal,
     Irregular,
@@ -6198,7 +6198,7 @@ impl HrType {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum CourseCapabilities {
     Processed,
     Valid,
@@ -6267,7 +6267,7 @@ impl CourseCapabilities {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum Weight {
     Calculating,
     UnknownVariant(u16),
@@ -6296,7 +6296,7 @@ impl Weight {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum WorkoutHr {
     BpmOffset,
     UnknownVariant(u32),
@@ -6325,7 +6325,7 @@ impl WorkoutHr {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum WorkoutPower {
     WattsOffset,
     UnknownVariant(u32),
@@ -6354,7 +6354,7 @@ impl WorkoutPower {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum BpStatus {
     NoError,
     ErrorIncompleteData,
@@ -6399,7 +6399,7 @@ impl BpStatus {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum UserLocalId {
     LocalMin,
     LocalMax,
@@ -6448,7 +6448,7 @@ impl UserLocalId {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum SwimStroke {
     Freestyle,
     Backstroke,
@@ -6501,7 +6501,7 @@ impl SwimStroke {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum ActivityType {
     Generic,
     Running,
@@ -6562,7 +6562,7 @@ impl ActivityType {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum ActivitySubtype {
     Generic,
     Treadmill,     // Run
@@ -6667,7 +6667,7 @@ impl ActivitySubtype {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum ActivityLevel {
     Low,
     Medium,
@@ -6704,7 +6704,7 @@ impl ActivityLevel {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum Side {
     Right,
     Left,
@@ -6737,7 +6737,7 @@ impl Side {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum LeftRightBalance {
     Mask,  // % contribution
     Right, // data corresponds to right if set, otherwise unknown
@@ -6770,7 +6770,7 @@ impl LeftRightBalance {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum LeftRightBalance100 {
     Mask,  // % contribution scaled by 100
     Right, // data corresponds to right if set, otherwise unknown
@@ -6803,7 +6803,7 @@ impl LeftRightBalance100 {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum LengthType {
     Idle,   // Rest period. Length with no strokes
     Active, // Length with strokes.
@@ -6836,7 +6836,7 @@ impl LengthType {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum DayOfWeek {
     Sunday,
     Monday,
@@ -6889,7 +6889,7 @@ impl DayOfWeek {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum ConnectivityCapabilities {
     Bluetooth,
     BluetoothLe,
@@ -7056,7 +7056,7 @@ impl ConnectivityCapabilities {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum WeatherReport {
     Current,
     HourlyForecast,
@@ -7093,7 +7093,7 @@ impl WeatherReport {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum WeatherStatus {
     Clear,
     PartlyCloudy,
@@ -7202,7 +7202,7 @@ impl WeatherStatus {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum WeatherSeverity {
     Unknown,
     Warning,
@@ -7247,7 +7247,7 @@ impl WeatherSeverity {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum WeatherSevereType {
     Unspecified,
     Tornado,
@@ -7612,7 +7612,7 @@ impl WeatherSevereType {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum StrokeType {
     NoEvent,
     Other, // stroke was detected but cannot be identified
@@ -7661,7 +7661,7 @@ impl StrokeType {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum BodyLocation {
     LeftLeg,
     LeftCalf,
@@ -7846,7 +7846,7 @@ impl BodyLocation {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum SegmentLapStatus {
     End,
     Fail,
@@ -7879,7 +7879,7 @@ impl SegmentLapStatus {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum SegmentLeaderboardType {
     Overall,
     PersonalBest,
@@ -7948,7 +7948,7 @@ impl SegmentLeaderboardType {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum SegmentDeleteStatus {
     DoNotDelete,
     DeleteOne,
@@ -7985,7 +7985,7 @@ impl SegmentDeleteStatus {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum SegmentSelectionType {
     Starred,
     Suggested,
@@ -8018,7 +8018,7 @@ impl SegmentSelectionType {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum SourceType {
     Ant,                // External device connected with ANT
     Antplus,            // External device connected with ANT+
@@ -8067,7 +8067,7 @@ impl SourceType {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum DisplayOrientation {
     Auto, // automatic if the device supports it
     Portrait,
@@ -8112,7 +8112,7 @@ impl DisplayOrientation {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum WorkoutEquipment {
     None,
     SwimFins,
@@ -8161,7 +8161,7 @@ impl WorkoutEquipment {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum WatchfaceMode {
     Digital,
     Analog,
@@ -8202,7 +8202,7 @@ impl WatchfaceMode {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum DigitalWatchfaceLayout {
     Traditional,
     Modern,
@@ -8239,7 +8239,7 @@ impl DigitalWatchfaceLayout {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum AnalogWatchfaceLayout {
     Minimal,
     Traditional,
@@ -8276,7 +8276,7 @@ impl AnalogWatchfaceLayout {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum RiderPositionType {
     Seated,
     Standing,
@@ -8317,7 +8317,7 @@ impl RiderPositionType {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum PowerPhaseType {
     PowerPhaseStartAngle,
     PowerPhaseEndAngle,
@@ -8358,7 +8358,7 @@ impl PowerPhaseType {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum CameraEventType {
     VideoStart, // Start of video recording
     VideoSplit, // Mark of video file split (end of one file, beginning of the other)
@@ -8437,7 +8437,7 @@ impl CameraEventType {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum SensorType {
     Accelerometer,
     Gyroscope,
@@ -8478,7 +8478,7 @@ impl SensorType {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum BikeLightNetworkConfigType {
     Auto,
     Individual,
@@ -8521,7 +8521,7 @@ impl BikeLightNetworkConfigType {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum CommTimeoutType {
     WildcardPairingTimeout, // Timeout pairing to any device
     PairingTimeout,         // Timeout pairing to previously paired device
@@ -8562,7 +8562,7 @@ impl CommTimeoutType {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum CameraOrientationType {
     CameraOrientation0,
     CameraOrientation90,
@@ -8603,7 +8603,7 @@ impl CameraOrientationType {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum AttitudeStage {
     Failed,
     Aligning,
@@ -8644,7 +8644,7 @@ impl AttitudeStage {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum AttitudeValidity {
     TrackAngleHeadingValid,
     PitchValid,
@@ -8721,7 +8721,7 @@ impl AttitudeValidity {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum AutoSyncFrequency {
     Never,
     Occasionally,
@@ -8766,7 +8766,7 @@ impl AutoSyncFrequency {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum ExdLayout {
     FullScreen,
     HalfVertical,
@@ -8823,7 +8823,7 @@ impl ExdLayout {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum ExdDisplayType {
     Numerical,
     Simple,
@@ -8892,7 +8892,7 @@ impl ExdDisplayType {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum ExdDataUnits {
     NoUnits,
     Laps,
@@ -9123,7 +9123,7 @@ impl ExdDataUnits {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum ExdQualifiers {
     NoQualifier,
     Instantaneous,
@@ -9324,7 +9324,7 @@ impl ExdQualifiers {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum ExdDescriptors {
     BikeLightBatteryStatus,
     BeamAngleStatus,
@@ -9751,7 +9751,7 @@ impl ExdDescriptors {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum AutoActivityDetect {
     None,
     Running,
@@ -9804,7 +9804,7 @@ impl AutoActivityDetect {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum SupportedExdScreenLayouts {
     FullScreen,
     HalfVertical,
@@ -9871,7 +9871,7 @@ impl SupportedExdScreenLayouts {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum FitBaseType {
     Enum,
     Sint8,
@@ -9964,7 +9964,7 @@ impl FitBaseType {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum TurnType {
     ArrivingIdx,
     ArrivingLeftIdx,
@@ -10141,7 +10141,7 @@ impl TurnType {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum BikeLightBeamAngleMode {
     Manual,
     Auto,
@@ -10174,7 +10174,7 @@ impl BikeLightBeamAngleMode {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum FitBaseUnit {
     Other,
     Kilogram,
@@ -10211,7 +10211,7 @@ impl FitBaseUnit {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum SetType {
     Rest,
     Active,
@@ -10244,7 +10244,7 @@ impl SetType {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum ExerciseCategory {
     BenchPress,
     CalfRaise,
@@ -10405,7 +10405,7 @@ impl ExerciseCategory {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum BenchPressExerciseName {
     AlternatingDumbbellChestPressOnSwissBall,
     BarbellBenchPress,
@@ -10578,7 +10578,7 @@ impl BenchPressExerciseName {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum CalfRaiseExerciseName {
     Name3WayCalfRaise,
     Name3WayWeightedCalfRaise,
@@ -10721,7 +10721,7 @@ impl CalfRaiseExerciseName {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum CardioExerciseName {
     BobAndWeaveCircle,
     WeightedBobAndWeaveCircle,
@@ -10838,7 +10838,7 @@ impl CardioExerciseName {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum CarryExerciseName {
     BarHolds,
     FarmersWalk,
@@ -10883,7 +10883,7 @@ impl CarryExerciseName {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum ChopExerciseName {
     CablePullThrough,
     CableRotationalLift,
@@ -11018,7 +11018,7 @@ impl ChopExerciseName {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum CoreExerciseName {
     AbsJabs,
     WeightedAbsJabs,
@@ -11353,7 +11353,7 @@ impl CoreExerciseName {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum CrunchExerciseName {
     BicycleCrunch,
     CableCrunch,
@@ -11778,7 +11778,7 @@ impl CrunchExerciseName {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum CurlExerciseName {
     AlternatingDumbbellBicepsCurl,
     AlternatingDumbbellBicepsCurlOnSwissBall,
@@ -12021,7 +12021,7 @@ impl CurlExerciseName {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum DeadliftExerciseName {
     BarbellDeadlift,
     BarbellStraightLegDeadlift,
@@ -12140,7 +12140,7 @@ impl DeadliftExerciseName {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum FlyeExerciseName {
     CableCrossover,
     DeclineDumbbellFlye,
@@ -12207,7 +12207,7 @@ impl FlyeExerciseName {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum HipRaiseExerciseName {
     BarbellHipThrustOnFloor,
     BarbellHipThrustWithBench,
@@ -12500,7 +12500,7 @@ impl HipRaiseExerciseName {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum HipStabilityExerciseName {
     BandSideLyingLegRaise,
     DeadBug,
@@ -12701,7 +12701,7 @@ impl HipStabilityExerciseName {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum HipSwingExerciseName {
     SingleArmKettlebellSwing,
     SingleArmDumbbellSwing,
@@ -12740,7 +12740,7 @@ impl HipSwingExerciseName {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum HyperextensionExerciseName {
     BackExtensionWithOppositeArmAndLegReach,
     WeightedBackExtensionWithOppositeArmAndLegReach,
@@ -12969,7 +12969,7 @@ impl HyperextensionExerciseName {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum LateralRaiseExerciseName {
     Name45DegreeCableExternalRotation,
     AlternatingLateralRaiseWithStaticHold,
@@ -13150,7 +13150,7 @@ impl LateralRaiseExerciseName {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum LegCurlExerciseName {
     LegCurl,
     WeightedLegCurl,
@@ -13235,7 +13235,7 @@ impl LegCurlExerciseName {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum LegRaiseExerciseName {
     HangingKneeRaise,
     HangingLegRaise,
@@ -13370,7 +13370,7 @@ impl LegRaiseExerciseName {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum LungeExerciseName {
     OverheadLunge,
     LungeMatrix,
@@ -13781,7 +13781,7 @@ impl LungeExerciseName {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum OlympicLiftExerciseName {
     BarbellHangPowerClean,
     BarbellHangSquatClean,
@@ -13902,7 +13902,7 @@ impl OlympicLiftExerciseName {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum PlankExerciseName {
     Name45DegreePlank,
     Weighted45DegreePlank,
@@ -14599,7 +14599,7 @@ impl PlankExerciseName {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum PlyoExerciseName {
     AlternatingJumpLunge,
     WeightedAlternatingJumpLunge,
@@ -14776,7 +14776,7 @@ impl PlyoExerciseName {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum PullUpExerciseName {
     BandedPullUps,
     Name30DegreeLatPulldown,
@@ -14965,7 +14965,7 @@ impl PullUpExerciseName {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum PushUpExerciseName {
     ChestPressWithBand,
     AlternatingStaggeredPushUp,
@@ -15366,7 +15366,7 @@ impl PushUpExerciseName {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum RowExerciseName {
     BarbellStraightLegDeadliftToRow,
     CableRowStanding,
@@ -15553,7 +15553,7 @@ impl RowExerciseName {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum ShoulderPressExerciseName {
     AlternatingDumbbellShoulderPress,
     ArnoldPress,
@@ -15710,7 +15710,7 @@ impl ShoulderPressExerciseName {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum ShoulderStabilityExerciseName {
     Name90DegreeCableExternalRotation,
     BandExternalRotation,
@@ -15909,7 +15909,7 @@ impl ShoulderStabilityExerciseName {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum ShrugExerciseName {
     BarbellJumpShrug,
     BarbellShrug,
@@ -16006,7 +16006,7 @@ impl ShrugExerciseName {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum SitUpExerciseName {
     AlternatingSitUp,
     WeightedAlternatingSitUp,
@@ -16199,7 +16199,7 @@ impl SitUpExerciseName {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum SquatExerciseName {
     LegPress,
     BackSquatWithBodyBar,
@@ -16630,7 +16630,7 @@ impl SquatExerciseName {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum TotalBodyExerciseName {
     Burpee,
     WeightedBurpee,
@@ -16713,7 +16713,7 @@ impl TotalBodyExerciseName {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum TricepsExtensionExerciseName {
     BenchDip,
     WeightedBenchDip,
@@ -16960,7 +16960,7 @@ impl TricepsExtensionExerciseName {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum WarmUpExerciseName {
     QuadrupedRocking,
     NeckTilts,
@@ -17123,7 +17123,7 @@ impl WarmUpExerciseName {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum RunExerciseName {
     Run,
     Walk,
@@ -17164,7 +17164,7 @@ impl RunExerciseName {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum WaterType {
     Fresh,
     Salt,
@@ -17205,7 +17205,7 @@ impl WaterType {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum TissueModelType {
     Zhl16c, // Buhlmann's decompression algorithm, version C
     UnknownVariant(u8),
@@ -17234,7 +17234,7 @@ impl TissueModelType {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum DiveGasStatus {
     Disabled,
     Enabled,
@@ -17271,7 +17271,7 @@ impl DiveGasStatus {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum DiveAlarmType {
     Depth,
     Time,
@@ -17304,7 +17304,7 @@ impl DiveAlarmType {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum DiveBacklightMode {
     AtDepth,
     AlwaysOn,
@@ -17337,7 +17337,7 @@ impl DiveBacklightMode {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum FaveroProduct {
     AssiomaUno,
     AssiomaDuo,
@@ -17370,7 +17370,7 @@ impl FaveroProduct {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum ClimbProEvent {
     Approach,
     Start,
@@ -17410,7 +17410,7 @@ impl ClimbProEvent {
 /// Describe all possible data types of a field
 ///
 /// The Enum type's value is actually an enum of enums.
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize)]
 pub enum FieldDataType {
     Bool,
     SInt8,

@@ -1,5 +1,5 @@
 use crate::objects::DataFieldValue;
-use chrono::{Duration, TimeZone, NaiveDate, NaiveDateTime, Local};
+use chrono::{Duration, Local, NaiveDate, NaiveDateTime, TimeZone};
 use std::collections::HashMap;
 
 pub mod field_types;
@@ -56,8 +56,10 @@ impl FieldInfo {
     pub fn convert_value(&self, value: &DataFieldValue) -> DataFieldValue {
         // handle time types specially
         match self.field_type {
-            FieldDataType::DateTime | FieldDataType::LocalDateTime => return self.parse_timestamp(value),
-            _ => ()
+            FieldDataType::DateTime | FieldDataType::LocalDateTime => {
+                return self.parse_timestamp(value)
+            }
+            _ => (),
         }
 
         // convert enum or rescale integer value into floating point
@@ -96,8 +98,7 @@ impl FieldInfo {
         let sec_since: Duration;
         if let Some(val) = value.as_i64() {
             sec_since = Duration::seconds(val);
-        }
-        else {
+        } else {
             // return raw value as fallback if we can't get seconds as int
             return value.clone();
         }
@@ -106,8 +107,10 @@ impl FieldInfo {
         // timestamp with TZ info
         let ref_date = match self.field_type {
             FieldDataType::DateTime => TimeZone::from_utc_datetime(&Local, &ref_date),
-            FieldDataType::LocalDateTime => TimeZone::from_local_datetime(&Local, &ref_date).unwrap(),
-            _ => panic!("Invalid field type in self.parse_timestamp!")
+            FieldDataType::LocalDateTime => {
+                TimeZone::from_local_datetime(&Local, &ref_date).unwrap()
+            }
+            _ => panic!("Invalid field type in self.parse_timestamp!"),
         };
 
         DataFieldValue::Timestamp(ref_date + sec_since)

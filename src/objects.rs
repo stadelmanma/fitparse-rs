@@ -1,9 +1,10 @@
 /// Defines the data structures needed to represent a parsed FIT file.
 use crate::profile::field_types::MesgNum;
 use chrono::{DateTime, Local};
+use serde::Serialize;
 
 /// Defines a FIT file's contents
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Serialize)]
 pub struct FitFile {
     pub header: FitFileHeader,
     pub records: Vec<FitDataRecord>,
@@ -23,7 +24,7 @@ pub struct FitFile {
 /// data_size = u32
 /// literal ".FIT" = [u8; 4]
 /// CRC = u16 (if the header_size is 14 bytes)
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Serialize)]
 pub struct FitFileHeader {
     pub header_size: u8,
     pub protocol_ver_enc: f32,
@@ -40,7 +41,7 @@ pub struct FitFileHeader {
 ///
 /// TODO - add a timestamp field to any Data records with this header type and drop the time_offset
 /// field entirely
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Serialize)]
 pub struct FitDataRecord {
     pub kind: MesgNum,
     pub time_offset: Option<u8>,
@@ -52,7 +53,7 @@ pub struct FitDataRecord {
 /// TODO I might store Enumerated types in value as a String and keep the
 /// actual integer value in the raw_value field. I just don't know
 /// exactly how I'll get the value from the FieldType yet
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Serialize)]
 pub struct DataField {
     pub name: String,
     pub units: String,
@@ -63,7 +64,8 @@ pub struct DataField {
 }
 
 /// Contains arbitrary data in the defined format.
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Serialize)]
+#[serde(tag = "type", content = "data")]
 pub enum DataFieldValue {
     Timestamp(DateTime<Local>),
     Enum(u8),
