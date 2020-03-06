@@ -8,4 +8,5 @@ edition = "2018"
 calamine = "0.16.1"
 
 [dependencies]
+chrono = "0.4"
 nom = "5"

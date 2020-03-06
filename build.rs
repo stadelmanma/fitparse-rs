@@ -6,7 +6,7 @@
 /// scale and offset defined which describe how to transform the primitive integer type into a floating
 /// point value.
 use calamine::{open_workbook, DataType, Range, Reader, Xlsx};
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, HashSet};
 use std::fs::File;
 use std::io::prelude::*;
 use std::process::Command;
@@ -203,6 +203,11 @@ fn generate_main_field_type_enum(
         "Float32", "Float64", "UInt8z", "UInt16z", "UInt32z", "Byte", "SInt64", "UInt64",
         "UInt64z",
     ];
+    let mut is_enum_force_false = HashSet::new();
+    is_enum_force_false.insert("date_time".to_string());
+    is_enum_force_false.insert("local_date_time".to_string());
+
+
     write!(
         out,
         "
@@ -225,7 +230,7 @@ pub enum FieldDataType {{
     write!(out, "    pub fn is_enum_type(&self) -> bool {{\n")?;
     write!(out, "        match self {{\n")?;
     for field_type in field_types {
-        if !field_type.variant_map.is_empty() {
+        if !field_type.variant_map.is_empty() && !is_enum_force_false.contains(&field_type.name) {
             write!(out, "FieldDataType::{} => true,\n", field_type.titlized_name)?;
         }
     }
@@ -240,7 +245,7 @@ pub enum FieldDataType {{
     )?;
     write!(out, "    match field_type {{\n")?;
     for field_type in field_types {
-        if !field_type.variant_map.is_empty() {
+        if !field_type.variant_map.is_empty() && !is_enum_force_false.contains(&field_type.name) {
             write!(
                 out,
                 "        FieldDataType::{0} => {0}::from_i64(value).to_string(),\n",

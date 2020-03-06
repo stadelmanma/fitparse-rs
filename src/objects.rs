@@ -1,5 +1,6 @@
 /// Defines the data structures needed to represent a parsed FIT file.
 use crate::profile::field_types::MesgNum;
+use chrono::{DateTime, Local};
 
 /// Defines a FIT file's contents
 #[derive(Clone, Debug)]
@@ -64,6 +65,7 @@ pub struct DataField {
 /// Contains arbitrary data in the defined format.
 #[derive(Clone, Debug)]
 pub enum DataFieldValue {
+    Timestamp(DateTime<Local>),
     Enum(u8),
     SInt8(i8),
     UInt8(u8),
@@ -94,6 +96,7 @@ impl DataFieldValue {
             DataFieldValue::SInt32(val) => *val != 0x7FFFFFFF,
             DataFieldValue::UInt32(val) => *val != 0xFFFFFFFF,
             DataFieldValue::String(val) => !val.contains("\0"),
+            DataFieldValue::Timestamp(_) => true, // timestamps are always valid
             DataFieldValue::Float32(val) => val.is_finite(),
             DataFieldValue::Float64(val) => val.is_finite(),
             DataFieldValue::UInt8z(val) => *val != 0x0,
@@ -135,6 +138,7 @@ impl DataFieldValue {
             DataFieldValue::UInt16(val) => Some(*val as i64),
             DataFieldValue::SInt32(val) => Some(*val as i64),
             DataFieldValue::UInt32(val) => Some(*val as i64),
+            DataFieldValue::Timestamp(val) => Some(val.timestamp()),
             DataFieldValue::Float32(val) => Some(*val as i64),
             DataFieldValue::Float64(val) => Some(*val as i64),
             DataFieldValue::UInt8z(val) => Some(*val as i64),
