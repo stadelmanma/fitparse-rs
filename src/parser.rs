@@ -332,36 +332,22 @@ fn process_data_fields(
 ) -> Vec<DataField> {
     let mesg_info = def_mesg.global_message_number.message_info();
     let mut data_fields = Vec::new();
-    if let Some(mesg_info) = mesg_info {
-        for (def_field, dat_value) in def_mesg
-            .field_definitions
-            .iter()
-            .zip(data_mesg.fields.iter())
-        {
-            if let Some(value) = dat_value {
-                if let Some(field_info) = mesg_info.get_field(def_field.field_definition_number) {
-                    data_fields.push(DataField {
-                        name: field_info.name().to_string(),
-                        units: field_info.units().to_string(),
-                        scale: field_info.scale(),
-                        offset: field_info.offset(),
-                        value: field_info.convert_value(value),
-                        raw_value: value.clone(),
-                    });
-                } else {
-                    data_fields.push(unknown_field(def_field.field_definition_number, &value));
-                }
-            }
-        }
-    } else {
-        // use placeholder data for unknown fields
-        for (def_field, dat_value) in def_mesg
-            .field_definitions
-            .iter()
-            .zip(data_mesg.fields.iter())
-        {
-            if let Some(value) = dat_value {
-                // we skip invalid fields
+    for (def_field, dat_value) in def_mesg
+        .field_definitions
+        .iter()
+        .zip(data_mesg.fields.iter())
+    {
+        if let Some(value) = dat_value {
+            if let Some(field_info) = mesg_info.get_field(def_field.field_definition_number) {
+                data_fields.push(DataField {
+                    name: field_info.name().to_string(),
+                    units: field_info.units().to_string(),
+                    scale: field_info.scale(),
+                    offset: field_info.offset(),
+                    value: field_info.convert_value(value),
+                    raw_value: value.clone(),
+                });
+            } else {
                 data_fields.push(unknown_field(def_field.field_definition_number, &value));
             }
         }
