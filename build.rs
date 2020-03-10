@@ -396,17 +396,17 @@ fn create_mesg_num_to_mesg_info_fn(
     write!(out, "impl MesgNum {{\n")?;
     write!(
         out,
-        "    pub fn message_info(&self) -> Option<MessageInfo> {{\n"
+        "    pub fn message_info(&self) -> MessageInfo {{\n"
     )?;
     write!(out, "        match self {{\n")?;
     for (mesg_variant, mesg_fn) in mesg_fns.iter() {
         write!(
             out,
-            "            MesgNum::{} => Some({}),\n",
+            "            MesgNum::{} => {},\n",
             mesg_variant, mesg_fn
         )?;
     }
-    write!(out, "            _ => None,\n")?;
+    write!(out, "            _ => unknown_message(),\n")?;
     write!(out, "        }}\n")?;
     write!(out, "    }}\n")?;
     write!(out, "}}\n")?;
@@ -440,8 +440,16 @@ fn process_messages(sheet: Range<DataType>, out: &mut File) -> Result<(), std::i
         }
     }
     end_message_fn(&mesg_name, out)?;
-    create_mesg_num_to_mesg_info_fn(&mesg_fns, out)?;
 
+    // output an unknown_message() fn that has no fields
+    write!(out, "fn unknown_message() -> MessageInfo {{\n")?;
+    write!(out, "    MessageInfo {{\n")?;
+    write!(out, "        name: \"unknown\",\n")?;
+    write!(out, "        fields: HashMap::new()\n")?;
+    write!(out, "    }}\n")?;
+    write!(out, "}}\n\n")?;
+
+    create_mesg_num_to_mesg_info_fn(&mesg_fns, out)?;
     Ok(())
 }
 
