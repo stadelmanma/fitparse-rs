@@ -4,6 +4,9 @@ version = "0.1.0"
 authors = ["Matthew Stadelman <stadelmanma@gmail.com>"]
 edition = "2018"
 
+[features]
+profile_parser = ["calamine"]
+
 [build-dependencies]
 calamine = "0.16.1"
 
@@ -12,3 +15,4 @@ chrono = {version = "0.4", features = ["serde"] }
 nom = "5"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
+calamine = { version = "0.16.1", optional = true }
