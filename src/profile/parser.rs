@@ -1,11 +1,12 @@
 use calamine::{open_workbook, DataType, Range, Reader, Xlsx};
 use serde::Serialize;
-use std::collections::{BTreeMap, HashSet};
+use std::collections::BTreeMap;
 use std::path::PathBuf;
 
 #[derive(Clone, Debug, Serialize)]
 pub struct FitProfile {
-    field_types: Vec<FieldTypeDefintion>
+    field_types: Vec<FieldTypeDefintion>,
+    messages: Vec<MessageDefinition>
 }
 
 #[derive(Clone, Debug, Serialize)]
@@ -29,6 +30,33 @@ impl FieldTypeDefintion {
 struct FieldTypeVariant {
     name: String,
     value: i64,
+    comment: Option<String>,
+}
+
+#[derive(Clone, Debug, Serialize)]
+struct MessageDefinition {
+    name: String,
+    field_map: BTreeMap<u8, MessageFieldDefinition>
+}
+
+impl MessageDefinition {
+    fn new(name: &str) -> Self {
+        MessageDefinition {
+            name: name.to_string(),
+            field_map: BTreeMap::new(),
+        }
+    }
+}
+
+#[derive(Clone, Debug, Serialize)]
+struct MessageFieldDefinition {
+    def_number: u8,
+    name: String,
+    field_type: String,
+    scale: f64,
+    offset: f64,
+    units: String,
+    // TODO components and reference fields
     comment: Option<String>,
 }
 
@@ -111,23 +139,89 @@ fn process_types(sheet: Range<DataType>) -> Vec<FieldTypeDefintion> {
     field_types
 }
 
-pub fn parse_profile(profile_fname: &PathBuf) -> Result<FitProfile, Box<dyn std::error::Error>> {
-    let mut excel: Xlsx<_> = open_workbook(&profile_fname)?;
-    let field_types;
+fn new_message_field_definition(row: &[DataType]) -> MessageFieldDefinition {
+    let def_number = match row[1] {
+        DataType::Float(v) => v as u8,
+        DataType::Int(v) => v as u8,
+        _ => panic!(format!(
+            "Field defintiton number must be an integer, row={:?}.",
+            row
+        )),
+    };
+    let name = row[2].get_string().expect(&format!("Field name must be a string, row={:?}.", row));
+    let ftype = row[3].get_string().expect(&format!("Field type must be a string, row={:?}.", row));
+    let comment = match row[4].get_string() {
+        Some(v) => Some(v.to_string()),
+        None => None,
+    };
 
-    // process Types sheet
-    if let Some(Ok(sheet)) = excel.worksheet_range("Types") {
-        field_types = process_types(sheet);
+    MessageFieldDefinition{
+        def_number,
+        name: name.to_string(),
+        field_type: ftype.to_string(),
+        scale: row[6].get_float().unwrap_or(1.0),
+        offset: row[7].get_float().unwrap_or(0.0),
+        units: row[8].get_string().unwrap_or("").to_string(),
+        comment
+    }
+}
+
+fn process_messages(sheet: Range<DataType>) -> Vec<MessageDefinition> {
+    let mut rows = sheet.rows().skip(2);
+    let mut messages: Vec<MessageDefinition> = Vec::new();
+    let mut msg: MessageDefinition;
+    let mut field: MessageFieldDefinition;
+    let mut last_def_number: u8 = 0;
+
+    // parse first message row to initialize first message to prevent unitialized compile error in loop
+    let row = rows.next().unwrap();
+    if let Some(v) = row[0].get_string() {
+        msg = MessageDefinition::new(v);
     } else {
-        panic!("Could not access workbook sheet 'Types'");
+        panic!(format!("Message name must be a string row={:?}.", row));
     }
 
-    // process Messages sheet
-    // if let Some(Ok(sheet)) = excel.worksheet_range("Messages") {
-    //     process_messages(sheet, &mut file)?;
-    // } else {
-    //     panic!("Could not access workbook sheet 'Messages'");
-    // }
+    // process messages and fields
+    for row in rows {
+        // begin new message function
+        if !row[0].is_empty() {
+            if let Some(v) = row[0].get_string() {
+                messages.push(msg);
+                msg = MessageDefinition::new(v);
+            } else {
+                panic!(format!("Message name must be a string row={:?}.", row));
+            }
+        }
+        else if !row[1].is_empty() {
+            field = new_message_field_definition(row);
+            last_def_number = field.def_number;
+            msg.field_map.insert(field.def_number, field);
+        }
+        else {
+            // TODO handle subfield using the last_def_number
+        }
+    }
+    messages.push(msg);
 
-    Ok(FitProfile{field_types})
+    messages
+}
+
+pub fn parse_profile(profile_fname: &PathBuf) -> Result<FitProfile, Box<dyn std::error::Error>> {
+    let mut excel: Xlsx<_> = open_workbook(&profile_fname)?;
+
+    // process Types sheet
+    let field_types = if let Some(Ok(sheet)) = excel.worksheet_range("Types") {
+        process_types(sheet)
+    } else {
+        panic!("Could not access workbook sheet 'Types'");
+    };
+
+    // process Messages sheet
+    let messages = if let Some(Ok(sheet)) = excel.worksheet_range("Messages") {
+        process_messages(sheet)
+    } else {
+        panic!("Could not access workbook sheet 'Messages'");
+    };
+
+    Ok(FitProfile{field_types, messages})
 }

@@ -19,17 +19,13 @@ fn main() {
     use std::path::PathBuf;
     use fitparser::profile::parse_profile;
 
-    let mut argc = 0;
-    for argument in args() {
-        if argc > 0 {
-            let mut profile_fname = PathBuf::from(argument);
-            let profile = parse_profile(&profile_fname).unwrap();
+    for argument in args().skip(1) {
+        let mut profile_fname = PathBuf::from(argument);
+        let profile = parse_profile(&profile_fname).unwrap();
 
-            profile_fname.set_extension("json");
-            let j = serde_json::to_string(&profile).unwrap();
-            let mut f = File::create(profile_fname).unwrap();
-            f.write(j.as_bytes()).unwrap();
-        }
-        argc += 1;
+        profile_fname.set_extension("json");
+        let j = serde_json::to_string(&profile).unwrap();
+        let mut f = File::create(profile_fname).unwrap();
+        f.write(j.as_bytes()).unwrap();
     }
 }
