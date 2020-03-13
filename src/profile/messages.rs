@@ -115,16 +115,6 @@ fn timestamp_correlation_message() -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
-        name: "timestamp",
-        field_type: FieldDataType::DateTime,
-        def_number: 253,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "s",
-    };
-    fields.insert(253, field);
-
-    let field = FieldInfo {
         name: "fractional_timestamp",
         field_type: FieldDataType::UInt16,
         def_number: 0,
@@ -184,6 +174,16 @@ fn timestamp_correlation_message() -> MessageInfo {
     };
     fields.insert(5, field);
 
+    let field = FieldInfo {
+        name: "timestamp",
+        field_type: FieldDataType::DateTime,
+        def_number: 253,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "s",
+    };
+    fields.insert(253, field);
+
     MessageInfo {
         name: "timestamp_correlation",
         fields: fields,
@@ -192,16 +192,6 @@ fn timestamp_correlation_message() -> MessageInfo {
 
 fn software_message() -> MessageInfo {
     let mut fields = HashMap::new();
-
-    let field = FieldInfo {
-        name: "message_index",
-        field_type: FieldDataType::MessageIndex,
-        def_number: 254,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "",
-    };
-    fields.insert(254, field);
 
     let field = FieldInfo {
         name: "version",
@@ -222,6 +212,16 @@ fn software_message() -> MessageInfo {
         units: "",
     };
     fields.insert(5, field);
+
+    let field = FieldInfo {
+        name: "message_index",
+        field_type: FieldDataType::MessageIndex,
+        def_number: 254,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+    };
+    fields.insert(254, field);
 
     MessageInfo {
         name: "software",
@@ -261,6 +261,7 @@ fn slave_device_message() -> MessageInfo {
 fn capabilities_message() -> MessageInfo {
     let mut fields = HashMap::new();
 
+    // [N]
     let field = FieldInfo {
         name: "languages",
         field_type: FieldDataType::UInt8z,
@@ -271,6 +272,7 @@ fn capabilities_message() -> MessageInfo {
     };
     fields.insert(0, field);
 
+    // [N]
     let field = FieldInfo {
         name: "sports",
         field_type: FieldDataType::SportBits0,
@@ -309,16 +311,6 @@ fn capabilities_message() -> MessageInfo {
 
 fn file_capabilities_message() -> MessageInfo {
     let mut fields = HashMap::new();
-
-    let field = FieldInfo {
-        name: "message_index",
-        field_type: FieldDataType::MessageIndex,
-        def_number: 254,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "",
-    };
-    fields.insert(254, field);
 
     let field = FieldInfo {
         name: "type",
@@ -370,15 +362,6 @@ fn file_capabilities_message() -> MessageInfo {
     };
     fields.insert(4, field);
 
-    MessageInfo {
-        name: "file_capabilities",
-        fields: fields,
-    }
-}
-
-fn mesg_capabilities_message() -> MessageInfo {
-    let mut fields = HashMap::new();
-
     let field = FieldInfo {
         name: "message_index",
         field_type: FieldDataType::MessageIndex,
@@ -388,6 +371,15 @@ fn mesg_capabilities_message() -> MessageInfo {
         units: "",
     };
     fields.insert(254, field);
+
+    MessageInfo {
+        name: "file_capabilities",
+        fields: fields,
+    }
+}
+
+fn mesg_capabilities_message() -> MessageInfo {
+    let mut fields = HashMap::new();
 
     let field = FieldInfo {
         name: "file",
@@ -429,15 +421,6 @@ fn mesg_capabilities_message() -> MessageInfo {
     };
     fields.insert(3, field);
 
-    MessageInfo {
-        name: "mesg_capabilities",
-        fields: fields,
-    }
-}
-
-fn field_capabilities_message() -> MessageInfo {
-    let mut fields = HashMap::new();
-
     let field = FieldInfo {
         name: "message_index",
         field_type: FieldDataType::MessageIndex,
@@ -447,6 +430,15 @@ fn field_capabilities_message() -> MessageInfo {
         units: "",
     };
     fields.insert(254, field);
+
+    MessageInfo {
+        name: "mesg_capabilities",
+        fields: fields,
+    }
+}
+
+fn field_capabilities_message() -> MessageInfo {
+    let mut fields = HashMap::new();
 
     let field = FieldInfo {
         name: "file",
@@ -488,6 +480,16 @@ fn field_capabilities_message() -> MessageInfo {
     };
     fields.insert(3, field);
 
+    let field = FieldInfo {
+        name: "message_index",
+        field_type: FieldDataType::MessageIndex,
+        def_number: 254,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+    };
+    fields.insert(254, field);
+
     MessageInfo {
         name: "field_capabilities",
         fields: fields,
@@ -517,6 +519,7 @@ fn device_settings_message() -> MessageInfo {
     };
     fields.insert(1, field);
 
+    // [N]
     let field = FieldInfo {
         name: "time_offset",
         field_type: FieldDataType::UInt32,
@@ -527,6 +530,7 @@ fn device_settings_message() -> MessageInfo {
     };
     fields.insert(2, field);
 
+    // [N]
     let field = FieldInfo {
         name: "time_mode",
         field_type: FieldDataType::TimeMode,
@@ -537,6 +541,7 @@ fn device_settings_message() -> MessageInfo {
     };
     fields.insert(4, field);
 
+    // [N]
     let field = FieldInfo {
         name: "time_zone_offset",
         field_type: FieldDataType::SInt8,
@@ -577,6 +582,7 @@ fn device_settings_message() -> MessageInfo {
     };
     fields.insert(39, field);
 
+    // [N]
     let field = FieldInfo {
         name: "pages_enabled",
         field_type: FieldDataType::UInt16,
@@ -627,6 +633,7 @@ fn device_settings_message() -> MessageInfo {
     };
     fields.insert(56, field);
 
+    // [N]
     let field = FieldInfo {
         name: "default_page",
         field_type: FieldDataType::UInt16,
@@ -735,16 +742,6 @@ fn device_settings_message() -> MessageInfo {
 
 fn user_profile_message() -> MessageInfo {
     let mut fields = HashMap::new();
-
-    let field = FieldInfo {
-        name: "message_index",
-        field_type: FieldDataType::MessageIndex,
-        def_number: 254,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "",
-    };
-    fields.insert(254, field);
 
     let field = FieldInfo {
         name: "friendly_name",
@@ -946,6 +943,7 @@ fn user_profile_message() -> MessageInfo {
     };
     fields.insert(22, field);
 
+    // [6]
     let field = FieldInfo {
         name: "global_id",
         field_type: FieldDataType::Byte,
@@ -1026,15 +1024,6 @@ fn user_profile_message() -> MessageInfo {
     };
     fields.insert(49, field);
 
-    MessageInfo {
-        name: "user_profile",
-        fields: fields,
-    }
-}
-
-fn hrm_profile_message() -> MessageInfo {
-    let mut fields = HashMap::new();
-
     let field = FieldInfo {
         name: "message_index",
         field_type: FieldDataType::MessageIndex,
@@ -1044,6 +1033,15 @@ fn hrm_profile_message() -> MessageInfo {
         units: "",
     };
     fields.insert(254, field);
+
+    MessageInfo {
+        name: "user_profile",
+        fields: fields,
+    }
+}
+
+fn hrm_profile_message() -> MessageInfo {
+    let mut fields = HashMap::new();
 
     let field = FieldInfo {
         name: "enabled",
@@ -1085,15 +1083,6 @@ fn hrm_profile_message() -> MessageInfo {
     };
     fields.insert(3, field);
 
-    MessageInfo {
-        name: "hrm_profile",
-        fields: fields,
-    }
-}
-
-fn sdm_profile_message() -> MessageInfo {
-    let mut fields = HashMap::new();
-
     let field = FieldInfo {
         name: "message_index",
         field_type: FieldDataType::MessageIndex,
@@ -1103,6 +1092,15 @@ fn sdm_profile_message() -> MessageInfo {
         units: "",
     };
     fields.insert(254, field);
+
+    MessageInfo {
+        name: "hrm_profile",
+        fields: fields,
+    }
+}
+
+fn sdm_profile_message() -> MessageInfo {
+    let mut fields = HashMap::new();
 
     let field = FieldInfo {
         name: "enabled",
@@ -1174,15 +1172,6 @@ fn sdm_profile_message() -> MessageInfo {
     };
     fields.insert(7, field);
 
-    MessageInfo {
-        name: "sdm_profile",
-        fields: fields,
-    }
-}
-
-fn bike_profile_message() -> MessageInfo {
-    let mut fields = HashMap::new();
-
     let field = FieldInfo {
         name: "message_index",
         field_type: FieldDataType::MessageIndex,
@@ -1192,6 +1181,15 @@ fn bike_profile_message() -> MessageInfo {
         units: "",
     };
     fields.insert(254, field);
+
+    MessageInfo {
+        name: "sdm_profile",
+        fields: fields,
+    }
+}
+
+fn bike_profile_message() -> MessageInfo {
+    let mut fields = HashMap::new();
 
     let field = FieldInfo {
         name: "name",
@@ -1463,6 +1461,7 @@ fn bike_profile_message() -> MessageInfo {
     };
     fields.insert(38, field);
 
+    // [N]
     let field = FieldInfo {
         name: "front_gear",
         field_type: FieldDataType::UInt8z,
@@ -1483,6 +1482,7 @@ fn bike_profile_message() -> MessageInfo {
     };
     fields.insert(40, field);
 
+    // [N]
     let field = FieldInfo {
         name: "rear_gear",
         field_type: FieldDataType::UInt8z,
@@ -1502,6 +1502,16 @@ fn bike_profile_message() -> MessageInfo {
         units: "",
     };
     fields.insert(44, field);
+
+    let field = FieldInfo {
+        name: "message_index",
+        field_type: FieldDataType::MessageIndex,
+        def_number: 254,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+    };
+    fields.insert(254, field);
 
     MessageInfo {
         name: "bike_profile",
@@ -1652,16 +1662,6 @@ fn watchface_settings_message() -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
-        name: "message_index",
-        field_type: FieldDataType::MessageIndex,
-        def_number: 254,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "",
-    };
-    fields.insert(254, field);
-
-    let field = FieldInfo {
         name: "mode",
         field_type: FieldDataType::WatchfaceMode,
         def_number: 0,
@@ -1681,6 +1681,16 @@ fn watchface_settings_message() -> MessageInfo {
     };
     fields.insert(1, field);
 
+    let field = FieldInfo {
+        name: "message_index",
+        field_type: FieldDataType::MessageIndex,
+        def_number: 254,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+    };
+    fields.insert(254, field);
+
     MessageInfo {
         name: "watchface_settings",
         fields: fields,
@@ -1691,16 +1701,6 @@ fn ohr_settings_message() -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
-        name: "timestamp",
-        field_type: FieldDataType::DateTime,
-        def_number: 253,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "s",
-    };
-    fields.insert(253, field);
-
-    let field = FieldInfo {
         name: "enabled",
         field_type: FieldDataType::Switch,
         def_number: 0,
@@ -1709,6 +1709,16 @@ fn ohr_settings_message() -> MessageInfo {
         units: "",
     };
     fields.insert(0, field);
+
+    let field = FieldInfo {
+        name: "timestamp",
+        field_type: FieldDataType::DateTime,
+        def_number: 253,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "s",
+    };
+    fields.insert(253, field);
 
     MessageInfo {
         name: "ohr_settings",
@@ -1818,16 +1828,6 @@ fn hr_zone_message() -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
-        name: "message_index",
-        field_type: FieldDataType::MessageIndex,
-        def_number: 254,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "",
-    };
-    fields.insert(254, field);
-
-    let field = FieldInfo {
         name: "high_bpm",
         field_type: FieldDataType::UInt8,
         def_number: 1,
@@ -1847,15 +1847,6 @@ fn hr_zone_message() -> MessageInfo {
     };
     fields.insert(2, field);
 
-    MessageInfo {
-        name: "hr_zone",
-        fields: fields,
-    }
-}
-
-fn speed_zone_message() -> MessageInfo {
-    let mut fields = HashMap::new();
-
     let field = FieldInfo {
         name: "message_index",
         field_type: FieldDataType::MessageIndex,
@@ -1865,6 +1856,15 @@ fn speed_zone_message() -> MessageInfo {
         units: "",
     };
     fields.insert(254, field);
+
+    MessageInfo {
+        name: "hr_zone",
+        fields: fields,
+    }
+}
+
+fn speed_zone_message() -> MessageInfo {
+    let mut fields = HashMap::new();
 
     let field = FieldInfo {
         name: "high_value",
@@ -1886,15 +1886,6 @@ fn speed_zone_message() -> MessageInfo {
     };
     fields.insert(1, field);
 
-    MessageInfo {
-        name: "speed_zone",
-        fields: fields,
-    }
-}
-
-fn cadence_zone_message() -> MessageInfo {
-    let mut fields = HashMap::new();
-
     let field = FieldInfo {
         name: "message_index",
         field_type: FieldDataType::MessageIndex,
@@ -1904,6 +1895,15 @@ fn cadence_zone_message() -> MessageInfo {
         units: "",
     };
     fields.insert(254, field);
+
+    MessageInfo {
+        name: "speed_zone",
+        fields: fields,
+    }
+}
+
+fn cadence_zone_message() -> MessageInfo {
+    let mut fields = HashMap::new();
 
     let field = FieldInfo {
         name: "high_value",
@@ -1925,15 +1925,6 @@ fn cadence_zone_message() -> MessageInfo {
     };
     fields.insert(1, field);
 
-    MessageInfo {
-        name: "cadence_zone",
-        fields: fields,
-    }
-}
-
-fn power_zone_message() -> MessageInfo {
-    let mut fields = HashMap::new();
-
     let field = FieldInfo {
         name: "message_index",
         field_type: FieldDataType::MessageIndex,
@@ -1943,6 +1934,15 @@ fn power_zone_message() -> MessageInfo {
         units: "",
     };
     fields.insert(254, field);
+
+    MessageInfo {
+        name: "cadence_zone",
+        fields: fields,
+    }
+}
+
+fn power_zone_message() -> MessageInfo {
+    let mut fields = HashMap::new();
 
     let field = FieldInfo {
         name: "high_value",
@@ -1964,15 +1964,6 @@ fn power_zone_message() -> MessageInfo {
     };
     fields.insert(2, field);
 
-    MessageInfo {
-        name: "power_zone",
-        fields: fields,
-    }
-}
-
-fn met_zone_message() -> MessageInfo {
-    let mut fields = HashMap::new();
-
     let field = FieldInfo {
         name: "message_index",
         field_type: FieldDataType::MessageIndex,
@@ -1982,6 +1973,15 @@ fn met_zone_message() -> MessageInfo {
         units: "",
     };
     fields.insert(254, field);
+
+    MessageInfo {
+        name: "power_zone",
+        fields: fields,
+    }
+}
+
+fn met_zone_message() -> MessageInfo {
+    let mut fields = HashMap::new();
 
     let field = FieldInfo {
         name: "high_bpm",
@@ -2013,15 +2013,6 @@ fn met_zone_message() -> MessageInfo {
     };
     fields.insert(3, field);
 
-    MessageInfo {
-        name: "met_zone",
-        fields: fields,
-    }
-}
-
-fn dive_settings_message() -> MessageInfo {
-    let mut fields = HashMap::new();
-
     let field = FieldInfo {
         name: "message_index",
         field_type: FieldDataType::MessageIndex,
@@ -2031,6 +2022,15 @@ fn dive_settings_message() -> MessageInfo {
         units: "",
     };
     fields.insert(254, field);
+
+    MessageInfo {
+        name: "met_zone",
+        fields: fields,
+    }
+}
+
+fn dive_settings_message() -> MessageInfo {
+    let mut fields = HashMap::new();
 
     let field = FieldInfo {
         name: "name",
@@ -2242,15 +2242,6 @@ fn dive_settings_message() -> MessageInfo {
     };
     fields.insert(20, field);
 
-    MessageInfo {
-        name: "dive_settings",
-        fields: fields,
-    }
-}
-
-fn dive_alarm_message() -> MessageInfo {
-    let mut fields = HashMap::new();
-
     let field = FieldInfo {
         name: "message_index",
         field_type: FieldDataType::MessageIndex,
@@ -2260,6 +2251,15 @@ fn dive_alarm_message() -> MessageInfo {
         units: "",
     };
     fields.insert(254, field);
+
+    MessageInfo {
+        name: "dive_settings",
+        fields: fields,
+    }
+}
+
+fn dive_alarm_message() -> MessageInfo {
+    let mut fields = HashMap::new();
 
     let field = FieldInfo {
         name: "depth",
@@ -2311,6 +2311,7 @@ fn dive_alarm_message() -> MessageInfo {
     };
     fields.insert(4, field);
 
+    // [N]
     let field = FieldInfo {
         name: "dive_types",
         field_type: FieldDataType::SubSport,
@@ -2321,15 +2322,6 @@ fn dive_alarm_message() -> MessageInfo {
     };
     fields.insert(5, field);
 
-    MessageInfo {
-        name: "dive_alarm",
-        fields: fields,
-    }
-}
-
-fn dive_gas_message() -> MessageInfo {
-    let mut fields = HashMap::new();
-
     let field = FieldInfo {
         name: "message_index",
         field_type: FieldDataType::MessageIndex,
@@ -2339,6 +2331,15 @@ fn dive_gas_message() -> MessageInfo {
         units: "",
     };
     fields.insert(254, field);
+
+    MessageInfo {
+        name: "dive_alarm",
+        fields: fields,
+    }
+}
+
+fn dive_gas_message() -> MessageInfo {
+    let mut fields = HashMap::new();
 
     let field = FieldInfo {
         name: "helium_content",
@@ -2370,15 +2371,6 @@ fn dive_gas_message() -> MessageInfo {
     };
     fields.insert(2, field);
 
-    MessageInfo {
-        name: "dive_gas",
-        fields: fields,
-    }
-}
-
-fn goal_message() -> MessageInfo {
-    let mut fields = HashMap::new();
-
     let field = FieldInfo {
         name: "message_index",
         field_type: FieldDataType::MessageIndex,
@@ -2388,6 +2380,15 @@ fn goal_message() -> MessageInfo {
         units: "",
     };
     fields.insert(254, field);
+
+    MessageInfo {
+        name: "dive_gas",
+        fields: fields,
+    }
+}
+
+fn goal_message() -> MessageInfo {
+    let mut fields = HashMap::new();
 
     let field = FieldInfo {
         name: "sport",
@@ -2509,6 +2510,16 @@ fn goal_message() -> MessageInfo {
     };
     fields.insert(11, field);
 
+    let field = FieldInfo {
+        name: "message_index",
+        field_type: FieldDataType::MessageIndex,
+        def_number: 254,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+    };
+    fields.insert(254, field);
+
     MessageInfo {
         name: "goal",
         fields: fields,
@@ -2517,16 +2528,6 @@ fn goal_message() -> MessageInfo {
 
 fn activity_message() -> MessageInfo {
     let mut fields = HashMap::new();
-
-    let field = FieldInfo {
-        name: "timestamp",
-        field_type: FieldDataType::DateTime,
-        def_number: 253,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "",
-    };
-    fields.insert(253, field);
 
     let field = FieldInfo {
         name: "total_timer_time",
@@ -2598,6 +2599,16 @@ fn activity_message() -> MessageInfo {
     };
     fields.insert(6, field);
 
+    let field = FieldInfo {
+        name: "timestamp",
+        field_type: FieldDataType::DateTime,
+        def_number: 253,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+    };
+    fields.insert(253, field);
+
     MessageInfo {
         name: "activity",
         fields: fields,
@@ -2606,26 +2617,6 @@ fn activity_message() -> MessageInfo {
 
 fn session_message() -> MessageInfo {
     let mut fields = HashMap::new();
-
-    let field = FieldInfo {
-        name: "message_index",
-        field_type: FieldDataType::MessageIndex,
-        def_number: 254,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "",
-    };
-    fields.insert(254, field);
-
-    let field = FieldInfo {
-        name: "timestamp",
-        field_type: FieldDataType::DateTime,
-        def_number: 253,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "s",
-    };
-    fields.insert(253, field);
 
     let field = FieldInfo {
         name: "event",
@@ -3227,6 +3218,7 @@ fn session_message() -> MessageInfo {
     };
     fields.insert(64, field);
 
+    // [N]
     let field = FieldInfo {
         name: "time_in_hr_zone",
         field_type: FieldDataType::UInt32,
@@ -3237,6 +3229,7 @@ fn session_message() -> MessageInfo {
     };
     fields.insert(65, field);
 
+    // [N]
     let field = FieldInfo {
         name: "time_in_speed_zone",
         field_type: FieldDataType::UInt32,
@@ -3247,6 +3240,7 @@ fn session_message() -> MessageInfo {
     };
     fields.insert(66, field);
 
+    // [N]
     let field = FieldInfo {
         name: "time_in_cadence_zone",
         field_type: FieldDataType::UInt32,
@@ -3257,6 +3251,7 @@ fn session_message() -> MessageInfo {
     };
     fields.insert(67, field);
 
+    // [N]
     let field = FieldInfo {
         name: "time_in_power_zone",
         field_type: FieldDataType::UInt32,
@@ -3327,6 +3322,7 @@ fn session_message() -> MessageInfo {
     };
     fields.insert(84, field);
 
+    // [N]
     let field = FieldInfo {
         name: "stroke_count",
         field_type: FieldDataType::UInt16,
@@ -3337,6 +3333,7 @@ fn session_message() -> MessageInfo {
     };
     fields.insert(85, field);
 
+    // [N]
     let field = FieldInfo {
         name: "zone_count",
         field_type: FieldDataType::UInt16,
@@ -3427,6 +3424,7 @@ fn session_message() -> MessageInfo {
     };
     fields.insert(94, field);
 
+    // [N]
     let field = FieldInfo {
         name: "avg_total_hemoglobin_conc",
         field_type: FieldDataType::UInt16,
@@ -3437,6 +3435,7 @@ fn session_message() -> MessageInfo {
     };
     fields.insert(95, field);
 
+    // [N]
     let field = FieldInfo {
         name: "min_total_hemoglobin_conc",
         field_type: FieldDataType::UInt16,
@@ -3447,6 +3446,7 @@ fn session_message() -> MessageInfo {
     };
     fields.insert(96, field);
 
+    // [N]
     let field = FieldInfo {
         name: "max_total_hemoglobin_conc",
         field_type: FieldDataType::UInt16,
@@ -3457,6 +3457,7 @@ fn session_message() -> MessageInfo {
     };
     fields.insert(97, field);
 
+    // [N]
     let field = FieldInfo {
         name: "avg_saturated_hemoglobin_percent",
         field_type: FieldDataType::UInt16,
@@ -3467,6 +3468,7 @@ fn session_message() -> MessageInfo {
     };
     fields.insert(98, field);
 
+    // [N]
     let field = FieldInfo {
         name: "min_saturated_hemoglobin_percent",
         field_type: FieldDataType::UInt16,
@@ -3477,6 +3479,7 @@ fn session_message() -> MessageInfo {
     };
     fields.insert(99, field);
 
+    // [N]
     let field = FieldInfo {
         name: "max_saturated_hemoglobin_percent",
         field_type: FieldDataType::UInt16,
@@ -3587,6 +3590,7 @@ fn session_message() -> MessageInfo {
     };
     fields.insert(115, field);
 
+    // [N]
     let field = FieldInfo {
         name: "avg_left_power_phase",
         field_type: FieldDataType::UInt8,
@@ -3597,6 +3601,7 @@ fn session_message() -> MessageInfo {
     };
     fields.insert(116, field);
 
+    // [N]
     let field = FieldInfo {
         name: "avg_left_power_phase_peak",
         field_type: FieldDataType::UInt8,
@@ -3607,6 +3612,7 @@ fn session_message() -> MessageInfo {
     };
     fields.insert(117, field);
 
+    // [N]
     let field = FieldInfo {
         name: "avg_right_power_phase",
         field_type: FieldDataType::UInt8,
@@ -3617,6 +3623,7 @@ fn session_message() -> MessageInfo {
     };
     fields.insert(118, field);
 
+    // [N]
     let field = FieldInfo {
         name: "avg_right_power_phase_peak",
         field_type: FieldDataType::UInt8,
@@ -3627,6 +3634,7 @@ fn session_message() -> MessageInfo {
     };
     fields.insert(119, field);
 
+    // [N]
     let field = FieldInfo {
         name: "avg_power_position",
         field_type: FieldDataType::UInt16,
@@ -3637,6 +3645,7 @@ fn session_message() -> MessageInfo {
     };
     fields.insert(120, field);
 
+    // [N]
     let field = FieldInfo {
         name: "max_power_position",
         field_type: FieldDataType::UInt16,
@@ -3647,6 +3656,7 @@ fn session_message() -> MessageInfo {
     };
     fields.insert(121, field);
 
+    // [N]
     let field = FieldInfo {
         name: "avg_cadence_position",
         field_type: FieldDataType::UInt8,
@@ -3657,6 +3667,7 @@ fn session_message() -> MessageInfo {
     };
     fields.insert(122, field);
 
+    // [N]
     let field = FieldInfo {
         name: "max_cadence_position",
         field_type: FieldDataType::UInt8,
@@ -3847,14 +3858,15 @@ fn session_message() -> MessageInfo {
     };
     fields.insert(187, field);
 
-    MessageInfo {
-        name: "session",
-        fields: fields,
-    }
-}
-
-fn lap_message() -> MessageInfo {
-    let mut fields = HashMap::new();
+    let field = FieldInfo {
+        name: "timestamp",
+        field_type: FieldDataType::DateTime,
+        def_number: 253,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "s",
+    };
+    fields.insert(253, field);
 
     let field = FieldInfo {
         name: "message_index",
@@ -3866,15 +3878,14 @@ fn lap_message() -> MessageInfo {
     };
     fields.insert(254, field);
 
-    let field = FieldInfo {
-        name: "timestamp",
-        field_type: FieldDataType::DateTime,
-        def_number: 253,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "s",
-    };
-    fields.insert(253, field);
+    MessageInfo {
+        name: "session",
+        fields: fields,
+    }
+}
+
+fn lap_message() -> MessageInfo {
+    let mut fields = HashMap::new();
 
     let field = FieldInfo {
         name: "event",
@@ -4386,6 +4397,7 @@ fn lap_message() -> MessageInfo {
     };
     fields.insert(56, field);
 
+    // [N]
     let field = FieldInfo {
         name: "time_in_hr_zone",
         field_type: FieldDataType::UInt32,
@@ -4396,6 +4408,7 @@ fn lap_message() -> MessageInfo {
     };
     fields.insert(57, field);
 
+    // [N]
     let field = FieldInfo {
         name: "time_in_speed_zone",
         field_type: FieldDataType::UInt32,
@@ -4406,6 +4419,7 @@ fn lap_message() -> MessageInfo {
     };
     fields.insert(58, field);
 
+    // [N]
     let field = FieldInfo {
         name: "time_in_cadence_zone",
         field_type: FieldDataType::UInt32,
@@ -4416,6 +4430,7 @@ fn lap_message() -> MessageInfo {
     };
     fields.insert(59, field);
 
+    // [N]
     let field = FieldInfo {
         name: "time_in_power_zone",
         field_type: FieldDataType::UInt32,
@@ -4476,6 +4491,7 @@ fn lap_message() -> MessageInfo {
     };
     fields.insert(74, field);
 
+    // [N]
     let field = FieldInfo {
         name: "stroke_count",
         field_type: FieldDataType::UInt16,
@@ -4486,6 +4502,7 @@ fn lap_message() -> MessageInfo {
     };
     fields.insert(75, field);
 
+    // [N]
     let field = FieldInfo {
         name: "zone_count",
         field_type: FieldDataType::UInt16,
@@ -4566,6 +4583,7 @@ fn lap_message() -> MessageInfo {
     };
     fields.insert(83, field);
 
+    // [N]
     let field = FieldInfo {
         name: "avg_total_hemoglobin_conc",
         field_type: FieldDataType::UInt16,
@@ -4576,6 +4594,7 @@ fn lap_message() -> MessageInfo {
     };
     fields.insert(84, field);
 
+    // [N]
     let field = FieldInfo {
         name: "min_total_hemoglobin_conc",
         field_type: FieldDataType::UInt16,
@@ -4586,6 +4605,7 @@ fn lap_message() -> MessageInfo {
     };
     fields.insert(85, field);
 
+    // [N]
     let field = FieldInfo {
         name: "max_total_hemoglobin_conc",
         field_type: FieldDataType::UInt16,
@@ -4596,6 +4616,7 @@ fn lap_message() -> MessageInfo {
     };
     fields.insert(86, field);
 
+    // [N]
     let field = FieldInfo {
         name: "avg_saturated_hemoglobin_percent",
         field_type: FieldDataType::UInt16,
@@ -4606,6 +4627,7 @@ fn lap_message() -> MessageInfo {
     };
     fields.insert(87, field);
 
+    // [N]
     let field = FieldInfo {
         name: "min_saturated_hemoglobin_percent",
         field_type: FieldDataType::UInt16,
@@ -4616,6 +4638,7 @@ fn lap_message() -> MessageInfo {
     };
     fields.insert(88, field);
 
+    // [N]
     let field = FieldInfo {
         name: "max_saturated_hemoglobin_percent",
         field_type: FieldDataType::UInt16,
@@ -4716,6 +4739,7 @@ fn lap_message() -> MessageInfo {
     };
     fields.insert(101, field);
 
+    // [N]
     let field = FieldInfo {
         name: "avg_left_power_phase",
         field_type: FieldDataType::UInt8,
@@ -4726,6 +4750,7 @@ fn lap_message() -> MessageInfo {
     };
     fields.insert(102, field);
 
+    // [N]
     let field = FieldInfo {
         name: "avg_left_power_phase_peak",
         field_type: FieldDataType::UInt8,
@@ -4736,6 +4761,7 @@ fn lap_message() -> MessageInfo {
     };
     fields.insert(103, field);
 
+    // [N]
     let field = FieldInfo {
         name: "avg_right_power_phase",
         field_type: FieldDataType::UInt8,
@@ -4746,6 +4772,7 @@ fn lap_message() -> MessageInfo {
     };
     fields.insert(104, field);
 
+    // [N]
     let field = FieldInfo {
         name: "avg_right_power_phase_peak",
         field_type: FieldDataType::UInt8,
@@ -4756,6 +4783,7 @@ fn lap_message() -> MessageInfo {
     };
     fields.insert(105, field);
 
+    // [N]
     let field = FieldInfo {
         name: "avg_power_position",
         field_type: FieldDataType::UInt16,
@@ -4766,6 +4794,7 @@ fn lap_message() -> MessageInfo {
     };
     fields.insert(106, field);
 
+    // [N]
     let field = FieldInfo {
         name: "max_power_position",
         field_type: FieldDataType::UInt16,
@@ -4776,6 +4805,7 @@ fn lap_message() -> MessageInfo {
     };
     fields.insert(107, field);
 
+    // [N]
     let field = FieldInfo {
         name: "avg_cadence_position",
         field_type: FieldDataType::UInt8,
@@ -4786,6 +4816,7 @@ fn lap_message() -> MessageInfo {
     };
     fields.insert(108, field);
 
+    // [N]
     let field = FieldInfo {
         name: "max_cadence_position",
         field_type: FieldDataType::UInt8,
@@ -4966,14 +4997,15 @@ fn lap_message() -> MessageInfo {
     };
     fields.insert(154, field);
 
-    MessageInfo {
-        name: "lap",
-        fields: fields,
-    }
-}
-
-fn length_message() -> MessageInfo {
-    let mut fields = HashMap::new();
+    let field = FieldInfo {
+        name: "timestamp",
+        field_type: FieldDataType::DateTime,
+        def_number: 253,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "s",
+    };
+    fields.insert(253, field);
 
     let field = FieldInfo {
         name: "message_index",
@@ -4985,15 +5017,14 @@ fn length_message() -> MessageInfo {
     };
     fields.insert(254, field);
 
-    let field = FieldInfo {
-        name: "timestamp",
-        field_type: FieldDataType::DateTime,
-        def_number: 253,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "",
-    };
-    fields.insert(253, field);
+    MessageInfo {
+        name: "lap",
+        fields: fields,
+    }
+}
+
+fn length_message() -> MessageInfo {
+    let mut fields = HashMap::new();
 
     let field = FieldInfo {
         name: "event",
@@ -5135,6 +5166,7 @@ fn length_message() -> MessageInfo {
     };
     fields.insert(19, field);
 
+    // [N]
     let field = FieldInfo {
         name: "stroke_count",
         field_type: FieldDataType::UInt16,
@@ -5145,6 +5177,7 @@ fn length_message() -> MessageInfo {
     };
     fields.insert(20, field);
 
+    // [N]
     let field = FieldInfo {
         name: "zone_count",
         field_type: FieldDataType::UInt16,
@@ -5155,6 +5188,26 @@ fn length_message() -> MessageInfo {
     };
     fields.insert(21, field);
 
+    let field = FieldInfo {
+        name: "timestamp",
+        field_type: FieldDataType::DateTime,
+        def_number: 253,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+    };
+    fields.insert(253, field);
+
+    let field = FieldInfo {
+        name: "message_index",
+        field_type: FieldDataType::MessageIndex,
+        def_number: 254,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+    };
+    fields.insert(254, field);
+
     MessageInfo {
         name: "length",
         fields: fields,
@@ -5163,16 +5216,6 @@ fn length_message() -> MessageInfo {
 
 fn record_message() -> MessageInfo {
     let mut fields = HashMap::new();
-
-    let field = FieldInfo {
-        name: "timestamp",
-        field_type: FieldDataType::DateTime,
-        def_number: 253,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "s",
-    };
-    fields.insert(253, field);
 
     let field = FieldInfo {
         name: "position_lat",
@@ -5254,6 +5297,7 @@ fn record_message() -> MessageInfo {
     };
     fields.insert(7, field);
 
+    // [3]
     let field = FieldInfo {
         name: "compressed_speed_distance",
         field_type: FieldDataType::Byte,
@@ -5315,6 +5359,7 @@ m",
     };
     fields.insert(13, field);
 
+    // [N]
     let field = FieldInfo {
         name: "speed_1s",
         field_type: FieldDataType::UInt8,
@@ -5645,6 +5690,7 @@ m",
     };
     fields.insert(68, field);
 
+    // [N]
     let field = FieldInfo {
         name: "left_power_phase",
         field_type: FieldDataType::UInt8,
@@ -5655,6 +5701,7 @@ m",
     };
     fields.insert(69, field);
 
+    // [N]
     let field = FieldInfo {
         name: "left_power_phase_peak",
         field_type: FieldDataType::UInt8,
@@ -5665,6 +5712,7 @@ m",
     };
     fields.insert(70, field);
 
+    // [N]
     let field = FieldInfo {
         name: "right_power_phase",
         field_type: FieldDataType::UInt8,
@@ -5675,6 +5723,7 @@ m",
     };
     fields.insert(71, field);
 
+    // [N]
     let field = FieldInfo {
         name: "right_power_phase_peak",
         field_type: FieldDataType::UInt8,
@@ -5895,15 +5944,6 @@ m",
     };
     fields.insert(120, field);
 
-    MessageInfo {
-        name: "record",
-        fields: fields,
-    }
-}
-
-fn event_message() -> MessageInfo {
-    let mut fields = HashMap::new();
-
     let field = FieldInfo {
         name: "timestamp",
         field_type: FieldDataType::DateTime,
@@ -5913,6 +5953,15 @@ fn event_message() -> MessageInfo {
         units: "s",
     };
     fields.insert(253, field);
+
+    MessageInfo {
+        name: "record",
+        fields: fields,
+    }
+}
+
+fn event_message() -> MessageInfo {
+    let mut fields = HashMap::new();
 
     let field = FieldInfo {
         name: "event",
@@ -6034,15 +6083,6 @@ fn event_message() -> MessageInfo {
     };
     fields.insert(13, field);
 
-    MessageInfo {
-        name: "event",
-        fields: fields,
-    }
-}
-
-fn device_info_message() -> MessageInfo {
-    let mut fields = HashMap::new();
-
     let field = FieldInfo {
         name: "timestamp",
         field_type: FieldDataType::DateTime,
@@ -6052,6 +6092,15 @@ fn device_info_message() -> MessageInfo {
         units: "s",
     };
     fields.insert(253, field);
+
+    MessageInfo {
+        name: "event",
+        fields: fields,
+    }
+}
+
+fn device_info_message() -> MessageInfo {
+    let mut fields = HashMap::new();
 
     let field = FieldInfo {
         name: "device_index",
@@ -6223,6 +6272,16 @@ fn device_info_message() -> MessageInfo {
     };
     fields.insert(27, field);
 
+    let field = FieldInfo {
+        name: "timestamp",
+        field_type: FieldDataType::DateTime,
+        def_number: 253,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "s",
+    };
+    fields.insert(253, field);
+
     MessageInfo {
         name: "device_info",
         fields: fields,
@@ -6231,16 +6290,6 @@ fn device_info_message() -> MessageInfo {
 
 fn training_file_message() -> MessageInfo {
     let mut fields = HashMap::new();
-
-    let field = FieldInfo {
-        name: "timestamp",
-        field_type: FieldDataType::DateTime,
-        def_number: 253,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "",
-    };
-    fields.insert(253, field);
 
     let field = FieldInfo {
         name: "type",
@@ -6292,6 +6341,16 @@ fn training_file_message() -> MessageInfo {
     };
     fields.insert(4, field);
 
+    let field = FieldInfo {
+        name: "timestamp",
+        field_type: FieldDataType::DateTime,
+        def_number: 253,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+    };
+    fields.insert(253, field);
+
     MessageInfo {
         name: "training_file",
         fields: fields,
@@ -6301,6 +6360,7 @@ fn training_file_message() -> MessageInfo {
 fn hrv_message() -> MessageInfo {
     let mut fields = HashMap::new();
 
+    // [N]
     let field = FieldInfo {
         name: "time",
         field_type: FieldDataType::UInt16,
@@ -6319,16 +6379,6 @@ fn hrv_message() -> MessageInfo {
 
 fn weather_conditions_message() -> MessageInfo {
     let mut fields = HashMap::new();
-
-    let field = FieldInfo {
-        name: "timestamp",
-        field_type: FieldDataType::DateTime,
-        def_number: 253,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "",
-    };
-    fields.insert(253, field);
 
     let field = FieldInfo {
         name: "weather_report",
@@ -6480,15 +6530,6 @@ fn weather_conditions_message() -> MessageInfo {
     };
     fields.insert(14, field);
 
-    MessageInfo {
-        name: "weather_conditions",
-        fields: fields,
-    }
-}
-
-fn weather_alert_message() -> MessageInfo {
-    let mut fields = HashMap::new();
-
     let field = FieldInfo {
         name: "timestamp",
         field_type: FieldDataType::DateTime,
@@ -6498,6 +6539,15 @@ fn weather_alert_message() -> MessageInfo {
         units: "",
     };
     fields.insert(253, field);
+
+    MessageInfo {
+        name: "weather_conditions",
+        fields: fields,
+    }
+}
+
+fn weather_alert_message() -> MessageInfo {
+    let mut fields = HashMap::new();
 
     let field = FieldInfo {
         name: "report_id",
@@ -6549,6 +6599,16 @@ fn weather_alert_message() -> MessageInfo {
     };
     fields.insert(4, field);
 
+    let field = FieldInfo {
+        name: "timestamp",
+        field_type: FieldDataType::DateTime,
+        def_number: 253,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+    };
+    fields.insert(253, field);
+
     MessageInfo {
         name: "weather_alert",
         fields: fields,
@@ -6557,16 +6617,6 @@ fn weather_alert_message() -> MessageInfo {
 
 fn gps_metadata_message() -> MessageInfo {
     let mut fields = HashMap::new();
-
-    let field = FieldInfo {
-        name: "timestamp",
-        field_type: FieldDataType::DateTime,
-        def_number: 253,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "s",
-    };
-    fields.insert(253, field);
 
     let field = FieldInfo {
         name: "timestamp_ms",
@@ -6638,6 +6688,7 @@ fn gps_metadata_message() -> MessageInfo {
     };
     fields.insert(6, field);
 
+    // [3]
     let field = FieldInfo {
         name: "velocity",
         field_type: FieldDataType::SInt16,
@@ -6648,15 +6699,6 @@ fn gps_metadata_message() -> MessageInfo {
     };
     fields.insert(7, field);
 
-    MessageInfo {
-        name: "gps_metadata",
-        fields: fields,
-    }
-}
-
-fn camera_event_message() -> MessageInfo {
-    let mut fields = HashMap::new();
-
     let field = FieldInfo {
         name: "timestamp",
         field_type: FieldDataType::DateTime,
@@ -6666,6 +6708,15 @@ fn camera_event_message() -> MessageInfo {
         units: "s",
     };
     fields.insert(253, field);
+
+    MessageInfo {
+        name: "gps_metadata",
+        fields: fields,
+    }
+}
+
+fn camera_event_message() -> MessageInfo {
+    let mut fields = HashMap::new();
 
     let field = FieldInfo {
         name: "timestamp_ms",
@@ -6707,15 +6758,6 @@ fn camera_event_message() -> MessageInfo {
     };
     fields.insert(3, field);
 
-    MessageInfo {
-        name: "camera_event",
-        fields: fields,
-    }
-}
-
-fn gyroscope_data_message() -> MessageInfo {
-    let mut fields = HashMap::new();
-
     let field = FieldInfo {
         name: "timestamp",
         field_type: FieldDataType::DateTime,
@@ -6725,6 +6767,15 @@ fn gyroscope_data_message() -> MessageInfo {
         units: "s",
     };
     fields.insert(253, field);
+
+    MessageInfo {
+        name: "camera_event",
+        fields: fields,
+    }
+}
+
+fn gyroscope_data_message() -> MessageInfo {
+    let mut fields = HashMap::new();
 
     let field = FieldInfo {
         name: "timestamp_ms",
@@ -6736,6 +6787,7 @@ fn gyroscope_data_message() -> MessageInfo {
     };
     fields.insert(0, field);
 
+    // [N]
     let field = FieldInfo {
         name: "sample_time_offset",
         field_type: FieldDataType::UInt16,
@@ -6746,6 +6798,7 @@ fn gyroscope_data_message() -> MessageInfo {
     };
     fields.insert(1, field);
 
+    // [N]
     let field = FieldInfo {
         name: "gyro_x",
         field_type: FieldDataType::UInt16,
@@ -6756,6 +6809,7 @@ fn gyroscope_data_message() -> MessageInfo {
     };
     fields.insert(2, field);
 
+    // [N]
     let field = FieldInfo {
         name: "gyro_y",
         field_type: FieldDataType::UInt16,
@@ -6766,6 +6820,7 @@ fn gyroscope_data_message() -> MessageInfo {
     };
     fields.insert(3, field);
 
+    // [N]
     let field = FieldInfo {
         name: "gyro_z",
         field_type: FieldDataType::UInt16,
@@ -6776,6 +6831,7 @@ fn gyroscope_data_message() -> MessageInfo {
     };
     fields.insert(4, field);
 
+    // [N]
     let field = FieldInfo {
         name: "calibrated_gyro_x",
         field_type: FieldDataType::Float32,
@@ -6786,6 +6842,7 @@ fn gyroscope_data_message() -> MessageInfo {
     };
     fields.insert(5, field);
 
+    // [N]
     let field = FieldInfo {
         name: "calibrated_gyro_y",
         field_type: FieldDataType::Float32,
@@ -6796,6 +6853,7 @@ fn gyroscope_data_message() -> MessageInfo {
     };
     fields.insert(6, field);
 
+    // [N]
     let field = FieldInfo {
         name: "calibrated_gyro_z",
         field_type: FieldDataType::Float32,
@@ -6805,6 +6863,16 @@ fn gyroscope_data_message() -> MessageInfo {
         units: "deg/s",
     };
     fields.insert(7, field);
+
+    let field = FieldInfo {
+        name: "timestamp",
+        field_type: FieldDataType::DateTime,
+        def_number: 253,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "s",
+    };
+    fields.insert(253, field);
 
     MessageInfo {
         name: "gyroscope_data",
@@ -6816,16 +6884,6 @@ fn accelerometer_data_message() -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
-        name: "timestamp",
-        field_type: FieldDataType::DateTime,
-        def_number: 253,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "s",
-    };
-    fields.insert(253, field);
-
-    let field = FieldInfo {
         name: "timestamp_ms",
         field_type: FieldDataType::UInt16,
         def_number: 0,
@@ -6835,6 +6893,7 @@ fn accelerometer_data_message() -> MessageInfo {
     };
     fields.insert(0, field);
 
+    // [N]
     let field = FieldInfo {
         name: "sample_time_offset",
         field_type: FieldDataType::UInt16,
@@ -6845,6 +6904,7 @@ fn accelerometer_data_message() -> MessageInfo {
     };
     fields.insert(1, field);
 
+    // [N]
     let field = FieldInfo {
         name: "accel_x",
         field_type: FieldDataType::UInt16,
@@ -6855,6 +6915,7 @@ fn accelerometer_data_message() -> MessageInfo {
     };
     fields.insert(2, field);
 
+    // [N]
     let field = FieldInfo {
         name: "accel_y",
         field_type: FieldDataType::UInt16,
@@ -6865,6 +6926,7 @@ fn accelerometer_data_message() -> MessageInfo {
     };
     fields.insert(3, field);
 
+    // [N]
     let field = FieldInfo {
         name: "accel_z",
         field_type: FieldDataType::UInt16,
@@ -6875,6 +6937,7 @@ fn accelerometer_data_message() -> MessageInfo {
     };
     fields.insert(4, field);
 
+    // [N]
     let field = FieldInfo {
         name: "calibrated_accel_x",
         field_type: FieldDataType::Float32,
@@ -6885,6 +6948,7 @@ fn accelerometer_data_message() -> MessageInfo {
     };
     fields.insert(5, field);
 
+    // [N]
     let field = FieldInfo {
         name: "calibrated_accel_y",
         field_type: FieldDataType::Float32,
@@ -6895,6 +6959,7 @@ fn accelerometer_data_message() -> MessageInfo {
     };
     fields.insert(6, field);
 
+    // [N]
     let field = FieldInfo {
         name: "calibrated_accel_z",
         field_type: FieldDataType::Float32,
@@ -6905,6 +6970,7 @@ fn accelerometer_data_message() -> MessageInfo {
     };
     fields.insert(7, field);
 
+    // [N]
     let field = FieldInfo {
         name: "compressed_calibrated_accel_x",
         field_type: FieldDataType::SInt16,
@@ -6915,6 +6981,7 @@ fn accelerometer_data_message() -> MessageInfo {
     };
     fields.insert(8, field);
 
+    // [N]
     let field = FieldInfo {
         name: "compressed_calibrated_accel_y",
         field_type: FieldDataType::SInt16,
@@ -6925,6 +6992,7 @@ fn accelerometer_data_message() -> MessageInfo {
     };
     fields.insert(9, field);
 
+    // [N]
     let field = FieldInfo {
         name: "compressed_calibrated_accel_z",
         field_type: FieldDataType::SInt16,
@@ -6934,6 +7002,16 @@ fn accelerometer_data_message() -> MessageInfo {
         units: "mG",
     };
     fields.insert(10, field);
+
+    let field = FieldInfo {
+        name: "timestamp",
+        field_type: FieldDataType::DateTime,
+        def_number: 253,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "s",
+    };
+    fields.insert(253, field);
 
     MessageInfo {
         name: "accelerometer_data",
@@ -6945,16 +7023,6 @@ fn magnetometer_data_message() -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
-        name: "timestamp",
-        field_type: FieldDataType::DateTime,
-        def_number: 253,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "s",
-    };
-    fields.insert(253, field);
-
-    let field = FieldInfo {
         name: "timestamp_ms",
         field_type: FieldDataType::UInt16,
         def_number: 0,
@@ -6964,6 +7032,7 @@ fn magnetometer_data_message() -> MessageInfo {
     };
     fields.insert(0, field);
 
+    // [N]
     let field = FieldInfo {
         name: "sample_time_offset",
         field_type: FieldDataType::UInt16,
@@ -6974,6 +7043,7 @@ fn magnetometer_data_message() -> MessageInfo {
     };
     fields.insert(1, field);
 
+    // [N]
     let field = FieldInfo {
         name: "mag_x",
         field_type: FieldDataType::UInt16,
@@ -6984,6 +7054,7 @@ fn magnetometer_data_message() -> MessageInfo {
     };
     fields.insert(2, field);
 
+    // [N]
     let field = FieldInfo {
         name: "mag_y",
         field_type: FieldDataType::UInt16,
@@ -6994,6 +7065,7 @@ fn magnetometer_data_message() -> MessageInfo {
     };
     fields.insert(3, field);
 
+    // [N]
     let field = FieldInfo {
         name: "mag_z",
         field_type: FieldDataType::UInt16,
@@ -7004,6 +7076,7 @@ fn magnetometer_data_message() -> MessageInfo {
     };
     fields.insert(4, field);
 
+    // [N]
     let field = FieldInfo {
         name: "calibrated_mag_x",
         field_type: FieldDataType::Float32,
@@ -7014,6 +7087,7 @@ fn magnetometer_data_message() -> MessageInfo {
     };
     fields.insert(5, field);
 
+    // [N]
     let field = FieldInfo {
         name: "calibrated_mag_y",
         field_type: FieldDataType::Float32,
@@ -7024,6 +7098,7 @@ fn magnetometer_data_message() -> MessageInfo {
     };
     fields.insert(6, field);
 
+    // [N]
     let field = FieldInfo {
         name: "calibrated_mag_z",
         field_type: FieldDataType::Float32,
@@ -7033,6 +7108,16 @@ fn magnetometer_data_message() -> MessageInfo {
         units: "G",
     };
     fields.insert(7, field);
+
+    let field = FieldInfo {
+        name: "timestamp",
+        field_type: FieldDataType::DateTime,
+        def_number: 253,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "s",
+    };
+    fields.insert(253, field);
 
     MessageInfo {
         name: "magnetometer_data",
@@ -7044,16 +7129,6 @@ fn barometer_data_message() -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
-        name: "timestamp",
-        field_type: FieldDataType::DateTime,
-        def_number: 253,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "s",
-    };
-    fields.insert(253, field);
-
-    let field = FieldInfo {
         name: "timestamp_ms",
         field_type: FieldDataType::UInt16,
         def_number: 0,
@@ -7063,6 +7138,7 @@ fn barometer_data_message() -> MessageInfo {
     };
     fields.insert(0, field);
 
+    // [N]
     let field = FieldInfo {
         name: "sample_time_offset",
         field_type: FieldDataType::UInt16,
@@ -7073,6 +7149,7 @@ fn barometer_data_message() -> MessageInfo {
     };
     fields.insert(1, field);
 
+    // [N]
     let field = FieldInfo {
         name: "baro_pres",
         field_type: FieldDataType::UInt32,
@@ -7082,6 +7159,16 @@ fn barometer_data_message() -> MessageInfo {
         units: "Pa",
     };
     fields.insert(2, field);
+
+    let field = FieldInfo {
+        name: "timestamp",
+        field_type: FieldDataType::DateTime,
+        def_number: 253,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "s",
+    };
+    fields.insert(253, field);
 
     MessageInfo {
         name: "barometer_data",
@@ -7093,16 +7180,6 @@ fn three_d_sensor_calibration_message() -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
-        name: "timestamp",
-        field_type: FieldDataType::DateTime,
-        def_number: 253,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "s",
-    };
-    fields.insert(253, field);
-
-    let field = FieldInfo {
         name: "sensor_type",
         field_type: FieldDataType::SensorType,
         def_number: 0,
@@ -7142,6 +7219,7 @@ fn three_d_sensor_calibration_message() -> MessageInfo {
     };
     fields.insert(3, field);
 
+    // [3]
     let field = FieldInfo {
         name: "offset_cal",
         field_type: FieldDataType::SInt32,
@@ -7152,6 +7230,7 @@ fn three_d_sensor_calibration_message() -> MessageInfo {
     };
     fields.insert(4, field);
 
+    // [9]
     let field = FieldInfo {
         name: "orientation_matrix",
         field_type: FieldDataType::SInt32,
@@ -7161,6 +7240,16 @@ fn three_d_sensor_calibration_message() -> MessageInfo {
         units: "",
     };
     fields.insert(5, field);
+
+    let field = FieldInfo {
+        name: "timestamp",
+        field_type: FieldDataType::DateTime,
+        def_number: 253,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "s",
+    };
+    fields.insert(253, field);
 
     MessageInfo {
         name: "three_d_sensor_calibration",
@@ -7172,16 +7261,6 @@ fn one_d_sensor_calibration_message() -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
-        name: "timestamp",
-        field_type: FieldDataType::DateTime,
-        def_number: 253,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "s",
-    };
-    fields.insert(253, field);
-
-    let field = FieldInfo {
         name: "sensor_type",
         field_type: FieldDataType::SensorType,
         def_number: 0,
@@ -7231,15 +7310,6 @@ fn one_d_sensor_calibration_message() -> MessageInfo {
     };
     fields.insert(4, field);
 
-    MessageInfo {
-        name: "one_d_sensor_calibration",
-        fields: fields,
-    }
-}
-
-fn video_frame_message() -> MessageInfo {
-    let mut fields = HashMap::new();
-
     let field = FieldInfo {
         name: "timestamp",
         field_type: FieldDataType::DateTime,
@@ -7249,6 +7319,15 @@ fn video_frame_message() -> MessageInfo {
         units: "s",
     };
     fields.insert(253, field);
+
+    MessageInfo {
+        name: "one_d_sensor_calibration",
+        fields: fields,
+    }
+}
+
+fn video_frame_message() -> MessageInfo {
+    let mut fields = HashMap::new();
 
     let field = FieldInfo {
         name: "timestamp_ms",
@@ -7270,15 +7349,6 @@ fn video_frame_message() -> MessageInfo {
     };
     fields.insert(1, field);
 
-    MessageInfo {
-        name: "video_frame",
-        fields: fields,
-    }
-}
-
-fn obdii_data_message() -> MessageInfo {
-    let mut fields = HashMap::new();
-
     let field = FieldInfo {
         name: "timestamp",
         field_type: FieldDataType::DateTime,
@@ -7288,6 +7358,15 @@ fn obdii_data_message() -> MessageInfo {
         units: "s",
     };
     fields.insert(253, field);
+
+    MessageInfo {
+        name: "video_frame",
+        fields: fields,
+    }
+}
+
+fn obdii_data_message() -> MessageInfo {
+    let mut fields = HashMap::new();
 
     let field = FieldInfo {
         name: "timestamp_ms",
@@ -7299,6 +7378,7 @@ fn obdii_data_message() -> MessageInfo {
     };
     fields.insert(0, field);
 
+    // [N]
     let field = FieldInfo {
         name: "time_offset",
         field_type: FieldDataType::UInt16,
@@ -7319,6 +7399,7 @@ fn obdii_data_message() -> MessageInfo {
     };
     fields.insert(2, field);
 
+    // [N]
     let field = FieldInfo {
         name: "raw_data",
         field_type: FieldDataType::Byte,
@@ -7329,6 +7410,7 @@ fn obdii_data_message() -> MessageInfo {
     };
     fields.insert(3, field);
 
+    // [N]
     let field = FieldInfo {
         name: "pid_data_size",
         field_type: FieldDataType::UInt8,
@@ -7339,6 +7421,7 @@ fn obdii_data_message() -> MessageInfo {
     };
     fields.insert(4, field);
 
+    // [N]
     let field = FieldInfo {
         name: "system_time",
         field_type: FieldDataType::UInt32,
@@ -7369,15 +7452,6 @@ fn obdii_data_message() -> MessageInfo {
     };
     fields.insert(7, field);
 
-    MessageInfo {
-        name: "obdii_data",
-        fields: fields,
-    }
-}
-
-fn nmea_sentence_message() -> MessageInfo {
-    let mut fields = HashMap::new();
-
     let field = FieldInfo {
         name: "timestamp",
         field_type: FieldDataType::DateTime,
@@ -7387,6 +7461,15 @@ fn nmea_sentence_message() -> MessageInfo {
         units: "s",
     };
     fields.insert(253, field);
+
+    MessageInfo {
+        name: "obdii_data",
+        fields: fields,
+    }
+}
+
+fn nmea_sentence_message() -> MessageInfo {
+    let mut fields = HashMap::new();
 
     let field = FieldInfo {
         name: "timestamp_ms",
@@ -7408,15 +7491,6 @@ fn nmea_sentence_message() -> MessageInfo {
     };
     fields.insert(1, field);
 
-    MessageInfo {
-        name: "nmea_sentence",
-        fields: fields,
-    }
-}
-
-fn aviation_attitude_message() -> MessageInfo {
-    let mut fields = HashMap::new();
-
     let field = FieldInfo {
         name: "timestamp",
         field_type: FieldDataType::DateTime,
@@ -7426,6 +7500,15 @@ fn aviation_attitude_message() -> MessageInfo {
         units: "s",
     };
     fields.insert(253, field);
+
+    MessageInfo {
+        name: "nmea_sentence",
+        fields: fields,
+    }
+}
+
+fn aviation_attitude_message() -> MessageInfo {
+    let mut fields = HashMap::new();
 
     let field = FieldInfo {
         name: "timestamp_ms",
@@ -7437,6 +7520,7 @@ fn aviation_attitude_message() -> MessageInfo {
     };
     fields.insert(0, field);
 
+    // [N]
     let field = FieldInfo {
         name: "system_time",
         field_type: FieldDataType::UInt32,
@@ -7447,6 +7531,7 @@ fn aviation_attitude_message() -> MessageInfo {
     };
     fields.insert(1, field);
 
+    // [N]
     let field = FieldInfo {
         name: "pitch",
         field_type: FieldDataType::SInt16,
@@ -7457,6 +7542,7 @@ fn aviation_attitude_message() -> MessageInfo {
     };
     fields.insert(2, field);
 
+    // [N]
     let field = FieldInfo {
         name: "roll",
         field_type: FieldDataType::SInt16,
@@ -7467,6 +7553,7 @@ fn aviation_attitude_message() -> MessageInfo {
     };
     fields.insert(3, field);
 
+    // [N]
     let field = FieldInfo {
         name: "accel_lateral",
         field_type: FieldDataType::SInt16,
@@ -7477,6 +7564,7 @@ fn aviation_attitude_message() -> MessageInfo {
     };
     fields.insert(4, field);
 
+    // [N]
     let field = FieldInfo {
         name: "accel_normal",
         field_type: FieldDataType::SInt16,
@@ -7487,6 +7575,7 @@ fn aviation_attitude_message() -> MessageInfo {
     };
     fields.insert(5, field);
 
+    // [N]
     let field = FieldInfo {
         name: "turn_rate",
         field_type: FieldDataType::SInt16,
@@ -7497,6 +7586,7 @@ fn aviation_attitude_message() -> MessageInfo {
     };
     fields.insert(6, field);
 
+    // [N]
     let field = FieldInfo {
         name: "stage",
         field_type: FieldDataType::AttitudeStage,
@@ -7507,6 +7597,7 @@ fn aviation_attitude_message() -> MessageInfo {
     };
     fields.insert(7, field);
 
+    // [N]
     let field = FieldInfo {
         name: "attitude_stage_complete",
         field_type: FieldDataType::UInt8,
@@ -7517,6 +7608,7 @@ fn aviation_attitude_message() -> MessageInfo {
     };
     fields.insert(8, field);
 
+    // [N]
     let field = FieldInfo {
         name: "track",
         field_type: FieldDataType::UInt16,
@@ -7527,6 +7619,7 @@ fn aviation_attitude_message() -> MessageInfo {
     };
     fields.insert(9, field);
 
+    // [N]
     let field = FieldInfo {
         name: "validity",
         field_type: FieldDataType::AttitudeValidity,
@@ -7536,6 +7629,16 @@ fn aviation_attitude_message() -> MessageInfo {
         units: "",
     };
     fields.insert(10, field);
+
+    let field = FieldInfo {
+        name: "timestamp",
+        field_type: FieldDataType::DateTime,
+        def_number: 253,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "s",
+    };
+    fields.insert(253, field);
 
     MessageInfo {
         name: "aviation_attitude",
@@ -7586,16 +7689,6 @@ fn video_title_message() -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
-        name: "message_index",
-        field_type: FieldDataType::MessageIndex,
-        def_number: 254,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "",
-    };
-    fields.insert(254, field);
-
-    let field = FieldInfo {
         name: "message_count",
         field_type: FieldDataType::UInt16,
         def_number: 0,
@@ -7614,6 +7707,16 @@ fn video_title_message() -> MessageInfo {
         units: "",
     };
     fields.insert(1, field);
+
+    let field = FieldInfo {
+        name: "message_index",
+        field_type: FieldDataType::MessageIndex,
+        def_number: 254,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+    };
+    fields.insert(254, field);
 
     MessageInfo {
         name: "video_title",
@@ -7625,16 +7728,6 @@ fn video_description_message() -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
-        name: "message_index",
-        field_type: FieldDataType::MessageIndex,
-        def_number: 254,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "",
-    };
-    fields.insert(254, field);
-
-    let field = FieldInfo {
         name: "message_count",
         field_type: FieldDataType::UInt16,
         def_number: 0,
@@ -7653,6 +7746,16 @@ fn video_description_message() -> MessageInfo {
         units: "",
     };
     fields.insert(1, field);
+
+    let field = FieldInfo {
+        name: "message_index",
+        field_type: FieldDataType::MessageIndex,
+        def_number: 254,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+    };
+    fields.insert(254, field);
 
     MessageInfo {
         name: "video_description",
@@ -7743,16 +7846,6 @@ fn set_message() -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
-        name: "timestamp",
-        field_type: FieldDataType::DateTime,
-        def_number: 254,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "",
-    };
-    fields.insert(254, field);
-
-    let field = FieldInfo {
         name: "duration",
         field_type: FieldDataType::UInt32,
         def_number: 0,
@@ -7802,6 +7895,7 @@ fn set_message() -> MessageInfo {
     };
     fields.insert(6, field);
 
+    // [N]
     let field = FieldInfo {
         name: "category",
         field_type: FieldDataType::ExerciseCategory,
@@ -7812,6 +7906,7 @@ fn set_message() -> MessageInfo {
     };
     fields.insert(7, field);
 
+    // [N]
     let field = FieldInfo {
         name: "category_subtype",
         field_type: FieldDataType::UInt16,
@@ -7852,6 +7947,16 @@ fn set_message() -> MessageInfo {
     };
     fields.insert(11, field);
 
+    let field = FieldInfo {
+        name: "timestamp",
+        field_type: FieldDataType::DateTime,
+        def_number: 254,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+    };
+    fields.insert(254, field);
+
     MessageInfo {
         name: "set",
         fields: fields,
@@ -7860,16 +7965,6 @@ fn set_message() -> MessageInfo {
 
 fn jump_message() -> MessageInfo {
     let mut fields = HashMap::new();
-
-    let field = FieldInfo {
-        name: "timestamp",
-        field_type: FieldDataType::DateTime,
-        def_number: 253,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "s",
-    };
-    fields.insert(253, field);
 
     let field = FieldInfo {
         name: "distance",
@@ -7961,6 +8056,16 @@ fn jump_message() -> MessageInfo {
     };
     fields.insert(8, field);
 
+    let field = FieldInfo {
+        name: "timestamp",
+        field_type: FieldDataType::DateTime,
+        def_number: 253,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "s",
+    };
+    fields.insert(253, field);
+
     MessageInfo {
         name: "jump",
         fields: fields,
@@ -8018,16 +8123,6 @@ fn course_message() -> MessageInfo {
 
 fn course_point_message() -> MessageInfo {
     let mut fields = HashMap::new();
-
-    let field = FieldInfo {
-        name: "message_index",
-        field_type: FieldDataType::MessageIndex,
-        def_number: 254,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "",
-    };
-    fields.insert(254, field);
 
     let field = FieldInfo {
         name: "timestamp",
@@ -8098,6 +8193,16 @@ fn course_point_message() -> MessageInfo {
         units: "",
     };
     fields.insert(8, field);
+
+    let field = FieldInfo {
+        name: "message_index",
+        field_type: FieldDataType::MessageIndex,
+        def_number: 254,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+    };
+    fields.insert(254, field);
 
     MessageInfo {
         name: "course_point",
@@ -8208,16 +8313,6 @@ fn segment_leaderboard_entry_message() -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
-        name: "message_index",
-        field_type: FieldDataType::MessageIndex,
-        def_number: 254,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "",
-    };
-    fields.insert(254, field);
-
-    let field = FieldInfo {
         name: "name",
         field_type: FieldDataType::String,
         def_number: 0,
@@ -8277,15 +8372,6 @@ fn segment_leaderboard_entry_message() -> MessageInfo {
     };
     fields.insert(5, field);
 
-    MessageInfo {
-        name: "segment_leaderboard_entry",
-        fields: fields,
-    }
-}
-
-fn segment_point_message() -> MessageInfo {
-    let mut fields = HashMap::new();
-
     let field = FieldInfo {
         name: "message_index",
         field_type: FieldDataType::MessageIndex,
@@ -8295,6 +8381,15 @@ fn segment_point_message() -> MessageInfo {
         units: "",
     };
     fields.insert(254, field);
+
+    MessageInfo {
+        name: "segment_leaderboard_entry",
+        fields: fields,
+    }
+}
+
+fn segment_point_message() -> MessageInfo {
+    let mut fields = HashMap::new();
 
     let field = FieldInfo {
         name: "position_lat",
@@ -8336,6 +8431,7 @@ fn segment_point_message() -> MessageInfo {
     };
     fields.insert(4, field);
 
+    // [N]
     let field = FieldInfo {
         name: "leader_time",
         field_type: FieldDataType::UInt32,
@@ -8345,15 +8441,6 @@ fn segment_point_message() -> MessageInfo {
         units: "s",
     };
     fields.insert(5, field);
-
-    MessageInfo {
-        name: "segment_point",
-        fields: fields,
-    }
-}
-
-fn segment_lap_message() -> MessageInfo {
-    let mut fields = HashMap::new();
 
     let field = FieldInfo {
         name: "message_index",
@@ -8365,15 +8452,14 @@ fn segment_lap_message() -> MessageInfo {
     };
     fields.insert(254, field);
 
-    let field = FieldInfo {
-        name: "timestamp",
-        field_type: FieldDataType::DateTime,
-        def_number: 253,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "s",
-    };
-    fields.insert(253, field);
+    MessageInfo {
+        name: "segment_point",
+        fields: fields,
+    }
+}
+
+fn segment_lap_message() -> MessageInfo {
+    let mut fields = HashMap::new();
 
     let field = FieldInfo {
         name: "event",
@@ -8865,6 +8951,7 @@ fn segment_lap_message() -> MessageInfo {
     };
     fields.insert(48, field);
 
+    // [N]
     let field = FieldInfo {
         name: "time_in_hr_zone",
         field_type: FieldDataType::UInt32,
@@ -8875,6 +8962,7 @@ fn segment_lap_message() -> MessageInfo {
     };
     fields.insert(49, field);
 
+    // [N]
     let field = FieldInfo {
         name: "time_in_speed_zone",
         field_type: FieldDataType::UInt32,
@@ -8885,6 +8973,7 @@ fn segment_lap_message() -> MessageInfo {
     };
     fields.insert(50, field);
 
+    // [N]
     let field = FieldInfo {
         name: "time_in_cadence_zone",
         field_type: FieldDataType::UInt32,
@@ -8895,6 +8984,7 @@ fn segment_lap_message() -> MessageInfo {
     };
     fields.insert(51, field);
 
+    // [N]
     let field = FieldInfo {
         name: "time_in_power_zone",
         field_type: FieldDataType::UInt32,
@@ -9125,6 +9215,7 @@ fn segment_lap_message() -> MessageInfo {
     };
     fields.insert(74, field);
 
+    // [N]
     let field = FieldInfo {
         name: "avg_left_power_phase",
         field_type: FieldDataType::UInt8,
@@ -9135,6 +9226,7 @@ fn segment_lap_message() -> MessageInfo {
     };
     fields.insert(75, field);
 
+    // [N]
     let field = FieldInfo {
         name: "avg_left_power_phase_peak",
         field_type: FieldDataType::UInt8,
@@ -9145,6 +9237,7 @@ fn segment_lap_message() -> MessageInfo {
     };
     fields.insert(76, field);
 
+    // [N]
     let field = FieldInfo {
         name: "avg_right_power_phase",
         field_type: FieldDataType::UInt8,
@@ -9155,6 +9248,7 @@ fn segment_lap_message() -> MessageInfo {
     };
     fields.insert(77, field);
 
+    // [N]
     let field = FieldInfo {
         name: "avg_right_power_phase_peak",
         field_type: FieldDataType::UInt8,
@@ -9165,6 +9259,7 @@ fn segment_lap_message() -> MessageInfo {
     };
     fields.insert(78, field);
 
+    // [N]
     let field = FieldInfo {
         name: "avg_power_position",
         field_type: FieldDataType::UInt16,
@@ -9175,6 +9270,7 @@ fn segment_lap_message() -> MessageInfo {
     };
     fields.insert(79, field);
 
+    // [N]
     let field = FieldInfo {
         name: "max_power_position",
         field_type: FieldDataType::UInt16,
@@ -9185,6 +9281,7 @@ fn segment_lap_message() -> MessageInfo {
     };
     fields.insert(80, field);
 
+    // [N]
     let field = FieldInfo {
         name: "avg_cadence_position",
         field_type: FieldDataType::UInt8,
@@ -9195,6 +9292,7 @@ fn segment_lap_message() -> MessageInfo {
     };
     fields.insert(81, field);
 
+    // [N]
     let field = FieldInfo {
         name: "max_cadence_position",
         field_type: FieldDataType::UInt8,
@@ -9255,14 +9353,15 @@ fn segment_lap_message() -> MessageInfo {
     };
     fields.insert(87, field);
 
-    MessageInfo {
-        name: "segment_lap",
-        fields: fields,
-    }
-}
-
-fn segment_file_message() -> MessageInfo {
-    let mut fields = HashMap::new();
+    let field = FieldInfo {
+        name: "timestamp",
+        field_type: FieldDataType::DateTime,
+        def_number: 253,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "s",
+    };
+    fields.insert(253, field);
 
     let field = FieldInfo {
         name: "message_index",
@@ -9273,6 +9372,15 @@ fn segment_file_message() -> MessageInfo {
         units: "",
     };
     fields.insert(254, field);
+
+    MessageInfo {
+        name: "segment_lap",
+        fields: fields,
+    }
+}
+
+fn segment_file_message() -> MessageInfo {
+    let mut fields = HashMap::new();
 
     let field = FieldInfo {
         name: "file_uuid",
@@ -9304,6 +9412,7 @@ fn segment_file_message() -> MessageInfo {
     };
     fields.insert(4, field);
 
+    // [N]
     let field = FieldInfo {
         name: "leader_type",
         field_type: FieldDataType::SegmentLeaderboardType,
@@ -9314,6 +9423,7 @@ fn segment_file_message() -> MessageInfo {
     };
     fields.insert(7, field);
 
+    // [N]
     let field = FieldInfo {
         name: "leader_group_primary_key",
         field_type: FieldDataType::UInt32,
@@ -9324,6 +9434,7 @@ fn segment_file_message() -> MessageInfo {
     };
     fields.insert(8, field);
 
+    // [N]
     let field = FieldInfo {
         name: "leader_activity_id",
         field_type: FieldDataType::UInt32,
@@ -9334,6 +9445,7 @@ fn segment_file_message() -> MessageInfo {
     };
     fields.insert(9, field);
 
+    // [N]
     let field = FieldInfo {
         name: "leader_activity_id_string",
         field_type: FieldDataType::String,
@@ -9353,6 +9465,16 @@ fn segment_file_message() -> MessageInfo {
         units: "",
     };
     fields.insert(11, field);
+
+    let field = FieldInfo {
+        name: "message_index",
+        field_type: FieldDataType::MessageIndex,
+        def_number: 254,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+    };
+    fields.insert(254, field);
 
     MessageInfo {
         name: "segment_file",
@@ -9443,16 +9565,6 @@ fn workout_session_message() -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
-        name: "message_index",
-        field_type: FieldDataType::MessageIndex,
-        def_number: 254,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "",
-    };
-    fields.insert(254, field);
-
-    let field = FieldInfo {
         name: "sport",
         field_type: FieldDataType::Sport,
         def_number: 0,
@@ -9512,15 +9624,6 @@ fn workout_session_message() -> MessageInfo {
     };
     fields.insert(5, field);
 
-    MessageInfo {
-        name: "workout_session",
-        fields: fields,
-    }
-}
-
-fn workout_step_message() -> MessageInfo {
-    let mut fields = HashMap::new();
-
     let field = FieldInfo {
         name: "message_index",
         field_type: FieldDataType::MessageIndex,
@@ -9530,6 +9633,15 @@ fn workout_step_message() -> MessageInfo {
         units: "",
     };
     fields.insert(254, field);
+
+    MessageInfo {
+        name: "workout_session",
+        fields: fields,
+    }
+}
+
+fn workout_step_message() -> MessageInfo {
+    let mut fields = HashMap::new();
 
     let field = FieldInfo {
         name: "wkt_step_name",
@@ -9671,15 +9783,6 @@ fn workout_step_message() -> MessageInfo {
     };
     fields.insert(13, field);
 
-    MessageInfo {
-        name: "workout_step",
-        fields: fields,
-    }
-}
-
-fn exercise_title_message() -> MessageInfo {
-    let mut fields = HashMap::new();
-
     let field = FieldInfo {
         name: "message_index",
         field_type: FieldDataType::MessageIndex,
@@ -9689,6 +9792,15 @@ fn exercise_title_message() -> MessageInfo {
         units: "",
     };
     fields.insert(254, field);
+
+    MessageInfo {
+        name: "workout_step",
+        fields: fields,
+    }
+}
+
+fn exercise_title_message() -> MessageInfo {
+    let mut fields = HashMap::new();
 
     let field = FieldInfo {
         name: "exercise_category",
@@ -9710,6 +9822,7 @@ fn exercise_title_message() -> MessageInfo {
     };
     fields.insert(1, field);
 
+    // [N]
     let field = FieldInfo {
         name: "wkt_step_name",
         field_type: FieldDataType::String,
@@ -9719,6 +9832,16 @@ fn exercise_title_message() -> MessageInfo {
         units: "",
     };
     fields.insert(2, field);
+
+    let field = FieldInfo {
+        name: "message_index",
+        field_type: FieldDataType::MessageIndex,
+        def_number: 254,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+    };
+    fields.insert(254, field);
 
     MessageInfo {
         name: "exercise_title",
@@ -9809,26 +9932,6 @@ fn totals_message() -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
-        name: "message_index",
-        field_type: FieldDataType::MessageIndex,
-        def_number: 254,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "",
-    };
-    fields.insert(254, field);
-
-    let field = FieldInfo {
-        name: "timestamp",
-        field_type: FieldDataType::DateTime,
-        def_number: 253,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "s",
-    };
-    fields.insert(253, field);
-
-    let field = FieldInfo {
         name: "timer_time",
         field_type: FieldDataType::UInt32,
         def_number: 0,
@@ -9908,15 +10011,6 @@ fn totals_message() -> MessageInfo {
     };
     fields.insert(9, field);
 
-    MessageInfo {
-        name: "totals",
-        fields: fields,
-    }
-}
-
-fn weight_scale_message() -> MessageInfo {
-    let mut fields = HashMap::new();
-
     let field = FieldInfo {
         name: "timestamp",
         field_type: FieldDataType::DateTime,
@@ -9926,6 +10020,25 @@ fn weight_scale_message() -> MessageInfo {
         units: "s",
     };
     fields.insert(253, field);
+
+    let field = FieldInfo {
+        name: "message_index",
+        field_type: FieldDataType::MessageIndex,
+        def_number: 254,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+    };
+    fields.insert(254, field);
+
+    MessageInfo {
+        name: "totals",
+        fields: fields,
+    }
+}
+
+fn weight_scale_message() -> MessageInfo {
+    let mut fields = HashMap::new();
 
     let field = FieldInfo {
         name: "weight",
@@ -10047,15 +10160,6 @@ fn weight_scale_message() -> MessageInfo {
     };
     fields.insert(12, field);
 
-    MessageInfo {
-        name: "weight_scale",
-        fields: fields,
-    }
-}
-
-fn blood_pressure_message() -> MessageInfo {
-    let mut fields = HashMap::new();
-
     let field = FieldInfo {
         name: "timestamp",
         field_type: FieldDataType::DateTime,
@@ -10065,6 +10169,15 @@ fn blood_pressure_message() -> MessageInfo {
         units: "s",
     };
     fields.insert(253, field);
+
+    MessageInfo {
+        name: "weight_scale",
+        fields: fields,
+    }
+}
+
+fn blood_pressure_message() -> MessageInfo {
+    let mut fields = HashMap::new();
 
     let field = FieldInfo {
         name: "systolic_pressure",
@@ -10166,15 +10279,6 @@ fn blood_pressure_message() -> MessageInfo {
     };
     fields.insert(9, field);
 
-    MessageInfo {
-        name: "blood_pressure",
-        fields: fields,
-    }
-}
-
-fn monitoring_info_message() -> MessageInfo {
-    let mut fields = HashMap::new();
-
     let field = FieldInfo {
         name: "timestamp",
         field_type: FieldDataType::DateTime,
@@ -10184,6 +10288,15 @@ fn monitoring_info_message() -> MessageInfo {
         units: "s",
     };
     fields.insert(253, field);
+
+    MessageInfo {
+        name: "blood_pressure",
+        fields: fields,
+    }
+}
+
+fn monitoring_info_message() -> MessageInfo {
+    let mut fields = HashMap::new();
 
     let field = FieldInfo {
         name: "local_timestamp",
@@ -10195,6 +10308,7 @@ fn monitoring_info_message() -> MessageInfo {
     };
     fields.insert(0, field);
 
+    // [N]
     let field = FieldInfo {
         name: "activity_type",
         field_type: FieldDataType::ActivityType,
@@ -10205,6 +10319,7 @@ fn monitoring_info_message() -> MessageInfo {
     };
     fields.insert(1, field);
 
+    // [N]
     let field = FieldInfo {
         name: "cycles_to_distance",
         field_type: FieldDataType::UInt16,
@@ -10215,6 +10330,7 @@ fn monitoring_info_message() -> MessageInfo {
     };
     fields.insert(3, field);
 
+    // [N]
     let field = FieldInfo {
         name: "cycles_to_calories",
         field_type: FieldDataType::UInt16,
@@ -10235,15 +10351,6 @@ fn monitoring_info_message() -> MessageInfo {
     };
     fields.insert(5, field);
 
-    MessageInfo {
-        name: "monitoring_info",
-        fields: fields,
-    }
-}
-
-fn monitoring_message() -> MessageInfo {
-    let mut fields = HashMap::new();
-
     let field = FieldInfo {
         name: "timestamp",
         field_type: FieldDataType::DateTime,
@@ -10253,6 +10360,15 @@ fn monitoring_message() -> MessageInfo {
         units: "s",
     };
     fields.insert(253, field);
+
+    MessageInfo {
+        name: "monitoring_info",
+        fields: fields,
+    }
+}
+
+fn monitoring_message() -> MessageInfo {
+    let mut fields = HashMap::new();
 
     let field = FieldInfo {
         name: "device_index",
@@ -10404,6 +10520,7 @@ fn monitoring_message() -> MessageInfo {
     };
     fields.insert(15, field);
 
+    // [8]
     let field = FieldInfo {
         name: "activity_time",
         field_type: FieldDataType::UInt16,
@@ -10534,6 +10651,16 @@ fn monitoring_message() -> MessageInfo {
     };
     fields.insert(34, field);
 
+    let field = FieldInfo {
+        name: "timestamp",
+        field_type: FieldDataType::DateTime,
+        def_number: 253,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "s",
+    };
+    fields.insert(253, field);
+
     MessageInfo {
         name: "monitoring",
         fields: fields,
@@ -10542,16 +10669,6 @@ fn monitoring_message() -> MessageInfo {
 
 fn hr_message() -> MessageInfo {
     let mut fields = HashMap::new();
-
-    let field = FieldInfo {
-        name: "timestamp",
-        field_type: FieldDataType::DateTime,
-        def_number: 253,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "",
-    };
-    fields.insert(253, field);
 
     let field = FieldInfo {
         name: "fractional_timestamp",
@@ -10573,6 +10690,7 @@ fn hr_message() -> MessageInfo {
     };
     fields.insert(1, field);
 
+    // [N]
     let field = FieldInfo {
         name: "filtered_bpm",
         field_type: FieldDataType::UInt8,
@@ -10583,6 +10701,7 @@ fn hr_message() -> MessageInfo {
     };
     fields.insert(6, field);
 
+    // [N]
     let field = FieldInfo {
         name: "event_timestamp",
         field_type: FieldDataType::UInt32,
@@ -10593,6 +10712,7 @@ fn hr_message() -> MessageInfo {
     };
     fields.insert(9, field);
 
+    // [N]
     let field = FieldInfo {
         name: "event_timestamp_12",
         field_type: FieldDataType::Byte,
@@ -10602,6 +10722,16 @@ fn hr_message() -> MessageInfo {
         units: "s",
     };
     fields.insert(10, field);
+
+    let field = FieldInfo {
+        name: "timestamp",
+        field_type: FieldDataType::DateTime,
+        def_number: 253,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+    };
+    fields.insert(253, field);
 
     MessageInfo {
         name: "hr",
@@ -10641,16 +10771,7 @@ fn stress_level_message() -> MessageInfo {
 fn memo_glob_message() -> MessageInfo {
     let mut fields = HashMap::new();
 
-    let field = FieldInfo {
-        name: "part_index",
-        field_type: FieldDataType::UInt32,
-        def_number: 250,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "",
-    };
-    fields.insert(250, field);
-
+    // [N]
     let field = FieldInfo {
         name: "memo",
         field_type: FieldDataType::Byte,
@@ -10680,6 +10801,16 @@ fn memo_glob_message() -> MessageInfo {
         units: "",
     };
     fields.insert(2, field);
+
+    let field = FieldInfo {
+        name: "part_index",
+        field_type: FieldDataType::UInt32,
+        def_number: 250,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+    };
+    fields.insert(250, field);
 
     MessageInfo {
         name: "memo_glob",
@@ -10750,16 +10881,6 @@ fn ant_rx_message() -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
-        name: "timestamp",
-        field_type: FieldDataType::DateTime,
-        def_number: 253,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "s",
-    };
-    fields.insert(253, field);
-
-    let field = FieldInfo {
         name: "fractional_timestamp",
         field_type: FieldDataType::UInt16,
         def_number: 0,
@@ -10779,6 +10900,7 @@ fn ant_rx_message() -> MessageInfo {
     };
     fields.insert(1, field);
 
+    // [N]
     let field = FieldInfo {
         name: "mesg_data",
         field_type: FieldDataType::Byte,
@@ -10799,6 +10921,7 @@ fn ant_rx_message() -> MessageInfo {
     };
     fields.insert(3, field);
 
+    // [N]
     let field = FieldInfo {
         name: "data",
         field_type: FieldDataType::Byte,
@@ -10808,6 +10931,16 @@ fn ant_rx_message() -> MessageInfo {
         units: "",
     };
     fields.insert(4, field);
+
+    let field = FieldInfo {
+        name: "timestamp",
+        field_type: FieldDataType::DateTime,
+        def_number: 253,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "s",
+    };
+    fields.insert(253, field);
 
     MessageInfo {
         name: "ant_rx",
@@ -10819,16 +10952,6 @@ fn ant_tx_message() -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
-        name: "timestamp",
-        field_type: FieldDataType::DateTime,
-        def_number: 253,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "s",
-    };
-    fields.insert(253, field);
-
-    let field = FieldInfo {
         name: "fractional_timestamp",
         field_type: FieldDataType::UInt16,
         def_number: 0,
@@ -10848,6 +10971,7 @@ fn ant_tx_message() -> MessageInfo {
     };
     fields.insert(1, field);
 
+    // [N]
     let field = FieldInfo {
         name: "mesg_data",
         field_type: FieldDataType::Byte,
@@ -10868,6 +10992,7 @@ fn ant_tx_message() -> MessageInfo {
     };
     fields.insert(3, field);
 
+    // [N]
     let field = FieldInfo {
         name: "data",
         field_type: FieldDataType::Byte,
@@ -10877,6 +11002,16 @@ fn ant_tx_message() -> MessageInfo {
         units: "",
     };
     fields.insert(4, field);
+
+    let field = FieldInfo {
+        name: "timestamp",
+        field_type: FieldDataType::DateTime,
+        def_number: 253,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "s",
+    };
+    fields.insert(253, field);
 
     MessageInfo {
         name: "ant_tx",
@@ -10986,6 +11121,7 @@ fn exd_data_field_configuration_message() -> MessageInfo {
     };
     fields.insert(4, field);
 
+    // [32]
     let field = FieldInfo {
         name: "title",
         field_type: FieldDataType::String,
@@ -11154,6 +11290,7 @@ fn field_description_message() -> MessageInfo {
     };
     fields.insert(2, field);
 
+    // [N]
     let field = FieldInfo {
         name: "field_name",
         field_type: FieldDataType::String,
@@ -11204,6 +11341,7 @@ fn field_description_message() -> MessageInfo {
     };
     fields.insert(7, field);
 
+    // [N]
     let field = FieldInfo {
         name: "units",
         field_type: FieldDataType::String,
@@ -11273,6 +11411,7 @@ fn field_description_message() -> MessageInfo {
 fn developer_data_id_message() -> MessageInfo {
     let mut fields = HashMap::new();
 
+    // [N]
     let field = FieldInfo {
         name: "developer_id",
         field_type: FieldDataType::Byte,
@@ -11283,6 +11422,7 @@ fn developer_data_id_message() -> MessageInfo {
     };
     fields.insert(0, field);
 
+    // [N]
     let field = FieldInfo {
         name: "application_id",
         field_type: FieldDataType::Byte,
@@ -11331,16 +11471,6 @@ fn developer_data_id_message() -> MessageInfo {
 
 fn dive_summary_message() -> MessageInfo {
     let mut fields = HashMap::new();
-
-    let field = FieldInfo {
-        name: "timestamp",
-        field_type: FieldDataType::DateTime,
-        def_number: 253,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "s",
-    };
-    fields.insert(253, field);
 
     let field = FieldInfo {
         name: "reference_mesg",
@@ -11462,15 +11592,6 @@ fn dive_summary_message() -> MessageInfo {
     };
     fields.insert(11, field);
 
-    MessageInfo {
-        name: "dive_summary",
-        fields: fields,
-    }
-}
-
-fn climb_pro_message() -> MessageInfo {
-    let mut fields = HashMap::new();
-
     let field = FieldInfo {
         name: "timestamp",
         field_type: FieldDataType::DateTime,
@@ -11480,6 +11601,15 @@ fn climb_pro_message() -> MessageInfo {
         units: "s",
     };
     fields.insert(253, field);
+
+    MessageInfo {
+        name: "dive_summary",
+        fields: fields,
+    }
+}
+
+fn climb_pro_message() -> MessageInfo {
+    let mut fields = HashMap::new();
 
     let field = FieldInfo {
         name: "position_lat",
@@ -11541,6 +11671,16 @@ fn climb_pro_message() -> MessageInfo {
     };
     fields.insert(5, field);
 
+    let field = FieldInfo {
+        name: "timestamp",
+        field_type: FieldDataType::DateTime,
+        def_number: 253,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "s",
+    };
+    fields.insert(253, field);
+
     MessageInfo {
         name: "climb_pro",
         fields: fields,
@@ -11557,93 +11697,93 @@ fn unknown_message() -> MessageInfo {
 impl MesgNum {
     pub fn message_info(&self) -> MessageInfo {
         match self {
-            MesgNum::AccelerometerData => accelerometer_data_message(),
-            MesgNum::Activity => activity_message(),
-            MesgNum::AntChannelId => ant_channel_id_message(),
-            MesgNum::AntRx => ant_rx_message(),
-            MesgNum::AntTx => ant_tx_message(),
-            MesgNum::AviationAttitude => aviation_attitude_message(),
-            MesgNum::BarometerData => barometer_data_message(),
-            MesgNum::BikeProfile => bike_profile_message(),
-            MesgNum::BloodPressure => blood_pressure_message(),
-            MesgNum::CadenceZone => cadence_zone_message(),
-            MesgNum::CameraEvent => camera_event_message(),
+            MesgNum::FileId => file_id_message(),
+            MesgNum::FileCreator => file_creator_message(),
+            MesgNum::TimestampCorrelation => timestamp_correlation_message(),
+            MesgNum::Software => software_message(),
+            MesgNum::SlaveDevice => slave_device_message(),
             MesgNum::Capabilities => capabilities_message(),
-            MesgNum::ClimbPro => climb_pro_message(),
-            MesgNum::Connectivity => connectivity_message(),
-            MesgNum::Course => course_message(),
-            MesgNum::CoursePoint => course_point_message(),
-            MesgNum::DeveloperDataId => developer_data_id_message(),
-            MesgNum::DeviceInfo => device_info_message(),
+            MesgNum::FileCapabilities => file_capabilities_message(),
+            MesgNum::MesgCapabilities => mesg_capabilities_message(),
+            MesgNum::FieldCapabilities => field_capabilities_message(),
             MesgNum::DeviceSettings => device_settings_message(),
+            MesgNum::UserProfile => user_profile_message(),
+            MesgNum::HrmProfile => hrm_profile_message(),
+            MesgNum::SdmProfile => sdm_profile_message(),
+            MesgNum::BikeProfile => bike_profile_message(),
+            MesgNum::Connectivity => connectivity_message(),
+            MesgNum::WatchfaceSettings => watchface_settings_message(),
+            MesgNum::OhrSettings => ohr_settings_message(),
+            MesgNum::ZonesTarget => zones_target_message(),
+            MesgNum::Sport => sport_message(),
+            MesgNum::HrZone => hr_zone_message(),
+            MesgNum::SpeedZone => speed_zone_message(),
+            MesgNum::CadenceZone => cadence_zone_message(),
+            MesgNum::PowerZone => power_zone_message(),
+            MesgNum::MetZone => met_zone_message(),
+            MesgNum::DiveSettings => dive_settings_message(),
             MesgNum::DiveAlarm => dive_alarm_message(),
             MesgNum::DiveGas => dive_gas_message(),
-            MesgNum::DiveSettings => dive_settings_message(),
-            MesgNum::DiveSummary => dive_summary_message(),
-            MesgNum::Event => event_message(),
-            MesgNum::ExdDataConceptConfiguration => exd_data_concept_configuration_message(),
-            MesgNum::ExdDataFieldConfiguration => exd_data_field_configuration_message(),
-            MesgNum::ExdScreenConfiguration => exd_screen_configuration_message(),
-            MesgNum::ExerciseTitle => exercise_title_message(),
-            MesgNum::FieldCapabilities => field_capabilities_message(),
-            MesgNum::FieldDescription => field_description_message(),
-            MesgNum::FileCapabilities => file_capabilities_message(),
-            MesgNum::FileCreator => file_creator_message(),
-            MesgNum::FileId => file_id_message(),
             MesgNum::Goal => goal_message(),
-            MesgNum::GpsMetadata => gps_metadata_message(),
-            MesgNum::GyroscopeData => gyroscope_data_message(),
-            MesgNum::Hr => hr_message(),
-            MesgNum::HrZone => hr_zone_message(),
-            MesgNum::HrmProfile => hrm_profile_message(),
-            MesgNum::Hrv => hrv_message(),
-            MesgNum::Jump => jump_message(),
+            MesgNum::Activity => activity_message(),
+            MesgNum::Session => session_message(),
             MesgNum::Lap => lap_message(),
             MesgNum::Length => length_message(),
-            MesgNum::MagnetometerData => magnetometer_data_message(),
-            MesgNum::MemoGlob => memo_glob_message(),
-            MesgNum::MesgCapabilities => mesg_capabilities_message(),
-            MesgNum::MetZone => met_zone_message(),
-            MesgNum::Monitoring => monitoring_message(),
-            MesgNum::MonitoringInfo => monitoring_info_message(),
-            MesgNum::NmeaSentence => nmea_sentence_message(),
-            MesgNum::ObdiiData => obdii_data_message(),
-            MesgNum::OhrSettings => ohr_settings_message(),
-            MesgNum::OneDSensorCalibration => one_d_sensor_calibration_message(),
-            MesgNum::PowerZone => power_zone_message(),
             MesgNum::Record => record_message(),
-            MesgNum::Schedule => schedule_message(),
-            MesgNum::SdmProfile => sdm_profile_message(),
-            MesgNum::SegmentFile => segment_file_message(),
+            MesgNum::Event => event_message(),
+            MesgNum::DeviceInfo => device_info_message(),
+            MesgNum::TrainingFile => training_file_message(),
+            MesgNum::Hrv => hrv_message(),
+            MesgNum::WeatherConditions => weather_conditions_message(),
+            MesgNum::WeatherAlert => weather_alert_message(),
+            MesgNum::GpsMetadata => gps_metadata_message(),
+            MesgNum::CameraEvent => camera_event_message(),
+            MesgNum::GyroscopeData => gyroscope_data_message(),
+            MesgNum::AccelerometerData => accelerometer_data_message(),
+            MesgNum::MagnetometerData => magnetometer_data_message(),
+            MesgNum::BarometerData => barometer_data_message(),
+            MesgNum::ThreeDSensorCalibration => three_d_sensor_calibration_message(),
+            MesgNum::OneDSensorCalibration => one_d_sensor_calibration_message(),
+            MesgNum::VideoFrame => video_frame_message(),
+            MesgNum::ObdiiData => obdii_data_message(),
+            MesgNum::NmeaSentence => nmea_sentence_message(),
+            MesgNum::AviationAttitude => aviation_attitude_message(),
+            MesgNum::Video => video_message(),
+            MesgNum::VideoTitle => video_title_message(),
+            MesgNum::VideoDescription => video_description_message(),
+            MesgNum::VideoClip => video_clip_message(),
+            MesgNum::Set => set_message(),
+            MesgNum::Jump => jump_message(),
+            MesgNum::Course => course_message(),
+            MesgNum::CoursePoint => course_point_message(),
             MesgNum::SegmentId => segment_id_message(),
-            MesgNum::SegmentLap => segment_lap_message(),
             MesgNum::SegmentLeaderboardEntry => segment_leaderboard_entry_message(),
             MesgNum::SegmentPoint => segment_point_message(),
-            MesgNum::Session => session_message(),
-            MesgNum::Set => set_message(),
-            MesgNum::SlaveDevice => slave_device_message(),
-            MesgNum::Software => software_message(),
-            MesgNum::SpeedZone => speed_zone_message(),
-            MesgNum::Sport => sport_message(),
-            MesgNum::StressLevel => stress_level_message(),
-            MesgNum::ThreeDSensorCalibration => three_d_sensor_calibration_message(),
-            MesgNum::TimestampCorrelation => timestamp_correlation_message(),
-            MesgNum::Totals => totals_message(),
-            MesgNum::TrainingFile => training_file_message(),
-            MesgNum::UserProfile => user_profile_message(),
-            MesgNum::Video => video_message(),
-            MesgNum::VideoClip => video_clip_message(),
-            MesgNum::VideoDescription => video_description_message(),
-            MesgNum::VideoFrame => video_frame_message(),
-            MesgNum::VideoTitle => video_title_message(),
-            MesgNum::WatchfaceSettings => watchface_settings_message(),
-            MesgNum::WeatherAlert => weather_alert_message(),
-            MesgNum::WeatherConditions => weather_conditions_message(),
-            MesgNum::WeightScale => weight_scale_message(),
+            MesgNum::SegmentLap => segment_lap_message(),
+            MesgNum::SegmentFile => segment_file_message(),
             MesgNum::Workout => workout_message(),
             MesgNum::WorkoutSession => workout_session_message(),
             MesgNum::WorkoutStep => workout_step_message(),
-            MesgNum::ZonesTarget => zones_target_message(),
+            MesgNum::ExerciseTitle => exercise_title_message(),
+            MesgNum::Schedule => schedule_message(),
+            MesgNum::Totals => totals_message(),
+            MesgNum::WeightScale => weight_scale_message(),
+            MesgNum::BloodPressure => blood_pressure_message(),
+            MesgNum::MonitoringInfo => monitoring_info_message(),
+            MesgNum::Monitoring => monitoring_message(),
+            MesgNum::Hr => hr_message(),
+            MesgNum::StressLevel => stress_level_message(),
+            MesgNum::MemoGlob => memo_glob_message(),
+            MesgNum::AntChannelId => ant_channel_id_message(),
+            MesgNum::AntRx => ant_rx_message(),
+            MesgNum::AntTx => ant_tx_message(),
+            MesgNum::ExdScreenConfiguration => exd_screen_configuration_message(),
+            MesgNum::ExdDataFieldConfiguration => exd_data_field_configuration_message(),
+            MesgNum::ExdDataConceptConfiguration => exd_data_concept_configuration_message(),
+            MesgNum::FieldDescription => field_description_message(),
+            MesgNum::DeveloperDataId => developer_data_id_message(),
+            MesgNum::DiveSummary => dive_summary_message(),
+            MesgNum::ClimbPro => climb_pro_message(),
             _ => unknown_message(),
         }
     }

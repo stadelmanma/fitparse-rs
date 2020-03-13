@@ -1,16 +1,18 @@
-/// Process the FIT profile excel workook and generate the profile module files.
-///
-/// The entries in the "Types" sheet name and describe the possible values for any Enum field types.
-/// The entries in the "Messages" sheet name and number the fields within a given message and specify
-/// the type of a field which can be an enum or a primitive. Primitive types may also have units,
-/// scale and offset defined which describe how to transform the primitive integer type into a floating
-/// point value.
 use calamine::{open_workbook, DataType, Range, Reader, Xlsx};
 use std::collections::{BTreeMap, HashSet};
+use std::env;
 use std::fs::File;
 use std::io::prelude::*;
 use std::process::Command;
 
+// the fields in these structs are mostly duplicated from code in src/profile/parser.rs
+#[derive(Clone, Debug)]
+pub struct FitProfile {
+    field_types: Vec<FieldTypeDefintion>,
+    messages: Vec<MessageDefinition>,
+}
+
+#[derive(Clone, Debug)]
 struct FieldTypeDefintion {
     name: String,
     titlized_name: String,
@@ -21,8 +23,8 @@ struct FieldTypeDefintion {
 impl FieldTypeDefintion {
     fn new(name: String, base_type: &'static str) -> Self {
         FieldTypeDefintion {
+            name: name.clone(),
             titlized_name: titlecase_string(&name),
-            name,
             base_type,
             variant_map: BTreeMap::new(),
         }
@@ -43,11 +45,12 @@ impl FieldTypeDefintion {
 
     /// generate to/from integer and to_string implementation for field type enum
     fn generate_impl(&self, out: &mut File) -> Result<(), std::io::Error> {
-        write!(out, "impl {} {{\n", &self.titlized_name)?;
+        write!(out, "impl {} {{\n", titlecase_string(&self.name))?;
         write!(
             out,
             "pub fn from_{0}(value: {0}) -> {1} {{\n",
-            self.base_type, &self.titlized_name
+            self.base_type,
+            titlecase_string(&self.name)
         )?;
         write!(out, "match value {{\n")?;
         for variant in self.variant_map.values() {
@@ -55,23 +58,28 @@ impl FieldTypeDefintion {
                 out,
                 "{} => {}::{},\n",
                 variant.value,
-                &self.titlized_name,
+                titlecase_string(&self.name),
                 variant.titlized_name()
             )?;
         }
-        write!(out, " _ => {}::UnknownVariant(value)\n", self.titlized_name)?;
+        write!(
+            out,
+            " _ => {}::UnknownVariant(value)\n",
+            titlecase_string(&self.name)
+        )?;
         write!(out, "}}\n")?;
         write!(out, "}}\n")?;
 
         write!(
             out,
             "pub fn from_i64(value: i64) -> {} {{\n",
-            self.titlized_name
+            titlecase_string(&self.name)
         )?;
         write!(
             out,
             "{0}::from_{1}(value as {1})\n",
-            self.titlized_name, self.base_type
+            titlecase_string(&self.name),
+            self.base_type
         )?;
         write!(out, "}}\n")?;
 
@@ -81,7 +89,7 @@ impl FieldTypeDefintion {
             write!(
                 out,
                 "{}::{} => {},\n",
-                self.titlized_name,
+                titlecase_string(&self.name),
                 variant.titlized_name(),
                 variant.value
             )?;
@@ -89,7 +97,7 @@ impl FieldTypeDefintion {
         write!(
             out,
             "{}::UnknownVariant(value) => *value\n",
-            self.titlized_name
+            titlecase_string(&self.name)
         )?;
         write!(out, "}}\n")?;
         write!(out, "}}\n")?;
@@ -100,7 +108,7 @@ impl FieldTypeDefintion {
             write!(
                 out,
                 "{}::{} => \"{}\".to_string(),\n",
-                self.titlized_name,
+                titlecase_string(&self.name),
                 variant.titlized_name(),
                 variant.name
             )?;
@@ -108,7 +116,7 @@ impl FieldTypeDefintion {
         write!(
             out,
             "{}::UnknownVariant(value) => format!(\"unknown_variant_{{}}\", *value)\n",
-            self.titlized_name
+            titlecase_string(&self.name)
         )?;
         write!(out, "}}\n")?;
         write!(out, "}}\n")?;
@@ -118,6 +126,7 @@ impl FieldTypeDefintion {
     }
 }
 
+#[derive(Clone, Debug)]
 struct FieldTypeVariant {
     name: String,
     value: i64,
@@ -143,6 +152,85 @@ impl FieldTypeVariant {
         } else {
             write!(out, "{},\n", self.titlized_name())
         }
+    }
+}
+
+#[derive(Clone, Debug)]
+struct MessageDefinition {
+    name: String,
+    field_map: BTreeMap<u8, MessageFieldDefinition>,
+}
+
+impl MessageDefinition {
+    fn new(name: &str) -> Self {
+        MessageDefinition {
+            name: name.to_string(),
+            field_map: BTreeMap::new(),
+        }
+    }
+
+    fn function_name(&self) -> String {
+        format!("{}_message", self.name)
+    }
+
+    fn write_function_def(&self, out: &mut File) -> Result<(), std::io::Error> {
+        write!(out, "fn {}() -> MessageInfo {{\n", self.function_name())?;
+        write!(out, "    let mut fields = HashMap::new();\n\n")?;
+        for field in self.field_map.values() {
+            field.generate_field_info_struct(out, "field")?;
+            write!(out, "fields.insert({}, field);\n\n", field.def_number)?;
+        }
+        write!(out, "    MessageInfo {{\n")?;
+        write!(out, "        name: \"{}\",\n", self.name)?;
+        write!(out, "        fields: fields\n")?;
+        write!(out, "    }}\n")?;
+        write!(out, "}}\n\n")?;
+
+        Ok(())
+    }
+}
+
+#[derive(Clone, Debug)]
+struct MessageFieldDefinition {
+    def_number: u8,
+    name: String,
+    field_type: String,
+    scale: f64,
+    offset: f64,
+    units: String,
+    // TODO components and reference fields
+    comment: Option<String>,
+}
+
+impl MessageFieldDefinition {
+    pub fn generate_field_info_struct(
+        &self,
+        out: &mut File,
+        var_name: &str,
+    ) -> Result<(), std::io::Error> {
+        if let Some(v) = &self.comment {
+            write!(out, "// {}\n", v)?;
+        }
+        write!(
+            out,
+            "    let {} = FieldInfo {{
+            name: \"{}\",
+            field_type: {},
+            def_number: {},
+            scale: {:.6},
+            offset: {:.6},
+            units: \"{}\"
+        }};\n",
+            var_name,
+            self.name,
+            self.field_type,
+            self.def_number,
+            self.scale,
+            self.offset,
+            self.units,
+        )?;
+
+        Ok(())
     }
 }
 
@@ -271,7 +359,7 @@ pub enum FieldDataType {{
     Ok(())
 }
 
-fn process_types(sheet: Range<DataType>, out: &mut File) -> Result<(), std::io::Error> {
+fn process_types(sheet: Range<DataType>) -> Vec<FieldTypeDefintion> {
     let mut field_types: Vec<FieldTypeDefintion> = Vec::new();
 
     for row in sheet.rows().skip(1) {
@@ -327,83 +415,114 @@ fn process_types(sheet: Range<DataType>, out: &mut File) -> Result<(), std::io::
         }
     }
 
-    for field_type in &field_types {
-        if !field_type.variant_map.is_empty() {
-            field_type.generate_enum(out)?;
-        }
-    }
-
-    generate_main_field_type_enum(&field_types, out)?;
-    Ok(())
+    field_types
 }
 
-fn end_message_fn(mesg_name: &str, out: &mut File) -> Result<(), std::io::Error> {
-    write!(out, "    MessageInfo {{\n")?;
-    write!(out, "        name: \"{}\",\n", mesg_name)?;
-    write!(out, "        fields: fields\n")?;
-    write!(out, "    }}\n")?;
-    write!(out, "}}\n\n")?;
-
-    Ok(())
-}
-
-fn create_field_info_struct(row: &[DataType], out: &mut File) -> Result<(), std::io::Error> {
-    if row[1].is_empty() {
-        // TODO subfield definition
-        return Ok(());
-    }
-    let def_num = match row[1] {
+fn new_message_field_definition(row: &[DataType]) -> MessageFieldDefinition {
+    let def_number = match row[1] {
         DataType::Float(v) => v as u8,
         DataType::Int(v) => v as u8,
         _ => panic!(format!(
-            "Field defintiton number must be an interger, row={:?}.",
+            "Field defintiton number must be an integer, row={:?}.",
             row
         )),
     };
-    let field_type = match row[3].get_string() {
-        Some(v) => field_type_str_to_field_type(v),
-        None => panic!(format!("Field type must be a string, row={:?}.", row)),
+    let name = row[2]
+        .get_string()
+        .expect(&format!("Field name must be a string, row={:?}.", row));
+    let ftype = row[3]
+        .get_string()
+        .expect(&format!("Field type must be a string, row={:?}.", row));
+    let comment = match row[4].get_string() {
+        Some(v) => Some(v.to_string()),
+        None => None,
     };
 
-    write!(
-        out,
-        "    let field = FieldInfo {{
-        name: \"{}\",
-        field_type: {},
-        def_number: {},
-        scale: {:.6},
-        offset: {:.6},
-        units: \"{}\"
-    }};\n",
-        row[2]
-            .get_string()
-            .expect(&format!("Field name must be a string, row={:?}.", row)),
-        field_type,
-        def_num,
-        row[6].get_float().unwrap_or(1.0),
-        row[7].get_float().unwrap_or(0.0),
-        row[8].get_string().unwrap_or(""),
-    )?;
-    write!(out, "fields.insert({}, field);\n\n", def_num)?;
+    MessageFieldDefinition {
+        def_number,
+        name: name.to_string(),
+        field_type: field_type_str_to_field_type(ftype),
+        scale: row[6].get_float().unwrap_or(1.0),
+        offset: row[7].get_float().unwrap_or(0.0),
+        units: row[8].get_string().unwrap_or("").to_string(),
+        comment,
+    }
+}
 
-    Ok(())
+fn process_messages(sheet: Range<DataType>) -> Vec<MessageDefinition> {
+    let mut rows = sheet.rows().skip(2);
+    let mut messages: Vec<MessageDefinition> = Vec::new();
+    let mut msg: MessageDefinition;
+    let mut field: MessageFieldDefinition;
+    let mut last_def_number: u8 = 0;
+
+    // parse first message row to initialize first message to prevent unitialized compile error in loop
+    let row = rows.next().unwrap();
+    if let Some(v) = row[0].get_string() {
+        msg = MessageDefinition::new(v);
+    } else {
+        panic!(format!("Message name must be a string row={:?}.", row));
+    }
+
+    // process messages and fields
+    for row in rows {
+        // begin new message function
+        if !row[0].is_empty() {
+            if let Some(v) = row[0].get_string() {
+                messages.push(msg);
+                msg = MessageDefinition::new(v);
+            } else {
+                panic!(format!("Message name must be a string row={:?}.", row));
+            }
+        } else if !row[1].is_empty() {
+            field = new_message_field_definition(row);
+            last_def_number = field.def_number;
+            msg.field_map.insert(field.def_number, field);
+        } else {
+            // TODO handle subfield using the last_def_number
+        }
+    }
+    messages.push(msg);
+
+    messages
+}
+
+pub fn parse_profile(profile_fname: &str) -> Result<FitProfile, Box<dyn std::error::Error>> {
+    let mut excel: Xlsx<_> = open_workbook(&profile_fname)?;
+
+    // process Types sheet
+    let field_types = if let Some(Ok(sheet)) = excel.worksheet_range("Types") {
+        process_types(sheet)
+    } else {
+        panic!("Could not access workbook sheet 'Types'");
+    };
+
+    // process Messages sheet
+    let messages = if let Some(Ok(sheet)) = excel.worksheet_range("Messages") {
+        process_messages(sheet)
+    } else {
+        panic!("Could not access workbook sheet 'Messages'");
+    };
+
+    Ok(FitProfile {
+        field_types,
+        messages,
+    })
 }
 
 fn create_mesg_num_to_mesg_info_fn(
-    mesg_fns: &BTreeMap<String, String>,
+    messages: &Vec<MessageDefinition>,
     out: &mut File,
 ) -> Result<(), std::io::Error> {
     write!(out, "impl MesgNum {{\n")?;
-    write!(
-        out,
-        "    pub fn message_info(&self) -> MessageInfo {{\n"
-    )?;
+    write!(out, "    pub fn message_info(&self) -> MessageInfo {{\n")?;
     write!(out, "        match self {{\n")?;
-    for (mesg_variant, mesg_fn) in mesg_fns.iter() {
+    for msg in messages {
         write!(
             out,
-            "            MesgNum::{} => {},\n",
-            mesg_variant, mesg_fn
+            "            MesgNum::{} => {}(),\n",
+            titlecase_string(&msg.name),
+            msg.function_name()
         )?;
     }
     write!(out, "            _ => unknown_message(),\n")?;
@@ -414,32 +533,55 @@ fn create_mesg_num_to_mesg_info_fn(
     Ok(())
 }
 
-fn process_messages(sheet: Range<DataType>, out: &mut File) -> Result<(), std::io::Error> {
-    let mut mesg_name = String::new();
-    let mut mesg_fns: BTreeMap<String, String> = BTreeMap::new();
-    let mut add_close_brace = false;
+/// call rustfmt on a generated file to cleanup auto-gen code
+fn rustfmt(fname: &str) {
+    Command::new("rustfmt")
+        .arg(&fname)
+        .status()
+        .expect(&format!("failed to execute rustfmt on {}", fname));
+}
 
-    for row in sheet.rows().skip(1) {
-        // begin new message function
-        if !row[0].is_empty() {
-            if add_close_brace {
-                end_message_fn(&mesg_name, out)?;
-            }
+fn write_types_files(profile: &FitProfile) -> Result<(), std::io::Error> {
+    let fname = "src/profile/field_types.rs";
+    let mut out = File::create(&fname)?;
 
-            if let Some(v) = row[0].get_string() {
-                mesg_name = v.to_string();
-                mesg_fns.insert(titlecase_string(v), format!("{}_message()", v));
-                write!(out, "fn {}_message() -> MessageInfo {{\n", v)?;
-                write!(out, "    let mut fields = HashMap::new();\n\n")?;
-                add_close_brace = true;
-            } else {
-                panic!(format!("Message name must be a string row={:?}.", row));
-            }
-        } else {
-            create_field_info_struct(row, out)?;
+    write!(
+        out,
+        "/// Auto generated profile from FIT SDK Release: XXX\n\n"
+    )?;
+    write!(out, "use serde::Serialize;\n")?;
+
+    // output enums and implementations
+    for field_type in &profile.field_types {
+        if !field_type.variant_map.is_empty() {
+            field_type.generate_enum(&mut out)?;
         }
     }
-    end_message_fn(&mesg_name, out)?;
+    generate_main_field_type_enum(&profile.field_types, &mut out)?;
+
+    rustfmt(&fname);
+    Ok(())
+}
+
+fn write_messages_file(profile: &FitProfile) -> Result<(), std::io::Error> {
+    let fname = "src/profile/messages.rs";
+    let mut out = File::create(&fname)?;
+
+    write!(
+        out,
+        "/// Auto generated profile from FIT SDK Release: XXX\n"
+    )?;
+    write!(out, "use std::collections::HashMap;\n")?;
+    write!(
+        out,
+        "use super::{{MessageInfo, FieldDataType, FieldInfo}};\n"
+    )?;
+    write!(out, "use super::field_types::*;\n\n")?;
+
+    // output all message functions
+    for msg in &profile.messages {
+        msg.write_function_def(&mut out)?;
+    }
 
     // output an unknown_message() fn that has no fields
     write!(out, "fn unknown_message() -> MessageInfo {{\n")?;
@@ -449,60 +591,30 @@ fn process_messages(sheet: Range<DataType>, out: &mut File) -> Result<(), std::i
     write!(out, "    }}\n")?;
     write!(out, "}}\n\n")?;
 
-    create_mesg_num_to_mesg_info_fn(&mesg_fns, out)?;
+    // output MesgNum implementation to allow parser to fetch info
+    create_mesg_num_to_mesg_info_fn(&profile.messages, &mut out)?;
+
+    rustfmt(&fname);
     Ok(())
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let profile_fname = "vendor/FitSDK/Profile.xlsx";
-    let field_types_fname = "src/profile/field_types.rs";
-    let messages_fname = "src/profile/messages.rs";
+    println!("cargo:rerun-if-env-changed=FIT_PROFILE");
+    let profile_fname = match env::var("FIT_PROFILE") {
+        Ok(val) => {
+            eprintln!("Reading FIT profile at {}", &val);
+            val
+        },
+        Err(_) => {
+            println!("cargo:warning=Did not update FIT profile, could not read FIT_PROFILE environment variable");
+            return Ok(());
+        },
+    };
 
-    // only re-run if this file changes since the code we generate depends on it.
-    println!("cargo:rerun-if-changed={}", &profile_fname);
-
-    let mut excel: Xlsx<_> = open_workbook(&profile_fname)?;
-    let mut file = File::create(&field_types_fname)?;
-    write!(
-        file,
-        "/// Auto generated profile from FIT SDK Release: XXX\n\n"
-    )?;
-    write!(file, "use serde::Serialize;\n")?;
-    if let Some(Ok(sheet)) = excel.worksheet_range("Types") {
-        process_types(sheet, &mut file)?;
-    } else {
-        panic!("Could not access workbook sheet 'Types'");
-    }
-
-    let mut file = File::create(&messages_fname)?;
-    write!(
-        file,
-        "/// Auto generated profile from FIT SDK Release: XXX\n"
-    )?;
-    write!(file, "use std::collections::HashMap;\n")?;
-    write!(
-        file,
-        "use super::{{MessageInfo, FieldDataType, FieldInfo}};\n"
-    )?;
-    write!(file, "use super::field_types::*;\n\n")?;
-    if let Some(Ok(sheet)) = excel.worksheet_range("Messages") {
-        process_messages(sheet, &mut file)?;
-    } else {
-        panic!("Could not access workbook sheet 'Messages'");
-    }
-
-    // call rustfmt on the two generated files to cleanup auto-gen code
-    Command::new("rustfmt")
-        .arg(&field_types_fname)
-        .status()
-        .expect(&format!(
-            "failed to execute rustfmt on {}",
-            field_types_fname
-        ));
-    Command::new("rustfmt")
-        .arg(&messages_fname)
-        .status()
-        .expect(&format!("failed to execute rustfmt on {}", messages_fname));
+    // process excel file and output
+    let profile = parse_profile(&profile_fname).unwrap();
+    write_types_files(&profile)?;
+    write_messages_file(&profile)?;
 
     Ok(())
 }
