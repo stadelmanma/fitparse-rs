@@ -7,11 +7,6 @@ use field_types::{get_field_variant_as_string, FieldDataType};
 
 pub mod messages;
 
-#[cfg(feature = "profile_parser")]
-pub mod parser;
-#[cfg(feature = "profile_parser")]
-pub use parser::parse_profile;
-
 /// Describes a single message pulled from the FIT profile.
 #[derive(Clone, Debug)]
 pub struct MessageInfo {
