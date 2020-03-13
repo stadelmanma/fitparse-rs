@@ -1,5 +1,6 @@
 use calamine::{open_workbook, DataType, Range, Reader, Xlsx};
 use std::collections::{BTreeMap, HashSet};
+use std::env;
 use std::fs::File;
 use std::io::prelude::*;
 use std::process::Command;
@@ -598,10 +599,17 @@ fn write_messages_file(profile: &FitProfile) -> Result<(), std::io::Error> {
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let profile_fname = "vendor/FitSDK/Profile.xlsx";
-    // only re-run if this file changes since the code we generate depends on it.
-    // todo figure out a better way to trigger the build, maybe using an env var?
-    println!("cargo:rerun-if-changed={}", &profile_fname);
+    println!("cargo:rerun-if-env-changed=FIT_PROFILE");
+    let profile_fname = match env::var("FIT_PROFILE") {
+        Ok(val) => {
+            eprintln!("Reading FIT profile at {}", &val);
+            val
+        },
+        Err(_) => {
+            println!("cargo:warning=Did not update FIT profile, could not read FIT_PROFILE environment variable");
+            return Ok(());
+        },
+    };
 
     // process excel file and output
     let profile = parse_profile(&profile_fname).unwrap();
