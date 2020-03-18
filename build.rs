@@ -604,11 +604,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         Ok(val) => {
             eprintln!("Reading FIT profile at {}", &val);
             val
-        },
+        }
         Err(_) => {
             println!("cargo:warning=Did not update FIT profile, could not read FIT_PROFILE environment variable");
             return Ok(());
-        },
+        }
     };
 
     // process excel file and output
