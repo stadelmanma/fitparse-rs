@@ -85,6 +85,7 @@ pub enum DataFieldValue {
     SInt64(i64),
     UInt64(u64),
     UInt64z(u64),
+    Array(Vec<Self>),
 }
 
 impl DataFieldValue {
@@ -108,6 +109,7 @@ impl DataFieldValue {
             DataFieldValue::SInt64(val) => *val != 0x7FFFFFFFFFFFFFFF,
             DataFieldValue::UInt64(val) => *val != 0xFFFFFFFFFFFFFFFF,
             DataFieldValue::UInt64z(val) => *val != 0x0,
+            DataFieldValue::Array(vals) => !vals.is_empty() && vals.iter().all(|v| v.is_valid()),
         }
     }
 

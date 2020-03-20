@@ -424,79 +424,95 @@ fn data_field_value(
     byte_order: Endianness,
     size: u8,
 ) -> IResult<&[u8], Option<DataFieldValue>> {
-    let (input, value) = match base_type {
-        BaseType::Enum => {
-            let (input, value) = le_u8(input)?;
-            (input, DataFieldValue::Enum(value))
-        }
-        BaseType::SInt8 => {
-            let (input, value) = le_i8(input)?;
-            (input, DataFieldValue::SInt8(value))
-        }
-        BaseType::UInt8 => {
-            let (input, value) = le_u8(input)?;
-            (input, DataFieldValue::UInt8(value))
-        }
-        BaseType::SInt16 => {
-            let (input, value) = i16!(input, byte_order)?;
-            (input, DataFieldValue::SInt16(value))
-        }
-        BaseType::UInt16 => {
-            let (input, value) = u16!(input, byte_order)?;
-            (input, DataFieldValue::UInt16(value))
-        }
-        BaseType::SInt32 => {
-            let (input, value) = i32!(input, byte_order)?;
-            (input, DataFieldValue::SInt32(value))
-        }
-        BaseType::UInt32 => {
-            let (input, value) = u32!(input, byte_order)?;
-            (input, DataFieldValue::UInt32(value))
-        }
-        BaseType::String => {
-            let (input, value) = take(size as usize)(input)?;
-            if let Ok(value) = String::from_utf8(value.to_vec()) {
-                (input, DataFieldValue::String(value))
-            } else {
-                return Ok((input, None));
+    let mut input = input;
+    let mut bytes_consumed = 0;
+    let mut values: Vec<DataFieldValue> = Vec::new();
+
+    while bytes_consumed < size {
+        let (i, value) = match base_type {
+            BaseType::Enum => {
+                bytes_consumed += 1;
+                le_u8(input).map(|(i, v)| (i, DataFieldValue::Enum(v)))?
             }
-        }
-        BaseType::Float32 => {
-            let (input, value) = parse_f32!(input, byte_order)?;
-            (input, DataFieldValue::Float32(value))
-        }
-        BaseType::Float64 => {
-            let (input, value) = parse_f64!(input, byte_order)?;
-            (input, DataFieldValue::Float64(value))
-        }
-        BaseType::UInt8z => {
-            let (input, value) = le_u8(input)?;
-            (input, DataFieldValue::UInt8z(value))
-        }
-        BaseType::UInt16z => {
-            let (input, value) = u16!(input, byte_order)?;
-            (input, DataFieldValue::UInt16z(value))
-        }
-        BaseType::UInt32z => {
-            let (input, value) = u32!(input, byte_order)?;
-            (input, DataFieldValue::UInt32z(value))
-        }
-        BaseType::Byte => {
-            let (input, value) = take(size as usize)(input)?;
-            (input, DataFieldValue::Byte(Vec::from(value)))
-        }
-        BaseType::SInt64 => {
-            let (input, value) = i64!(input, byte_order)?;
-            (input, DataFieldValue::SInt64(value))
-        }
-        BaseType::UInt64 => {
-            let (input, value) = u64!(input, byte_order)?;
-            (input, DataFieldValue::UInt64(value))
-        }
-        BaseType::UInt64z => {
-            let (input, value) = u64!(input, byte_order)?;
-            (input, DataFieldValue::UInt64z(value))
-        }
+            BaseType::SInt8 => {
+                bytes_consumed += 1;
+                le_i8(input).map(|(i, v)| (i, DataFieldValue::SInt8(v)))?
+            }
+            BaseType::UInt8 => {
+                bytes_consumed += 1;
+                le_u8(input).map(|(i, v)| (i, DataFieldValue::UInt8(v)))?
+            }
+            BaseType::SInt16 => {
+                bytes_consumed += 2;
+                i16!(input, byte_order).map(|(i, v)| (i, DataFieldValue::SInt16(v)))?
+            }
+            BaseType::UInt16 => {
+                bytes_consumed += 2;
+                u16!(input, byte_order).map(|(i, v)| (i, DataFieldValue::UInt16(v)))?
+            }
+            BaseType::SInt32 => {
+                bytes_consumed += 4;
+                i32!(input, byte_order).map(|(i, v)| (i, DataFieldValue::SInt32(v)))?
+            }
+            BaseType::UInt32 => {
+                bytes_consumed += 4;
+                u32!(input, byte_order).map(|(i, v)| (i, DataFieldValue::UInt32(v)))?
+            }
+            BaseType::String => {
+                bytes_consumed += size;
+                let (input, value) = take(size as usize)(input)?;
+                if let Ok(value) = String::from_utf8(value.to_vec()) {
+                    (input, DataFieldValue::String(value))
+                } else {
+                    return Ok((input, None));
+                }
+            }
+            BaseType::Float32 => {
+                bytes_consumed += 4;
+                parse_f32!(input, byte_order).map(|(i, v)| (i, DataFieldValue::Float32(v)))?
+            }
+            BaseType::Float64 => {
+                bytes_consumed += 8;
+                parse_f64!(input, byte_order).map(|(i, v)| (i, DataFieldValue::Float64(v)))?
+            }
+            BaseType::UInt8z => {
+                bytes_consumed += 1;
+                le_u8(input).map(|(i, v)| (i, DataFieldValue::UInt8z(v)))?
+            }
+            BaseType::UInt16z => {
+                bytes_consumed += 2;
+                u16!(input, byte_order).map(|(i, v)| (i, DataFieldValue::UInt16z(v)))?
+            }
+            BaseType::UInt32z => {
+                bytes_consumed += 4;
+                u32!(input, byte_order).map(|(i, v)| (i, DataFieldValue::UInt32z(v)))?
+            }
+            BaseType::Byte => {
+                bytes_consumed += size;
+                take(size as usize)(input).map(|(i, v)| (i, DataFieldValue::Byte(Vec::from(v))))?
+            }
+            BaseType::SInt64 => {
+                bytes_consumed += 8;
+                i64!(input, byte_order).map(|(i, v)| (i, DataFieldValue::SInt64(v)))?
+            }
+            BaseType::UInt64 => {
+                bytes_consumed += 8;
+                u64!(input, byte_order).map(|(i, v)| (i, DataFieldValue::UInt64(v)))?
+            }
+            BaseType::UInt64z => {
+                bytes_consumed += 8;
+                u64!(input, byte_order).map(|(i, v)| (i, DataFieldValue::UInt64z(v)))?
+            }
+        };
+        values.push(value);
+        input = i;
+    }
+
+    // Return either a regular DataFieldValue or an Array of them
+    let value = if values.len() == 1 {
+        values[0].clone()
+    } else {
+        DataFieldValue::Array(values)
     };
 
     // Only return "something" if it's in the valid range

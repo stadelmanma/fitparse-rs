@@ -54,6 +54,11 @@ impl FieldInfo {
 
     /// convert the value into a "output" form applying any scaling or enum conversions
     pub fn convert_value(&self, value: &DataFieldValue) -> DataFieldValue {
+        // for array types just map and return
+        if let DataFieldValue::Array(vals) = value {
+            return DataFieldValue::Array(vals.iter().map(|v| self.convert_value(v)).collect());
+        }
+
         // handle time types specially
         match self.field_type {
             FieldDataType::DateTime | FieldDataType::LocalDateTime => {
