@@ -25,12 +25,15 @@ enum OutputLocation {
     Inplace,
     LocalDirectory(PathBuf),
     LocalFile(PathBuf),
+    Stdout,
 }
 
 impl OutputLocation {
     fn new(location: PathBuf) -> Self {
         if location.is_dir() {
             OutputLocation::LocalDirectory(location)
+        } else if location.as_os_str() == "-" {
+            OutputLocation::Stdout
         } else {
             OutputLocation::LocalFile(location)
         }
@@ -50,6 +53,10 @@ impl OutputLocation {
                 .join(filename.file_name().unwrap())
                 .with_extension("json"),
             Self::LocalFile(dest) => dest.clone(),
+            Self::Stdout => {
+                println!("{}", j);
+                return Ok(());
+            }
         };
 
         let mut f = File::create(outname).unwrap();
