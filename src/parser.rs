@@ -9,6 +9,7 @@
 ///   that
 use crate::objects::*;
 use crate::profile::field_types::MesgNum;
+use crate::profile::{FieldInfo, MessageInfo};
 use nom::bytes::complete::{tag, take};
 use nom::combinator::cond;
 use nom::error::ErrorKind;
@@ -331,25 +332,26 @@ fn process_data_fields(
     def_mesg: &FitDefinitionMessage,
 ) -> Vec<DataField> {
     let mesg_info = def_mesg.global_message_number.message_info();
+    // filter data message into a mapping of HashMap<def_num, DataField> for easier processing
+    // since we don't export empty/invalid fields
+    let data_map: HashMap<u8, DataFieldValue> =
+        def_mesg
+            .field_definitions
+            .iter()
+            .map(|f| f.field_definition_number)
+            .zip(data_mesg.fields.into_iter())
+            .filter_map(|(k, v)| v.map(|v| (k, v)))
+            .collect();
     let mut data_fields = Vec::new();
-    for (def_field, dat_value) in def_mesg
-        .field_definitions
-        .iter()
-        .zip(data_mesg.fields.iter())
-    {
-        if let Some(value) = dat_value {
-            if let Some(field_info) = mesg_info.get_field(def_field.field_definition_number) {
-                data_fields.push(DataField {
-                    name: field_info.name().to_string(),
-                    units: field_info.units().to_string(),
-                    scale: field_info.scale(),
-                    offset: field_info.offset(),
-                    value: field_info.convert_value(value),
-                    raw_value: value.clone(),
-                });
-            } else {
-                data_fields.push(unknown_field(def_field.field_definition_number, &value));
-            }
+
+    for (field_def_num, value) in &data_map {
+        if let Some(field_info) = mesg_info.get_field(*field_def_num) {
+            // TODO this is where we will want to do component expansion I think
+            // I have all the raw values as well as all the message info
+
+            data_fields.push(build_data_field(&mesg_info, &field_info, &data_map, value));
+        } else {
+            data_fields.push(unknown_field(*field_def_num, &value));
         }
     }
 
@@ -358,6 +360,34 @@ fn process_data_fields(
     }
 
     data_fields
+}
+
+// Build a data field using the provided FIT profile information
+fn build_data_field(
+    mesg_info: &MessageInfo,
+    field_info: &FieldInfo,
+    data_map: &HashMap<u8, DataFieldValue>,
+    value: &DataFieldValue,
+) -> DataField {
+    if !field_info.subfields().is_empty() {
+        for (num, val, sub_info) in field_info.subfields() {
+            if let Some(v) = data_map.get(num) {
+                if v.as_i64().map_or(false, |v| v == *val) {
+                    return build_data_field(mesg_info, sub_info, data_map, value);
+                }
+            }
+        }
+    }
+
+    // this is the default return
+    DataField {
+        name: field_info.name().to_string(),
+        units: field_info.units().to_string(),
+        scale: field_info.scale(),
+        offset: field_info.offset(),
+        value: field_info.convert_value(value),
+        raw_value: value.clone(),
+    }
 }
 
 // Create an "unknown" field as a placeholder if we don't have any message information

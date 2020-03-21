@@ -5,7 +5,6 @@ pub mod parser;
 pub mod profile;
 pub use parser::parse_file;
 
-
 #[cfg(test)]
 mod tests {
     use super::*;

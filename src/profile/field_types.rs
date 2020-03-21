@@ -78,6 +78,9 @@ impl File {
             File::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             File::Device => "device".to_string(),
@@ -393,6 +396,9 @@ impl MesgNum {
             MesgNum::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u16() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             MesgNum::FileId => "file_id".to_string(),
@@ -514,6 +520,9 @@ impl Checksum {
             Checksum::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             Checksum::Clear => "clear".to_string(),
@@ -549,6 +558,9 @@ impl FileFlags {
             FileFlags::Erase => 8,
             FileFlags::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -587,6 +599,9 @@ impl MesgCount {
             MesgCount::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             MesgCount::NumPerFile => "num_per_file".to_string(),
@@ -618,6 +633,9 @@ impl DateTime {
             DateTime::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u32() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             DateTime::Min => "min".to_string(),
@@ -646,6 +664,9 @@ impl LocalDateTime {
             LocalDateTime::Min => 268435456,
             LocalDateTime::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u32() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -682,6 +703,9 @@ impl MessageIndex {
             MessageIndex::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u16() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             MessageIndex::Mask => "mask".to_string(),
@@ -712,6 +736,9 @@ impl DeviceIndex {
             DeviceIndex::Creator => 0,
             DeviceIndex::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -744,6 +771,9 @@ impl Gender {
             Gender::Male => 1,
             Gender::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -889,6 +919,9 @@ impl Language {
             Language::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             Language::English => "english".to_string(),
@@ -977,6 +1010,9 @@ impl LanguageBits0 {
             LanguageBits0::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             LanguageBits0::English => "english".to_string(),
@@ -1033,6 +1069,9 @@ impl LanguageBits1 {
             LanguageBits1::Slovakian => 128,
             LanguageBits1::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -1091,6 +1130,9 @@ impl LanguageBits2 {
             LanguageBits2::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             LanguageBits2::Slovenian => "slovenian".to_string(),
@@ -1148,6 +1190,9 @@ impl LanguageBits3 {
             LanguageBits3::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             LanguageBits3::Bulgarian => "bulgarian".to_string(),
@@ -1198,6 +1243,9 @@ impl LanguageBits4 {
             LanguageBits4::Mongolian => 32,
             LanguageBits4::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -1548,6 +1596,9 @@ impl TimeZone {
             TimeZone::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             TimeZone::Almaty => "almaty".to_string(),
@@ -1688,6 +1739,9 @@ impl DisplayMeasure {
             DisplayMeasure::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             DisplayMeasure::Metric => "metric".to_string(),
@@ -1725,6 +1779,9 @@ impl DisplayHeart {
             DisplayHeart::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             DisplayHeart::Bpm => "bpm".to_string(),
@@ -1758,6 +1815,9 @@ impl DisplayPower {
             DisplayPower::PercentFtp => 1,
             DisplayPower::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -1912,6 +1972,9 @@ impl DisplayPosition {
             DisplayPosition::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             DisplayPosition::Degree => "degree".to_string(),
@@ -1987,6 +2050,9 @@ impl Switch {
             Switch::Auto => 2,
             Switch::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -2166,6 +2232,9 @@ impl Sport {
             Sport::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             Sport::Generic => "generic".to_string(),
@@ -2265,6 +2334,9 @@ impl SportBits0 {
             SportBits0::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             SportBits0::Generic => "generic".to_string(),
@@ -2321,6 +2393,9 @@ impl SportBits1 {
             SportBits1::Rowing => 128,
             SportBits1::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -2379,6 +2454,9 @@ impl SportBits2 {
             SportBits2::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             SportBits2::Mountaineering => "mountaineering".to_string(),
@@ -2435,6 +2513,9 @@ impl SportBits3 {
             SportBits3::RockClimbing => 128,
             SportBits3::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -2493,6 +2574,9 @@ impl SportBits4 {
             SportBits4::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             SportBits4::Sailing => "sailing".to_string(),
@@ -2550,6 +2634,9 @@ impl SportBits5 {
             SportBits5::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             SportBits5::WaterSkiing => "water_skiing".to_string(),
@@ -2585,6 +2672,9 @@ impl SportBits6 {
             SportBits6::FloorClimbing => 1,
             SportBits6::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -2795,6 +2885,9 @@ impl SubSport {
             SubSport::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             SubSport::Generic => "generic".to_string(),
@@ -2908,6 +3001,9 @@ impl SportEvent {
             SportEvent::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             SportEvent::Uncategorized => "uncategorized".to_string(),
@@ -2948,6 +3044,9 @@ impl Activity {
             Activity::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             Activity::Manual => "manual".to_string(),
@@ -2986,6 +3085,9 @@ impl Intensity {
             Intensity::Cooldown => 3,
             Intensity::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -3027,6 +3129,9 @@ impl SessionTrigger {
             SessionTrigger::FitnessEquipment => 3,
             SessionTrigger::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -3077,6 +3182,9 @@ impl AutolapTrigger {
             AutolapTrigger::Off => 6,
             AutolapTrigger::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -3137,6 +3245,9 @@ impl LapTrigger {
             LapTrigger::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             LapTrigger::Manual => "manual".to_string(),
@@ -3188,6 +3299,9 @@ impl TimeMode {
             TimeMode::Utc => 5,
             TimeMode::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -3241,6 +3355,9 @@ impl BacklightMode {
             BacklightMode::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             BacklightMode::Off => "off".to_string(),
@@ -3281,6 +3398,9 @@ impl DateMode {
             DateMode::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             DateMode::DayMonth => "day_month".to_string(),
@@ -3310,6 +3430,9 @@ impl BacklightTimeout {
             BacklightTimeout::Infinite => 0,
             BacklightTimeout::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -3445,6 +3568,9 @@ impl Event {
             Event::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             Event::Timer => "timer".to_string(),
@@ -3536,6 +3662,9 @@ impl EventType {
             EventType::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             EventType::Start => "start".to_string(),
@@ -3580,6 +3709,9 @@ impl TimerTrigger {
             TimerTrigger::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             TimerTrigger::Manual => "manual".to_string(),
@@ -3619,6 +3751,9 @@ impl FitnessEquipmentState {
             FitnessEquipmentState::Unknown => 3,
             FitnessEquipmentState::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -3661,6 +3796,9 @@ impl Tone {
             Tone::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             Tone::Off => "off".to_string(),
@@ -3702,6 +3840,9 @@ impl Autoscroll {
             Autoscroll::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             Autoscroll::None => "none".to_string(),
@@ -3740,6 +3881,9 @@ impl ActivityClass {
             ActivityClass::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             ActivityClass::LevelMax => "level_max".to_string(),
@@ -3777,6 +3921,9 @@ impl HrZoneCalc {
             HrZoneCalc::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             HrZoneCalc::Custom => "custom".to_string(),
@@ -3810,6 +3957,9 @@ impl PwrZoneCalc {
             PwrZoneCalc::PercentFtp => 1,
             PwrZoneCalc::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -3928,6 +4078,9 @@ impl WktStepDuration {
             WktStepDuration::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             WktStepDuration::Time => "time".to_string(),
@@ -4033,6 +4186,9 @@ impl WktStepTarget {
             WktStepTarget::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             WktStepTarget::Speed => "speed".to_string(),
@@ -4093,6 +4249,9 @@ impl Goal {
             Goal::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             Goal::Time => "time".to_string(),
@@ -4143,6 +4302,9 @@ impl GoalRecurrence {
             GoalRecurrence::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             GoalRecurrence::Off => "off".to_string(),
@@ -4183,6 +4345,9 @@ impl GoalSource {
             GoalSource::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             GoalSource::Auto => "auto".to_string(),
@@ -4216,6 +4381,9 @@ impl Schedule {
             Schedule::Course => 1,
             Schedule::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -4321,6 +4489,9 @@ impl CoursePoint {
             CoursePoint::SegmentEnd => 25,
             CoursePoint::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -4897,6 +5068,9 @@ impl Manufacturer {
             Manufacturer::Actigraphcorp => 5759,
             Manufacturer::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u16() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -5668,6 +5842,9 @@ impl GarminProduct {
             GarminProduct::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u16() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             GarminProduct::Hrm1 => "hrm1".to_string(),
@@ -5959,6 +6136,9 @@ impl AntplusDeviceType {
             AntplusDeviceType::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             AntplusDeviceType::Antfs => "antfs".to_string(),
@@ -6019,6 +6199,9 @@ impl AntNetwork {
             AntNetwork::Private => 3,
             AntNetwork::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -6091,6 +6274,9 @@ impl WorkoutCapabilities {
             WorkoutCapabilities::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u32() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             WorkoutCapabilities::Interval => "interval".to_string(),
@@ -6151,6 +6337,9 @@ impl BatteryStatus {
             BatteryStatus::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             BatteryStatus::New => "new".to_string(),
@@ -6188,6 +6377,9 @@ impl HrType {
             HrType::Irregular => 1,
             HrType::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -6249,6 +6441,9 @@ impl CourseCapabilities {
             CourseCapabilities::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u32() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             CourseCapabilities::Processed => "processed".to_string(),
@@ -6288,6 +6483,9 @@ impl Weight {
             Weight::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u16() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             Weight::Calculating => "calculating".to_string(),
@@ -6317,6 +6515,9 @@ impl WorkoutHr {
             WorkoutHr::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u32() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             WorkoutHr::BpmOffset => "bpm_offset".to_string(),
@@ -6345,6 +6546,9 @@ impl WorkoutPower {
             WorkoutPower::WattsOffset => 1000,
             WorkoutPower::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u32() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -6386,6 +6590,9 @@ impl BpStatus {
             BpStatus::ErrorIrregularHeartRate => 4,
             BpStatus::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -6434,6 +6641,9 @@ impl UserLocalId {
             UserLocalId::PortableMax => 65534,
             UserLocalId::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u16() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -6486,6 +6696,9 @@ impl SwimStroke {
             SwimStroke::Im => 6,
             SwimStroke::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -6545,6 +6758,9 @@ impl ActivityType {
             ActivityType::All => 254,
             ActivityType::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -6640,6 +6856,9 @@ impl ActivitySubtype {
             ActivitySubtype::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             ActivitySubtype::Generic => "generic".to_string(),
@@ -6694,6 +6913,9 @@ impl ActivityLevel {
             ActivityLevel::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             ActivityLevel::Low => "low".to_string(),
@@ -6728,6 +6950,9 @@ impl Side {
             Side::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             Side::Right => "right".to_string(),
@@ -6760,6 +6985,9 @@ impl LeftRightBalance {
             LeftRightBalance::Right => 128,
             LeftRightBalance::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -6794,6 +7022,9 @@ impl LeftRightBalance100 {
             LeftRightBalance100::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u16() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             LeftRightBalance100::Mask => "mask".to_string(),
@@ -6826,6 +7057,9 @@ impl LengthType {
             LengthType::Active => 1,
             LengthType::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -6874,6 +7108,9 @@ impl DayOfWeek {
             DayOfWeek::Saturday => 6,
             DayOfWeek::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -7003,6 +7240,9 @@ impl ConnectivityCapabilities {
             ConnectivityCapabilities::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u32() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             ConnectivityCapabilities::Bluetooth => "bluetooth".to_string(),
@@ -7082,6 +7322,9 @@ impl WeatherReport {
             WeatherReport::DailyForecast => 2,
             WeatherReport::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -7174,6 +7417,9 @@ impl WeatherStatus {
             WeatherStatus::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             WeatherStatus::Clear => "clear".to_string(),
@@ -7234,6 +7480,9 @@ impl WeatherSeverity {
             WeatherSeverity::Statement => 4,
             WeatherSeverity::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -7520,6 +7769,9 @@ impl WeatherSevereType {
             WeatherSevereType::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             WeatherSevereType::Unspecified => "unspecified".to_string(),
@@ -7647,6 +7899,9 @@ impl StrokeType {
             StrokeType::Smash => 5,
             StrokeType::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -7799,6 +8054,9 @@ impl BodyLocation {
             BodyLocation::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             BodyLocation::LeftLeg => "left_leg".to_string(),
@@ -7870,6 +8128,9 @@ impl SegmentLapStatus {
             SegmentLapStatus::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             SegmentLapStatus::End => "end".to_string(),
@@ -7930,6 +8191,9 @@ impl SegmentLeaderboardType {
             SegmentLeaderboardType::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             SegmentLeaderboardType::Overall => "overall".to_string(),
@@ -7975,6 +8239,9 @@ impl SegmentDeleteStatus {
             SegmentDeleteStatus::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             SegmentDeleteStatus::DoNotDelete => "do_not_delete".to_string(),
@@ -8008,6 +8275,9 @@ impl SegmentSelectionType {
             SegmentSelectionType::Suggested => 1,
             SegmentSelectionType::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -8054,6 +8324,9 @@ impl SourceType {
             SourceType::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             SourceType::Ant => "ant".to_string(),
@@ -8099,6 +8372,9 @@ impl DisplayOrientation {
             DisplayOrientation::LandscapeFlipped => 4,
             DisplayOrientation::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -8148,6 +8424,9 @@ impl WorkoutEquipment {
             WorkoutEquipment::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             WorkoutEquipment::None => "none".to_string(),
@@ -8191,6 +8470,9 @@ impl WatchfaceMode {
             WatchfaceMode::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             WatchfaceMode::Digital => "digital".to_string(),
@@ -8229,6 +8511,9 @@ impl DigitalWatchfaceLayout {
             DigitalWatchfaceLayout::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             DigitalWatchfaceLayout::Traditional => "traditional".to_string(),
@@ -8265,6 +8550,9 @@ impl AnalogWatchfaceLayout {
             AnalogWatchfaceLayout::Modern => 2,
             AnalogWatchfaceLayout::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -8306,6 +8594,9 @@ impl RiderPositionType {
             RiderPositionType::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             RiderPositionType::Seated => "seated".to_string(),
@@ -8346,6 +8637,9 @@ impl PowerPhaseType {
             PowerPhaseType::PowerPhaseCenter => 3,
             PowerPhaseType::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -8415,6 +8709,9 @@ impl CameraEventType {
             CameraEventType::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             CameraEventType::VideoStart => "video_start".to_string(),
@@ -8467,6 +8764,9 @@ impl SensorType {
             SensorType::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             SensorType::Accelerometer => "accelerometer".to_string(),
@@ -8507,6 +8807,9 @@ impl BikeLightNetworkConfigType {
             BikeLightNetworkConfigType::Trail => 6,
             BikeLightNetworkConfigType::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -8551,6 +8854,9 @@ impl CommTimeoutType {
             CommTimeoutType::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u16() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             CommTimeoutType::WildcardPairingTimeout => "wildcard_pairing_timeout".to_string(),
@@ -8592,6 +8898,9 @@ impl CameraOrientationType {
             CameraOrientationType::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             CameraOrientationType::CameraOrientation0 => "camera_orientation_0".to_string(),
@@ -8632,6 +8941,9 @@ impl AttitudeStage {
             AttitudeStage::Valid => 3,
             AttitudeStage::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -8701,6 +9013,9 @@ impl AttitudeValidity {
             AttitudeValidity::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u16() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             AttitudeValidity::TrackAngleHeadingValid => "track_angle_heading_valid".to_string(),
@@ -8753,6 +9068,9 @@ impl AutoSyncFrequency {
             AutoSyncFrequency::Remote => 4,
             AutoSyncFrequency::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -8807,6 +9125,9 @@ impl ExdLayout {
             ExdLayout::HalfHorizontalTopSplit => 7,
             ExdLayout::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -8873,6 +9194,9 @@ impl ExdDisplayType {
             ExdDisplayType::Gauge => 10,
             ExdDisplayType::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -9059,6 +9383,9 @@ impl ExdDataUnits {
             ExdDataUnits::EightCardinal => 49,
             ExdDataUnits::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -9272,6 +9599,9 @@ impl ExdQualifiers {
             ExdQualifiers::Zone1 => 250,
             ExdQualifiers::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -9633,6 +9963,9 @@ impl ExdDescriptors {
             ExdDescriptors::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             ExdDescriptors::BikeLightBatteryStatus => "bike_light_battery_status".to_string(),
@@ -9790,6 +10123,9 @@ impl AutoActivityDetect {
             AutoActivityDetect::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u32() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             AutoActivityDetect::None => "none".to_string(),
@@ -9845,6 +10181,9 @@ impl SupportedExdScreenLayouts {
             SupportedExdScreenLayouts::HalfHorizontalTopSplit => 128,
             SupportedExdScreenLayouts::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u32() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -9939,6 +10278,9 @@ impl FitBaseType {
             FitBaseType::Uint64z => 144,
             FitBaseType::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -10096,6 +10438,9 @@ impl TurnType {
             TurnType::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             TurnType::ArrivingIdx => "arriving_idx".to_string(),
@@ -10165,6 +10510,9 @@ impl BikeLightBeamAngleMode {
             BikeLightBeamAngleMode::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             BikeLightBeamAngleMode::Manual => "manual".to_string(),
@@ -10201,6 +10549,9 @@ impl FitBaseUnit {
             FitBaseUnit::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u16() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             FitBaseUnit::Other => "other".to_string(),
@@ -10234,6 +10585,9 @@ impl SetType {
             SetType::Active => 1,
             SetType::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -10363,6 +10717,9 @@ impl ExerciseCategory {
             ExerciseCategory::Unknown => 65534,
             ExerciseCategory::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u16() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -10503,6 +10860,9 @@ impl BenchPressExerciseName {
             BenchPressExerciseName::AlternatingDumbbellChestPress => 26,
             BenchPressExerciseName::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u16() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -10659,6 +11019,9 @@ impl CalfRaiseExerciseName {
             CalfRaiseExerciseName::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u16() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             CalfRaiseExerciseName::Name3WayCalfRaise => "3_way_calf_raise".to_string(),
@@ -10805,6 +11168,9 @@ impl CardioExerciseName {
             CardioExerciseName::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u16() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             CardioExerciseName::BobAndWeaveCircle => "bob_and_weave_circle".to_string(),
@@ -10870,6 +11236,9 @@ impl CarryExerciseName {
             CarryExerciseName::OverheadCarry => 4,
             CarryExerciseName::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u16() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -10969,6 +11338,9 @@ impl ChopExerciseName {
             ChopExerciseName::StandingStabilityReverseChop => 22,
             ChopExerciseName::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u16() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -11254,6 +11626,9 @@ impl CoreExerciseName {
             CoreExerciseName::TheHundred => 72,
             CoreExerciseName::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u16() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -11626,6 +12001,9 @@ impl CrunchExerciseName {
             CrunchExerciseName::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u16() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             CrunchExerciseName::BicycleCrunch => "bicycle_crunch".to_string(),
@@ -11928,6 +12306,9 @@ impl CurlExerciseName {
             CurlExerciseName::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u16() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             CurlExerciseName::AlternatingDumbbellBicepsCurl => {
@@ -12096,6 +12477,9 @@ impl DeadliftExerciseName {
             DeadliftExerciseName::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u16() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             DeadliftExerciseName::BarbellDeadlift => "barbell_deadlift".to_string(),
@@ -12187,6 +12571,9 @@ impl FlyeExerciseName {
             FlyeExerciseName::HugATree => 9,
             FlyeExerciseName::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u16() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -12374,6 +12761,9 @@ impl HipRaiseExerciseName {
             HipRaiseExerciseName::LegLiftInExternalRotation => 49,
             HipRaiseExerciseName::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u16() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -12620,6 +13010,9 @@ impl HipStabilityExerciseName {
             HipStabilityExerciseName::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u16() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             HipStabilityExerciseName::BandSideLyingLegRaise => {
@@ -12727,6 +13120,9 @@ impl HipSwingExerciseName {
             HipSwingExerciseName::StepOutSwing => 2,
             HipSwingExerciseName::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u16() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -12877,6 +13273,9 @@ impl HyperextensionExerciseName {
             HyperextensionExerciseName::SupineFloorBarre => 39,
             HyperextensionExerciseName::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u16() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -13089,6 +13488,9 @@ impl LateralRaiseExerciseName {
             LateralRaiseExerciseName::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u16() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             LateralRaiseExerciseName::Name45DegreeCableExternalRotation => {
@@ -13204,6 +13606,9 @@ impl LegCurlExerciseName {
             LegCurlExerciseName::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u16() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             LegCurlExerciseName::LegCurl => "leg_curl".to_string(),
@@ -13318,6 +13723,9 @@ impl LegRaiseExerciseName {
             LegRaiseExerciseName::WeightedLateralStepover => 21,
             LegRaiseExerciseName::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u16() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -13631,6 +14039,9 @@ impl LungeExerciseName {
             LungeExerciseName::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u16() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             LungeExerciseName::OverheadLunge => "overhead_lunge".to_string(),
@@ -13861,6 +14272,9 @@ impl OlympicLiftExerciseName {
             OlympicLiftExerciseName::SquatCleanAndJerk => 20,
             OlympicLiftExerciseName::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u16() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -14325,6 +14739,9 @@ impl PlankExerciseName {
             PlankExerciseName::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u16() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             PlankExerciseName::Name45DegreePlank => "45_degree_plank".to_string(),
@@ -14716,6 +15133,9 @@ impl PlyoExerciseName {
             PlyoExerciseName::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u16() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             PlyoExerciseName::AlternatingJumpLunge => "alternating_jump_lunge".to_string(),
@@ -14910,6 +15330,9 @@ impl PullUpExerciseName {
             PullUpExerciseName::PullUp => 38,
             PullUpExerciseName::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u16() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -15220,6 +15643,9 @@ impl PushUpExerciseName {
             PushUpExerciseName::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u16() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             PushUpExerciseName::ChestPressWithBand => "chest_press_with_band".to_string(),
@@ -15486,6 +15912,9 @@ impl RowExerciseName {
             RowExerciseName::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u16() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             RowExerciseName::BarbellStraightLegDeadliftToRow => {
@@ -15642,6 +16071,9 @@ impl ShoulderPressExerciseName {
             ShoulderPressExerciseName::WeightPlateFrontRaise => 23,
             ShoulderPressExerciseName::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u16() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -15827,6 +16259,9 @@ impl ShoulderStabilityExerciseName {
             ShoulderStabilityExerciseName::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u16() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             ShoulderStabilityExerciseName::Name90DegreeCableExternalRotation => {
@@ -15977,6 +16412,9 @@ impl ShrugExerciseName {
             ShrugExerciseName::WideGripJumpShrug => 16,
             ShrugExerciseName::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u16() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -16137,6 +16575,9 @@ impl SitUpExerciseName {
             SitUpExerciseName::SitUp => 37,
             SitUpExerciseName::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u16() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -16493,6 +16934,9 @@ impl SquatExerciseName {
             SquatExerciseName::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u16() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             SquatExerciseName::LegPress => "leg_press".to_string(),
@@ -16687,6 +17131,9 @@ impl TotalBodyExerciseName {
             TotalBodyExerciseName::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u16() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             TotalBodyExerciseName::Burpee => "burpee".to_string(),
@@ -16853,6 +17300,9 @@ impl TricepsExtensionExerciseName {
             TricepsExtensionExerciseName::WeightedDip => 40,
             TricepsExtensionExerciseName::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u16() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -17071,6 +17521,9 @@ impl WarmUpExerciseName {
             WarmUpExerciseName::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u16() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             WarmUpExerciseName::QuadrupedRocking => "quadruped_rocking".to_string(),
@@ -17153,6 +17606,9 @@ impl RunExerciseName {
             RunExerciseName::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u16() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             RunExerciseName::Run => "run".to_string(),
@@ -17194,6 +17650,9 @@ impl WaterType {
             WaterType::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             WaterType::Fresh => "fresh".to_string(),
@@ -17225,6 +17684,9 @@ impl TissueModelType {
             TissueModelType::Zhl16c => 0,
             TissueModelType::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -17261,6 +17723,9 @@ impl DiveGasStatus {
             DiveGasStatus::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             DiveGasStatus::Disabled => "disabled".to_string(),
@@ -17295,6 +17760,9 @@ impl DiveAlarmType {
             DiveAlarmType::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             DiveAlarmType::Depth => "depth".to_string(),
@@ -17328,6 +17796,9 @@ impl DiveBacklightMode {
             DiveBacklightMode::UnknownVariant(value) => *value,
         }
     }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
+    }
     pub fn to_string(&self) -> String {
         match &self {
             DiveBacklightMode::AtDepth => "at_depth".to_string(),
@@ -17360,6 +17831,9 @@ impl FaveroProduct {
             FaveroProduct::AssiomaDuo => 12,
             FaveroProduct::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u16() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {
@@ -17396,6 +17870,9 @@ impl ClimbProEvent {
             ClimbProEvent::Complete => 2,
             ClimbProEvent::UnknownVariant(value) => *value,
         }
+    }
+    pub fn as_i64(&self) -> i64 {
+        self.as_u8() as i64
     }
     pub fn to_string(&self) -> String {
         match &self {

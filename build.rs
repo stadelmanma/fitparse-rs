@@ -102,6 +102,10 @@ impl FieldTypeDefintion {
         write!(out, "}}\n")?;
         write!(out, "}}\n")?;
 
+        write!( out, "pub fn as_i64(&self) -> i64 {{\n")?;
+        write!(out, "self.as_{}() as i64\n", self.base_type)?;
+        write!(out, "}}\n")?;
+
         write!(out, "pub fn to_string(&self) -> String {{\n")?;
         write!(out, "match &self {{\n")?;
         for variant in self.variant_map.values() {
@@ -169,6 +173,15 @@ impl MessageDefinition {
         }
     }
 
+    fn get_field_by_name(&self, name: &str) -> &MessageFieldDefinition {
+        for field in self.field_map.values() {
+            if field.name == name {
+                return field;
+            }
+        }
+        panic!(format!("No field with name: {:?}", name));
+    }
+
     fn function_name(&self) -> String {
         format!("{}_message", self.name)
     }
@@ -177,7 +190,7 @@ impl MessageDefinition {
         write!(out, "fn {}() -> MessageInfo {{\n", self.function_name())?;
         write!(out, "    let mut fields = HashMap::new();\n\n")?;
         for field in self.field_map.values() {
-            field.generate_field_info_struct(out, "field")?;
+            field.generate_field_info_struct(out, &self, "field")?;
             write!(out, "fields.insert({}, field);\n\n", field.def_number)?;
         }
         write!(out, "    MessageInfo {{\n")?;
@@ -198,7 +211,7 @@ struct MessageFieldDefinition {
     scale: f64,
     offset: f64,
     units: String,
-    // TODO components and reference fields
+    subfields: Vec<(String, String, MessageFieldDefinition)>,
     comment: Option<String>,
 }
 
@@ -206,8 +219,24 @@ impl MessageFieldDefinition {
     pub fn generate_field_info_struct(
         &self,
         out: &mut File,
+        mesg: &MessageDefinition,
         var_name: &str,
     ) -> Result<(), std::io::Error> {
+        let subfield_var: &'static str;
+        if self.subfields.is_empty() {
+            subfield_var = "Vec::new()";
+        }
+        else {
+            subfield_var = "subfields";
+            write!(out, "let mut {} = Vec::new();\n", subfield_var)?;
+            for (fld_name, fld_value, sub_info) in &self.subfields {
+                // broken
+                sub_info.generate_field_info_struct(out, mesg, "sub_fld")?;
+                let ref_field = mesg.get_field_by_name(fld_name);
+                write!(out, "subfields.push(({}, {}::{}.as_i64(), {}));\n", ref_field.def_number, ref_field.field_type, titlecase_string(fld_value), "sub_fld")?;
+            }
+        }
+
         if let Some(v) = &self.comment {
             write!(out, "// {}\n", v)?;
         }
@@ -215,11 +244,12 @@ impl MessageFieldDefinition {
             out,
             "    let {} = FieldInfo {{
             name: \"{}\",
-            field_type: {},
+            field_type: FieldDataType::{},
             def_number: {},
             scale: {:.6},
             offset: {:.6},
-            units: \"{}\"
+            units: \"{}\",
+            subfields: {}
         }};\n",
             var_name,
             self.name,
@@ -228,6 +258,7 @@ impl MessageFieldDefinition {
             self.scale,
             self.offset,
             self.units,
+            subfield_var
         )?;
 
         Ok(())
@@ -270,23 +301,23 @@ fn base_type_to_rust_type(base_type_str: &str) -> &'static str {
 /// match the field type string to a simple type or an enum
 fn field_type_str_to_field_type(field_type_str: &str) -> String {
     match field_type_str {
-        "sint8" => "FieldDataType::SInt8".to_string(),
-        "uint8" => "FieldDataType::UInt8".to_string(),
-        "sint16" => "FieldDataType::SInt16".to_string(),
-        "uint16" => "FieldDataType::UInt16".to_string(),
-        "sint32" => "FieldDataType::SInt32".to_string(),
-        "uint32" => "FieldDataType::UInt32".to_string(),
-        "string" => "FieldDataType::String".to_string(),
-        "float32" => "FieldDataType::Float32".to_string(),
-        "float64" => "FieldDataType::Float64".to_string(),
-        "uint8z" => "FieldDataType::UInt8z".to_string(),
-        "uint16z" => "FieldDataType::UInt16z".to_string(),
-        "uint32z" => "FieldDataType::UInt32z".to_string(),
-        "byte" => "FieldDataType::Byte".to_string(),
-        "sint64" => "FieldDataType::SInt64".to_string(),
-        "uint64" => "FieldDataType::UInt64".to_string(),
-        "uint64z" => "FieldDataType::UInt64z".to_string(),
-        _ => format!("FieldDataType::{}", titlecase_string(field_type_str)),
+        "sint8" => "SInt8".to_string(),
+        "uint8" => "UInt8".to_string(),
+        "sint16" => "SInt16".to_string(),
+        "uint16" => "UInt16".to_string(),
+        "sint32" => "SInt32".to_string(),
+        "uint32" => "UInt32".to_string(),
+        "string" => "String".to_string(),
+        "float32" => "Float32".to_string(),
+        "float64" => "Float64".to_string(),
+        "uint8z" => "UInt8z".to_string(),
+        "uint16z" => "UInt16z".to_string(),
+        "uint32z" => "UInt32z".to_string(),
+        "byte" => "Byte".to_string(),
+        "sint64" => "SInt64".to_string(),
+        "uint64" => "UInt64".to_string(),
+        "uint64z" => "UInt64z".to_string(),
+        _ => titlecase_string(field_type_str),
     }
 }
 
@@ -445,6 +476,7 @@ fn new_message_field_definition(row: &[DataType]) -> MessageFieldDefinition {
         scale: row[6].get_float().unwrap_or(1.0),
         offset: row[7].get_float().unwrap_or(0.0),
         units: row[8].get_string().unwrap_or("").to_string(),
+        subfields: Vec::new(),
         comment,
     }
 }
@@ -478,8 +510,24 @@ fn process_messages(sheet: Range<DataType>) -> Vec<MessageDefinition> {
             field = new_message_field_definition(row);
             last_def_number = field.def_number;
             msg.field_map.insert(field.def_number, field);
-        } else {
-            // TODO handle subfield using the last_def_number
+        } else if !row[2].is_empty() {
+            // process sub field
+            let parent = msg
+                .field_map
+                .get_mut(&last_def_number)
+                .expect("No parent field defined for subfield!");
+            let mut temp_row: Vec<DataType> = Vec::from(row);
+            temp_row[1] = DataType::Int(last_def_number as i64);
+            field = new_message_field_definition(&temp_row);
+            // store subfield ref_field, ref_field_value and defintion, if multiple values can
+            // trigger this subfield we simply duplicate them
+            let ref_field_names = row[11].get_string().expect("No reference field name(s)");
+            let ref_field_vals = row[12].get_string().expect("No reference field value(s)");
+            for (name, value) in ref_field_names.split(',').zip(ref_field_vals.split(',')) {
+                parent
+                    .subfields
+                    .push((name.trim().to_string(), value.trim().to_string(), field.clone()));
+            }
         }
     }
     messages.push(msg);

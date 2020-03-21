@@ -32,7 +32,8 @@ pub struct FieldInfo {
     def_number: u8,
     scale: f64,
     offset: f64,
-    units: &'static str, // TODO components and subfields
+    units: &'static str,
+    subfields: Vec<(u8, i64, FieldInfo)>, // ref_def_num, ref_value, subfield_info
 }
 
 impl FieldInfo {
@@ -50,6 +51,10 @@ impl FieldInfo {
 
     pub fn offset(&self) -> f64 {
         self.offset
+    }
+
+    pub fn subfields(&self) -> &[(u8, i64, FieldInfo)] {
+        &self.subfields
     }
 
     /// convert the value into a "output" form applying any scaling or enum conversions
@@ -123,4 +128,3 @@ impl FieldInfo {
 }
 
 // TODO how to handle subfields and reference fields?
-// TODO what about array types?
