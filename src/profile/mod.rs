@@ -19,8 +19,23 @@ impl MessageInfo {
         self.name
     }
 
-    pub fn get_field(&self, key: u8) -> Option<&FieldInfo> {
-        self.fields.get(&key)
+    /// Fetch the information for a specific field, if the field contains subfields then
+    /// we use the data values provided to try and de-reference it and return the subfield
+    /// info instead
+    pub fn get_field(&self, key: u8, data_map: &HashMap<u8, DataFieldValue>) -> Option<&FieldInfo> {
+        if let Some(field) = self.fields.get(&key) {
+            // check against subfields
+            for (num, val, sub_info) in &field.subfields {
+                if let Some(v) = data_map.get(num) {
+                    if v.as_i64().map_or(false, |v| v == *val) {
+                        return Some(sub_info);
+                    }
+                }
+            }
+            // fallback to initial field info as default return
+            return Some(field)
+        }
+        None
     }
 }
 
