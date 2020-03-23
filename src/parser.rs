@@ -178,7 +178,7 @@ fn parse_records(input: &[u8]) -> IResult<&[u8], Vec<FitDataRecord>> {
     let mut records = Vec::new();
     let mut input = input.clone();
     while input.len() > 2 {
-        match fit_data_record(input.clone(), &mut definitions) {
+        match fit_message(input.clone(), &mut definitions) {
             Err(e) => return Err(e),
             Ok((new_inp, rec)) => {
                 if new_inp == input {
@@ -200,7 +200,7 @@ fn parse_records(input: &[u8]) -> IResult<&[u8], Vec<FitDataRecord>> {
 /// data after a defintion message in a complete FIT file because all defintion messages must occur
 /// before the data messages that use them are read. A defintion message at the end wouldn't serve
 /// a purpose.
-fn fit_data_record<'a>(
+fn fit_message<'a>(
     input: &'a [u8],
     definitions: &mut HashMap<u8, FitDefinitionMessage>,
 ) -> IResult<&'a [u8], FitDataRecord> {
@@ -225,7 +225,7 @@ fn fit_data_record<'a>(
         FitMessageType::Definition => {
             let (input, message) = definition_message(input, header.contains_developer_data)?;
             definitions.insert(header.local_message_type, message);
-            fit_data_record(input.clone(), definitions)
+            fit_message(input.clone(), definitions)
         }
     }
 }
@@ -334,7 +334,7 @@ fn process_data_fields(
     let mesg_info = def_mesg.global_message_number.message_info();
     // filter data message into a mapping of HashMap<def_num, DataField> for easier processing
     // since we don't export empty/invalid fields
-    let data_map: HashMap<u8, DataFieldValue> =
+    let mut data_map: HashMap<u8, DataFieldValue> =
         def_mesg
             .field_definitions
             .iter()
@@ -344,16 +344,8 @@ fn process_data_fields(
             .collect();
     let mut data_fields = Vec::new();
 
-    for (field_def_num, value) in &data_map {
-        if let Some(field_info) = mesg_info.get_field(*field_def_num) {
-            // TODO this is where we will want to do component expansion I think
-            // I have all the raw values as well as all the message info
-
-            data_fields.push(build_data_field(&mesg_info, &field_info, &data_map, value));
-        } else {
-            data_fields.push(unknown_field(*field_def_num, &value));
-        }
-    }
+    // populate data field vector with initial set of parsed fields
+    build_data_fields_from_map(&mesg_info, &mut data_map, &mut data_fields);
 
     if def_mesg.number_of_developer_fields != 0u8 {
         panic!("Not Implemented: number_of_developer_fields > 0")
@@ -362,24 +354,26 @@ fn process_data_fields(
     data_fields
 }
 
-// Build a data field using the provided FIT profile information
-fn build_data_field(
+/// Recursive function to add processed data fields from raw values in the data mapping
+fn build_data_fields_from_map(
     mesg_info: &MessageInfo,
-    field_info: &FieldInfo,
-    data_map: &HashMap<u8, DataFieldValue>,
-    value: &DataFieldValue,
-) -> DataField {
-    if !field_info.subfields().is_empty() {
-        for (num, val, sub_info) in field_info.subfields() {
-            if let Some(v) = data_map.get(num) {
-                if v.as_i64().map_or(false, |v| v == *val) {
-                    return build_data_field(mesg_info, sub_info, data_map, value);
-                }
-            }
+    data_map: &mut HashMap<u8, DataFieldValue>,
+    data_fields: &mut Vec<DataField>) {
+
+    for (def_num, value) in data_map.iter() {
+        if let Some(field_info) = mesg_info.get_field(*def_num, &data_map) {
+
+            // check for components
+
+            data_fields.push(data_field_with_info(field_info, &value));
+        } else {
+            data_fields.push(unknown_field(*def_num, &value));
         }
     }
+}
 
-    // this is the default return
+/// Build a data field using the provided FIT profile information
+fn data_field_with_info(field_info: &FieldInfo, value: &DataFieldValue) -> DataField {
     DataField {
         name: field_info.name().to_string(),
         units: field_info.units().to_string(),
@@ -390,7 +384,7 @@ fn build_data_field(
     }
 }
 
-// Create an "unknown" field as a placeholder if we don't have any message information
+/// Create an "unknown" field as a placeholder if we don't have any field information
 fn unknown_field(field_def_num: u8, value: &DataFieldValue) -> DataField {
     DataField {
         name: format!("unknown_field_{}", field_def_num),
