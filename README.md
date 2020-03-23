@@ -19,10 +19,8 @@ other serialization format implemented using Serde.
 This library **does not** support writing FIT files at this time.
 
 Features in Progress:
- * Supporting reference fields
  * Supporting component fields
  * Properly handing compressed timestamps
- * Chained FIT files
  * Streamed FIT files
  * Parsing developer data fields
 
