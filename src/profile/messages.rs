@@ -1,5 +1,5 @@
 use super::field_types::*;
-use super::{FieldDataType, FieldInfo, MessageInfo};
+use super::{ComponentFieldInfo, FieldDataType, FieldInfo, MessageInfo};
 /// Auto generated profile from FIT SDK Release: XXX
 use std::collections::HashMap;
 
@@ -14,6 +14,7 @@ fn file_id_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
@@ -25,6 +26,7 @@ fn file_id_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
@@ -37,6 +39,7 @@ fn file_id_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((1, Manufacturer::FaveroElectronics.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -47,6 +50,7 @@ fn file_id_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((1, Manufacturer::Garmin.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -57,6 +61,7 @@ fn file_id_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((1, Manufacturer::Dynastream.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -67,6 +72,7 @@ fn file_id_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((1, Manufacturer::DynastreamOem.as_i64(), sub_fld));
     let field = FieldInfo {
@@ -77,6 +83,7 @@ fn file_id_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: subfields,
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
@@ -88,9 +95,11 @@ fn file_id_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
+    // Only set for files that are can be created/erased.
     let field = FieldInfo {
         name: "time_created",
         field_type: FieldDataType::DateTime,
@@ -99,9 +108,11 @@ fn file_id_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
+    // Only set for files that are not created/erased.
     let field = FieldInfo {
         name: "number",
         field_type: FieldDataType::UInt16,
@@ -110,9 +121,11 @@ fn file_id_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(5, field);
 
+    // Optional free form string to indicate the devices name or model
     let field = FieldInfo {
         name: "product_name",
         field_type: FieldDataType::String,
@@ -121,6 +134,7 @@ fn file_id_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(8, field);
 
@@ -141,6 +155,7 @@ fn file_creator_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
@@ -152,6 +167,7 @@ fn file_creator_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
@@ -164,6 +180,7 @@ fn file_creator_message() -> MessageInfo {
 fn timestamp_correlation_message() -> MessageInfo {
     let mut fields = HashMap::new();
 
+    // Fractional part of the UTC timestamp at the time the system timestamp was recorded.
     let field = FieldInfo {
         name: "fractional_timestamp",
         field_type: FieldDataType::UInt16,
@@ -172,9 +189,11 @@ fn timestamp_correlation_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
+    // Whole second part of the system timestamp
     let field = FieldInfo {
         name: "system_timestamp",
         field_type: FieldDataType::DateTime,
@@ -183,9 +202,11 @@ fn timestamp_correlation_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
+    // Fractional part of the system timestamp
     let field = FieldInfo {
         name: "fractional_system_timestamp",
         field_type: FieldDataType::UInt16,
@@ -194,9 +215,11 @@ fn timestamp_correlation_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
+    // timestamp epoch expressed in local time used to convert timestamps to local time
     let field = FieldInfo {
         name: "local_timestamp",
         field_type: FieldDataType::LocalDateTime,
@@ -205,9 +228,11 @@ fn timestamp_correlation_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
+    // Millisecond part of the UTC timestamp at the time the system timestamp was recorded.
     let field = FieldInfo {
         name: "timestamp_ms",
         field_type: FieldDataType::UInt16,
@@ -216,9 +241,11 @@ fn timestamp_correlation_message() -> MessageInfo {
         offset: 0.000000,
         units: "ms",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
+    // Millisecond part of the system timestamp
     let field = FieldInfo {
         name: "system_timestamp_ms",
         field_type: FieldDataType::UInt16,
@@ -227,9 +254,11 @@ fn timestamp_correlation_message() -> MessageInfo {
         offset: 0.000000,
         units: "ms",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(5, field);
 
+    // Whole second part of UTC timestamp at the time the system timestamp was recorded.
     let field = FieldInfo {
         name: "timestamp",
         field_type: FieldDataType::DateTime,
@@ -238,6 +267,7 @@ fn timestamp_correlation_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(253, field);
 
@@ -258,6 +288,7 @@ fn software_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
@@ -269,6 +300,7 @@ fn software_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(5, field);
 
@@ -280,6 +312,7 @@ fn software_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(254, field);
 
@@ -300,6 +333,7 @@ fn slave_device_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
@@ -312,6 +346,7 @@ fn slave_device_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((0, Manufacturer::FaveroElectronics.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -322,6 +357,7 @@ fn slave_device_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((0, Manufacturer::Garmin.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -332,6 +368,7 @@ fn slave_device_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((0, Manufacturer::Dynastream.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -342,6 +379,7 @@ fn slave_device_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((0, Manufacturer::DynastreamOem.as_i64(), sub_fld));
     let field = FieldInfo {
@@ -352,6 +390,7 @@ fn slave_device_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: subfields,
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
@@ -364,7 +403,7 @@ fn slave_device_message() -> MessageInfo {
 fn capabilities_message() -> MessageInfo {
     let mut fields = HashMap::new();
 
-    // [N]
+    // Use language_bits_x types where x is index of array.
     let field = FieldInfo {
         name: "languages",
         field_type: FieldDataType::UInt8z,
@@ -373,10 +412,11 @@ fn capabilities_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
-    // [N]
+    // Use sport_bits_x types where x is index of array.
     let field = FieldInfo {
         name: "sports",
         field_type: FieldDataType::SportBits0,
@@ -385,6 +425,7 @@ fn capabilities_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
@@ -396,6 +437,7 @@ fn capabilities_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(21, field);
 
@@ -407,6 +449,7 @@ fn capabilities_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(23, field);
 
@@ -427,6 +470,7 @@ fn file_capabilities_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
@@ -438,6 +482,7 @@ fn file_capabilities_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
@@ -449,6 +494,7 @@ fn file_capabilities_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
@@ -460,6 +506,7 @@ fn file_capabilities_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
@@ -471,6 +518,7 @@ fn file_capabilities_message() -> MessageInfo {
         offset: 0.000000,
         units: "bytes",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
@@ -482,6 +530,7 @@ fn file_capabilities_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(254, field);
 
@@ -502,6 +551,7 @@ fn mesg_capabilities_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
@@ -513,6 +563,7 @@ fn mesg_capabilities_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
@@ -524,6 +575,7 @@ fn mesg_capabilities_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
@@ -536,6 +588,7 @@ fn mesg_capabilities_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((2, MesgCount::NumPerFile.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -546,6 +599,7 @@ fn mesg_capabilities_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((2, MesgCount::MaxPerFile.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -556,6 +610,7 @@ fn mesg_capabilities_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((2, MesgCount::MaxPerFileType.as_i64(), sub_fld));
     let field = FieldInfo {
@@ -566,6 +621,7 @@ fn mesg_capabilities_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: subfields,
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
@@ -577,6 +633,7 @@ fn mesg_capabilities_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(254, field);
 
@@ -597,6 +654,7 @@ fn field_capabilities_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
@@ -608,6 +666,7 @@ fn field_capabilities_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
@@ -619,6 +678,7 @@ fn field_capabilities_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
@@ -630,6 +690,7 @@ fn field_capabilities_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
@@ -641,6 +702,7 @@ fn field_capabilities_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(254, field);
 
@@ -653,6 +715,7 @@ fn field_capabilities_message() -> MessageInfo {
 fn device_settings_message() -> MessageInfo {
     let mut fields = HashMap::new();
 
+    // Index into time zone arrays.
     let field = FieldInfo {
         name: "active_time_zone",
         field_type: FieldDataType::UInt8,
@@ -661,9 +724,11 @@ fn device_settings_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
+    // Offset from system time. Required to convert timestamp from system time to UTC.
     let field = FieldInfo {
         name: "utc_offset",
         field_type: FieldDataType::UInt32,
@@ -672,10 +737,11 @@ fn device_settings_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
-    // [N]
+    // Offset from system time.
     let field = FieldInfo {
         name: "time_offset",
         field_type: FieldDataType::UInt32,
@@ -684,10 +750,11 @@ fn device_settings_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
-    // [N]
+    // Display mode for the time
     let field = FieldInfo {
         name: "time_mode",
         field_type: FieldDataType::TimeMode,
@@ -696,10 +763,11 @@ fn device_settings_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
-    // [N]
+    // timezone offset in 1/4 hour increments
     let field = FieldInfo {
         name: "time_zone_offset",
         field_type: FieldDataType::SInt8,
@@ -708,9 +776,11 @@ fn device_settings_message() -> MessageInfo {
         offset: 0.000000,
         units: "hr",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(5, field);
 
+    // Mode for backlight
     let field = FieldInfo {
         name: "backlight_mode",
         field_type: FieldDataType::BacklightMode,
@@ -719,9 +789,11 @@ fn device_settings_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(12, field);
 
+    // Enabled state of the activity tracker functionality
     let field = FieldInfo {
         name: "activity_tracker_enabled",
         field_type: FieldDataType::Bool,
@@ -730,9 +802,11 @@ fn device_settings_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(36, field);
 
+    // UTC timestamp used to set the devices clock and date
     let field = FieldInfo {
         name: "clock_time",
         field_type: FieldDataType::DateTime,
@@ -741,10 +815,11 @@ fn device_settings_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(39, field);
 
-    // [N]
+    // Bitfield  to configure enabled screens for each supported loop
     let field = FieldInfo {
         name: "pages_enabled",
         field_type: FieldDataType::UInt16,
@@ -753,9 +828,11 @@ fn device_settings_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(40, field);
 
+    // Enabled state of the move alert
     let field = FieldInfo {
         name: "move_alert_enabled",
         field_type: FieldDataType::Bool,
@@ -764,9 +841,11 @@ fn device_settings_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(46, field);
 
+    // Display mode for the date
     let field = FieldInfo {
         name: "date_mode",
         field_type: FieldDataType::DateMode,
@@ -775,6 +854,7 @@ fn device_settings_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(47, field);
 
@@ -786,6 +866,7 @@ fn device_settings_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(55, field);
 
@@ -797,10 +878,11 @@ fn device_settings_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(56, field);
 
-    // [N]
+    // Bitfield to indicate one page as default for each supported loop
     let field = FieldInfo {
         name: "default_page",
         field_type: FieldDataType::UInt16,
@@ -809,9 +891,11 @@ fn device_settings_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(57, field);
 
+    // Minimum steps before an autosync can occur
     let field = FieldInfo {
         name: "autosync_min_steps",
         field_type: FieldDataType::UInt16,
@@ -820,9 +904,11 @@ fn device_settings_message() -> MessageInfo {
         offset: 0.000000,
         units: "steps",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(58, field);
 
+    // Minimum minutes before an autosync can occur
     let field = FieldInfo {
         name: "autosync_min_time",
         field_type: FieldDataType::UInt16,
@@ -831,9 +917,11 @@ fn device_settings_message() -> MessageInfo {
         offset: 0.000000,
         units: "minutes",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(59, field);
 
+    // Enable auto-detect setting for the lactate threshold feature.
     let field = FieldInfo {
         name: "lactate_threshold_autodetect_enabled",
         field_type: FieldDataType::Bool,
@@ -842,9 +930,11 @@ fn device_settings_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(80, field);
 
+    // Automatically upload using BLE
     let field = FieldInfo {
         name: "ble_auto_upload_enabled",
         field_type: FieldDataType::Bool,
@@ -853,9 +943,11 @@ fn device_settings_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(86, field);
 
+    // Helps to conserve battery by changing modes
     let field = FieldInfo {
         name: "auto_sync_frequency",
         field_type: FieldDataType::AutoSyncFrequency,
@@ -864,9 +956,11 @@ fn device_settings_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(89, field);
 
+    // Allows setting specific activities auto-activity detect enabled/disabled settings
     let field = FieldInfo {
         name: "auto_activity_detect",
         field_type: FieldDataType::AutoActivityDetect,
@@ -875,9 +969,11 @@ fn device_settings_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(90, field);
 
+    // Number of screens configured to display
     let field = FieldInfo {
         name: "number_of_screens",
         field_type: FieldDataType::UInt8,
@@ -886,9 +982,11 @@ fn device_settings_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(94, field);
 
+    // Smart Notification display orientation
     let field = FieldInfo {
         name: "smart_notification_display_orientation",
         field_type: FieldDataType::DisplayOrientation,
@@ -897,6 +995,7 @@ fn device_settings_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(95, field);
 
@@ -908,6 +1007,7 @@ fn device_settings_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(134, field);
 
@@ -928,6 +1028,7 @@ fn user_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
@@ -939,6 +1040,7 @@ fn user_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
@@ -950,6 +1052,7 @@ fn user_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "years",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
@@ -961,6 +1064,7 @@ fn user_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
@@ -972,6 +1076,7 @@ fn user_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "kg",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
@@ -983,6 +1088,7 @@ fn user_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(5, field);
 
@@ -994,6 +1100,7 @@ fn user_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(6, field);
 
@@ -1005,6 +1112,7 @@ fn user_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(7, field);
 
@@ -1016,6 +1124,7 @@ fn user_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "bpm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(8, field);
 
@@ -1027,6 +1136,7 @@ fn user_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "bpm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(9, field);
 
@@ -1038,6 +1148,7 @@ fn user_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "bpm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(10, field);
 
@@ -1049,6 +1160,7 @@ fn user_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "bpm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(11, field);
 
@@ -1060,6 +1172,7 @@ fn user_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(12, field);
 
@@ -1071,6 +1184,7 @@ fn user_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(13, field);
 
@@ -1082,6 +1196,7 @@ fn user_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(14, field);
 
@@ -1093,6 +1208,7 @@ fn user_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(16, field);
 
@@ -1104,6 +1220,7 @@ fn user_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(17, field);
 
@@ -1115,6 +1232,7 @@ fn user_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(18, field);
 
@@ -1126,6 +1244,7 @@ fn user_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(21, field);
 
@@ -1137,10 +1256,10 @@ fn user_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(22, field);
 
-    // [6]
     let field = FieldInfo {
         name: "global_id",
         field_type: FieldDataType::Byte,
@@ -1149,9 +1268,11 @@ fn user_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(23, field);
 
+    // Typical wake time
     let field = FieldInfo {
         name: "wake_time",
         field_type: FieldDataType::LocaltimeIntoDay,
@@ -1160,9 +1281,11 @@ fn user_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(28, field);
 
+    // Typical bed time
     let field = FieldInfo {
         name: "sleep_time",
         field_type: FieldDataType::LocaltimeIntoDay,
@@ -1171,6 +1294,7 @@ fn user_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(29, field);
 
@@ -1182,9 +1306,11 @@ fn user_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(30, field);
 
+    // User defined running step length set to 0 for auto length
     let field = FieldInfo {
         name: "user_running_step_length",
         field_type: FieldDataType::UInt16,
@@ -1193,9 +1319,11 @@ fn user_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(31, field);
 
+    // User defined walking step length set to 0 for auto length
     let field = FieldInfo {
         name: "user_walking_step_length",
         field_type: FieldDataType::UInt16,
@@ -1204,6 +1332,7 @@ fn user_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(32, field);
 
@@ -1215,6 +1344,7 @@ fn user_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(47, field);
 
@@ -1226,6 +1356,7 @@ fn user_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(49, field);
 
@@ -1237,6 +1368,7 @@ fn user_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(254, field);
 
@@ -1257,6 +1389,7 @@ fn hrm_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
@@ -1268,6 +1401,7 @@ fn hrm_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
@@ -1279,6 +1413,7 @@ fn hrm_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
@@ -1290,6 +1425,7 @@ fn hrm_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
@@ -1301,6 +1437,7 @@ fn hrm_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(254, field);
 
@@ -1321,6 +1458,7 @@ fn sdm_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
@@ -1332,6 +1470,7 @@ fn sdm_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
@@ -1343,6 +1482,7 @@ fn sdm_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "%",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
@@ -1354,9 +1494,11 @@ fn sdm_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
+    // Use footpod for speed source instead of GPS
     let field = FieldInfo {
         name: "speed_source",
         field_type: FieldDataType::Bool,
@@ -1365,6 +1507,7 @@ fn sdm_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
@@ -1376,9 +1519,11 @@ fn sdm_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(5, field);
 
+    // Rollover counter that can be used to extend the odometer
     let field = FieldInfo {
         name: "odometer_rollover",
         field_type: FieldDataType::UInt8,
@@ -1387,6 +1532,7 @@ fn sdm_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(7, field);
 
@@ -1398,6 +1544,7 @@ fn sdm_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(254, field);
 
@@ -1418,6 +1565,7 @@ fn bike_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
@@ -1429,6 +1577,7 @@ fn bike_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
@@ -1440,6 +1589,7 @@ fn bike_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
@@ -1451,6 +1601,7 @@ fn bike_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
@@ -1462,6 +1613,7 @@ fn bike_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
@@ -1473,6 +1625,7 @@ fn bike_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(5, field);
 
@@ -1484,6 +1637,7 @@ fn bike_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(6, field);
 
@@ -1495,6 +1649,7 @@ fn bike_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(7, field);
 
@@ -1506,6 +1661,7 @@ fn bike_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(8, field);
 
@@ -1517,6 +1673,7 @@ fn bike_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(9, field);
 
@@ -1528,6 +1685,7 @@ fn bike_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "kg",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(10, field);
 
@@ -1539,6 +1697,7 @@ fn bike_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "%",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(11, field);
 
@@ -1550,6 +1709,7 @@ fn bike_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(12, field);
 
@@ -1561,6 +1721,7 @@ fn bike_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(13, field);
 
@@ -1572,6 +1733,7 @@ fn bike_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(14, field);
 
@@ -1583,6 +1745,7 @@ fn bike_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(15, field);
 
@@ -1594,6 +1757,7 @@ fn bike_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(16, field);
 
@@ -1605,6 +1769,7 @@ fn bike_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(17, field);
 
@@ -1616,6 +1781,7 @@ fn bike_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(18, field);
 
@@ -1627,6 +1793,7 @@ fn bike_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "mm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(19, field);
 
@@ -1638,6 +1805,7 @@ fn bike_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(20, field);
 
@@ -1649,6 +1817,7 @@ fn bike_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(21, field);
 
@@ -1660,6 +1829,7 @@ fn bike_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(22, field);
 
@@ -1671,6 +1841,7 @@ fn bike_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(23, field);
 
@@ -1682,9 +1853,11 @@ fn bike_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(24, field);
 
+    // Rollover counter that can be used to extend the odometer
     let field = FieldInfo {
         name: "odometer_rollover",
         field_type: FieldDataType::UInt8,
@@ -1693,9 +1866,11 @@ fn bike_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(37, field);
 
+    // Number of front gears
     let field = FieldInfo {
         name: "front_gear_num",
         field_type: FieldDataType::UInt8z,
@@ -1704,10 +1879,11 @@ fn bike_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(38, field);
 
-    // [N]
+    // Number of teeth on each gear 0 is innermost
     let field = FieldInfo {
         name: "front_gear",
         field_type: FieldDataType::UInt8z,
@@ -1716,9 +1892,11 @@ fn bike_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(39, field);
 
+    // Number of rear gears
     let field = FieldInfo {
         name: "rear_gear_num",
         field_type: FieldDataType::UInt8z,
@@ -1727,10 +1905,11 @@ fn bike_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(40, field);
 
-    // [N]
+    // Number of teeth on each gear 0 is innermost
     let field = FieldInfo {
         name: "rear_gear",
         field_type: FieldDataType::UInt8z,
@@ -1739,6 +1918,7 @@ fn bike_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(41, field);
 
@@ -1750,6 +1930,7 @@ fn bike_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(44, field);
 
@@ -1761,6 +1942,7 @@ fn bike_profile_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(254, field);
 
@@ -1773,6 +1955,7 @@ fn bike_profile_message() -> MessageInfo {
 fn connectivity_message() -> MessageInfo {
     let mut fields = HashMap::new();
 
+    // Use Bluetooth for connectivity features
     let field = FieldInfo {
         name: "bluetooth_enabled",
         field_type: FieldDataType::Bool,
@@ -1781,9 +1964,11 @@ fn connectivity_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
+    // Use Bluetooth Low Energy for connectivity features
     let field = FieldInfo {
         name: "bluetooth_le_enabled",
         field_type: FieldDataType::Bool,
@@ -1792,9 +1977,11 @@ fn connectivity_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
+    // Use ANT for connectivity features
     let field = FieldInfo {
         name: "ant_enabled",
         field_type: FieldDataType::Bool,
@@ -1803,6 +1990,7 @@ fn connectivity_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
@@ -1814,6 +2002,7 @@ fn connectivity_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
@@ -1825,6 +2014,7 @@ fn connectivity_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
@@ -1836,6 +2026,7 @@ fn connectivity_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(5, field);
 
@@ -1847,6 +2038,7 @@ fn connectivity_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(6, field);
 
@@ -1858,6 +2050,7 @@ fn connectivity_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(7, field);
 
@@ -1869,6 +2062,7 @@ fn connectivity_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(8, field);
 
@@ -1880,6 +2074,7 @@ fn connectivity_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(9, field);
 
@@ -1891,6 +2086,7 @@ fn connectivity_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(10, field);
 
@@ -1902,6 +2098,7 @@ fn connectivity_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(11, field);
 
@@ -1913,6 +2110,7 @@ fn connectivity_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(12, field);
 
@@ -1933,6 +2131,7 @@ fn watchface_settings_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
@@ -1945,6 +2144,7 @@ fn watchface_settings_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((0, WatchfaceMode::Digital.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -1955,6 +2155,7 @@ fn watchface_settings_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((0, WatchfaceMode::Analog.as_i64(), sub_fld));
     let field = FieldInfo {
@@ -1965,6 +2166,7 @@ fn watchface_settings_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: subfields,
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
@@ -1976,6 +2178,7 @@ fn watchface_settings_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(254, field);
 
@@ -1996,6 +2199,7 @@ fn ohr_settings_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
@@ -2007,6 +2211,7 @@ fn ohr_settings_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(253, field);
 
@@ -2027,6 +2232,7 @@ fn zones_target_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
@@ -2038,6 +2244,7 @@ fn zones_target_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
@@ -2049,6 +2256,7 @@ fn zones_target_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
@@ -2060,6 +2268,7 @@ fn zones_target_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(5, field);
 
@@ -2071,6 +2280,7 @@ fn zones_target_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(7, field);
 
@@ -2091,6 +2301,7 @@ fn sport_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
@@ -2102,6 +2313,7 @@ fn sport_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
@@ -2113,6 +2325,7 @@ fn sport_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
@@ -2133,6 +2346,7 @@ fn hr_zone_message() -> MessageInfo {
         offset: 0.000000,
         units: "bpm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
@@ -2144,6 +2358,7 @@ fn hr_zone_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
@@ -2155,6 +2370,7 @@ fn hr_zone_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(254, field);
 
@@ -2175,6 +2391,7 @@ fn speed_zone_message() -> MessageInfo {
         offset: 0.000000,
         units: "m/s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
@@ -2186,6 +2403,7 @@ fn speed_zone_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
@@ -2197,6 +2415,7 @@ fn speed_zone_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(254, field);
 
@@ -2217,6 +2436,7 @@ fn cadence_zone_message() -> MessageInfo {
         offset: 0.000000,
         units: "rpm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
@@ -2228,6 +2448,7 @@ fn cadence_zone_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
@@ -2239,6 +2460,7 @@ fn cadence_zone_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(254, field);
 
@@ -2259,6 +2481,7 @@ fn power_zone_message() -> MessageInfo {
         offset: 0.000000,
         units: "watts",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
@@ -2270,6 +2493,7 @@ fn power_zone_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
@@ -2281,6 +2505,7 @@ fn power_zone_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(254, field);
 
@@ -2301,6 +2526,7 @@ fn met_zone_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
@@ -2312,6 +2538,7 @@ fn met_zone_message() -> MessageInfo {
         offset: 0.000000,
         units: "kcal / min",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
@@ -2323,6 +2550,7 @@ fn met_zone_message() -> MessageInfo {
         offset: 0.000000,
         units: "kcal / min",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
@@ -2334,6 +2562,7 @@ fn met_zone_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(254, field);
 
@@ -2354,6 +2583,7 @@ fn dive_settings_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
@@ -2365,6 +2595,7 @@ fn dive_settings_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
@@ -2376,6 +2607,7 @@ fn dive_settings_message() -> MessageInfo {
         offset: 0.000000,
         units: "percent",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
@@ -2387,6 +2619,7 @@ fn dive_settings_message() -> MessageInfo {
         offset: 0.000000,
         units: "percent",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
@@ -2398,9 +2631,11 @@ fn dive_settings_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
+    // Fresh water is usually 1000; salt water is usually 1025
     let field = FieldInfo {
         name: "water_density",
         field_type: FieldDataType::Float32,
@@ -2409,9 +2644,11 @@ fn dive_settings_message() -> MessageInfo {
         offset: 0.000000,
         units: "kg/m^3",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(5, field);
 
+    // Typically 1.40
     let field = FieldInfo {
         name: "po2_warn",
         field_type: FieldDataType::UInt8,
@@ -2420,9 +2657,11 @@ fn dive_settings_message() -> MessageInfo {
         offset: 0.000000,
         units: "percent",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(6, field);
 
+    // Typically 1.60
     let field = FieldInfo {
         name: "po2_critical",
         field_type: FieldDataType::UInt8,
@@ -2431,6 +2670,7 @@ fn dive_settings_message() -> MessageInfo {
         offset: 0.000000,
         units: "percent",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(7, field);
 
@@ -2442,6 +2682,7 @@ fn dive_settings_message() -> MessageInfo {
         offset: 0.000000,
         units: "percent",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(8, field);
 
@@ -2453,6 +2694,7 @@ fn dive_settings_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(9, field);
 
@@ -2464,6 +2706,7 @@ fn dive_settings_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(10, field);
 
@@ -2475,6 +2718,7 @@ fn dive_settings_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(11, field);
 
@@ -2486,6 +2730,7 @@ fn dive_settings_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(12, field);
 
@@ -2497,6 +2742,7 @@ fn dive_settings_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(13, field);
 
@@ -2508,6 +2754,7 @@ fn dive_settings_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(14, field);
 
@@ -2519,6 +2766,7 @@ fn dive_settings_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(15, field);
 
@@ -2530,9 +2778,11 @@ fn dive_settings_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(16, field);
 
+    // Time between surfacing and ending the activity
     let field = FieldInfo {
         name: "repeat_dive_interval",
         field_type: FieldDataType::UInt16,
@@ -2541,9 +2791,11 @@ fn dive_settings_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(17, field);
 
+    // Time at safety stop (if enabled)
     let field = FieldInfo {
         name: "safety_stop_time",
         field_type: FieldDataType::UInt16,
@@ -2552,6 +2804,7 @@ fn dive_settings_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(18, field);
 
@@ -2563,6 +2816,7 @@ fn dive_settings_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(19, field);
 
@@ -2575,6 +2829,7 @@ fn dive_settings_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((19, SourceType::Antplus.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -2585,6 +2840,7 @@ fn dive_settings_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((19, SourceType::Local.as_i64(), sub_fld));
     let field = FieldInfo {
@@ -2595,6 +2851,7 @@ fn dive_settings_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: subfields,
+        components: Vec::new(),
     };
     fields.insert(20, field);
 
@@ -2606,6 +2863,7 @@ fn dive_settings_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(254, field);
 
@@ -2626,6 +2884,7 @@ fn dive_alarm_message() -> MessageInfo {
         offset: 0.000000,
         units: "m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
@@ -2637,6 +2896,7 @@ fn dive_alarm_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
@@ -2648,6 +2908,7 @@ fn dive_alarm_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
@@ -2659,6 +2920,7 @@ fn dive_alarm_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
@@ -2670,10 +2932,10 @@ fn dive_alarm_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
-    // [N]
     let field = FieldInfo {
         name: "dive_types",
         field_type: FieldDataType::SubSport,
@@ -2682,9 +2944,11 @@ fn dive_alarm_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(5, field);
 
+    // Index of the alarm
     let field = FieldInfo {
         name: "message_index",
         field_type: FieldDataType::MessageIndex,
@@ -2693,6 +2957,7 @@ fn dive_alarm_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(254, field);
 
@@ -2713,6 +2978,7 @@ fn dive_gas_message() -> MessageInfo {
         offset: 0.000000,
         units: "percent",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
@@ -2724,6 +2990,7 @@ fn dive_gas_message() -> MessageInfo {
         offset: 0.000000,
         units: "percent",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
@@ -2735,6 +3002,7 @@ fn dive_gas_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
@@ -2746,6 +3014,7 @@ fn dive_gas_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(254, field);
 
@@ -2766,6 +3035,7 @@ fn goal_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
@@ -2777,6 +3047,7 @@ fn goal_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
@@ -2788,6 +3059,7 @@ fn goal_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
@@ -2799,6 +3071,7 @@ fn goal_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
@@ -2810,6 +3083,7 @@ fn goal_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
@@ -2821,6 +3095,7 @@ fn goal_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(5, field);
 
@@ -2832,6 +3107,7 @@ fn goal_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(6, field);
 
@@ -2843,6 +3119,7 @@ fn goal_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(7, field);
 
@@ -2854,6 +3131,7 @@ fn goal_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(8, field);
 
@@ -2865,6 +3143,7 @@ fn goal_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(9, field);
 
@@ -2876,6 +3155,7 @@ fn goal_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(10, field);
 
@@ -2887,6 +3167,7 @@ fn goal_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(11, field);
 
@@ -2898,6 +3179,7 @@ fn goal_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(254, field);
 
@@ -2910,6 +3192,7 @@ fn goal_message() -> MessageInfo {
 fn activity_message() -> MessageInfo {
     let mut fields = HashMap::new();
 
+    // Exclude pauses
     let field = FieldInfo {
         name: "total_timer_time",
         field_type: FieldDataType::UInt32,
@@ -2918,6 +3201,7 @@ fn activity_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
@@ -2929,6 +3213,7 @@ fn activity_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
@@ -2940,6 +3225,7 @@ fn activity_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
@@ -2951,6 +3237,7 @@ fn activity_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
@@ -2962,9 +3249,11 @@ fn activity_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
+    // timestamp epoch expressed in local time, used to convert activity timestamps to local time
     let field = FieldInfo {
         name: "local_timestamp",
         field_type: FieldDataType::LocalDateTime,
@@ -2973,6 +3262,7 @@ fn activity_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(5, field);
 
@@ -2984,6 +3274,7 @@ fn activity_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(6, field);
 
@@ -2995,6 +3286,7 @@ fn activity_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(253, field);
 
@@ -3007,6 +3299,7 @@ fn activity_message() -> MessageInfo {
 fn session_message() -> MessageInfo {
     let mut fields = HashMap::new();
 
+    // session
     let field = FieldInfo {
         name: "event",
         field_type: FieldDataType::Event,
@@ -3015,9 +3308,11 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
+    // stop
     let field = FieldInfo {
         name: "event_type",
         field_type: FieldDataType::EventType,
@@ -3026,6 +3321,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
@@ -3037,6 +3333,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
@@ -3048,6 +3345,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "semicircles",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
@@ -3059,6 +3357,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "semicircles",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
@@ -3070,6 +3369,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(5, field);
 
@@ -3081,9 +3381,11 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(6, field);
 
+    // Time (includes pauses)
     let field = FieldInfo {
         name: "total_elapsed_time",
         field_type: FieldDataType::UInt32,
@@ -3092,9 +3394,11 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(7, field);
 
+    // Timer Time (excludes pauses)
     let field = FieldInfo {
         name: "total_timer_time",
         field_type: FieldDataType::UInt32,
@@ -3103,6 +3407,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(8, field);
 
@@ -3114,6 +3419,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(9, field);
 
@@ -3126,6 +3432,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "strides",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((5, Sport::Running.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -3136,6 +3443,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "strides",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((5, Sport::Walking.as_i64(), sub_fld));
     let field = FieldInfo {
@@ -3146,6 +3454,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "cycles",
         subfields: subfields,
+        components: Vec::new(),
     };
     fields.insert(10, field);
 
@@ -3157,6 +3466,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "kcal",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(11, field);
 
@@ -3168,9 +3478,21 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "kcal",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(13, field);
 
+    let mut components = Vec::new();
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 124,
+        scale: 1000.000000,
+        offset: 0.000000,
+        units: "m/s",
+        bits: 16,
+        accumulate: false,
+    };
+    components.push(comp_fld);
+    // total_distance / total_timer_time
     let field = FieldInfo {
         name: "avg_speed",
         field_type: FieldDataType::UInt16,
@@ -3179,9 +3501,20 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "m/s",
         subfields: Vec::new(),
+        components: components,
     };
     fields.insert(14, field);
 
+    let mut components = Vec::new();
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 125,
+        scale: 1000.000000,
+        offset: 0.000000,
+        units: "m/s",
+        bits: 16,
+        accumulate: false,
+    };
+    components.push(comp_fld);
     let field = FieldInfo {
         name: "max_speed",
         field_type: FieldDataType::UInt16,
@@ -3190,9 +3523,11 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "m/s",
         subfields: Vec::new(),
+        components: components,
     };
     fields.insert(15, field);
 
+    // average heart rate (excludes pause time)
     let field = FieldInfo {
         name: "avg_heart_rate",
         field_type: FieldDataType::UInt8,
@@ -3201,6 +3536,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "bpm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(16, field);
 
@@ -3212,6 +3548,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "bpm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(17, field);
 
@@ -3224,8 +3561,10 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "strides/min",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((5, Sport::Running.as_i64(), sub_fld));
+    // total_cycles / total_timer_time if non_zero_avg_cadence otherwise total_cycles / total_elapsed_time
     let field = FieldInfo {
         name: "avg_cadence",
         field_type: FieldDataType::UInt8,
@@ -3234,6 +3573,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "rpm",
         subfields: subfields,
+        components: Vec::new(),
     };
     fields.insert(18, field);
 
@@ -3246,6 +3586,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "strides/min",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((5, Sport::Running.as_i64(), sub_fld));
     let field = FieldInfo {
@@ -3256,9 +3597,11 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "rpm",
         subfields: subfields,
+        components: Vec::new(),
     };
     fields.insert(19, field);
 
+    // total_power / total_timer_time if non_zero_avg_power otherwise total_power / total_elapsed_time
     let field = FieldInfo {
         name: "avg_power",
         field_type: FieldDataType::UInt16,
@@ -3267,6 +3610,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "watts",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(20, field);
 
@@ -3278,6 +3622,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "watts",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(21, field);
 
@@ -3289,6 +3634,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(22, field);
 
@@ -3300,6 +3646,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(23, field);
 
@@ -3311,6 +3658,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(24, field);
 
@@ -3322,6 +3670,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(25, field);
 
@@ -3333,6 +3682,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(26, field);
 
@@ -3344,6 +3694,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(27, field);
 
@@ -3355,6 +3706,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(28, field);
 
@@ -3366,6 +3718,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "semicircles",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(29, field);
 
@@ -3377,6 +3730,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "semicircles",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(30, field);
 
@@ -3388,6 +3742,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "semicircles",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(31, field);
 
@@ -3399,6 +3754,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "semicircles",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(32, field);
 
@@ -3410,6 +3766,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "watts",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(34, field);
 
@@ -3421,6 +3778,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "tss",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(35, field);
 
@@ -3432,6 +3790,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "if",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(36, field);
 
@@ -3443,6 +3802,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(37, field);
 
@@ -3454,6 +3814,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "strokes/lap",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(41, field);
 
@@ -3465,6 +3826,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(42, field);
 
@@ -3476,6 +3838,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "swim_stroke",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(43, field);
 
@@ -3487,6 +3850,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(44, field);
 
@@ -3498,6 +3862,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "watts",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(45, field);
 
@@ -3509,9 +3874,11 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(46, field);
 
+    // # of active lengths of swim pool
     let field = FieldInfo {
         name: "num_active_lengths",
         field_type: FieldDataType::UInt16,
@@ -3520,6 +3887,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "lengths",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(47, field);
 
@@ -3531,9 +3899,20 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "J",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(48, field);
 
+    let mut components = Vec::new();
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 126,
+        scale: 5.000000,
+        offset: 500.000000,
+        units: "m",
+        bits: 16,
+        accumulate: false,
+    };
+    components.push(comp_fld);
     let field = FieldInfo {
         name: "avg_altitude",
         field_type: FieldDataType::UInt16,
@@ -3542,9 +3921,20 @@ fn session_message() -> MessageInfo {
         offset: 500.000000,
         units: "m",
         subfields: Vec::new(),
+        components: components,
     };
     fields.insert(49, field);
 
+    let mut components = Vec::new();
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 128,
+        scale: 5.000000,
+        offset: 500.000000,
+        units: "m",
+        bits: 16,
+        accumulate: false,
+    };
+    components.push(comp_fld);
     let field = FieldInfo {
         name: "max_altitude",
         field_type: FieldDataType::UInt16,
@@ -3553,6 +3943,7 @@ fn session_message() -> MessageInfo {
         offset: 500.000000,
         units: "m",
         subfields: Vec::new(),
+        components: components,
     };
     fields.insert(50, field);
 
@@ -3564,6 +3955,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(51, field);
 
@@ -3575,6 +3967,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "%",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(52, field);
 
@@ -3586,6 +3979,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "%",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(53, field);
 
@@ -3597,6 +3991,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "%",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(54, field);
 
@@ -3608,6 +4003,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "%",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(55, field);
 
@@ -3619,6 +4015,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "%",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(56, field);
 
@@ -3630,6 +4027,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "C",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(57, field);
 
@@ -3641,6 +4039,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "C",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(58, field);
 
@@ -3652,6 +4051,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(59, field);
 
@@ -3663,6 +4063,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "m/s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(60, field);
 
@@ -3674,6 +4075,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "m/s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(61, field);
 
@@ -3685,6 +4087,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "m/s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(62, field);
 
@@ -3696,6 +4099,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "m/s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(63, field);
 
@@ -3707,10 +4111,10 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "bpm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(64, field);
 
-    // [N]
     let field = FieldInfo {
         name: "time_in_hr_zone",
         field_type: FieldDataType::UInt32,
@@ -3719,10 +4123,10 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(65, field);
 
-    // [N]
     let field = FieldInfo {
         name: "time_in_speed_zone",
         field_type: FieldDataType::UInt32,
@@ -3731,10 +4135,10 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(66, field);
 
-    // [N]
     let field = FieldInfo {
         name: "time_in_cadence_zone",
         field_type: FieldDataType::UInt32,
@@ -3743,10 +4147,10 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(67, field);
 
-    // [N]
     let field = FieldInfo {
         name: "time_in_power_zone",
         field_type: FieldDataType::UInt32,
@@ -3755,6 +4159,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(68, field);
 
@@ -3766,6 +4171,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(69, field);
 
@@ -3777,9 +4183,20 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(70, field);
 
+    let mut components = Vec::new();
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 127,
+        scale: 5.000000,
+        offset: 500.000000,
+        units: "m",
+        bits: 16,
+        accumulate: false,
+    };
+    components.push(comp_fld);
     let field = FieldInfo {
         name: "min_altitude",
         field_type: FieldDataType::UInt16,
@@ -3788,6 +4205,7 @@ fn session_message() -> MessageInfo {
         offset: 500.000000,
         units: "m",
         subfields: Vec::new(),
+        components: components,
     };
     fields.insert(71, field);
 
@@ -3799,6 +4217,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(82, field);
 
@@ -3810,6 +4229,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(83, field);
 
@@ -3821,10 +4241,11 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(84, field);
 
-    // [N]
+    // stroke_type enum used as the index
     let field = FieldInfo {
         name: "stroke_count",
         field_type: FieldDataType::UInt16,
@@ -3833,10 +4254,11 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "counts",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(85, field);
 
-    // [N]
+    // zone number used as the index
     let field = FieldInfo {
         name: "zone_count",
         field_type: FieldDataType::UInt16,
@@ -3845,6 +4267,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "counts",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(86, field);
 
@@ -3856,6 +4279,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "m/s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(87, field);
 
@@ -3867,6 +4291,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "m/s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(88, field);
 
@@ -3878,6 +4303,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "mm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(89, field);
 
@@ -3889,6 +4315,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "percent",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(90, field);
 
@@ -3900,9 +4327,11 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "ms",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(91, field);
 
+    // fractional part of the avg_cadence
     let field = FieldInfo {
         name: "avg_fractional_cadence",
         field_type: FieldDataType::UInt8,
@@ -3911,9 +4340,11 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "rpm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(92, field);
 
+    // fractional part of the max_cadence
     let field = FieldInfo {
         name: "max_fractional_cadence",
         field_type: FieldDataType::UInt8,
@@ -3922,9 +4353,11 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "rpm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(93, field);
 
+    // fractional part of the total_cycles
     let field = FieldInfo {
         name: "total_fractional_cycles",
         field_type: FieldDataType::UInt8,
@@ -3933,10 +4366,11 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "cycles",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(94, field);
 
-    // [N]
+    // Avg saturated and unsaturated hemoglobin
     let field = FieldInfo {
         name: "avg_total_hemoglobin_conc",
         field_type: FieldDataType::UInt16,
@@ -3945,10 +4379,11 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "g/dL",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(95, field);
 
-    // [N]
+    // Min saturated and unsaturated hemoglobin
     let field = FieldInfo {
         name: "min_total_hemoglobin_conc",
         field_type: FieldDataType::UInt16,
@@ -3957,10 +4392,11 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "g/dL",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(96, field);
 
-    // [N]
+    // Max saturated and unsaturated hemoglobin
     let field = FieldInfo {
         name: "max_total_hemoglobin_conc",
         field_type: FieldDataType::UInt16,
@@ -3969,10 +4405,11 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "g/dL",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(97, field);
 
-    // [N]
+    // Avg percentage of hemoglobin saturated with oxygen
     let field = FieldInfo {
         name: "avg_saturated_hemoglobin_percent",
         field_type: FieldDataType::UInt16,
@@ -3981,10 +4418,11 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "%",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(98, field);
 
-    // [N]
+    // Min percentage of hemoglobin saturated with oxygen
     let field = FieldInfo {
         name: "min_saturated_hemoglobin_percent",
         field_type: FieldDataType::UInt16,
@@ -3993,10 +4431,11 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "%",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(99, field);
 
-    // [N]
+    // Max percentage of hemoglobin saturated with oxygen
     let field = FieldInfo {
         name: "max_saturated_hemoglobin_percent",
         field_type: FieldDataType::UInt16,
@@ -4005,6 +4444,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "%",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(100, field);
 
@@ -4016,6 +4456,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "percent",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(101, field);
 
@@ -4027,6 +4468,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "percent",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(102, field);
 
@@ -4038,6 +4480,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "percent",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(103, field);
 
@@ -4049,6 +4492,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "percent",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(104, field);
 
@@ -4060,6 +4504,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "percent",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(105, field);
 
@@ -4071,9 +4516,11 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(111, field);
 
+    // Total time spend in the standing position
     let field = FieldInfo {
         name: "time_standing",
         field_type: FieldDataType::UInt32,
@@ -4082,9 +4529,11 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(112, field);
 
+    // Number of transitions to the standing state
     let field = FieldInfo {
         name: "stand_count",
         field_type: FieldDataType::UInt16,
@@ -4093,9 +4542,11 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(113, field);
 
+    // Average platform center offset Left
     let field = FieldInfo {
         name: "avg_left_pco",
         field_type: FieldDataType::SInt8,
@@ -4104,9 +4555,11 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "mm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(114, field);
 
+    // Average platform center offset Right
     let field = FieldInfo {
         name: "avg_right_pco",
         field_type: FieldDataType::SInt8,
@@ -4115,10 +4568,11 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "mm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(115, field);
 
-    // [N]
+    // Average left power phase angles. Indexes defined by power_phase_type.
     let field = FieldInfo {
         name: "avg_left_power_phase",
         field_type: FieldDataType::UInt8,
@@ -4127,10 +4581,11 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "degrees",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(116, field);
 
-    // [N]
+    // Average left power phase peak angles. Data value indexes defined by power_phase_type.
     let field = FieldInfo {
         name: "avg_left_power_phase_peak",
         field_type: FieldDataType::UInt8,
@@ -4139,10 +4594,11 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "degrees",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(117, field);
 
-    // [N]
+    // Average right power phase angles. Data value indexes defined by power_phase_type.
     let field = FieldInfo {
         name: "avg_right_power_phase",
         field_type: FieldDataType::UInt8,
@@ -4151,10 +4607,11 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "degrees",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(118, field);
 
-    // [N]
+    // Average right power phase peak angles data value indexes  defined by power_phase_type.
     let field = FieldInfo {
         name: "avg_right_power_phase_peak",
         field_type: FieldDataType::UInt8,
@@ -4163,10 +4620,11 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "degrees",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(119, field);
 
-    // [N]
+    // Average power by position. Data value indexes defined by rider_position_type.
     let field = FieldInfo {
         name: "avg_power_position",
         field_type: FieldDataType::UInt16,
@@ -4175,10 +4633,11 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "watts",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(120, field);
 
-    // [N]
+    // Maximum power by position. Data value indexes defined by rider_position_type.
     let field = FieldInfo {
         name: "max_power_position",
         field_type: FieldDataType::UInt16,
@@ -4187,10 +4646,11 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "watts",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(121, field);
 
-    // [N]
+    // Average cadence by position. Data value indexes defined by rider_position_type.
     let field = FieldInfo {
         name: "avg_cadence_position",
         field_type: FieldDataType::UInt8,
@@ -4199,10 +4659,11 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "rpm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(122, field);
 
-    // [N]
+    // Maximum cadence by position. Data value indexes defined by rider_position_type.
     let field = FieldInfo {
         name: "max_cadence_position",
         field_type: FieldDataType::UInt8,
@@ -4211,9 +4672,11 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "rpm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(123, field);
 
+    // total_distance / total_timer_time
     let field = FieldInfo {
         name: "enhanced_avg_speed",
         field_type: FieldDataType::UInt32,
@@ -4222,6 +4685,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "m/s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(124, field);
 
@@ -4233,6 +4697,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "m/s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(125, field);
 
@@ -4244,6 +4709,7 @@ fn session_message() -> MessageInfo {
         offset: 500.000000,
         units: "m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(126, field);
 
@@ -4255,6 +4721,7 @@ fn session_message() -> MessageInfo {
         offset: 500.000000,
         units: "m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(127, field);
 
@@ -4266,9 +4733,11 @@ fn session_message() -> MessageInfo {
         offset: 500.000000,
         units: "m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(128, field);
 
+    // lev average motor power during session
     let field = FieldInfo {
         name: "avg_lev_motor_power",
         field_type: FieldDataType::UInt16,
@@ -4277,9 +4746,11 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "watts",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(129, field);
 
+    // lev maximum motor power during session
     let field = FieldInfo {
         name: "max_lev_motor_power",
         field_type: FieldDataType::UInt16,
@@ -4288,9 +4759,11 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "watts",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(130, field);
 
+    // lev battery consumption during session
     let field = FieldInfo {
         name: "lev_battery_consumption",
         field_type: FieldDataType::UInt8,
@@ -4299,6 +4772,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "percent",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(131, field);
 
@@ -4310,6 +4784,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "percent",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(132, field);
 
@@ -4321,6 +4796,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "percent",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(133, field);
 
@@ -4332,6 +4808,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "mm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(134, field);
 
@@ -4343,6 +4820,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(137, field);
 
@@ -4354,9 +4832,11 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "m/s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(139, field);
 
+    // The grit score estimates how challenging a route could be for a cyclist in terms of time spent going over sharp turns or large grade slopes.
     let field = FieldInfo {
         name: "total_grit",
         field_type: FieldDataType::Float32,
@@ -4365,9 +4845,11 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "kGrit",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(181, field);
 
+    // The flow score estimates how long distance wise a cyclist deaccelerates over intervals where deacceleration is unnecessary such as smooth turns or small grade angle intervals.
     let field = FieldInfo {
         name: "total_flow",
         field_type: FieldDataType::Float32,
@@ -4376,6 +4858,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "Flow",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(182, field);
 
@@ -4387,9 +4870,11 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(183, field);
 
+    // The grit score estimates how challenging a route could be for a cyclist in terms of time spent going over sharp turns or large grade slopes.
     let field = FieldInfo {
         name: "avg_grit",
         field_type: FieldDataType::Float32,
@@ -4398,9 +4883,11 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "kGrit",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(186, field);
 
+    // The flow score estimates how long distance wise a cyclist deaccelerates over intervals where deacceleration is unnecessary such as smooth turns or small grade angle intervals.
     let field = FieldInfo {
         name: "avg_flow",
         field_type: FieldDataType::Float32,
@@ -4409,9 +4896,11 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "Flow",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(187, field);
 
+    // Sesson end time.
     let field = FieldInfo {
         name: "timestamp",
         field_type: FieldDataType::DateTime,
@@ -4420,9 +4909,11 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(253, field);
 
+    // Selected bit is set for the current session.
     let field = FieldInfo {
         name: "message_index",
         field_type: FieldDataType::MessageIndex,
@@ -4431,6 +4922,7 @@ fn session_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(254, field);
 
@@ -4451,6 +4943,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
@@ -4462,6 +4955,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
@@ -4473,6 +4967,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
@@ -4484,6 +4979,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "semicircles",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
@@ -4495,6 +4991,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "semicircles",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
@@ -4506,6 +5003,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "semicircles",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(5, field);
 
@@ -4517,9 +5015,11 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "semicircles",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(6, field);
 
+    // Time (includes pauses)
     let field = FieldInfo {
         name: "total_elapsed_time",
         field_type: FieldDataType::UInt32,
@@ -4528,9 +5028,11 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(7, field);
 
+    // Timer Time (excludes pauses)
     let field = FieldInfo {
         name: "total_timer_time",
         field_type: FieldDataType::UInt32,
@@ -4539,6 +5041,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(8, field);
 
@@ -4550,6 +5053,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(9, field);
 
@@ -4562,6 +5066,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "strides",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((25, Sport::Running.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -4572,6 +5077,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "strides",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((25, Sport::Walking.as_i64(), sub_fld));
     let field = FieldInfo {
@@ -4582,6 +5088,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "cycles",
         subfields: subfields,
+        components: Vec::new(),
     };
     fields.insert(10, field);
 
@@ -4593,9 +5100,11 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "kcal",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(11, field);
 
+    // If New Leaf
     let field = FieldInfo {
         name: "total_fat_calories",
         field_type: FieldDataType::UInt16,
@@ -4604,9 +5113,20 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "kcal",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(12, field);
 
+    let mut components = Vec::new();
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 110,
+        scale: 1000.000000,
+        offset: 0.000000,
+        units: "m/s",
+        bits: 16,
+        accumulate: false,
+    };
+    components.push(comp_fld);
     let field = FieldInfo {
         name: "avg_speed",
         field_type: FieldDataType::UInt16,
@@ -4615,9 +5135,20 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "m/s",
         subfields: Vec::new(),
+        components: components,
     };
     fields.insert(13, field);
 
+    let mut components = Vec::new();
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 111,
+        scale: 1000.000000,
+        offset: 0.000000,
+        units: "m/s",
+        bits: 16,
+        accumulate: false,
+    };
+    components.push(comp_fld);
     let field = FieldInfo {
         name: "max_speed",
         field_type: FieldDataType::UInt16,
@@ -4626,6 +5157,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "m/s",
         subfields: Vec::new(),
+        components: components,
     };
     fields.insert(14, field);
 
@@ -4637,6 +5169,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "bpm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(15, field);
 
@@ -4648,6 +5181,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "bpm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(16, field);
 
@@ -4660,8 +5194,10 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "strides/min",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((25, Sport::Running.as_i64(), sub_fld));
+    // total_cycles / total_timer_time if non_zero_avg_cadence otherwise total_cycles / total_elapsed_time
     let field = FieldInfo {
         name: "avg_cadence",
         field_type: FieldDataType::UInt8,
@@ -4670,6 +5206,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "rpm",
         subfields: subfields,
+        components: Vec::new(),
     };
     fields.insert(17, field);
 
@@ -4682,6 +5219,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "strides/min",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((25, Sport::Running.as_i64(), sub_fld));
     let field = FieldInfo {
@@ -4692,9 +5230,11 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "rpm",
         subfields: subfields,
+        components: Vec::new(),
     };
     fields.insert(18, field);
 
+    // total_power / total_timer_time if non_zero_avg_power otherwise total_power / total_elapsed_time
     let field = FieldInfo {
         name: "avg_power",
         field_type: FieldDataType::UInt16,
@@ -4703,6 +5243,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "watts",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(19, field);
 
@@ -4714,6 +5255,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "watts",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(20, field);
 
@@ -4725,6 +5267,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(21, field);
 
@@ -4736,6 +5279,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(22, field);
 
@@ -4747,6 +5291,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(23, field);
 
@@ -4758,6 +5303,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(24, field);
 
@@ -4769,6 +5315,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(25, field);
 
@@ -4780,9 +5327,11 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(26, field);
 
+    // # of lengths of swim pool
     let field = FieldInfo {
         name: "num_lengths",
         field_type: FieldDataType::UInt16,
@@ -4791,6 +5340,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "lengths",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(32, field);
 
@@ -4802,6 +5352,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "watts",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(33, field);
 
@@ -4813,6 +5364,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(34, field);
 
@@ -4824,6 +5376,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(35, field);
 
@@ -4835,6 +5388,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(37, field);
 
@@ -4846,6 +5400,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(38, field);
 
@@ -4857,9 +5412,11 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(39, field);
 
+    // # of active lengths of swim pool
     let field = FieldInfo {
         name: "num_active_lengths",
         field_type: FieldDataType::UInt16,
@@ -4868,6 +5425,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "lengths",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(40, field);
 
@@ -4879,9 +5437,20 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "J",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(41, field);
 
+    let mut components = Vec::new();
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 112,
+        scale: 5.000000,
+        offset: 500.000000,
+        units: "m",
+        bits: 16,
+        accumulate: false,
+    };
+    components.push(comp_fld);
     let field = FieldInfo {
         name: "avg_altitude",
         field_type: FieldDataType::UInt16,
@@ -4890,9 +5459,20 @@ fn lap_message() -> MessageInfo {
         offset: 500.000000,
         units: "m",
         subfields: Vec::new(),
+        components: components,
     };
     fields.insert(42, field);
 
+    let mut components = Vec::new();
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 114,
+        scale: 5.000000,
+        offset: 500.000000,
+        units: "m",
+        bits: 16,
+        accumulate: false,
+    };
+    components.push(comp_fld);
     let field = FieldInfo {
         name: "max_altitude",
         field_type: FieldDataType::UInt16,
@@ -4901,6 +5481,7 @@ fn lap_message() -> MessageInfo {
         offset: 500.000000,
         units: "m",
         subfields: Vec::new(),
+        components: components,
     };
     fields.insert(43, field);
 
@@ -4912,6 +5493,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(44, field);
 
@@ -4923,6 +5505,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "%",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(45, field);
 
@@ -4934,6 +5517,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "%",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(46, field);
 
@@ -4945,6 +5529,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "%",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(47, field);
 
@@ -4956,6 +5541,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "%",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(48, field);
 
@@ -4967,6 +5553,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "%",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(49, field);
 
@@ -4978,6 +5565,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "C",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(50, field);
 
@@ -4989,6 +5577,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "C",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(51, field);
 
@@ -5000,6 +5589,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(52, field);
 
@@ -5011,6 +5601,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "m/s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(53, field);
 
@@ -5022,6 +5613,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "m/s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(54, field);
 
@@ -5033,6 +5625,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "m/s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(55, field);
 
@@ -5044,10 +5637,10 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "m/s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(56, field);
 
-    // [N]
     let field = FieldInfo {
         name: "time_in_hr_zone",
         field_type: FieldDataType::UInt32,
@@ -5056,10 +5649,10 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(57, field);
 
-    // [N]
     let field = FieldInfo {
         name: "time_in_speed_zone",
         field_type: FieldDataType::UInt32,
@@ -5068,10 +5661,10 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(58, field);
 
-    // [N]
     let field = FieldInfo {
         name: "time_in_cadence_zone",
         field_type: FieldDataType::UInt32,
@@ -5080,10 +5673,10 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(59, field);
 
-    // [N]
     let field = FieldInfo {
         name: "time_in_power_zone",
         field_type: FieldDataType::UInt32,
@@ -5092,6 +5685,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(60, field);
 
@@ -5103,9 +5697,20 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(61, field);
 
+    let mut components = Vec::new();
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 113,
+        scale: 5.000000,
+        offset: 500.000000,
+        units: "m",
+        bits: 16,
+        accumulate: false,
+    };
+    components.push(comp_fld);
     let field = FieldInfo {
         name: "min_altitude",
         field_type: FieldDataType::UInt16,
@@ -5114,6 +5719,7 @@ fn lap_message() -> MessageInfo {
         offset: 500.000000,
         units: "m",
         subfields: Vec::new(),
+        components: components,
     };
     fields.insert(62, field);
 
@@ -5125,6 +5731,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "bpm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(63, field);
 
@@ -5136,6 +5743,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(71, field);
 
@@ -5147,10 +5755,11 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(74, field);
 
-    // [N]
+    // stroke_type enum used as the index
     let field = FieldInfo {
         name: "stroke_count",
         field_type: FieldDataType::UInt16,
@@ -5159,10 +5768,11 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "counts",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(75, field);
 
-    // [N]
+    // zone number used as the index
     let field = FieldInfo {
         name: "zone_count",
         field_type: FieldDataType::UInt16,
@@ -5171,6 +5781,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "counts",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(76, field);
 
@@ -5182,6 +5793,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "mm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(77, field);
 
@@ -5193,6 +5805,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "percent",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(78, field);
 
@@ -5204,9 +5817,11 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "ms",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(79, field);
 
+    // fractional part of the avg_cadence
     let field = FieldInfo {
         name: "avg_fractional_cadence",
         field_type: FieldDataType::UInt8,
@@ -5215,9 +5830,11 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "rpm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(80, field);
 
+    // fractional part of the max_cadence
     let field = FieldInfo {
         name: "max_fractional_cadence",
         field_type: FieldDataType::UInt8,
@@ -5226,9 +5843,11 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "rpm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(81, field);
 
+    // fractional part of the total_cycles
     let field = FieldInfo {
         name: "total_fractional_cycles",
         field_type: FieldDataType::UInt8,
@@ -5237,6 +5856,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "cycles",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(82, field);
 
@@ -5248,10 +5868,11 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(83, field);
 
-    // [N]
+    // Avg saturated and unsaturated hemoglobin
     let field = FieldInfo {
         name: "avg_total_hemoglobin_conc",
         field_type: FieldDataType::UInt16,
@@ -5260,10 +5881,11 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "g/dL",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(84, field);
 
-    // [N]
+    // Min saturated and unsaturated hemoglobin
     let field = FieldInfo {
         name: "min_total_hemoglobin_conc",
         field_type: FieldDataType::UInt16,
@@ -5272,10 +5894,11 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "g/dL",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(85, field);
 
-    // [N]
+    // Max saturated and unsaturated hemoglobin
     let field = FieldInfo {
         name: "max_total_hemoglobin_conc",
         field_type: FieldDataType::UInt16,
@@ -5284,10 +5907,11 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "g/dL",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(86, field);
 
-    // [N]
+    // Avg percentage of hemoglobin saturated with oxygen
     let field = FieldInfo {
         name: "avg_saturated_hemoglobin_percent",
         field_type: FieldDataType::UInt16,
@@ -5296,10 +5920,11 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "%",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(87, field);
 
-    // [N]
+    // Min percentage of hemoglobin saturated with oxygen
     let field = FieldInfo {
         name: "min_saturated_hemoglobin_percent",
         field_type: FieldDataType::UInt16,
@@ -5308,10 +5933,11 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "%",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(88, field);
 
-    // [N]
+    // Max percentage of hemoglobin saturated with oxygen
     let field = FieldInfo {
         name: "max_saturated_hemoglobin_percent",
         field_type: FieldDataType::UInt16,
@@ -5320,6 +5946,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "%",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(89, field);
 
@@ -5331,6 +5958,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "percent",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(91, field);
 
@@ -5342,6 +5970,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "percent",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(92, field);
 
@@ -5353,6 +5982,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "percent",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(93, field);
 
@@ -5364,6 +5994,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "percent",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(94, field);
 
@@ -5375,9 +6006,11 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "percent",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(95, field);
 
+    // Total time spent in the standing position
     let field = FieldInfo {
         name: "time_standing",
         field_type: FieldDataType::UInt32,
@@ -5386,9 +6019,11 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(98, field);
 
+    // Number of transitions to the standing state
     let field = FieldInfo {
         name: "stand_count",
         field_type: FieldDataType::UInt16,
@@ -5397,9 +6032,11 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(99, field);
 
+    // Average left platform center offset
     let field = FieldInfo {
         name: "avg_left_pco",
         field_type: FieldDataType::SInt8,
@@ -5408,9 +6045,11 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "mm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(100, field);
 
+    // Average right platform center offset
     let field = FieldInfo {
         name: "avg_right_pco",
         field_type: FieldDataType::SInt8,
@@ -5419,10 +6058,11 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "mm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(101, field);
 
-    // [N]
+    // Average left power phase angles. Data value indexes defined by power_phase_type.
     let field = FieldInfo {
         name: "avg_left_power_phase",
         field_type: FieldDataType::UInt8,
@@ -5431,10 +6071,11 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "degrees",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(102, field);
 
-    // [N]
+    // Average left power phase peak angles. Data value indexes  defined by power_phase_type.
     let field = FieldInfo {
         name: "avg_left_power_phase_peak",
         field_type: FieldDataType::UInt8,
@@ -5443,10 +6084,11 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "degrees",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(103, field);
 
-    // [N]
+    // Average right power phase angles. Data value indexes defined by power_phase_type.
     let field = FieldInfo {
         name: "avg_right_power_phase",
         field_type: FieldDataType::UInt8,
@@ -5455,10 +6097,11 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "degrees",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(104, field);
 
-    // [N]
+    // Average right power phase peak angles. Data value indexes  defined by power_phase_type.
     let field = FieldInfo {
         name: "avg_right_power_phase_peak",
         field_type: FieldDataType::UInt8,
@@ -5467,10 +6110,11 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "degrees",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(105, field);
 
-    // [N]
+    // Average power by position. Data value indexes defined by rider_position_type.
     let field = FieldInfo {
         name: "avg_power_position",
         field_type: FieldDataType::UInt16,
@@ -5479,10 +6123,11 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "watts",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(106, field);
 
-    // [N]
+    // Maximum power by position. Data value indexes defined by rider_position_type.
     let field = FieldInfo {
         name: "max_power_position",
         field_type: FieldDataType::UInt16,
@@ -5491,10 +6136,11 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "watts",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(107, field);
 
-    // [N]
+    // Average cadence by position. Data value indexes defined by rider_position_type.
     let field = FieldInfo {
         name: "avg_cadence_position",
         field_type: FieldDataType::UInt8,
@@ -5503,10 +6149,11 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "rpm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(108, field);
 
-    // [N]
+    // Maximum cadence by position. Data value indexes defined by rider_position_type.
     let field = FieldInfo {
         name: "max_cadence_position",
         field_type: FieldDataType::UInt8,
@@ -5515,6 +6162,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "rpm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(109, field);
 
@@ -5526,6 +6174,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "m/s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(110, field);
 
@@ -5537,6 +6186,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "m/s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(111, field);
 
@@ -5548,6 +6198,7 @@ fn lap_message() -> MessageInfo {
         offset: 500.000000,
         units: "m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(112, field);
 
@@ -5559,6 +6210,7 @@ fn lap_message() -> MessageInfo {
         offset: 500.000000,
         units: "m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(113, field);
 
@@ -5570,9 +6222,11 @@ fn lap_message() -> MessageInfo {
         offset: 500.000000,
         units: "m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(114, field);
 
+    // lev average motor power during lap
     let field = FieldInfo {
         name: "avg_lev_motor_power",
         field_type: FieldDataType::UInt16,
@@ -5581,9 +6235,11 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "watts",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(115, field);
 
+    // lev maximum motor power during lap
     let field = FieldInfo {
         name: "max_lev_motor_power",
         field_type: FieldDataType::UInt16,
@@ -5592,9 +6248,11 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "watts",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(116, field);
 
+    // lev battery consumption during lap
     let field = FieldInfo {
         name: "lev_battery_consumption",
         field_type: FieldDataType::UInt8,
@@ -5603,6 +6261,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "percent",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(117, field);
 
@@ -5614,6 +6273,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "percent",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(118, field);
 
@@ -5625,6 +6285,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "percent",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(119, field);
 
@@ -5636,6 +6297,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "mm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(120, field);
 
@@ -5647,9 +6309,11 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "m/s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(121, field);
 
+    // The grit score estimates how challenging a route could be for a cyclist in terms of time spent going over sharp turns or large grade slopes.
     let field = FieldInfo {
         name: "total_grit",
         field_type: FieldDataType::Float32,
@@ -5658,9 +6322,11 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "kGrit",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(149, field);
 
+    // The flow score estimates how long distance wise a cyclist deaccelerates over intervals where deacceleration is unnecessary such as smooth turns or small grade angle intervals.
     let field = FieldInfo {
         name: "total_flow",
         field_type: FieldDataType::Float32,
@@ -5669,6 +6335,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "Flow",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(150, field);
 
@@ -5680,9 +6347,11 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(151, field);
 
+    // The grit score estimates how challenging a route could be for a cyclist in terms of time spent going over sharp turns or large grade slopes.
     let field = FieldInfo {
         name: "avg_grit",
         field_type: FieldDataType::Float32,
@@ -5691,9 +6360,11 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "kGrit",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(153, field);
 
+    // The flow score estimates how long distance wise a cyclist deaccelerates over intervals where deacceleration is unnecessary such as smooth turns or small grade angle intervals.
     let field = FieldInfo {
         name: "avg_flow",
         field_type: FieldDataType::Float32,
@@ -5702,9 +6373,11 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "Flow",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(154, field);
 
+    // Lap end time.
     let field = FieldInfo {
         name: "timestamp",
         field_type: FieldDataType::DateTime,
@@ -5713,6 +6386,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(253, field);
 
@@ -5724,6 +6398,7 @@ fn lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(254, field);
 
@@ -5744,6 +6419,7 @@ fn length_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
@@ -5755,6 +6431,7 @@ fn length_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
@@ -5766,6 +6443,7 @@ fn length_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
@@ -5777,6 +6455,7 @@ fn length_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
@@ -5788,6 +6467,7 @@ fn length_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
@@ -5799,6 +6479,7 @@ fn length_message() -> MessageInfo {
         offset: 0.000000,
         units: "strokes",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(5, field);
 
@@ -5810,6 +6491,7 @@ fn length_message() -> MessageInfo {
         offset: 0.000000,
         units: "m/s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(6, field);
 
@@ -5821,6 +6503,7 @@ fn length_message() -> MessageInfo {
         offset: 0.000000,
         units: "swim_stroke",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(7, field);
 
@@ -5832,6 +6515,7 @@ fn length_message() -> MessageInfo {
         offset: 0.000000,
         units: "strokes/min",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(9, field);
 
@@ -5843,6 +6527,7 @@ fn length_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(10, field);
 
@@ -5854,6 +6539,7 @@ fn length_message() -> MessageInfo {
         offset: 0.000000,
         units: "kcal",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(11, field);
 
@@ -5865,6 +6551,7 @@ fn length_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(12, field);
 
@@ -5876,6 +6563,7 @@ fn length_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(18, field);
 
@@ -5887,10 +6575,11 @@ fn length_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(19, field);
 
-    // [N]
+    // stroke_type enum used as the index
     let field = FieldInfo {
         name: "stroke_count",
         field_type: FieldDataType::UInt16,
@@ -5899,10 +6588,11 @@ fn length_message() -> MessageInfo {
         offset: 0.000000,
         units: "counts",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(20, field);
 
-    // [N]
+    // zone number used as the index
     let field = FieldInfo {
         name: "zone_count",
         field_type: FieldDataType::UInt16,
@@ -5911,6 +6601,7 @@ fn length_message() -> MessageInfo {
         offset: 0.000000,
         units: "counts",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(21, field);
 
@@ -5922,6 +6613,7 @@ fn length_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(253, field);
 
@@ -5933,6 +6625,7 @@ fn length_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(254, field);
 
@@ -5953,6 +6646,7 @@ fn record_message() -> MessageInfo {
         offset: 0.000000,
         units: "semicircles",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
@@ -5964,9 +6658,20 @@ fn record_message() -> MessageInfo {
         offset: 0.000000,
         units: "semicircles",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
+    let mut components = Vec::new();
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 78,
+        scale: 5.000000,
+        offset: 500.000000,
+        units: "m",
+        bits: 16,
+        accumulate: false,
+    };
+    components.push(comp_fld);
     let field = FieldInfo {
         name: "altitude",
         field_type: FieldDataType::UInt16,
@@ -5975,6 +6680,7 @@ fn record_message() -> MessageInfo {
         offset: 500.000000,
         units: "m",
         subfields: Vec::new(),
+        components: components,
     };
     fields.insert(2, field);
 
@@ -5986,6 +6692,7 @@ fn record_message() -> MessageInfo {
         offset: 0.000000,
         units: "bpm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
@@ -5997,6 +6704,7 @@ fn record_message() -> MessageInfo {
         offset: 0.000000,
         units: "rpm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
@@ -6008,9 +6716,20 @@ fn record_message() -> MessageInfo {
         offset: 0.000000,
         units: "m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(5, field);
 
+    let mut components = Vec::new();
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 73,
+        scale: 1000.000000,
+        offset: 0.000000,
+        units: "m/s",
+        bits: 16,
+        accumulate: false,
+    };
+    components.push(comp_fld);
     let field = FieldInfo {
         name: "speed",
         field_type: FieldDataType::UInt16,
@@ -6019,6 +6738,7 @@ fn record_message() -> MessageInfo {
         offset: 0.000000,
         units: "m/s",
         subfields: Vec::new(),
+        components: components,
     };
     fields.insert(6, field);
 
@@ -6030,10 +6750,29 @@ fn record_message() -> MessageInfo {
         offset: 0.000000,
         units: "watts",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(7, field);
 
-    // [3]
+    let mut components = Vec::new();
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 6,
+        scale: 100.000000,
+        offset: 0.000000,
+        units: "m/s",
+        bits: 12,
+        accumulate: false,
+    };
+    components.push(comp_fld);
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 5,
+        scale: 16.000000,
+        offset: 0.000000,
+        units: "m",
+        bits: 12,
+        accumulate: true,
+    };
+    components.push(comp_fld);
     let field = FieldInfo {
         name: "compressed_speed_distance",
         field_type: FieldDataType::Byte,
@@ -6043,6 +6782,7 @@ fn record_message() -> MessageInfo {
         units: "m/s,
 m",
         subfields: Vec::new(),
+        components: components,
     };
     fields.insert(8, field);
 
@@ -6054,9 +6794,11 @@ m",
         offset: 0.000000,
         units: "%",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(9, field);
 
+    // Relative. 0 is none  254 is Max.
     let field = FieldInfo {
         name: "resistance",
         field_type: FieldDataType::UInt8,
@@ -6065,6 +6807,7 @@ m",
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(10, field);
 
@@ -6076,6 +6819,7 @@ m",
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(11, field);
 
@@ -6087,6 +6831,7 @@ m",
         offset: 0.000000,
         units: "m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(12, field);
 
@@ -6098,10 +6843,11 @@ m",
         offset: 0.000000,
         units: "C",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(13, field);
 
-    // [N]
+    // Speed at 1s intervals.  Timestamp field indicates time of last array element.
     let field = FieldInfo {
         name: "speed_1s",
         field_type: FieldDataType::UInt8,
@@ -6110,9 +6856,20 @@ m",
         offset: 0.000000,
         units: "m/s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(17, field);
 
+    let mut components = Vec::new();
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 19,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "cycles",
+        bits: 8,
+        accumulate: true,
+    };
+    components.push(comp_fld);
     let field = FieldInfo {
         name: "cycles",
         field_type: FieldDataType::UInt8,
@@ -6121,6 +6878,7 @@ m",
         offset: 0.000000,
         units: "cycles",
         subfields: Vec::new(),
+        components: components,
     };
     fields.insert(18, field);
 
@@ -6132,9 +6890,20 @@ m",
         offset: 0.000000,
         units: "cycles",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(19, field);
 
+    let mut components = Vec::new();
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 29,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "watts",
+        bits: 16,
+        accumulate: true,
+    };
+    components.push(comp_fld);
     let field = FieldInfo {
         name: "compressed_accumulated_power",
         field_type: FieldDataType::UInt16,
@@ -6143,6 +6912,7 @@ m",
         offset: 0.000000,
         units: "watts",
         subfields: Vec::new(),
+        components: components,
     };
     fields.insert(28, field);
 
@@ -6154,6 +6924,7 @@ m",
         offset: 0.000000,
         units: "watts",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(29, field);
 
@@ -6165,6 +6936,7 @@ m",
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(30, field);
 
@@ -6176,6 +6948,7 @@ m",
         offset: 0.000000,
         units: "m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(31, field);
 
@@ -6187,6 +6960,7 @@ m",
         offset: 0.000000,
         units: "m/s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(32, field);
 
@@ -6198,6 +6972,7 @@ m",
         offset: 0.000000,
         units: "kcal",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(33, field);
 
@@ -6209,6 +6984,7 @@ m",
         offset: 0.000000,
         units: "mm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(39, field);
 
@@ -6220,6 +6996,7 @@ m",
         offset: 0.000000,
         units: "percent",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(40, field);
 
@@ -6231,6 +7008,7 @@ m",
         offset: 0.000000,
         units: "ms",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(41, field);
 
@@ -6242,6 +7020,7 @@ m",
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(42, field);
 
@@ -6253,6 +7032,7 @@ m",
         offset: 0.000000,
         units: "percent",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(43, field);
 
@@ -6264,6 +7044,7 @@ m",
         offset: 0.000000,
         units: "percent",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(44, field);
 
@@ -6275,6 +7056,7 @@ m",
         offset: 0.000000,
         units: "percent",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(45, field);
 
@@ -6286,6 +7068,7 @@ m",
         offset: 0.000000,
         units: "percent",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(46, field);
 
@@ -6297,6 +7080,7 @@ m",
         offset: 0.000000,
         units: "percent",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(47, field);
 
@@ -6308,6 +7092,7 @@ m",
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(48, field);
 
@@ -6319,6 +7104,7 @@ m",
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(49, field);
 
@@ -6330,6 +7116,7 @@ m",
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(50, field);
 
@@ -6341,9 +7128,11 @@ m",
         offset: 0.000000,
         units: "m/s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(51, field);
 
+    // Log cadence and fractional cadence for backwards compatability
     let field = FieldInfo {
         name: "cadence256",
         field_type: FieldDataType::UInt16,
@@ -6352,6 +7141,7 @@ m",
         offset: 0.000000,
         units: "rpm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(52, field);
 
@@ -6363,9 +7153,11 @@ m",
         offset: 0.000000,
         units: "rpm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(53, field);
 
+    // Total saturated and unsaturated hemoglobin
     let field = FieldInfo {
         name: "total_hemoglobin_conc",
         field_type: FieldDataType::UInt16,
@@ -6374,9 +7166,11 @@ m",
         offset: 0.000000,
         units: "g/dL",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(54, field);
 
+    // Min saturated and unsaturated hemoglobin
     let field = FieldInfo {
         name: "total_hemoglobin_conc_min",
         field_type: FieldDataType::UInt16,
@@ -6385,9 +7179,11 @@ m",
         offset: 0.000000,
         units: "g/dL",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(55, field);
 
+    // Max saturated and unsaturated hemoglobin
     let field = FieldInfo {
         name: "total_hemoglobin_conc_max",
         field_type: FieldDataType::UInt16,
@@ -6396,9 +7192,11 @@ m",
         offset: 0.000000,
         units: "g/dL",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(56, field);
 
+    // Percentage of hemoglobin saturated with oxygen
     let field = FieldInfo {
         name: "saturated_hemoglobin_percent",
         field_type: FieldDataType::UInt16,
@@ -6407,9 +7205,11 @@ m",
         offset: 0.000000,
         units: "%",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(57, field);
 
+    // Min percentage of hemoglobin saturated with oxygen
     let field = FieldInfo {
         name: "saturated_hemoglobin_percent_min",
         field_type: FieldDataType::UInt16,
@@ -6418,9 +7218,11 @@ m",
         offset: 0.000000,
         units: "%",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(58, field);
 
+    // Max percentage of hemoglobin saturated with oxygen
     let field = FieldInfo {
         name: "saturated_hemoglobin_percent_max",
         field_type: FieldDataType::UInt16,
@@ -6429,6 +7231,7 @@ m",
         offset: 0.000000,
         units: "%",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(59, field);
 
@@ -6440,9 +7243,11 @@ m",
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(62, field);
 
+    // Left platform center offset
     let field = FieldInfo {
         name: "left_pco",
         field_type: FieldDataType::SInt8,
@@ -6451,9 +7256,11 @@ m",
         offset: 0.000000,
         units: "mm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(67, field);
 
+    // Right platform center offset
     let field = FieldInfo {
         name: "right_pco",
         field_type: FieldDataType::SInt8,
@@ -6462,10 +7269,11 @@ m",
         offset: 0.000000,
         units: "mm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(68, field);
 
-    // [N]
+    // Left power phase angles. Data value indexes defined by power_phase_type.
     let field = FieldInfo {
         name: "left_power_phase",
         field_type: FieldDataType::UInt8,
@@ -6474,10 +7282,11 @@ m",
         offset: 0.000000,
         units: "degrees",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(69, field);
 
-    // [N]
+    // Left power phase peak angles. Data value indexes defined by power_phase_type.
     let field = FieldInfo {
         name: "left_power_phase_peak",
         field_type: FieldDataType::UInt8,
@@ -6486,10 +7295,11 @@ m",
         offset: 0.000000,
         units: "degrees",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(70, field);
 
-    // [N]
+    // Right power phase angles. Data value indexes defined by power_phase_type.
     let field = FieldInfo {
         name: "right_power_phase",
         field_type: FieldDataType::UInt8,
@@ -6498,10 +7308,11 @@ m",
         offset: 0.000000,
         units: "degrees",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(71, field);
 
-    // [N]
+    // Right power phase peak angles. Data value indexes defined by power_phase_type.
     let field = FieldInfo {
         name: "right_power_phase_peak",
         field_type: FieldDataType::UInt8,
@@ -6510,6 +7321,7 @@ m",
         offset: 0.000000,
         units: "degrees",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(72, field);
 
@@ -6521,6 +7333,7 @@ m",
         offset: 0.000000,
         units: "m/s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(73, field);
 
@@ -6532,9 +7345,11 @@ m",
         offset: 500.000000,
         units: "m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(78, field);
 
+    // lev battery state of charge
     let field = FieldInfo {
         name: "battery_soc",
         field_type: FieldDataType::UInt8,
@@ -6543,9 +7358,11 @@ m",
         offset: 0.000000,
         units: "percent",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(81, field);
 
+    // lev motor power
     let field = FieldInfo {
         name: "motor_power",
         field_type: FieldDataType::UInt16,
@@ -6554,6 +7371,7 @@ m",
         offset: 0.000000,
         units: "watts",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(82, field);
 
@@ -6565,6 +7383,7 @@ m",
         offset: 0.000000,
         units: "percent",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(83, field);
 
@@ -6576,6 +7395,7 @@ m",
         offset: 0.000000,
         units: "percent",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(84, field);
 
@@ -6587,9 +7407,11 @@ m",
         offset: 0.000000,
         units: "mm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(85, field);
 
+    // Includes atmospheric pressure
     let field = FieldInfo {
         name: "absolute_pressure",
         field_type: FieldDataType::UInt32,
@@ -6598,9 +7420,11 @@ m",
         offset: 0.000000,
         units: "Pa",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(91, field);
 
+    // 0 if above water
     let field = FieldInfo {
         name: "depth",
         field_type: FieldDataType::UInt32,
@@ -6609,9 +7433,11 @@ m",
         offset: 0.000000,
         units: "m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(92, field);
 
+    // 0 if above water
     let field = FieldInfo {
         name: "next_stop_depth",
         field_type: FieldDataType::UInt32,
@@ -6620,6 +7446,7 @@ m",
         offset: 0.000000,
         units: "m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(93, field);
 
@@ -6631,6 +7458,7 @@ m",
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(94, field);
 
@@ -6642,6 +7470,7 @@ m",
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(95, field);
 
@@ -6653,6 +7482,7 @@ m",
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(96, field);
 
@@ -6664,6 +7494,7 @@ m",
         offset: 0.000000,
         units: "percent",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(97, field);
 
@@ -6675,9 +7506,11 @@ m",
         offset: 0.000000,
         units: "percent",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(98, field);
 
+    // The grit score estimates how challenging a route could be for a cyclist in terms of time spent going over sharp turns or large grade slopes.
     let field = FieldInfo {
         name: "grit",
         field_type: FieldDataType::Float32,
@@ -6686,9 +7519,11 @@ m",
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(114, field);
 
+    // The flow score estimates how long distance wise a cyclist deaccelerates over intervals where deacceleration is unnecessary such as smooth turns or small grade angle intervals.
     let field = FieldInfo {
         name: "flow",
         field_type: FieldDataType::Float32,
@@ -6697,6 +7532,7 @@ m",
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(115, field);
 
@@ -6708,6 +7544,7 @@ m",
         offset: 0.000000,
         units: "km",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(117, field);
 
@@ -6719,6 +7556,7 @@ m",
         offset: 0.000000,
         units: "percent",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(118, field);
 
@@ -6730,6 +7568,7 @@ m",
         offset: 0.000000,
         units: "depends on sensor",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(119, field);
 
@@ -6741,6 +7580,7 @@ m",
         offset: 0.000000,
         units: "percent",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(120, field);
 
@@ -6752,6 +7592,7 @@ m",
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(253, field);
 
@@ -6772,6 +7613,7 @@ fn event_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
@@ -6783,9 +7625,20 @@ fn event_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
+    let mut components = Vec::new();
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 3,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        bits: 16,
+        accumulate: false,
+    };
+    components.push(comp_fld);
     let field = FieldInfo {
         name: "data16",
         field_type: FieldDataType::UInt16,
@@ -6794,6 +7647,7 @@ fn event_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: components,
     };
     fields.insert(2, field);
 
@@ -6806,6 +7660,7 @@ fn event_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((0, Event::Timer.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -6816,6 +7671,7 @@ fn event_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((0, Event::CoursePoint.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -6826,6 +7682,7 @@ fn event_message() -> MessageInfo {
         offset: 0.000000,
         units: "V",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((0, Event::Battery.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -6836,6 +7693,7 @@ fn event_message() -> MessageInfo {
         offset: 0.000000,
         units: "m/s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((0, Event::VirtualPartnerPace.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -6846,6 +7704,7 @@ fn event_message() -> MessageInfo {
         offset: 0.000000,
         units: "bpm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((0, Event::HrHighAlert.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -6856,6 +7715,7 @@ fn event_message() -> MessageInfo {
         offset: 0.000000,
         units: "bpm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((0, Event::HrLowAlert.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -6866,6 +7726,7 @@ fn event_message() -> MessageInfo {
         offset: 0.000000,
         units: "m/s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((0, Event::SpeedHighAlert.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -6876,6 +7737,7 @@ fn event_message() -> MessageInfo {
         offset: 0.000000,
         units: "m/s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((0, Event::SpeedLowAlert.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -6886,6 +7748,7 @@ fn event_message() -> MessageInfo {
         offset: 0.000000,
         units: "rpm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((0, Event::CadHighAlert.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -6896,6 +7759,7 @@ fn event_message() -> MessageInfo {
         offset: 0.000000,
         units: "rpm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((0, Event::CadLowAlert.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -6906,6 +7770,7 @@ fn event_message() -> MessageInfo {
         offset: 0.000000,
         units: "watts",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((0, Event::PowerHighAlert.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -6916,6 +7781,7 @@ fn event_message() -> MessageInfo {
         offset: 0.000000,
         units: "watts",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((0, Event::PowerLowAlert.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -6926,6 +7792,7 @@ fn event_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((0, Event::TimeDurationAlert.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -6936,6 +7803,7 @@ fn event_message() -> MessageInfo {
         offset: 0.000000,
         units: "m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((0, Event::DistanceDurationAlert.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -6946,6 +7814,7 @@ fn event_message() -> MessageInfo {
         offset: 0.000000,
         units: "calories",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((0, Event::CalorieDurationAlert.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -6956,8 +7825,28 @@ fn event_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((0, Event::FitnessEquipment.as_i64(), sub_fld));
+    let mut components = Vec::new();
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 7,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        bits: 16,
+        accumulate: false,
+    };
+    components.push(comp_fld);
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 8,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        bits: 16,
+        accumulate: false,
+    };
+    components.push(comp_fld);
     let sub_fld = FieldInfo {
         name: "sport_point",
         field_type: FieldDataType::UInt32,
@@ -6966,8 +7855,46 @@ fn event_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: components,
     };
     subfields.push((0, Event::SportPoint.as_i64(), sub_fld));
+    let mut components = Vec::new();
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 11,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        bits: 8,
+        accumulate: false,
+    };
+    components.push(comp_fld);
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 12,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        bits: 8,
+        accumulate: false,
+    };
+    components.push(comp_fld);
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 9,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        bits: 8,
+        accumulate: false,
+    };
+    components.push(comp_fld);
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 10,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        bits: 8,
+        accumulate: false,
+    };
+    components.push(comp_fld);
     let sub_fld = FieldInfo {
         name: "gear_change_data",
         field_type: FieldDataType::UInt32,
@@ -6976,8 +7903,46 @@ fn event_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: components,
     };
     subfields.push((0, Event::FrontGearChange.as_i64(), sub_fld));
+    let mut components = Vec::new();
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 11,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        bits: 8,
+        accumulate: false,
+    };
+    components.push(comp_fld);
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 12,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        bits: 8,
+        accumulate: false,
+    };
+    components.push(comp_fld);
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 9,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        bits: 8,
+        accumulate: false,
+    };
+    components.push(comp_fld);
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 10,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        bits: 8,
+        accumulate: false,
+    };
+    components.push(comp_fld);
     let sub_fld = FieldInfo {
         name: "gear_change_data",
         field_type: FieldDataType::UInt32,
@@ -6986,8 +7951,10 @@ fn event_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: components,
     };
     subfields.push((0, Event::RearGearChange.as_i64(), sub_fld));
+    // Indicates the rider position value.
     let sub_fld = FieldInfo {
         name: "rider_position",
         field_type: FieldDataType::RiderPositionType,
@@ -6996,6 +7963,7 @@ fn event_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((0, Event::RiderPositionChange.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -7006,6 +7974,7 @@ fn event_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((0, Event::CommTimeout.as_i64(), sub_fld));
     let field = FieldInfo {
@@ -7016,6 +7985,7 @@ fn event_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: subfields,
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
@@ -7027,9 +7997,11 @@ fn event_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
+    // Do not populate directly.  Autogenerated by decoder for sport_point subfield components
     let field = FieldInfo {
         name: "score",
         field_type: FieldDataType::UInt16,
@@ -7038,9 +8010,11 @@ fn event_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(7, field);
 
+    // Do not populate directly.  Autogenerated by decoder for sport_point subfield components
     let field = FieldInfo {
         name: "opponent_score",
         field_type: FieldDataType::UInt16,
@@ -7049,9 +8023,11 @@ fn event_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(8, field);
 
+    // Do not populate directly.  Autogenerated by decoder for gear_change subfield components.  Front gear number. 1 is innermost.
     let field = FieldInfo {
         name: "front_gear_num",
         field_type: FieldDataType::UInt8z,
@@ -7060,9 +8036,11 @@ fn event_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(9, field);
 
+    // Do not populate directly.  Autogenerated by decoder for gear_change subfield components.  Number of front teeth.
     let field = FieldInfo {
         name: "front_gear",
         field_type: FieldDataType::UInt8z,
@@ -7071,9 +8049,11 @@ fn event_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(10, field);
 
+    // Do not populate directly.  Autogenerated by decoder for gear_change subfield components.  Rear gear number. 1 is innermost.
     let field = FieldInfo {
         name: "rear_gear_num",
         field_type: FieldDataType::UInt8z,
@@ -7082,9 +8062,11 @@ fn event_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(11, field);
 
+    // Do not populate directly.  Autogenerated by decoder for gear_change subfield components.  Number of rear teeth.
     let field = FieldInfo {
         name: "rear_gear",
         field_type: FieldDataType::UInt8z,
@@ -7093,6 +8075,7 @@ fn event_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(12, field);
 
@@ -7104,6 +8087,7 @@ fn event_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(13, field);
 
@@ -7115,6 +8099,7 @@ fn event_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(253, field);
 
@@ -7135,6 +8120,7 @@ fn device_info_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
@@ -7147,6 +8133,7 @@ fn device_info_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((25, SourceType::Antplus.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -7157,6 +8144,7 @@ fn device_info_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((25, SourceType::Ant.as_i64(), sub_fld));
     let field = FieldInfo {
@@ -7167,6 +8155,7 @@ fn device_info_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: subfields,
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
@@ -7178,6 +8167,7 @@ fn device_info_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
@@ -7189,6 +8179,7 @@ fn device_info_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
@@ -7201,6 +8192,7 @@ fn device_info_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((2, Manufacturer::FaveroElectronics.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -7211,6 +8203,7 @@ fn device_info_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((2, Manufacturer::Garmin.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -7221,6 +8214,7 @@ fn device_info_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((2, Manufacturer::Dynastream.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -7231,6 +8225,7 @@ fn device_info_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((2, Manufacturer::DynastreamOem.as_i64(), sub_fld));
     let field = FieldInfo {
@@ -7241,6 +8236,7 @@ fn device_info_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: subfields,
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
@@ -7252,6 +8248,7 @@ fn device_info_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(5, field);
 
@@ -7263,9 +8260,11 @@ fn device_info_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(6, field);
 
+    // Reset by new battery or charge.
     let field = FieldInfo {
         name: "cum_operating_time",
         field_type: FieldDataType::UInt32,
@@ -7274,6 +8273,7 @@ fn device_info_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(7, field);
 
@@ -7285,6 +8285,7 @@ fn device_info_message() -> MessageInfo {
         offset: 0.000000,
         units: "V",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(10, field);
 
@@ -7296,9 +8297,11 @@ fn device_info_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(11, field);
 
+    // Indicates the location of the sensor
     let field = FieldInfo {
         name: "sensor_position",
         field_type: FieldDataType::BodyLocation,
@@ -7307,9 +8310,11 @@ fn device_info_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(18, field);
 
+    // Used to describe the sensor or location
     let field = FieldInfo {
         name: "descriptor",
         field_type: FieldDataType::String,
@@ -7318,6 +8323,7 @@ fn device_info_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(19, field);
 
@@ -7329,6 +8335,7 @@ fn device_info_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(20, field);
 
@@ -7340,6 +8347,7 @@ fn device_info_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(21, field);
 
@@ -7351,6 +8359,7 @@ fn device_info_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(22, field);
 
@@ -7362,9 +8371,11 @@ fn device_info_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(25, field);
 
+    // Optional free form string to indicate the devices name or model
     let field = FieldInfo {
         name: "product_name",
         field_type: FieldDataType::String,
@@ -7373,6 +8384,7 @@ fn device_info_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(27, field);
 
@@ -7384,6 +8396,7 @@ fn device_info_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(253, field);
 
@@ -7404,6 +8417,7 @@ fn training_file_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
@@ -7415,6 +8429,7 @@ fn training_file_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
@@ -7427,6 +8442,7 @@ fn training_file_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((1, Manufacturer::FaveroElectronics.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -7437,6 +8453,7 @@ fn training_file_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((1, Manufacturer::Garmin.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -7447,6 +8464,7 @@ fn training_file_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((1, Manufacturer::Dynastream.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -7457,6 +8475,7 @@ fn training_file_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((1, Manufacturer::DynastreamOem.as_i64(), sub_fld));
     let field = FieldInfo {
@@ -7467,6 +8486,7 @@ fn training_file_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: subfields,
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
@@ -7478,6 +8498,7 @@ fn training_file_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
@@ -7489,6 +8510,7 @@ fn training_file_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
@@ -7500,6 +8522,7 @@ fn training_file_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(253, field);
 
@@ -7512,7 +8535,7 @@ fn training_file_message() -> MessageInfo {
 fn hrv_message() -> MessageInfo {
     let mut fields = HashMap::new();
 
-    // [N]
+    // Time between beats
     let field = FieldInfo {
         name: "time",
         field_type: FieldDataType::UInt16,
@@ -7521,6 +8544,7 @@ fn hrv_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
@@ -7533,6 +8557,7 @@ fn hrv_message() -> MessageInfo {
 fn weather_conditions_message() -> MessageInfo {
     let mut fields = HashMap::new();
 
+    // Current or forecast
     let field = FieldInfo {
         name: "weather_report",
         field_type: FieldDataType::WeatherReport,
@@ -7541,6 +8566,7 @@ fn weather_conditions_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
@@ -7552,9 +8578,11 @@ fn weather_conditions_message() -> MessageInfo {
         offset: 0.000000,
         units: "C",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
+    // Corresponds to GSC Response weatherIcon field
     let field = FieldInfo {
         name: "condition",
         field_type: FieldDataType::WeatherStatus,
@@ -7563,6 +8591,7 @@ fn weather_conditions_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
@@ -7574,6 +8603,7 @@ fn weather_conditions_message() -> MessageInfo {
         offset: 0.000000,
         units: "degrees",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
@@ -7585,9 +8615,11 @@ fn weather_conditions_message() -> MessageInfo {
         offset: 0.000000,
         units: "m/s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
+    // range 0-100
     let field = FieldInfo {
         name: "precipitation_probability",
         field_type: FieldDataType::UInt8,
@@ -7596,9 +8628,11 @@ fn weather_conditions_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(5, field);
 
+    // Heat Index if  GCS heatIdx above or equal to 90F or wind chill if GCS windChill below or equal to 32F
     let field = FieldInfo {
         name: "temperature_feels_like",
         field_type: FieldDataType::SInt8,
@@ -7607,6 +8641,7 @@ fn weather_conditions_message() -> MessageInfo {
         offset: 0.000000,
         units: "C",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(6, field);
 
@@ -7618,9 +8653,11 @@ fn weather_conditions_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(7, field);
 
+    // string corresponding to GCS response location string
     let field = FieldInfo {
         name: "location",
         field_type: FieldDataType::String,
@@ -7629,6 +8666,7 @@ fn weather_conditions_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(8, field);
 
@@ -7640,6 +8678,7 @@ fn weather_conditions_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(9, field);
 
@@ -7651,6 +8690,7 @@ fn weather_conditions_message() -> MessageInfo {
         offset: 0.000000,
         units: "semicircles",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(10, field);
 
@@ -7662,6 +8702,7 @@ fn weather_conditions_message() -> MessageInfo {
         offset: 0.000000,
         units: "semicircles",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(11, field);
 
@@ -7673,6 +8714,7 @@ fn weather_conditions_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(12, field);
 
@@ -7684,6 +8726,7 @@ fn weather_conditions_message() -> MessageInfo {
         offset: 0.000000,
         units: "C",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(13, field);
 
@@ -7695,9 +8738,11 @@ fn weather_conditions_message() -> MessageInfo {
         offset: 0.000000,
         units: "C",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(14, field);
 
+    // time of update for current conditions, else forecast time
     let field = FieldInfo {
         name: "timestamp",
         field_type: FieldDataType::DateTime,
@@ -7706,6 +8751,7 @@ fn weather_conditions_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(253, field);
 
@@ -7718,6 +8764,7 @@ fn weather_conditions_message() -> MessageInfo {
 fn weather_alert_message() -> MessageInfo {
     let mut fields = HashMap::new();
 
+    // Unique identifier from GCS report ID string, length is 12
     let field = FieldInfo {
         name: "report_id",
         field_type: FieldDataType::String,
@@ -7726,9 +8773,11 @@ fn weather_alert_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
+    // Time alert was issued
     let field = FieldInfo {
         name: "issue_time",
         field_type: FieldDataType::DateTime,
@@ -7737,9 +8786,11 @@ fn weather_alert_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
+    // Time alert expires
     let field = FieldInfo {
         name: "expire_time",
         field_type: FieldDataType::DateTime,
@@ -7748,9 +8799,11 @@ fn weather_alert_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
+    // Warning, Watch, Advisory, Statement
     let field = FieldInfo {
         name: "severity",
         field_type: FieldDataType::WeatherSeverity,
@@ -7759,9 +8812,11 @@ fn weather_alert_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
+    // Tornado, Severe Thunderstorm, etc.
     let field = FieldInfo {
         name: "type",
         field_type: FieldDataType::WeatherSevereType,
@@ -7770,6 +8825,7 @@ fn weather_alert_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
@@ -7781,6 +8837,7 @@ fn weather_alert_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(253, field);
 
@@ -7793,6 +8850,7 @@ fn weather_alert_message() -> MessageInfo {
 fn gps_metadata_message() -> MessageInfo {
     let mut fields = HashMap::new();
 
+    // Millisecond part of the timestamp.
     let field = FieldInfo {
         name: "timestamp_ms",
         field_type: FieldDataType::UInt16,
@@ -7801,6 +8859,7 @@ fn gps_metadata_message() -> MessageInfo {
         offset: 0.000000,
         units: "ms",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
@@ -7812,6 +8871,7 @@ fn gps_metadata_message() -> MessageInfo {
         offset: 0.000000,
         units: "semicircles",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
@@ -7823,6 +8883,7 @@ fn gps_metadata_message() -> MessageInfo {
         offset: 0.000000,
         units: "semicircles",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
@@ -7834,6 +8895,7 @@ fn gps_metadata_message() -> MessageInfo {
         offset: 500.000000,
         units: "m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
@@ -7845,6 +8907,7 @@ fn gps_metadata_message() -> MessageInfo {
         offset: 0.000000,
         units: "m/s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
@@ -7856,9 +8919,11 @@ fn gps_metadata_message() -> MessageInfo {
         offset: 0.000000,
         units: "degrees",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(5, field);
 
+    // Used to correlate UTC to system time if the timestamp of the message is in system time.  This UTC time is derived from the GPS data.
     let field = FieldInfo {
         name: "utc_timestamp",
         field_type: FieldDataType::DateTime,
@@ -7867,10 +8932,11 @@ fn gps_metadata_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(6, field);
 
-    // [3]
+    // velocity[0] is lon velocity.  Velocity[1] is lat velocity.  Velocity[2] is altitude velocity.
     let field = FieldInfo {
         name: "velocity",
         field_type: FieldDataType::SInt16,
@@ -7879,9 +8945,11 @@ fn gps_metadata_message() -> MessageInfo {
         offset: 0.000000,
         units: "m/s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(7, field);
 
+    // Whole second part of the timestamp.
     let field = FieldInfo {
         name: "timestamp",
         field_type: FieldDataType::DateTime,
@@ -7890,6 +8958,7 @@ fn gps_metadata_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(253, field);
 
@@ -7902,6 +8971,7 @@ fn gps_metadata_message() -> MessageInfo {
 fn camera_event_message() -> MessageInfo {
     let mut fields = HashMap::new();
 
+    // Millisecond part of the timestamp.
     let field = FieldInfo {
         name: "timestamp_ms",
         field_type: FieldDataType::UInt16,
@@ -7910,6 +8980,7 @@ fn camera_event_message() -> MessageInfo {
         offset: 0.000000,
         units: "ms",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
@@ -7921,6 +8992,7 @@ fn camera_event_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
@@ -7932,6 +9004,7 @@ fn camera_event_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
@@ -7943,9 +9016,11 @@ fn camera_event_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
+    // Whole second part of the timestamp.
     let field = FieldInfo {
         name: "timestamp",
         field_type: FieldDataType::DateTime,
@@ -7954,6 +9029,7 @@ fn camera_event_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(253, field);
 
@@ -7966,6 +9042,7 @@ fn camera_event_message() -> MessageInfo {
 fn gyroscope_data_message() -> MessageInfo {
     let mut fields = HashMap::new();
 
+    // Millisecond part of the timestamp.
     let field = FieldInfo {
         name: "timestamp_ms",
         field_type: FieldDataType::UInt16,
@@ -7974,10 +9051,11 @@ fn gyroscope_data_message() -> MessageInfo {
         offset: 0.000000,
         units: "ms",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
-    // [N]
+    // Each time in the array describes the time at which the gyro sample with the corrosponding index was taken. Limited to 30 samples in each message. The samples may span across seconds. Array size must match the number of samples in gyro_x and gyro_y and gyro_z
     let field = FieldInfo {
         name: "sample_time_offset",
         field_type: FieldDataType::UInt16,
@@ -7986,10 +9064,11 @@ fn gyroscope_data_message() -> MessageInfo {
         offset: 0.000000,
         units: "ms",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
-    // [N]
+    // These are the raw ADC reading. Maximum number of samples is 30 in each message. The samples may span across seconds. A conversion will need to be done on this data once read.
     let field = FieldInfo {
         name: "gyro_x",
         field_type: FieldDataType::UInt16,
@@ -7998,10 +9077,11 @@ fn gyroscope_data_message() -> MessageInfo {
         offset: 0.000000,
         units: "counts",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
-    // [N]
+    // These are the raw ADC reading. Maximum number of samples is 30 in each message. The samples may span across seconds. A conversion will need to be done on this data once read.
     let field = FieldInfo {
         name: "gyro_y",
         field_type: FieldDataType::UInt16,
@@ -8010,10 +9090,11 @@ fn gyroscope_data_message() -> MessageInfo {
         offset: 0.000000,
         units: "counts",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
-    // [N]
+    // These are the raw ADC reading. Maximum number of samples is 30 in each message. The samples may span across seconds. A conversion will need to be done on this data once read.
     let field = FieldInfo {
         name: "gyro_z",
         field_type: FieldDataType::UInt16,
@@ -8022,10 +9103,11 @@ fn gyroscope_data_message() -> MessageInfo {
         offset: 0.000000,
         units: "counts",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
-    // [N]
+    // Calibrated gyro reading
     let field = FieldInfo {
         name: "calibrated_gyro_x",
         field_type: FieldDataType::Float32,
@@ -8034,10 +9116,11 @@ fn gyroscope_data_message() -> MessageInfo {
         offset: 0.000000,
         units: "deg/s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(5, field);
 
-    // [N]
+    // Calibrated gyro reading
     let field = FieldInfo {
         name: "calibrated_gyro_y",
         field_type: FieldDataType::Float32,
@@ -8046,10 +9129,11 @@ fn gyroscope_data_message() -> MessageInfo {
         offset: 0.000000,
         units: "deg/s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(6, field);
 
-    // [N]
+    // Calibrated gyro reading
     let field = FieldInfo {
         name: "calibrated_gyro_z",
         field_type: FieldDataType::Float32,
@@ -8058,9 +9142,11 @@ fn gyroscope_data_message() -> MessageInfo {
         offset: 0.000000,
         units: "deg/s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(7, field);
 
+    // Whole second part of the timestamp
     let field = FieldInfo {
         name: "timestamp",
         field_type: FieldDataType::DateTime,
@@ -8069,6 +9155,7 @@ fn gyroscope_data_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(253, field);
 
@@ -8081,6 +9168,7 @@ fn gyroscope_data_message() -> MessageInfo {
 fn accelerometer_data_message() -> MessageInfo {
     let mut fields = HashMap::new();
 
+    // Millisecond part of the timestamp.
     let field = FieldInfo {
         name: "timestamp_ms",
         field_type: FieldDataType::UInt16,
@@ -8089,10 +9177,11 @@ fn accelerometer_data_message() -> MessageInfo {
         offset: 0.000000,
         units: "ms",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
-    // [N]
+    // Each time in the array describes the time at which the accelerometer sample with the corrosponding index was taken. Limited to 30 samples in each message. The samples may span across seconds. Array size must match the number of samples in accel_x and accel_y and accel_z
     let field = FieldInfo {
         name: "sample_time_offset",
         field_type: FieldDataType::UInt16,
@@ -8101,10 +9190,11 @@ fn accelerometer_data_message() -> MessageInfo {
         offset: 0.000000,
         units: "ms",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
-    // [N]
+    // These are the raw ADC reading. Maximum number of samples is 30 in each message. The samples may span across seconds. A conversion will need to be done on this data once read.
     let field = FieldInfo {
         name: "accel_x",
         field_type: FieldDataType::UInt16,
@@ -8113,10 +9203,11 @@ fn accelerometer_data_message() -> MessageInfo {
         offset: 0.000000,
         units: "counts",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
-    // [N]
+    // These are the raw ADC reading. Maximum number of samples is 30 in each message. The samples may span across seconds. A conversion will need to be done on this data once read.
     let field = FieldInfo {
         name: "accel_y",
         field_type: FieldDataType::UInt16,
@@ -8125,10 +9216,11 @@ fn accelerometer_data_message() -> MessageInfo {
         offset: 0.000000,
         units: "counts",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
-    // [N]
+    // These are the raw ADC reading. Maximum number of samples is 30 in each message. The samples may span across seconds. A conversion will need to be done on this data once read.
     let field = FieldInfo {
         name: "accel_z",
         field_type: FieldDataType::UInt16,
@@ -8137,10 +9229,11 @@ fn accelerometer_data_message() -> MessageInfo {
         offset: 0.000000,
         units: "counts",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
-    // [N]
+    // Calibrated accel reading
     let field = FieldInfo {
         name: "calibrated_accel_x",
         field_type: FieldDataType::Float32,
@@ -8149,10 +9242,11 @@ fn accelerometer_data_message() -> MessageInfo {
         offset: 0.000000,
         units: "g",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(5, field);
 
-    // [N]
+    // Calibrated accel reading
     let field = FieldInfo {
         name: "calibrated_accel_y",
         field_type: FieldDataType::Float32,
@@ -8161,10 +9255,11 @@ fn accelerometer_data_message() -> MessageInfo {
         offset: 0.000000,
         units: "g",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(6, field);
 
-    // [N]
+    // Calibrated accel reading
     let field = FieldInfo {
         name: "calibrated_accel_z",
         field_type: FieldDataType::Float32,
@@ -8173,10 +9268,11 @@ fn accelerometer_data_message() -> MessageInfo {
         offset: 0.000000,
         units: "g",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(7, field);
 
-    // [N]
+    // Calibrated accel reading
     let field = FieldInfo {
         name: "compressed_calibrated_accel_x",
         field_type: FieldDataType::SInt16,
@@ -8185,10 +9281,11 @@ fn accelerometer_data_message() -> MessageInfo {
         offset: 0.000000,
         units: "mG",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(8, field);
 
-    // [N]
+    // Calibrated accel reading
     let field = FieldInfo {
         name: "compressed_calibrated_accel_y",
         field_type: FieldDataType::SInt16,
@@ -8197,10 +9294,11 @@ fn accelerometer_data_message() -> MessageInfo {
         offset: 0.000000,
         units: "mG",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(9, field);
 
-    // [N]
+    // Calibrated accel reading
     let field = FieldInfo {
         name: "compressed_calibrated_accel_z",
         field_type: FieldDataType::SInt16,
@@ -8209,9 +9307,11 @@ fn accelerometer_data_message() -> MessageInfo {
         offset: 0.000000,
         units: "mG",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(10, field);
 
+    // Whole second part of the timestamp
     let field = FieldInfo {
         name: "timestamp",
         field_type: FieldDataType::DateTime,
@@ -8220,6 +9320,7 @@ fn accelerometer_data_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(253, field);
 
@@ -8232,6 +9333,7 @@ fn accelerometer_data_message() -> MessageInfo {
 fn magnetometer_data_message() -> MessageInfo {
     let mut fields = HashMap::new();
 
+    // Millisecond part of the timestamp.
     let field = FieldInfo {
         name: "timestamp_ms",
         field_type: FieldDataType::UInt16,
@@ -8240,10 +9342,11 @@ fn magnetometer_data_message() -> MessageInfo {
         offset: 0.000000,
         units: "ms",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
-    // [N]
+    // Each time in the array describes the time at which the compass sample with the corrosponding index was taken. Limited to 30 samples in each message. The samples may span across seconds. Array size must match the number of samples in cmps_x and cmps_y and cmps_z
     let field = FieldInfo {
         name: "sample_time_offset",
         field_type: FieldDataType::UInt16,
@@ -8252,10 +9355,11 @@ fn magnetometer_data_message() -> MessageInfo {
         offset: 0.000000,
         units: "ms",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
-    // [N]
+    // These are the raw ADC reading. Maximum number of samples is 30 in each message. The samples may span across seconds. A conversion will need to be done on this data once read.
     let field = FieldInfo {
         name: "mag_x",
         field_type: FieldDataType::UInt16,
@@ -8264,10 +9368,11 @@ fn magnetometer_data_message() -> MessageInfo {
         offset: 0.000000,
         units: "counts",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
-    // [N]
+    // These are the raw ADC reading. Maximum number of samples is 30 in each message. The samples may span across seconds. A conversion will need to be done on this data once read.
     let field = FieldInfo {
         name: "mag_y",
         field_type: FieldDataType::UInt16,
@@ -8276,10 +9381,11 @@ fn magnetometer_data_message() -> MessageInfo {
         offset: 0.000000,
         units: "counts",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
-    // [N]
+    // These are the raw ADC reading. Maximum number of samples is 30 in each message. The samples may span across seconds. A conversion will need to be done on this data once read.
     let field = FieldInfo {
         name: "mag_z",
         field_type: FieldDataType::UInt16,
@@ -8288,10 +9394,11 @@ fn magnetometer_data_message() -> MessageInfo {
         offset: 0.000000,
         units: "counts",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
-    // [N]
+    // Calibrated Magnetometer reading
     let field = FieldInfo {
         name: "calibrated_mag_x",
         field_type: FieldDataType::Float32,
@@ -8300,10 +9407,11 @@ fn magnetometer_data_message() -> MessageInfo {
         offset: 0.000000,
         units: "G",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(5, field);
 
-    // [N]
+    // Calibrated Magnetometer reading
     let field = FieldInfo {
         name: "calibrated_mag_y",
         field_type: FieldDataType::Float32,
@@ -8312,10 +9420,11 @@ fn magnetometer_data_message() -> MessageInfo {
         offset: 0.000000,
         units: "G",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(6, field);
 
-    // [N]
+    // Calibrated Magnetometer reading
     let field = FieldInfo {
         name: "calibrated_mag_z",
         field_type: FieldDataType::Float32,
@@ -8324,9 +9433,11 @@ fn magnetometer_data_message() -> MessageInfo {
         offset: 0.000000,
         units: "G",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(7, field);
 
+    // Whole second part of the timestamp
     let field = FieldInfo {
         name: "timestamp",
         field_type: FieldDataType::DateTime,
@@ -8335,6 +9446,7 @@ fn magnetometer_data_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(253, field);
 
@@ -8347,6 +9459,7 @@ fn magnetometer_data_message() -> MessageInfo {
 fn barometer_data_message() -> MessageInfo {
     let mut fields = HashMap::new();
 
+    // Millisecond part of the timestamp.
     let field = FieldInfo {
         name: "timestamp_ms",
         field_type: FieldDataType::UInt16,
@@ -8355,10 +9468,11 @@ fn barometer_data_message() -> MessageInfo {
         offset: 0.000000,
         units: "ms",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
-    // [N]
+    // Each time in the array describes the time at which the barometer sample with the corrosponding index was taken. The samples may span across seconds. Array size must match the number of samples in baro_cal
     let field = FieldInfo {
         name: "sample_time_offset",
         field_type: FieldDataType::UInt16,
@@ -8367,10 +9481,11 @@ fn barometer_data_message() -> MessageInfo {
         offset: 0.000000,
         units: "ms",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
-    // [N]
+    // These are the raw ADC reading. The samples may span across seconds. A conversion will need to be done on this data once read.
     let field = FieldInfo {
         name: "baro_pres",
         field_type: FieldDataType::UInt32,
@@ -8379,9 +9494,11 @@ fn barometer_data_message() -> MessageInfo {
         offset: 0.000000,
         units: "Pa",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
+    // Whole second part of the timestamp
     let field = FieldInfo {
         name: "timestamp",
         field_type: FieldDataType::DateTime,
@@ -8390,6 +9507,7 @@ fn barometer_data_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(253, field);
 
@@ -8402,6 +9520,7 @@ fn barometer_data_message() -> MessageInfo {
 fn three_d_sensor_calibration_message() -> MessageInfo {
     let mut fields = HashMap::new();
 
+    // Indicates which sensor the calibration is for
     let field = FieldInfo {
         name: "sensor_type",
         field_type: FieldDataType::SensorType,
@@ -8410,10 +9529,12 @@ fn three_d_sensor_calibration_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
     let mut subfields = Vec::new();
+    // Accelerometer calibration factor
     let sub_fld = FieldInfo {
         name: "accel_cal_factor",
         field_type: FieldDataType::UInt32,
@@ -8422,8 +9543,10 @@ fn three_d_sensor_calibration_message() -> MessageInfo {
         offset: 0.000000,
         units: "g",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((0, SensorType::Accelerometer.as_i64(), sub_fld));
+    // Gyro calibration factor
     let sub_fld = FieldInfo {
         name: "gyro_cal_factor",
         field_type: FieldDataType::UInt32,
@@ -8432,8 +9555,10 @@ fn three_d_sensor_calibration_message() -> MessageInfo {
         offset: 0.000000,
         units: "deg/s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((0, SensorType::Gyroscope.as_i64(), sub_fld));
+    // Calibration factor used to convert from raw ADC value to degrees, g,  etc.
     let field = FieldInfo {
         name: "calibration_factor",
         field_type: FieldDataType::UInt32,
@@ -8442,9 +9567,11 @@ fn three_d_sensor_calibration_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: subfields,
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
+    // Calibration factor divisor
     let field = FieldInfo {
         name: "calibration_divisor",
         field_type: FieldDataType::UInt32,
@@ -8453,9 +9580,11 @@ fn three_d_sensor_calibration_message() -> MessageInfo {
         offset: 0.000000,
         units: "counts",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
+    // Level shift value used to shift the ADC value back into range
     let field = FieldInfo {
         name: "level_shift",
         field_type: FieldDataType::UInt32,
@@ -8464,10 +9593,11 @@ fn three_d_sensor_calibration_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
-    // [3]
+    // Internal calibration factors, one for each: xy, yx, zx
     let field = FieldInfo {
         name: "offset_cal",
         field_type: FieldDataType::SInt32,
@@ -8476,10 +9606,11 @@ fn three_d_sensor_calibration_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
-    // [9]
+    // 3 x 3 rotation matrix (row major)
     let field = FieldInfo {
         name: "orientation_matrix",
         field_type: FieldDataType::SInt32,
@@ -8488,9 +9619,11 @@ fn three_d_sensor_calibration_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(5, field);
 
+    // Whole second part of the timestamp
     let field = FieldInfo {
         name: "timestamp",
         field_type: FieldDataType::DateTime,
@@ -8499,6 +9632,7 @@ fn three_d_sensor_calibration_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(253, field);
 
@@ -8511,6 +9645,7 @@ fn three_d_sensor_calibration_message() -> MessageInfo {
 fn one_d_sensor_calibration_message() -> MessageInfo {
     let mut fields = HashMap::new();
 
+    // Indicates which sensor the calibration is for
     let field = FieldInfo {
         name: "sensor_type",
         field_type: FieldDataType::SensorType,
@@ -8519,10 +9654,12 @@ fn one_d_sensor_calibration_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
     let mut subfields = Vec::new();
+    // Barometer calibration factor
     let sub_fld = FieldInfo {
         name: "baro_cal_factor",
         field_type: FieldDataType::UInt32,
@@ -8531,8 +9668,10 @@ fn one_d_sensor_calibration_message() -> MessageInfo {
         offset: 0.000000,
         units: "Pa",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((0, SensorType::Barometer.as_i64(), sub_fld));
+    // Calibration factor used to convert from raw ADC value to degrees, g,  etc.
     let field = FieldInfo {
         name: "calibration_factor",
         field_type: FieldDataType::UInt32,
@@ -8541,9 +9680,11 @@ fn one_d_sensor_calibration_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: subfields,
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
+    // Calibration factor divisor
     let field = FieldInfo {
         name: "calibration_divisor",
         field_type: FieldDataType::UInt32,
@@ -8552,9 +9693,11 @@ fn one_d_sensor_calibration_message() -> MessageInfo {
         offset: 0.000000,
         units: "counts",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
+    // Level shift value used to shift the ADC value back into range
     let field = FieldInfo {
         name: "level_shift",
         field_type: FieldDataType::UInt32,
@@ -8563,9 +9706,11 @@ fn one_d_sensor_calibration_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
+    // Internal Calibration factor
     let field = FieldInfo {
         name: "offset_cal",
         field_type: FieldDataType::SInt32,
@@ -8574,9 +9719,11 @@ fn one_d_sensor_calibration_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
+    // Whole second part of the timestamp
     let field = FieldInfo {
         name: "timestamp",
         field_type: FieldDataType::DateTime,
@@ -8585,6 +9732,7 @@ fn one_d_sensor_calibration_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(253, field);
 
@@ -8597,6 +9745,7 @@ fn one_d_sensor_calibration_message() -> MessageInfo {
 fn video_frame_message() -> MessageInfo {
     let mut fields = HashMap::new();
 
+    // Millisecond part of the timestamp.
     let field = FieldInfo {
         name: "timestamp_ms",
         field_type: FieldDataType::UInt16,
@@ -8605,9 +9754,11 @@ fn video_frame_message() -> MessageInfo {
         offset: 0.000000,
         units: "ms",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
+    // Number of the frame that the timestamp and timestamp_ms correlate to
     let field = FieldInfo {
         name: "frame_number",
         field_type: FieldDataType::UInt32,
@@ -8616,9 +9767,11 @@ fn video_frame_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
+    // Whole second part of the timestamp
     let field = FieldInfo {
         name: "timestamp",
         field_type: FieldDataType::DateTime,
@@ -8627,6 +9780,7 @@ fn video_frame_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(253, field);
 
@@ -8639,6 +9793,7 @@ fn video_frame_message() -> MessageInfo {
 fn obdii_data_message() -> MessageInfo {
     let mut fields = HashMap::new();
 
+    // Fractional part of timestamp, added to timestamp
     let field = FieldInfo {
         name: "timestamp_ms",
         field_type: FieldDataType::UInt16,
@@ -8647,10 +9802,11 @@ fn obdii_data_message() -> MessageInfo {
         offset: 0.000000,
         units: "ms",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
-    // [N]
+    // Offset of PID reading [i] from start_timestamp+start_timestamp_ms. Readings may span accross seconds.
     let field = FieldInfo {
         name: "time_offset",
         field_type: FieldDataType::UInt16,
@@ -8659,9 +9815,11 @@ fn obdii_data_message() -> MessageInfo {
         offset: 0.000000,
         units: "ms",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
+    // Parameter ID
     let field = FieldInfo {
         name: "pid",
         field_type: FieldDataType::Byte,
@@ -8670,10 +9828,11 @@ fn obdii_data_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
-    // [N]
+    // Raw parameter data
     let field = FieldInfo {
         name: "raw_data",
         field_type: FieldDataType::Byte,
@@ -8682,10 +9841,11 @@ fn obdii_data_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
-    // [N]
+    // Optional, data size of PID[i].  If not specified refer to SAE J1979.
     let field = FieldInfo {
         name: "pid_data_size",
         field_type: FieldDataType::UInt8,
@@ -8694,10 +9854,11 @@ fn obdii_data_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
-    // [N]
+    // System time associated with sample expressed in ms, can be used instead of time_offset.  There will be a system_time value for each raw_data element.  For multibyte pids the system_time is repeated.
     let field = FieldInfo {
         name: "system_time",
         field_type: FieldDataType::UInt32,
@@ -8706,9 +9867,11 @@ fn obdii_data_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(5, field);
 
+    // Timestamp of first sample recorded in the message.  Used with time_offset to generate time of each sample
     let field = FieldInfo {
         name: "start_timestamp",
         field_type: FieldDataType::DateTime,
@@ -8717,9 +9880,11 @@ fn obdii_data_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(6, field);
 
+    // Fractional part of start_timestamp
     let field = FieldInfo {
         name: "start_timestamp_ms",
         field_type: FieldDataType::UInt16,
@@ -8728,9 +9893,11 @@ fn obdii_data_message() -> MessageInfo {
         offset: 0.000000,
         units: "ms",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(7, field);
 
+    // Timestamp message was output
     let field = FieldInfo {
         name: "timestamp",
         field_type: FieldDataType::DateTime,
@@ -8739,6 +9906,7 @@ fn obdii_data_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(253, field);
 
@@ -8751,6 +9919,7 @@ fn obdii_data_message() -> MessageInfo {
 fn nmea_sentence_message() -> MessageInfo {
     let mut fields = HashMap::new();
 
+    // Fractional part of timestamp, added to timestamp
     let field = FieldInfo {
         name: "timestamp_ms",
         field_type: FieldDataType::UInt16,
@@ -8759,9 +9928,11 @@ fn nmea_sentence_message() -> MessageInfo {
         offset: 0.000000,
         units: "ms",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
+    // NMEA sentence
     let field = FieldInfo {
         name: "sentence",
         field_type: FieldDataType::String,
@@ -8770,9 +9941,11 @@ fn nmea_sentence_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
+    // Timestamp message was output
     let field = FieldInfo {
         name: "timestamp",
         field_type: FieldDataType::DateTime,
@@ -8781,6 +9954,7 @@ fn nmea_sentence_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(253, field);
 
@@ -8793,6 +9967,7 @@ fn nmea_sentence_message() -> MessageInfo {
 fn aviation_attitude_message() -> MessageInfo {
     let mut fields = HashMap::new();
 
+    // Fractional part of timestamp, added to timestamp
     let field = FieldInfo {
         name: "timestamp_ms",
         field_type: FieldDataType::UInt16,
@@ -8801,10 +9976,11 @@ fn aviation_attitude_message() -> MessageInfo {
         offset: 0.000000,
         units: "ms",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
-    // [N]
+    // System time associated with sample expressed in ms.
     let field = FieldInfo {
         name: "system_time",
         field_type: FieldDataType::UInt32,
@@ -8813,10 +9989,11 @@ fn aviation_attitude_message() -> MessageInfo {
         offset: 0.000000,
         units: "ms",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
-    // [N]
+    // Range -PI/2 to +PI/2
     let field = FieldInfo {
         name: "pitch",
         field_type: FieldDataType::SInt16,
@@ -8825,10 +10002,11 @@ fn aviation_attitude_message() -> MessageInfo {
         offset: 0.000000,
         units: "radians",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
-    // [N]
+    // Range -PI to +PI
     let field = FieldInfo {
         name: "roll",
         field_type: FieldDataType::SInt16,
@@ -8837,10 +10015,11 @@ fn aviation_attitude_message() -> MessageInfo {
         offset: 0.000000,
         units: "radians",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
-    // [N]
+    // Range -78.4 to +78.4 (-8 Gs to 8 Gs)
     let field = FieldInfo {
         name: "accel_lateral",
         field_type: FieldDataType::SInt16,
@@ -8849,10 +10028,11 @@ fn aviation_attitude_message() -> MessageInfo {
         offset: 0.000000,
         units: "m/s^2",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
-    // [N]
+    // Range -78.4 to +78.4 (-8 Gs to 8 Gs)
     let field = FieldInfo {
         name: "accel_normal",
         field_type: FieldDataType::SInt16,
@@ -8861,10 +10041,11 @@ fn aviation_attitude_message() -> MessageInfo {
         offset: 0.000000,
         units: "m/s^2",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(5, field);
 
-    // [N]
+    // Range -8.727 to +8.727 (-500 degs/sec to +500 degs/sec)
     let field = FieldInfo {
         name: "turn_rate",
         field_type: FieldDataType::SInt16,
@@ -8873,10 +10054,10 @@ fn aviation_attitude_message() -> MessageInfo {
         offset: 0.000000,
         units: "radians/second",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(6, field);
 
-    // [N]
     let field = FieldInfo {
         name: "stage",
         field_type: FieldDataType::AttitudeStage,
@@ -8885,10 +10066,11 @@ fn aviation_attitude_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(7, field);
 
-    // [N]
+    // The percent complete of the current attitude stage.  Set to 0 for attitude stages 0, 1 and 2 and to 100 for attitude stage 3 by AHRS modules that do not support it.  Range - 100
     let field = FieldInfo {
         name: "attitude_stage_complete",
         field_type: FieldDataType::UInt8,
@@ -8897,10 +10079,11 @@ fn aviation_attitude_message() -> MessageInfo {
         offset: 0.000000,
         units: "%",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(8, field);
 
-    // [N]
+    // Track Angle/Heading Range 0 - 2pi
     let field = FieldInfo {
         name: "track",
         field_type: FieldDataType::UInt16,
@@ -8909,10 +10092,10 @@ fn aviation_attitude_message() -> MessageInfo {
         offset: 0.000000,
         units: "radians",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(9, field);
 
-    // [N]
     let field = FieldInfo {
         name: "validity",
         field_type: FieldDataType::AttitudeValidity,
@@ -8921,9 +10104,11 @@ fn aviation_attitude_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(10, field);
 
+    // Timestamp message was output
     let field = FieldInfo {
         name: "timestamp",
         field_type: FieldDataType::DateTime,
@@ -8932,6 +10117,7 @@ fn aviation_attitude_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(253, field);
 
@@ -8952,6 +10138,7 @@ fn video_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
@@ -8963,9 +10150,11 @@ fn video_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
+    // Playback time of video
     let field = FieldInfo {
         name: "duration",
         field_type: FieldDataType::UInt32,
@@ -8974,6 +10163,7 @@ fn video_message() -> MessageInfo {
         offset: 0.000000,
         units: "ms",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
@@ -8986,6 +10176,7 @@ fn video_message() -> MessageInfo {
 fn video_title_message() -> MessageInfo {
     let mut fields = HashMap::new();
 
+    // Total number of title parts
     let field = FieldInfo {
         name: "message_count",
         field_type: FieldDataType::UInt16,
@@ -8994,6 +10185,7 @@ fn video_title_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
@@ -9005,9 +10197,11 @@ fn video_title_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
+    // Long titles will be split into multiple parts
     let field = FieldInfo {
         name: "message_index",
         field_type: FieldDataType::MessageIndex,
@@ -9016,6 +10210,7 @@ fn video_title_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(254, field);
 
@@ -9028,6 +10223,7 @@ fn video_title_message() -> MessageInfo {
 fn video_description_message() -> MessageInfo {
     let mut fields = HashMap::new();
 
+    // Total number of description parts
     let field = FieldInfo {
         name: "message_count",
         field_type: FieldDataType::UInt16,
@@ -9036,6 +10232,7 @@ fn video_description_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
@@ -9047,9 +10244,11 @@ fn video_description_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
+    // Long descriptions will be split into multiple parts
     let field = FieldInfo {
         name: "message_index",
         field_type: FieldDataType::MessageIndex,
@@ -9058,6 +10257,7 @@ fn video_description_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(254, field);
 
@@ -9078,6 +10278,7 @@ fn video_clip_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
@@ -9089,6 +10290,7 @@ fn video_clip_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
@@ -9100,6 +10302,7 @@ fn video_clip_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
@@ -9111,6 +10314,7 @@ fn video_clip_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
@@ -9122,9 +10326,11 @@ fn video_clip_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
+    // Start of clip in video time
     let field = FieldInfo {
         name: "clip_start",
         field_type: FieldDataType::UInt32,
@@ -9133,9 +10339,11 @@ fn video_clip_message() -> MessageInfo {
         offset: 0.000000,
         units: "ms",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(6, field);
 
+    // End of clip in video time
     let field = FieldInfo {
         name: "clip_end",
         field_type: FieldDataType::UInt32,
@@ -9144,6 +10352,7 @@ fn video_clip_message() -> MessageInfo {
         offset: 0.000000,
         units: "ms",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(7, field);
 
@@ -9164,9 +10373,11 @@ fn set_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
+    // # of repitions of the movement
     let field = FieldInfo {
         name: "repetitions",
         field_type: FieldDataType::UInt16,
@@ -9175,9 +10386,11 @@ fn set_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
+    // Amount of weight applied for the set
     let field = FieldInfo {
         name: "weight",
         field_type: FieldDataType::UInt16,
@@ -9186,6 +10399,7 @@ fn set_message() -> MessageInfo {
         offset: 0.000000,
         units: "kg",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
@@ -9197,9 +10411,11 @@ fn set_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(5, field);
 
+    // Start time of the set
     let field = FieldInfo {
         name: "start_time",
         field_type: FieldDataType::DateTime,
@@ -9208,10 +10424,10 @@ fn set_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(6, field);
 
-    // [N]
     let field = FieldInfo {
         name: "category",
         field_type: FieldDataType::ExerciseCategory,
@@ -9220,10 +10436,11 @@ fn set_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(7, field);
 
-    // [N]
+    // Based on the associated category, see [category]_exercise_names
     let field = FieldInfo {
         name: "category_subtype",
         field_type: FieldDataType::UInt16,
@@ -9232,6 +10449,7 @@ fn set_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(8, field);
 
@@ -9243,6 +10461,7 @@ fn set_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(9, field);
 
@@ -9254,6 +10473,7 @@ fn set_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(10, field);
 
@@ -9265,9 +10485,11 @@ fn set_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(11, field);
 
+    // Timestamp of the set
     let field = FieldInfo {
         name: "timestamp",
         field_type: FieldDataType::DateTime,
@@ -9276,6 +10498,7 @@ fn set_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(254, field);
 
@@ -9296,6 +10519,7 @@ fn jump_message() -> MessageInfo {
         offset: 0.000000,
         units: "m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
@@ -9307,6 +10531,7 @@ fn jump_message() -> MessageInfo {
         offset: 0.000000,
         units: "m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
@@ -9318,6 +10543,7 @@ fn jump_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
@@ -9329,9 +10555,11 @@ fn jump_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
+    // A score for a jump calculated based on hang time, rotations, and distance.
     let field = FieldInfo {
         name: "score",
         field_type: FieldDataType::Float32,
@@ -9340,6 +10568,7 @@ fn jump_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
@@ -9351,6 +10580,7 @@ fn jump_message() -> MessageInfo {
         offset: 0.000000,
         units: "semicircles",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(5, field);
 
@@ -9362,9 +10592,20 @@ fn jump_message() -> MessageInfo {
         offset: 0.000000,
         units: "semicircles",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(6, field);
 
+    let mut components = Vec::new();
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 8,
+        scale: 1000.000000,
+        offset: 0.000000,
+        units: "m/s",
+        bits: 16,
+        accumulate: false,
+    };
+    components.push(comp_fld);
     let field = FieldInfo {
         name: "speed",
         field_type: FieldDataType::UInt16,
@@ -9373,6 +10614,7 @@ fn jump_message() -> MessageInfo {
         offset: 0.000000,
         units: "m/s",
         subfields: Vec::new(),
+        components: components,
     };
     fields.insert(7, field);
 
@@ -9384,6 +10626,7 @@ fn jump_message() -> MessageInfo {
         offset: 0.000000,
         units: "m/s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(8, field);
 
@@ -9395,6 +10638,7 @@ fn jump_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(253, field);
 
@@ -9415,6 +10659,7 @@ fn course_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
@@ -9426,6 +10671,7 @@ fn course_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(5, field);
 
@@ -9437,6 +10683,7 @@ fn course_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(6, field);
 
@@ -9448,6 +10695,7 @@ fn course_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(7, field);
 
@@ -9468,6 +10716,7 @@ fn course_point_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
@@ -9479,6 +10728,7 @@ fn course_point_message() -> MessageInfo {
         offset: 0.000000,
         units: "semicircles",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
@@ -9490,6 +10740,7 @@ fn course_point_message() -> MessageInfo {
         offset: 0.000000,
         units: "semicircles",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
@@ -9501,6 +10752,7 @@ fn course_point_message() -> MessageInfo {
         offset: 0.000000,
         units: "m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
@@ -9512,6 +10764,7 @@ fn course_point_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(5, field);
 
@@ -9523,6 +10776,7 @@ fn course_point_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(6, field);
 
@@ -9534,6 +10788,7 @@ fn course_point_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(8, field);
 
@@ -9545,6 +10800,7 @@ fn course_point_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(254, field);
 
@@ -9557,6 +10813,7 @@ fn course_point_message() -> MessageInfo {
 fn segment_id_message() -> MessageInfo {
     let mut fields = HashMap::new();
 
+    // Friendly name assigned to segment
     let field = FieldInfo {
         name: "name",
         field_type: FieldDataType::String,
@@ -9565,9 +10822,11 @@ fn segment_id_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
+    // UUID of the segment
     let field = FieldInfo {
         name: "uuid",
         field_type: FieldDataType::String,
@@ -9576,9 +10835,11 @@ fn segment_id_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
+    // Sport associated with the segment
     let field = FieldInfo {
         name: "sport",
         field_type: FieldDataType::Sport,
@@ -9587,9 +10848,11 @@ fn segment_id_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
+    // Segment enabled for evaluation
     let field = FieldInfo {
         name: "enabled",
         field_type: FieldDataType::Bool,
@@ -9598,9 +10861,11 @@ fn segment_id_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
+    // Primary key of the user that created the segment
     let field = FieldInfo {
         name: "user_profile_primary_key",
         field_type: FieldDataType::UInt32,
@@ -9609,9 +10874,11 @@ fn segment_id_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
+    // ID of the device that created the segment
     let field = FieldInfo {
         name: "device_id",
         field_type: FieldDataType::UInt32,
@@ -9620,9 +10887,11 @@ fn segment_id_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(5, field);
 
+    // Index for the Leader Board entry selected as the default race participant
     let field = FieldInfo {
         name: "default_race_leader",
         field_type: FieldDataType::UInt8,
@@ -9631,9 +10900,11 @@ fn segment_id_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(6, field);
 
+    // Indicates if any segments should be deleted
     let field = FieldInfo {
         name: "delete_status",
         field_type: FieldDataType::SegmentDeleteStatus,
@@ -9642,9 +10913,11 @@ fn segment_id_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(7, field);
 
+    // Indicates how the segment was selected to be sent to the device
     let field = FieldInfo {
         name: "selection_type",
         field_type: FieldDataType::SegmentSelectionType,
@@ -9653,6 +10926,7 @@ fn segment_id_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(8, field);
 
@@ -9665,6 +10939,7 @@ fn segment_id_message() -> MessageInfo {
 fn segment_leaderboard_entry_message() -> MessageInfo {
     let mut fields = HashMap::new();
 
+    // Friendly name assigned to leader
     let field = FieldInfo {
         name: "name",
         field_type: FieldDataType::String,
@@ -9673,9 +10948,11 @@ fn segment_leaderboard_entry_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
+    // Leader classification
     let field = FieldInfo {
         name: "type",
         field_type: FieldDataType::SegmentLeaderboardType,
@@ -9684,9 +10961,11 @@ fn segment_leaderboard_entry_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
+    // Primary user ID of this leader
     let field = FieldInfo {
         name: "group_primary_key",
         field_type: FieldDataType::UInt32,
@@ -9695,9 +10974,11 @@ fn segment_leaderboard_entry_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
+    // ID of the activity associated with this leader time
     let field = FieldInfo {
         name: "activity_id",
         field_type: FieldDataType::UInt32,
@@ -9706,9 +10987,11 @@ fn segment_leaderboard_entry_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
+    // Segment Time (includes pauses)
     let field = FieldInfo {
         name: "segment_time",
         field_type: FieldDataType::UInt32,
@@ -9717,9 +11000,11 @@ fn segment_leaderboard_entry_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
+    // String version of the activity_id. 21 characters long, express in decimal
     let field = FieldInfo {
         name: "activity_id_string",
         field_type: FieldDataType::String,
@@ -9728,6 +11013,7 @@ fn segment_leaderboard_entry_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(5, field);
 
@@ -9739,6 +11025,7 @@ fn segment_leaderboard_entry_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(254, field);
 
@@ -9759,6 +11046,7 @@ fn segment_point_message() -> MessageInfo {
         offset: 0.000000,
         units: "semicircles",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
@@ -9770,9 +11058,11 @@ fn segment_point_message() -> MessageInfo {
         offset: 0.000000,
         units: "semicircles",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
+    // Accumulated distance along the segment at the described point
     let field = FieldInfo {
         name: "distance",
         field_type: FieldDataType::UInt32,
@@ -9781,9 +11071,11 @@ fn segment_point_message() -> MessageInfo {
         offset: 0.000000,
         units: "m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
+    // Accumulated altitude along the segment at the described point
     let field = FieldInfo {
         name: "altitude",
         field_type: FieldDataType::UInt16,
@@ -9792,10 +11084,11 @@ fn segment_point_message() -> MessageInfo {
         offset: 500.000000,
         units: "m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
-    // [N]
+    // Accumualted time each leader board member required to reach the described point. This value is zero for all leader board members at the starting point of the segment.
     let field = FieldInfo {
         name: "leader_time",
         field_type: FieldDataType::UInt32,
@@ -9804,6 +11097,7 @@ fn segment_point_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(5, field);
 
@@ -9815,6 +11109,7 @@ fn segment_point_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(254, field);
 
@@ -9835,6 +11130,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
@@ -9846,6 +11142,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
@@ -9857,6 +11154,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
@@ -9868,6 +11166,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "semicircles",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
@@ -9879,6 +11178,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "semicircles",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
@@ -9890,6 +11190,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "semicircles",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(5, field);
 
@@ -9901,9 +11202,11 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "semicircles",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(6, field);
 
+    // Time (includes pauses)
     let field = FieldInfo {
         name: "total_elapsed_time",
         field_type: FieldDataType::UInt32,
@@ -9912,9 +11215,11 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(7, field);
 
+    // Timer Time (excludes pauses)
     let field = FieldInfo {
         name: "total_timer_time",
         field_type: FieldDataType::UInt32,
@@ -9923,6 +11228,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(8, field);
 
@@ -9934,6 +11240,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(9, field);
 
@@ -9946,6 +11253,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "strokes",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((23, Sport::Cycling.as_i64(), sub_fld));
     let field = FieldInfo {
@@ -9956,6 +11264,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "cycles",
         subfields: subfields,
+        components: Vec::new(),
     };
     fields.insert(10, field);
 
@@ -9967,9 +11276,11 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "kcal",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(11, field);
 
+    // If New Leaf
     let field = FieldInfo {
         name: "total_fat_calories",
         field_type: FieldDataType::UInt16,
@@ -9978,6 +11289,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "kcal",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(12, field);
 
@@ -9989,6 +11301,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "m/s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(13, field);
 
@@ -10000,6 +11313,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "m/s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(14, field);
 
@@ -10011,6 +11325,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "bpm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(15, field);
 
@@ -10022,9 +11337,11 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "bpm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(16, field);
 
+    // total_cycles / total_timer_time if non_zero_avg_cadence otherwise total_cycles / total_elapsed_time
     let field = FieldInfo {
         name: "avg_cadence",
         field_type: FieldDataType::UInt8,
@@ -10033,6 +11350,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "rpm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(17, field);
 
@@ -10044,9 +11362,11 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "rpm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(18, field);
 
+    // total_power / total_timer_time if non_zero_avg_power otherwise total_power / total_elapsed_time
     let field = FieldInfo {
         name: "avg_power",
         field_type: FieldDataType::UInt16,
@@ -10055,6 +11375,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "watts",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(19, field);
 
@@ -10066,6 +11387,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "watts",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(20, field);
 
@@ -10077,6 +11399,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(21, field);
 
@@ -10088,6 +11411,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(22, field);
 
@@ -10099,6 +11423,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(23, field);
 
@@ -10110,9 +11435,11 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(24, field);
 
+    // North east corner latitude.
     let field = FieldInfo {
         name: "nec_lat",
         field_type: FieldDataType::SInt32,
@@ -10121,9 +11448,11 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "semicircles",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(25, field);
 
+    // North east corner longitude.
     let field = FieldInfo {
         name: "nec_long",
         field_type: FieldDataType::SInt32,
@@ -10132,9 +11461,11 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "semicircles",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(26, field);
 
+    // South west corner latitude.
     let field = FieldInfo {
         name: "swc_lat",
         field_type: FieldDataType::SInt32,
@@ -10143,9 +11474,11 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "semicircles",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(27, field);
 
+    // South west corner latitude.
     let field = FieldInfo {
         name: "swc_long",
         field_type: FieldDataType::SInt32,
@@ -10154,6 +11487,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "semicircles",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(28, field);
 
@@ -10165,6 +11499,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(29, field);
 
@@ -10176,6 +11511,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "watts",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(30, field);
 
@@ -10187,6 +11523,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(31, field);
 
@@ -10198,6 +11535,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(32, field);
 
@@ -10209,6 +11547,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "J",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(33, field);
 
@@ -10220,6 +11559,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 500.000000,
         units: "m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(34, field);
 
@@ -10231,6 +11571,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 500.000000,
         units: "m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(35, field);
 
@@ -10242,6 +11583,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(36, field);
 
@@ -10253,6 +11595,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "%",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(37, field);
 
@@ -10264,6 +11607,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "%",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(38, field);
 
@@ -10275,6 +11619,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "%",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(39, field);
 
@@ -10286,6 +11631,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "%",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(40, field);
 
@@ -10297,6 +11643,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "%",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(41, field);
 
@@ -10308,6 +11655,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "C",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(42, field);
 
@@ -10319,6 +11667,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "C",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(43, field);
 
@@ -10330,6 +11679,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(44, field);
 
@@ -10341,6 +11691,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "m/s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(45, field);
 
@@ -10352,6 +11703,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "m/s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(46, field);
 
@@ -10363,6 +11715,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "m/s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(47, field);
 
@@ -10374,10 +11727,10 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "m/s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(48, field);
 
-    // [N]
     let field = FieldInfo {
         name: "time_in_hr_zone",
         field_type: FieldDataType::UInt32,
@@ -10386,10 +11739,10 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(49, field);
 
-    // [N]
     let field = FieldInfo {
         name: "time_in_speed_zone",
         field_type: FieldDataType::UInt32,
@@ -10398,10 +11751,10 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(50, field);
 
-    // [N]
     let field = FieldInfo {
         name: "time_in_cadence_zone",
         field_type: FieldDataType::UInt32,
@@ -10410,10 +11763,10 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(51, field);
 
-    // [N]
     let field = FieldInfo {
         name: "time_in_power_zone",
         field_type: FieldDataType::UInt32,
@@ -10422,6 +11775,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(52, field);
 
@@ -10433,6 +11787,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(53, field);
 
@@ -10444,6 +11799,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 500.000000,
         units: "m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(54, field);
 
@@ -10455,6 +11811,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "bpm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(55, field);
 
@@ -10466,6 +11823,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(56, field);
 
@@ -10477,6 +11835,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(57, field);
 
@@ -10488,6 +11847,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(58, field);
 
@@ -10499,6 +11859,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "percent",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(59, field);
 
@@ -10510,6 +11871,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "percent",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(60, field);
 
@@ -10521,6 +11883,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "percent",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(61, field);
 
@@ -10532,6 +11895,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "percent",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(62, field);
 
@@ -10543,6 +11907,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "percent",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(63, field);
 
@@ -10554,6 +11919,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(64, field);
 
@@ -10565,9 +11931,11 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(65, field);
 
+    // fractional part of the avg_cadence
     let field = FieldInfo {
         name: "avg_fractional_cadence",
         field_type: FieldDataType::UInt8,
@@ -10576,9 +11944,11 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "rpm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(66, field);
 
+    // fractional part of the max_cadence
     let field = FieldInfo {
         name: "max_fractional_cadence",
         field_type: FieldDataType::UInt8,
@@ -10587,9 +11957,11 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "rpm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(67, field);
 
+    // fractional part of the total_cycles
     let field = FieldInfo {
         name: "total_fractional_cycles",
         field_type: FieldDataType::UInt8,
@@ -10598,6 +11970,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "cycles",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(68, field);
 
@@ -10609,6 +11982,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(69, field);
 
@@ -10620,9 +11994,11 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(70, field);
 
+    // Total time spent in the standing position
     let field = FieldInfo {
         name: "time_standing",
         field_type: FieldDataType::UInt32,
@@ -10631,9 +12007,11 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(71, field);
 
+    // Number of transitions to the standing state
     let field = FieldInfo {
         name: "stand_count",
         field_type: FieldDataType::UInt16,
@@ -10642,9 +12020,11 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(72, field);
 
+    // Average left platform center offset
     let field = FieldInfo {
         name: "avg_left_pco",
         field_type: FieldDataType::SInt8,
@@ -10653,9 +12033,11 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "mm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(73, field);
 
+    // Average right platform center offset
     let field = FieldInfo {
         name: "avg_right_pco",
         field_type: FieldDataType::SInt8,
@@ -10664,10 +12046,11 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "mm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(74, field);
 
-    // [N]
+    // Average left power phase angles. Data value indexes defined by power_phase_type.
     let field = FieldInfo {
         name: "avg_left_power_phase",
         field_type: FieldDataType::UInt8,
@@ -10676,10 +12059,11 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "degrees",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(75, field);
 
-    // [N]
+    // Average left power phase peak angles. Data value indexes defined by power_phase_type.
     let field = FieldInfo {
         name: "avg_left_power_phase_peak",
         field_type: FieldDataType::UInt8,
@@ -10688,10 +12072,11 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "degrees",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(76, field);
 
-    // [N]
+    // Average right power phase angles. Data value indexes defined by power_phase_type.
     let field = FieldInfo {
         name: "avg_right_power_phase",
         field_type: FieldDataType::UInt8,
@@ -10700,10 +12085,11 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "degrees",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(77, field);
 
-    // [N]
+    // Average right power phase peak angles. Data value indexes defined by power_phase_type.
     let field = FieldInfo {
         name: "avg_right_power_phase_peak",
         field_type: FieldDataType::UInt8,
@@ -10712,10 +12098,11 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "degrees",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(78, field);
 
-    // [N]
+    // Average power by position. Data value indexes defined by rider_position_type.
     let field = FieldInfo {
         name: "avg_power_position",
         field_type: FieldDataType::UInt16,
@@ -10724,10 +12111,11 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "watts",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(79, field);
 
-    // [N]
+    // Maximum power by position. Data value indexes defined by rider_position_type.
     let field = FieldInfo {
         name: "max_power_position",
         field_type: FieldDataType::UInt16,
@@ -10736,10 +12124,11 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "watts",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(80, field);
 
-    // [N]
+    // Average cadence by position. Data value indexes defined by rider_position_type.
     let field = FieldInfo {
         name: "avg_cadence_position",
         field_type: FieldDataType::UInt8,
@@ -10748,10 +12137,11 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "rpm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(81, field);
 
-    // [N]
+    // Maximum cadence by position. Data value indexes defined by rider_position_type.
     let field = FieldInfo {
         name: "max_cadence_position",
         field_type: FieldDataType::UInt8,
@@ -10760,9 +12150,11 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "rpm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(82, field);
 
+    // Manufacturer that produced the segment
     let field = FieldInfo {
         name: "manufacturer",
         field_type: FieldDataType::Manufacturer,
@@ -10771,9 +12163,11 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(83, field);
 
+    // The grit score estimates how challenging a route could be for a cyclist in terms of time spent going over sharp turns or large grade slopes.
     let field = FieldInfo {
         name: "total_grit",
         field_type: FieldDataType::Float32,
@@ -10782,9 +12176,11 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "kGrit",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(84, field);
 
+    // The flow score estimates how long distance wise a cyclist deaccelerates over intervals where deacceleration is unnecessary such as smooth turns or small grade angle intervals.
     let field = FieldInfo {
         name: "total_flow",
         field_type: FieldDataType::Float32,
@@ -10793,9 +12189,11 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "Flow",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(85, field);
 
+    // The grit score estimates how challenging a route could be for a cyclist in terms of time spent going over sharp turns or large grade slopes.
     let field = FieldInfo {
         name: "avg_grit",
         field_type: FieldDataType::Float32,
@@ -10804,9 +12202,11 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "kGrit",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(86, field);
 
+    // The flow score estimates how long distance wise a cyclist deaccelerates over intervals where deacceleration is unnecessary such as smooth turns or small grade angle intervals.
     let field = FieldInfo {
         name: "avg_flow",
         field_type: FieldDataType::Float32,
@@ -10815,9 +12215,11 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "Flow",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(87, field);
 
+    // Lap end time.
     let field = FieldInfo {
         name: "timestamp",
         field_type: FieldDataType::DateTime,
@@ -10826,6 +12228,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(253, field);
 
@@ -10837,6 +12240,7 @@ fn segment_lap_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(254, field);
 
@@ -10849,6 +12253,7 @@ fn segment_lap_message() -> MessageInfo {
 fn segment_file_message() -> MessageInfo {
     let mut fields = HashMap::new();
 
+    // UUID of the segment file
     let field = FieldInfo {
         name: "file_uuid",
         field_type: FieldDataType::String,
@@ -10857,9 +12262,11 @@ fn segment_file_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
+    // Enabled state of the segment file
     let field = FieldInfo {
         name: "enabled",
         field_type: FieldDataType::Bool,
@@ -10868,9 +12275,11 @@ fn segment_file_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
+    // Primary key of the user that created the segment file
     let field = FieldInfo {
         name: "user_profile_primary_key",
         field_type: FieldDataType::UInt32,
@@ -10879,10 +12288,11 @@ fn segment_file_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
-    // [N]
+    // Leader type of each leader in the segment file
     let field = FieldInfo {
         name: "leader_type",
         field_type: FieldDataType::SegmentLeaderboardType,
@@ -10891,10 +12301,11 @@ fn segment_file_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(7, field);
 
-    // [N]
+    // Group primary key of each leader in the segment file
     let field = FieldInfo {
         name: "leader_group_primary_key",
         field_type: FieldDataType::UInt32,
@@ -10903,10 +12314,11 @@ fn segment_file_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(8, field);
 
-    // [N]
+    // Activity ID of each leader in the segment file
     let field = FieldInfo {
         name: "leader_activity_id",
         field_type: FieldDataType::UInt32,
@@ -10915,10 +12327,11 @@ fn segment_file_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(9, field);
 
-    // [N]
+    // String version of the activity ID of each leader in the segment file. 21 characters long for each ID, express in decimal
     let field = FieldInfo {
         name: "leader_activity_id_string",
         field_type: FieldDataType::String,
@@ -10927,9 +12340,11 @@ fn segment_file_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(10, field);
 
+    // Index for the Leader Board entry selected as the default race participant
     let field = FieldInfo {
         name: "default_race_leader",
         field_type: FieldDataType::UInt8,
@@ -10938,6 +12353,7 @@ fn segment_file_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(11, field);
 
@@ -10949,6 +12365,7 @@ fn segment_file_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(254, field);
 
@@ -10969,6 +12386,7 @@ fn workout_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
@@ -10980,9 +12398,11 @@ fn workout_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(5, field);
 
+    // number of valid steps
     let field = FieldInfo {
         name: "num_valid_steps",
         field_type: FieldDataType::UInt16,
@@ -10991,6 +12411,7 @@ fn workout_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(6, field);
 
@@ -11002,6 +12423,7 @@ fn workout_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(8, field);
 
@@ -11013,6 +12435,7 @@ fn workout_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(11, field);
 
@@ -11024,6 +12447,7 @@ fn workout_message() -> MessageInfo {
         offset: 0.000000,
         units: "m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(14, field);
 
@@ -11035,6 +12459,7 @@ fn workout_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(15, field);
 
@@ -11055,6 +12480,7 @@ fn workout_session_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
@@ -11066,6 +12492,7 @@ fn workout_session_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
@@ -11077,6 +12504,7 @@ fn workout_session_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
@@ -11088,6 +12516,7 @@ fn workout_session_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
@@ -11099,6 +12528,7 @@ fn workout_session_message() -> MessageInfo {
         offset: 0.000000,
         units: "m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
@@ -11110,6 +12540,7 @@ fn workout_session_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(5, field);
 
@@ -11121,6 +12552,7 @@ fn workout_session_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(254, field);
 
@@ -11141,6 +12573,7 @@ fn workout_step_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
@@ -11152,6 +12585,7 @@ fn workout_step_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
@@ -11164,6 +12598,7 @@ fn workout_step_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((1, WktStepDuration::Time.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -11174,6 +12609,7 @@ fn workout_step_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((1, WktStepDuration::RepetitionTime.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -11184,6 +12620,7 @@ fn workout_step_message() -> MessageInfo {
         offset: 0.000000,
         units: "m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((1, WktStepDuration::Distance.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -11194,6 +12631,7 @@ fn workout_step_message() -> MessageInfo {
         offset: 0.000000,
         units: "% or bpm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((1, WktStepDuration::HrLessThan.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -11204,6 +12642,7 @@ fn workout_step_message() -> MessageInfo {
         offset: 0.000000,
         units: "% or bpm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((1, WktStepDuration::HrGreaterThan.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -11214,8 +12653,10 @@ fn workout_step_message() -> MessageInfo {
         offset: 0.000000,
         units: "calories",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((1, WktStepDuration::Calories.as_i64(), sub_fld));
+    // message_index of step to loop back to. Steps are assumed to be in the order by message_index. custom_name and intensity members are undefined for this duration type.
     let sub_fld = FieldInfo {
         name: "duration_step",
         field_type: FieldDataType::UInt32,
@@ -11224,8 +12665,10 @@ fn workout_step_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((1, WktStepDuration::RepeatUntilStepsCmplt.as_i64(), sub_fld));
+    // message_index of step to loop back to. Steps are assumed to be in the order by message_index. custom_name and intensity members are undefined for this duration type.
     let sub_fld = FieldInfo {
         name: "duration_step",
         field_type: FieldDataType::UInt32,
@@ -11234,8 +12677,10 @@ fn workout_step_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((1, WktStepDuration::RepeatUntilTime.as_i64(), sub_fld));
+    // message_index of step to loop back to. Steps are assumed to be in the order by message_index. custom_name and intensity members are undefined for this duration type.
     let sub_fld = FieldInfo {
         name: "duration_step",
         field_type: FieldDataType::UInt32,
@@ -11244,8 +12689,10 @@ fn workout_step_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((1, WktStepDuration::RepeatUntilDistance.as_i64(), sub_fld));
+    // message_index of step to loop back to. Steps are assumed to be in the order by message_index. custom_name and intensity members are undefined for this duration type.
     let sub_fld = FieldInfo {
         name: "duration_step",
         field_type: FieldDataType::UInt32,
@@ -11254,8 +12701,10 @@ fn workout_step_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((1, WktStepDuration::RepeatUntilCalories.as_i64(), sub_fld));
+    // message_index of step to loop back to. Steps are assumed to be in the order by message_index. custom_name and intensity members are undefined for this duration type.
     let sub_fld = FieldInfo {
         name: "duration_step",
         field_type: FieldDataType::UInt32,
@@ -11264,8 +12713,10 @@ fn workout_step_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((1, WktStepDuration::RepeatUntilHrLessThan.as_i64(), sub_fld));
+    // message_index of step to loop back to. Steps are assumed to be in the order by message_index. custom_name and intensity members are undefined for this duration type.
     let sub_fld = FieldInfo {
         name: "duration_step",
         field_type: FieldDataType::UInt32,
@@ -11274,12 +12725,14 @@ fn workout_step_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((
         1,
         WktStepDuration::RepeatUntilHrGreaterThan.as_i64(),
         sub_fld,
     ));
+    // message_index of step to loop back to. Steps are assumed to be in the order by message_index. custom_name and intensity members are undefined for this duration type.
     let sub_fld = FieldInfo {
         name: "duration_step",
         field_type: FieldDataType::UInt32,
@@ -11288,12 +12741,14 @@ fn workout_step_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((
         1,
         WktStepDuration::RepeatUntilPowerLessThan.as_i64(),
         sub_fld,
     ));
+    // message_index of step to loop back to. Steps are assumed to be in the order by message_index. custom_name and intensity members are undefined for this duration type.
     let sub_fld = FieldInfo {
         name: "duration_step",
         field_type: FieldDataType::UInt32,
@@ -11302,6 +12757,7 @@ fn workout_step_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((
         1,
@@ -11316,6 +12772,7 @@ fn workout_step_message() -> MessageInfo {
         offset: 0.000000,
         units: "% or watts",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((1, WktStepDuration::PowerLessThan.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -11326,6 +12783,7 @@ fn workout_step_message() -> MessageInfo {
         offset: 0.000000,
         units: "% or watts",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((1, WktStepDuration::PowerGreaterThan.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -11336,6 +12794,7 @@ fn workout_step_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((1, WktStepDuration::Reps.as_i64(), sub_fld));
     let field = FieldInfo {
@@ -11346,6 +12805,7 @@ fn workout_step_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: subfields,
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
@@ -11357,10 +12817,12 @@ fn workout_step_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
     let mut subfields = Vec::new();
+    // speed zone (1-10);Custom =0;
     let sub_fld = FieldInfo {
         name: "target_speed_zone",
         field_type: FieldDataType::UInt32,
@@ -11369,8 +12831,10 @@ fn workout_step_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((3, WktStepTarget::Speed.as_i64(), sub_fld));
+    // hr zone (1-5);Custom =0;
     let sub_fld = FieldInfo {
         name: "target_hr_zone",
         field_type: FieldDataType::UInt32,
@@ -11379,8 +12843,10 @@ fn workout_step_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((3, WktStepTarget::HeartRate.as_i64(), sub_fld));
+    // Zone (1-?); Custom = 0;
     let sub_fld = FieldInfo {
         name: "target_cadence_zone",
         field_type: FieldDataType::UInt32,
@@ -11389,8 +12855,10 @@ fn workout_step_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((3, WktStepTarget::Cadence.as_i64(), sub_fld));
+    // Power Zone ( 1-7); Custom = 0;
     let sub_fld = FieldInfo {
         name: "target_power_zone",
         field_type: FieldDataType::UInt32,
@@ -11399,8 +12867,10 @@ fn workout_step_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((3, WktStepTarget::Power.as_i64(), sub_fld));
+    // # of repetitions
     let sub_fld = FieldInfo {
         name: "repeat_steps",
         field_type: FieldDataType::UInt32,
@@ -11409,6 +12879,7 @@ fn workout_step_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((1, WktStepDuration::RepeatUntilStepsCmplt.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -11419,6 +12890,7 @@ fn workout_step_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((1, WktStepDuration::RepeatUntilTime.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -11429,6 +12901,7 @@ fn workout_step_message() -> MessageInfo {
         offset: 0.000000,
         units: "m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((1, WktStepDuration::RepeatUntilDistance.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -11439,6 +12912,7 @@ fn workout_step_message() -> MessageInfo {
         offset: 0.000000,
         units: "calories",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((1, WktStepDuration::RepeatUntilCalories.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -11449,6 +12923,7 @@ fn workout_step_message() -> MessageInfo {
         offset: 0.000000,
         units: "% or bpm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((1, WktStepDuration::RepeatUntilHrLessThan.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -11459,6 +12934,7 @@ fn workout_step_message() -> MessageInfo {
         offset: 0.000000,
         units: "% or bpm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((
         1,
@@ -11473,6 +12949,7 @@ fn workout_step_message() -> MessageInfo {
         offset: 0.000000,
         units: "% or watts",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((
         1,
@@ -11487,6 +12964,7 @@ fn workout_step_message() -> MessageInfo {
         offset: 0.000000,
         units: "% or watts",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((
         1,
@@ -11501,6 +12979,7 @@ fn workout_step_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((3, WktStepTarget::SwimStroke.as_i64(), sub_fld));
     let field = FieldInfo {
@@ -11511,6 +12990,7 @@ fn workout_step_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: subfields,
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
@@ -11523,6 +13003,7 @@ fn workout_step_message() -> MessageInfo {
         offset: 0.000000,
         units: "m/s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((3, WktStepTarget::Speed.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -11533,6 +13014,7 @@ fn workout_step_message() -> MessageInfo {
         offset: 0.000000,
         units: "% or bpm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((3, WktStepTarget::HeartRate.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -11543,6 +13025,7 @@ fn workout_step_message() -> MessageInfo {
         offset: 0.000000,
         units: "rpm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((3, WktStepTarget::Cadence.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -11553,6 +13036,7 @@ fn workout_step_message() -> MessageInfo {
         offset: 0.000000,
         units: "% or watts",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((3, WktStepTarget::Power.as_i64(), sub_fld));
     let field = FieldInfo {
@@ -11563,6 +13047,7 @@ fn workout_step_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: subfields,
+        components: Vec::new(),
     };
     fields.insert(5, field);
 
@@ -11575,6 +13060,7 @@ fn workout_step_message() -> MessageInfo {
         offset: 0.000000,
         units: "m/s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((3, WktStepTarget::Speed.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -11585,6 +13071,7 @@ fn workout_step_message() -> MessageInfo {
         offset: 0.000000,
         units: "% or bpm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((3, WktStepTarget::HeartRate.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -11595,6 +13082,7 @@ fn workout_step_message() -> MessageInfo {
         offset: 0.000000,
         units: "rpm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((3, WktStepTarget::Cadence.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -11605,6 +13093,7 @@ fn workout_step_message() -> MessageInfo {
         offset: 0.000000,
         units: "% or watts",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((3, WktStepTarget::Power.as_i64(), sub_fld));
     let field = FieldInfo {
@@ -11615,6 +13104,7 @@ fn workout_step_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: subfields,
+        components: Vec::new(),
     };
     fields.insert(6, field);
 
@@ -11626,6 +13116,7 @@ fn workout_step_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(7, field);
 
@@ -11637,6 +13128,7 @@ fn workout_step_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(8, field);
 
@@ -11648,6 +13140,7 @@ fn workout_step_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(9, field);
 
@@ -11659,6 +13152,7 @@ fn workout_step_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(10, field);
 
@@ -11670,6 +13164,7 @@ fn workout_step_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(11, field);
 
@@ -11681,6 +13176,7 @@ fn workout_step_message() -> MessageInfo {
         offset: 0.000000,
         units: "kg",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(12, field);
 
@@ -11692,6 +13188,7 @@ fn workout_step_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(13, field);
 
@@ -11703,6 +13200,7 @@ fn workout_step_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(254, field);
 
@@ -11723,6 +13221,7 @@ fn exercise_title_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
@@ -11734,10 +13233,10 @@ fn exercise_title_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
-    // [N]
     let field = FieldInfo {
         name: "wkt_step_name",
         field_type: FieldDataType::String,
@@ -11746,6 +13245,7 @@ fn exercise_title_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
@@ -11757,6 +13257,7 @@ fn exercise_title_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(254, field);
 
@@ -11769,6 +13270,7 @@ fn exercise_title_message() -> MessageInfo {
 fn schedule_message() -> MessageInfo {
     let mut fields = HashMap::new();
 
+    // Corresponds to file_id of scheduled workout / course.
     let field = FieldInfo {
         name: "manufacturer",
         field_type: FieldDataType::Manufacturer,
@@ -11777,6 +13279,7 @@ fn schedule_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
@@ -11789,6 +13292,7 @@ fn schedule_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((0, Manufacturer::FaveroElectronics.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -11799,6 +13303,7 @@ fn schedule_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((0, Manufacturer::Garmin.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -11809,6 +13314,7 @@ fn schedule_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((0, Manufacturer::Dynastream.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -11819,8 +13325,10 @@ fn schedule_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((0, Manufacturer::DynastreamOem.as_i64(), sub_fld));
+    // Corresponds to file_id of scheduled workout / course.
     let field = FieldInfo {
         name: "product",
         field_type: FieldDataType::UInt16,
@@ -11829,9 +13337,11 @@ fn schedule_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: subfields,
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
+    // Corresponds to file_id of scheduled workout / course.
     let field = FieldInfo {
         name: "serial_number",
         field_type: FieldDataType::UInt32z,
@@ -11840,9 +13350,11 @@ fn schedule_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
+    // Corresponds to file_id of scheduled workout / course.
     let field = FieldInfo {
         name: "time_created",
         field_type: FieldDataType::DateTime,
@@ -11851,9 +13363,11 @@ fn schedule_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
+    // TRUE if this activity has been started
     let field = FieldInfo {
         name: "completed",
         field_type: FieldDataType::Bool,
@@ -11862,6 +13376,7 @@ fn schedule_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
@@ -11873,6 +13388,7 @@ fn schedule_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(5, field);
 
@@ -11884,6 +13400,7 @@ fn schedule_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(6, field);
 
@@ -11896,6 +13413,7 @@ fn schedule_message() -> MessageInfo {
 fn totals_message() -> MessageInfo {
     let mut fields = HashMap::new();
 
+    // Excludes pauses
     let field = FieldInfo {
         name: "timer_time",
         field_type: FieldDataType::UInt32,
@@ -11904,6 +13422,7 @@ fn totals_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
@@ -11915,6 +13434,7 @@ fn totals_message() -> MessageInfo {
         offset: 0.000000,
         units: "m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
@@ -11926,6 +13446,7 @@ fn totals_message() -> MessageInfo {
         offset: 0.000000,
         units: "kcal",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
@@ -11937,9 +13458,11 @@ fn totals_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
+    // Includes pauses
     let field = FieldInfo {
         name: "elapsed_time",
         field_type: FieldDataType::UInt32,
@@ -11948,6 +13471,7 @@ fn totals_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
@@ -11959,6 +13483,7 @@ fn totals_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(5, field);
 
@@ -11970,6 +13495,7 @@ fn totals_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(6, field);
 
@@ -11981,6 +13507,7 @@ fn totals_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(9, field);
 
@@ -11992,6 +13519,7 @@ fn totals_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(253, field);
 
@@ -12003,6 +13531,7 @@ fn totals_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(254, field);
 
@@ -12023,6 +13552,7 @@ fn weight_scale_message() -> MessageInfo {
         offset: 0.000000,
         units: "kg",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
@@ -12034,6 +13564,7 @@ fn weight_scale_message() -> MessageInfo {
         offset: 0.000000,
         units: "%",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
@@ -12045,6 +13576,7 @@ fn weight_scale_message() -> MessageInfo {
         offset: 0.000000,
         units: "%",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
@@ -12056,6 +13588,7 @@ fn weight_scale_message() -> MessageInfo {
         offset: 0.000000,
         units: "kg",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
@@ -12067,6 +13600,7 @@ fn weight_scale_message() -> MessageInfo {
         offset: 0.000000,
         units: "kg",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
@@ -12078,6 +13612,7 @@ fn weight_scale_message() -> MessageInfo {
         offset: 0.000000,
         units: "kg",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(5, field);
 
@@ -12089,6 +13624,7 @@ fn weight_scale_message() -> MessageInfo {
         offset: 0.000000,
         units: "kcal/day",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(7, field);
 
@@ -12100,9 +13636,11 @@ fn weight_scale_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(8, field);
 
+    // ~4kJ per kcal, 0.25 allows max 16384 kcal
     let field = FieldInfo {
         name: "active_met",
         field_type: FieldDataType::UInt16,
@@ -12111,6 +13649,7 @@ fn weight_scale_message() -> MessageInfo {
         offset: 0.000000,
         units: "kcal/day",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(9, field);
 
@@ -12122,6 +13661,7 @@ fn weight_scale_message() -> MessageInfo {
         offset: 0.000000,
         units: "years",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(10, field);
 
@@ -12133,9 +13673,11 @@ fn weight_scale_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(11, field);
 
+    // Associates this weight scale message to a user.  This corresponds to the index of the user profile message in the weight scale file.
     let field = FieldInfo {
         name: "user_profile_index",
         field_type: FieldDataType::MessageIndex,
@@ -12144,6 +13686,7 @@ fn weight_scale_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(12, field);
 
@@ -12155,6 +13698,7 @@ fn weight_scale_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(253, field);
 
@@ -12175,6 +13719,7 @@ fn blood_pressure_message() -> MessageInfo {
         offset: 0.000000,
         units: "mmHg",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
@@ -12186,6 +13731,7 @@ fn blood_pressure_message() -> MessageInfo {
         offset: 0.000000,
         units: "mmHg",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
@@ -12197,6 +13743,7 @@ fn blood_pressure_message() -> MessageInfo {
         offset: 0.000000,
         units: "mmHg",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
@@ -12208,6 +13755,7 @@ fn blood_pressure_message() -> MessageInfo {
         offset: 0.000000,
         units: "mmHg",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
@@ -12219,6 +13767,7 @@ fn blood_pressure_message() -> MessageInfo {
         offset: 0.000000,
         units: "mmHg",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
@@ -12230,6 +13779,7 @@ fn blood_pressure_message() -> MessageInfo {
         offset: 0.000000,
         units: "mmHg",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(5, field);
 
@@ -12241,6 +13791,7 @@ fn blood_pressure_message() -> MessageInfo {
         offset: 0.000000,
         units: "bpm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(6, field);
 
@@ -12252,6 +13803,7 @@ fn blood_pressure_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(7, field);
 
@@ -12263,9 +13815,11 @@ fn blood_pressure_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(8, field);
 
+    // Associates this blood pressure message to a user.  This corresponds to the index of the user profile message in the blood pressure file.
     let field = FieldInfo {
         name: "user_profile_index",
         field_type: FieldDataType::MessageIndex,
@@ -12274,6 +13828,7 @@ fn blood_pressure_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(9, field);
 
@@ -12285,6 +13840,7 @@ fn blood_pressure_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(253, field);
 
@@ -12297,6 +13853,7 @@ fn blood_pressure_message() -> MessageInfo {
 fn monitoring_info_message() -> MessageInfo {
     let mut fields = HashMap::new();
 
+    // Use to convert activity timestamps to local time if device does not support time zone and daylight savings time correction.
     let field = FieldInfo {
         name: "local_timestamp",
         field_type: FieldDataType::LocalDateTime,
@@ -12305,10 +13862,10 @@ fn monitoring_info_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
-    // [N]
     let field = FieldInfo {
         name: "activity_type",
         field_type: FieldDataType::ActivityType,
@@ -12317,10 +13874,11 @@ fn monitoring_info_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
-    // [N]
+    // Indexed by activity_type
     let field = FieldInfo {
         name: "cycles_to_distance",
         field_type: FieldDataType::UInt16,
@@ -12329,10 +13887,11 @@ fn monitoring_info_message() -> MessageInfo {
         offset: 0.000000,
         units: "m/cycle",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
-    // [N]
+    // Indexed by activity_type
     let field = FieldInfo {
         name: "cycles_to_calories",
         field_type: FieldDataType::UInt16,
@@ -12341,6 +13900,7 @@ fn monitoring_info_message() -> MessageInfo {
         offset: 0.000000,
         units: "kcal/cycle",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
@@ -12352,6 +13912,7 @@ fn monitoring_info_message() -> MessageInfo {
         offset: 0.000000,
         units: "kcal / day",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(5, field);
 
@@ -12363,6 +13924,7 @@ fn monitoring_info_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(253, field);
 
@@ -12375,6 +13937,7 @@ fn monitoring_info_message() -> MessageInfo {
 fn monitoring_message() -> MessageInfo {
     let mut fields = HashMap::new();
 
+    // Associates this data to device_info message.  Not required for file with single device (sensor).
     let field = FieldInfo {
         name: "device_index",
         field_type: FieldDataType::DeviceIndex,
@@ -12383,9 +13946,11 @@ fn monitoring_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
+    // Accumulated total calories.  Maintained by MonitoringReader for each activity_type.  See SDK documentation
     let field = FieldInfo {
         name: "calories",
         field_type: FieldDataType::UInt16,
@@ -12394,9 +13959,11 @@ fn monitoring_message() -> MessageInfo {
         offset: 0.000000,
         units: "kcal",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
+    // Accumulated distance.  Maintained by MonitoringReader for each activity_type.  See SDK documentation.
     let field = FieldInfo {
         name: "distance",
         field_type: FieldDataType::UInt32,
@@ -12405,6 +13972,7 @@ fn monitoring_message() -> MessageInfo {
         offset: 0.000000,
         units: "m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
@@ -12417,6 +13985,7 @@ fn monitoring_message() -> MessageInfo {
         offset: 0.000000,
         units: "steps",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((5, ActivityType::Walking.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -12427,6 +13996,7 @@ fn monitoring_message() -> MessageInfo {
         offset: 0.000000,
         units: "steps",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((5, ActivityType::Running.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -12437,6 +14007,7 @@ fn monitoring_message() -> MessageInfo {
         offset: 0.000000,
         units: "strokes",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((5, ActivityType::Cycling.as_i64(), sub_fld));
     let sub_fld = FieldInfo {
@@ -12447,8 +14018,10 @@ fn monitoring_message() -> MessageInfo {
         offset: 0.000000,
         units: "strokes",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     subfields.push((5, ActivityType::Swimming.as_i64(), sub_fld));
+    // Accumulated cycles.  Maintained by MonitoringReader for each activity_type.  See SDK documentation.
     let field = FieldInfo {
         name: "cycles",
         field_type: FieldDataType::UInt32,
@@ -12457,6 +14030,7 @@ fn monitoring_message() -> MessageInfo {
         offset: 0.000000,
         units: "cycles",
         subfields: subfields,
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
@@ -12468,6 +14042,7 @@ fn monitoring_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
@@ -12479,6 +14054,7 @@ fn monitoring_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(5, field);
 
@@ -12490,6 +14066,7 @@ fn monitoring_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(6, field);
 
@@ -12501,6 +14078,7 @@ fn monitoring_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(7, field);
 
@@ -12512,6 +14090,7 @@ fn monitoring_message() -> MessageInfo {
         offset: 0.000000,
         units: "100 * m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(8, field);
 
@@ -12523,6 +14102,7 @@ fn monitoring_message() -> MessageInfo {
         offset: 0.000000,
         units: "2 * cycles (steps)",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(9, field);
 
@@ -12534,9 +14114,11 @@ fn monitoring_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(10, field);
 
+    // Must align to logging interval, for example, time must be 00:00:00 for daily log.
     let field = FieldInfo {
         name: "local_timestamp",
         field_type: FieldDataType::LocalDateTime,
@@ -12545,9 +14127,11 @@ fn monitoring_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(11, field);
 
+    // Avg temperature during the logging interval ended at timestamp
     let field = FieldInfo {
         name: "temperature",
         field_type: FieldDataType::SInt16,
@@ -12556,9 +14140,11 @@ fn monitoring_message() -> MessageInfo {
         offset: 0.000000,
         units: "C",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(12, field);
 
+    // Min temperature during the logging interval ended at timestamp
     let field = FieldInfo {
         name: "temperature_min",
         field_type: FieldDataType::SInt16,
@@ -12567,9 +14153,11 @@ fn monitoring_message() -> MessageInfo {
         offset: 0.000000,
         units: "C",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(14, field);
 
+    // Max temperature during the logging interval ended at timestamp
     let field = FieldInfo {
         name: "temperature_max",
         field_type: FieldDataType::SInt16,
@@ -12578,10 +14166,11 @@ fn monitoring_message() -> MessageInfo {
         offset: 0.000000,
         units: "C",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(15, field);
 
-    // [8]
+    // Indexed using minute_activity_level enum
     let field = FieldInfo {
         name: "activity_time",
         field_type: FieldDataType::UInt16,
@@ -12590,6 +14179,7 @@ fn monitoring_message() -> MessageInfo {
         offset: 0.000000,
         units: "minutes",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(16, field);
 
@@ -12601,9 +14191,30 @@ fn monitoring_message() -> MessageInfo {
         offset: 0.000000,
         units: "kcal",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(19, field);
 
+    let mut components = Vec::new();
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 5,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        bits: 5,
+        accumulate: false,
+    };
+    components.push(comp_fld);
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 28,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        bits: 3,
+        accumulate: false,
+    };
+    components.push(comp_fld);
+    // Indicates single type / intensity for duration since last monitoring message.
     let field = FieldInfo {
         name: "current_activity_type_intensity",
         field_type: FieldDataType::Byte,
@@ -12612,6 +14223,7 @@ fn monitoring_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: components,
     };
     fields.insert(24, field);
 
@@ -12623,6 +14235,7 @@ fn monitoring_message() -> MessageInfo {
         offset: 0.000000,
         units: "min",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(25, field);
 
@@ -12634,6 +14247,7 @@ fn monitoring_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(26, field);
 
@@ -12645,6 +14259,7 @@ fn monitoring_message() -> MessageInfo {
         offset: 0.000000,
         units: "bpm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(27, field);
 
@@ -12656,6 +14271,7 @@ fn monitoring_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(28, field);
 
@@ -12667,6 +14283,7 @@ fn monitoring_message() -> MessageInfo {
         offset: 0.000000,
         units: "min",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(29, field);
 
@@ -12678,6 +14295,7 @@ fn monitoring_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(30, field);
 
@@ -12689,6 +14307,7 @@ fn monitoring_message() -> MessageInfo {
         offset: 0.000000,
         units: "m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(31, field);
 
@@ -12700,6 +14319,7 @@ fn monitoring_message() -> MessageInfo {
         offset: 0.000000,
         units: "m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(32, field);
 
@@ -12711,6 +14331,7 @@ fn monitoring_message() -> MessageInfo {
         offset: 0.000000,
         units: "minutes",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(33, field);
 
@@ -12722,9 +14343,11 @@ fn monitoring_message() -> MessageInfo {
         offset: 0.000000,
         units: "minutes",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(34, field);
 
+    // Must align to logging interval, for example, time must be 00:00:00 for daily log.
     let field = FieldInfo {
         name: "timestamp",
         field_type: FieldDataType::DateTime,
@@ -12733,6 +14356,7 @@ fn monitoring_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(253, field);
 
@@ -12753,9 +14377,20 @@ fn hr_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
+    let mut components = Vec::new();
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 0,
+        scale: 256.000000,
+        offset: 0.000000,
+        units: "s",
+        bits: 8,
+        accumulate: false,
+    };
+    components.push(comp_fld);
     let field = FieldInfo {
         name: "time256",
         field_type: FieldDataType::UInt8,
@@ -12764,10 +14399,10 @@ fn hr_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: components,
     };
     fields.insert(1, field);
 
-    // [N]
     let field = FieldInfo {
         name: "filtered_bpm",
         field_type: FieldDataType::UInt8,
@@ -12776,10 +14411,10 @@ fn hr_message() -> MessageInfo {
         offset: 0.000000,
         units: "bpm",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(6, field);
 
-    // [N]
     let field = FieldInfo {
         name: "event_timestamp",
         field_type: FieldDataType::UInt32,
@@ -12788,10 +14423,101 @@ fn hr_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(9, field);
 
-    // [N]
+    let mut components = Vec::new();
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 9,
+        scale: 1024.000000,
+        offset: 0.000000,
+        units: "s",
+        bits: 12,
+        accumulate: true,
+    };
+    components.push(comp_fld);
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 9,
+        scale: 1024.000000,
+        offset: 0.000000,
+        units: "",
+        bits: 12,
+        accumulate: true,
+    };
+    components.push(comp_fld);
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 9,
+        scale: 1024.000000,
+        offset: 0.000000,
+        units: "",
+        bits: 12,
+        accumulate: true,
+    };
+    components.push(comp_fld);
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 9,
+        scale: 1024.000000,
+        offset: 0.000000,
+        units: "",
+        bits: 12,
+        accumulate: true,
+    };
+    components.push(comp_fld);
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 9,
+        scale: 1024.000000,
+        offset: 0.000000,
+        units: "",
+        bits: 12,
+        accumulate: true,
+    };
+    components.push(comp_fld);
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 9,
+        scale: 1024.000000,
+        offset: 0.000000,
+        units: "",
+        bits: 12,
+        accumulate: true,
+    };
+    components.push(comp_fld);
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 9,
+        scale: 1024.000000,
+        offset: 0.000000,
+        units: "",
+        bits: 12,
+        accumulate: true,
+    };
+    components.push(comp_fld);
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 9,
+        scale: 1024.000000,
+        offset: 0.000000,
+        units: "",
+        bits: 12,
+        accumulate: true,
+    };
+    components.push(comp_fld);
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 9,
+        scale: 1024.000000,
+        offset: 0.000000,
+        units: "",
+        bits: 12,
+        accumulate: true,
+    };
+    components.push(comp_fld);
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 9,
+        scale: 1024.000000,
+        offset: 0.000000,
+        units: "",
+        bits: 12,
+        accumulate: true,
+    };
+    components.push(comp_fld);
     let field = FieldInfo {
         name: "event_timestamp_12",
         field_type: FieldDataType::Byte,
@@ -12800,6 +14526,7 @@ fn hr_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: components,
     };
     fields.insert(10, field);
 
@@ -12811,6 +14538,7 @@ fn hr_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(253, field);
 
@@ -12831,9 +14559,11 @@ fn stress_level_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
+    // Time stress score was calculated
     let field = FieldInfo {
         name: "stress_level_time",
         field_type: FieldDataType::DateTime,
@@ -12842,6 +14572,7 @@ fn stress_level_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
@@ -12854,7 +14585,7 @@ fn stress_level_message() -> MessageInfo {
 fn memo_glob_message() -> MessageInfo {
     let mut fields = HashMap::new();
 
-    // [N]
+    // Block of utf8 bytes
     let field = FieldInfo {
         name: "memo",
         field_type: FieldDataType::Byte,
@@ -12863,9 +14594,11 @@ fn memo_glob_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
+    // Allows relating glob to another mesg  If used only required for first part of each memo_glob
     let field = FieldInfo {
         name: "message_number",
         field_type: FieldDataType::UInt16,
@@ -12874,9 +14607,11 @@ fn memo_glob_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
+    // Index of external mesg
     let field = FieldInfo {
         name: "message_index",
         field_type: FieldDataType::MessageIndex,
@@ -12885,9 +14620,11 @@ fn memo_glob_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
+    // Sequence number of memo blocks
     let field = FieldInfo {
         name: "part_index",
         field_type: FieldDataType::UInt32,
@@ -12896,6 +14633,7 @@ fn memo_glob_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(250, field);
 
@@ -12916,6 +14654,7 @@ fn ant_channel_id_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
@@ -12927,6 +14666,7 @@ fn ant_channel_id_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
@@ -12938,6 +14678,7 @@ fn ant_channel_id_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
@@ -12949,6 +14690,7 @@ fn ant_channel_id_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
@@ -12960,6 +14702,7 @@ fn ant_channel_id_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
@@ -12980,6 +14723,7 @@ fn ant_rx_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
@@ -12991,10 +14735,92 @@ fn ant_rx_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
-    // [N]
+    let mut components = Vec::new();
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 3,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        bits: 8,
+        accumulate: false,
+    };
+    components.push(comp_fld);
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 4,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        bits: 8,
+        accumulate: false,
+    };
+    components.push(comp_fld);
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 4,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        bits: 8,
+        accumulate: false,
+    };
+    components.push(comp_fld);
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 4,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        bits: 8,
+        accumulate: false,
+    };
+    components.push(comp_fld);
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 4,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        bits: 8,
+        accumulate: false,
+    };
+    components.push(comp_fld);
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 4,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        bits: 8,
+        accumulate: false,
+    };
+    components.push(comp_fld);
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 4,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        bits: 8,
+        accumulate: false,
+    };
+    components.push(comp_fld);
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 4,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        bits: 8,
+        accumulate: false,
+    };
+    components.push(comp_fld);
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 4,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        bits: 8,
+        accumulate: false,
+    };
+    components.push(comp_fld);
     let field = FieldInfo {
         name: "mesg_data",
         field_type: FieldDataType::Byte,
@@ -13003,6 +14829,7 @@ fn ant_rx_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: components,
     };
     fields.insert(2, field);
 
@@ -13014,10 +14841,10 @@ fn ant_rx_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
-    // [N]
     let field = FieldInfo {
         name: "data",
         field_type: FieldDataType::Byte,
@@ -13026,6 +14853,7 @@ fn ant_rx_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
@@ -13037,6 +14865,7 @@ fn ant_rx_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(253, field);
 
@@ -13057,6 +14886,7 @@ fn ant_tx_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
@@ -13068,10 +14898,92 @@ fn ant_tx_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
-    // [N]
+    let mut components = Vec::new();
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 3,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        bits: 8,
+        accumulate: false,
+    };
+    components.push(comp_fld);
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 4,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        bits: 8,
+        accumulate: false,
+    };
+    components.push(comp_fld);
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 4,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        bits: 8,
+        accumulate: false,
+    };
+    components.push(comp_fld);
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 4,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        bits: 8,
+        accumulate: false,
+    };
+    components.push(comp_fld);
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 4,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        bits: 8,
+        accumulate: false,
+    };
+    components.push(comp_fld);
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 4,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        bits: 8,
+        accumulate: false,
+    };
+    components.push(comp_fld);
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 4,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        bits: 8,
+        accumulate: false,
+    };
+    components.push(comp_fld);
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 4,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        bits: 8,
+        accumulate: false,
+    };
+    components.push(comp_fld);
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 4,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        bits: 8,
+        accumulate: false,
+    };
+    components.push(comp_fld);
     let field = FieldInfo {
         name: "mesg_data",
         field_type: FieldDataType::Byte,
@@ -13080,6 +14992,7 @@ fn ant_tx_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: components,
     };
     fields.insert(2, field);
 
@@ -13091,10 +15004,10 @@ fn ant_tx_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
-    // [N]
     let field = FieldInfo {
         name: "data",
         field_type: FieldDataType::Byte,
@@ -13103,6 +15016,7 @@ fn ant_tx_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
@@ -13114,6 +15028,7 @@ fn ant_tx_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(253, field);
 
@@ -13134,9 +15049,11 @@ fn exd_screen_configuration_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
+    // number of fields in screen
     let field = FieldInfo {
         name: "field_count",
         field_type: FieldDataType::UInt8,
@@ -13145,6 +15062,7 @@ fn exd_screen_configuration_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
@@ -13156,6 +15074,7 @@ fn exd_screen_configuration_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
@@ -13167,6 +15086,7 @@ fn exd_screen_configuration_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
@@ -13187,9 +15107,29 @@ fn exd_data_field_configuration_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
+    let mut components = Vec::new();
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 2,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        bits: 4,
+        accumulate: false,
+    };
+    components.push(comp_fld);
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 3,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        bits: 4,
+        accumulate: false,
+    };
+    components.push(comp_fld);
     let field = FieldInfo {
         name: "concept_field",
         field_type: FieldDataType::Byte,
@@ -13198,6 +15138,7 @@ fn exd_data_field_configuration_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: components,
     };
     fields.insert(1, field);
 
@@ -13209,6 +15150,7 @@ fn exd_data_field_configuration_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
@@ -13220,6 +15162,7 @@ fn exd_data_field_configuration_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
@@ -13231,10 +15174,10 @@ fn exd_data_field_configuration_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
-    // [32]
     let field = FieldInfo {
         name: "title",
         field_type: FieldDataType::String,
@@ -13243,6 +15186,7 @@ fn exd_data_field_configuration_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(5, field);
 
@@ -13263,9 +15207,29 @@ fn exd_data_concept_configuration_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
+    let mut components = Vec::new();
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 2,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        bits: 4,
+        accumulate: false,
+    };
+    components.push(comp_fld);
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 3,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        bits: 4,
+        accumulate: false,
+    };
+    components.push(comp_fld);
     let field = FieldInfo {
         name: "concept_field",
         field_type: FieldDataType::Byte,
@@ -13274,6 +15238,7 @@ fn exd_data_concept_configuration_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: components,
     };
     fields.insert(1, field);
 
@@ -13285,6 +15250,7 @@ fn exd_data_concept_configuration_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
@@ -13296,6 +15262,7 @@ fn exd_data_concept_configuration_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
@@ -13307,6 +15274,7 @@ fn exd_data_concept_configuration_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
@@ -13318,6 +15286,7 @@ fn exd_data_concept_configuration_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(5, field);
 
@@ -13329,6 +15298,7 @@ fn exd_data_concept_configuration_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(6, field);
 
@@ -13340,6 +15310,7 @@ fn exd_data_concept_configuration_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(8, field);
 
@@ -13351,6 +15322,7 @@ fn exd_data_concept_configuration_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(9, field);
 
@@ -13362,6 +15334,7 @@ fn exd_data_concept_configuration_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(10, field);
 
@@ -13373,6 +15346,7 @@ fn exd_data_concept_configuration_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(11, field);
 
@@ -13393,6 +15367,7 @@ fn field_description_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
@@ -13404,6 +15379,7 @@ fn field_description_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
@@ -13415,10 +15391,10 @@ fn field_description_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
-    // [N]
     let field = FieldInfo {
         name: "field_name",
         field_type: FieldDataType::String,
@@ -13427,6 +15403,7 @@ fn field_description_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
@@ -13438,6 +15415,7 @@ fn field_description_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
@@ -13449,6 +15427,7 @@ fn field_description_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(5, field);
 
@@ -13460,6 +15439,7 @@ fn field_description_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(6, field);
 
@@ -13471,10 +15451,10 @@ fn field_description_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(7, field);
 
-    // [N]
     let field = FieldInfo {
         name: "units",
         field_type: FieldDataType::String,
@@ -13483,6 +15463,7 @@ fn field_description_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(8, field);
 
@@ -13494,6 +15475,7 @@ fn field_description_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(9, field);
 
@@ -13505,6 +15487,7 @@ fn field_description_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(10, field);
 
@@ -13516,6 +15499,7 @@ fn field_description_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(13, field);
 
@@ -13527,6 +15511,7 @@ fn field_description_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(14, field);
 
@@ -13538,6 +15523,7 @@ fn field_description_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(15, field);
 
@@ -13550,7 +15536,6 @@ fn field_description_message() -> MessageInfo {
 fn developer_data_id_message() -> MessageInfo {
     let mut fields = HashMap::new();
 
-    // [N]
     let field = FieldInfo {
         name: "developer_id",
         field_type: FieldDataType::Byte,
@@ -13559,10 +15544,10 @@ fn developer_data_id_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
-    // [N]
     let field = FieldInfo {
         name: "application_id",
         field_type: FieldDataType::Byte,
@@ -13571,6 +15556,7 @@ fn developer_data_id_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
@@ -13582,6 +15568,7 @@ fn developer_data_id_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
@@ -13593,6 +15580,7 @@ fn developer_data_id_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
@@ -13604,6 +15592,7 @@ fn developer_data_id_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
@@ -13624,6 +15613,7 @@ fn dive_summary_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
@@ -13635,9 +15625,11 @@ fn dive_summary_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
+    // 0 if above water
     let field = FieldInfo {
         name: "avg_depth",
         field_type: FieldDataType::UInt32,
@@ -13646,9 +15638,11 @@ fn dive_summary_message() -> MessageInfo {
         offset: 0.000000,
         units: "m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
+    // 0 if above water
     let field = FieldInfo {
         name: "max_depth",
         field_type: FieldDataType::UInt32,
@@ -13657,9 +15651,11 @@ fn dive_summary_message() -> MessageInfo {
         offset: 0.000000,
         units: "m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
+    // Time since end of last dive
     let field = FieldInfo {
         name: "surface_interval",
         field_type: FieldDataType::UInt32,
@@ -13668,6 +15664,7 @@ fn dive_summary_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
@@ -13679,6 +15676,7 @@ fn dive_summary_message() -> MessageInfo {
         offset: 0.000000,
         units: "percent",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(5, field);
 
@@ -13690,6 +15688,7 @@ fn dive_summary_message() -> MessageInfo {
         offset: 0.000000,
         units: "percent",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(6, field);
 
@@ -13701,6 +15700,7 @@ fn dive_summary_message() -> MessageInfo {
         offset: 0.000000,
         units: "percent",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(7, field);
 
@@ -13712,6 +15712,7 @@ fn dive_summary_message() -> MessageInfo {
         offset: 0.000000,
         units: "percent",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(8, field);
 
@@ -13723,6 +15724,7 @@ fn dive_summary_message() -> MessageInfo {
         offset: 0.000000,
         units: "OTUs",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(9, field);
 
@@ -13734,6 +15736,7 @@ fn dive_summary_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(10, field);
 
@@ -13745,6 +15748,7 @@ fn dive_summary_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(11, field);
 
@@ -13756,6 +15760,7 @@ fn dive_summary_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(253, field);
 
@@ -13776,6 +15781,7 @@ fn climb_pro_message() -> MessageInfo {
         offset: 0.000000,
         units: "semicircles",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(0, field);
 
@@ -13787,6 +15793,7 @@ fn climb_pro_message() -> MessageInfo {
         offset: 0.000000,
         units: "semicircles",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(1, field);
 
@@ -13798,6 +15805,7 @@ fn climb_pro_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(2, field);
 
@@ -13809,6 +15817,7 @@ fn climb_pro_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(3, field);
 
@@ -13820,6 +15829,7 @@ fn climb_pro_message() -> MessageInfo {
         offset: 0.000000,
         units: "",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(4, field);
 
@@ -13831,6 +15841,7 @@ fn climb_pro_message() -> MessageInfo {
         offset: 0.000000,
         units: "m",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(5, field);
 
@@ -13842,6 +15853,7 @@ fn climb_pro_message() -> MessageInfo {
         offset: 0.000000,
         units: "s",
         subfields: Vec::new(),
+        components: Vec::new(),
     };
     fields.insert(253, field);
 

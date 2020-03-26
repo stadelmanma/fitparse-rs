@@ -33,7 +33,7 @@ impl MessageInfo {
                 }
             }
             // fallback to initial field info as default return
-            return Some(field)
+            return Some(field);
         }
         None
     }
@@ -49,6 +49,7 @@ pub struct FieldInfo {
     offset: f64,
     units: &'static str,
     subfields: Vec<(u8, i64, FieldInfo)>, // ref_def_num, ref_value, subfield_info
+    components: Vec<ComponentFieldInfo>,
 }
 
 impl FieldInfo {
@@ -70,6 +71,10 @@ impl FieldInfo {
 
     pub fn subfields(&self) -> &[(u8, i64, FieldInfo)] {
         &self.subfields
+    }
+
+    pub fn components(&self) -> &[ComponentFieldInfo] {
+        &self.components
     }
 
     /// convert the value into a "output" form applying any scaling or enum conversions
@@ -142,4 +147,39 @@ impl FieldInfo {
     }
 }
 
-// TODO how to handle subfields and reference fields?
+/// Describes a componet field within a largest field pulled from the FIT profile
+#[derive(Clone, Debug)]
+pub struct ComponentFieldInfo {
+    dest_def_number: u8,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    bits: u8,
+    accumulate: bool,
+}
+
+impl ComponentFieldInfo {
+    pub fn dest_def_number(&self) -> u8 {
+        self.dest_def_number
+    }
+
+    pub fn scale(&self) -> f64 {
+        self.scale
+    }
+
+    pub fn offset(&self) -> f64 {
+        self.offset
+    }
+
+    pub fn units(&self) -> &str {
+        self.units
+    }
+
+    pub fn bits(&self) -> u8 {
+        self.bits
+    }
+
+    pub fn accumulate(&self) -> bool {
+        self.accumulate
+    }
+}

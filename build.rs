@@ -102,7 +102,7 @@ impl FieldTypeDefintion {
         write!(out, "}}\n")?;
         write!(out, "}}\n")?;
 
-        write!( out, "pub fn as_i64(&self) -> i64 {{\n")?;
+        write!(out, "pub fn as_i64(&self) -> i64 {{\n")?;
         write!(out, "self.as_{}() as i64\n", self.base_type)?;
         write!(out, "}}\n")?;
 
@@ -212,6 +212,7 @@ struct MessageFieldDefinition {
     offset: f64,
     units: String,
     subfields: Vec<(String, String, MessageFieldDefinition)>,
+    components: Vec<MessageFieldComponent>,
     comment: Option<String>,
 }
 
@@ -225,15 +226,32 @@ impl MessageFieldDefinition {
         let subfield_var: &'static str;
         if self.subfields.is_empty() {
             subfield_var = "Vec::new()";
-        }
-        else {
+        } else {
             subfield_var = "subfields";
             write!(out, "let mut {} = Vec::new();\n", subfield_var)?;
             for (fld_name, fld_value, sub_info) in &self.subfields {
-                // broken
                 sub_info.generate_field_info_struct(out, mesg, "sub_fld")?;
                 let ref_field = mesg.get_field_by_name(fld_name);
-                write!(out, "subfields.push(({}, {}::{}.as_i64(), {}));\n", ref_field.def_number, ref_field.field_type, titlecase_string(fld_value), "sub_fld")?;
+                write!(
+                    out,
+                    "subfields.push(({}, {}::{}.as_i64(), {}));\n",
+                    ref_field.def_number,
+                    ref_field.field_type,
+                    titlecase_string(fld_value),
+                    "sub_fld"
+                )?;
+            }
+        }
+
+        let components_var: &'static str;
+        if self.components.is_empty() {
+            components_var = "Vec::new()";
+        } else {
+            components_var = "components";
+            write!(out, "let mut {} = Vec::new();\n", components_var)?;
+            for comp_info in &self.components {
+                comp_info.generate_comp_field_info_struct(out, mesg, "comp_fld")?;
+                write!(out, "components.push(comp_fld);\n")?;
             }
         }
 
@@ -249,7 +267,8 @@ impl MessageFieldDefinition {
             scale: {:.6},
             offset: {:.6},
             units: \"{}\",
-            subfields: {}
+            subfields: {},
+            components: {},
         }};\n",
             var_name,
             self.name,
@@ -258,7 +277,49 @@ impl MessageFieldDefinition {
             self.scale,
             self.offset,
             self.units,
-            subfield_var
+            subfield_var,
+            components_var
+        )?;
+
+        Ok(())
+    }
+}
+
+#[derive(Clone, Debug)]
+struct MessageFieldComponent {
+    name: String,
+    scale: f64,
+    offset: f64,
+    units: String,
+    bits: u8,
+    accumulate: bool,
+}
+
+impl MessageFieldComponent {
+    fn generate_comp_field_info_struct(
+        &self,
+        out: &mut File,
+        mesg: &MessageDefinition,
+        var_name: &str,
+    ) -> Result<(), std::io::Error> {
+        let dest_def_number = mesg.get_field_by_name(&self.name).def_number;
+        write!(
+            out,
+            "let {} = ComponentFieldInfo {{
+            dest_def_number: {},
+            scale: {:.6},
+            offset: {:.6},
+            units: \"{}\",
+            bits: {},
+            accumulate: {},
+        }};\n",
+            var_name,
+            dest_def_number,
+            self.scale,
+            self.offset,
+            self.units,
+            self.bits,
+            self.accumulate,
         )?;
 
         Ok(())
@@ -277,6 +338,8 @@ fn titlecase_string(value: &str) -> String {
 
     String::from(words.join(""))
 }
+
+macro_rules! split_csv_string ( ($value:expr) => ( {$value.split(',').map(|v| v.trim().to_string())} ););
 
 /// Match a base type string to a rust type for enum generation
 fn base_type_to_rust_type(base_type_str: &str) -> &'static str {
@@ -449,6 +512,40 @@ fn process_types(sheet: Range<DataType>) -> Vec<FieldTypeDefintion> {
     field_types
 }
 
+fn parse_message_field_components(row: &[DataType]) -> Vec<MessageFieldComponent> {
+    let mut components = Vec::new();
+
+    // parse out the fields into iterators
+    let names: Vec<String> = match row[5].get_string() {
+        Some(v) => split_csv_string!(v).collect(),
+        None => {
+            return components;
+        }
+    };
+    let cols: Vec<String> = row[6..=10].into_iter().map(|v| v.to_string()).collect();
+    let mut scales = split_csv_string!(cols[0]).map(|s| s.parse::<f64>().ok());
+    let mut offsets = split_csv_string!(cols[1]).map(|s| s.parse::<f64>().ok());
+    let mut units = split_csv_string!(cols[2]);
+    let mut bits = split_csv_string!(cols[3]).map(|s| s.parse::<u8>().ok());
+    let mut accumulate = split_csv_string!(cols[4]).map(|s| s == "1");
+
+    // build each component
+    for name in names {
+        components.push(MessageFieldComponent {
+            name,
+            scale: scales.next().flatten().unwrap_or(1.0),
+            offset: offsets.next().flatten().unwrap_or(0.0),
+            units: units.next().unwrap_or(String::new()),
+            bits: bits
+                .next()
+                .flatten()
+                .expect(&format!("Could not parse bits value for row: {:?}", row)),
+            accumulate: accumulate.next().unwrap_or(false),
+        });
+    }
+    components
+}
+
 fn new_message_field_definition(row: &[DataType]) -> MessageFieldDefinition {
     let def_number = match row[1] {
         DataType::Float(v) => v as u8,
@@ -464,7 +561,8 @@ fn new_message_field_definition(row: &[DataType]) -> MessageFieldDefinition {
     let ftype = row[3]
         .get_string()
         .expect(&format!("Field type must be a string, row={:?}.", row));
-    let comment = match row[4].get_string() {
+    let components = parse_message_field_components(&row);
+    let comment = match row[13].get_string() {
         Some(v) => Some(v.to_string()),
         None => None,
     };
@@ -477,6 +575,7 @@ fn new_message_field_definition(row: &[DataType]) -> MessageFieldDefinition {
         offset: row[7].get_float().unwrap_or(0.0),
         units: row[8].get_string().unwrap_or("").to_string(),
         subfields: Vec::new(),
+        components,
         comment,
     }
 }
@@ -523,10 +622,10 @@ fn process_messages(sheet: Range<DataType>) -> Vec<MessageDefinition> {
             // trigger this subfield we simply duplicate them
             let ref_field_names = row[11].get_string().expect("No reference field name(s)");
             let ref_field_vals = row[12].get_string().expect("No reference field value(s)");
-            for (name, value) in ref_field_names.split(',').zip(ref_field_vals.split(',')) {
-                parent
-                    .subfields
-                    .push((name.trim().to_string(), value.trim().to_string(), field.clone()));
+            for (name, value) in
+                split_csv_string!(ref_field_names).zip(split_csv_string!(ref_field_vals))
+            {
+                parent.subfields.push((name, value, field.clone()));
             }
         }
     }
@@ -622,7 +721,7 @@ fn write_messages_file(profile: &FitProfile) -> Result<(), std::io::Error> {
     write!(out, "use std::collections::HashMap;\n")?;
     write!(
         out,
-        "use super::{{MessageInfo, FieldDataType, FieldInfo}};\n"
+        "use super::{{ComponentFieldInfo, FieldDataType, FieldInfo, MessageInfo}};\n"
     )?;
     write!(out, "use super::field_types::*;\n\n")?;
 
