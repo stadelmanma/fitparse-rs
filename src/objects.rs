@@ -154,4 +154,29 @@ impl DataFieldValue {
             _ => None,
         }
     }
+
+    pub fn to_ne_bytes(&self) -> Vec<u8> {
+        match self {
+            DataFieldValue::Byte(val) => val.clone(),
+            DataFieldValue::Enum(val) => vec![*val as u8],
+            DataFieldValue::SInt8(val) => vec![*val as u8],
+            DataFieldValue::UInt8(val) => vec![*val as u8],
+            DataFieldValue::SInt16(val) => val.to_ne_bytes().to_vec(),
+            DataFieldValue::UInt16(val) => val.to_ne_bytes().to_vec(),
+            DataFieldValue::SInt32(val) => val.to_ne_bytes().to_vec(),
+            DataFieldValue::UInt32(val) => val.to_ne_bytes().to_vec(),
+            DataFieldValue::String(val) => val.as_bytes().to_vec(),
+            DataFieldValue::Timestamp(val) => val.timestamp().to_ne_bytes().to_vec(),
+            DataFieldValue::Float32(val) => val.to_ne_bytes().to_vec(),
+            DataFieldValue::Float64(val) => val.to_ne_bytes().to_vec(),
+            DataFieldValue::UInt8z(val) => vec![*val as u8],
+            DataFieldValue::UInt16z(val) => val.to_ne_bytes().to_vec(),
+            DataFieldValue::UInt32z(val) => val.to_ne_bytes().to_vec(),
+            DataFieldValue::SInt64(val) => val.to_ne_bytes().to_vec(),
+            DataFieldValue::UInt64(val) => val.to_ne_bytes().to_vec(),
+            DataFieldValue::UInt64z(val) => val.to_ne_bytes().to_vec(),
+            DataFieldValue::Array(vals) => vals.iter().flat_map(|v| v.to_ne_bytes()).collect(),
+
+        }
+    }
 }
