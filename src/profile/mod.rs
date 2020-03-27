@@ -77,6 +77,31 @@ impl FieldInfo {
         &self.components
     }
 
+    pub fn expand_components(&self, value: &DataFieldValue) -> HashMap<u8, DataFieldValue> {
+        // extract out each field by masking specific bits, spanning 1 or more bytes
+        let bit_mask = [1u8, 2u8, 4u8, 8u8, 16u8, 32u8, 64u8, 128u8];
+        let mut bytes = value.to_ne_bytes().into_iter();
+        let mut data_map = HashMap::new();
+        let mut byte = bytes.next().unwrap_or(0);
+        let mut bit_pos = 0;
+        for comp_fld in &self.components {
+            let mut tmp: u64 = 0;
+            for pos in 0..comp_fld.bits {
+                tmp |= (((byte & bit_mask[bit_pos]) >> bit_pos) as u64) << pos;
+                if bit_pos == 7 {
+                    byte = bytes.next().unwrap_or(0);
+                    bit_pos = 0;
+                }
+                else {
+                    bit_pos += 1;
+                }
+            }
+            data_map.insert(comp_fld.dest_def_number, DataFieldValue::UInt64(tmp));
+        }
+
+        data_map
+    }
+
     /// convert the value into a "output" form applying any scaling or enum conversions
     pub fn convert_value(&self, value: &DataFieldValue) -> DataFieldValue {
         // for array types just map and return
