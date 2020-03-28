@@ -1,12 +1,6 @@
 /// Parse FIT files
 ///
-/// Logic largely based on: https://github.com/dtcooper/python-fitparse
-///
-/// Notes:
-///   I'll want to eventually determine a way to check CRCs if it's not too messy
-///   Apparently FIT files can be chained? If so I'll need to conditionally rerun the parser
-///   Also profiles are configurable and vary on SDK release I think so I'll need a way to customize
-///   that
+/// Logic largely based on: https://github.com/dtcooper/python-fitparse.
 use crate::objects::*;
 use crate::profile::field_types::MesgNum;
 use crate::profile::{FieldInfo, MessageInfo};
@@ -22,7 +16,8 @@ use nom::{i16, i32, i64, u16, u32, u64};
 use std::collections::HashMap;
 use std::fmt::Display;
 
-pub enum FitMessageType {
+#[derive(Clone, Copy, Debug)]
+enum FitMessageType {
     Data,
     Definition,
 }
@@ -31,6 +26,7 @@ pub enum FitMessageType {
 ///
 /// The value of the bits inside is different for the two message header types but for simplicity
 /// we treat them the same here and make the time_offset optionnal.
+#[derive(Clone, Debug)]
 struct FitMessageHeader {
     contains_developer_data: bool,
     local_message_type: u8,
@@ -78,7 +74,7 @@ struct FieldDefinition {
 /// meta-data for the decode process. The developer data field description is used to map data
 /// within a data message to the appropriate meta-data.
 #[derive(Clone, Debug)]
-pub struct DeveloperFieldDefinition {
+struct DeveloperFieldDefinition {
     pub field_number: u8,
     pub size: u8,
     pub developer_data_index: u8,
@@ -88,7 +84,7 @@ pub struct DeveloperFieldDefinition {
 /// file can contain data for up to 255 unique developers. These messages must occur before any
 /// related field description messages.
 #[derive(Clone, Debug)]
-pub struct DeveloperDataIdMessage {
+struct DeveloperDataIdMessage {
     pub application_id: [u8; 16],
     pub developer_data_index: u8,
 }
@@ -97,7 +93,7 @@ pub struct DeveloperDataIdMessage {
 /// contain up to 255 unique fields per developer. These messages must occur in the file before
 /// any related data is added.
 #[derive(Clone, Debug)]
-pub struct DeveloperFieldDescription {
+struct DeveloperFieldDescription {
     pub developer_data_index: u8,
     pub field_definition_number: u8,
     pub fit_base_type_id: u8,
@@ -107,7 +103,7 @@ pub struct DeveloperFieldDescription {
 }
 
 #[derive(Clone, Copy, Debug)]
-pub enum BaseType {
+enum BaseType {
     Enum = 0x00,
     SInt8 = 0x01,
     UInt8 = 0x02,
@@ -125,6 +121,36 @@ pub enum BaseType {
     SInt64 = 0x8E,
     UInt64 = 0x8F,
     UInt64z = 0x90,
+}
+
+impl BaseType {
+    /// Check the value of the last 5 bits to determine the base type.
+    ///
+    /// Bits 5 and 6 are reserved so we don't check them and to avoid issues it's easier to
+    /// simply zero them out, 0x9f == 159 == 0b10011111. When the type can't be determined we default
+    /// to a byte vector.
+    fn from_u8(base_type_field: u8) -> Self {
+        match base_type_field & 0x9f {
+            0x00 => BaseType::Enum,
+            0x01 => BaseType::SInt8,
+            0x02 => BaseType::UInt8,
+            0x83 => BaseType::SInt16,
+            0x84 => BaseType::UInt16,
+            0x85 => BaseType::SInt32,
+            0x86 => BaseType::UInt32,
+            0x07 => BaseType::String,
+            0x88 => BaseType::Float32,
+            0x89 => BaseType::Float64,
+            0x0A => BaseType::UInt8z,
+            0x8B => BaseType::UInt16z,
+            0x8C => BaseType::UInt32z,
+            0x0D => BaseType::Byte,
+            0x8E => BaseType::SInt64,
+            0x8F => BaseType::UInt64,
+            0x90 => BaseType::UInt64z,
+            _ => BaseType::Byte,
+        }
+    }
 }
 
 pub fn parse_file(input: &[u8]) -> IResult<&[u8], FitFile> {
@@ -420,37 +446,9 @@ fn field_definition(input: &[u8]) -> IResult<&[u8], FieldDefinition> {
         FieldDefinition {
             field_definition_number,
             size,
-            base_type: parse_base_type(base_type_field),
+            base_type: BaseType::from_u8(base_type_field),
         },
     ))
-}
-
-/// Check the value of the last 5 bits to determine the base type.
-///
-/// Bits 5 and 6 are reserved so we don't check them and to avoid issues it's easier to
-/// simply zero them out, 0x9f == 159 == 0b10011111. When the type can't be determined we default
-/// to a byte vector.
-fn parse_base_type(base_type_field: u8) -> BaseType {
-    match base_type_field & 0x9f {
-        0x00 => BaseType::Enum,
-        0x01 => BaseType::SInt8,
-        0x02 => BaseType::UInt8,
-        0x83 => BaseType::SInt16,
-        0x84 => BaseType::UInt16,
-        0x85 => BaseType::SInt32,
-        0x86 => BaseType::UInt32,
-        0x07 => BaseType::String,
-        0x88 => BaseType::Float32,
-        0x89 => BaseType::Float64,
-        0x0A => BaseType::UInt8z,
-        0x8B => BaseType::UInt16z,
-        0x8C => BaseType::UInt32z,
-        0x0D => BaseType::Byte,
-        0x8E => BaseType::SInt64,
-        0x8F => BaseType::UInt64,
-        0x90 => BaseType::UInt64z,
-        _ => BaseType::Byte,
-    }
 }
 
 macro_rules! parse_f32 ( ($i:expr, $e:expr) => ( {if nom::number::Endianness::Big == $e { nom::number::complete::be_f32($i) } else { nom::number::complete::le_f32($i) } } ););
