@@ -3,7 +3,30 @@ pub mod objects;
 pub use objects::FitFile;
 pub mod parser;
 pub mod profile;
-pub use parser::parse_file;
+use std::io::Read;
+
+/// Parse FIT data from a readable source and return the result, after applying the defined profile
+/// to the parser AST.
+pub fn parse<T: Read>(source: &mut T) -> Result<Vec<FitFile>, Box<dyn std::error::Error>> {
+    let mut fit_data: Vec<FitFile> = Vec::new();
+    let mut buffer = Vec::new();
+    source.read_to_end(&mut buffer)?;
+
+    // process data until no bytes remain or we hit an error
+    let mut remaining: &[u8] = &buffer;
+    while remaining.len() > 0 {
+        match parser::parse(&remaining) {
+            Ok((r, ast)) => {
+                remaining = r;
+                fit_data.push(FitFile::from_ast(ast));
+            },
+            Err(e) => return Err(Box::new(e.to_owned()))
+        };
+    }
+
+    Result::Ok(fit_data)
+}
+
 
 #[cfg(test)]
 mod tests {

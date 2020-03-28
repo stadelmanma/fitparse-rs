@@ -1,4 +1,4 @@
-use fitparser::{parse_file, FitFile};
+use fitparser::{parse, FitFile};
 use std::fs::File;
 use std::io::prelude::*;
 use std::path::PathBuf;
@@ -76,27 +76,16 @@ fn main() {
 
     // Read each FIT file and output it
     let mut fit_data: Vec<FitFile> = Vec::new();
-    let mut buffer = Vec::new();
     for file in opt.files {
-        // read the whole file incase we have chained FIT files
+        // open file and parse data
         let mut f = File::open(&file).unwrap();
-        f.read_to_end(&mut buffer).unwrap();
-
-        // process FIT files until no bytes remain
-        let mut remaining: &[u8] = &buffer;
-        while remaining.len() > 0 {
-            let (r, fitfile) = parse_file(&remaining).unwrap();
-            remaining = r;
-            fit_data.push(fitfile)
-        }
+        fit_data.extend_from_slice(&parse(&mut f).unwrap());
 
         // output a single fit file's data into a single output file
         if !collect_all {
             output_loc.write_json_file(&file, &fit_data).unwrap();
             fit_data.clear();
         }
-
-        buffer.clear()
     }
     // output fit data from all files into a single file
     if collect_all {

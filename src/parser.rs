@@ -16,6 +16,19 @@ use nom::{i16, i32, i64, u16, u32, u64};
 use std::collections::HashMap;
 use std::fmt::Display;
 
+#[derive(Debug)]
+pub struct Ast {}
+
+
+#[derive(Debug)]
+pub struct FitDataRecordNode {}
+
+/// Parse a collection of bytes into a Fit File AST
+pub fn parse(input: &[u8]) -> IResult<&[u8], Ast> {
+    unimplemented!("parsing bytes into ast")
+    //fit_file(input)
+}
+
 #[derive(Clone, Copy, Debug)]
 enum FitMessageType {
     Data,
@@ -153,11 +166,7 @@ impl BaseType {
     }
 }
 
-pub fn parse_file(input: &[u8]) -> IResult<&[u8], FitFile> {
-    fit_file(input)
-}
-
-/// Parse a FIT file
+/// Parse a FIT file into AST
 fn fit_file(input: &[u8]) -> IResult<&[u8], FitFile> {
     let (input, header) = fit_file_header(input)?;
     let (input, records) = parse_records(input)?;

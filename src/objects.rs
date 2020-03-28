@@ -1,4 +1,5 @@
 /// Defines the data structures needed to represent a parsed FIT file.
+use crate::parser::Ast;
 use crate::profile::field_types::MesgNum;
 use chrono::{DateTime, Local};
 use serde::Serialize;
@@ -9,6 +10,13 @@ pub struct FitFile {
     pub header: FitFileHeader,
     pub records: Vec<FitDataRecord>,
     pub crc: u16,
+}
+
+impl FitFile {
+    /// convert the AST into a FitFile by applying the defined profile.
+    pub fn from_ast(ast: Ast) -> Self {
+        unimplemented!("profile conversion")
+    }
 }
 
 /// The file header provides information about the FIT File. The minimum size of the file header is
