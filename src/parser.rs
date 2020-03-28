@@ -334,18 +334,18 @@ fn process_data_fields(
     let mesg_info = def_mesg.global_message_number.message_info();
     // filter data message into a mapping of HashMap<def_num, DataField> for easier processing
     // since we don't export empty/invalid fields
-    let mut data_map: HashMap<u8, DataFieldValue> =
-        def_mesg
-            .field_definitions
-            .iter()
-            .map(|f| f.field_definition_number)
-            .zip(data_mesg.fields.into_iter())
-            .filter_map(|(k, v)| v.map(|v| (k, v)))
-            .collect();
+    let mut data_map: HashMap<u8, DataFieldValue> = def_mesg
+        .field_definitions
+        .iter()
+        .map(|f| f.field_definition_number)
+        .zip(data_mesg.fields.into_iter())
+        .filter_map(|(k, v)| v.map(|v| (k, v)))
+        .collect();
     let mut data_fields = Vec::new();
 
     // populate data field vector with initial set of parsed fields
-    build_data_fields_from_map(&mesg_info, &mut data_map, &mut data_fields);
+    let mut process_queue: Vec<u8> = data_map.keys().map(|k| k.clone()).collect();
+    build_data_fields_from_map(&mesg_info, &mut process_queue, &mut data_map, &mut data_fields);
 
     if def_mesg.number_of_developer_fields != 0u8 {
         panic!("Not Implemented: number_of_developer_fields > 0")
@@ -357,20 +357,34 @@ fn process_data_fields(
 /// Recursive function to add processed data fields from raw values in the data mapping
 fn build_data_fields_from_map(
     mesg_info: &MessageInfo,
+    process_queue: &mut Vec<u8>,
     data_map: &mut HashMap<u8, DataFieldValue>,
-    data_fields: &mut Vec<DataField>) {
+    data_fields: &mut Vec<DataField>,
+) {
+    while !process_queue.is_empty() {
+        let def_num = process_queue.remove(0);
+        let value = &data_map[&def_num];
 
-    for (def_num, value) in data_map.iter() {
-        if let Some(field_info) = mesg_info.get_field(*def_num, &data_map) {
-
-            // check for components
-
-            data_fields.push(data_field_with_info(field_info, &value));
+        if let Some(field_info) = mesg_info.get_field(def_num, &data_map) {
+            // check for components, the decomposition is profile specific so
+            // we dont store the parent field because we want the JSON to be
+            // profile agnostic
+            if field_info.components().is_empty() {
+                data_fields.push(data_field_with_info(field_info, &value));
+            } else {
+                for (comp_def_num, comp_value) in field_info.expand_components(&value) {
+                    // TODO modify fieldinfo with component scale,offset,units
+                    // or replace it somehow, or do something otherwise my stuff is wrong
+                    data_map.insert(comp_def_num, comp_value);
+                    process_queue.push(comp_def_num);
+                }
+            }
         } else {
-            data_fields.push(unknown_field(*def_num, &value));
+            data_fields.push(unknown_field(def_num, &value));
         }
     }
 }
+
 
 /// Build a data field using the provided FIT profile information
 fn data_field_with_info(field_info: &FieldInfo, value: &DataFieldValue) -> DataField {
