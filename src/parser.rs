@@ -1,9 +1,7 @@
 /// Parse FIT files
 ///
 /// Logic largely based on: https://github.com/dtcooper/python-fitparse.
-use crate::objects::*;
-use crate::profile::field_types::MesgNum;
-use crate::profile::{FieldInfo, MessageInfo};
+use crate::objects::{DataFieldValue, FitFileHeader};
 use nom::bytes::complete::{tag, take};
 use nom::combinator::cond;
 use nom::error::ErrorKind;
@@ -16,17 +14,28 @@ use nom::{i16, i32, i64, u16, u32, u64};
 use std::collections::HashMap;
 use std::fmt::Display;
 
+/// Parsed data representing a FIT file that can have an arbitary profile applied to it.
 #[derive(Debug)]
-pub struct Ast {}
+pub struct Ast {
+    pub header: FitFileHeader,
+    pub records: Vec<FitDataRecordNode>,
+    pub crc: u16,
+}
 
 
+/// Parsed FitDataMessage with additional message info to decouple it from it's local definition
+/// message.
 #[derive(Debug)]
-pub struct FitDataRecordNode {}
+pub struct FitDataRecordNode {
+    pub global_message_number: u16,
+    pub time_offset: Option<u8>,
+    pub fields: HashMap<u8, DataFieldValue>
+    // pub developer_fields: ...
+}
 
 /// Parse a collection of bytes into a Fit File AST
 pub fn parse(input: &[u8]) -> IResult<&[u8], Ast> {
-    unimplemented!("parsing bytes into ast")
-    //fit_file(input)
+    fit_file(input)
 }
 
 #[derive(Clone, Copy, Debug)]
@@ -54,7 +63,7 @@ struct FitMessageHeader {
 #[derive(Clone, Debug)]
 struct FitDefinitionMessage {
     byte_order: Endianness,
-    global_message_number: MesgNum,
+    global_message_number: u16,
     number_of_fields: u8,
     field_definitions: Vec<FieldDefinition>,
     number_of_developer_fields: u8,
@@ -167,19 +176,15 @@ impl BaseType {
 }
 
 /// Parse a FIT file into AST
-fn fit_file(input: &[u8]) -> IResult<&[u8], FitFile> {
+fn fit_file(input: &[u8]) -> IResult<&[u8], Ast> {
     let (input, header) = fit_file_header(input)?;
-    let (input, records) = parse_records(input)?;
+    // the header tells us the data length and then we add two for the CRC at the end
+    let (input, record_bytes) = take(header.data_size)(input)?;
+    // TODO: calculate CRC
+    let (_, records) = parse_messages(record_bytes)?;
     let (input, crc) = le_u16(input)?;
 
-    Ok((
-        input,
-        FitFile {
-            header,
-            records,
-            crc,
-        },
-    ))
+    Ok((input, Ast{header, records, crc}))
 }
 
 /// Parse the FIT file header
@@ -203,16 +208,18 @@ fn fit_file_header(input: &[u8]) -> IResult<&[u8], FitFileHeader> {
     ))
 }
 
+
+
 /// Parse each message inside the FIT file
 ///
 /// All messages are returned in the order that they were written in but we use a local definition
 /// message mapping to decode the data messages since local_message_type numbers can be redefined
-/// throughout the file. This contiues until we reach the 2 byte CRC at the end of the input stream
-fn parse_records(input: &[u8]) -> IResult<&[u8], Vec<FitDataRecord>> {
+/// throughout the file.
+fn parse_messages(input: &[u8]) -> IResult<&[u8], Vec<FitDataRecordNode>> {
     let mut definitions: HashMap<u8, FitDefinitionMessage> = HashMap::new();
     let mut records = Vec::new();
     let mut input = input.clone();
-    while input.len() > 2 {
+    while input.len() > 0 {
         match fit_message(input.clone(), &mut definitions) {
             Err(e) => return Err(e),
             Ok((new_inp, rec)) => {
@@ -229,7 +236,7 @@ fn parse_records(input: &[u8]) -> IResult<&[u8], Vec<FitDataRecord>> {
     Ok((input, records))
 }
 
-/// parse a single FIT data record which can define further fields or actaully cotain data itself
+/// parse a single FIT data record which can define further fields or contain data itself
 ///
 /// This function recurses if the message read was a defintion message since there should always be
 /// data after a defintion message in a complete FIT file because all defintion messages must occur
@@ -238,19 +245,23 @@ fn parse_records(input: &[u8]) -> IResult<&[u8], Vec<FitDataRecord>> {
 fn fit_message<'a>(
     input: &'a [u8],
     definitions: &mut HashMap<u8, FitDefinitionMessage>,
-) -> IResult<&'a [u8], FitDataRecord> {
+) -> IResult<&'a [u8], FitDataRecordNode> {
     let (input, header) = message_header(input)?;
     match &header.message_type {
         FitMessageType::Data => {
             if let Some(def_mesg) = definitions.get(&header.local_message_type) {
-                let (input, data_mesg) = data_message(input, def_mesg)?;
-                let fields = process_data_fields(data_mesg, def_mesg);
+                let (input, msg) = data_message(input, def_mesg)?;
                 Ok((
                     input,
-                    FitDataRecord {
-                        kind: def_mesg.global_message_number,
+                    FitDataRecordNode {
+                        global_message_number: def_mesg.global_message_number,
                         time_offset: header.time_offset,
-                        fields,
+                        fields: def_mesg.field_definitions
+                                .iter()
+                                .map(|f| f.field_definition_number)
+                                .zip(msg.fields.into_iter())
+                                .filter_map(|(k, v)| v.map(|v| (k, v)))
+                                .collect(),
                     },
                 ))
             } else {
@@ -330,7 +341,7 @@ fn definition_message(
         input,
         FitDefinitionMessage {
             byte_order,
-            global_message_number: MesgNum::from_u16(global_message_number),
+            global_message_number,
             number_of_fields,
             field_definitions,
             number_of_developer_fields,
@@ -356,93 +367,10 @@ fn data_message<'a>(
         input = i;
     }
     if def_mesg.number_of_developer_fields != 0u8 {
-        panic!("Not Implemented: number_of_developer_fields > 0")
+        todo!("number_of_developer_fields > 0")
     }
 
-    return Ok((input, FitDataMessage { fields }));
-}
-
-fn process_data_fields(
-    data_mesg: FitDataMessage,
-    def_mesg: &FitDefinitionMessage,
-) -> Vec<DataField> {
-    let mesg_info = def_mesg.global_message_number.message_info();
-    // filter data message into a mapping of HashMap<def_num, DataField> for easier processing
-    // since we don't export empty/invalid fields
-    let mut data_map: HashMap<u8, DataFieldValue> = def_mesg
-        .field_definitions
-        .iter()
-        .map(|f| f.field_definition_number)
-        .zip(data_mesg.fields.into_iter())
-        .filter_map(|(k, v)| v.map(|v| (k, v)))
-        .collect();
-    let mut data_fields = Vec::new();
-
-    // populate data field vector with initial set of parsed fields
-    let mut process_queue: Vec<u8> = data_map.keys().map(|k| k.clone()).collect();
-    build_data_fields_from_map(&mesg_info, &mut process_queue, &mut data_map, &mut data_fields);
-
-    if def_mesg.number_of_developer_fields != 0u8 {
-        panic!("Not Implemented: number_of_developer_fields > 0")
-    }
-
-    data_fields
-}
-
-/// Recursive function to add processed data fields from raw values in the data mapping
-fn build_data_fields_from_map(
-    mesg_info: &MessageInfo,
-    process_queue: &mut Vec<u8>,
-    data_map: &mut HashMap<u8, DataFieldValue>,
-    data_fields: &mut Vec<DataField>,
-) {
-    while !process_queue.is_empty() {
-        let def_num = process_queue.remove(0);
-        let value = &data_map[&def_num];
-
-        if let Some(field_info) = mesg_info.get_field(def_num, &data_map) {
-            // check for components, the decomposition is profile specific so
-            // we dont store the parent field because we want the JSON to be
-            // profile agnostic
-            if field_info.components().is_empty() {
-                data_fields.push(data_field_with_info(field_info, &value));
-            } else {
-                for (comp_def_num, comp_value) in field_info.expand_components(&value) {
-                    // TODO modify fieldinfo with component scale,offset,units
-                    // or replace it somehow, or do something otherwise my stuff is wrong
-                    data_map.insert(comp_def_num, comp_value);
-                    process_queue.push(comp_def_num);
-                }
-            }
-        } else {
-            data_fields.push(unknown_field(def_num, &value));
-        }
-    }
-}
-
-
-/// Build a data field using the provided FIT profile information
-fn data_field_with_info(field_info: &FieldInfo, value: &DataFieldValue) -> DataField {
-    DataField {
-        name: field_info.name().to_string(),
-        units: field_info.units().to_string(),
-        scale: field_info.scale(),
-        offset: field_info.offset(),
-        value: field_info.convert_value(value),
-        raw_value: value.clone(),
-    }
-}
-
-/// Create an "unknown" field as a placeholder if we don't have any field information
-fn unknown_field(field_def_num: u8, value: &DataFieldValue) -> DataField {
-    DataField {
-        name: format!("unknown_field_{}", field_def_num),
-        units: "".to_string(),
-        scale: 1.0,
-        offset: 0.0,
-        value: value.clone(),
-        raw_value: value.clone(),
-    }
+    Ok((input, FitDataMessage { fields }))
 }
 
 fn field_definition(input: &[u8]) -> IResult<&[u8], FieldDefinition> {
