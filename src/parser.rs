@@ -30,7 +30,7 @@ pub struct FitDataRecordNode {
     pub global_message_number: u16,
     pub time_offset: Option<u8>,
     pub fields: HashMap<u8, DataFieldValue>
-    // pub developer_fields: ...
+    // pub developer_fields: Vec<T>
 }
 
 /// Parse a collection of bytes into a Fit File AST
@@ -498,7 +498,7 @@ fn data_field_value(
 
 /// Convert a split decimal style value with fix precision into a single floating point value
 ///
-/// this function should never fail as long as integer values are passed in as the arguments
+/// This function should never fail as long as integer values are passed in as the arguments
 fn split_decimal_to_float<T: Display>(left: T, right: T) -> f32 {
     format!("{}.{}", left, right).parse().unwrap()
 }

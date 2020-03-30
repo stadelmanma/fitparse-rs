@@ -1,4 +1,5 @@
-use crate::objects::DataFieldValue;
+use crate::parser::FitDataRecordNode;
+use crate::objects::{DataFieldValue, FitDataRecord};
 use chrono::{Duration, Local, NaiveDate, NaiveDateTime, TimeZone};
 use std::collections::HashMap;
 
@@ -207,4 +208,9 @@ impl ComponentFieldInfo {
     pub fn accumulate(&self) -> bool {
         self.accumulate
     }
+}
+
+
+pub fn apply_data_profile(node: FitDataRecordNode) -> FitDataRecord {
+    unimplemented!("apply data profile to node")
 }

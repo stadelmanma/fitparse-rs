@@ -1,6 +1,6 @@
 /// Defines the data structures needed to represent a parsed FIT file.
 use crate::parser::Ast;
-use crate::profile::field_types::MesgNum;
+use crate::profile::apply_data_profile;
 use chrono::{DateTime, Local};
 use serde::Serialize;
 
@@ -15,7 +15,11 @@ pub struct FitFile {
 impl FitFile {
     /// convert the AST into a FitFile by applying the defined profile.
     pub fn from_ast(ast: Ast) -> Self {
-        unimplemented!("profile conversion")
+        FitFile {
+            header: ast.header,
+            records: ast.records.into_iter().map(|r| apply_data_profile(r)).collect(),
+            crc: ast.crc
+        }
     }
 }
 
@@ -46,21 +50,14 @@ pub struct FitFileHeader {
 /// If a time offset is present the data message had a CompressedTimestamp header.
 /// This allows for time information to be conveyed without the need for a full 4 byte timestamp
 /// data field.
-///
-/// TODO - add a timestamp field to any Data records with this header type and drop the time_offset
-/// field entirely
 #[derive(Clone, Debug, Serialize)]
 pub struct FitDataRecord {
-    pub kind: MesgNum,
+    pub kind: String,
     pub time_offset: Option<u8>,
     pub fields: Vec<DataField>,
 }
 
-/// Define arbitary data contained with in a FitDataRecord.
-///
-/// TODO I might store Enumerated types in value as a String and keep the
-/// actual integer value in the raw_value field. I just don't know
-/// exactly how I'll get the value from the FieldType yet
+/// Describe arbitary data field within a FitDataRecord.
 #[derive(Clone, Debug, Serialize)]
 pub struct DataField {
     pub name: String,
