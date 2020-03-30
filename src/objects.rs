@@ -17,7 +17,7 @@ impl FitFile {
     pub fn from_ast(ast: Ast) -> Self {
         FitFile {
             header: ast.header,
-            records: ast.records.into_iter().map(|r| apply_data_profile(r)).collect(),
+            records: apply_data_profile(ast.records),
             crc: ast.crc
         }
     }
