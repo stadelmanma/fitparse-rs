@@ -1,5 +1,5 @@
-use crate::parser::FitDataRecordNode;
 use crate::objects::{DataField, DataFieldValue, FitDataRecord};
+use crate::parser::FitDataRecordNode;
 use chrono::{Duration, Local, NaiveDate, NaiveDateTime, TimeZone};
 use std::collections::HashMap;
 
@@ -78,7 +78,10 @@ impl FieldInfo {
         &self.components
     }
 
-    pub fn expand_components(&self, value: &DataFieldValue) -> Vec<(&ComponentFieldInfo, DataFieldValue)> {
+    pub fn expand_components(
+        &self,
+        value: &DataFieldValue,
+    ) -> Vec<(&ComponentFieldInfo, DataFieldValue)> {
         // extract out each field by masking specific bits, spanning 1 or more bytes
         let bit_mask = [1u8, 2u8, 4u8, 8u8, 16u8, 32u8, 64u8, 128u8];
         let mut bytes = value.to_ne_bytes().into_iter();
@@ -92,8 +95,7 @@ impl FieldInfo {
                 if bit_pos == 7 {
                     byte = bytes.next().unwrap_or(0);
                     bit_pos = 0;
-                }
-                else {
+                } else {
                     bit_pos += 1;
                 }
             }
@@ -216,23 +218,16 @@ pub fn apply_data_profile(nodes: Vec<FitDataRecordNode>) -> Vec<FitDataRecord> {
     let mut accumlated_values: HashMap<u16, HashMap<u8, DataFieldValue>> = HashMap::new();
     let mut records = Vec::new();
 
-    for mut node in nodes {
+    for node in nodes {
         let mesg_num = MesgNum::from_u16(node.global_message_number);
         let mesg_info = mesg_num.message_info();
-        let mut rec_fields = Vec::new();
 
-        // initialize process queue with field info for decoded, valid fields.
-        let mut process_queue: Vec<(u8, Option<FieldInfo>)> = node.fields.keys().map(|k| (*k, mesg_info.get_field(*k, &node.fields).cloned())).collect();
+        // TODO process developer fields
 
-        // process data mapping populating the record fields
-        build_data_fields_from_map(&mesg_info, &mut process_queue, &mut node.fields, &mut rec_fields);
-
-        // todo process developer fields
-
-        records.push(FitDataRecord{
+        records.push(FitDataRecord {
             kind: mesg_num.to_string(),
             time_offset: node.time_offset,
-            fields: rec_fields,
+            fields: build_data_fields_from_map(mesg_info, node.fields),
         });
     }
 
@@ -241,11 +236,16 @@ pub fn apply_data_profile(nodes: Vec<FitDataRecordNode>) -> Vec<FitDataRecord> {
 
 /// Add processed data fields from raw values in the data mapping
 fn build_data_fields_from_map(
-    mesg_info: &MessageInfo,
-    process_queue: &mut Vec<(u8, Option<FieldInfo>)>,
-    data_map: &mut HashMap<u8, DataFieldValue>,
-    data_fields: &mut Vec<DataField>,
-) {
+    mesg_info: MessageInfo,
+    mut data_map: HashMap<u8, DataFieldValue>,
+) -> Vec<DataField> {
+    // initialize process queue with field info for decoded, valid fields.
+    let mut data_fields = Vec::new();
+    let mut process_queue: Vec<(u8, Option<FieldInfo>)> = data_map
+        .keys()
+        .map(|k| (*k, mesg_info.get_field(*k, &data_map).cloned()))
+        .collect();
+
     while !process_queue.is_empty() {
         let (def_num, field_info) = process_queue.remove(0);
         let value = &data_map[&def_num];
@@ -257,28 +257,27 @@ fn build_data_fields_from_map(
             if field_info.components().is_empty() {
                 data_fields.push(data_field_with_info(&field_info, &value));
             } else {
-                let (infos, values): (Vec<_>, Vec<_>) = field_info.expand_components(&value).into_iter().unzip();
+                let (infos, values): (Vec<_>, Vec<_>) =
+                    field_info.expand_components(&value).into_iter().unzip();
                 // add all data to map first and then update process queue since reference fields
                 // are data dependent
                 for (comp_info, comp_value) in infos.iter().zip(values.into_iter()) {
                     data_map.insert(comp_info.dest_def_number, comp_value);
                 }
                 for comp_info in infos {
-                    let old_field_info = mesg_info.get_field(comp_info.dest_def_number, data_map);
+                    let old_field_info = mesg_info.get_field(comp_info.dest_def_number, &data_map);
                     let new_field_info = match old_field_info {
-                        Some(info) => {
-                            Some(FieldInfo {
-                                name: info.name,
-                                field_type: info.field_type,
-                                def_number: info.def_number,
-                                scale: comp_info.scale,
-                                offset: comp_info.offset,
-                                units: comp_info.units,
-                                subfields: info.subfields.clone(),
-                                components: info.components.clone(),
-                            })
-                        },
-                        None => None
+                        Some(info) => Some(FieldInfo {
+                            name: info.name,
+                            field_type: info.field_type,
+                            def_number: info.def_number,
+                            scale: comp_info.scale,
+                            offset: comp_info.offset,
+                            units: comp_info.units,
+                            subfields: info.subfields.clone(),
+                            components: info.components.clone(),
+                        }),
+                        None => None,
                     };
                     process_queue.push((comp_info.dest_def_number, new_field_info));
                 }
@@ -287,6 +286,8 @@ fn build_data_fields_from_map(
             data_fields.push(unknown_field(def_num, &value));
         }
     }
+
+    data_fields
 }
 
 /// Build a data field using the provided FIT profile information

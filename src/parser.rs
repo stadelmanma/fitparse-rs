@@ -22,15 +22,13 @@ pub struct Ast {
     pub crc: u16,
 }
 
-
 /// Parsed FitDataMessage with additional message info to decouple it from it's local definition
 /// message.
 #[derive(Debug)]
 pub struct FitDataRecordNode {
     pub global_message_number: u16,
     pub time_offset: Option<u8>,
-    pub fields: HashMap<u8, DataFieldValue>
-    // pub developer_fields: Vec<T>
+    pub fields: HashMap<u8, DataFieldValue>, // pub developer_fields: Vec<T>
 }
 
 /// Parse a collection of bytes into a Fit File AST
@@ -184,7 +182,14 @@ fn fit_file(input: &[u8]) -> IResult<&[u8], Ast> {
     let (_, records) = parse_messages(record_bytes)?;
     let (input, crc) = le_u16(input)?;
 
-    Ok((input, Ast{header, records, crc}))
+    Ok((
+        input,
+        Ast {
+            header,
+            records,
+            crc,
+        },
+    ))
 }
 
 /// Parse the FIT file header
@@ -207,8 +212,6 @@ fn fit_file_header(input: &[u8]) -> IResult<&[u8], FitFileHeader> {
         },
     ))
 }
-
-
 
 /// Parse each message inside the FIT file
 ///
@@ -256,12 +259,13 @@ fn fit_message<'a>(
                     FitDataRecordNode {
                         global_message_number: def_mesg.global_message_number,
                         time_offset: header.time_offset,
-                        fields: def_mesg.field_definitions
-                                .iter()
-                                .map(|f| f.field_definition_number)
-                                .zip(msg.fields.into_iter())
-                                .filter_map(|(k, v)| v.map(|v| (k, v)))
-                                .collect(),
+                        fields: def_mesg
+                            .field_definitions
+                            .iter()
+                            .map(|f| f.field_definition_number)
+                            .zip(msg.fields.into_iter())
+                            .filter_map(|(k, v)| v.map(|v| (k, v)))
+                            .collect(),
                     },
                 ))
             } else {

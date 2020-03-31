@@ -19,14 +19,13 @@ pub fn parse<T: Read>(source: &mut T) -> Result<Vec<FitFile>, Box<dyn std::error
             Ok((r, ast)) => {
                 remaining = r;
                 fit_data.push(FitFile::from_ast(ast));
-            },
-            Err(e) => return Err(Box::new(e.to_owned()))
+            }
+            Err(e) => return Err(Box::new(e.to_owned())),
         };
     }
 
     Result::Ok(fit_data)
 }
-
 
 #[cfg(test)]
 mod tests {

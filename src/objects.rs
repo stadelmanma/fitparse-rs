@@ -18,7 +18,7 @@ impl FitFile {
         FitFile {
             header: ast.header,
             records: apply_data_profile(ast.records),
-            crc: ast.crc
+            crc: ast.crc,
         }
     }
 }
@@ -181,7 +181,6 @@ impl DataFieldValue {
             DataFieldValue::UInt64(val) => val.to_ne_bytes().to_vec(),
             DataFieldValue::UInt64z(val) => val.to_ne_bytes().to_vec(),
             DataFieldValue::Array(vals) => vals.iter().flat_map(|v| v.to_ne_bytes()).collect(),
-
         }
     }
 }
