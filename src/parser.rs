@@ -465,8 +465,8 @@ fn data_field_value(
                 u32!(input, byte_order).map(|(i, v)| (i, DataFieldValue::UInt32z(v)))?
             }
             BaseType::Byte => {
-                bytes_consumed += size;
-                take(size as usize)(input).map(|(i, v)| (i, DataFieldValue::Byte(Vec::from(v))))?
+                bytes_consumed += 1;
+                le_u8(input).map(|(i, v)| (i, DataFieldValue::UInt8(v)))?
             }
             BaseType::SInt64 => {
                 bytes_consumed += 8;

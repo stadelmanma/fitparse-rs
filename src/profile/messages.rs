@@ -3,7 +3,7 @@ use super::{ComponentFieldInfo, FieldDataType, FieldInfo, MessageInfo};
 /// Auto generated profile from FIT SDK Release: XXX
 use std::collections::HashMap;
 
-fn file_id_message() -> MessageInfo {
+fn file_id_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
@@ -13,6 +13,7 @@ fn file_id_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -25,6 +26,7 @@ fn file_id_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -38,6 +40,7 @@ fn file_id_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -49,6 +52,7 @@ fn file_id_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -60,6 +64,7 @@ fn file_id_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -71,6 +76,7 @@ fn file_id_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -82,6 +88,7 @@ fn file_id_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: subfields,
         components: Vec::new(),
     };
@@ -94,6 +101,7 @@ fn file_id_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -107,6 +115,7 @@ fn file_id_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -120,6 +129,7 @@ fn file_id_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -133,6 +143,7 @@ fn file_id_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -140,11 +151,12 @@ fn file_id_message() -> MessageInfo {
 
     MessageInfo {
         name: "file_id",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn file_creator_message() -> MessageInfo {
+fn file_creator_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
@@ -154,6 +166,7 @@ fn file_creator_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -166,6 +179,7 @@ fn file_creator_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -173,11 +187,12 @@ fn file_creator_message() -> MessageInfo {
 
     MessageInfo {
         name: "file_creator",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn timestamp_correlation_message() -> MessageInfo {
+fn timestamp_correlation_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     // Fractional part of the UTC timestamp at the time the system timestamp was recorded.
@@ -188,6 +203,7 @@ fn timestamp_correlation_message() -> MessageInfo {
         scale: 32768.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -201,6 +217,7 @@ fn timestamp_correlation_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -214,6 +231,7 @@ fn timestamp_correlation_message() -> MessageInfo {
         scale: 32768.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -227,6 +245,7 @@ fn timestamp_correlation_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -240,6 +259,7 @@ fn timestamp_correlation_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "ms",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -253,6 +273,7 @@ fn timestamp_correlation_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "ms",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -266,6 +287,7 @@ fn timestamp_correlation_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -273,11 +295,12 @@ fn timestamp_correlation_message() -> MessageInfo {
 
     MessageInfo {
         name: "timestamp_correlation",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn software_message() -> MessageInfo {
+fn software_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
@@ -287,6 +310,7 @@ fn software_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -299,6 +323,7 @@ fn software_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -311,6 +336,7 @@ fn software_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -318,11 +344,12 @@ fn software_message() -> MessageInfo {
 
     MessageInfo {
         name: "software",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn slave_device_message() -> MessageInfo {
+fn slave_device_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
@@ -332,6 +359,7 @@ fn slave_device_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -345,6 +373,7 @@ fn slave_device_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -356,6 +385,7 @@ fn slave_device_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -367,6 +397,7 @@ fn slave_device_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -378,6 +409,7 @@ fn slave_device_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -389,6 +421,7 @@ fn slave_device_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: subfields,
         components: Vec::new(),
     };
@@ -396,11 +429,12 @@ fn slave_device_message() -> MessageInfo {
 
     MessageInfo {
         name: "slave_device",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn capabilities_message() -> MessageInfo {
+fn capabilities_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     // Use language_bits_x types where x is index of array.
@@ -411,6 +445,7 @@ fn capabilities_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -424,6 +459,7 @@ fn capabilities_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -436,6 +472,7 @@ fn capabilities_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -448,6 +485,7 @@ fn capabilities_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -455,11 +493,12 @@ fn capabilities_message() -> MessageInfo {
 
     MessageInfo {
         name: "capabilities",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn file_capabilities_message() -> MessageInfo {
+fn file_capabilities_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
@@ -469,6 +508,7 @@ fn file_capabilities_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -481,6 +521,7 @@ fn file_capabilities_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -493,6 +534,7 @@ fn file_capabilities_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -505,6 +547,7 @@ fn file_capabilities_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -517,6 +560,7 @@ fn file_capabilities_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "bytes",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -529,6 +573,7 @@ fn file_capabilities_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -536,11 +581,12 @@ fn file_capabilities_message() -> MessageInfo {
 
     MessageInfo {
         name: "file_capabilities",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn mesg_capabilities_message() -> MessageInfo {
+fn mesg_capabilities_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
@@ -550,6 +596,7 @@ fn mesg_capabilities_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -562,6 +609,7 @@ fn mesg_capabilities_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -574,6 +622,7 @@ fn mesg_capabilities_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -587,6 +636,7 @@ fn mesg_capabilities_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -598,6 +648,7 @@ fn mesg_capabilities_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -609,6 +660,7 @@ fn mesg_capabilities_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -620,6 +672,7 @@ fn mesg_capabilities_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: subfields,
         components: Vec::new(),
     };
@@ -632,6 +685,7 @@ fn mesg_capabilities_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -639,11 +693,12 @@ fn mesg_capabilities_message() -> MessageInfo {
 
     MessageInfo {
         name: "mesg_capabilities",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn field_capabilities_message() -> MessageInfo {
+fn field_capabilities_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
@@ -653,6 +708,7 @@ fn field_capabilities_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -665,6 +721,7 @@ fn field_capabilities_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -677,6 +734,7 @@ fn field_capabilities_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -689,6 +747,7 @@ fn field_capabilities_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -701,6 +760,7 @@ fn field_capabilities_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -708,11 +768,12 @@ fn field_capabilities_message() -> MessageInfo {
 
     MessageInfo {
         name: "field_capabilities",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn device_settings_message() -> MessageInfo {
+fn device_settings_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     // Index into time zone arrays.
@@ -723,6 +784,7 @@ fn device_settings_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -736,6 +798,7 @@ fn device_settings_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -749,6 +812,7 @@ fn device_settings_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -762,6 +826,7 @@ fn device_settings_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -775,6 +840,7 @@ fn device_settings_message() -> MessageInfo {
         scale: 4.000000,
         offset: 0.000000,
         units: "hr",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -788,6 +854,7 @@ fn device_settings_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -801,6 +868,7 @@ fn device_settings_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -814,6 +882,7 @@ fn device_settings_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -827,6 +896,7 @@ fn device_settings_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -840,6 +910,7 @@ fn device_settings_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -853,6 +924,7 @@ fn device_settings_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -865,6 +937,7 @@ fn device_settings_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -877,6 +950,7 @@ fn device_settings_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -890,6 +964,7 @@ fn device_settings_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -903,6 +978,7 @@ fn device_settings_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "steps",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -916,6 +992,7 @@ fn device_settings_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "minutes",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -929,6 +1006,7 @@ fn device_settings_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -942,6 +1020,7 @@ fn device_settings_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -955,6 +1034,7 @@ fn device_settings_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -968,6 +1048,7 @@ fn device_settings_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -981,6 +1062,7 @@ fn device_settings_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -994,6 +1076,7 @@ fn device_settings_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1006,6 +1089,7 @@ fn device_settings_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1013,11 +1097,12 @@ fn device_settings_message() -> MessageInfo {
 
     MessageInfo {
         name: "device_settings",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn user_profile_message() -> MessageInfo {
+fn user_profile_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
@@ -1027,6 +1112,7 @@ fn user_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1039,6 +1125,7 @@ fn user_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1051,6 +1138,7 @@ fn user_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "years",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1063,6 +1151,7 @@ fn user_profile_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1075,6 +1164,7 @@ fn user_profile_message() -> MessageInfo {
         scale: 10.000000,
         offset: 0.000000,
         units: "kg",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1087,6 +1177,7 @@ fn user_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1099,6 +1190,7 @@ fn user_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1111,6 +1203,7 @@ fn user_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1123,6 +1216,7 @@ fn user_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "bpm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1135,6 +1229,7 @@ fn user_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "bpm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1147,6 +1242,7 @@ fn user_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "bpm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1159,6 +1255,7 @@ fn user_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "bpm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1171,6 +1268,7 @@ fn user_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1183,6 +1281,7 @@ fn user_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1195,6 +1294,7 @@ fn user_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1207,6 +1307,7 @@ fn user_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1219,6 +1320,7 @@ fn user_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1231,6 +1333,7 @@ fn user_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1243,6 +1346,7 @@ fn user_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1255,6 +1359,7 @@ fn user_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1267,6 +1372,7 @@ fn user_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1280,6 +1386,7 @@ fn user_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1293,6 +1400,7 @@ fn user_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1305,6 +1413,7 @@ fn user_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1318,6 +1427,7 @@ fn user_profile_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1331,6 +1441,7 @@ fn user_profile_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1343,6 +1454,7 @@ fn user_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1355,6 +1467,7 @@ fn user_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1367,6 +1480,7 @@ fn user_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1374,11 +1488,12 @@ fn user_profile_message() -> MessageInfo {
 
     MessageInfo {
         name: "user_profile",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn hrm_profile_message() -> MessageInfo {
+fn hrm_profile_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
@@ -1388,6 +1503,7 @@ fn hrm_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1400,6 +1516,7 @@ fn hrm_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1412,6 +1529,7 @@ fn hrm_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1424,6 +1542,7 @@ fn hrm_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1436,6 +1555,7 @@ fn hrm_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1443,11 +1563,12 @@ fn hrm_profile_message() -> MessageInfo {
 
     MessageInfo {
         name: "hrm_profile",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn sdm_profile_message() -> MessageInfo {
+fn sdm_profile_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
@@ -1457,6 +1578,7 @@ fn sdm_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1469,6 +1591,7 @@ fn sdm_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1481,6 +1604,7 @@ fn sdm_profile_message() -> MessageInfo {
         scale: 10.000000,
         offset: 0.000000,
         units: "%",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1493,6 +1617,7 @@ fn sdm_profile_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1506,6 +1631,7 @@ fn sdm_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1518,6 +1644,7 @@ fn sdm_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1531,6 +1658,7 @@ fn sdm_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1543,6 +1671,7 @@ fn sdm_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1550,11 +1679,12 @@ fn sdm_profile_message() -> MessageInfo {
 
     MessageInfo {
         name: "sdm_profile",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn bike_profile_message() -> MessageInfo {
+fn bike_profile_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
@@ -1564,6 +1694,7 @@ fn bike_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1576,6 +1707,7 @@ fn bike_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1588,6 +1720,7 @@ fn bike_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1600,6 +1733,7 @@ fn bike_profile_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1612,6 +1746,7 @@ fn bike_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1624,6 +1759,7 @@ fn bike_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1636,6 +1772,7 @@ fn bike_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1648,6 +1785,7 @@ fn bike_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1660,6 +1798,7 @@ fn bike_profile_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1672,6 +1811,7 @@ fn bike_profile_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1684,6 +1824,7 @@ fn bike_profile_message() -> MessageInfo {
         scale: 10.000000,
         offset: 0.000000,
         units: "kg",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1696,6 +1837,7 @@ fn bike_profile_message() -> MessageInfo {
         scale: 10.000000,
         offset: 0.000000,
         units: "%",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1708,6 +1850,7 @@ fn bike_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1720,6 +1863,7 @@ fn bike_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1732,6 +1876,7 @@ fn bike_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1744,6 +1889,7 @@ fn bike_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1756,6 +1902,7 @@ fn bike_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1768,6 +1915,7 @@ fn bike_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1780,6 +1928,7 @@ fn bike_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1792,6 +1941,7 @@ fn bike_profile_message() -> MessageInfo {
         scale: 2.000000,
         offset: 0.000000,
         units: "mm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1804,6 +1954,7 @@ fn bike_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1816,6 +1967,7 @@ fn bike_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1828,6 +1980,7 @@ fn bike_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1840,6 +1993,7 @@ fn bike_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1852,6 +2006,7 @@ fn bike_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1865,6 +2020,7 @@ fn bike_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1878,6 +2034,7 @@ fn bike_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1891,6 +2048,7 @@ fn bike_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1904,6 +2062,7 @@ fn bike_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1917,6 +2076,7 @@ fn bike_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1929,6 +2089,7 @@ fn bike_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1941,6 +2102,7 @@ fn bike_profile_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1948,11 +2110,12 @@ fn bike_profile_message() -> MessageInfo {
 
     MessageInfo {
         name: "bike_profile",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn connectivity_message() -> MessageInfo {
+fn connectivity_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     // Use Bluetooth for connectivity features
@@ -1963,6 +2126,7 @@ fn connectivity_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1976,6 +2140,7 @@ fn connectivity_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -1989,6 +2154,7 @@ fn connectivity_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2001,6 +2167,7 @@ fn connectivity_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2013,6 +2180,7 @@ fn connectivity_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2025,6 +2193,7 @@ fn connectivity_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2037,6 +2206,7 @@ fn connectivity_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2049,6 +2219,7 @@ fn connectivity_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2061,6 +2232,7 @@ fn connectivity_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2073,6 +2245,7 @@ fn connectivity_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2085,6 +2258,7 @@ fn connectivity_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2097,6 +2271,7 @@ fn connectivity_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2109,6 +2284,7 @@ fn connectivity_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2116,11 +2292,12 @@ fn connectivity_message() -> MessageInfo {
 
     MessageInfo {
         name: "connectivity",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn watchface_settings_message() -> MessageInfo {
+fn watchface_settings_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
@@ -2130,6 +2307,7 @@ fn watchface_settings_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2143,6 +2321,7 @@ fn watchface_settings_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2154,6 +2333,7 @@ fn watchface_settings_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2165,6 +2345,7 @@ fn watchface_settings_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: subfields,
         components: Vec::new(),
     };
@@ -2177,6 +2358,7 @@ fn watchface_settings_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2184,11 +2366,12 @@ fn watchface_settings_message() -> MessageInfo {
 
     MessageInfo {
         name: "watchface_settings",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn ohr_settings_message() -> MessageInfo {
+fn ohr_settings_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
@@ -2198,6 +2381,7 @@ fn ohr_settings_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2210,6 +2394,7 @@ fn ohr_settings_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2217,11 +2402,12 @@ fn ohr_settings_message() -> MessageInfo {
 
     MessageInfo {
         name: "ohr_settings",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn zones_target_message() -> MessageInfo {
+fn zones_target_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
@@ -2231,6 +2417,7 @@ fn zones_target_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2243,6 +2430,7 @@ fn zones_target_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2255,6 +2443,7 @@ fn zones_target_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2267,6 +2456,7 @@ fn zones_target_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2279,6 +2469,7 @@ fn zones_target_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2286,11 +2477,12 @@ fn zones_target_message() -> MessageInfo {
 
     MessageInfo {
         name: "zones_target",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn sport_message() -> MessageInfo {
+fn sport_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
@@ -2300,6 +2492,7 @@ fn sport_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2312,6 +2505,7 @@ fn sport_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2324,6 +2518,7 @@ fn sport_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2331,11 +2526,12 @@ fn sport_message() -> MessageInfo {
 
     MessageInfo {
         name: "sport",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn hr_zone_message() -> MessageInfo {
+fn hr_zone_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
@@ -2345,6 +2541,7 @@ fn hr_zone_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "bpm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2357,6 +2554,7 @@ fn hr_zone_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2369,6 +2567,7 @@ fn hr_zone_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2376,11 +2575,12 @@ fn hr_zone_message() -> MessageInfo {
 
     MessageInfo {
         name: "hr_zone",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn speed_zone_message() -> MessageInfo {
+fn speed_zone_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
@@ -2390,6 +2590,7 @@ fn speed_zone_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "m/s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2402,6 +2603,7 @@ fn speed_zone_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2414,6 +2616,7 @@ fn speed_zone_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2421,11 +2624,12 @@ fn speed_zone_message() -> MessageInfo {
 
     MessageInfo {
         name: "speed_zone",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn cadence_zone_message() -> MessageInfo {
+fn cadence_zone_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
@@ -2435,6 +2639,7 @@ fn cadence_zone_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "rpm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2447,6 +2652,7 @@ fn cadence_zone_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2459,6 +2665,7 @@ fn cadence_zone_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2466,11 +2673,12 @@ fn cadence_zone_message() -> MessageInfo {
 
     MessageInfo {
         name: "cadence_zone",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn power_zone_message() -> MessageInfo {
+fn power_zone_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
@@ -2480,6 +2688,7 @@ fn power_zone_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "watts",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2492,6 +2701,7 @@ fn power_zone_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2504,6 +2714,7 @@ fn power_zone_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2511,11 +2722,12 @@ fn power_zone_message() -> MessageInfo {
 
     MessageInfo {
         name: "power_zone",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn met_zone_message() -> MessageInfo {
+fn met_zone_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
@@ -2525,6 +2737,7 @@ fn met_zone_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2537,6 +2750,7 @@ fn met_zone_message() -> MessageInfo {
         scale: 10.000000,
         offset: 0.000000,
         units: "kcal / min",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2549,6 +2763,7 @@ fn met_zone_message() -> MessageInfo {
         scale: 10.000000,
         offset: 0.000000,
         units: "kcal / min",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2561,6 +2776,7 @@ fn met_zone_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2568,11 +2784,12 @@ fn met_zone_message() -> MessageInfo {
 
     MessageInfo {
         name: "met_zone",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn dive_settings_message() -> MessageInfo {
+fn dive_settings_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
@@ -2582,6 +2799,7 @@ fn dive_settings_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2594,6 +2812,7 @@ fn dive_settings_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2606,6 +2825,7 @@ fn dive_settings_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "percent",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2618,6 +2838,7 @@ fn dive_settings_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "percent",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2630,6 +2851,7 @@ fn dive_settings_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2643,6 +2865,7 @@ fn dive_settings_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "kg/m^3",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2656,6 +2879,7 @@ fn dive_settings_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "percent",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2669,6 +2893,7 @@ fn dive_settings_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "percent",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2681,6 +2906,7 @@ fn dive_settings_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "percent",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2693,6 +2919,7 @@ fn dive_settings_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2705,6 +2932,7 @@ fn dive_settings_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2717,6 +2945,7 @@ fn dive_settings_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2729,6 +2958,7 @@ fn dive_settings_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2741,6 +2971,7 @@ fn dive_settings_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2753,6 +2984,7 @@ fn dive_settings_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2765,6 +2997,7 @@ fn dive_settings_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2777,6 +3010,7 @@ fn dive_settings_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2790,6 +3024,7 @@ fn dive_settings_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2803,6 +3038,7 @@ fn dive_settings_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2815,6 +3051,7 @@ fn dive_settings_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2828,6 +3065,7 @@ fn dive_settings_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2839,6 +3077,7 @@ fn dive_settings_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2850,6 +3089,7 @@ fn dive_settings_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: subfields,
         components: Vec::new(),
     };
@@ -2862,6 +3102,7 @@ fn dive_settings_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2869,11 +3110,12 @@ fn dive_settings_message() -> MessageInfo {
 
     MessageInfo {
         name: "dive_settings",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn dive_alarm_message() -> MessageInfo {
+fn dive_alarm_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
@@ -2883,6 +3125,7 @@ fn dive_alarm_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2895,6 +3138,7 @@ fn dive_alarm_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2907,6 +3151,7 @@ fn dive_alarm_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2919,6 +3164,7 @@ fn dive_alarm_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2931,6 +3177,7 @@ fn dive_alarm_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2943,6 +3190,7 @@ fn dive_alarm_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2956,6 +3204,7 @@ fn dive_alarm_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2963,11 +3212,12 @@ fn dive_alarm_message() -> MessageInfo {
 
     MessageInfo {
         name: "dive_alarm",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn dive_gas_message() -> MessageInfo {
+fn dive_gas_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
@@ -2977,6 +3227,7 @@ fn dive_gas_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "percent",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -2989,6 +3240,7 @@ fn dive_gas_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "percent",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3001,6 +3253,7 @@ fn dive_gas_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3013,6 +3266,7 @@ fn dive_gas_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3020,11 +3274,12 @@ fn dive_gas_message() -> MessageInfo {
 
     MessageInfo {
         name: "dive_gas",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn goal_message() -> MessageInfo {
+fn goal_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
@@ -3034,6 +3289,7 @@ fn goal_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3046,6 +3302,7 @@ fn goal_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3058,6 +3315,7 @@ fn goal_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3070,6 +3328,7 @@ fn goal_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3082,6 +3341,7 @@ fn goal_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3094,6 +3354,7 @@ fn goal_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3106,6 +3367,7 @@ fn goal_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3118,6 +3380,7 @@ fn goal_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3130,6 +3393,7 @@ fn goal_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3142,6 +3406,7 @@ fn goal_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3154,6 +3419,7 @@ fn goal_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3166,6 +3432,7 @@ fn goal_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3178,6 +3445,7 @@ fn goal_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3185,11 +3453,12 @@ fn goal_message() -> MessageInfo {
 
     MessageInfo {
         name: "goal",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn activity_message() -> MessageInfo {
+fn activity_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     // Exclude pauses
@@ -3200,6 +3469,7 @@ fn activity_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3212,6 +3482,7 @@ fn activity_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3224,6 +3495,7 @@ fn activity_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3236,6 +3508,7 @@ fn activity_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3248,6 +3521,7 @@ fn activity_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3261,6 +3535,7 @@ fn activity_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3273,6 +3548,7 @@ fn activity_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3285,6 +3561,7 @@ fn activity_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3292,11 +3569,12 @@ fn activity_message() -> MessageInfo {
 
     MessageInfo {
         name: "activity",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn session_message() -> MessageInfo {
+fn session_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     // session
@@ -3307,6 +3585,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3320,6 +3599,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3332,6 +3612,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3344,6 +3625,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "semicircles",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3356,6 +3638,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "semicircles",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3368,6 +3651,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3380,6 +3664,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3393,6 +3678,7 @@ fn session_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3406,6 +3692,7 @@ fn session_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3418,6 +3705,7 @@ fn session_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3431,6 +3719,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "strides",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3442,6 +3731,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "strides",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3453,6 +3743,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "cycles",
+        accumulate: false,
         subfields: subfields,
         components: Vec::new(),
     };
@@ -3465,6 +3756,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "kcal",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3477,6 +3769,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "kcal",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3500,6 +3793,7 @@ fn session_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "m/s",
+        accumulate: false,
         subfields: Vec::new(),
         components: components,
     };
@@ -3522,6 +3816,7 @@ fn session_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "m/s",
+        accumulate: false,
         subfields: Vec::new(),
         components: components,
     };
@@ -3535,6 +3830,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "bpm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3547,6 +3843,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "bpm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3560,6 +3857,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "strides/min",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3572,6 +3870,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "rpm",
+        accumulate: false,
         subfields: subfields,
         components: Vec::new(),
     };
@@ -3585,6 +3884,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "strides/min",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3596,6 +3896,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "rpm",
+        accumulate: false,
         subfields: subfields,
         components: Vec::new(),
     };
@@ -3609,6 +3910,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "watts",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3621,6 +3923,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "watts",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3633,6 +3936,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3645,6 +3949,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3657,6 +3962,7 @@ fn session_message() -> MessageInfo {
         scale: 10.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3669,6 +3975,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3681,6 +3988,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3693,6 +4001,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3705,6 +4014,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3717,6 +4027,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "semicircles",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3729,6 +4040,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "semicircles",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3741,6 +4053,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "semicircles",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3753,6 +4066,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "semicircles",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3765,6 +4079,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "watts",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3777,6 +4092,7 @@ fn session_message() -> MessageInfo {
         scale: 10.000000,
         offset: 0.000000,
         units: "tss",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3789,6 +4105,7 @@ fn session_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "if",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3801,6 +4118,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3813,6 +4131,7 @@ fn session_message() -> MessageInfo {
         scale: 10.000000,
         offset: 0.000000,
         units: "strokes/lap",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3825,6 +4144,7 @@ fn session_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3837,6 +4157,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "swim_stroke",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3849,6 +4170,7 @@ fn session_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3861,6 +4183,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "watts",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3873,6 +4196,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3886,6 +4210,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "lengths",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3898,6 +4223,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "J",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3920,6 +4246,7 @@ fn session_message() -> MessageInfo {
         scale: 5.000000,
         offset: 500.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: components,
     };
@@ -3942,6 +4269,7 @@ fn session_message() -> MessageInfo {
         scale: 5.000000,
         offset: 500.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: components,
     };
@@ -3954,6 +4282,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3966,6 +4295,7 @@ fn session_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "%",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3978,6 +4308,7 @@ fn session_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "%",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -3990,6 +4321,7 @@ fn session_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "%",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4002,6 +4334,7 @@ fn session_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "%",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4014,6 +4347,7 @@ fn session_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "%",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4026,6 +4360,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "C",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4038,6 +4373,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "C",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4050,6 +4386,7 @@ fn session_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4062,6 +4399,7 @@ fn session_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "m/s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4074,6 +4412,7 @@ fn session_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "m/s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4086,6 +4425,7 @@ fn session_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "m/s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4098,6 +4438,7 @@ fn session_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "m/s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4110,6 +4451,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "bpm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4122,6 +4464,7 @@ fn session_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4134,6 +4477,7 @@ fn session_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4146,6 +4490,7 @@ fn session_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4158,6 +4503,7 @@ fn session_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4170,6 +4516,7 @@ fn session_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4182,6 +4529,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4204,6 +4552,7 @@ fn session_message() -> MessageInfo {
         scale: 5.000000,
         offset: 500.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: components,
     };
@@ -4216,6 +4565,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4228,6 +4578,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4240,6 +4591,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4253,6 +4605,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "counts",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4266,6 +4619,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "counts",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4278,6 +4632,7 @@ fn session_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "m/s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4290,6 +4645,7 @@ fn session_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "m/s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4302,6 +4658,7 @@ fn session_message() -> MessageInfo {
         scale: 10.000000,
         offset: 0.000000,
         units: "mm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4314,6 +4671,7 @@ fn session_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "percent",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4326,6 +4684,7 @@ fn session_message() -> MessageInfo {
         scale: 10.000000,
         offset: 0.000000,
         units: "ms",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4339,6 +4698,7 @@ fn session_message() -> MessageInfo {
         scale: 128.000000,
         offset: 0.000000,
         units: "rpm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4352,6 +4712,7 @@ fn session_message() -> MessageInfo {
         scale: 128.000000,
         offset: 0.000000,
         units: "rpm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4365,6 +4726,7 @@ fn session_message() -> MessageInfo {
         scale: 128.000000,
         offset: 0.000000,
         units: "cycles",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4378,6 +4740,7 @@ fn session_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "g/dL",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4391,6 +4754,7 @@ fn session_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "g/dL",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4404,6 +4768,7 @@ fn session_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "g/dL",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4417,6 +4782,7 @@ fn session_message() -> MessageInfo {
         scale: 10.000000,
         offset: 0.000000,
         units: "%",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4430,6 +4796,7 @@ fn session_message() -> MessageInfo {
         scale: 10.000000,
         offset: 0.000000,
         units: "%",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4443,6 +4810,7 @@ fn session_message() -> MessageInfo {
         scale: 10.000000,
         offset: 0.000000,
         units: "%",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4455,6 +4823,7 @@ fn session_message() -> MessageInfo {
         scale: 2.000000,
         offset: 0.000000,
         units: "percent",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4467,6 +4836,7 @@ fn session_message() -> MessageInfo {
         scale: 2.000000,
         offset: 0.000000,
         units: "percent",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4479,6 +4849,7 @@ fn session_message() -> MessageInfo {
         scale: 2.000000,
         offset: 0.000000,
         units: "percent",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4491,6 +4862,7 @@ fn session_message() -> MessageInfo {
         scale: 2.000000,
         offset: 0.000000,
         units: "percent",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4503,6 +4875,7 @@ fn session_message() -> MessageInfo {
         scale: 2.000000,
         offset: 0.000000,
         units: "percent",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4515,6 +4888,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4528,6 +4902,7 @@ fn session_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4541,6 +4916,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4554,6 +4930,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "mm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4567,6 +4944,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "mm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4580,6 +4958,7 @@ fn session_message() -> MessageInfo {
         scale: 0.711111,
         offset: 0.000000,
         units: "degrees",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4593,6 +4972,7 @@ fn session_message() -> MessageInfo {
         scale: 0.711111,
         offset: 0.000000,
         units: "degrees",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4606,6 +4986,7 @@ fn session_message() -> MessageInfo {
         scale: 0.711111,
         offset: 0.000000,
         units: "degrees",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4619,6 +5000,7 @@ fn session_message() -> MessageInfo {
         scale: 0.711111,
         offset: 0.000000,
         units: "degrees",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4632,6 +5014,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "watts",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4645,6 +5028,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "watts",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4658,6 +5042,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "rpm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4671,6 +5056,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "rpm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4684,6 +5070,7 @@ fn session_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "m/s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4696,6 +5083,7 @@ fn session_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "m/s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4708,6 +5096,7 @@ fn session_message() -> MessageInfo {
         scale: 5.000000,
         offset: 500.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4720,6 +5109,7 @@ fn session_message() -> MessageInfo {
         scale: 5.000000,
         offset: 500.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4732,6 +5122,7 @@ fn session_message() -> MessageInfo {
         scale: 5.000000,
         offset: 500.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4745,6 +5136,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "watts",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4758,6 +5150,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "watts",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4771,6 +5164,7 @@ fn session_message() -> MessageInfo {
         scale: 2.000000,
         offset: 0.000000,
         units: "percent",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4783,6 +5177,7 @@ fn session_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "percent",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4795,6 +5190,7 @@ fn session_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "percent",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4807,6 +5203,7 @@ fn session_message() -> MessageInfo {
         scale: 10.000000,
         offset: 0.000000,
         units: "mm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4819,6 +5216,7 @@ fn session_message() -> MessageInfo {
         scale: 10.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4831,6 +5229,7 @@ fn session_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "m/s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4844,6 +5243,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "kGrit",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4857,6 +5257,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "Flow",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4869,6 +5270,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4882,6 +5284,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "kGrit",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4895,6 +5298,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "Flow",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4908,6 +5312,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4921,6 +5326,7 @@ fn session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4928,11 +5334,12 @@ fn session_message() -> MessageInfo {
 
     MessageInfo {
         name: "session",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn lap_message() -> MessageInfo {
+fn lap_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
@@ -4942,6 +5349,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4954,6 +5362,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4966,6 +5375,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4978,6 +5388,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "semicircles",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -4990,6 +5401,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "semicircles",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5002,6 +5414,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "semicircles",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5014,6 +5427,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "semicircles",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5027,6 +5441,7 @@ fn lap_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5040,6 +5455,7 @@ fn lap_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5052,6 +5468,7 @@ fn lap_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5065,6 +5482,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "strides",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5076,6 +5494,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "strides",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5087,6 +5506,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "cycles",
+        accumulate: false,
         subfields: subfields,
         components: Vec::new(),
     };
@@ -5099,6 +5519,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "kcal",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5112,6 +5533,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "kcal",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5134,6 +5556,7 @@ fn lap_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "m/s",
+        accumulate: false,
         subfields: Vec::new(),
         components: components,
     };
@@ -5156,6 +5579,7 @@ fn lap_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "m/s",
+        accumulate: false,
         subfields: Vec::new(),
         components: components,
     };
@@ -5168,6 +5592,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "bpm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5180,6 +5605,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "bpm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5193,6 +5619,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "strides/min",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5205,6 +5632,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "rpm",
+        accumulate: false,
         subfields: subfields,
         components: Vec::new(),
     };
@@ -5218,6 +5646,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "strides/min",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5229,6 +5658,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "rpm",
+        accumulate: false,
         subfields: subfields,
         components: Vec::new(),
     };
@@ -5242,6 +5672,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "watts",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5254,6 +5685,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "watts",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5266,6 +5698,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5278,6 +5711,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5290,6 +5724,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5302,6 +5737,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5314,6 +5750,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5326,6 +5763,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5339,6 +5777,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "lengths",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5351,6 +5790,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "watts",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5363,6 +5803,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5375,6 +5816,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5387,6 +5829,7 @@ fn lap_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5399,6 +5842,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5411,6 +5855,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5424,6 +5869,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "lengths",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5436,6 +5882,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "J",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5458,6 +5905,7 @@ fn lap_message() -> MessageInfo {
         scale: 5.000000,
         offset: 500.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: components,
     };
@@ -5480,6 +5928,7 @@ fn lap_message() -> MessageInfo {
         scale: 5.000000,
         offset: 500.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: components,
     };
@@ -5492,6 +5941,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5504,6 +5954,7 @@ fn lap_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "%",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5516,6 +5967,7 @@ fn lap_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "%",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5528,6 +5980,7 @@ fn lap_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "%",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5540,6 +5993,7 @@ fn lap_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "%",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5552,6 +6006,7 @@ fn lap_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "%",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5564,6 +6019,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "C",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5576,6 +6032,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "C",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5588,6 +6045,7 @@ fn lap_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5600,6 +6058,7 @@ fn lap_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "m/s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5612,6 +6071,7 @@ fn lap_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "m/s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5624,6 +6084,7 @@ fn lap_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "m/s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5636,6 +6097,7 @@ fn lap_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "m/s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5648,6 +6110,7 @@ fn lap_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5660,6 +6123,7 @@ fn lap_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5672,6 +6136,7 @@ fn lap_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5684,6 +6149,7 @@ fn lap_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5696,6 +6162,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5718,6 +6185,7 @@ fn lap_message() -> MessageInfo {
         scale: 5.000000,
         offset: 500.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: components,
     };
@@ -5730,6 +6198,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "bpm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5742,6 +6211,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5754,6 +6224,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5767,6 +6238,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "counts",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5780,6 +6252,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "counts",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5792,6 +6265,7 @@ fn lap_message() -> MessageInfo {
         scale: 10.000000,
         offset: 0.000000,
         units: "mm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5804,6 +6278,7 @@ fn lap_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "percent",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5816,6 +6291,7 @@ fn lap_message() -> MessageInfo {
         scale: 10.000000,
         offset: 0.000000,
         units: "ms",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5829,6 +6305,7 @@ fn lap_message() -> MessageInfo {
         scale: 128.000000,
         offset: 0.000000,
         units: "rpm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5842,6 +6319,7 @@ fn lap_message() -> MessageInfo {
         scale: 128.000000,
         offset: 0.000000,
         units: "rpm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5855,6 +6333,7 @@ fn lap_message() -> MessageInfo {
         scale: 128.000000,
         offset: 0.000000,
         units: "cycles",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5867,6 +6346,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5880,6 +6360,7 @@ fn lap_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "g/dL",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5893,6 +6374,7 @@ fn lap_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "g/dL",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5906,6 +6388,7 @@ fn lap_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "g/dL",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5919,6 +6402,7 @@ fn lap_message() -> MessageInfo {
         scale: 10.000000,
         offset: 0.000000,
         units: "%",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5932,6 +6416,7 @@ fn lap_message() -> MessageInfo {
         scale: 10.000000,
         offset: 0.000000,
         units: "%",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5945,6 +6430,7 @@ fn lap_message() -> MessageInfo {
         scale: 10.000000,
         offset: 0.000000,
         units: "%",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5957,6 +6443,7 @@ fn lap_message() -> MessageInfo {
         scale: 2.000000,
         offset: 0.000000,
         units: "percent",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5969,6 +6456,7 @@ fn lap_message() -> MessageInfo {
         scale: 2.000000,
         offset: 0.000000,
         units: "percent",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5981,6 +6469,7 @@ fn lap_message() -> MessageInfo {
         scale: 2.000000,
         offset: 0.000000,
         units: "percent",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -5993,6 +6482,7 @@ fn lap_message() -> MessageInfo {
         scale: 2.000000,
         offset: 0.000000,
         units: "percent",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6005,6 +6495,7 @@ fn lap_message() -> MessageInfo {
         scale: 2.000000,
         offset: 0.000000,
         units: "percent",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6018,6 +6509,7 @@ fn lap_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6031,6 +6523,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6044,6 +6537,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "mm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6057,6 +6551,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "mm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6070,6 +6565,7 @@ fn lap_message() -> MessageInfo {
         scale: 0.711111,
         offset: 0.000000,
         units: "degrees",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6083,6 +6579,7 @@ fn lap_message() -> MessageInfo {
         scale: 0.711111,
         offset: 0.000000,
         units: "degrees",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6096,6 +6593,7 @@ fn lap_message() -> MessageInfo {
         scale: 0.711111,
         offset: 0.000000,
         units: "degrees",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6109,6 +6607,7 @@ fn lap_message() -> MessageInfo {
         scale: 0.711111,
         offset: 0.000000,
         units: "degrees",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6122,6 +6621,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "watts",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6135,6 +6635,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "watts",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6148,6 +6649,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "rpm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6161,6 +6663,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "rpm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6173,6 +6676,7 @@ fn lap_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "m/s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6185,6 +6689,7 @@ fn lap_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "m/s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6197,6 +6702,7 @@ fn lap_message() -> MessageInfo {
         scale: 5.000000,
         offset: 500.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6209,6 +6715,7 @@ fn lap_message() -> MessageInfo {
         scale: 5.000000,
         offset: 500.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6221,6 +6728,7 @@ fn lap_message() -> MessageInfo {
         scale: 5.000000,
         offset: 500.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6234,6 +6742,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "watts",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6247,6 +6756,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "watts",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6260,6 +6770,7 @@ fn lap_message() -> MessageInfo {
         scale: 2.000000,
         offset: 0.000000,
         units: "percent",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6272,6 +6783,7 @@ fn lap_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "percent",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6284,6 +6796,7 @@ fn lap_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "percent",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6296,6 +6809,7 @@ fn lap_message() -> MessageInfo {
         scale: 10.000000,
         offset: 0.000000,
         units: "mm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6308,6 +6822,7 @@ fn lap_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "m/s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6321,6 +6836,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "kGrit",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6334,6 +6850,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "Flow",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6346,6 +6863,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6359,6 +6877,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "kGrit",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6372,6 +6891,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "Flow",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6385,6 +6905,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6397,6 +6918,7 @@ fn lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6404,11 +6926,12 @@ fn lap_message() -> MessageInfo {
 
     MessageInfo {
         name: "lap",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn length_message() -> MessageInfo {
+fn length_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
@@ -6418,6 +6941,7 @@ fn length_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6430,6 +6954,7 @@ fn length_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6442,6 +6967,7 @@ fn length_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6454,6 +6980,7 @@ fn length_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6466,6 +6993,7 @@ fn length_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6478,6 +7006,7 @@ fn length_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "strokes",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6490,6 +7019,7 @@ fn length_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "m/s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6502,6 +7032,7 @@ fn length_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "swim_stroke",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6514,6 +7045,7 @@ fn length_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "strokes/min",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6526,6 +7058,7 @@ fn length_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6538,6 +7071,7 @@ fn length_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "kcal",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6550,6 +7084,7 @@ fn length_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6562,6 +7097,7 @@ fn length_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6574,6 +7110,7 @@ fn length_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6587,6 +7124,7 @@ fn length_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "counts",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6600,6 +7138,7 @@ fn length_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "counts",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6612,6 +7151,7 @@ fn length_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6624,6 +7164,7 @@ fn length_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6631,11 +7172,12 @@ fn length_message() -> MessageInfo {
 
     MessageInfo {
         name: "length",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn record_message() -> MessageInfo {
+fn record_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
@@ -6645,6 +7187,7 @@ fn record_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "semicircles",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6657,6 +7200,7 @@ fn record_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "semicircles",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6679,6 +7223,7 @@ fn record_message() -> MessageInfo {
         scale: 5.000000,
         offset: 500.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: components,
     };
@@ -6691,6 +7236,7 @@ fn record_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "bpm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6703,6 +7249,7 @@ fn record_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "rpm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6715,6 +7262,7 @@ fn record_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6737,6 +7285,7 @@ fn record_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "m/s",
+        accumulate: false,
         subfields: Vec::new(),
         components: components,
     };
@@ -6749,6 +7298,7 @@ fn record_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "watts",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6781,6 +7331,7 @@ fn record_message() -> MessageInfo {
         offset: 0.000000,
         units: "m/s,
 m",
+        accumulate: false,
         subfields: Vec::new(),
         components: components,
     };
@@ -6793,6 +7344,7 @@ m",
         scale: 100.000000,
         offset: 0.000000,
         units: "%",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6806,6 +7358,7 @@ m",
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6818,6 +7371,7 @@ m",
         scale: 1000.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6830,6 +7384,7 @@ m",
         scale: 100.000000,
         offset: 0.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6842,6 +7397,7 @@ m",
         scale: 1.000000,
         offset: 0.000000,
         units: "C",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6855,6 +7411,7 @@ m",
         scale: 16.000000,
         offset: 0.000000,
         units: "m/s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6877,6 +7434,7 @@ m",
         scale: 1.000000,
         offset: 0.000000,
         units: "cycles",
+        accumulate: true,
         subfields: Vec::new(),
         components: components,
     };
@@ -6889,6 +7447,7 @@ m",
         scale: 1.000000,
         offset: 0.000000,
         units: "cycles",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6911,6 +7470,7 @@ m",
         scale: 1.000000,
         offset: 0.000000,
         units: "watts",
+        accumulate: true,
         subfields: Vec::new(),
         components: components,
     };
@@ -6923,6 +7483,7 @@ m",
         scale: 1.000000,
         offset: 0.000000,
         units: "watts",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6935,6 +7496,7 @@ m",
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6947,6 +7509,7 @@ m",
         scale: 1.000000,
         offset: 0.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6959,6 +7522,7 @@ m",
         scale: 1000.000000,
         offset: 0.000000,
         units: "m/s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6971,6 +7535,7 @@ m",
         scale: 1.000000,
         offset: 0.000000,
         units: "kcal",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6983,6 +7548,7 @@ m",
         scale: 10.000000,
         offset: 0.000000,
         units: "mm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -6995,6 +7561,7 @@ m",
         scale: 100.000000,
         offset: 0.000000,
         units: "percent",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7007,6 +7574,7 @@ m",
         scale: 10.000000,
         offset: 0.000000,
         units: "ms",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7019,6 +7587,7 @@ m",
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7031,6 +7600,7 @@ m",
         scale: 2.000000,
         offset: 0.000000,
         units: "percent",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7043,6 +7613,7 @@ m",
         scale: 2.000000,
         offset: 0.000000,
         units: "percent",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7055,6 +7626,7 @@ m",
         scale: 2.000000,
         offset: 0.000000,
         units: "percent",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7067,6 +7639,7 @@ m",
         scale: 2.000000,
         offset: 0.000000,
         units: "percent",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7079,6 +7652,7 @@ m",
         scale: 2.000000,
         offset: 0.000000,
         units: "percent",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7091,6 +7665,7 @@ m",
         scale: 128.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7103,6 +7678,7 @@ m",
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7115,6 +7691,7 @@ m",
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7127,6 +7704,7 @@ m",
         scale: 100.000000,
         offset: 0.000000,
         units: "m/s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7140,6 +7718,7 @@ m",
         scale: 256.000000,
         offset: 0.000000,
         units: "rpm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7152,6 +7731,7 @@ m",
         scale: 128.000000,
         offset: 0.000000,
         units: "rpm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7165,6 +7745,7 @@ m",
         scale: 100.000000,
         offset: 0.000000,
         units: "g/dL",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7178,6 +7759,7 @@ m",
         scale: 100.000000,
         offset: 0.000000,
         units: "g/dL",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7191,6 +7773,7 @@ m",
         scale: 100.000000,
         offset: 0.000000,
         units: "g/dL",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7204,6 +7787,7 @@ m",
         scale: 10.000000,
         offset: 0.000000,
         units: "%",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7217,6 +7801,7 @@ m",
         scale: 10.000000,
         offset: 0.000000,
         units: "%",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7230,6 +7815,7 @@ m",
         scale: 10.000000,
         offset: 0.000000,
         units: "%",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7242,6 +7828,7 @@ m",
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7255,6 +7842,7 @@ m",
         scale: 1.000000,
         offset: 0.000000,
         units: "mm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7268,6 +7856,7 @@ m",
         scale: 1.000000,
         offset: 0.000000,
         units: "mm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7281,6 +7870,7 @@ m",
         scale: 0.711111,
         offset: 0.000000,
         units: "degrees",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7294,6 +7884,7 @@ m",
         scale: 0.711111,
         offset: 0.000000,
         units: "degrees",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7307,6 +7898,7 @@ m",
         scale: 0.711111,
         offset: 0.000000,
         units: "degrees",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7320,6 +7912,7 @@ m",
         scale: 0.711111,
         offset: 0.000000,
         units: "degrees",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7332,6 +7925,7 @@ m",
         scale: 1000.000000,
         offset: 0.000000,
         units: "m/s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7344,6 +7938,7 @@ m",
         scale: 5.000000,
         offset: 500.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7357,6 +7952,7 @@ m",
         scale: 2.000000,
         offset: 0.000000,
         units: "percent",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7370,6 +7966,7 @@ m",
         scale: 1.000000,
         offset: 0.000000,
         units: "watts",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7382,6 +7979,7 @@ m",
         scale: 100.000000,
         offset: 0.000000,
         units: "percent",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7394,6 +7992,7 @@ m",
         scale: 100.000000,
         offset: 0.000000,
         units: "percent",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7406,6 +8005,7 @@ m",
         scale: 10.000000,
         offset: 0.000000,
         units: "mm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7419,6 +8019,7 @@ m",
         scale: 1.000000,
         offset: 0.000000,
         units: "Pa",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7432,6 +8033,7 @@ m",
         scale: 1000.000000,
         offset: 0.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7445,6 +8047,7 @@ m",
         scale: 1000.000000,
         offset: 0.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7457,6 +8060,7 @@ m",
         scale: 1.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7469,6 +8073,7 @@ m",
         scale: 1.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7481,6 +8086,7 @@ m",
         scale: 1.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7493,6 +8099,7 @@ m",
         scale: 1.000000,
         offset: 0.000000,
         units: "percent",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7505,6 +8112,7 @@ m",
         scale: 1.000000,
         offset: 0.000000,
         units: "percent",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7518,6 +8126,7 @@ m",
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7531,6 +8140,7 @@ m",
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7543,6 +8153,7 @@ m",
         scale: 1.000000,
         offset: 0.000000,
         units: "km",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7555,6 +8166,7 @@ m",
         scale: 1.000000,
         offset: 0.000000,
         units: "percent",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7567,6 +8179,7 @@ m",
         scale: 1.000000,
         offset: 0.000000,
         units: "depends on sensor",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7579,6 +8192,7 @@ m",
         scale: 1.000000,
         offset: 0.000000,
         units: "percent",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7591,6 +8205,7 @@ m",
         scale: 1.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7598,11 +8213,12 @@ m",
 
     MessageInfo {
         name: "record",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn event_message() -> MessageInfo {
+fn event_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
@@ -7612,6 +8228,7 @@ fn event_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7624,6 +8241,7 @@ fn event_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7646,6 +8264,7 @@ fn event_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: components,
     };
@@ -7659,6 +8278,7 @@ fn event_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7670,6 +8290,7 @@ fn event_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7681,6 +8302,7 @@ fn event_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "V",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7692,6 +8314,7 @@ fn event_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "m/s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7703,6 +8326,7 @@ fn event_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "bpm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7714,6 +8338,7 @@ fn event_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "bpm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7725,6 +8350,7 @@ fn event_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "m/s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7736,6 +8362,7 @@ fn event_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "m/s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7747,6 +8374,7 @@ fn event_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "rpm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7758,6 +8386,7 @@ fn event_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "rpm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7769,6 +8398,7 @@ fn event_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "watts",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7780,6 +8410,7 @@ fn event_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "watts",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7791,6 +8422,7 @@ fn event_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7802,6 +8434,7 @@ fn event_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7813,6 +8446,7 @@ fn event_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "calories",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7824,6 +8458,7 @@ fn event_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7854,6 +8489,7 @@ fn event_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: components,
     };
@@ -7902,6 +8538,7 @@ fn event_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: components,
     };
@@ -7950,6 +8587,7 @@ fn event_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: components,
     };
@@ -7962,6 +8600,7 @@ fn event_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7973,6 +8612,7 @@ fn event_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -7984,6 +8624,7 @@ fn event_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: subfields,
         components: Vec::new(),
     };
@@ -7996,6 +8637,7 @@ fn event_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8009,6 +8651,7 @@ fn event_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8022,6 +8665,7 @@ fn event_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8035,6 +8679,7 @@ fn event_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8048,6 +8693,7 @@ fn event_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8061,6 +8707,7 @@ fn event_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8074,6 +8721,7 @@ fn event_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8086,6 +8734,7 @@ fn event_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8098,6 +8747,7 @@ fn event_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8105,11 +8755,12 @@ fn event_message() -> MessageInfo {
 
     MessageInfo {
         name: "event",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn device_info_message() -> MessageInfo {
+fn device_info_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
@@ -8119,6 +8770,7 @@ fn device_info_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8132,6 +8784,7 @@ fn device_info_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8143,6 +8796,7 @@ fn device_info_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8154,6 +8808,7 @@ fn device_info_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: subfields,
         components: Vec::new(),
     };
@@ -8166,6 +8821,7 @@ fn device_info_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8178,6 +8834,7 @@ fn device_info_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8191,6 +8848,7 @@ fn device_info_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8202,6 +8860,7 @@ fn device_info_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8213,6 +8872,7 @@ fn device_info_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8224,6 +8884,7 @@ fn device_info_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8235,6 +8896,7 @@ fn device_info_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: subfields,
         components: Vec::new(),
     };
@@ -8247,6 +8909,7 @@ fn device_info_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8259,6 +8922,7 @@ fn device_info_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8272,6 +8936,7 @@ fn device_info_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8284,6 +8949,7 @@ fn device_info_message() -> MessageInfo {
         scale: 256.000000,
         offset: 0.000000,
         units: "V",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8296,6 +8962,7 @@ fn device_info_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8309,6 +8976,7 @@ fn device_info_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8322,6 +8990,7 @@ fn device_info_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8334,6 +9003,7 @@ fn device_info_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8346,6 +9016,7 @@ fn device_info_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8358,6 +9029,7 @@ fn device_info_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8370,6 +9042,7 @@ fn device_info_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8383,6 +9056,7 @@ fn device_info_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8395,6 +9069,7 @@ fn device_info_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8402,11 +9077,12 @@ fn device_info_message() -> MessageInfo {
 
     MessageInfo {
         name: "device_info",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn training_file_message() -> MessageInfo {
+fn training_file_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
@@ -8416,6 +9092,7 @@ fn training_file_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8428,6 +9105,7 @@ fn training_file_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8441,6 +9119,7 @@ fn training_file_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8452,6 +9131,7 @@ fn training_file_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8463,6 +9143,7 @@ fn training_file_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8474,6 +9155,7 @@ fn training_file_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8485,6 +9167,7 @@ fn training_file_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: subfields,
         components: Vec::new(),
     };
@@ -8497,6 +9180,7 @@ fn training_file_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8509,6 +9193,7 @@ fn training_file_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8521,6 +9206,7 @@ fn training_file_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8528,11 +9214,12 @@ fn training_file_message() -> MessageInfo {
 
     MessageInfo {
         name: "training_file",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn hrv_message() -> MessageInfo {
+fn hrv_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     // Time between beats
@@ -8543,6 +9230,7 @@ fn hrv_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8550,11 +9238,12 @@ fn hrv_message() -> MessageInfo {
 
     MessageInfo {
         name: "hrv",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn weather_conditions_message() -> MessageInfo {
+fn weather_conditions_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     // Current or forecast
@@ -8565,6 +9254,7 @@ fn weather_conditions_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8577,6 +9267,7 @@ fn weather_conditions_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "C",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8590,6 +9281,7 @@ fn weather_conditions_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8602,6 +9294,7 @@ fn weather_conditions_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "degrees",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8614,6 +9307,7 @@ fn weather_conditions_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "m/s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8627,6 +9321,7 @@ fn weather_conditions_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8640,6 +9335,7 @@ fn weather_conditions_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "C",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8652,6 +9348,7 @@ fn weather_conditions_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8665,6 +9362,7 @@ fn weather_conditions_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8677,6 +9375,7 @@ fn weather_conditions_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8689,6 +9388,7 @@ fn weather_conditions_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "semicircles",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8701,6 +9401,7 @@ fn weather_conditions_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "semicircles",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8713,6 +9414,7 @@ fn weather_conditions_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8725,6 +9427,7 @@ fn weather_conditions_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "C",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8737,6 +9440,7 @@ fn weather_conditions_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "C",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8750,6 +9454,7 @@ fn weather_conditions_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8757,11 +9462,12 @@ fn weather_conditions_message() -> MessageInfo {
 
     MessageInfo {
         name: "weather_conditions",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn weather_alert_message() -> MessageInfo {
+fn weather_alert_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     // Unique identifier from GCS report ID string, length is 12
@@ -8772,6 +9478,7 @@ fn weather_alert_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8785,6 +9492,7 @@ fn weather_alert_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8798,6 +9506,7 @@ fn weather_alert_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8811,6 +9520,7 @@ fn weather_alert_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8824,6 +9534,7 @@ fn weather_alert_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8836,6 +9547,7 @@ fn weather_alert_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8843,11 +9555,12 @@ fn weather_alert_message() -> MessageInfo {
 
     MessageInfo {
         name: "weather_alert",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn gps_metadata_message() -> MessageInfo {
+fn gps_metadata_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     // Millisecond part of the timestamp.
@@ -8858,6 +9571,7 @@ fn gps_metadata_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "ms",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8870,6 +9584,7 @@ fn gps_metadata_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "semicircles",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8882,6 +9597,7 @@ fn gps_metadata_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "semicircles",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8894,6 +9610,7 @@ fn gps_metadata_message() -> MessageInfo {
         scale: 5.000000,
         offset: 500.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8906,6 +9623,7 @@ fn gps_metadata_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "m/s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8918,6 +9636,7 @@ fn gps_metadata_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "degrees",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8931,6 +9650,7 @@ fn gps_metadata_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8944,6 +9664,7 @@ fn gps_metadata_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "m/s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8957,6 +9678,7 @@ fn gps_metadata_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8964,11 +9686,12 @@ fn gps_metadata_message() -> MessageInfo {
 
     MessageInfo {
         name: "gps_metadata",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn camera_event_message() -> MessageInfo {
+fn camera_event_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     // Millisecond part of the timestamp.
@@ -8979,6 +9702,7 @@ fn camera_event_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "ms",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -8991,6 +9715,7 @@ fn camera_event_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9003,6 +9728,7 @@ fn camera_event_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9015,6 +9741,7 @@ fn camera_event_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9028,6 +9755,7 @@ fn camera_event_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9035,11 +9763,12 @@ fn camera_event_message() -> MessageInfo {
 
     MessageInfo {
         name: "camera_event",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn gyroscope_data_message() -> MessageInfo {
+fn gyroscope_data_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     // Millisecond part of the timestamp.
@@ -9050,6 +9779,7 @@ fn gyroscope_data_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "ms",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9063,6 +9793,7 @@ fn gyroscope_data_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "ms",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9076,6 +9807,7 @@ fn gyroscope_data_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "counts",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9089,6 +9821,7 @@ fn gyroscope_data_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "counts",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9102,6 +9835,7 @@ fn gyroscope_data_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "counts",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9115,6 +9849,7 @@ fn gyroscope_data_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "deg/s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9128,6 +9863,7 @@ fn gyroscope_data_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "deg/s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9141,6 +9877,7 @@ fn gyroscope_data_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "deg/s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9154,6 +9891,7 @@ fn gyroscope_data_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9161,11 +9899,12 @@ fn gyroscope_data_message() -> MessageInfo {
 
     MessageInfo {
         name: "gyroscope_data",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn accelerometer_data_message() -> MessageInfo {
+fn accelerometer_data_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     // Millisecond part of the timestamp.
@@ -9176,6 +9915,7 @@ fn accelerometer_data_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "ms",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9189,6 +9929,7 @@ fn accelerometer_data_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "ms",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9202,6 +9943,7 @@ fn accelerometer_data_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "counts",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9215,6 +9957,7 @@ fn accelerometer_data_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "counts",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9228,6 +9971,7 @@ fn accelerometer_data_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "counts",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9241,6 +9985,7 @@ fn accelerometer_data_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "g",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9254,6 +9999,7 @@ fn accelerometer_data_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "g",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9267,6 +10013,7 @@ fn accelerometer_data_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "g",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9280,6 +10027,7 @@ fn accelerometer_data_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "mG",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9293,6 +10041,7 @@ fn accelerometer_data_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "mG",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9306,6 +10055,7 @@ fn accelerometer_data_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "mG",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9319,6 +10069,7 @@ fn accelerometer_data_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9326,11 +10077,12 @@ fn accelerometer_data_message() -> MessageInfo {
 
     MessageInfo {
         name: "accelerometer_data",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn magnetometer_data_message() -> MessageInfo {
+fn magnetometer_data_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     // Millisecond part of the timestamp.
@@ -9341,6 +10093,7 @@ fn magnetometer_data_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "ms",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9354,6 +10107,7 @@ fn magnetometer_data_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "ms",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9367,6 +10121,7 @@ fn magnetometer_data_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "counts",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9380,6 +10135,7 @@ fn magnetometer_data_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "counts",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9393,6 +10149,7 @@ fn magnetometer_data_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "counts",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9406,6 +10163,7 @@ fn magnetometer_data_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "G",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9419,6 +10177,7 @@ fn magnetometer_data_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "G",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9432,6 +10191,7 @@ fn magnetometer_data_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "G",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9445,6 +10205,7 @@ fn magnetometer_data_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9452,11 +10213,12 @@ fn magnetometer_data_message() -> MessageInfo {
 
     MessageInfo {
         name: "magnetometer_data",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn barometer_data_message() -> MessageInfo {
+fn barometer_data_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     // Millisecond part of the timestamp.
@@ -9467,6 +10229,7 @@ fn barometer_data_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "ms",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9480,6 +10243,7 @@ fn barometer_data_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "ms",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9493,6 +10257,7 @@ fn barometer_data_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "Pa",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9506,6 +10271,7 @@ fn barometer_data_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9513,11 +10279,12 @@ fn barometer_data_message() -> MessageInfo {
 
     MessageInfo {
         name: "barometer_data",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn three_d_sensor_calibration_message() -> MessageInfo {
+fn three_d_sensor_calibration_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     // Indicates which sensor the calibration is for
@@ -9528,6 +10295,7 @@ fn three_d_sensor_calibration_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9542,6 +10310,7 @@ fn three_d_sensor_calibration_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "g",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9554,6 +10323,7 @@ fn three_d_sensor_calibration_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "deg/s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9566,6 +10336,7 @@ fn three_d_sensor_calibration_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: subfields,
         components: Vec::new(),
     };
@@ -9579,6 +10350,7 @@ fn three_d_sensor_calibration_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "counts",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9592,6 +10364,7 @@ fn three_d_sensor_calibration_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9605,6 +10378,7 @@ fn three_d_sensor_calibration_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9618,6 +10392,7 @@ fn three_d_sensor_calibration_message() -> MessageInfo {
         scale: 65535.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9631,6 +10406,7 @@ fn three_d_sensor_calibration_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9638,11 +10414,12 @@ fn three_d_sensor_calibration_message() -> MessageInfo {
 
     MessageInfo {
         name: "three_d_sensor_calibration",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn one_d_sensor_calibration_message() -> MessageInfo {
+fn one_d_sensor_calibration_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     // Indicates which sensor the calibration is for
@@ -9653,6 +10430,7 @@ fn one_d_sensor_calibration_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9667,6 +10445,7 @@ fn one_d_sensor_calibration_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "Pa",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9679,6 +10458,7 @@ fn one_d_sensor_calibration_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: subfields,
         components: Vec::new(),
     };
@@ -9692,6 +10472,7 @@ fn one_d_sensor_calibration_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "counts",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9705,6 +10486,7 @@ fn one_d_sensor_calibration_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9718,6 +10500,7 @@ fn one_d_sensor_calibration_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9731,6 +10514,7 @@ fn one_d_sensor_calibration_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9738,11 +10522,12 @@ fn one_d_sensor_calibration_message() -> MessageInfo {
 
     MessageInfo {
         name: "one_d_sensor_calibration",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn video_frame_message() -> MessageInfo {
+fn video_frame_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     // Millisecond part of the timestamp.
@@ -9753,6 +10538,7 @@ fn video_frame_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "ms",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9766,6 +10552,7 @@ fn video_frame_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9779,6 +10566,7 @@ fn video_frame_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9786,11 +10574,12 @@ fn video_frame_message() -> MessageInfo {
 
     MessageInfo {
         name: "video_frame",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn obdii_data_message() -> MessageInfo {
+fn obdii_data_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     // Fractional part of timestamp, added to timestamp
@@ -9801,6 +10590,7 @@ fn obdii_data_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "ms",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9814,6 +10604,7 @@ fn obdii_data_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "ms",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9827,6 +10618,7 @@ fn obdii_data_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9840,6 +10632,7 @@ fn obdii_data_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9853,6 +10646,7 @@ fn obdii_data_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9866,6 +10660,7 @@ fn obdii_data_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9879,6 +10674,7 @@ fn obdii_data_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9892,6 +10688,7 @@ fn obdii_data_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "ms",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9905,6 +10702,7 @@ fn obdii_data_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9912,11 +10710,12 @@ fn obdii_data_message() -> MessageInfo {
 
     MessageInfo {
         name: "obdii_data",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn nmea_sentence_message() -> MessageInfo {
+fn nmea_sentence_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     // Fractional part of timestamp, added to timestamp
@@ -9927,6 +10726,7 @@ fn nmea_sentence_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "ms",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9940,6 +10740,7 @@ fn nmea_sentence_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9953,6 +10754,7 @@ fn nmea_sentence_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9960,11 +10762,12 @@ fn nmea_sentence_message() -> MessageInfo {
 
     MessageInfo {
         name: "nmea_sentence",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn aviation_attitude_message() -> MessageInfo {
+fn aviation_attitude_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     // Fractional part of timestamp, added to timestamp
@@ -9975,6 +10778,7 @@ fn aviation_attitude_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "ms",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -9988,6 +10792,7 @@ fn aviation_attitude_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "ms",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10001,6 +10806,7 @@ fn aviation_attitude_message() -> MessageInfo {
         scale: 10430.380000,
         offset: 0.000000,
         units: "radians",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10014,6 +10820,7 @@ fn aviation_attitude_message() -> MessageInfo {
         scale: 10430.380000,
         offset: 0.000000,
         units: "radians",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10027,6 +10834,7 @@ fn aviation_attitude_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "m/s^2",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10040,6 +10848,7 @@ fn aviation_attitude_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "m/s^2",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10053,6 +10862,7 @@ fn aviation_attitude_message() -> MessageInfo {
         scale: 1024.000000,
         offset: 0.000000,
         units: "radians/second",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10065,6 +10875,7 @@ fn aviation_attitude_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10078,6 +10889,7 @@ fn aviation_attitude_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "%",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10091,6 +10903,7 @@ fn aviation_attitude_message() -> MessageInfo {
         scale: 10430.380000,
         offset: 0.000000,
         units: "radians",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10103,6 +10916,7 @@ fn aviation_attitude_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10116,6 +10930,7 @@ fn aviation_attitude_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10123,11 +10938,12 @@ fn aviation_attitude_message() -> MessageInfo {
 
     MessageInfo {
         name: "aviation_attitude",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn video_message() -> MessageInfo {
+fn video_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
@@ -10137,6 +10953,7 @@ fn video_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10149,6 +10966,7 @@ fn video_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10162,6 +10980,7 @@ fn video_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "ms",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10169,11 +10988,12 @@ fn video_message() -> MessageInfo {
 
     MessageInfo {
         name: "video",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn video_title_message() -> MessageInfo {
+fn video_title_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     // Total number of title parts
@@ -10184,6 +11004,7 @@ fn video_title_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10196,6 +11017,7 @@ fn video_title_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10209,6 +11031,7 @@ fn video_title_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10216,11 +11039,12 @@ fn video_title_message() -> MessageInfo {
 
     MessageInfo {
         name: "video_title",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn video_description_message() -> MessageInfo {
+fn video_description_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     // Total number of description parts
@@ -10231,6 +11055,7 @@ fn video_description_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10243,6 +11068,7 @@ fn video_description_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10256,6 +11082,7 @@ fn video_description_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10263,11 +11090,12 @@ fn video_description_message() -> MessageInfo {
 
     MessageInfo {
         name: "video_description",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn video_clip_message() -> MessageInfo {
+fn video_clip_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
@@ -10277,6 +11105,7 @@ fn video_clip_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10289,6 +11118,7 @@ fn video_clip_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10301,6 +11131,7 @@ fn video_clip_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10313,6 +11144,7 @@ fn video_clip_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10325,6 +11157,7 @@ fn video_clip_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10338,6 +11171,7 @@ fn video_clip_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "ms",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10351,6 +11185,7 @@ fn video_clip_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "ms",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10358,11 +11193,12 @@ fn video_clip_message() -> MessageInfo {
 
     MessageInfo {
         name: "video_clip",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn set_message() -> MessageInfo {
+fn set_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
@@ -10372,6 +11208,7 @@ fn set_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10385,6 +11222,7 @@ fn set_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10398,6 +11236,7 @@ fn set_message() -> MessageInfo {
         scale: 16.000000,
         offset: 0.000000,
         units: "kg",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10410,6 +11249,7 @@ fn set_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10423,6 +11263,7 @@ fn set_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10435,6 +11276,7 @@ fn set_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10448,6 +11290,7 @@ fn set_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10460,6 +11303,7 @@ fn set_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10472,6 +11316,7 @@ fn set_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10484,6 +11329,7 @@ fn set_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10497,6 +11343,7 @@ fn set_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10504,11 +11351,12 @@ fn set_message() -> MessageInfo {
 
     MessageInfo {
         name: "set",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn jump_message() -> MessageInfo {
+fn jump_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
@@ -10518,6 +11366,7 @@ fn jump_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10530,6 +11379,7 @@ fn jump_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10542,6 +11392,7 @@ fn jump_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10554,6 +11405,7 @@ fn jump_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10567,6 +11419,7 @@ fn jump_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10579,6 +11432,7 @@ fn jump_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "semicircles",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10591,6 +11445,7 @@ fn jump_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "semicircles",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10613,6 +11468,7 @@ fn jump_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "m/s",
+        accumulate: false,
         subfields: Vec::new(),
         components: components,
     };
@@ -10625,6 +11481,7 @@ fn jump_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "m/s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10637,6 +11494,7 @@ fn jump_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10644,11 +11502,12 @@ fn jump_message() -> MessageInfo {
 
     MessageInfo {
         name: "jump",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn course_message() -> MessageInfo {
+fn course_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
@@ -10658,6 +11517,7 @@ fn course_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10670,6 +11530,7 @@ fn course_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10682,6 +11543,7 @@ fn course_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10694,6 +11556,7 @@ fn course_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10701,11 +11564,12 @@ fn course_message() -> MessageInfo {
 
     MessageInfo {
         name: "course",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn course_point_message() -> MessageInfo {
+fn course_point_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
@@ -10715,6 +11579,7 @@ fn course_point_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10727,6 +11592,7 @@ fn course_point_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "semicircles",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10739,6 +11605,7 @@ fn course_point_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "semicircles",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10751,6 +11618,7 @@ fn course_point_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10763,6 +11631,7 @@ fn course_point_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10775,6 +11644,7 @@ fn course_point_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10787,6 +11657,7 @@ fn course_point_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10799,6 +11670,7 @@ fn course_point_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10806,11 +11678,12 @@ fn course_point_message() -> MessageInfo {
 
     MessageInfo {
         name: "course_point",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn segment_id_message() -> MessageInfo {
+fn segment_id_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     // Friendly name assigned to segment
@@ -10821,6 +11694,7 @@ fn segment_id_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10834,6 +11708,7 @@ fn segment_id_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10847,6 +11722,7 @@ fn segment_id_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10860,6 +11736,7 @@ fn segment_id_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10873,6 +11750,7 @@ fn segment_id_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10886,6 +11764,7 @@ fn segment_id_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10899,6 +11778,7 @@ fn segment_id_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10912,6 +11792,7 @@ fn segment_id_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10925,6 +11806,7 @@ fn segment_id_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10932,11 +11814,12 @@ fn segment_id_message() -> MessageInfo {
 
     MessageInfo {
         name: "segment_id",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn segment_leaderboard_entry_message() -> MessageInfo {
+fn segment_leaderboard_entry_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     // Friendly name assigned to leader
@@ -10947,6 +11830,7 @@ fn segment_leaderboard_entry_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10960,6 +11844,7 @@ fn segment_leaderboard_entry_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10973,6 +11858,7 @@ fn segment_leaderboard_entry_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10986,6 +11872,7 @@ fn segment_leaderboard_entry_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -10999,6 +11886,7 @@ fn segment_leaderboard_entry_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11012,6 +11900,7 @@ fn segment_leaderboard_entry_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11024,6 +11913,7 @@ fn segment_leaderboard_entry_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11031,11 +11921,12 @@ fn segment_leaderboard_entry_message() -> MessageInfo {
 
     MessageInfo {
         name: "segment_leaderboard_entry",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn segment_point_message() -> MessageInfo {
+fn segment_point_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
@@ -11045,6 +11936,7 @@ fn segment_point_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "semicircles",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11057,6 +11949,7 @@ fn segment_point_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "semicircles",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11070,6 +11963,7 @@ fn segment_point_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11083,6 +11977,7 @@ fn segment_point_message() -> MessageInfo {
         scale: 5.000000,
         offset: 500.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11096,6 +11991,7 @@ fn segment_point_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11108,6 +12004,7 @@ fn segment_point_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11115,11 +12012,12 @@ fn segment_point_message() -> MessageInfo {
 
     MessageInfo {
         name: "segment_point",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn segment_lap_message() -> MessageInfo {
+fn segment_lap_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
@@ -11129,6 +12027,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11141,6 +12040,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11153,6 +12053,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11165,6 +12066,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "semicircles",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11177,6 +12079,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "semicircles",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11189,6 +12092,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "semicircles",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11201,6 +12105,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "semicircles",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11214,6 +12119,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11227,6 +12133,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11239,6 +12146,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11252,6 +12160,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "strokes",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11263,6 +12172,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "cycles",
+        accumulate: false,
         subfields: subfields,
         components: Vec::new(),
     };
@@ -11275,6 +12185,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "kcal",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11288,6 +12199,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "kcal",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11300,6 +12212,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "m/s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11312,6 +12225,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "m/s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11324,6 +12238,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "bpm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11336,6 +12251,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "bpm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11349,6 +12265,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "rpm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11361,6 +12278,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "rpm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11374,6 +12292,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "watts",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11386,6 +12305,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "watts",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11398,6 +12318,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11410,6 +12331,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11422,6 +12344,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11434,6 +12357,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11447,6 +12371,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "semicircles",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11460,6 +12385,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "semicircles",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11473,6 +12399,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "semicircles",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11486,6 +12413,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "semicircles",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11498,6 +12426,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11510,6 +12439,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "watts",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11522,6 +12452,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11534,6 +12465,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11546,6 +12478,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "J",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11558,6 +12491,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 5.000000,
         offset: 500.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11570,6 +12504,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 5.000000,
         offset: 500.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11582,6 +12517,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11594,6 +12530,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "%",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11606,6 +12543,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "%",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11618,6 +12556,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "%",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11630,6 +12569,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "%",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11642,6 +12582,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "%",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11654,6 +12595,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "C",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11666,6 +12608,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "C",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11678,6 +12621,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11690,6 +12634,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "m/s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11702,6 +12647,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "m/s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11714,6 +12660,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "m/s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11726,6 +12673,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "m/s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11738,6 +12686,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11750,6 +12699,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11762,6 +12712,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11774,6 +12725,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11786,6 +12738,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11798,6 +12751,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 5.000000,
         offset: 500.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11810,6 +12764,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "bpm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11822,6 +12777,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11834,6 +12790,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11846,6 +12803,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11858,6 +12816,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 2.000000,
         offset: 0.000000,
         units: "percent",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11870,6 +12829,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 2.000000,
         offset: 0.000000,
         units: "percent",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11882,6 +12842,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 2.000000,
         offset: 0.000000,
         units: "percent",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11894,6 +12855,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 2.000000,
         offset: 0.000000,
         units: "percent",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11906,6 +12868,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 2.000000,
         offset: 0.000000,
         units: "percent",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11918,6 +12881,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11930,6 +12894,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11943,6 +12908,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 128.000000,
         offset: 0.000000,
         units: "rpm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11956,6 +12922,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 128.000000,
         offset: 0.000000,
         units: "rpm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11969,6 +12936,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 128.000000,
         offset: 0.000000,
         units: "cycles",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11981,6 +12949,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -11993,6 +12962,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12006,6 +12976,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12019,6 +12990,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12032,6 +13004,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "mm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12045,6 +13018,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "mm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12058,6 +13032,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 0.711111,
         offset: 0.000000,
         units: "degrees",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12071,6 +13046,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 0.711111,
         offset: 0.000000,
         units: "degrees",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12084,6 +13060,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 0.711111,
         offset: 0.000000,
         units: "degrees",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12097,6 +13074,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 0.711111,
         offset: 0.000000,
         units: "degrees",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12110,6 +13088,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "watts",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12123,6 +13102,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "watts",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12136,6 +13116,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "rpm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12149,6 +13130,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "rpm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12162,6 +13144,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12175,6 +13158,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "kGrit",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12188,6 +13172,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "Flow",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12201,6 +13186,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "kGrit",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12214,6 +13200,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "Flow",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12227,6 +13214,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12239,6 +13227,7 @@ fn segment_lap_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12246,11 +13235,12 @@ fn segment_lap_message() -> MessageInfo {
 
     MessageInfo {
         name: "segment_lap",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn segment_file_message() -> MessageInfo {
+fn segment_file_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     // UUID of the segment file
@@ -12261,6 +13251,7 @@ fn segment_file_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12274,6 +13265,7 @@ fn segment_file_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12287,6 +13279,7 @@ fn segment_file_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12300,6 +13293,7 @@ fn segment_file_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12313,6 +13307,7 @@ fn segment_file_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12326,6 +13321,7 @@ fn segment_file_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12339,6 +13335,7 @@ fn segment_file_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12352,6 +13349,7 @@ fn segment_file_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12364,6 +13362,7 @@ fn segment_file_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12371,11 +13370,12 @@ fn segment_file_message() -> MessageInfo {
 
     MessageInfo {
         name: "segment_file",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn workout_message() -> MessageInfo {
+fn workout_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
@@ -12385,6 +13385,7 @@ fn workout_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12397,6 +13398,7 @@ fn workout_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12410,6 +13412,7 @@ fn workout_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12422,6 +13425,7 @@ fn workout_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12434,6 +13438,7 @@ fn workout_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12446,6 +13451,7 @@ fn workout_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12458,6 +13464,7 @@ fn workout_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12465,11 +13472,12 @@ fn workout_message() -> MessageInfo {
 
     MessageInfo {
         name: "workout",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn workout_session_message() -> MessageInfo {
+fn workout_session_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
@@ -12479,6 +13487,7 @@ fn workout_session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12491,6 +13500,7 @@ fn workout_session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12503,6 +13513,7 @@ fn workout_session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12515,6 +13526,7 @@ fn workout_session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12527,6 +13539,7 @@ fn workout_session_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12539,6 +13552,7 @@ fn workout_session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12551,6 +13565,7 @@ fn workout_session_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12558,11 +13573,12 @@ fn workout_session_message() -> MessageInfo {
 
     MessageInfo {
         name: "workout_session",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn workout_step_message() -> MessageInfo {
+fn workout_step_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
@@ -12572,6 +13588,7 @@ fn workout_step_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12584,6 +13601,7 @@ fn workout_step_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12597,6 +13615,7 @@ fn workout_step_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12608,6 +13627,7 @@ fn workout_step_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12619,6 +13639,7 @@ fn workout_step_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12630,6 +13651,7 @@ fn workout_step_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "% or bpm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12641,6 +13663,7 @@ fn workout_step_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "% or bpm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12652,6 +13675,7 @@ fn workout_step_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "calories",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12664,6 +13688,7 @@ fn workout_step_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12676,6 +13701,7 @@ fn workout_step_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12688,6 +13714,7 @@ fn workout_step_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12700,6 +13727,7 @@ fn workout_step_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12712,6 +13740,7 @@ fn workout_step_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12724,6 +13753,7 @@ fn workout_step_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12740,6 +13770,7 @@ fn workout_step_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12756,6 +13787,7 @@ fn workout_step_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12771,6 +13803,7 @@ fn workout_step_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "% or watts",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12782,6 +13815,7 @@ fn workout_step_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "% or watts",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12793,6 +13827,7 @@ fn workout_step_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12804,6 +13839,7 @@ fn workout_step_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: subfields,
         components: Vec::new(),
     };
@@ -12816,6 +13852,7 @@ fn workout_step_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12830,6 +13867,7 @@ fn workout_step_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12842,6 +13880,7 @@ fn workout_step_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12854,6 +13893,7 @@ fn workout_step_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12866,6 +13906,7 @@ fn workout_step_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12878,6 +13919,7 @@ fn workout_step_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12889,6 +13931,7 @@ fn workout_step_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12900,6 +13943,7 @@ fn workout_step_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12911,6 +13955,7 @@ fn workout_step_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "calories",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12922,6 +13967,7 @@ fn workout_step_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "% or bpm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12933,6 +13979,7 @@ fn workout_step_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "% or bpm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12948,6 +13995,7 @@ fn workout_step_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "% or watts",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12963,6 +14011,7 @@ fn workout_step_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "% or watts",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12978,6 +14027,7 @@ fn workout_step_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -12989,6 +14039,7 @@ fn workout_step_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: subfields,
         components: Vec::new(),
     };
@@ -13002,6 +14053,7 @@ fn workout_step_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "m/s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13013,6 +14065,7 @@ fn workout_step_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "% or bpm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13024,6 +14077,7 @@ fn workout_step_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "rpm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13035,6 +14089,7 @@ fn workout_step_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "% or watts",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13046,6 +14101,7 @@ fn workout_step_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: subfields,
         components: Vec::new(),
     };
@@ -13059,6 +14115,7 @@ fn workout_step_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "m/s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13070,6 +14127,7 @@ fn workout_step_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "% or bpm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13081,6 +14139,7 @@ fn workout_step_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "rpm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13092,6 +14151,7 @@ fn workout_step_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "% or watts",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13103,6 +14163,7 @@ fn workout_step_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: subfields,
         components: Vec::new(),
     };
@@ -13115,6 +14176,7 @@ fn workout_step_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13127,6 +14189,7 @@ fn workout_step_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13139,6 +14202,7 @@ fn workout_step_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13151,6 +14215,7 @@ fn workout_step_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13163,6 +14228,7 @@ fn workout_step_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13175,6 +14241,7 @@ fn workout_step_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "kg",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13187,6 +14254,7 @@ fn workout_step_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13199,6 +14267,7 @@ fn workout_step_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13206,11 +14275,12 @@ fn workout_step_message() -> MessageInfo {
 
     MessageInfo {
         name: "workout_step",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn exercise_title_message() -> MessageInfo {
+fn exercise_title_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
@@ -13220,6 +14290,7 @@ fn exercise_title_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13232,6 +14303,7 @@ fn exercise_title_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13244,6 +14316,7 @@ fn exercise_title_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13256,6 +14329,7 @@ fn exercise_title_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13263,11 +14337,12 @@ fn exercise_title_message() -> MessageInfo {
 
     MessageInfo {
         name: "exercise_title",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn schedule_message() -> MessageInfo {
+fn schedule_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     // Corresponds to file_id of scheduled workout / course.
@@ -13278,6 +14353,7 @@ fn schedule_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13291,6 +14367,7 @@ fn schedule_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13302,6 +14379,7 @@ fn schedule_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13313,6 +14391,7 @@ fn schedule_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13324,6 +14403,7 @@ fn schedule_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13336,6 +14416,7 @@ fn schedule_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: subfields,
         components: Vec::new(),
     };
@@ -13349,6 +14430,7 @@ fn schedule_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13362,6 +14444,7 @@ fn schedule_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13375,6 +14458,7 @@ fn schedule_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13387,6 +14471,7 @@ fn schedule_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13399,6 +14484,7 @@ fn schedule_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13406,11 +14492,12 @@ fn schedule_message() -> MessageInfo {
 
     MessageInfo {
         name: "schedule",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn totals_message() -> MessageInfo {
+fn totals_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     // Excludes pauses
@@ -13421,6 +14508,7 @@ fn totals_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13433,6 +14521,7 @@ fn totals_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13445,6 +14534,7 @@ fn totals_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "kcal",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13457,6 +14547,7 @@ fn totals_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13470,6 +14561,7 @@ fn totals_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13482,6 +14574,7 @@ fn totals_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13494,6 +14587,7 @@ fn totals_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13506,6 +14600,7 @@ fn totals_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13518,6 +14613,7 @@ fn totals_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13530,6 +14626,7 @@ fn totals_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13537,11 +14634,12 @@ fn totals_message() -> MessageInfo {
 
     MessageInfo {
         name: "totals",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn weight_scale_message() -> MessageInfo {
+fn weight_scale_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
@@ -13551,6 +14649,7 @@ fn weight_scale_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "kg",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13563,6 +14662,7 @@ fn weight_scale_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "%",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13575,6 +14675,7 @@ fn weight_scale_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "%",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13587,6 +14688,7 @@ fn weight_scale_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "kg",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13599,6 +14701,7 @@ fn weight_scale_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "kg",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13611,6 +14714,7 @@ fn weight_scale_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "kg",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13623,6 +14727,7 @@ fn weight_scale_message() -> MessageInfo {
         scale: 4.000000,
         offset: 0.000000,
         units: "kcal/day",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13635,6 +14740,7 @@ fn weight_scale_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13648,6 +14754,7 @@ fn weight_scale_message() -> MessageInfo {
         scale: 4.000000,
         offset: 0.000000,
         units: "kcal/day",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13660,6 +14767,7 @@ fn weight_scale_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "years",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13672,6 +14780,7 @@ fn weight_scale_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13685,6 +14794,7 @@ fn weight_scale_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13697,6 +14807,7 @@ fn weight_scale_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13704,11 +14815,12 @@ fn weight_scale_message() -> MessageInfo {
 
     MessageInfo {
         name: "weight_scale",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn blood_pressure_message() -> MessageInfo {
+fn blood_pressure_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
@@ -13718,6 +14830,7 @@ fn blood_pressure_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "mmHg",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13730,6 +14843,7 @@ fn blood_pressure_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "mmHg",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13742,6 +14856,7 @@ fn blood_pressure_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "mmHg",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13754,6 +14869,7 @@ fn blood_pressure_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "mmHg",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13766,6 +14882,7 @@ fn blood_pressure_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "mmHg",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13778,6 +14895,7 @@ fn blood_pressure_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "mmHg",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13790,6 +14908,7 @@ fn blood_pressure_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "bpm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13802,6 +14921,7 @@ fn blood_pressure_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13814,6 +14934,7 @@ fn blood_pressure_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13827,6 +14948,7 @@ fn blood_pressure_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13839,6 +14961,7 @@ fn blood_pressure_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13846,11 +14969,12 @@ fn blood_pressure_message() -> MessageInfo {
 
     MessageInfo {
         name: "blood_pressure",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn monitoring_info_message() -> MessageInfo {
+fn monitoring_info_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     // Use to convert activity timestamps to local time if device does not support time zone and daylight savings time correction.
@@ -13861,6 +14985,7 @@ fn monitoring_info_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13873,6 +14998,7 @@ fn monitoring_info_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13886,6 +15012,7 @@ fn monitoring_info_message() -> MessageInfo {
         scale: 5000.000000,
         offset: 0.000000,
         units: "m/cycle",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13899,6 +15026,7 @@ fn monitoring_info_message() -> MessageInfo {
         scale: 5000.000000,
         offset: 0.000000,
         units: "kcal/cycle",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13911,6 +15039,7 @@ fn monitoring_info_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "kcal / day",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13923,6 +15052,7 @@ fn monitoring_info_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13930,11 +15060,12 @@ fn monitoring_info_message() -> MessageInfo {
 
     MessageInfo {
         name: "monitoring_info",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn monitoring_message() -> MessageInfo {
+fn monitoring_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     // Associates this data to device_info message.  Not required for file with single device (sensor).
@@ -13945,6 +15076,7 @@ fn monitoring_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13958,6 +15090,7 @@ fn monitoring_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "kcal",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13971,6 +15104,7 @@ fn monitoring_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13984,6 +15118,7 @@ fn monitoring_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "steps",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -13995,6 +15130,7 @@ fn monitoring_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "steps",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -14006,6 +15142,7 @@ fn monitoring_message() -> MessageInfo {
         scale: 2.000000,
         offset: 0.000000,
         units: "strokes",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -14017,6 +15154,7 @@ fn monitoring_message() -> MessageInfo {
         scale: 2.000000,
         offset: 0.000000,
         units: "strokes",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -14029,6 +15167,7 @@ fn monitoring_message() -> MessageInfo {
         scale: 2.000000,
         offset: 0.000000,
         units: "cycles",
+        accumulate: false,
         subfields: subfields,
         components: Vec::new(),
     };
@@ -14041,6 +15180,7 @@ fn monitoring_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -14053,6 +15193,7 @@ fn monitoring_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -14065,6 +15206,7 @@ fn monitoring_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -14077,6 +15219,7 @@ fn monitoring_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -14089,6 +15232,7 @@ fn monitoring_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "100 * m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -14101,6 +15245,7 @@ fn monitoring_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "2 * cycles (steps)",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -14113,6 +15258,7 @@ fn monitoring_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -14126,6 +15272,7 @@ fn monitoring_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -14139,6 +15286,7 @@ fn monitoring_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "C",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -14152,6 +15300,7 @@ fn monitoring_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "C",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -14165,6 +15314,7 @@ fn monitoring_message() -> MessageInfo {
         scale: 100.000000,
         offset: 0.000000,
         units: "C",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -14178,6 +15328,7 @@ fn monitoring_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "minutes",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -14190,6 +15341,7 @@ fn monitoring_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "kcal",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -14222,6 +15374,7 @@ fn monitoring_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: components,
     };
@@ -14234,6 +15387,7 @@ fn monitoring_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "min",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -14246,6 +15400,7 @@ fn monitoring_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -14258,6 +15413,7 @@ fn monitoring_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "bpm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -14270,6 +15426,7 @@ fn monitoring_message() -> MessageInfo {
         scale: 10.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -14282,6 +15439,7 @@ fn monitoring_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "min",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -14294,6 +15452,7 @@ fn monitoring_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -14306,6 +15465,7 @@ fn monitoring_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -14318,6 +15478,7 @@ fn monitoring_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -14330,6 +15491,7 @@ fn monitoring_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "minutes",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -14342,6 +15504,7 @@ fn monitoring_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "minutes",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -14355,6 +15518,7 @@ fn monitoring_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -14362,11 +15526,12 @@ fn monitoring_message() -> MessageInfo {
 
     MessageInfo {
         name: "monitoring",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn hr_message() -> MessageInfo {
+fn hr_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
@@ -14376,6 +15541,7 @@ fn hr_message() -> MessageInfo {
         scale: 32768.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -14398,6 +15564,7 @@ fn hr_message() -> MessageInfo {
         scale: 256.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: components,
     };
@@ -14410,6 +15577,7 @@ fn hr_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "bpm",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -14422,6 +15590,7 @@ fn hr_message() -> MessageInfo {
         scale: 1024.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -14525,6 +15694,7 @@ fn hr_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: components,
     };
@@ -14537,6 +15707,7 @@ fn hr_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -14544,11 +15715,12 @@ fn hr_message() -> MessageInfo {
 
     MessageInfo {
         name: "hr",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn stress_level_message() -> MessageInfo {
+fn stress_level_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
@@ -14558,6 +15730,7 @@ fn stress_level_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -14571,6 +15744,7 @@ fn stress_level_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -14578,11 +15752,12 @@ fn stress_level_message() -> MessageInfo {
 
     MessageInfo {
         name: "stress_level",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn memo_glob_message() -> MessageInfo {
+fn memo_glob_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     // Block of utf8 bytes
@@ -14593,6 +15768,7 @@ fn memo_glob_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -14606,6 +15782,7 @@ fn memo_glob_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -14619,6 +15796,7 @@ fn memo_glob_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -14632,6 +15810,7 @@ fn memo_glob_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -14639,11 +15818,12 @@ fn memo_glob_message() -> MessageInfo {
 
     MessageInfo {
         name: "memo_glob",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn ant_channel_id_message() -> MessageInfo {
+fn ant_channel_id_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
@@ -14653,6 +15833,7 @@ fn ant_channel_id_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -14665,6 +15846,7 @@ fn ant_channel_id_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -14677,6 +15859,7 @@ fn ant_channel_id_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -14689,6 +15872,7 @@ fn ant_channel_id_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -14701,6 +15885,7 @@ fn ant_channel_id_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -14708,11 +15893,12 @@ fn ant_channel_id_message() -> MessageInfo {
 
     MessageInfo {
         name: "ant_channel_id",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn ant_rx_message() -> MessageInfo {
+fn ant_rx_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
@@ -14722,6 +15908,7 @@ fn ant_rx_message() -> MessageInfo {
         scale: 32768.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -14734,6 +15921,7 @@ fn ant_rx_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -14828,6 +16016,7 @@ fn ant_rx_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: components,
     };
@@ -14840,6 +16029,7 @@ fn ant_rx_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -14852,6 +16042,7 @@ fn ant_rx_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -14864,6 +16055,7 @@ fn ant_rx_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -14871,11 +16063,12 @@ fn ant_rx_message() -> MessageInfo {
 
     MessageInfo {
         name: "ant_rx",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn ant_tx_message() -> MessageInfo {
+fn ant_tx_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
@@ -14885,6 +16078,7 @@ fn ant_tx_message() -> MessageInfo {
         scale: 32768.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -14897,6 +16091,7 @@ fn ant_tx_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -14991,6 +16186,7 @@ fn ant_tx_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: components,
     };
@@ -15003,6 +16199,7 @@ fn ant_tx_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15015,6 +16212,7 @@ fn ant_tx_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15027,6 +16225,7 @@ fn ant_tx_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15034,11 +16233,12 @@ fn ant_tx_message() -> MessageInfo {
 
     MessageInfo {
         name: "ant_tx",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn exd_screen_configuration_message() -> MessageInfo {
+fn exd_screen_configuration_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
@@ -15048,6 +16248,7 @@ fn exd_screen_configuration_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15061,6 +16262,7 @@ fn exd_screen_configuration_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15073,6 +16275,7 @@ fn exd_screen_configuration_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15085,6 +16288,7 @@ fn exd_screen_configuration_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15092,11 +16296,12 @@ fn exd_screen_configuration_message() -> MessageInfo {
 
     MessageInfo {
         name: "exd_screen_configuration",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn exd_data_field_configuration_message() -> MessageInfo {
+fn exd_data_field_configuration_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
@@ -15106,6 +16311,7 @@ fn exd_data_field_configuration_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15137,6 +16343,7 @@ fn exd_data_field_configuration_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: components,
     };
@@ -15149,6 +16356,7 @@ fn exd_data_field_configuration_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15161,6 +16369,7 @@ fn exd_data_field_configuration_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15173,6 +16382,7 @@ fn exd_data_field_configuration_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15185,6 +16395,7 @@ fn exd_data_field_configuration_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15192,11 +16403,12 @@ fn exd_data_field_configuration_message() -> MessageInfo {
 
     MessageInfo {
         name: "exd_data_field_configuration",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn exd_data_concept_configuration_message() -> MessageInfo {
+fn exd_data_concept_configuration_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
@@ -15206,6 +16418,7 @@ fn exd_data_concept_configuration_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15237,6 +16450,7 @@ fn exd_data_concept_configuration_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: components,
     };
@@ -15249,6 +16463,7 @@ fn exd_data_concept_configuration_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15261,6 +16476,7 @@ fn exd_data_concept_configuration_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15273,6 +16489,7 @@ fn exd_data_concept_configuration_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15285,6 +16502,7 @@ fn exd_data_concept_configuration_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15297,6 +16515,7 @@ fn exd_data_concept_configuration_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15309,6 +16528,7 @@ fn exd_data_concept_configuration_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15321,6 +16541,7 @@ fn exd_data_concept_configuration_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15333,6 +16554,7 @@ fn exd_data_concept_configuration_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15345,6 +16567,7 @@ fn exd_data_concept_configuration_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15352,11 +16575,12 @@ fn exd_data_concept_configuration_message() -> MessageInfo {
 
     MessageInfo {
         name: "exd_data_concept_configuration",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn field_description_message() -> MessageInfo {
+fn field_description_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
@@ -15366,6 +16590,7 @@ fn field_description_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15378,6 +16603,7 @@ fn field_description_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15390,6 +16616,7 @@ fn field_description_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15402,6 +16629,7 @@ fn field_description_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15414,6 +16642,7 @@ fn field_description_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15426,6 +16655,7 @@ fn field_description_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15438,6 +16668,7 @@ fn field_description_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15450,6 +16681,7 @@ fn field_description_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15462,6 +16694,7 @@ fn field_description_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15474,6 +16707,7 @@ fn field_description_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15486,6 +16720,7 @@ fn field_description_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15498,6 +16733,7 @@ fn field_description_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15510,6 +16746,7 @@ fn field_description_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15522,6 +16759,7 @@ fn field_description_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15529,11 +16767,12 @@ fn field_description_message() -> MessageInfo {
 
     MessageInfo {
         name: "field_description",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn developer_data_id_message() -> MessageInfo {
+fn developer_data_id_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
@@ -15543,6 +16782,7 @@ fn developer_data_id_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15555,6 +16795,7 @@ fn developer_data_id_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15567,6 +16808,7 @@ fn developer_data_id_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15579,6 +16821,7 @@ fn developer_data_id_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15591,6 +16834,7 @@ fn developer_data_id_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15598,11 +16842,12 @@ fn developer_data_id_message() -> MessageInfo {
 
     MessageInfo {
         name: "developer_data_id",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn dive_summary_message() -> MessageInfo {
+fn dive_summary_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
@@ -15612,6 +16857,7 @@ fn dive_summary_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15624,6 +16870,7 @@ fn dive_summary_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15637,6 +16884,7 @@ fn dive_summary_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15650,6 +16898,7 @@ fn dive_summary_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15663,6 +16912,7 @@ fn dive_summary_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15675,6 +16925,7 @@ fn dive_summary_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "percent",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15687,6 +16938,7 @@ fn dive_summary_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "percent",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15699,6 +16951,7 @@ fn dive_summary_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "percent",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15711,6 +16964,7 @@ fn dive_summary_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "percent",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15723,6 +16977,7 @@ fn dive_summary_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "OTUs",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15735,6 +16990,7 @@ fn dive_summary_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15747,6 +17003,7 @@ fn dive_summary_message() -> MessageInfo {
         scale: 1000.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15759,6 +17016,7 @@ fn dive_summary_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15766,11 +17024,12 @@ fn dive_summary_message() -> MessageInfo {
 
     MessageInfo {
         name: "dive_summary",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn climb_pro_message() -> MessageInfo {
+fn climb_pro_message(global_message_number: u16) -> MessageInfo {
     let mut fields = HashMap::new();
 
     let field = FieldInfo {
@@ -15780,6 +17039,7 @@ fn climb_pro_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "semicircles",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15792,6 +17052,7 @@ fn climb_pro_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "semicircles",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15804,6 +17065,7 @@ fn climb_pro_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15816,6 +17078,7 @@ fn climb_pro_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15828,6 +17091,7 @@ fn climb_pro_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15840,6 +17104,7 @@ fn climb_pro_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "m",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15852,6 +17117,7 @@ fn climb_pro_message() -> MessageInfo {
         scale: 1.000000,
         offset: 0.000000,
         units: "s",
+        accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
@@ -15859,13 +17125,15 @@ fn climb_pro_message() -> MessageInfo {
 
     MessageInfo {
         name: "climb_pro",
+        global_message_number,
         fields: fields,
     }
 }
 
-fn unknown_message() -> MessageInfo {
+fn unknown_message(global_message_number: u16) -> MessageInfo {
     MessageInfo {
         name: "unknown",
+        global_message_number,
         fields: HashMap::new(),
     }
 }
@@ -15873,94 +17141,98 @@ fn unknown_message() -> MessageInfo {
 impl MesgNum {
     pub fn message_info(&self) -> MessageInfo {
         match self {
-            MesgNum::FileId => file_id_message(),
-            MesgNum::FileCreator => file_creator_message(),
-            MesgNum::TimestampCorrelation => timestamp_correlation_message(),
-            MesgNum::Software => software_message(),
-            MesgNum::SlaveDevice => slave_device_message(),
-            MesgNum::Capabilities => capabilities_message(),
-            MesgNum::FileCapabilities => file_capabilities_message(),
-            MesgNum::MesgCapabilities => mesg_capabilities_message(),
-            MesgNum::FieldCapabilities => field_capabilities_message(),
-            MesgNum::DeviceSettings => device_settings_message(),
-            MesgNum::UserProfile => user_profile_message(),
-            MesgNum::HrmProfile => hrm_profile_message(),
-            MesgNum::SdmProfile => sdm_profile_message(),
-            MesgNum::BikeProfile => bike_profile_message(),
-            MesgNum::Connectivity => connectivity_message(),
-            MesgNum::WatchfaceSettings => watchface_settings_message(),
-            MesgNum::OhrSettings => ohr_settings_message(),
-            MesgNum::ZonesTarget => zones_target_message(),
-            MesgNum::Sport => sport_message(),
-            MesgNum::HrZone => hr_zone_message(),
-            MesgNum::SpeedZone => speed_zone_message(),
-            MesgNum::CadenceZone => cadence_zone_message(),
-            MesgNum::PowerZone => power_zone_message(),
-            MesgNum::MetZone => met_zone_message(),
-            MesgNum::DiveSettings => dive_settings_message(),
-            MesgNum::DiveAlarm => dive_alarm_message(),
-            MesgNum::DiveGas => dive_gas_message(),
-            MesgNum::Goal => goal_message(),
-            MesgNum::Activity => activity_message(),
-            MesgNum::Session => session_message(),
-            MesgNum::Lap => lap_message(),
-            MesgNum::Length => length_message(),
-            MesgNum::Record => record_message(),
-            MesgNum::Event => event_message(),
-            MesgNum::DeviceInfo => device_info_message(),
-            MesgNum::TrainingFile => training_file_message(),
-            MesgNum::Hrv => hrv_message(),
-            MesgNum::WeatherConditions => weather_conditions_message(),
-            MesgNum::WeatherAlert => weather_alert_message(),
-            MesgNum::GpsMetadata => gps_metadata_message(),
-            MesgNum::CameraEvent => camera_event_message(),
-            MesgNum::GyroscopeData => gyroscope_data_message(),
-            MesgNum::AccelerometerData => accelerometer_data_message(),
-            MesgNum::MagnetometerData => magnetometer_data_message(),
-            MesgNum::BarometerData => barometer_data_message(),
-            MesgNum::ThreeDSensorCalibration => three_d_sensor_calibration_message(),
-            MesgNum::OneDSensorCalibration => one_d_sensor_calibration_message(),
-            MesgNum::VideoFrame => video_frame_message(),
-            MesgNum::ObdiiData => obdii_data_message(),
-            MesgNum::NmeaSentence => nmea_sentence_message(),
-            MesgNum::AviationAttitude => aviation_attitude_message(),
-            MesgNum::Video => video_message(),
-            MesgNum::VideoTitle => video_title_message(),
-            MesgNum::VideoDescription => video_description_message(),
-            MesgNum::VideoClip => video_clip_message(),
-            MesgNum::Set => set_message(),
-            MesgNum::Jump => jump_message(),
-            MesgNum::Course => course_message(),
-            MesgNum::CoursePoint => course_point_message(),
-            MesgNum::SegmentId => segment_id_message(),
-            MesgNum::SegmentLeaderboardEntry => segment_leaderboard_entry_message(),
-            MesgNum::SegmentPoint => segment_point_message(),
-            MesgNum::SegmentLap => segment_lap_message(),
-            MesgNum::SegmentFile => segment_file_message(),
-            MesgNum::Workout => workout_message(),
-            MesgNum::WorkoutSession => workout_session_message(),
-            MesgNum::WorkoutStep => workout_step_message(),
-            MesgNum::ExerciseTitle => exercise_title_message(),
-            MesgNum::Schedule => schedule_message(),
-            MesgNum::Totals => totals_message(),
-            MesgNum::WeightScale => weight_scale_message(),
-            MesgNum::BloodPressure => blood_pressure_message(),
-            MesgNum::MonitoringInfo => monitoring_info_message(),
-            MesgNum::Monitoring => monitoring_message(),
-            MesgNum::Hr => hr_message(),
-            MesgNum::StressLevel => stress_level_message(),
-            MesgNum::MemoGlob => memo_glob_message(),
-            MesgNum::AntChannelId => ant_channel_id_message(),
-            MesgNum::AntRx => ant_rx_message(),
-            MesgNum::AntTx => ant_tx_message(),
-            MesgNum::ExdScreenConfiguration => exd_screen_configuration_message(),
-            MesgNum::ExdDataFieldConfiguration => exd_data_field_configuration_message(),
-            MesgNum::ExdDataConceptConfiguration => exd_data_concept_configuration_message(),
-            MesgNum::FieldDescription => field_description_message(),
-            MesgNum::DeveloperDataId => developer_data_id_message(),
-            MesgNum::DiveSummary => dive_summary_message(),
-            MesgNum::ClimbPro => climb_pro_message(),
-            _ => unknown_message(),
+            MesgNum::FileId => file_id_message(self.as_u16()),
+            MesgNum::FileCreator => file_creator_message(self.as_u16()),
+            MesgNum::TimestampCorrelation => timestamp_correlation_message(self.as_u16()),
+            MesgNum::Software => software_message(self.as_u16()),
+            MesgNum::SlaveDevice => slave_device_message(self.as_u16()),
+            MesgNum::Capabilities => capabilities_message(self.as_u16()),
+            MesgNum::FileCapabilities => file_capabilities_message(self.as_u16()),
+            MesgNum::MesgCapabilities => mesg_capabilities_message(self.as_u16()),
+            MesgNum::FieldCapabilities => field_capabilities_message(self.as_u16()),
+            MesgNum::DeviceSettings => device_settings_message(self.as_u16()),
+            MesgNum::UserProfile => user_profile_message(self.as_u16()),
+            MesgNum::HrmProfile => hrm_profile_message(self.as_u16()),
+            MesgNum::SdmProfile => sdm_profile_message(self.as_u16()),
+            MesgNum::BikeProfile => bike_profile_message(self.as_u16()),
+            MesgNum::Connectivity => connectivity_message(self.as_u16()),
+            MesgNum::WatchfaceSettings => watchface_settings_message(self.as_u16()),
+            MesgNum::OhrSettings => ohr_settings_message(self.as_u16()),
+            MesgNum::ZonesTarget => zones_target_message(self.as_u16()),
+            MesgNum::Sport => sport_message(self.as_u16()),
+            MesgNum::HrZone => hr_zone_message(self.as_u16()),
+            MesgNum::SpeedZone => speed_zone_message(self.as_u16()),
+            MesgNum::CadenceZone => cadence_zone_message(self.as_u16()),
+            MesgNum::PowerZone => power_zone_message(self.as_u16()),
+            MesgNum::MetZone => met_zone_message(self.as_u16()),
+            MesgNum::DiveSettings => dive_settings_message(self.as_u16()),
+            MesgNum::DiveAlarm => dive_alarm_message(self.as_u16()),
+            MesgNum::DiveGas => dive_gas_message(self.as_u16()),
+            MesgNum::Goal => goal_message(self.as_u16()),
+            MesgNum::Activity => activity_message(self.as_u16()),
+            MesgNum::Session => session_message(self.as_u16()),
+            MesgNum::Lap => lap_message(self.as_u16()),
+            MesgNum::Length => length_message(self.as_u16()),
+            MesgNum::Record => record_message(self.as_u16()),
+            MesgNum::Event => event_message(self.as_u16()),
+            MesgNum::DeviceInfo => device_info_message(self.as_u16()),
+            MesgNum::TrainingFile => training_file_message(self.as_u16()),
+            MesgNum::Hrv => hrv_message(self.as_u16()),
+            MesgNum::WeatherConditions => weather_conditions_message(self.as_u16()),
+            MesgNum::WeatherAlert => weather_alert_message(self.as_u16()),
+            MesgNum::GpsMetadata => gps_metadata_message(self.as_u16()),
+            MesgNum::CameraEvent => camera_event_message(self.as_u16()),
+            MesgNum::GyroscopeData => gyroscope_data_message(self.as_u16()),
+            MesgNum::AccelerometerData => accelerometer_data_message(self.as_u16()),
+            MesgNum::MagnetometerData => magnetometer_data_message(self.as_u16()),
+            MesgNum::BarometerData => barometer_data_message(self.as_u16()),
+            MesgNum::ThreeDSensorCalibration => three_d_sensor_calibration_message(self.as_u16()),
+            MesgNum::OneDSensorCalibration => one_d_sensor_calibration_message(self.as_u16()),
+            MesgNum::VideoFrame => video_frame_message(self.as_u16()),
+            MesgNum::ObdiiData => obdii_data_message(self.as_u16()),
+            MesgNum::NmeaSentence => nmea_sentence_message(self.as_u16()),
+            MesgNum::AviationAttitude => aviation_attitude_message(self.as_u16()),
+            MesgNum::Video => video_message(self.as_u16()),
+            MesgNum::VideoTitle => video_title_message(self.as_u16()),
+            MesgNum::VideoDescription => video_description_message(self.as_u16()),
+            MesgNum::VideoClip => video_clip_message(self.as_u16()),
+            MesgNum::Set => set_message(self.as_u16()),
+            MesgNum::Jump => jump_message(self.as_u16()),
+            MesgNum::Course => course_message(self.as_u16()),
+            MesgNum::CoursePoint => course_point_message(self.as_u16()),
+            MesgNum::SegmentId => segment_id_message(self.as_u16()),
+            MesgNum::SegmentLeaderboardEntry => segment_leaderboard_entry_message(self.as_u16()),
+            MesgNum::SegmentPoint => segment_point_message(self.as_u16()),
+            MesgNum::SegmentLap => segment_lap_message(self.as_u16()),
+            MesgNum::SegmentFile => segment_file_message(self.as_u16()),
+            MesgNum::Workout => workout_message(self.as_u16()),
+            MesgNum::WorkoutSession => workout_session_message(self.as_u16()),
+            MesgNum::WorkoutStep => workout_step_message(self.as_u16()),
+            MesgNum::ExerciseTitle => exercise_title_message(self.as_u16()),
+            MesgNum::Schedule => schedule_message(self.as_u16()),
+            MesgNum::Totals => totals_message(self.as_u16()),
+            MesgNum::WeightScale => weight_scale_message(self.as_u16()),
+            MesgNum::BloodPressure => blood_pressure_message(self.as_u16()),
+            MesgNum::MonitoringInfo => monitoring_info_message(self.as_u16()),
+            MesgNum::Monitoring => monitoring_message(self.as_u16()),
+            MesgNum::Hr => hr_message(self.as_u16()),
+            MesgNum::StressLevel => stress_level_message(self.as_u16()),
+            MesgNum::MemoGlob => memo_glob_message(self.as_u16()),
+            MesgNum::AntChannelId => ant_channel_id_message(self.as_u16()),
+            MesgNum::AntRx => ant_rx_message(self.as_u16()),
+            MesgNum::AntTx => ant_tx_message(self.as_u16()),
+            MesgNum::ExdScreenConfiguration => exd_screen_configuration_message(self.as_u16()),
+            MesgNum::ExdDataFieldConfiguration => {
+                exd_data_field_configuration_message(self.as_u16())
+            }
+            MesgNum::ExdDataConceptConfiguration => {
+                exd_data_concept_configuration_message(self.as_u16())
+            }
+            MesgNum::FieldDescription => field_description_message(self.as_u16()),
+            MesgNum::DeveloperDataId => developer_data_id_message(self.as_u16()),
+            MesgNum::DiveSummary => dive_summary_message(self.as_u16()),
+            MesgNum::ClimbPro => climb_pro_message(self.as_u16()),
+            MesgNum::UnknownVariant(num) => unknown_message(*num),
         }
     }
 }

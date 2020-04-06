@@ -12,12 +12,17 @@ pub mod messages;
 #[derive(Clone, Debug)]
 pub struct MessageInfo {
     name: &'static str,
+    global_message_number: u16,
     fields: HashMap<u8, FieldInfo>,
 }
 
 impl MessageInfo {
     pub fn name(&self) -> &'static str {
         self.name
+    }
+
+    pub fn global_message_number(&self) -> u16 {
+        self.global_message_number
     }
 
     /// Fetch the information for a specific field, if the field contains subfields then
@@ -49,6 +54,7 @@ pub struct FieldInfo {
     scale: f64,
     offset: f64,
     units: &'static str,
+    accumulate: bool,
     subfields: Vec<(u8, i64, FieldInfo)>, // ref_def_num, ref_value, subfield_info
     components: Vec<ComponentFieldInfo>,
 }
@@ -68,6 +74,10 @@ impl FieldInfo {
 
     pub fn offset(&self) -> f64 {
         self.offset
+    }
+
+    pub fn accumulate(&self) -> bool {
+        self.accumulate
     }
 
     pub fn subfields(&self) -> &[(u8, i64, FieldInfo)] {
@@ -213,9 +223,12 @@ impl ComponentFieldInfo {
 }
 
 /// Convert a collection of FIT data record AST nodes into a proper FitDataRecord object by
-/// applying the defined FIT data profile
+/// applying the defined FIT data profile. Some fields are accumulated across multiple messages
+/// we store those in a special mapping where the key is (global_message_number << 8 | def_number)
+/// to avoid needing a nested hash map. The value in the mapping is the raw DataFieldValue parsed
+/// prior to any field rescaling.
 pub fn apply_data_profile(nodes: Vec<FitDataRecordNode>) -> Vec<FitDataRecord> {
-    let mut accumlated_values: HashMap<u16, HashMap<u8, DataFieldValue>> = HashMap::new();
+    let mut accumulated_values: HashMap<u32, DataFieldValue> = HashMap::new();
     let mut records = Vec::new();
 
     for node in nodes {
@@ -227,7 +240,7 @@ pub fn apply_data_profile(nodes: Vec<FitDataRecordNode>) -> Vec<FitDataRecord> {
         records.push(FitDataRecord {
             kind: mesg_num.to_string(),
             time_offset: node.time_offset,
-            fields: build_data_fields_from_map(mesg_info, node.fields),
+            fields: build_data_fields_from_map(mesg_info, node.fields, &mut accumulated_values),
         });
     }
 
@@ -238,6 +251,7 @@ pub fn apply_data_profile(nodes: Vec<FitDataRecordNode>) -> Vec<FitDataRecord> {
 fn build_data_fields_from_map(
     mesg_info: MessageInfo,
     mut data_map: HashMap<u8, DataFieldValue>,
+    accumulator: &mut HashMap<u32, DataFieldValue>,
 ) -> Vec<DataField> {
     // initialize process queue with field info for decoded, valid fields.
     let mut data_fields = Vec::new();
@@ -255,7 +269,15 @@ fn build_data_fields_from_map(
             // we dont store the parent field because we want the JSON to be
             // profile agnostic
             if field_info.components().is_empty() {
-                data_fields.push(data_field_with_info(&field_info, &value));
+                if field_info.accumulate {
+                    let key = (mesg_info.global_message_number as u32) << 8 | def_num as u32;
+                    let value = accumulator
+                        .entry(key)
+                        .and_modify(|v| *v += value.clone())
+                        .or_insert(value.clone());
+                    eprintln!("accumlating field: {:?} = {:?}", field_info.name, value);
+                }
+                data_fields.push(data_field_with_info(&field_info, value));
             } else {
                 let (infos, values): (Vec<_>, Vec<_>) =
                     field_info.expand_components(&value).into_iter().unzip();
@@ -274,6 +296,7 @@ fn build_data_fields_from_map(
                             scale: comp_info.scale,
                             offset: comp_info.offset,
                             units: comp_info.units,
+                            accumulate: comp_info.accumulate,
                             subfields: info.subfields.clone(),
                             components: info.components.clone(),
                         }),

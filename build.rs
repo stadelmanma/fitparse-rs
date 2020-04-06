@@ -187,7 +187,11 @@ impl MessageDefinition {
     }
 
     fn write_function_def(&self, out: &mut File) -> Result<(), std::io::Error> {
-        write!(out, "fn {}() -> MessageInfo {{\n", self.function_name())?;
+        write!(
+            out,
+            "fn {}(global_message_number: u16) -> MessageInfo {{\n",
+            self.function_name()
+        )?;
         write!(out, "    let mut fields = HashMap::new();\n\n")?;
         for field in self.field_map.values() {
             field.generate_field_info_struct(out, &self, "field")?;
@@ -195,6 +199,7 @@ impl MessageDefinition {
         }
         write!(out, "    MessageInfo {{\n")?;
         write!(out, "        name: \"{}\",\n", self.name)?;
+        write!(out, "        global_message_number,\n")?;
         write!(out, "        fields: fields\n")?;
         write!(out, "    }}\n")?;
         write!(out, "}}\n\n")?;
@@ -211,6 +216,7 @@ struct MessageFieldDefinition {
     scale: f64,
     offset: f64,
     units: String,
+    accumulate: bool,
     subfields: Vec<(String, String, MessageFieldDefinition)>,
     components: Vec<MessageFieldComponent>,
     comment: Option<String>,
@@ -267,6 +273,7 @@ impl MessageFieldDefinition {
             scale: {:.6},
             offset: {:.6},
             units: \"{}\",
+            accumulate: {},
             subfields: {},
             components: {},
         }};\n",
@@ -277,6 +284,7 @@ impl MessageFieldDefinition {
             self.scale,
             self.offset,
             self.units,
+            self.accumulate,
             subfield_var,
             components_var
         )?;
@@ -574,6 +582,7 @@ fn new_message_field_definition(row: &[DataType]) -> MessageFieldDefinition {
         scale: row[6].get_float().unwrap_or(1.0),
         offset: row[7].get_float().unwrap_or(0.0),
         units: row[8].get_string().unwrap_or("").to_string(),
+        accumulate: row[10].to_string() == "1",
         subfields: Vec::new(),
         components,
         comment,
@@ -667,12 +676,15 @@ fn create_mesg_num_to_mesg_info_fn(
     for msg in messages {
         write!(
             out,
-            "            MesgNum::{} => {}(),\n",
+            "            MesgNum::{} => {}(self.as_u16()),\n",
             titlecase_string(&msg.name),
             msg.function_name()
         )?;
     }
-    write!(out, "            _ => unknown_message(),\n")?;
+    write!(
+        out,
+        "            MesgNum::UnknownVariant(num) => unknown_message(*num),\n"
+    )?;
     write!(out, "        }}\n")?;
     write!(out, "    }}\n")?;
     write!(out, "}}\n")?;
@@ -731,9 +743,13 @@ fn write_messages_file(profile: &FitProfile) -> Result<(), std::io::Error> {
     }
 
     // output an unknown_message() fn that has no fields
-    write!(out, "fn unknown_message() -> MessageInfo {{\n")?;
+    write!(
+        out,
+        "fn unknown_message(global_message_number: u16) -> MessageInfo {{\n"
+    )?;
     write!(out, "    MessageInfo {{\n")?;
     write!(out, "        name: \"unknown\",\n")?;
+    write!(out, "        global_message_number,\n")?;
     write!(out, "        fields: HashMap::new()\n")?;
     write!(out, "    }}\n")?;
     write!(out, "}}\n\n")?;
