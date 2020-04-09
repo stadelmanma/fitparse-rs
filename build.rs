@@ -681,10 +681,7 @@ fn create_mesg_num_to_mesg_info_fn(
             msg.function_name()
         )?;
     }
-    write!(
-        out,
-        "            MesgNum::UnknownVariant(num) => unknown_message(*num),\n"
-    )?;
+    write!(out, "            _ => unknown_message(self.as_u16()),\n")?;
     write!(out, "        }}\n")?;
     write!(out, "    }}\n")?;
     write!(out, "}}\n")?;

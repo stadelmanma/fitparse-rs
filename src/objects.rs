@@ -317,15 +317,14 @@ impl Add for DataFieldValue {
             DataFieldValue::Array(mut vals) => {
                 if let DataFieldValue::Array(mut other_vals) = other {
                     if vals.len() > other_vals.len() {
-                        vals.iter_mut()
-                            .zip(other_vals.into_iter())
-                            .map(|(v, o)| *v += o);
+                        for (v, o) in vals.iter_mut().zip(other_vals.into_iter()) {
+                            *v += o;
+                        }
                         DataFieldValue::Array(vals)
                     } else {
-                        other_vals
-                            .iter_mut()
-                            .zip(vals.into_iter())
-                            .map(|(v, o)| *v += o);
+                        for (o, v) in other_vals.iter_mut().zip(vals.into_iter()) {
+                            *o += v;
+                        }
                         DataFieldValue::Array(other_vals)
                     }
                 } else {

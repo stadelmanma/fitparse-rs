@@ -17232,7 +17232,7 @@ impl MesgNum {
             MesgNum::DeveloperDataId => developer_data_id_message(self.as_u16()),
             MesgNum::DiveSummary => dive_summary_message(self.as_u16()),
             MesgNum::ClimbPro => climb_pro_message(self.as_u16()),
-            MesgNum::UnknownVariant(num) => unknown_message(*num),
+            _ => unknown_message(self.as_u16()),
         }
     }
 }

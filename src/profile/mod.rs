@@ -222,13 +222,43 @@ impl ComponentFieldInfo {
     }
 }
 
+/// Handles values that need to accumlate across multiple messages as well as applying the
+/// time offset to the current base timestamp
+struct Accumlator {
+    base_timestamp: u32,
+    current_mesg_number: u16,
+    field_values: HashMap<u32, DataFieldValue>,
+}
+
+impl Accumlator {
+    fn new() -> Self {
+        Accumlator {
+            base_timestamp: 0,
+            current_mesg_number: 0,
+            field_values: HashMap::new(),
+        }
+    }
+
+    fn increment(&mut self, def_num: u8, value: &DataFieldValue) -> &DataFieldValue {
+        let key = (self.current_mesg_number as u32) << 8 | def_num as u32;
+        self.field_values
+            .entry(key)
+            .and_modify(|v| *v += value.clone())
+            .or_insert(value.clone())
+    }
+
+    fn get_timestamp(&self, offset: u8) -> DataFieldValue {
+        todo!();
+    }
+}
+
 /// Convert a collection of FIT data record AST nodes into a proper FitDataRecord object by
 /// applying the defined FIT data profile. Some fields are accumulated across multiple messages
 /// we store those in a special mapping where the key is (global_message_number << 8 | def_number)
 /// to avoid needing a nested hash map. The value in the mapping is the raw DataFieldValue parsed
 /// prior to any field rescaling.
 pub fn apply_data_profile(nodes: Vec<FitDataRecordNode>) -> Vec<FitDataRecord> {
-    let mut accumulated_values: HashMap<u32, DataFieldValue> = HashMap::new();
+    let mut accumulator = Accumlator::new();
     let mut records = Vec::new();
 
     for node in nodes {
@@ -237,10 +267,11 @@ pub fn apply_data_profile(nodes: Vec<FitDataRecordNode>) -> Vec<FitDataRecord> {
 
         // TODO process developer fields
 
+        accumulator.current_mesg_number = node.global_message_number;
         records.push(FitDataRecord {
             kind: mesg_num.to_string(),
             time_offset: node.time_offset,
-            fields: build_data_fields_from_map(mesg_info, node.fields, &mut accumulated_values),
+            fields: build_data_fields_from_map(mesg_info, node.fields, &mut accumulator),
         });
     }
 
@@ -251,7 +282,7 @@ pub fn apply_data_profile(nodes: Vec<FitDataRecordNode>) -> Vec<FitDataRecord> {
 fn build_data_fields_from_map(
     mesg_info: MessageInfo,
     mut data_map: HashMap<u8, DataFieldValue>,
-    accumulator: &mut HashMap<u32, DataFieldValue>,
+    accumulator: &mut Accumlator,
 ) -> Vec<DataField> {
     // initialize process queue with field info for decoded, valid fields.
     let mut data_fields = Vec::new();
@@ -262,7 +293,7 @@ fn build_data_fields_from_map(
 
     while !process_queue.is_empty() {
         let (def_num, field_info) = process_queue.remove(0);
-        let value = &data_map[&def_num];
+        let mut value = &data_map[&def_num];
 
         if let Some(field_info) = field_info {
             // check for components, the decomposition is profile specific so
@@ -270,12 +301,7 @@ fn build_data_fields_from_map(
             // profile agnostic
             if field_info.components().is_empty() {
                 if field_info.accumulate {
-                    let key = (mesg_info.global_message_number as u32) << 8 | def_num as u32;
-                    let value = accumulator
-                        .entry(key)
-                        .and_modify(|v| *v += value.clone())
-                        .or_insert(value.clone());
-                    eprintln!("accumlating field: {:?} = {:?}", field_info.name, value);
+                    value = accumulator.increment(def_num, value)
                 }
                 data_fields.push(data_field_with_info(&field_info, value));
             } else {
@@ -298,7 +324,8 @@ fn build_data_fields_from_map(
                             units: comp_info.units,
                             accumulate: comp_info.accumulate,
                             subfields: info.subfields.clone(),
-                            components: info.components.clone(),
+                            // double component expansion breaks scale/offset adjustment
+                            components: Vec::new(), // info.components.clone(),
                         }),
                         None => None,
                     };
