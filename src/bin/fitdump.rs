@@ -4,9 +4,9 @@ use std::io::prelude::*;
 use std::path::PathBuf;
 use structopt::StructOpt;
 
-/// Parse FIT formatted files and output them as JSON
+/// Parse FIT formatted files and output their data in the JSON format
 #[derive(Debug, StructOpt)]
-#[structopt(name = "fit_to_json")]
+#[structopt(name = "fitdump")]
 struct Cli {
     /// FIT files to convert to JSON
     #[structopt(name = "FILE", parse(from_os_str))]
@@ -15,7 +15,7 @@ struct Cli {
     /// Output location, if not provided the JSON file will be output alongside the input file. If a
     /// directory is provided all FIT files will be written there using the same filename but with
     /// a JSON extension. If multiple FIT files are provided and the output path isn't a directory
-    /// the JSON data will be an array of FIT files.
+    /// the JSON data will be an array of data arrays, "N" files long.
     #[structopt(short, long, parse(from_os_str))]
     output: Option<PathBuf>,
 }

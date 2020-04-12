@@ -10,16 +10,15 @@ and uses the specifications defined by the Fit File SDK which is
 maintained by [ANT](thisisant.com).
 
 The goal of this crate is to parse valid FIT files according to the
-defined FIT profile and export them into a more usable format. To that
+defined FIT profile and export their data into a more usable format. To that
 end we leverage the Serde framework which allows end users to export the
 data in whatever format suits their needs. This library provides a
-`fit_to_json` executable for use and to serve as a template for any
+`fitdump` executable for use and to serve as a template for any
 other serialization format implemented using Serde.
 
 This library **does not** support writing FIT files at this time.
 
 Features in Progress:
- * Streamed FIT files
  * Parsing developer data fields
 
 ## Usage

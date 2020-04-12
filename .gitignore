@@ -1,3 +1,4 @@
 /target
 vendor/*
 Cargo.lock
+tmp
