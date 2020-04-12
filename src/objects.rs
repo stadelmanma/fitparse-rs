@@ -55,7 +55,6 @@ pub struct FitFileHeader {
 #[derive(Clone, Debug, Serialize)]
 pub struct FitDataRecord {
     pub kind: String,
-    pub time_offset: Option<u8>,
     pub fields: Vec<DataField>,
 }
 
