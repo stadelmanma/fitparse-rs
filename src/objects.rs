@@ -3,11 +3,13 @@ use crate::parser::Ast;
 use crate::profile::apply_data_profile;
 use chrono::{DateTime, Local};
 use serde::Serialize;
+use serde::ser::{Serialize as SerializeTrait, Serializer, SerializeSeq, SerializeMap};
+use std::collections::{BTreeMap};
 use std::ops::Add;
 use std::ops::AddAssign;
 
 /// Defines a FIT file's contents
-#[derive(Clone, Debug, Serialize)]
+#[derive(Clone, Debug)]
 pub struct FitFile {
     pub header: FitFileHeader,
     pub records: Vec<FitDataRecord>,
@@ -25,6 +27,29 @@ impl FitFile {
     }
 }
 
+impl SerializeTrait for FitFile {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let mut seq = serializer.serialize_seq(Some(self.records.len()))?;
+        for msg in &self.records {
+            let mut field_map: BTreeMap<&str, &DataField> = BTreeMap::new();
+            for field in &msg.fields {
+                field_map.insert(&field.name, field);
+            }
+            seq.serialize_element(&FitDataRecordSerde{kind: &msg.kind, fields: field_map})?;
+        }
+        seq.end()    }
+}
+
+/// Internal struct used to serialize a data record into a cleaner format
+#[derive(Debug, Serialize)]
+struct FitDataRecordSerde<'a> {
+    pub kind: &'a str,
+    pub fields: BTreeMap<&'a str, &'a DataField>
+}
+
 /// The file header provides information about the FIT File. The minimum size of the file header is
 /// 12 bytes including protocol and profile version numbers, the amount of data contained in the
 /// file and data type signature. The 12 byte header is considered legacy, using the 14 byte header
@@ -38,7 +63,7 @@ impl FitFile {
 /// data_size = u32
 /// literal ".FIT" = [u8; 4]
 /// CRC = u16 (if the header_size is 14 bytes)
-#[derive(Clone, Debug, Serialize)]
+#[derive(Clone, Debug)]
 pub struct FitFileHeader {
     pub header_size: u8,
     pub protocol_ver_enc: f32,
@@ -61,17 +86,21 @@ pub struct FitDataRecord {
 /// Describe arbitary data field within a FitDataRecord.
 #[derive(Clone, Debug, Serialize)]
 pub struct DataField {
+    #[serde(skip)]
     pub name: String,
     pub units: String,
+    #[serde(skip)]
     pub scale: f64,
+    #[serde(skip)]
     pub offset: f64,
     pub value: DataFieldValue,
+    #[serde(skip)]
     pub raw_value: DataFieldValue,
 }
 
 /// Contains arbitrary data in the defined format.
 #[derive(Clone, Debug, Serialize)]
-#[serde(tag = "type", content = "data")]
+#[serde(untagged)]
 pub enum DataFieldValue {
     Timestamp(DateTime<Local>),
     Byte(u8),
