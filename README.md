@@ -20,6 +20,7 @@ This library **does not** support writing FIT files at this time.
 
 Features in Progress:
  * Parsing developer data fields
+ * Checking the CRC
 
 ## Usage
 
