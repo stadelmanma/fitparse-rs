@@ -3,7 +3,7 @@ use crate::parser::Ast;
 use crate::profile::apply_data_profile;
 use chrono::{DateTime, Local};
 use serde::Serialize;
-use serde::ser::{Serialize as SerializeTrait, Serializer, SerializeSeq, SerializeMap};
+use serde::ser::{Serialize as SerializeTrait, Serializer, SerializeSeq};
 use std::collections::{BTreeMap};
 use std::ops::Add;
 use std::ops::AddAssign;
