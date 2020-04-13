@@ -3,12 +3,13 @@
 /// Logic largely based on: https://github.com/dtcooper/python-fitparse.
 use crate::objects::{DataFieldValue, FitFileHeader};
 use nom::bytes::complete::{tag, take};
+use nom::character::complete::char;
 use nom::combinator::cond;
 use nom::error::ErrorKind;
 use nom::multi::count;
 use nom::number::complete::{le_i8, le_u16, le_u32, le_u8};
 use nom::number::Endianness;
-use nom::sequence::tuple;
+use nom::sequence::{terminated, tuple};
 use nom::IResult;
 use nom::{i16, i32, i64, u16, u32, u64};
 use std::collections::HashMap;
@@ -437,8 +438,8 @@ fn data_field_value(
             }
             BaseType::String => {
                 bytes_consumed += size;
-                let (input, value) = take(size as usize)(input)?;
-                if let Ok(value) = String::from_utf8(value.to_vec()) {
+                let (input, value) = terminated(take(size as usize - 1), char('\0'))(input)?;
+                if let Ok(value) = String::from_utf8(value[0..(size as usize - 1)].to_vec()) {
                     (input, DataFieldValue::String(value))
                 } else {
                     return Ok((input, None));
