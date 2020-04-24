@@ -16,10 +16,13 @@ data in whatever format suits their needs. This library provides a
 `fitdump` executable for use and to serve as a template for any
 other serialization format implemented using Serde.
 
-This library **does not** support writing FIT files at this time.
+Notes:
+ * This library **does not** support writing FIT files at this time.
+ * Files with Developer Data fields can be parsed but the developer fields
+   are dropped.
 
 Features in Progress:
- * Parsing developer data fields
+ * Checking the CRC
 
 ## Usage
 

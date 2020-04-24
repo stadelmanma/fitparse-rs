@@ -41,7 +41,6 @@ mod tests {
     }
 
     #[test]
-    #[ignore]
     fn parse_developer_data() {
         let data = include_bytes!("../test/fixtures/DeveloperData.fit").to_vec();
         let mut buf = Cursor::new(&data);

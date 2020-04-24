@@ -3,12 +3,13 @@
 /// Logic largely based on: https://github.com/dtcooper/python-fitparse.
 use crate::objects::{DataFieldValue, FitFileHeader};
 use nom::bytes::complete::{tag, take};
+use nom::character::complete::char;
 use nom::combinator::cond;
 use nom::error::ErrorKind;
 use nom::multi::count;
 use nom::number::complete::{le_i8, le_u16, le_u32, le_u8};
 use nom::number::Endianness;
-use nom::sequence::tuple;
+use nom::sequence::{terminated, tuple};
 use nom::IResult;
 use nom::{i16, i32, i64, u16, u32, u64};
 use std::collections::HashMap;
@@ -28,7 +29,8 @@ pub struct Ast {
 pub struct FitDataRecordNode {
     pub global_message_number: u16,
     pub time_offset: Option<u8>,
-    pub fields: HashMap<u8, DataFieldValue>, // pub developer_fields: Vec<T>
+    pub fields: HashMap<u8, DataFieldValue>,
+    pub developer_fields: HashMap<u8, DataFieldValue>
 }
 
 /// Parse a collection of bytes into a Fit File AST
@@ -74,6 +76,7 @@ struct FitDefinitionMessage {
 #[derive(Clone, Debug)]
 struct FitDataMessage {
     fields: Vec<Option<DataFieldValue>>,
+    developer_fields: Vec<Option<DataFieldValue>>,
 }
 
 /// The Field Definition bytes are used to specify which FIT fields of the global FIT message are to
@@ -266,6 +269,13 @@ fn fit_message<'a>(
                             .zip(msg.fields.into_iter())
                             .filter_map(|(k, v)| v.map(|v| (k, v)))
                             .collect(),
+                        developer_fields: def_mesg
+                            .developer_field_definitions
+                            .iter()
+                            .map(|f| f.field_number)
+                            .zip(msg.developer_fields.into_iter())
+                            .filter_map(|(k, v)| v.map(|v| (k, v)))
+                            .collect(),
                     },
                 ))
             } else {
@@ -335,8 +345,9 @@ fn definition_message(
     let (input, field_definitions) = count(field_definition, number_of_fields as usize)(input)?;
     let (input, number_of_developer_fields, developer_field_definitions) =
         if contains_developer_data {
-            let (input, number_of_developer_fields) = le_u8(input)?;
-            (input, number_of_developer_fields, Vec::new())
+            let (input, nflds) = le_u8(input)?;
+            let (input, dev_fld_defs) = count(developer_field_definition, nflds as usize)(input)?;
+            (input, nflds, dev_fld_defs)
         } else {
             (input, 0, Vec::new())
         };
@@ -352,6 +363,14 @@ fn definition_message(
             developer_field_definitions,
         },
     ))
+}
+
+fn developer_field_definition(input: &[u8]) -> IResult<&[u8], DeveloperFieldDefinition> {
+    let (input, field_number) = le_u8(input)?;
+    let (input, size) = le_u8(input)?;
+    let (input, developer_data_index) = le_u8(input)?;
+
+    Ok((input, DeveloperFieldDefinition{field_number, size, developer_data_index}))
 }
 
 fn data_message<'a>(
@@ -370,11 +389,23 @@ fn data_message<'a>(
         fields.push(value);
         input = i;
     }
-    if def_mesg.number_of_developer_fields != 0u8 {
-        todo!("number_of_developer_fields > 0")
+    // store developer data as a byte array temporarily, we will apply the correct field definition
+    // later on when applying the profile. THis isn't ideal due to the fact I can't handled Endianness
+    // properly or apply the correct field def number
+    let mut developer_fields = Vec::new();
+    let mut input = input;
+    for field_def in &def_mesg.developer_field_definitions {
+        let (i, value) = data_field_value(
+            input,
+            BaseType::Byte,
+            Endianness::Little, // TODO: I don't know how to handle this since byte swapping
+            field_def.size,     // the whole thing as needed might not be valid if the field isn't
+        )?;                     // a single integer value.
+        developer_fields.push(value);
+        input = i;
     }
 
-    Ok((input, FitDataMessage { fields }))
+    Ok((input, FitDataMessage { fields, developer_fields }))
 }
 
 fn field_definition(input: &[u8]) -> IResult<&[u8], FieldDefinition> {
@@ -437,8 +468,8 @@ fn data_field_value(
             }
             BaseType::String => {
                 bytes_consumed += size;
-                let (input, value) = take(size as usize)(input)?;
-                if let Ok(value) = String::from_utf8(value.to_vec()) {
+                let (input, value) = terminated(take(size as usize - 1), char('\0'))(input)?;
+                if let Ok(value) = String::from_utf8(value[0..(size as usize - 1)].to_vec()) {
                     (input, DataFieldValue::String(value))
                 } else {
                     return Ok((input, None));
