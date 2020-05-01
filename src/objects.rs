@@ -2,9 +2,9 @@
 use crate::parser::Ast;
 use crate::profile::apply_data_profile;
 use chrono::{DateTime, Local};
+use serde::ser::{Serialize as SerializeTrait, SerializeSeq, Serializer};
 use serde::Serialize;
-use serde::ser::{Serialize as SerializeTrait, Serializer, SerializeSeq};
-use std::collections::{BTreeMap};
+use std::collections::BTreeMap;
 use std::ops::Add;
 use std::ops::AddAssign;
 
@@ -38,16 +38,20 @@ impl SerializeTrait for FitFile {
             for field in &msg.fields {
                 field_map.insert(&field.name, field);
             }
-            seq.serialize_element(&FitDataRecordSerde{kind: &msg.kind, fields: field_map})?;
+            seq.serialize_element(&FitDataRecordSerde {
+                kind: &msg.kind,
+                fields: field_map,
+            })?;
         }
-        seq.end()    }
+        seq.end()
+    }
 }
 
 /// Internal struct used to serialize a data record into a cleaner format
 #[derive(Debug, Serialize)]
 struct FitDataRecordSerde<'a> {
     pub kind: &'a str,
-    pub fields: BTreeMap<&'a str, &'a DataField>
+    pub fields: BTreeMap<&'a str, &'a DataField>,
 }
 
 /// The file header provides information about the FIT File. The minimum size of the file header is

@@ -68,7 +68,7 @@ fn main() {
     let opt = Cli::from_args();
     let output_loc = opt
         .output
-        .map_or(OutputLocation::Inplace, |loc| OutputLocation::new(loc));
+        .map_or(OutputLocation::Inplace, OutputLocation::new);
     let collect_all = match output_loc {
         OutputLocation::LocalFile(_) => true,
         _ => false,

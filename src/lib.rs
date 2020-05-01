@@ -1,6 +1,6 @@
 extern crate nom;
 pub mod objects;
-pub use objects::{FitFile, FitDataRecord};
+pub use objects::{FitDataRecord, FitFile};
 pub mod parser;
 pub mod profile;
 use std::io::Read;

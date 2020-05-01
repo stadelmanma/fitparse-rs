@@ -30,7 +30,7 @@ pub struct FitDataRecordNode {
     pub global_message_number: u16,
     pub time_offset: Option<u8>,
     pub fields: HashMap<u8, DataFieldValue>,
-    pub developer_fields: HashMap<u8, DataFieldValue>
+    pub developer_fields: HashMap<u8, DataFieldValue>,
 }
 
 /// Parse a collection of bytes into a Fit File AST
@@ -370,7 +370,14 @@ fn developer_field_definition(input: &[u8]) -> IResult<&[u8], DeveloperFieldDefi
     let (input, size) = le_u8(input)?;
     let (input, developer_data_index) = le_u8(input)?;
 
-    Ok((input, DeveloperFieldDefinition{field_number, size, developer_data_index}))
+    Ok((
+        input,
+        DeveloperFieldDefinition {
+            field_number,
+            size,
+            developer_data_index,
+        },
+    ))
 }
 
 fn data_message<'a>(
@@ -400,12 +407,18 @@ fn data_message<'a>(
             BaseType::Byte,
             Endianness::Little, // TODO: I don't know how to handle this since byte swapping
             field_def.size,     // the whole thing as needed might not be valid if the field isn't
-        )?;                     // a single integer value.
+        )?; // a single integer value.
         developer_fields.push(value);
         input = i;
     }
 
-    Ok((input, FitDataMessage { fields, developer_fields }))
+    Ok((
+        input,
+        FitDataMessage {
+            fields,
+            developer_fields,
+        },
+    ))
 }
 
 fn field_definition(input: &[u8]) -> IResult<&[u8], FieldDefinition> {
