@@ -1,3 +1,4 @@
+//! Defines the FIT profile used to convert an AST into final values
 use crate::objects::{DataField, DataFieldValue, FitDataRecord};
 use crate::parser::FitDataRecordNode;
 use chrono::{DateTime, Duration, Local, NaiveDate, TimeZone};
@@ -70,14 +71,6 @@ pub struct MessageInfo {
 }
 
 impl MessageInfo {
-    fn name(&self) -> &'static str {
-        self.name
-    }
-
-    fn global_message_number(&self) -> u16 {
-        self.global_message_number
-    }
-
     /// Fetch the information for a specific field, if the field contains subfields then
     /// we use the data values provided to try and de-reference it and return the subfield
     /// info instead
@@ -113,30 +106,6 @@ struct FieldInfo {
 }
 
 impl FieldInfo {
-    fn name(&self) -> &'static str {
-        self.name
-    }
-
-    fn units(&self) -> &'static str {
-        self.units
-    }
-
-    fn scale(&self) -> f64 {
-        self.scale
-    }
-
-    fn offset(&self) -> f64 {
-        self.offset
-    }
-
-    fn accumulate(&self) -> bool {
-        self.accumulate
-    }
-
-    fn subfields(&self) -> &[(u8, i64, FieldInfo)] {
-        &self.subfields
-    }
-
     fn components(&self) -> &[ComponentFieldInfo] {
         &self.components
     }
@@ -228,31 +197,6 @@ struct ComponentFieldInfo {
     accumulate: bool,
 }
 
-impl ComponentFieldInfo {
-    pub fn dest_def_number(&self) -> u8 {
-        self.dest_def_number
-    }
-
-    pub fn scale(&self) -> f64 {
-        self.scale
-    }
-
-    pub fn offset(&self) -> f64 {
-        self.offset
-    }
-
-    pub fn units(&self) -> &str {
-        self.units
-    }
-
-    pub fn bits(&self) -> u8 {
-        self.bits
-    }
-
-    pub fn accumulate(&self) -> bool {
-        self.accumulate
-    }
-}
 
 /// Stores the timestamp offset from the FIT reference date in seconds
 #[derive(Debug, Copy, Clone)]
@@ -402,10 +346,10 @@ fn build_data_fields_from_map(
 /// Build a data field using the provided FIT profile information
 fn data_field_with_info(field_info: &FieldInfo, value: &DataFieldValue) -> DataField {
     DataField {
-        name: field_info.name().to_string(),
-        units: field_info.units().to_string(),
-        scale: field_info.scale(),
-        offset: field_info.offset(),
+        name: field_info.name.to_string(),
+        units: field_info.units.to_string(),
+        scale: field_info.scale,
+        offset: field_info.offset,
         value: field_info.convert_value(value),
         raw_value: value.clone(),
     }

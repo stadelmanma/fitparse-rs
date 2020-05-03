@@ -20,8 +20,11 @@ use std::fmt::Display;
 /// Parsed data representing a FIT file that can have an arbitary profile applied to it.
 #[derive(Debug)]
 pub struct Ast {
+    /// FIT file header information
     pub header: FitFileHeader,
+    /// Array of raw FIT data messages
     pub records: Vec<FitDataRecordNode>,
+    /// 16 bit CRC converted to native endian format.
     pub crc: u16,
 }
 
@@ -40,10 +43,15 @@ pub struct Ast {
 /// CRC = u16 (if the header_size is 14 bytes)
 #[derive(Clone, Debug)]
 pub struct FitFileHeader {
+    /// Length of header in bytes, should be either 12 or 14
     pub header_size: u8,
+    /// Protocol version number as provided in SDK
     pub protocol_ver_enc: f32,
+    /// Profile version number as provided in SDK
     pub profile_ver_enc: f32,
+    /// Length of the Data Records section in bytes
     pub data_size: u32,
+    /// Contains the value of the CRC of Bytes 0 through 13 CRC MSB 11, or may be set to 0x0000.
     pub crc: Option<u16>,
 }
 
@@ -51,9 +59,13 @@ pub struct FitFileHeader {
 /// message.
 #[derive(Debug)]
 pub struct FitDataRecordNode {
+    /// The global message number used to identify a particular FIT profile message
     pub global_message_number: u16,
+    /// A relative time offset from a previous offset or a fixed timestamp field
     pub time_offset: Option<u8>,
+    /// A mapping of field definition number to the raw data field value
     pub fields: HashMap<u8, DataFieldValue>,
+    /// A mapping of field definition number to the raw data field value for developer added fields
     pub developer_fields: HashMap<u8, DataFieldValue>,
 }
 

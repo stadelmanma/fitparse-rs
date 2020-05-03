@@ -11,6 +11,7 @@ use std::ops::AddAssign;
 /// Defines a FIT file's contents
 #[derive(Clone, Debug)]
 pub struct FitFile {
+    /// Array of raw FIT data messages
     pub records: Vec<FitDataRecord>,
 }
 
@@ -46,8 +47,8 @@ impl SerializeTrait for FitFile {
 /// Internal struct used to serialize a data record into a cleaner format
 #[derive(Debug, Serialize)]
 struct FitDataRecordSerde<'a> {
-    pub kind: &'a str,
-    pub fields: BTreeMap<&'a str, &'a DataField>,
+    kind: &'a str,
+    fields: BTreeMap<&'a str, &'a DataField>,
 }
 
 /// Defines a set of data derived from a FIT Data message.
@@ -66,40 +67,67 @@ pub struct FitDataRecord {
 /// is the final quantity derived from the raw_value by applying any necessary type conversions.
 #[derive(Clone, Debug, Serialize)]
 pub struct DataField {
+    /// name of the data field
     #[serde(skip)]
     pub name: String,
+    /// units of the data field
     pub units: String,
+    /// scale applied to the raw field, used when converting an integer value to floating point
     #[serde(skip)]
     pub scale: f64,
+    /// offset applied to the raw field, used when converting an integer value to floating point
     #[serde(skip)]
     pub offset: f64,
+    /// final converted value of the data field after applying any needed manipulations
     pub value: DataFieldValue,
+    /// raw value read from the FIT file data source
     #[serde(skip)]
     pub raw_value: DataFieldValue,
 }
 
-/// Contains arbitrary data in the defined format.
+/// Contains arbitrary data in the defined format. These types match the base types defined in the
+/// FIT profile so while some fields have overlapping Rust types the invalid value differs.
 #[derive(Clone, Debug, Serialize)]
 #[serde(untagged)]
 pub enum DataFieldValue {
+    /// Timestamp field converted to the local timezone
     Timestamp(DateTime<Local>),
+    /// Unsigned 8bit integer data
     Byte(u8),
+    /// Unsigned 8bit integer that gets mapped to a FieldType enum
     Enum(u8),
+    /// Signed 8bit integer data
     SInt8(i8),
+    /// Unsigned 8bit integer data
     UInt8(u8),
+    /// Signed 16bit integer data
     SInt16(i16),
+    /// Unsigned 16bit integer data
     UInt16(u16),
+    /// Signed 32bit integer data
     SInt32(i32),
+    /// Unsigned 32bit integer data
     UInt32(u32),
+    /// UTF-8 format string data
     String(String),
+    /// 32bit floating point data
     Float32(f32),
+    /// 64bit floating point data
     Float64(f64),
+    /// Unsigned 8bit integer data where the invalid value is 0x0 instead of 0xFF
     UInt8z(u8),
+    /// Unsigned 16bit integer data where the invalid value is 0x0 instead of 0xFFFF
     UInt16z(u16),
+    /// Unsigned 16bit integer data where the invalid value is 0x0 instead of 0xFFFFFFFF
     UInt32z(u32),
+    /// Signed 64bit integer data
     SInt64(i64),
+    /// Unsigned 64bit integer data
     UInt64(u64),
+    /// Unsigned 64bit integer data where the invalid value is 0x0 instead of 0xFFFFFFFFFFFFFFFF
     UInt64z(u64),
+    /// Array of DataFieldValue, while this allows nested arrays and mixed types this is not possible
+    /// in a properly formatted FIT file
     Array(Vec<Self>),
 }
 
