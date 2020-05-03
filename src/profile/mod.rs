@@ -197,7 +197,6 @@ struct ComponentFieldInfo {
     accumulate: bool,
 }
 
-
 /// Stores the timestamp offset from the FIT reference date in seconds
 #[derive(Debug, Copy, Clone)]
 enum TimestampField {
