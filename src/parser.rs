@@ -5,13 +5,12 @@
 //! documentation.
 use crate::objects::DataFieldValue;
 use nom::bytes::complete::{tag, take};
-use nom::character::complete::char;
 use nom::combinator::cond;
 use nom::error::ErrorKind;
 use nom::multi::count;
 use nom::number::complete::{le_i8, le_u16, le_u32, le_u8};
 use nom::number::Endianness;
-use nom::sequence::{terminated, tuple};
+use nom::sequence::tuple;
 use nom::IResult;
 use nom::{i16, i32, i64, u16, u32, u64};
 use std::collections::HashMap;
@@ -517,8 +516,17 @@ fn data_field_value(
             }
             BaseType::String => {
                 bytes_consumed += size;
-                let (input, value) = terminated(take(size as usize - 1), char('\0'))(input)?;
-                if let Ok(value) = String::from_utf8(value[0..(size as usize - 1)].to_vec()) {
+                // consume the field as defined by it's size and then locate the first NUL byte
+                // and ignore everything after it when converting to a string
+                let (input, field_value) = take(size as usize)(input)?;
+                let mut value = Vec::new();
+                for char in field_value {
+                    if *char == 0u8 {
+                        break;
+                    }
+                    value.push(*char);
+                }
+                if let Ok(value) = String::from_utf8(value) {
                     (input, DataFieldValue::String(value))
                 } else {
                     return Ok((input, None));
