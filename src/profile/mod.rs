@@ -9,6 +9,58 @@ use field_types::{get_field_variant_as_string, FieldDataType, MesgNum};
 
 pub mod messages;
 
+/// Convert a collection of FIT data record AST nodes into a proper FitDataRecord object by
+/// applying the defined FIT data profile. Some fields are accumulated across multiple messages
+/// we store those in a special mapping where the key is (global_message_number << 8 | def_number)
+/// to avoid needing a nested hash map. The value in the mapping is the raw DataFieldValue parsed
+/// prior to any field rescaling.
+pub fn apply_data_profile(nodes: Vec<FitDataRecordNode>) -> Vec<FitDataRecord> {
+    let mut accumulator = Accumlator::new();
+    let mut records = Vec::new();
+
+    for node in nodes {
+        let mesg_num = MesgNum::from_u16(node.global_message_number);
+        let mesg_info = mesg_num.message_info();
+
+        // set the message number and check if we have an actual timestamp field defined
+        accumulator.current_mesg_number = node.global_message_number;
+        if let Some(value) = node.fields.get(&253) {
+            accumulator.base_timestamp =
+                if let Some(info) = mesg_info.get_field(253, &HashMap::new()) {
+                    if let FieldDataType::LocalDateTime = info.field_type {
+                        TimestampField::Local(value.as_i64().unwrap_or(0))
+                    } else {
+                        TimestampField::Utc(value.as_i64().unwrap_or(0))
+                    }
+                } else {
+                    // default to assuming we have a UTC timestamp
+                    TimestampField::Utc(value.as_i64().unwrap_or(0))
+                }
+        }
+
+        // process defined fields and add timstamp field if the header has a time offset
+        let mut record = FitDataRecord {
+            kind: mesg_num.to_string(),
+            fields: build_data_fields_from_map(mesg_info, node.fields, &mut accumulator),
+        };
+        if let Some(time_offset) = node.time_offset {
+            record.fields.push(DataField {
+                name: String::from("timestamp"),
+                units: String::new(),
+                scale: 1.0,
+                offset: 0.0,
+                value: accumulator.increment_timestamp(time_offset),
+                raw_value: DataFieldValue::UInt8(time_offset),
+            });
+        }
+        // TODO process developer fields
+
+        records.push(record);
+    }
+
+    records
+}
+
 /// Describes a single message pulled from the FIT profile.
 #[derive(Clone, Debug)]
 pub struct MessageInfo {
@@ -18,18 +70,18 @@ pub struct MessageInfo {
 }
 
 impl MessageInfo {
-    pub fn name(&self) -> &'static str {
+    fn name(&self) -> &'static str {
         self.name
     }
 
-    pub fn global_message_number(&self) -> u16 {
+    fn global_message_number(&self) -> u16 {
         self.global_message_number
     }
 
     /// Fetch the information for a specific field, if the field contains subfields then
     /// we use the data values provided to try and de-reference it and return the subfield
     /// info instead
-    pub fn get_field(&self, key: u8, data_map: &HashMap<u8, DataFieldValue>) -> Option<&FieldInfo> {
+    fn get_field(&self, key: u8, data_map: &HashMap<u8, DataFieldValue>) -> Option<&FieldInfo> {
         if let Some(field) = self.fields.get(&key) {
             // check against subfields
             for (num, val, sub_info) in &field.subfields {
@@ -48,7 +100,7 @@ impl MessageInfo {
 
 /// Describes a single field within a message pulled from the FIT profile
 #[derive(Clone, Debug)]
-pub struct FieldInfo {
+struct FieldInfo {
     name: &'static str,
     field_type: FieldDataType,
     def_number: u8,
@@ -61,35 +113,35 @@ pub struct FieldInfo {
 }
 
 impl FieldInfo {
-    pub fn name(&self) -> &'static str {
+    fn name(&self) -> &'static str {
         self.name
     }
 
-    pub fn units(&self) -> &'static str {
+    fn units(&self) -> &'static str {
         self.units
     }
 
-    pub fn scale(&self) -> f64 {
+    fn scale(&self) -> f64 {
         self.scale
     }
 
-    pub fn offset(&self) -> f64 {
+    fn offset(&self) -> f64 {
         self.offset
     }
 
-    pub fn accumulate(&self) -> bool {
+    fn accumulate(&self) -> bool {
         self.accumulate
     }
 
-    pub fn subfields(&self) -> &[(u8, i64, FieldInfo)] {
+    fn subfields(&self) -> &[(u8, i64, FieldInfo)] {
         &self.subfields
     }
 
-    pub fn components(&self) -> &[ComponentFieldInfo] {
+    fn components(&self) -> &[ComponentFieldInfo] {
         &self.components
     }
 
-    pub fn expand_components(
+    fn expand_components(
         &self,
         value: &DataFieldValue,
     ) -> Vec<(&ComponentFieldInfo, DataFieldValue)> {
@@ -117,7 +169,7 @@ impl FieldInfo {
     }
 
     /// convert the value into a "output" form applying any scaling or enum conversions
-    pub fn convert_value(&self, value: &DataFieldValue) -> DataFieldValue {
+    fn convert_value(&self, value: &DataFieldValue) -> DataFieldValue {
         // for array types just map and return
         if let DataFieldValue::Array(vals) = value {
             return DataFieldValue::Array(vals.iter().map(|v| self.convert_value(v)).collect());
@@ -167,7 +219,7 @@ impl FieldInfo {
 
 /// Describes a componet field within a largest field pulled from the FIT profile
 #[derive(Clone, Debug)]
-pub struct ComponentFieldInfo {
+struct ComponentFieldInfo {
     dest_def_number: u8,
     scale: f64,
     offset: f64,
@@ -283,58 +335,6 @@ impl Accumlator {
         }
         self.base_timestamp.clone().into()
     }
-}
-
-/// Convert a collection of FIT data record AST nodes into a proper FitDataRecord object by
-/// applying the defined FIT data profile. Some fields are accumulated across multiple messages
-/// we store those in a special mapping where the key is (global_message_number << 8 | def_number)
-/// to avoid needing a nested hash map. The value in the mapping is the raw DataFieldValue parsed
-/// prior to any field rescaling.
-pub fn apply_data_profile(nodes: Vec<FitDataRecordNode>) -> Vec<FitDataRecord> {
-    let mut accumulator = Accumlator::new();
-    let mut records = Vec::new();
-
-    for node in nodes {
-        let mesg_num = MesgNum::from_u16(node.global_message_number);
-        let mesg_info = mesg_num.message_info();
-
-        // set the message number and check if we have an actual timestamp field defined
-        accumulator.current_mesg_number = node.global_message_number;
-        if let Some(value) = node.fields.get(&253) {
-            accumulator.base_timestamp =
-                if let Some(info) = mesg_info.get_field(253, &HashMap::new()) {
-                    if let FieldDataType::LocalDateTime = info.field_type {
-                        TimestampField::Local(value.as_i64().unwrap_or(0))
-                    } else {
-                        TimestampField::Utc(value.as_i64().unwrap_or(0))
-                    }
-                } else {
-                    // default to assuming we have a UTC timestamp
-                    TimestampField::Utc(value.as_i64().unwrap_or(0))
-                }
-        }
-
-        // process defined fields and add timstamp field if the header has a time offset
-        let mut record = FitDataRecord {
-            kind: mesg_num.to_string(),
-            fields: build_data_fields_from_map(mesg_info, node.fields, &mut accumulator),
-        };
-        if let Some(time_offset) = node.time_offset {
-            record.fields.push(DataField {
-                name: String::from("timestamp"),
-                units: String::new(),
-                scale: 1.0,
-                offset: 0.0,
-                value: accumulator.increment_timestamp(time_offset),
-                raw_value: DataFieldValue::UInt8(time_offset),
-            });
-        }
-        // TODO process developer fields
-
-        records.push(record);
-    }
-
-    records
 }
 
 /// Add processed data fields from raw values in the data mapping

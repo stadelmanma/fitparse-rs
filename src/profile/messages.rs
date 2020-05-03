@@ -1,6 +1,8 @@
+#![allow(missing_docs)]
+//! Auto generated profile messages from FIT SDK Release: XXX
+
 use super::field_types::*;
 use super::{ComponentFieldInfo, FieldDataType, FieldInfo, MessageInfo};
-/// Auto generated profile from FIT SDK Release: XXX
 use std::collections::HashMap;
 
 fn file_id_message(global_message_number: u16) -> MessageInfo {

@@ -1,4 +1,4 @@
-/// Defines the data structures needed to represent a parsed FIT file.
+//! Defines the data structures needed to represent a parsed FIT file.
 use crate::parser::Ast;
 use crate::profile::apply_data_profile;
 use chrono::{DateTime, Local};
@@ -11,18 +11,14 @@ use std::ops::AddAssign;
 /// Defines a FIT file's contents
 #[derive(Clone, Debug)]
 pub struct FitFile {
-    pub header: FitFileHeader,
     pub records: Vec<FitDataRecord>,
-    pub crc: u16,
 }
 
 impl FitFile {
     /// convert the AST into a FitFile by applying the defined profile.
     pub fn from_ast(ast: Ast) -> Self {
         FitFile {
-            header: ast.header,
             records: apply_data_profile(ast.records),
-            crc: ast.crc,
         }
     }
 }
@@ -54,40 +50,20 @@ struct FitDataRecordSerde<'a> {
     pub fields: BTreeMap<&'a str, &'a DataField>,
 }
 
-/// The file header provides information about the FIT File. The minimum size of the file header is
-/// 12 bytes including protocol and profile version numbers, the amount of data contained in the
-/// file and data type signature. The 12 byte header is considered legacy, using the 14 byte header
-/// is preferred. The header size should always be decoded before attempting to interpret a FIT
-/// file, Dynastream may extend the header as necessary. Computing the CRC is optional when using a
-/// 14 byte file header, it is permissible to set it to 0x0000.
-///
-/// header_size = u8,
-/// protocol_ver_enc = u8,
-/// profile_ver_enc = u16
-/// data_size = u32
-/// literal ".FIT" = [u8; 4]
-/// CRC = u16 (if the header_size is 14 bytes)
-#[derive(Clone, Debug)]
-pub struct FitFileHeader {
-    pub header_size: u8,
-    pub protocol_ver_enc: f32,
-    pub profile_ver_enc: f32,
-    pub data_size: u32,
-    pub crc: Option<u16>,
-}
-
 /// Defines a set of data derived from a FIT Data message.
-///
-/// If a time offset is present the data message had a CompressedTimestamp header.
-/// This allows for time information to be conveyed without the need for a full 4 byte timestamp
-/// data field.
 #[derive(Clone, Debug, Serialize)]
 pub struct FitDataRecord {
+    /// The kind of message the data came from, the FIT profile defines several message kinds
     pub kind: String,
+    /// A vector containing all the fields present in this message
     pub fields: Vec<DataField>,
 }
 
-/// Describe arbitary data field within a FitDataRecord.
+/// Describes arbitary data field within a FitDataRecord.
+///
+/// The FIT profile defines the name, units, scale and offset for each field. Scale and offset are
+/// used to convert a float value stored as an integer back into a float. The `value` of the field
+/// is the final quantity derived from the raw_value by applying any necessary type conversions.
 #[derive(Clone, Debug, Serialize)]
 pub struct DataField {
     #[serde(skip)]
@@ -128,6 +104,7 @@ pub enum DataFieldValue {
 }
 
 impl DataFieldValue {
+    /// Check if the value contained is valid according to the FIT profile
     pub fn is_valid(&self) -> bool {
         match self {
             DataFieldValue::Enum(val) => *val != 0xFF,
@@ -152,6 +129,7 @@ impl DataFieldValue {
         }
     }
 
+    /// Try and coerce the value into a floating point number
     pub fn as_f64(&self) -> Option<f64> {
         match self {
             DataFieldValue::Byte(val) => Some(*val as f64),
@@ -173,6 +151,7 @@ impl DataFieldValue {
         }
     }
 
+    /// Try and coerce the value into an integer
     pub fn as_i64(&self) -> Option<i64> {
         match self {
             DataFieldValue::Byte(val) => Some(*val as i64),
@@ -196,6 +175,7 @@ impl DataFieldValue {
         }
     }
 
+    /// Convert the value into a vector of bytes
     pub fn to_ne_bytes(&self) -> Vec<u8> {
         match self {
             DataFieldValue::Byte(val) => vec![*val as u8],

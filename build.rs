@@ -32,7 +32,7 @@ impl FieldTypeDefintion {
 
     /// Generate an enum from the field type variants
     fn generate_enum(&self, out: &mut File) -> Result<(), std::io::Error> {
-        write!(out, "#[derive(Clone, Copy, Debug, Serialize)]\n")?;
+        write!(out, "#[derive(Clone, Copy, Debug)]\n")?;
         write!(out, "pub enum {} {{\n", titlecase_string(&self.name))?;
         for variant in self.variant_map.values() {
             variant.write_variant_line(out)?;
@@ -410,7 +410,7 @@ fn generate_main_field_type_enum(
 /// Describe all possible data types of a field
 ///
 /// The Enum type's value is actually an enum of enums.
-#[derive(Clone, Copy, Debug, Serialize)]
+#[derive(Clone, Copy, Debug)]
 pub enum FieldDataType {{
 "
     )?;
@@ -701,11 +701,16 @@ fn write_types_files(profile: &FitProfile) -> Result<(), std::io::Error> {
     let fname = "src/profile/field_types.rs";
     let mut out = File::create(&fname)?;
 
+    write!(out, "#![allow(missing_docs)]\n")?;
+    write!(out, "#![allow(dead_code)]\n")?;
     write!(
         out,
-        "/// Auto generated profile from FIT SDK Release: XXX\n\n"
+        "//! Auto generated profile field types from FIT SDK Release: XXX\n"
     )?;
-    write!(out, "use serde::Serialize;\n")?;
+    write!(
+        out,
+        "//! Not all of these may be used by the defined set of FIT messages\n\n"
+    )?;
 
     // output enums and implementations
     for field_type in &profile.field_types {
@@ -723,9 +728,10 @@ fn write_messages_file(profile: &FitProfile) -> Result<(), std::io::Error> {
     let fname = "src/profile/messages.rs";
     let mut out = File::create(&fname)?;
 
+    write!(out, "#![allow(missing_docs)]\n")?;
     write!(
         out,
-        "/// Auto generated profile from FIT SDK Release: XXX\n"
+        "//! Auto generated profile messages from FIT SDK Release: XXX\n\n"
     )?;
     write!(out, "use std::collections::HashMap;\n")?;
     write!(

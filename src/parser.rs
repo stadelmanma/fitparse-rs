@@ -1,7 +1,9 @@
-/// Parse FIT files
-///
-/// Logic largely based on: https://github.com/dtcooper/python-fitparse.
-use crate::objects::{DataFieldValue, FitFileHeader};
+//! Parse FIT files into an intermediate AST. This data is raw and largely unless until the FIT
+//! profile is applied to decode the fields.
+//!
+//! Logic largely based on: https://github.com/dtcooper/python-fitparse as well as the FIT SDK
+//! documentation.
+use crate::objects::DataFieldValue;
 use nom::bytes::complete::{tag, take};
 use nom::character::complete::char;
 use nom::combinator::cond;
@@ -21,6 +23,28 @@ pub struct Ast {
     pub header: FitFileHeader,
     pub records: Vec<FitDataRecordNode>,
     pub crc: u16,
+}
+
+/// The file header provides information about the FIT File. The minimum size of the file header is
+/// 12 bytes including protocol and profile version numbers, the amount of data contained in the
+/// file and data type signature. The 12 byte header is considered legacy, using the 14 byte header
+/// is preferred. The header size should always be decoded before attempting to interpret a FIT
+/// file, Dynastream may extend the header as necessary. Computing the CRC is optional when using a
+/// 14 byte file header, it is permissible to set it to 0x0000.
+///
+/// header_size = u8,
+/// protocol_ver_enc = u8,
+/// profile_ver_enc = u16
+/// data_size = u32
+/// literal ".FIT" = [u8; 4]
+/// CRC = u16 (if the header_size is 14 bytes)
+#[derive(Clone, Debug)]
+pub struct FitFileHeader {
+    pub header_size: u8,
+    pub protocol_ver_enc: f32,
+    pub profile_ver_enc: f32,
+    pub data_size: u32,
+    pub crc: Option<u16>,
 }
 
 /// Parsed FitDataMessage with additional message info to decouple it from it's local definition
@@ -86,9 +110,9 @@ struct FitDataMessage {
 /// listed in the global FIT profile. Each Field Definition consists of 3 bytes.
 #[derive(Clone, Debug)]
 struct FieldDefinition {
-    pub field_definition_number: u8, //  could possibly be an enum (ie. field_type) but this is per-message type
-    pub size: u8, // which might make things messy (i.e. umpteen different enums of enums)
-    pub base_type: BaseType,
+    field_definition_number: u8, //  could possibly be an enum (ie. field_type) but this is per-message type
+    size: u8, // which might make things messy (i.e. umpteen different enums of enums)
+    base_type: BaseType,
 }
 
 /// Developer data fields allow for files to define the meaning of data without requiring changes to
@@ -98,9 +122,9 @@ struct FieldDefinition {
 /// within a data message to the appropriate meta-data.
 #[derive(Clone, Debug)]
 struct DeveloperFieldDefinition {
-    pub field_number: u8,
-    pub size: u8,
-    pub developer_data_index: u8,
+    field_number: u8,
+    size: u8,
+    developer_data_index: u8,
 }
 
 /// Developer data ID messages are used to uniquely identify developer data field sources, a FIT
@@ -108,8 +132,8 @@ struct DeveloperFieldDefinition {
 /// related field description messages.
 #[derive(Clone, Debug)]
 struct DeveloperDataIdMessage {
-    pub application_id: [u8; 16],
-    pub developer_data_index: u8,
+    application_id: [u8; 16],
+    developer_data_index: u8,
 }
 
 /// Field description messages define the meaning of data within a dev field, a FIT file can
@@ -117,12 +141,12 @@ struct DeveloperDataIdMessage {
 /// any related data is added.
 #[derive(Clone, Debug)]
 struct DeveloperFieldDescription {
-    pub developer_data_index: u8,
-    pub field_definition_number: u8,
-    pub fit_base_type_id: u8,
-    pub field_name: String, // max size 64 bytes
-    pub units: String,      // max size 16 bytes
-    pub native_field_num: u8,
+    developer_data_index: u8,
+    field_definition_number: u8,
+    fit_base_type_id: u8,
+    field_name: String, // max size 64 bytes
+    units: String,      // max size 16 bytes
+    native_field_num: u8,
 }
 
 #[derive(Clone, Copy, Debug)]
@@ -562,7 +586,7 @@ mod tests {
     #[test]
     fn header_test() {
         let data = include_bytes!("../test/fixtures/Activity.fit");
-        let hdr = fit_file_header(data).unwrap().1;
+        let (_, hdr) = fit_file_header(data).unwrap();
         assert_eq!(hdr.header_size, 12);
         assert_eq!(hdr.protocol_ver_enc, 1.0);
         assert_eq!(hdr.profile_ver_enc, 1.0);
@@ -574,7 +598,7 @@ mod tests {
     fn message_header_test() {
         let data = include_bytes!("../test/fixtures/Activity.fit");
         let sl = &data[12..];
-        let hdr = message_header(sl).unwrap().1;
+        let (_, hdr) = message_header(sl).unwrap();
         // need to asert that this is what I'm returning
         //Normal { message_type: Definition, contains_developer_data: false, local_message_type: 0 }
         // also need to test a CompressedTimestamp version and a Normal, Data version
