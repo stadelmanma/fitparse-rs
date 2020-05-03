@@ -1,3 +1,4 @@
+//! Read one or more FIT files and dump their contents as JSON
 use fitparser::{parse, FitFile};
 use std::fs::File;
 use std::io::prelude::*;
@@ -14,8 +15,9 @@ struct Cli {
 
     /// Output location, if not provided the JSON file will be output alongside the input file. If a
     /// directory is provided all FIT files will be written there using the same filename but with
-    /// a JSON extension. If multiple FIT files are provided and the output path isn't a directory
-    /// the JSON data will be an array of data arrays, "N" files long.
+    /// a '.json' extension. If multiple FIT files are provided and the output path isn't a directory
+    /// the JSON data will be an array of data arrays, "N" files long. Using a "-" as the output file
+    /// name will result in all content being printed to STDOUT.
     #[structopt(short, long, parse(from_os_str))]
     output: Option<PathBuf>,
 }
