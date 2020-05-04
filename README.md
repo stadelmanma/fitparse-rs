@@ -1,4 +1,8 @@
 # Fitparser
+[![LICENSE](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Crates.io Version](https://img.shields.io/crates/v/fitparser.svg)](https://crates.io/crates/fitparser)
+[![Docs.rs](https://docs.rs/fitparser/badge.svg)](https://docs.rs/fitparser)
+
 
 ## Overview
 
@@ -18,15 +22,31 @@ other serialization format implemented using Serde.
 
 Notes:
  * This library **does not** support writing FIT files at this time.
- * Files with Developer Data fields can be parsed but the developer fields
-   are dropped.
+ * Files with Developer Data fields can be parsed but the develope
+   fields are dropped.
 
 Features in Progress:
  * Checking the CRC
 
 ## Usage
 
-TODO - Add when library API gets more finalized
+See library documentation at [docs.rs/fitparser](https://docs.rs/fitparser)
+for full usage information. Below is a basic example of calling the parser
+on a FIT file.
+```rust
+use fitparser::{parse, FitFile};
+use std::fs::File;
+use std::io::prelude::*;
+
+let mut fp = File::open("tests/fixtures/Activity.fit")?;
+for data in parse(&mut fp)? {
+    // print the data in FIT file
+    println!("{:#?}", data);
+    // alternatively reserialize the data into a new format with serde
+    // println!("{:#?}",  serde_json::to_string(data)?);
+}
+```
+
 
 ## Updating the FIT profile
 
@@ -37,6 +57,10 @@ update the FIT profile set the environment variable `FIT_PROFILE` to the
 path of the desired Profile.xlsx file and then run `cargo build`. When
 this variable is not set cargo will simply emit a warning stating that
 the profile was not updated.
+
+```sh
+FIT_PROFILE=./FitSDKRelease_21.22.00/Profile.xlsx cargo build
+```
 
 A profile file is not required for building the library as the files
 generated are committed to the repository. The profile only needs
