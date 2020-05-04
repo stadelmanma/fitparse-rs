@@ -14,7 +14,7 @@
 //! use std::fs::File;
 //! use std::io::prelude::*;
 //!
-//! let mut fp = File::open("test/fixtures/Activity.fit")?;
+//! let mut fp = File::open("tests/fixtures/Activity.fit")?;
 //! for data in parse(&mut fp)? {
 //!     // print the data in FIT file
 //!     println!("{:#?}", data);
@@ -62,7 +62,7 @@ mod tests {
 
     #[test]
     fn parse_activity() {
-        let data = include_bytes!("../test/fixtures/Activity.fit").to_vec();
+        let data = include_bytes!("../tests/fixtures/Activity.fit").to_vec();
         let mut buf = Cursor::new(&data);
         let fitfile = &parse(&mut buf).unwrap()[0];
         assert_eq!(fitfile.records.len(), 22);
@@ -70,7 +70,7 @@ mod tests {
 
     #[test]
     fn parse_developer_data() {
-        let data = include_bytes!("../test/fixtures/DeveloperData.fit").to_vec();
+        let data = include_bytes!("../tests/fixtures/DeveloperData.fit").to_vec();
         let mut buf = Cursor::new(&data);
         let fitfile = &parse(&mut buf).unwrap()[0];
         assert_eq!(fitfile.records.len(), 6);
@@ -78,7 +78,7 @@ mod tests {
 
     #[test]
     fn parse_monitoring_file() {
-        let data = include_bytes!("../test/fixtures/MonitoringFile.fit").to_vec();
+        let data = include_bytes!("../tests/fixtures/MonitoringFile.fit").to_vec();
         let mut buf = Cursor::new(&data);
         let fitfile = &parse(&mut buf).unwrap()[0];
         assert_eq!(fitfile.records.len(), 355);
@@ -86,7 +86,7 @@ mod tests {
 
     #[test]
     fn parse_settings() {
-        let data = include_bytes!("../test/fixtures/Settings.fit").to_vec();
+        let data = include_bytes!("../tests/fixtures/Settings.fit").to_vec();
         let mut buf = Cursor::new(&data);
         let fitfile = &parse(&mut buf).unwrap()[0];
         assert_eq!(fitfile.records.len(), 3);
@@ -94,7 +94,7 @@ mod tests {
 
     #[test]
     fn parse_weight_scale_multi_user() {
-        let data = include_bytes!("../test/fixtures/WeightScaleMultiUser.fit").to_vec();
+        let data = include_bytes!("../tests/fixtures/WeightScaleMultiUser.fit").to_vec();
         let mut buf = Cursor::new(&data);
         let fitfile = &parse(&mut buf).unwrap()[0];
         assert_eq!(fitfile.records.len(), 7);
@@ -102,7 +102,7 @@ mod tests {
 
     #[test]
     fn parse_weight_scale_single_user() {
-        let data = include_bytes!("../test/fixtures/WeightScaleSingleUser.fit").to_vec();
+        let data = include_bytes!("../tests/fixtures/WeightScaleSingleUser.fit").to_vec();
         let mut buf = Cursor::new(&data);
         let fitfile = &parse(&mut buf).unwrap()[0];
         assert_eq!(fitfile.records.len(), 6);
@@ -110,7 +110,7 @@ mod tests {
 
     #[test]
     fn parse_workout_custom_target_values() {
-        let data = include_bytes!("../test/fixtures/WorkoutCustomTargetValues.fit").to_vec();
+        let data = include_bytes!("../tests/fixtures/WorkoutCustomTargetValues.fit").to_vec();
         let mut buf = Cursor::new(&data);
         let fitfile = &parse(&mut buf).unwrap()[0];
         assert_eq!(fitfile.records.len(), 6);
@@ -118,7 +118,7 @@ mod tests {
 
     #[test]
     fn parse_workout_individual_steps() {
-        let data = include_bytes!("../test/fixtures/WorkoutIndividualSteps.fit").to_vec();
+        let data = include_bytes!("../tests/fixtures/WorkoutIndividualSteps.fit").to_vec();
         let mut buf = Cursor::new(&data);
         let fitfile = &parse(&mut buf).unwrap()[0];
         assert_eq!(fitfile.records.len(), 6);
@@ -126,7 +126,7 @@ mod tests {
 
     #[test]
     fn parse_workout_repeat_greater_than_step() {
-        let data = include_bytes!("../test/fixtures/WorkoutRepeatGreaterThanStep.fit").to_vec();
+        let data = include_bytes!("../tests/fixtures/WorkoutRepeatGreaterThanStep.fit").to_vec();
         let mut buf = Cursor::new(&data);
         let fitfile = &parse(&mut buf).unwrap()[0];
         assert_eq!(fitfile.records.len(), 7);
@@ -134,9 +134,19 @@ mod tests {
 
     #[test]
     fn parse_workout_repeat_steps() {
-        let data = include_bytes!("../test/fixtures/WorkoutRepeatSteps.fit").to_vec();
+        let data = include_bytes!("../tests/fixtures/WorkoutRepeatSteps.fit").to_vec();
         let mut buf = Cursor::new(&data);
         let fitfile = &parse(&mut buf).unwrap()[0];
         assert_eq!(fitfile.records.len(), 7);
+    }
+
+    #[test]
+    fn parse_garmin_fenix_5_bike() {
+        // this test case includes a FIT file with a string field, which was broken in v0.1.0
+        // and fixed in v0.1.1
+        let data = include_bytes!("../tests/fixtures/garmin-fenix-5-bike.fit").to_vec();
+        let mut buf = Cursor::new(&data);
+        let fitfile = &parse(&mut buf).unwrap()[0];
+        assert_eq!(fitfile.records.len(), 143);
     }
 }

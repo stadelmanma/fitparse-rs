@@ -605,7 +605,7 @@ mod tests {
 
     #[test]
     fn header_test() {
-        let data = include_bytes!("../test/fixtures/Activity.fit");
+        let data = include_bytes!("../tests/fixtures/Activity.fit");
         let (_, hdr) = fit_file_header(data).unwrap();
         assert_eq!(hdr.header_size, 12);
         assert_eq!(hdr.protocol_ver_enc, 1.0);
@@ -616,7 +616,7 @@ mod tests {
 
     #[test]
     fn message_header_test() {
-        let data = include_bytes!("../test/fixtures/Activity.fit");
+        let data = include_bytes!("../tests/fixtures/Activity.fit");
         let sl = &data[12..];
         let (_, hdr) = message_header(sl).unwrap();
         // need to asert that this is what I'm returning
