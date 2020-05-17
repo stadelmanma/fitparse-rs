@@ -1,12 +1,15 @@
 //! Deserialize a stream of FIT file data into the serde data model by parsing the file and
 //! applying the packaged FIT profile to the data.
 use crate::error::{Error, ErrorKind, Result};
+use nom::number::complete::le_u16;
 use serde::de;
 use std::collections::HashMap;
 use std::io;
 
 mod parser;
 use parser;
+
+use nom::bytes::complete::take; // temporary
 
 // I'll probably track the definition messsages in Deserializer as well as
 // field accumlations since it will probably make sense to apply the
@@ -65,6 +68,7 @@ impl<'de> Deserializer<'de> {
     /// Parse the FIT header
     pub fn parse_header(&mut self) -> Result<()> {
         let (input, header) = parser::fit_file_header(self.input)?;
+        println!("{:?}", header);
         self.input = input;
         self.header_size = header.header_size();
         self.data_size = header.data_size();
@@ -72,6 +76,13 @@ impl<'de> Deserializer<'de> {
         self.profile_ver_enc = header.profile_ver_enc();
 
         Ok(())
+    }
+
+    /// Extract a 2 byte CRC
+    pub fn parse_crc(&mut self) -> Result<u16> {
+        let (input, crc) = le_u16(self.input)?;
+        self.input = input;
+        Ok(crc)
     }
 }
 
@@ -92,6 +103,22 @@ where
     // Lastly we will use deserialize_struct for each data field, we will also apply
     // the FIT profile here to get field info and do proper conversions.
     // Due to the message `kind` field, data messages need to be a struct as well I suppose.
+
+    // Also, I don't need to use deserialize_seq to handle the messages, that could be a separate
+    // driver fuction
+
+    // goal data structure mocked out as json
+    // [
+    //   {kind: str, fields {name: value, ...} }
+    //   ...
+    //]
+
+    // I'll need to build a seq here even though I might not call deserialize_seq to handle messages
+
+
+    // TODO call deserialize_seq
+    let (input, record_bytes) = take(header.data_size)(input)?;
+    let crc = deserializer.parse_crc()?;
 
     let t = T::deserialize(&mut deserializer)?;
     if deserializer.input.is_empty() {
