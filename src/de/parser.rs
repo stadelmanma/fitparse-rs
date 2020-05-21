@@ -1,4 +1,5 @@
 //! Helper functions and structures needed to deserialize a FIT file.
+use crate::Value;
 use nom::bytes::complete::{tag, take};
 use nom::combinator::cond;
 use nom::error::ErrorKind;
@@ -9,6 +10,34 @@ use nom::sequence::tuple;
 use nom::IResult;
 use nom::{i16, i32, i64, u16, u32, u64};
 use std::fmt::Display;
+
+/// Define an is_valid function needed for parsing here, this function is not needed for normal use
+impl Value {
+    fn is_valid(&self) -> bool {
+        match self {
+            Value::Enum(val) => *val != 0xFF,
+            Value::SInt8(val) => *val != 0x7F,
+            Value::UInt8(val) => *val != 0xFF,
+            Value::SInt16(val) => *val != 0x7FFF,
+            Value::UInt16(val) => *val != 0xFFFF,
+            Value::SInt32(val) => *val != 0x7FFFFFFF,
+            Value::UInt32(val) => *val != 0xFFFFFFFF,
+            Value::String(val) => !val.contains("\0"),
+            Value::Timestamp(_) => true, // timestamps are always valid
+            Value::Float32(val) => val.is_finite(),
+            Value::Float64(val) => val.is_finite(),
+            Value::UInt8z(val) => *val != 0x0,
+            Value::UInt16z(val) => *val != 0x0,
+            Value::UInt32z(val) => *val != 0x0,
+            Value::Byte(val) => *val != 0xFF,
+            Value::SInt64(val) => *val != 0x7FFFFFFFFFFFFFFF,
+            Value::UInt64(val) => *val != 0xFFFFFFFFFFFFFFFF,
+            Value::UInt64z(val) => *val != 0x0,
+            Value::Array(vals) => !vals.is_empty() && vals.iter().all(|v| v.is_valid()),
+        }
+    }
+}
+
 
 /// The file header provides information about the FIT File. The minimum size of the file header is
 /// 12 bytes including protocol and profile version numbers, the amount of data contained in the
