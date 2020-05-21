@@ -1,25 +1,27 @@
 //! Deserialize a stream of FIT file data into the serde data model by parsing the file and
 //! applying the packaged FIT profile to the data.
+use crate::{FitDataRecord, Value};
 use crate::error::{Error, ErrorKind, Result};
 use nom::number::complete::le_u16;
-use serde::de;
 use std::collections::HashMap;
+use core::iter::Iterator;
 use std::io;
 
 mod parser;
-use parser;
 
 use nom::bytes::complete::take; // temporary
 
-// I'll probably track the definition messsages in Deserializer as well as
-// field accumlations since it will probably make sense to apply the
-// profile as we go since I have a struct to track the current context.
-
-// it would be nice to check the CRC on the fly, if I use some kind of buffered reader
-// for certain sections that might be possible since I could build the CRC as chunks
-// of the file are read
+/// Stores a definition message or a DataMessage
+#[derive(Clone, Debug)]
+pub enum FitMessage {
+    /// A raw data message
+    Data(parser::FitMessageHeader, parser::FitDataMessage),
+    /// A definition message used to define upcoming data messages
+    Definition(parser::FitMessageHeader, parser::FitDefinitionMessage),
+}
 
 /// Stores data and manages the deserialization of a FIT data stream into Rust constructs
+#[derive(Debug)]
 pub struct Deserializer<'de> {
     // These fields describe FIT file info that may be of use.
     /// Length of header in bytes, should be either 12 or 14
@@ -37,7 +39,13 @@ pub struct Deserializer<'de> {
     input: &'de [u8],
     /// Track the current set of FIT message definitions, these are what allows the format to
     /// be self describing.
-    definitions: HashMap<u8, FitDefinitionMessage>
+    definitions: HashMap<u8, parser::FitDefinitionMessage>,
+    /// stores the current position in the byte stream, this is needed for error generation and
+    /// checking the state of the parser
+    position: usize,
+    /// stores the location that the current FIT message ends, for chained FIT messges this will
+    /// be updated to reflect the new end position
+    end_of_messages: usize
 }
 
 impl<'de> Deserializer<'de> {
@@ -50,7 +58,9 @@ impl<'de> Deserializer<'de> {
             protocol_ver_enc: 0.0,
             profile_ver_enc: 0.0,
             input,
-            definitions: HashMap::new()
+            definitions: HashMap::new(),
+            position: 0,
+            end_of_messages: 0,
         }
     }
 
@@ -59,182 +69,112 @@ impl<'de> Deserializer<'de> {
         Deserializer::new(input)
     }
 
-    ///  Deserialize a FIT file stored in a readable source
-    fn from_reader<T: io::Read>(source: T) -> Self {
-        // I'll also need to export a pub interface like I do for `from_bytes`
-        todo!();
-    }
+    // ///  Deserialize a FIT file stored in a readable source
+    // fn from_reader<T: io::Read>(source: T) -> Self {
+    //     // I'll also need to export a pub interface like I do for `from_bytes`
+    //     todo!();
+    // }
 
     /// Parse the FIT header
-    pub fn parse_header(&mut self) -> Result<()> {
+    fn parse_header(&mut self) -> Result<()> {
         let (input, header) = parser::fit_file_header(self.input)?;
-        println!("{:?}", header);
         self.input = input;
         self.header_size = header.header_size();
         self.data_size = header.data_size();
         self.protocol_ver_enc = header.protocol_ver_enc();
         self.profile_ver_enc = header.profile_ver_enc();
 
+        self.end_of_messages = self.position + self.header_size as usize + self.data_size as usize;
+        self.position += self.header_size as usize;
+
         Ok(())
     }
 
     /// Extract a 2 byte CRC
-    pub fn parse_crc(&mut self) -> Result<u16> {
+    fn parse_crc(&mut self) -> Result<u16> {
         let (input, crc) = le_u16(self.input)?;
         self.input = input;
+        self.position += 2;
         Ok(crc)
+    }
+
+    /// Parse and decode the next data record
+    fn get_next_message(&mut self) -> Result<FitMessage> {
+        // parse a single message of eithe variety
+        let init_len = self.input.len();
+        let (input, header) = parser::message_header(self.input)?;
+        match header.message_type() {
+            parser::FitMessageType::Data => {
+                if let Some(def_mesg) = self.definitions.get(&header.local_message_type()) {
+                    let (input, message) = parser::data_message(input, &def_mesg)?;
+                    self.input = input;
+                    self.position += init_len - input.len();
+                    return Ok(FitMessage::Data(header, message));
+
+                }
+                else {
+                    return Err(ErrorKind::MissingDefinitionMessage(header.local_message_type(), self.position).into());
+                }
+            },
+            parser::FitMessageType::Definition => {
+                let (input, message) = parser::definition_message(input, &header)?;
+                self.definitions.insert(header.local_message_type(), message.clone());
+                self.input = input;
+                self.position += init_len - input.len();
+                return Ok(FitMessage::Definition(header, message))
+            }
+        }
+    }
+}
+
+impl<'de> Iterator for Deserializer<'de> {
+    type Item = Result<FitDataRecord>;
+
+    // NOTE: this currently sucks because I can't elegantly deal with errors
+    // this could  be useful, if I move the conditionals checking my parser position into get_next_message()
+    // so that I'm always returning a result?
+    // https://play.rust-lang.org/?gist=aa4ef1fe3a523aaa5b7cf90fd71b9b28&version=stable&backtrace=0
+
+    fn next(&mut self) -> Option<Result<FitDataRecord>> {
+        if self.position > 0 && self.position == self.end_of_messages {
+            // extract the CRC, eventually we'd want to validate it
+            match self.parse_crc() {
+                Ok(_) => {},
+                Err(e) => return Some(Err(e))
+            }
+        }
+        if self.position == 0 || (self.position > self.end_of_messages && self.input.len() > 0) {
+            // if there is extra bytes remaining the FIT file must be chained so we parse
+            // the header and continue on
+            match self.parse_header() {
+                Ok(_) => {},
+                Err(e) => return Some(Err(e))
+            }
+        }
+        if self.input.len() == 0 {
+            return None;
+        }
+
+        // loop over messages until we get a data message, valid FIT files always end with a
+        // data message as far as I know
+        loop {
+            match self.get_next_message() {
+                Ok(fit_message) => {
+                    if let FitMessage::Data(header, message) = fit_message {
+                        // todo decode fields via profile
+                        // todo check for compressed timestamp
+                        return Some(Ok(FitDataRecord::new("todo".to_string())));
+                    }
+                },
+                Err(e) => return Some(Err(e))
+            }
+        }
     }
 }
 
 /// Deserialize a FIT file stored as an array of bytes
-pub fn from_bytes<'a, T>(input: &'a [u8]) -> Result<T>
-where
-    T: de::Deserialize<'a>,
-{
+pub fn from_bytes<'a>(input: &'a [u8]) -> Result<Vec<FitDataRecord>> {
     // create deserializer and parse header data that comes before the first messages.
     let mut deserializer = Deserializer::from_bytes(input);
-    deserializer.parse_header()?;
-
-    // In here I need to replace the call to `T::deserialize` with my own logic since
-    // FIT files cannot really encode arbitrary data structures. They always encode a sequence
-    // of messages and each message is essentially a map with `name: {value, units}`.
-    // It probably makes sense to call deserialize_seq first since we have a sequence
-    // of messages. Then we will want to call deserialize_map on the data messages.
-    // Lastly we will use deserialize_struct for each data field, we will also apply
-    // the FIT profile here to get field info and do proper conversions.
-    // Due to the message `kind` field, data messages need to be a struct as well I suppose.
-
-    // Also, I don't need to use deserialize_seq to handle the messages, that could be a separate
-    // driver fuction
-
-    // goal data structure mocked out as json
-    // [
-    //   {kind: str, fields {name: value, ...} }
-    //   ...
-    //]
-
-    // I'll need to build a seq here even though I might not call deserialize_seq to handle messages
-
-
-    // TODO call deserialize_seq
-    let (input, record_bytes) = take(header.data_size)(input)?;
-    let crc = deserializer.parse_crc()?;
-
-    let t = T::deserialize(&mut deserializer)?;
-    if deserializer.input.is_empty() {
-        Ok(t)
-    } else {
-        Err(ErrorKind::TrailingBytes(deserializer.input.len()).into())
-    }
-}
-
-macro_rules! deserialize_not_supported {
-    ($method:ident) => {
-        #[inline]
-        fn $method<V>(self, _visitor: V) -> Result<V::Value>
-        where
-            V: de::Visitor<'de>,
-        {
-            Err(Box::new(ErrorKind::NotSupported(stringify!($method).into())))
-        }
-    };
-}
-
-impl<'de, 'a> de::Deserializer<'de> for &'a mut Deserializer<'de> {
-    type Error = Error;
-
-    deserialize_not_supported!(deserialize_any);
-    deserialize_not_supported!(deserialize_bool);
-    deserialize_not_supported!(deserialize_i8);
-    deserialize_not_supported!(deserialize_i16);
-    deserialize_not_supported!(deserialize_i32);
-    deserialize_not_supported!(deserialize_i64);
-    deserialize_not_supported!(deserialize_u8);
-    deserialize_not_supported!(deserialize_u16);
-    deserialize_not_supported!(deserialize_u32);
-    deserialize_not_supported!(deserialize_u64);
-    deserialize_not_supported!(deserialize_f32);
-    deserialize_not_supported!(deserialize_f64);
-    deserialize_not_supported!(deserialize_char);
-    deserialize_not_supported!(deserialize_str);
-    deserialize_not_supported!(deserialize_string);
-    deserialize_not_supported!(deserialize_bytes);
-    deserialize_not_supported!(deserialize_byte_buf);
-    deserialize_not_supported!(deserialize_option);
-    deserialize_not_supported!(deserialize_unit);
-    deserialize_not_supported!(deserialize_seq);
-    deserialize_not_supported!(deserialize_map);
-    deserialize_not_supported!(deserialize_identifier);
-    deserialize_not_supported!(deserialize_ignored_any);
-
-    #[inline]
-    fn deserialize_unit_struct<V>(self, _name: &'static str, _visitor: V) -> Result<V::Value>
-    where
-        V: de::Visitor<'de>,
-    {
-        Err(Box::new(ErrorKind::NotSupported(
-            "deserialize_unit_struct".into(),
-        )))
-    }
-
-    #[inline]
-    fn deserialize_newtype_struct<V>(self, _name: &'static str, _visitor: V) -> Result<V::Value>
-    where
-        V: de::Visitor<'de>,
-    {
-        Err(Box::new(ErrorKind::NotSupported(
-            "deserialize_newtype_struct".into(),
-        )))
-    }
-
-    #[inline]
-    fn deserialize_tuple<V>(self, _len: usize, _visitor: V) -> Result<V::Value>
-    where
-        V: de::Visitor<'de>,
-    {
-        Err(Box::new(ErrorKind::NotSupported(
-            "deserialize_tuple".into(),
-        )))
-    }
-
-    #[inline]
-    fn deserialize_tuple_struct<V>(
-        self,
-        _name: &'static str,
-        _len: usize,
-        _visitor: V,
-    ) -> Result<V::Value>
-    where
-        V: de::Visitor<'de>,
-    {
-        Err(Box::new(ErrorKind::NotSupported(
-            "deserialize_tuple_struct".into(),
-        )))
-    }
-
-    fn deserialize_struct<V>(
-        self,
-        _name: &'static str,
-        _fields: &'static [&'static str],
-        _visitor: V,
-    ) -> Result<V::Value>
-    where
-        V: de::Visitor<'de>,
-    {
-        Err(Box::new(ErrorKind::NotSupported(
-            "deserialize_struct".into(),
-        )))
-    }
-
-    fn deserialize_enum<V>(
-        self,
-        _name: &'static str,
-        _variants: &'static [&'static str],
-        _visitor: V,
-    ) -> Result<V::Value>
-    where
-        V: de::Visitor<'de>,
-    {
-        Err(Box::new(ErrorKind::NotSupported("deserialize_enum".into())))
-    }
+    deserializer.into_iter().collect()
 }
