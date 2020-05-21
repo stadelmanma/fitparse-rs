@@ -41,7 +41,11 @@ impl OutputLocation {
         }
     }
 
-    fn write_json_file(&self, filename: &PathBuf, data: &[fitparser::FitDataRecord]) -> std::io::Result<()> {
+    fn write_json_file(
+        &self,
+        filename: &PathBuf,
+        data: &[fitparser::FitDataRecord],
+    ) -> std::io::Result<()> {
         let j = if data.len() == 1 {
             serde_json::to_string(&data[0]).unwrap()
         } else {
@@ -82,7 +86,7 @@ fn main() {
         // open file and parse data
         let mut f = File::open(&file).unwrap();
         let mut buffer = Vec::new();
-        f.read_to_end(&mut buffer);
+        f.read_to_end(&mut buffer).unwrap();
         fit_data.extend_from_slice(&fitparser::from_bytes(&buffer).unwrap());
 
         // output a single fit file's data into a single output file

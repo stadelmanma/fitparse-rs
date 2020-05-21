@@ -1,15 +1,12 @@
 //! Deserialize a stream of FIT file data into the serde data model by parsing the file and
 //! applying the packaged FIT profile to the data.
+use crate::error::{ErrorKind, Result};
 use crate::{FitDataRecord, Value};
-use crate::error::{Error, ErrorKind, Result};
+use core::iter::Iterator;
 use nom::number::complete::le_u16;
 use std::collections::HashMap;
-use core::iter::Iterator;
-use std::io;
 
 mod parser;
-
-use nom::bytes::complete::take; // temporary
 
 /// Stores a definition message or a DataMessage
 #[derive(Clone, Debug)]
@@ -45,7 +42,7 @@ pub struct Deserializer<'de> {
     position: usize,
     /// stores the location that the current FIT message ends, for chained FIT messges this will
     /// be updated to reflect the new end position
-    end_of_messages: usize
+    end_of_messages: usize,
 }
 
 impl<'de> Deserializer<'de> {
@@ -109,19 +106,22 @@ impl<'de> Deserializer<'de> {
                     let (input, message) = parser::data_message(input, &def_mesg)?;
                     self.input = input;
                     self.position += init_len - input.len();
-                    return Ok(FitMessage::Data(header, message));
-
+                    Ok(FitMessage::Data(header, message))
+                } else {
+                    Err(ErrorKind::MissingDefinitionMessage(
+                        header.local_message_type(),
+                        self.position,
+                    )
+                    .into())
                 }
-                else {
-                    return Err(ErrorKind::MissingDefinitionMessage(header.local_message_type(), self.position).into());
-                }
-            },
+            }
             parser::FitMessageType::Definition => {
                 let (input, message) = parser::definition_message(input, &header)?;
-                self.definitions.insert(header.local_message_type(), message.clone());
+                self.definitions
+                    .insert(header.local_message_type(), message.clone());
                 self.input = input;
                 self.position += init_len - input.len();
-                return Ok(FitMessage::Definition(header, message))
+                Ok(FitMessage::Definition(header, message))
             }
         }
     }
@@ -130,28 +130,23 @@ impl<'de> Deserializer<'de> {
 impl<'de> Iterator for Deserializer<'de> {
     type Item = Result<FitDataRecord>;
 
-    // NOTE: this currently sucks because I can't elegantly deal with errors
-    // this could  be useful, if I move the conditionals checking my parser position into get_next_message()
-    // so that I'm always returning a result?
-    // https://play.rust-lang.org/?gist=aa4ef1fe3a523aaa5b7cf90fd71b9b28&version=stable&backtrace=0
-
     fn next(&mut self) -> Option<Result<FitDataRecord>> {
         if self.position > 0 && self.position == self.end_of_messages {
             // extract the CRC, eventually we'd want to validate it
             match self.parse_crc() {
-                Ok(_) => {},
-                Err(e) => return Some(Err(e))
+                Ok(_) => {}
+                Err(e) => return Some(Err(e)),
             }
         }
-        if self.position == 0 || (self.position > self.end_of_messages && self.input.len() > 0) {
+        if self.position == 0 || (self.position > self.end_of_messages && !self.input.is_empty()) {
             // if there is extra bytes remaining the FIT file must be chained so we parse
             // the header and continue on
             match self.parse_header() {
-                Ok(_) => {},
-                Err(e) => return Some(Err(e))
+                Ok(_) => {}
+                Err(e) => return Some(Err(e)),
             }
         }
-        if self.input.len() == 0 {
+        if self.input.is_empty() {
             return None;
         }
 
@@ -165,16 +160,16 @@ impl<'de> Iterator for Deserializer<'de> {
                         // todo check for compressed timestamp
                         return Some(Ok(FitDataRecord::new("todo".to_string())));
                     }
-                },
-                Err(e) => return Some(Err(e))
+                }
+                Err(e) => return Some(Err(e)),
             }
         }
     }
 }
 
 /// Deserialize a FIT file stored as an array of bytes
-pub fn from_bytes<'a>(input: &'a [u8]) -> Result<Vec<FitDataRecord>> {
+pub fn from_bytes(input: &[u8]) -> Result<Vec<FitDataRecord>> {
     // create deserializer and parse header data that comes before the first messages.
-    let mut deserializer = Deserializer::from_bytes(input);
-    deserializer.into_iter().collect()
+    let deserializer = Deserializer::from_bytes(input);
+    deserializer.collect()
 }

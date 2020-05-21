@@ -2,7 +2,6 @@
 use crate::Value;
 use nom::bytes::complete::{tag, take};
 use nom::combinator::cond;
-use nom::error::ErrorKind;
 use nom::multi::count;
 use nom::number::complete::{le_i8, le_u16, le_u32, le_u8};
 use nom::number::Endianness;
@@ -22,9 +21,9 @@ impl Value {
             Value::UInt8(val) => *val != 0xFF,
             Value::SInt16(val) => *val != 0x7FFF,
             Value::UInt16(val) => *val != 0xFFFF,
-            Value::SInt32(val) => *val != 0x7FFFFFFF,
-            Value::UInt32(val) => *val != 0xFFFFFFFF,
-            Value::String(val) => !val.contains("\0"),
+            Value::SInt32(val) => *val != 0x7FFF_FFFF,
+            Value::UInt32(val) => *val != 0xFFFF_FFFF,
+            Value::String(val) => !val.contains('\0'),
             Value::Timestamp(_) => true, // timestamps are always valid
             Value::Float32(val) => val.is_finite(),
             Value::Float64(val) => val.is_finite(),
@@ -32,14 +31,13 @@ impl Value {
             Value::UInt16z(val) => *val != 0x0,
             Value::UInt32z(val) => *val != 0x0,
             Value::Byte(val) => *val != 0xFF,
-            Value::SInt64(val) => *val != 0x7FFFFFFFFFFFFFFF,
-            Value::UInt64(val) => *val != 0xFFFFFFFFFFFFFFFF,
+            Value::SInt64(val) => *val != 0x7FFF_FFFF_FFFF_FFFF,
+            Value::UInt64(val) => *val != 0xFFFF_FFFF_FFFF_FFFF,
             Value::UInt64z(val) => *val != 0x0,
             Value::Array(vals) => !vals.is_empty() && vals.iter().all(|v| v.is_valid()),
         }
     }
 }
-
 
 /// The file header provides information about the FIT File. The minimum size of the file header is
 /// 12 bytes including protocol and profile version numbers, the amount of data contained in the
@@ -91,7 +89,7 @@ impl FitFileHeader {
 }
 
 /// Type of FIT message being read as specified by the header byte
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, PartialEq)]
 pub enum FitMessageType {
     Data,
     Definition,
@@ -310,9 +308,9 @@ pub fn message_header(input: &[u8]) -> IResult<&[u8], FitMessageHeader> {
 
 /// parse a definition message
 pub fn definition_message<'a>(
-    input: &'a[u8],
+    input: &'a [u8],
     header: &FitMessageHeader,
-) -> IResult<&'a[u8], FitDefinitionMessage> {
+) -> IResult<&'a [u8], FitDefinitionMessage> {
     let (input, _) = take(1usize)(input)?;
     let (input, arch_byte) = le_u8(input)?;
     let byte_order = if arch_byte == 1 {
@@ -400,7 +398,7 @@ pub fn data_message<'a>(
             input,
             BaseType::Byte,
             def_mesg.byte_order, // TODO: I don't know how to handle this since byte swapping
-            field_def.size,     // the whole thing as needed might not be valid if the field isn't
+            field_def.size,      // the whole thing as needed might not be valid if the field isn't
         )?; // a single integer value.
         developer_fields.push(value);
         input = i;
@@ -531,5 +529,37 @@ fn data_field_value(
         Ok((input, Some(value)))
     } else {
         Ok((input, None))
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    // I could define static byte slices for these basic functions to operate on
+    // without loading an actual fixture file. I'll still want full file tests
+    // down the road
+
+    #[test]
+    fn header_test() {
+        let data = include_bytes!("../../tests/fixtures/Activity.fit");
+        let (_, hdr) = fit_file_header(data).unwrap();
+        assert_eq!(hdr.header_size, 12);
+        assert_eq!(hdr.protocol_ver_enc, 1.0);
+        assert_eq!(hdr.profile_ver_enc, 1.0);
+        assert_eq!(hdr.data_size, 757);
+        assert_eq!(hdr.crc, None);
+    }
+
+    #[test]
+    fn definition_message_header_test() {
+        let data = include_bytes!("../../tests/fixtures/Activity.fit");
+        let sl = &data[12..];
+        let (_, hdr) = message_header(sl).unwrap();
+
+        assert_eq!(hdr.contains_developer_data, false);
+        assert_eq!(hdr.local_message_type, 0);
+        assert_eq!(hdr.message_type, FitMessageType::Definition);
+        assert_eq!(hdr.time_offset, None);
     }
 }
