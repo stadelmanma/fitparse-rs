@@ -283,3 +283,70 @@ pub fn message_header(input: &[u8]) -> IResult<&[u8], FitMessageHeader> {
     ))
 }
 
+/// parse a definition message
+pub fn definition_message<'a>(
+    input: &'a[u8],
+    header: &FitMessageHeader,
+) -> IResult<&'a[u8], FitDefinitionMessage> {
+    let (input, _) = take(1usize)(input)?;
+    let (input, arch_byte) = le_u8(input)?;
+    let byte_order = if arch_byte == 1 {
+        Endianness::Big
+    } else {
+        Endianness::Little
+    };
+    let (input, global_message_number) = u16!(input, byte_order)?;
+    let (input, number_of_fields) = le_u8(input)?;
+    let (input, field_definitions) = count(field_definition, number_of_fields as usize)(input)?;
+    let (input, number_of_developer_fields, developer_field_definitions) =
+        if header.contains_developer_data() {
+            let (input, nflds) = le_u8(input)?;
+            let (input, dev_fld_defs) = count(developer_field_definition, nflds as usize)(input)?;
+            (input, nflds, dev_fld_defs)
+        } else {
+            (input, 0, Vec::new())
+        };
+
+    Ok((
+        input,
+        FitDefinitionMessage {
+            byte_order,
+            global_message_number,
+            number_of_fields,
+            field_definitions,
+            number_of_developer_fields,
+            developer_field_definitions,
+        },
+    ))
+}
+
+fn field_definition(input: &[u8]) -> IResult<&[u8], FieldDefinition> {
+    let (input, field_definition_number) = le_u8(input)?;
+    let (input, size) = le_u8(input)?;
+    let (input, base_type_field) = le_u8(input)?;
+
+    Ok((
+        input,
+        FieldDefinition {
+            field_definition_number,
+            size,
+            base_type: BaseType::from(base_type_field),
+        },
+    ))
+}
+
+fn developer_field_definition(input: &[u8]) -> IResult<&[u8], DeveloperFieldDefinition> {
+    let (input, field_number) = le_u8(input)?;
+    let (input, size) = le_u8(input)?;
+    let (input, developer_data_index) = le_u8(input)?;
+
+    Ok((
+        input,
+        DeveloperFieldDefinition {
+            field_number,
+            size,
+            developer_data_index,
+        },
+    ))
+}
+
