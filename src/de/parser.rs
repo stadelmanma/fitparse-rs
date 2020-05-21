@@ -244,3 +244,42 @@ pub fn fit_file_header(input: &[u8]) -> IResult<&[u8], FitFileHeader> {
 fn split_decimal_to_float<T: Display>(left: T, right: T) -> f32 {
     format!("{}.{}", left, right).parse().unwrap()
 }
+
+/// Parse the header of a single FIT message
+pub fn message_header(input: &[u8]) -> IResult<&[u8], FitMessageHeader> {
+    let (input, msg_header_byte) = le_u8(input)?;
+    let contains_developer_data: bool;
+    let local_message_type: u8;
+    let message_type: FitMessageType;
+    let time_offset: Option<u8>;
+
+    if msg_header_byte & 0x80 == 0x80 {
+        // compressed timestamp header
+        contains_developer_data = false;
+        local_message_type = (msg_header_byte >> 5) & 0x3; // bits 5-6
+        message_type = FitMessageType::Data;
+        time_offset = Some(msg_header_byte & 0x1F);
+    } else if (msg_header_byte & 0x40) == 0x40 {
+        contains_developer_data = msg_header_byte & 0x20 == 0x20;
+        local_message_type = msg_header_byte & 0xF;
+        message_type = FitMessageType::Definition;
+        time_offset = None;
+    } else {
+        // developer data bit is reserved for Data messages and should be 0, so we don't check it
+        contains_developer_data = false;
+        local_message_type = msg_header_byte & 0xF;
+        message_type = FitMessageType::Data;
+        time_offset = None;
+    }
+
+    Ok((
+        input,
+        FitMessageHeader {
+            contains_developer_data,
+            local_message_type,
+            message_type,
+            time_offset,
+        },
+    ))
+}
+
