@@ -107,6 +107,24 @@ pub struct FitMessageHeader {
     time_offset: Option<u8>,
 }
 
+impl FitMessageHeader {
+    pub fn contains_developer_data(&self) -> bool {
+        self.contains_developer_data
+    }
+
+    pub fn local_message_type(&self) -> u8 {
+        self.local_message_type
+    }
+
+    pub fn message_type(&self) -> FitMessageType {
+        self.message_type
+    }
+
+    pub fn time_offset(&self) -> Option<u8> {
+        self.time_offset
+    }
+}
+
 /// The definition message is used to create an association between the local message type
 /// contained in the record header, and a Global Message Number (mesg_num) that relates to the
 /// global FIT message. Although 1 byte is available for the number of fields and 1 byte is
