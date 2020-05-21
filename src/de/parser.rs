@@ -9,6 +9,7 @@ use nom::number::Endianness;
 use nom::sequence::tuple;
 use nom::IResult;
 use nom::{i16, i32, i64, u16, u32, u64};
+use std::convert::From;
 use std::fmt::Display;
 
 /// Define an is_valid function needed for parsing here, this function is not needed for normal use
@@ -186,14 +187,14 @@ pub enum BaseType {
     UInt64z = 0x90,
 }
 
-impl BaseType {
+impl From<u8> for BaseType {
     /// Check the value of the last 5 bits to determine the base type.
     ///
     /// Bits 5 and 6 are reserved so we don't check them and to avoid issues it's easier to
     /// simply zero them out, 0x9f == 159 == 0b10011111. When the type can't be determined we default
     /// to a byte vector.
-    fn from_u8(base_type_field: u8) -> Self {
-        match base_type_field & 0x9f {
+    fn from(value: u8) -> Self {
+        match value & 0x9f {
             0x00 => BaseType::Enum,
             0x01 => BaseType::SInt8,
             0x02 => BaseType::UInt8,
