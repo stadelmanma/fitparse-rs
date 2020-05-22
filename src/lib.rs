@@ -33,6 +33,7 @@ use std::fmt;
 
 mod de;
 mod error;
+pub mod profile;
 
 pub use de::{from_bytes, Deserializer};
 pub use error::{Error, ErrorKind, Result};
@@ -44,7 +45,7 @@ pub struct FitDataRecord {
     /// custom messages can be defined by altering the profile
     kind: String,
     /// All the fields present in this message, a record may not have every possible field defined
-    fields: BTreeMap<String, Value>,
+    fields: BTreeMap<String, FieldValue>,
 }
 
 impl FitDataRecord {
@@ -53,6 +54,31 @@ impl FitDataRecord {
         FitDataRecord {
             kind,
             fields: BTreeMap::new(),
+        }
+    }
+}
+
+/// Stores a value and it's defined units which are set by the FIT profile during decoding
+#[derive(Clone, Debug, Serialize)]
+pub struct FieldValue {
+    value: Value,
+    units: String
+}
+
+impl FieldValue {
+    /// Create a new FieldValue
+    pub fn new(value: Value, units: String) -> Self {
+        FieldValue { value, units }
+    }
+}
+
+impl fmt::Display for FieldValue {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        if self.units.is_empty() {
+            write!(f, "{}", self.value)
+        }
+        else {
+            write!(f, "{} {}", self.value, self.units)
         }
     }
 }
