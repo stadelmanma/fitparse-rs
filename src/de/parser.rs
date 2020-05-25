@@ -1,4 +1,4 @@
-//! Helper functions and structures needed to deserialize a FIT file.
+//! Helper functions and structures needed to parse a FIT file.
 use crate::Value;
 use nom::bytes::complete::{tag, take};
 use nom::combinator::cond;

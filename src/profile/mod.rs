@@ -46,6 +46,11 @@ pub struct FieldInfo {
 }
 
 impl FieldInfo {
+    /// Get units of field
+    pub fn name(&self) -> &'static str {
+        self.name
+    }
+
     /// Get field type
     pub fn field_type(&self) -> FieldDataType {
         self.field_type
@@ -68,7 +73,7 @@ impl FieldInfo {
 
     /// Get units of field
     pub fn units(&self) -> &'static str {
-        &self.units
+        self.units
     }
 
     /// Check whether or not this field is accumlated across multiple messages
@@ -117,7 +122,7 @@ impl ComponentFieldInfo {
 
     /// Get units of field
     pub fn units(&self) -> &'static str {
-        &self.units
+        self.units
     }
 
     /// Get bitmask needed for this field during expansion

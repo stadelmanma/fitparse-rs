@@ -1,11 +1,13 @@
 //! Deserialize a stream of FIT file data into the serde data model by parsing the file and
 //! applying the packaged FIT profile to the data.
 use crate::error::{ErrorKind, Result};
-use crate::{FitDataRecord, Value};
+use crate::FitDataRecord;
 use core::iter::Iterator;
 use nom::number::complete::le_u16;
 use std::collections::HashMap;
 
+mod decode;
+use decode::Decoder;
 mod parser;
 
 /// Stores a definition message or a DataMessage
@@ -18,7 +20,6 @@ pub enum FitMessage {
 }
 
 /// Stores data and manages the deserialization of a FIT data stream into Rust constructs
-#[derive(Debug)]
 pub struct Deserializer<'de> {
     // These fields describe FIT file info that may be of use.
     /// Length of header in bytes, should be either 12 or 14
@@ -37,12 +38,14 @@ pub struct Deserializer<'de> {
     /// Track the current set of FIT message definitions, these are what allows the format to
     /// be self describing.
     definitions: HashMap<u8, parser::FitDefinitionMessage>,
-    /// stores the current position in the byte stream, this is needed for error generation and
+    /// Stores the current position in the byte stream, this is needed for error generation and
     /// checking the state of the parser
     position: usize,
-    /// stores the location that the current FIT message ends, for chained FIT messges this will
+    /// Stores the location that the current FIT message ends, for chained FIT messges this will
     /// be updated to reflect the new end position
     end_of_messages: usize,
+    /// Applys the FIT profile to the data
+    decoder: Decoder,
 }
 
 impl<'de> Deserializer<'de> {
@@ -58,6 +61,7 @@ impl<'de> Deserializer<'de> {
             definitions: HashMap::new(),
             position: 0,
             end_of_messages: 0,
+            decoder: Decoder::new(),
         }
     }
 
@@ -158,7 +162,7 @@ impl<'de> Iterator for Deserializer<'de> {
                     if let FitMessage::Data(header, message) = fit_message {
                         // todo decode fields via profile
                         // todo check for compressed timestamp
-                        return Some(Ok(FitDataRecord::new("todo".to_string())));
+                        return Some(self.decoder.decode_message(header, message));
                     }
                 }
                 Err(e) => return Some(Err(e)),
