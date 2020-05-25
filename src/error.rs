@@ -23,6 +23,8 @@ pub enum ErrorKind {
     ParseError(usize, nom::error::ErrorKind),
     /// Errors tied to insufficent data in the buffer, similar to an IO error but coming from nom
     UnexpectedEof(nom::Needed),
+    /// Errors related to interactions with a Value enum
+    ValueError(String),
 }
 
 impl StdError for ErrorKind {
@@ -33,6 +35,7 @@ impl StdError for ErrorKind {
             ErrorKind::TrailingBytes(_) => None,
             ErrorKind::ParseError(..) => None, // TODO, I should chain nom's error in here somehow
             ErrorKind::UnexpectedEof(..) => None,
+            ErrorKind::ValueError(..) => None,
         }
     }
 }
@@ -81,6 +84,7 @@ impl fmt::Display for ErrorKind {
             ErrorKind::UnexpectedEof(nom::Needed::Unknown) => {
                 write!(fmt, "parser error: requires more data")
             }
+            ErrorKind::ValueError(ref message) => write!(fmt, "value error: {}", message),
         }
     }
 }
