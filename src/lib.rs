@@ -29,6 +29,7 @@
 use chrono::{DateTime, Local};
 use serde::Serialize;
 use std::collections::BTreeMap;
+use std::convert;
 use std::fmt;
 
 mod de;
@@ -62,7 +63,7 @@ impl FitDataRecord {
 #[derive(Clone, Debug, Serialize)]
 pub struct FieldValue {
     value: Value,
-    units: String
+    units: String,
 }
 
 impl FieldValue {
@@ -76,8 +77,7 @@ impl fmt::Display for FieldValue {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         if self.units.is_empty() {
             write!(f, "{}", self.value)
-        }
-        else {
+        } else {
             write!(f, "{} {}", self.value, self.units)
         }
     }
@@ -151,6 +151,42 @@ impl fmt::Display for Value {
             Value::Float64(val) => write!(f, "{}", val),
             Value::String(val) => write!(f, "{}", val),
             Value::Array(vals) => write!(f, "{:?}", vals), // printing arrays is hard
+        }
+    }
+}
+
+impl convert::TryInto<i64> for Value {
+    type Error = error::Error;
+
+    fn try_into(self) -> Result<i64> {
+        match self {
+            Value::Timestamp(val) => Ok(val.timestamp()),
+            Value::Byte(val) => Ok(val as i64),
+            Value::Enum(val) => Ok(val as i64),
+            Value::SInt8(val) => Ok(val as i64),
+            Value::UInt8(val) => Ok(val as i64),
+            Value::UInt8z(val) => Ok(val as i64),
+            Value::SInt16(val) => Ok(val as i64),
+            Value::UInt16(val) => Ok(val as i64),
+            Value::UInt16z(val) => Ok(val as i64),
+            Value::SInt32(val) => Ok(val as i64),
+            Value::UInt32(val) => Ok(val as i64),
+            Value::UInt32z(val) => Ok(val as i64),
+            Value::SInt64(val) => Ok(val as i64),
+            Value::UInt64(val) => Ok(val as i64),
+            Value::UInt64z(val) => Ok(val as i64),
+            Value::Float32(_) => {
+                Err(ErrorKind::ValueError(format!("cannot convert {} into an i64", self)).into())
+            }
+            Value::Float64(_) => {
+                Err(ErrorKind::ValueError(format!("cannot convert {} into an i64", self)).into())
+            }
+            Value::String(_) => {
+                Err(ErrorKind::ValueError(format!("cannot convert {} into an i64", self)).into())
+            }
+            Value::Array(_) => {
+                Err(ErrorKind::ValueError(format!("cannot convert {} into an i64", self)).into())
+            }
         }
     }
 }
