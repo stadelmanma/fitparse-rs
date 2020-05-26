@@ -11,12 +11,17 @@ documentation = "https://docs.rs/fitparser"
 keywords = ["ant", "fit", "garmin", "serde"]
 categories = ["encoding", "parser-implementations"]
 
-[build-dependencies]
-calamine = "0.16.1"
-
 [dependencies]
 chrono = { version = "0.4", features = ["serde"] }
 nom = "5"
 serde = { version = "1.0", features = ["derive"] }
-serde_json = "1.0"
+
+[build-dependencies]
+calamine = "0.16.1"
+
+[dev-dependencies]
 structopt = "0.3"
+serde_json = { version = "1.0" }
+
+[[example]]
+name = "fit_to_json"
