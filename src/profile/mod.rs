@@ -105,6 +105,22 @@ pub struct ComponentFieldInfo {
 }
 
 impl ComponentFieldInfo {
+    /// Expand the component info into a full FieldInfo struct
+    pub fn to_field_info(&self, info: &FieldInfo) -> FieldInfo {
+        FieldInfo {
+            name: info.name(),
+            field_type: info.field_type(),
+            def_number: info.def_number(),
+            scale: self.scale(),
+            offset: self.offset(),
+            units: self.units(),
+            accumulate: self.accumulate(),
+            subfields: info.subfields().to_vec(),
+            // double component expansion breaks scale/offset adjustment
+            components: Vec::new(), // info.components.clone(),
+        }
+    }
+
     /// Destination definition number to use once the component is expanded
     pub fn dest_def_number(&self) -> u8 {
         self.dest_def_number

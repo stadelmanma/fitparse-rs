@@ -178,11 +178,11 @@ impl FitDataMessage {
         self.global_message_number
     }
 
-    pub fn get_fields(&self) -> &HashMap<u8, Option<Value>> {
+    pub fn fields(&self) -> &HashMap<u8, Option<Value>> {
         &self.fields
     }
 
-    pub fn get_developer_fields(&self) -> &[Option<Value>] {
+    pub fn developer_fields(&self) -> &[Option<Value>] {
         &self.developer_fields
     }
 }

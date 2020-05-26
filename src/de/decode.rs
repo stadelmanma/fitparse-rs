@@ -1,11 +1,41 @@
 //! Helper functions and structures needed to decode a FIT file using the defined profile.
 use super::parser::{FitDataMessage, FitMessageHeader};
 use crate::error::{ErrorKind, Result};
-use crate::profile::{FieldInfo, MessageInfo};
+use crate::profile::{
+    get_field_variant_as_string, ComponentFieldInfo, FieldDataType, FieldInfo, MesgNum, MessageInfo,
+};
 use crate::{FieldValue, FitDataRecord, Value};
 use chrono::{DateTime, Duration, Local, NaiveDate, TimeZone};
 use std::collections::HashMap;
 use std::convert::{From, TryInto};
+use std::iter::FromIterator;
+
+impl Value {
+    /// Convert the value into a vector of bytes
+    fn to_ne_bytes(&self) -> Vec<u8> {
+        match self {
+            Value::Byte(val) => vec![*val as u8],
+            Value::Enum(val) => vec![*val as u8],
+            Value::SInt8(val) => vec![*val as u8],
+            Value::UInt8(val) => vec![*val as u8],
+            Value::SInt16(val) => val.to_ne_bytes().to_vec(),
+            Value::UInt16(val) => val.to_ne_bytes().to_vec(),
+            Value::SInt32(val) => val.to_ne_bytes().to_vec(),
+            Value::UInt32(val) => val.to_ne_bytes().to_vec(),
+            Value::String(val) => val.as_bytes().to_vec(),
+            Value::Timestamp(val) => val.timestamp().to_ne_bytes().to_vec(),
+            Value::Float32(val) => val.to_ne_bytes().to_vec(),
+            Value::Float64(val) => val.to_ne_bytes().to_vec(),
+            Value::UInt8z(val) => vec![*val as u8],
+            Value::UInt16z(val) => val.to_ne_bytes().to_vec(),
+            Value::UInt32z(val) => val.to_ne_bytes().to_vec(),
+            Value::SInt64(val) => val.to_ne_bytes().to_vec(),
+            Value::UInt64(val) => val.to_ne_bytes().to_vec(),
+            Value::UInt64z(val) => val.to_ne_bytes().to_vec(),
+            Value::Array(vals) => vals.iter().flat_map(|v| v.to_ne_bytes()).collect(),
+        }
+    }
+}
 
 /// Stores the timestamp offset from the FIT reference date in seconds
 #[derive(Debug, Copy, Clone)]
@@ -67,8 +97,100 @@ impl Decoder {
         header: FitMessageHeader,
         message: FitDataMessage,
     ) -> Result<FitDataRecord> {
-        todo!("process raw data messages into data records");
-        //Ok(FitDataRecord::new("todo".to_string()))
+        let mesg_num = MesgNum::from_u16(message.global_message_number());
+        let mesg_info = mesg_num.message_info();
+        let mut record = FitDataRecord::new(mesg_num.to_string());
+
+        // check if we have a real timestamp field to set the reference
+        if let Some(Some(value)) = message.fields().get(&253) {
+            let value = value.clone();
+            self.base_timestamp =
+                if let Some(info) = get_message_field(&mesg_info, 253, &HashMap::new()) {
+                    if let FieldDataType::LocalDateTime = info.field_type() {
+                        TimestampField::Local(value.try_into().unwrap_or(0))
+                    } else {
+                        TimestampField::Utc(value.try_into().unwrap_or(0))
+                    }
+                } else {
+                    // default to assuming we have a UTC timestamp
+                    TimestampField::Utc(value.try_into().unwrap_or(0))
+                }
+        }
+
+        // process raw data
+        for (key, value) in self.build_data_fields_from_map(mesg_info, message.fields())? {
+            record.insert(key, value);
+        }
+
+        // Add a timestamp field if we have a time offset
+        if let Some(time_offset) = header.time_offset() {
+            record.insert(
+                String::from("timestamp"),
+                FieldValue::new(self.update_timestamp(time_offset), String::new()));
+        }
+
+        // TODO: process developer fields
+
+        Ok(record)
+    }
+
+    /// Build processed field values from the raw data mapping
+    fn build_data_fields_from_map(
+        &mut self,
+        mesg_info: MessageInfo,
+        data_map: &HashMap<u8, Option<Value>>,
+    ) -> Result<Vec<(String, FieldValue)>> {
+        // initialize process queue with field info for parsed, valid fields.
+        let msg_num = mesg_info.global_message_number();
+        let mut data_fields = Vec::new();
+        let mut data_map: HashMap<u8, Value> = HashMap::from_iter(
+            data_map
+                .iter()
+                .filter_map(|(key, val)| val.as_ref().map(|v| (*key, v.clone()))),
+        );
+        let mut process_queue: Vec<(u8, Option<FieldInfo>)> = data_map
+            .keys()
+            .map(|k| (*k, get_message_field(&mesg_info, *k, &data_map).cloned()))
+            .collect();
+
+        while !process_queue.is_empty() {
+            let (def_num, field_info) = process_queue.remove(0);
+            let mut value = data_map[&def_num].clone();
+
+            if let Some(field_info) = field_info {
+                // check for components, the decomposition is profile specific so
+                // we dont store the parent field because we want the JSON to be
+                // profile agnostic
+                if field_info.components().is_empty() {
+                    if field_info.accumulate() {
+                        value = self.accumlate_value(msg_num, def_num, value)?;
+                    }
+                    data_fields.push(data_field_with_info(&field_info, value)?);
+                } else {
+                    let (infos, values): (Vec<_>, Vec<_>) =
+                        expand_components(&field_info, &value).into_iter().unzip();
+                    // add all data to map first and then update process queue since reference fields
+                    // are data dependent
+                    for (comp_info, comp_value) in infos.iter().zip(values.into_iter()) {
+                        data_map.insert(comp_info.dest_def_number(), comp_value);
+                    }
+                    for comp_info in infos {
+                        let dest_def_number = comp_info.dest_def_number();
+                        let old_field_info =
+                            get_message_field(&mesg_info, comp_info.dest_def_number(), &data_map);
+                        let new_field_info = match old_field_info {
+                            Some(info) => Some(comp_info.to_field_info(info)),
+                            None => None,
+                        };
+                        process_queue.push((dest_def_number, new_field_info));
+                    }
+                }
+            } else {
+                data_fields.push(unknown_field(def_num, value));
+            }
+        }
+
+        Ok(data_fields)
     }
 
     /// Increment the stored field value
@@ -175,12 +297,82 @@ fn get_message_field<'a>(
     None
 }
 
+/// Applies a bitmask to the value and uses the field info to derive additional fields based on the
+/// defined components
+fn expand_components<'a>(
+    field_info: &'a FieldInfo,
+    value: &Value,
+) -> Vec<(&'a ComponentFieldInfo, Value)> {
+    // extract out each field by masking specific bits, spanning 1 or more bytes
+    let bit_mask = [1u8, 2u8, 4u8, 8u8, 16u8, 32u8, 64u8, 128u8];
+    let mut bytes = value.to_ne_bytes().into_iter();
+    let mut components = Vec::new();
+    let mut byte = bytes.next().unwrap_or(0);
+    let mut bit_pos = 0;
+    for comp_fld in field_info.components() {
+        let mut tmp: u64 = 0;
+        for pos in 0..comp_fld.bits() {
+            tmp |= (((byte & bit_mask[bit_pos]) >> bit_pos) as u64) << pos;
+            if bit_pos == 7 {
+                byte = bytes.next().unwrap_or(0);
+                bit_pos = 0;
+            } else {
+                bit_pos += 1;
+            }
+        }
+        components.push((comp_fld, Value::UInt64(tmp)));
+    }
+
+    components
+}
+
+/// Applies any necessary value conversions based on the field specification
+fn convert_value(field_info: &FieldInfo, value: Value) -> Result<Value> {
+    // for array types return inner vector unmodified
+    if let Value::Array(vals) = value {
+        return Ok(Value::Array(vals));
+    }
+
+    // handle time types specially, if for some reason I can't convert to an integer we will
+    // just dump the reference timestamp by passing it a 0
+    match field_info.field_type() {
+        FieldDataType::DateTime => {
+            return Ok(Value::from(TimestampField::Utc(
+                value.try_into().unwrap_or(0),
+            )));
+        }
+        FieldDataType::LocalDateTime => {
+            return Ok(Value::from(TimestampField::Local(
+                value.try_into().unwrap_or(0),
+            )));
+        }
+        _ => (),
+    }
+
+    // convert enum or rescale integer value into floating point
+    if field_info.field_type().is_enum_type() {
+        let val: i64 = value.try_into()?;
+        Ok(Value::String(get_field_variant_as_string(
+            field_info.field_type(),
+            val,
+        )))
+    } else if field_info.scale() != 1.0 || field_info.offset() != 0.0 {
+        let val: f64 = value.try_into()?;
+        Ok(Value::Float64(
+            val / field_info.scale() - field_info.offset(),
+        ))
+    } else {
+        Ok(value)
+    }
+}
+
 /// Build a data field using the provided FIT profile information
-fn data_field_with_info(field_info: &FieldInfo, value: Value) -> (String, FieldValue) {
-    (
+fn data_field_with_info(field_info: &FieldInfo, value: Value) -> Result<(String, FieldValue)> {
+    let value = convert_value(field_info, value)?;
+    Ok((
         field_info.name().to_string(),
         FieldValue::new(value, field_info.units().to_string()),
-    )
+    ))
 }
 
 /// Create an "unknown" field as a placeholder if we don't have any field information

@@ -57,6 +57,16 @@ impl FitDataRecord {
             fields: BTreeMap::new(),
         }
     }
+
+    /// Fetch a field from the record
+    pub fn get(&self, key: &str) -> Option<&FieldValue> {
+        self.fields.get(key)
+    }
+
+    /// Add a field to the record
+    pub fn insert(&mut self, key: String, value: FieldValue) -> Option<FieldValue> {
+        self.fields.insert(key, value)
+    }
 }
 
 /// Stores a value and it's defined units which are set by the FIT profile during decoding
@@ -70,6 +80,16 @@ impl FieldValue {
     /// Create a new FieldValue
     pub fn new(value: Value, units: String) -> Self {
         FieldValue { value, units }
+    }
+
+    /// Return stored value
+    pub fn value(&self) -> &Value {
+        &self.value
+    }
+
+    /// Return units associated with the value
+    pub fn units(&self) -> &str {
+        &self.units
     }
 }
 
@@ -155,6 +175,38 @@ impl fmt::Display for Value {
     }
 }
 
+impl convert::TryInto<f64> for Value {
+    type Error = error::Error;
+
+    fn try_into(self) -> Result<f64> {
+        match self {
+            Value::Timestamp(val) => Ok(val.timestamp() as f64),
+            Value::Byte(val) => Ok(val as f64),
+            Value::Enum(val) => Ok(val as f64),
+            Value::SInt8(val) => Ok(val as f64),
+            Value::UInt8(val) => Ok(val as f64),
+            Value::UInt8z(val) => Ok(val as f64),
+            Value::SInt16(val) => Ok(val as f64),
+            Value::UInt16(val) => Ok(val as f64),
+            Value::UInt16z(val) => Ok(val as f64),
+            Value::SInt32(val) => Ok(val as f64),
+            Value::UInt32(val) => Ok(val as f64),
+            Value::UInt32z(val) => Ok(val as f64),
+            Value::SInt64(val) => Ok(val as f64),
+            Value::UInt64(val) => Ok(val as f64),
+            Value::UInt64z(val) => Ok(val as f64),
+            Value::Float32(val) => Ok(val as f64),
+            Value::Float64(val) => Ok(val),
+            Value::String(_) => {
+                Err(ErrorKind::ValueError(format!("cannot convert {} into an f64", self)).into())
+            }
+            Value::Array(_) => {
+                Err(ErrorKind::ValueError(format!("cannot convert {} into an f64", self)).into())
+            }
+        }
+    }
+}
+
 impl convert::TryInto<i64> for Value {
     type Error = error::Error;
 
@@ -172,7 +224,7 @@ impl convert::TryInto<i64> for Value {
             Value::SInt32(val) => Ok(val as i64),
             Value::UInt32(val) => Ok(val as i64),
             Value::UInt32z(val) => Ok(val as i64),
-            Value::SInt64(val) => Ok(val as i64),
+            Value::SInt64(val) => Ok(val),
             Value::UInt64(val) => Ok(val as i64),
             Value::UInt64z(val) => Ok(val as i64),
             Value::Float32(_) => {
@@ -194,7 +246,6 @@ impl convert::TryInto<i64> for Value {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use std::io::Cursor;
 
     #[test]
     fn parse_activity() {
