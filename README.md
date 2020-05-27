@@ -18,16 +18,14 @@ The goal of this crate is to parse valid FIT files according to the
 defined FIT profile and export their data into a more usable format. To that
 end we leverage the Serde framework which allows end users to export the
 data in whatever format suits their needs. This library provides a
-`fitdump` executable for use and to serve as a template for any
+`fit_to_json` example executable to serve as a template for any
 other serialization format implemented using Serde.
 
 Notes:
  * This library **does not** support writing FIT files at this time.
- * Files with Developer Data fields can be parsed but the develope
+ * Files with Developer Data fields can be parsed but the developer
    fields are dropped.
-
-Features in Progress:
- * Checking the CRC
+  * We do not validate the CRC values at this time
 
 ## Usage
 
@@ -35,15 +33,15 @@ See library documentation at [docs.rs/fitparser](https://docs.rs/fitparser)
 for full usage information. Below is a basic example of calling the parser
 on a FIT file.
 ```rust
-use fitparser::{parse, FitFile};
+use fitparser;
 use std::fs::File;
 use std::io::prelude::*;
 
 let mut fp = File::open("tests/fixtures/Activity.fit")?;
-for data in parse(&mut fp)? {
+for data in fitparser::from_reader(&mut fp)? {
     // print the data in FIT file
     println!("{:#?}", data);
-    // alternatively reserialize the data into a new format with serde
+    // alternatively re-serialize the data into a new format with serde
     // println!("{:#?}",  serde_json::to_string(data)?);
 }
 ```

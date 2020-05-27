@@ -8,6 +8,8 @@ typically implemented.
 FitDataRecord objects.
 * Moved the `fit_dump` executable to examples and renamed it `fit_to_json`,
 this was done to remove the library's dependency on serde_json and structopt.
+* Reimplement the `parse` top level function as `from_reader` using the new
+return type.
 
 ## v0.1.1
 Fixed a parsing error when handling string data fields that caused the
