@@ -32,7 +32,7 @@ impl FieldTypeDefintion {
 
     /// Generate an enum from the field type variants
     fn generate_enum(&self, out: &mut File) -> Result<(), std::io::Error> {
-        write!(out, "#[derive(Clone, Copy, Debug)]\n")?;
+        write!(out, "#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]\n")?;
         write!(out, "pub enum {} {{\n", titlecase_string(&self.name))?;
         for variant in self.variant_map.values() {
             variant.write_variant_line(out)?;
