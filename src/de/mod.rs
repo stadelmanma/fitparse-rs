@@ -137,17 +137,15 @@ impl<'de> Iterator for Deserializer<'de> {
     fn next(&mut self) -> Option<Result<FitDataRecord>> {
         if self.position > 0 && self.position == self.end_of_messages {
             // extract the CRC, eventually we'd want to validate it
-            match self.parse_crc() {
-                Ok(_) => {}
-                Err(e) => return Some(Err(e)),
+            if let Err(e) =  self.parse_crc() {
+                return Some(Err(e))
             }
         }
         if self.position == 0 || (self.position > self.end_of_messages && !self.input.is_empty()) {
             // if there is extra bytes remaining the FIT file must be chained so we parse
             // the header and continue on
-            match self.parse_header() {
-                Ok(_) => {}
-                Err(e) => return Some(Err(e)),
+            if let Err(e) =  self.parse_header() {
+                return Some(Err(e))
             }
         }
         if self.input.is_empty() {
@@ -160,8 +158,6 @@ impl<'de> Iterator for Deserializer<'de> {
             match self.get_next_message() {
                 Ok(fit_message) => {
                     if let FitMessage::Data(header, message) = fit_message {
-                        // todo decode fields via profile
-                        // todo check for compressed timestamp
                         return Some(self.decoder.decode_message(header, message));
                     }
                 }
