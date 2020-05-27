@@ -5,6 +5,7 @@ use crate::FitDataRecord;
 use core::iter::Iterator;
 use nom::number::complete::le_u16;
 use std::collections::HashMap;
+use std::io::Read;
 
 mod decode;
 use decode::Decoder;
@@ -69,12 +70,6 @@ impl<'de> Deserializer<'de> {
     fn from_bytes(input: &'de [u8]) -> Self {
         Deserializer::new(input)
     }
-
-    // ///  Deserialize a FIT file stored in a readable source
-    // fn from_reader<T: io::Read>(source: T) -> Self {
-    //     // I'll also need to export a pub interface like I do for `from_bytes`
-    //     todo!();
-    // }
 
     /// Parse the FIT header
     fn parse_header(&mut self) -> Result<()> {
@@ -169,7 +164,17 @@ impl<'de> Iterator for Deserializer<'de> {
 
 /// Deserialize a FIT file stored as an array of bytes
 pub fn from_bytes(input: &[u8]) -> Result<Vec<FitDataRecord>> {
-    // create deserializer and parse header data that comes before the first messages.
     let deserializer = Deserializer::from_bytes(input);
     deserializer.collect()
+}
+
+/// Deserialize a FIT file stored in a 'readable' source.
+/// Currently this just reads all available data into a buffer
+/// and then calls `from_bytes`. This will not be reliable for
+/// sources that stream data and may not contain a full FIT file
+/// at the time of reading.
+pub fn from_reader<T: Read>(source: &mut T) -> Result<Vec<FitDataRecord>> {
+    let mut buffer = Vec::new();
+    source.read_to_end(&mut buffer)?;
+    from_bytes(&buffer)
 }

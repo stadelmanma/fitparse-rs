@@ -15,9 +15,7 @@
 //! use std::io::prelude::*;
 //!
 //! let mut fp = File::open("tests/fixtures/Activity.fit")?;
-//! let mut buffer = Vec::new();
-//! fp.read_to_end(&mut buffer)?;
-//! for data in fitparser::from_bytes(&buffer)? {
+//! for data in fitparser::from_reader(&mut fp)? {
 //!     // print the data in FIT file
 //!     println!("{:#?}", data);
 //!     // alternatively reserialize the data into a new format with serde
@@ -36,7 +34,7 @@ mod de;
 mod error;
 pub mod profile;
 
-pub use de::{from_bytes, Deserializer};
+pub use de::{from_bytes, from_reader, Deserializer};
 pub use error::{Error, ErrorKind, Result};
 
 /// Defines a set of data derived from a FIT Data message.
