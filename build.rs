@@ -32,99 +32,117 @@ impl FieldTypeDefintion {
 
     /// Generate an enum from the field type variants
     fn generate_enum(&self, out: &mut File) -> Result<(), std::io::Error> {
-        write!(out, "#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]\n")?;
-        write!(out, "pub enum {} {{\n", titlecase_string(&self.name))?;
+        writeln!(
+            out,
+            "#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]"
+        )?;
+        writeln!(out, "pub enum {} {{", titlecase_string(&self.name))?;
         for variant in self.variant_map.values() {
             variant.write_variant_line(out)?;
         }
-        write!(out, "UnknownVariant({}),\n", self.base_type)?;
-        write!(out, "}}\n")?;
+        writeln!(out, "UnknownVariant({}),", self.base_type)?;
+        writeln!(out, "}}")?;
 
         self.generate_impl(out)
     }
 
     /// generate to/from integer and to_string implementation for field type enum
     fn generate_impl(&self, out: &mut File) -> Result<(), std::io::Error> {
-        write!(out, "impl {} {{\n", titlecase_string(&self.name))?;
-        write!(
-            out,
-            "pub fn from_{0}(value: {0}) -> {1} {{\n",
-            self.base_type,
-            titlecase_string(&self.name)
-        )?;
-        write!(out, "match value {{\n")?;
-        for variant in self.variant_map.values() {
-            write!(
-                out,
-                "{} => {}::{},\n",
-                variant.value,
-                titlecase_string(&self.name),
-                variant.titlized_name()
-            )?;
-        }
-        write!(
-            out,
-            " _ => {}::UnknownVariant(value)\n",
-            titlecase_string(&self.name)
-        )?;
-        write!(out, "}}\n")?;
-        write!(out, "}}\n")?;
+        writeln!(out, "impl {} {{", titlecase_string(&self.name))?;
 
-        write!(
-            out,
-            "pub fn from_i64(value: i64) -> {} {{\n",
-            titlecase_string(&self.name)
-        )?;
-        write!(
-            out,
-            "{0}::from_{1}(value as {1})\n",
-            titlecase_string(&self.name),
-            self.base_type
-        )?;
-        write!(out, "}}\n")?;
-
-        write!(out, "pub fn as_{0}(&self) -> {0} {{\n", self.base_type)?;
-        write!(out, "match &self {{\n")?;
+        writeln!(out, "pub fn as_{0}(self) -> {0} {{", self.base_type)?;
+        writeln!(out, "match self {{")?;
         for variant in self.variant_map.values() {
-            write!(
+            writeln!(
                 out,
-                "{}::{} => {},\n",
+                "{}::{} => {},",
                 titlecase_string(&self.name),
                 variant.titlized_name(),
                 variant.value
             )?;
         }
-        write!(
+        writeln!(
             out,
-            "{}::UnknownVariant(value) => *value\n",
+            "{}::UnknownVariant(value) => value",
             titlecase_string(&self.name)
         )?;
-        write!(out, "}}\n")?;
-        write!(out, "}}\n")?;
+        writeln!(out, "}}")?;
+        writeln!(out, "}}")?;
 
-        write!(out, "pub fn as_i64(&self) -> i64 {{\n")?;
-        write!(out, "self.as_{}() as i64\n", self.base_type)?;
-        write!(out, "}}\n")?;
+        writeln!(out, "pub fn as_i64(self) -> i64 {{")?;
+        writeln!(out, "self.as_{}() as i64", self.base_type)?;
+        writeln!(out, "}}")?;
 
-        write!(out, "pub fn to_string(&self) -> String {{\n")?;
-        write!(out, "match &self {{\n")?;
+        writeln!(out, "}}")?;
+
+        writeln!(
+            out,
+            "impl fmt::Display for {} {{",
+            titlecase_string(&self.name)
+        )?;
+        writeln!(
+            out,
+            "fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {{"
+        )?;
+        writeln!(out, "match &self {{")?;
         for variant in self.variant_map.values() {
-            write!(
+            writeln!(
                 out,
-                "{}::{} => \"{}\".to_string(),\n",
+                "{}::{} => writeln!(f, \"{}\"),",
                 titlecase_string(&self.name),
                 variant.titlized_name(),
                 variant.name
             )?;
         }
-        write!(
+        writeln!(
             out,
-            "{}::UnknownVariant(value) => format!(\"unknown_variant_{{}}\", *value)\n",
+            "{}::UnknownVariant(value) => writeln!(f, \"unknown_variant_{{}}\", *value)",
             titlecase_string(&self.name)
         )?;
-        write!(out, "}}\n")?;
-        write!(out, "}}\n")?;
-        write!(out, "}}\n\n")?;
+        writeln!(out, "}}")?;
+        writeln!(out, "}}")?;
+        writeln!(out, "}}")?;
+
+        writeln!(
+            out,
+            "impl convert::From<{}> for {} {{",
+            self.base_type,
+            titlecase_string(&self.name)
+        )?;
+        writeln!(out, "fn from(value: {0}) -> Self {{", self.base_type)?;
+        writeln!(out, "match value {{")?;
+        for variant in self.variant_map.values() {
+            writeln!(
+                out,
+                "{} => {}::{},",
+                variant.value,
+                titlecase_string(&self.name),
+                variant.titlized_name()
+            )?;
+        }
+        writeln!(
+            out,
+            " _ => {}::UnknownVariant(value)",
+            titlecase_string(&self.name)
+        )?;
+        writeln!(out, "}}")?;
+        writeln!(out, "}}")?;
+        writeln!(out, "}}")?;
+
+        writeln!(
+            out,
+            "impl convert::From<i64> for {} {{",
+            titlecase_string(&self.name)
+        )?;
+        writeln!(out, "fn from(value: i64) -> Self {{")?;
+        writeln!(
+            out,
+            "{0}::from(value as {1})",
+            titlecase_string(&self.name),
+            self.base_type
+        )?;
+        writeln!(out, "}}")?;
+        writeln!(out, "}}")?;
 
         Ok(())
     }
@@ -152,9 +170,9 @@ impl FieldTypeVariant {
 
     fn write_variant_line(&self, out: &mut File) -> Result<(), std::io::Error> {
         if let Some(v) = &self.comment {
-            write!(out, "{}, // {}\n", self.titlized_name(), v)
+            writeln!(out, "/// {}\n{},", v, self.titlized_name())
         } else {
-            write!(out, "{},\n", self.titlized_name())
+            writeln!(out, "{},", self.titlized_name())
         }
     }
 }
@@ -187,22 +205,22 @@ impl MessageDefinition {
     }
 
     fn write_function_def(&self, out: &mut File) -> Result<(), std::io::Error> {
-        write!(
+        writeln!(
             out,
-            "fn {}(global_message_number: u16) -> MessageInfo {{\n",
+            "fn {}(global_message_number: u16) -> MessageInfo {{",
             self.function_name()
         )?;
-        write!(out, "    let mut fields = HashMap::new();\n\n")?;
+        writeln!(out, "    let mut fields = HashMap::new();")?;
         for field in self.field_map.values() {
             field.generate_field_info_struct(out, &self, "field")?;
-            write!(out, "fields.insert({}, field);\n\n", field.def_number)?;
+            writeln!(out, "fields.insert({}, field);", field.def_number)?;
         }
-        write!(out, "    MessageInfo {{\n")?;
-        write!(out, "        name: \"{}\",\n", self.name)?;
-        write!(out, "        global_message_number,\n")?;
-        write!(out, "        fields: fields\n")?;
-        write!(out, "    }}\n")?;
-        write!(out, "}}\n\n")?;
+        writeln!(out, "    MessageInfo {{")?;
+        writeln!(out, "        name: \"{}\",", self.name)?;
+        writeln!(out, "        global_message_number,")?;
+        writeln!(out, "        fields")?;
+        writeln!(out, "    }}")?;
+        writeln!(out, "}}")?;
 
         Ok(())
     }
@@ -234,13 +252,13 @@ impl MessageFieldDefinition {
             subfield_var = "Vec::new()";
         } else {
             subfield_var = "subfields";
-            write!(out, "let mut {} = Vec::new();\n", subfield_var)?;
+            writeln!(out, "let mut {} = Vec::new();", subfield_var)?;
             for (fld_name, fld_value, sub_info) in &self.subfields {
                 sub_info.generate_field_info_struct(out, mesg, "sub_fld")?;
                 let ref_field = mesg.get_field_by_name(fld_name);
-                write!(
+                writeln!(
                     out,
-                    "subfields.push(({}, {}::{}.as_i64(), {}));\n",
+                    "subfields.push(({}, {}::{}.as_i64(), {}));",
                     ref_field.def_number,
                     ref_field.field_type,
                     titlecase_string(fld_value),
@@ -254,17 +272,17 @@ impl MessageFieldDefinition {
             components_var = "Vec::new()";
         } else {
             components_var = "components";
-            write!(out, "let mut {} = Vec::new();\n", components_var)?;
+            writeln!(out, "let mut {} = Vec::new();", components_var)?;
             for comp_info in &self.components {
                 comp_info.generate_comp_field_info_struct(out, mesg, "comp_fld")?;
-                write!(out, "components.push(comp_fld);\n")?;
+                writeln!(out, "components.push(comp_fld);")?;
             }
         }
 
         if let Some(v) = &self.comment {
-            write!(out, "// {}\n", v)?;
+            writeln!(out, "// {}", v)?;
         }
-        write!(
+        writeln!(
             out,
             "    let {} = FieldInfo {{
             name: \"{}\",
@@ -276,7 +294,7 @@ impl MessageFieldDefinition {
             accumulate: {},
             subfields: {},
             components: {},
-        }};\n",
+        }};",
             var_name,
             self.name,
             self.field_type,
@@ -311,7 +329,7 @@ impl MessageFieldComponent {
         var_name: &str,
     ) -> Result<(), std::io::Error> {
         let dest_def_number = mesg.get_field_by_name(&self.name).def_number;
-        write!(
+        writeln!(
             out,
             "let {} = ComponentFieldInfo {{
             dest_def_number: {},
@@ -320,7 +338,7 @@ impl MessageFieldComponent {
             units: \"{}\",
             bits: {},
             accumulate: {},
-        }};\n",
+        }};",
             var_name,
             dest_def_number,
             self.scale,
@@ -404,7 +422,7 @@ fn generate_main_field_type_enum(
     is_enum_force_false.insert("date_time".to_string());
     is_enum_force_false.insert("local_date_time".to_string());
 
-    write!(
+    writeln!(
         out,
         "
 /// Describe all possible data types of a field
@@ -415,48 +433,44 @@ pub enum FieldDataType {{
 "
     )?;
     for type_name in base_types {
-        write!(out, " {},\n", type_name)?;
+        writeln!(out, " {},", type_name)?;
     }
     for field_type in field_types {
-        write!(out, "{},\n", field_type.titlized_name)?;
+        writeln!(out, "{},", field_type.titlized_name)?;
     }
 
-    write!(out, "}}\n\n")?;
+    writeln!(out, "}}")?;
 
-    write!(out, "impl FieldDataType {{\n")?;
-    write!(out, "    pub fn is_enum_type(&self) -> bool {{\n")?;
-    write!(out, "        match self {{\n")?;
+    writeln!(out, "impl FieldDataType {{")?;
+    writeln!(out, "    pub fn is_enum_type(self) -> bool {{")?;
+    writeln!(out, "        match self {{")?;
     for field_type in field_types {
         if !field_type.variant_map.is_empty() && !is_enum_force_false.contains(&field_type.name) {
-            write!(
-                out,
-                "FieldDataType::{} => true,\n",
-                field_type.titlized_name
-            )?;
+            writeln!(out, "FieldDataType::{} => true,", field_type.titlized_name)?;
         }
     }
-    write!(out, "            _ => false,\n")?;
-    write!(out, "        }}\n")?;
-    write!(out, "    }}\n")?;
-    write!(out, "}}\n")?;
+    writeln!(out, "            _ => false,")?;
+    writeln!(out, "        }}")?;
+    writeln!(out, "    }}")?;
+    writeln!(out, "}}")?;
 
-    write!(
+    writeln!(
         out,
-        "pub fn get_field_variant_as_string(field_type: FieldDataType , value: i64) -> String {{\n"
+        "pub fn get_field_variant_as_string(field_type: FieldDataType , value: i64) -> String {{"
     )?;
-    write!(out, "    match field_type {{\n")?;
+    writeln!(out, "    match field_type {{")?;
     for field_type in field_types {
         if !field_type.variant_map.is_empty() && !is_enum_force_false.contains(&field_type.name) {
-            write!(
+            writeln!(
                 out,
-                "        FieldDataType::{0} => {0}::from_i64(value).to_string(),\n",
+                "        FieldDataType::{0} => {0}::from(value).to_string(),",
                 field_type.titlized_name
             )?;
         }
     }
-    write!(out, "        _ => format!(\"Undefined{{}}\", value),\n")?;
-    write!(out, "    }}\n")?;
-    write!(out, "}}\n")?;
+    writeln!(out, "        _ => format!(\"Undefined{{}}\", value),")?;
+    writeln!(out, "    }}")?;
+    writeln!(out, "}}")?;
 
     Ok(())
 }
@@ -670,21 +684,21 @@ fn create_mesg_num_to_mesg_info_fn(
     messages: &Vec<MessageDefinition>,
     out: &mut File,
 ) -> Result<(), std::io::Error> {
-    write!(out, "impl MesgNum {{\n")?;
-    write!(out, "    pub fn message_info(&self) -> MessageInfo {{\n")?;
-    write!(out, "        match self {{\n")?;
+    writeln!(out, "impl MesgNum {{")?;
+    writeln!(out, "    pub fn message_info(self) -> MessageInfo {{")?;
+    writeln!(out, "        match self {{")?;
     for msg in messages {
-        write!(
+        writeln!(
             out,
-            "            MesgNum::{} => {}(self.as_u16()),\n",
+            "            MesgNum::{} => {}(self.as_u16()),",
             titlecase_string(&msg.name),
             msg.function_name()
         )?;
     }
-    write!(out, "            _ => unknown_message(self.as_u16()),\n")?;
-    write!(out, "        }}\n")?;
-    write!(out, "    }}\n")?;
-    write!(out, "}}\n")?;
+    writeln!(out, "            _ => unknown_message(self.as_u16()),")?;
+    writeln!(out, "        }}")?;
+    writeln!(out, "    }}")?;
+    writeln!(out, "}}")?;
 
     Ok(())
 }
@@ -701,16 +715,19 @@ fn write_types_files(profile: &FitProfile) -> Result<(), std::io::Error> {
     let fname = "src/profile/field_types.rs";
     let mut out = File::create(&fname)?;
 
-    write!(out, "#![allow(missing_docs)]\n")?;
-    write!(out, "#![allow(dead_code)]\n")?;
-    write!(
+    writeln!(
         out,
-        "//! Auto generated profile field types from FIT SDK Release: XXX\n"
+        "//! Auto generated profile field types from FIT SDK Release: XXX"
     )?;
-    write!(
+    writeln!(
         out,
-        "//! Not all of these may be used by the defined set of FIT messages\n\n"
+        "//! Not all of these may be used by the defined set of FIT messages"
     )?;
+    writeln!(out, "#![allow(missing_docs)]")?;
+    writeln!(out, "#![allow(dead_code)]")?;
+    writeln!(out, "#![allow(clippy::unreadable_literal)]")?;
+    writeln!(out, "use std::convert;")?;
+    writeln!(out, "use std::fmt;")?;
 
     // output enums and implementations
     for field_type in &profile.field_types {
@@ -728,17 +745,19 @@ fn write_messages_file(profile: &FitProfile) -> Result<(), std::io::Error> {
     let fname = "src/profile/messages.rs";
     let mut out = File::create(&fname)?;
 
-    write!(out, "#![allow(missing_docs)]\n")?;
-    write!(
+    writeln!(
         out,
-        "//! Auto generated profile messages from FIT SDK Release: XXX\n\n"
+        "//! Auto generated profile messages from FIT SDK Release: XXX"
     )?;
-    write!(out, "use std::collections::HashMap;\n")?;
-    write!(
+    writeln!(out, "#![allow(missing_docs)]")?;
+    writeln!(out, "#![allow(clippy::redundant_field_names)]")?;
+    writeln!(out, "#![allow(clippy::unreadable_literal)]")?;
+    writeln!(out, "use std::collections::HashMap;")?;
+    writeln!(
         out,
-        "use super::{{ComponentFieldInfo, FieldDataType, FieldInfo, MessageInfo}};\n"
+        "use super::{{ComponentFieldInfo, FieldDataType, FieldInfo, MessageInfo}};"
     )?;
-    write!(out, "use super::field_types::*;\n\n")?;
+    writeln!(out, "use super::field_types::*;")?;
 
     // output all message functions
     for msg in &profile.messages {
@@ -746,16 +765,16 @@ fn write_messages_file(profile: &FitProfile) -> Result<(), std::io::Error> {
     }
 
     // output an unknown_message() fn that has no fields
-    write!(
+    writeln!(
         out,
-        "fn unknown_message(global_message_number: u16) -> MessageInfo {{\n"
+        "fn unknown_message(global_message_number: u16) -> MessageInfo {{"
     )?;
-    write!(out, "    MessageInfo {{\n")?;
-    write!(out, "        name: \"unknown\",\n")?;
-    write!(out, "        global_message_number,\n")?;
-    write!(out, "        fields: HashMap::new()\n")?;
-    write!(out, "    }}\n")?;
-    write!(out, "}}\n\n")?;
+    writeln!(out, "    MessageInfo {{")?;
+    writeln!(out, "        name: \"unknown\",")?;
+    writeln!(out, "        global_message_number,")?;
+    writeln!(out, "        fields: HashMap::new()")?;
+    writeln!(out, "    }}")?;
+    writeln!(out, "}}")?;
 
     // output MesgNum implementation to allow parser to fetch info
     create_mesg_num_to_mesg_info_fn(&profile.messages, &mut out)?;
