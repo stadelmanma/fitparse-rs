@@ -97,7 +97,7 @@ impl Decoder {
         header: FitMessageHeader,
         message: FitDataMessage,
     ) -> Result<FitDataRecord> {
-        let mesg_num = MesgNum::from_u16(message.global_message_number());
+        let mesg_num = MesgNum::from(message.global_message_number());
         let mesg_info = mesg_num.message_info();
         let mut record = FitDataRecord::new(mesg_num.to_string());
 
@@ -126,7 +126,8 @@ impl Decoder {
         if let Some(time_offset) = header.time_offset() {
             record.insert(
                 String::from("timestamp"),
-                FieldValue::new(self.update_timestamp(time_offset), String::new()));
+                FieldValue::new(self.update_timestamp(time_offset), String::new()),
+            );
         }
 
         // TODO: process developer fields
