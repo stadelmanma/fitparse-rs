@@ -132,15 +132,15 @@ impl<'de> Iterator for Deserializer<'de> {
     fn next(&mut self) -> Option<Result<FitDataRecord>> {
         if self.position > 0 && self.position == self.end_of_messages {
             // extract the CRC, eventually we'd want to validate it
-            if let Err(e) =  self.parse_crc() {
-                return Some(Err(e))
+            if let Err(e) = self.parse_crc() {
+                return Some(Err(e));
             }
         }
         if self.position == 0 || (self.position > self.end_of_messages && !self.input.is_empty()) {
             // if there is extra bytes remaining the FIT file must be chained so we parse
             // the header and continue on
-            if let Err(e) =  self.parse_header() {
-                return Some(Err(e))
+            if let Err(e) = self.parse_header() {
+                return Some(Err(e));
             }
         }
         if self.input.is_empty() {

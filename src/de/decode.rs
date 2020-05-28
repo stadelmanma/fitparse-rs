@@ -8,6 +8,7 @@ use crate::{FieldValue, FitDataRecord, Value};
 use chrono::{DateTime, Duration, Local, NaiveDate, TimeZone};
 use std::collections::HashMap;
 use std::convert::{From, TryInto};
+use std::f64::EPSILON;
 use std::iter::FromIterator;
 
 impl Value {
@@ -70,7 +71,7 @@ impl TimestampField {
 
 impl From<TimestampField> for Value {
     fn from(timestamp: TimestampField) -> Value {
-        return Value::Timestamp(timestamp.to_date_time());
+        Value::Timestamp(timestamp.to_date_time())
     }
 }
 
@@ -271,7 +272,7 @@ impl Decoder {
             }
         }
 
-        Value::from(self.base_timestamp.clone())
+        Value::from(self.base_timestamp)
     }
 }
 
@@ -357,7 +358,9 @@ fn convert_value(field_info: &FieldInfo, value: Value) -> Result<Value> {
             field_info.field_type(),
             val,
         )))
-    } else if field_info.scale() != 1.0 || field_info.offset() != 0.0 {
+    } else if ((field_info.scale() - 1.0).abs() > EPSILON)
+        || ((field_info.offset() - 0.0).abs() > EPSILON)
+    {
         let val: f64 = value.try_into()?;
         Ok(Value::Float64(
             val / field_info.scale() - field_info.offset(),

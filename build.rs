@@ -258,11 +258,10 @@ impl MessageFieldDefinition {
                 let ref_field = mesg.get_field_by_name(fld_name);
                 writeln!(
                     out,
-                    "subfields.push(({}, {}::{}.as_i64(), {}));",
+                    "subfields.push(({}, {}::{}.as_i64(), sub_fld));",
                     ref_field.def_number,
                     ref_field.field_type,
                     titlecase_string(fld_value),
-                    "sub_fld"
                 )?;
             }
         }
@@ -362,7 +361,7 @@ fn titlecase_string(value: &str) -> String {
         }
     }
 
-    String::from(words.join(""))
+    words.join("")
 }
 
 macro_rules! split_csv_string ( ($value:expr) => ( {$value.split(',').map(|v| v.trim().to_string())} ););
@@ -544,7 +543,7 @@ fn parse_message_field_components(row: &[DataType]) -> Vec<MessageFieldComponent
             return components;
         }
     };
-    let cols: Vec<String> = row[6..=10].into_iter().map(|v| v.to_string()).collect();
+    let cols: Vec<String> = row[6..=10].iter().map(|v| v.to_string()).collect();
     let mut scales = split_csv_string!(cols[0]).map(|s| s.parse::<f64>().ok());
     let mut offsets = split_csv_string!(cols[1]).map(|s| s.parse::<f64>().ok());
     let mut units = split_csv_string!(cols[2]);
@@ -557,11 +556,11 @@ fn parse_message_field_components(row: &[DataType]) -> Vec<MessageFieldComponent
             name,
             scale: scales.next().flatten().unwrap_or(1.0),
             offset: offsets.next().flatten().unwrap_or(0.0),
-            units: units.next().unwrap_or(String::new()),
+            units: units.next().unwrap_or_default(),
             bits: bits
                 .next()
                 .flatten()
-                .expect(&format!("Could not parse bits value for row: {:?}", row)),
+                .unwrap_or_else(|| panic!("Could not parse bits value for row: {:?}", row)),
             accumulate: accumulate.next().unwrap_or(false),
         });
     }
@@ -572,17 +571,14 @@ fn new_message_field_definition(row: &[DataType]) -> MessageFieldDefinition {
     let def_number = match row[1] {
         DataType::Float(v) => v as u8,
         DataType::Int(v) => v as u8,
-        _ => panic!(format!(
-            "Field defintiton number must be an integer, row={:?}.",
-            row
-        )),
+        _ => panic!("Field defintiton number must be an integer, row={:?}.", row),
     };
     let name = row[2]
         .get_string()
-        .expect(&format!("Field name must be a string, row={:?}.", row));
+        .unwrap_or_else(|| panic!("Field name must be a string, row={:?}.", row));
     let ftype = row[3]
         .get_string()
-        .expect(&format!("Field type must be a string, row={:?}.", row));
+        .unwrap_or_else(|| panic!("Field type must be a string, row={:?}.", row));
     let components = parse_message_field_components(&row);
     let comment = match row[13].get_string() {
         Some(v) => Some(v.to_string()),
@@ -615,7 +611,7 @@ fn process_messages(sheet: Range<DataType>) -> Vec<MessageDefinition> {
     if let Some(v) = row[0].get_string() {
         msg = MessageDefinition::new(v);
     } else {
-        panic!(format!("Message name must be a string row={:?}.", row));
+        panic!("Message name must be a string row={:?}.", row);
     }
 
     // process messages and fields
@@ -626,7 +622,7 @@ fn process_messages(sheet: Range<DataType>) -> Vec<MessageDefinition> {
                 messages.push(msg);
                 msg = MessageDefinition::new(v);
             } else {
-                panic!(format!("Message name must be a string row={:?}.", row));
+                panic!("Message name must be a string row={:?}.", row);
             }
         } else if !row[1].is_empty() {
             field = new_message_field_definition(row);
@@ -681,7 +677,7 @@ pub fn parse_profile(profile_fname: &str) -> Result<FitProfile, Box<dyn std::err
 }
 
 fn create_mesg_num_to_mesg_info_fn(
-    messages: &Vec<MessageDefinition>,
+    messages: &[MessageDefinition],
     out: &mut File,
 ) -> Result<(), std::io::Error> {
     writeln!(out, "impl MesgNum {{")?;
@@ -708,7 +704,7 @@ fn rustfmt(fname: &str) {
     Command::new("rustfmt")
         .arg(&fname)
         .status()
-        .expect(&format!("failed to execute rustfmt on {}", fname));
+        .unwrap_or_else(|_| panic!("failed to execute rustfmt on {}", fname));
 }
 
 fn write_types_files(profile: &FitProfile) -> Result<(), std::io::Error> {

@@ -182,6 +182,7 @@ impl FitDataMessage {
         &self.fields
     }
 
+    #[allow(dead_code)]
     pub fn developer_fields(&self) -> &[Option<Value>] {
         &self.developer_fields
     }
