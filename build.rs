@@ -88,7 +88,7 @@ impl FieldTypeDefintion {
         for variant in self.variant_map.values() {
             writeln!(
                 out,
-                "{}::{} => writeln!(f, \"{}\"),",
+                "{}::{} => write!(f, \"{}\"),",
                 titlecase_string(&self.name),
                 variant.titlized_name(),
                 variant.name
@@ -96,7 +96,7 @@ impl FieldTypeDefintion {
         }
         writeln!(
             out,
-            "{}::UnknownVariant(value) => writeln!(f, \"unknown_variant_{{}}\", *value)",
+            "{}::UnknownVariant(value) => write!(f, \"unknown_variant_{{}}\", *value)",
             titlecase_string(&self.name)
         )?;
         writeln!(out, "}}")?;

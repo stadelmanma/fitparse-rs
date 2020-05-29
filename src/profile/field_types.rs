@@ -81,27 +81,27 @@ impl File {
 impl fmt::Display for File {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            File::Device => writeln!(f, "device"),
-            File::Settings => writeln!(f, "settings"),
-            File::Sport => writeln!(f, "sport"),
-            File::Activity => writeln!(f, "activity"),
-            File::Workout => writeln!(f, "workout"),
-            File::Course => writeln!(f, "course"),
-            File::Schedules => writeln!(f, "schedules"),
-            File::Weight => writeln!(f, "weight"),
-            File::Totals => writeln!(f, "totals"),
-            File::Goals => writeln!(f, "goals"),
-            File::BloodPressure => writeln!(f, "blood_pressure"),
-            File::MonitoringA => writeln!(f, "monitoring_a"),
-            File::ActivitySummary => writeln!(f, "activity_summary"),
-            File::MonitoringDaily => writeln!(f, "monitoring_daily"),
-            File::MonitoringB => writeln!(f, "monitoring_b"),
-            File::Segment => writeln!(f, "segment"),
-            File::SegmentList => writeln!(f, "segment_list"),
-            File::ExdConfiguration => writeln!(f, "exd_configuration"),
-            File::MfgRangeMin => writeln!(f, "mfg_range_min"),
-            File::MfgRangeMax => writeln!(f, "mfg_range_max"),
-            File::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            File::Device => write!(f, "device"),
+            File::Settings => write!(f, "settings"),
+            File::Sport => write!(f, "sport"),
+            File::Activity => write!(f, "activity"),
+            File::Workout => write!(f, "workout"),
+            File::Course => write!(f, "course"),
+            File::Schedules => write!(f, "schedules"),
+            File::Weight => write!(f, "weight"),
+            File::Totals => write!(f, "totals"),
+            File::Goals => write!(f, "goals"),
+            File::BloodPressure => write!(f, "blood_pressure"),
+            File::MonitoringA => write!(f, "monitoring_a"),
+            File::ActivitySummary => write!(f, "activity_summary"),
+            File::MonitoringDaily => write!(f, "monitoring_daily"),
+            File::MonitoringB => write!(f, "monitoring_b"),
+            File::Segment => write!(f, "segment"),
+            File::SegmentList => write!(f, "segment_list"),
+            File::ExdConfiguration => write!(f, "exd_configuration"),
+            File::MfgRangeMin => write!(f, "mfg_range_min"),
+            File::MfgRangeMax => write!(f, "mfg_range_max"),
+            File::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -336,97 +336,97 @@ impl MesgNum {
 impl fmt::Display for MesgNum {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            MesgNum::FileId => writeln!(f, "file_id"),
-            MesgNum::Capabilities => writeln!(f, "capabilities"),
-            MesgNum::DeviceSettings => writeln!(f, "device_settings"),
-            MesgNum::UserProfile => writeln!(f, "user_profile"),
-            MesgNum::HrmProfile => writeln!(f, "hrm_profile"),
-            MesgNum::SdmProfile => writeln!(f, "sdm_profile"),
-            MesgNum::BikeProfile => writeln!(f, "bike_profile"),
-            MesgNum::ZonesTarget => writeln!(f, "zones_target"),
-            MesgNum::HrZone => writeln!(f, "hr_zone"),
-            MesgNum::PowerZone => writeln!(f, "power_zone"),
-            MesgNum::MetZone => writeln!(f, "met_zone"),
-            MesgNum::Sport => writeln!(f, "sport"),
-            MesgNum::Goal => writeln!(f, "goal"),
-            MesgNum::Session => writeln!(f, "session"),
-            MesgNum::Lap => writeln!(f, "lap"),
-            MesgNum::Record => writeln!(f, "record"),
-            MesgNum::Event => writeln!(f, "event"),
-            MesgNum::DeviceInfo => writeln!(f, "device_info"),
-            MesgNum::Workout => writeln!(f, "workout"),
-            MesgNum::WorkoutStep => writeln!(f, "workout_step"),
-            MesgNum::Schedule => writeln!(f, "schedule"),
-            MesgNum::WeightScale => writeln!(f, "weight_scale"),
-            MesgNum::Course => writeln!(f, "course"),
-            MesgNum::CoursePoint => writeln!(f, "course_point"),
-            MesgNum::Totals => writeln!(f, "totals"),
-            MesgNum::Activity => writeln!(f, "activity"),
-            MesgNum::Software => writeln!(f, "software"),
-            MesgNum::FileCapabilities => writeln!(f, "file_capabilities"),
-            MesgNum::MesgCapabilities => writeln!(f, "mesg_capabilities"),
-            MesgNum::FieldCapabilities => writeln!(f, "field_capabilities"),
-            MesgNum::FileCreator => writeln!(f, "file_creator"),
-            MesgNum::BloodPressure => writeln!(f, "blood_pressure"),
-            MesgNum::SpeedZone => writeln!(f, "speed_zone"),
-            MesgNum::Monitoring => writeln!(f, "monitoring"),
-            MesgNum::TrainingFile => writeln!(f, "training_file"),
-            MesgNum::Hrv => writeln!(f, "hrv"),
-            MesgNum::AntRx => writeln!(f, "ant_rx"),
-            MesgNum::AntTx => writeln!(f, "ant_tx"),
-            MesgNum::AntChannelId => writeln!(f, "ant_channel_id"),
-            MesgNum::Length => writeln!(f, "length"),
-            MesgNum::MonitoringInfo => writeln!(f, "monitoring_info"),
-            MesgNum::Pad => writeln!(f, "pad"),
-            MesgNum::SlaveDevice => writeln!(f, "slave_device"),
-            MesgNum::Connectivity => writeln!(f, "connectivity"),
-            MesgNum::WeatherConditions => writeln!(f, "weather_conditions"),
-            MesgNum::WeatherAlert => writeln!(f, "weather_alert"),
-            MesgNum::CadenceZone => writeln!(f, "cadence_zone"),
-            MesgNum::Hr => writeln!(f, "hr"),
-            MesgNum::SegmentLap => writeln!(f, "segment_lap"),
-            MesgNum::MemoGlob => writeln!(f, "memo_glob"),
-            MesgNum::SegmentId => writeln!(f, "segment_id"),
-            MesgNum::SegmentLeaderboardEntry => writeln!(f, "segment_leaderboard_entry"),
-            MesgNum::SegmentPoint => writeln!(f, "segment_point"),
-            MesgNum::SegmentFile => writeln!(f, "segment_file"),
-            MesgNum::WorkoutSession => writeln!(f, "workout_session"),
-            MesgNum::WatchfaceSettings => writeln!(f, "watchface_settings"),
-            MesgNum::GpsMetadata => writeln!(f, "gps_metadata"),
-            MesgNum::CameraEvent => writeln!(f, "camera_event"),
-            MesgNum::TimestampCorrelation => writeln!(f, "timestamp_correlation"),
-            MesgNum::GyroscopeData => writeln!(f, "gyroscope_data"),
-            MesgNum::AccelerometerData => writeln!(f, "accelerometer_data"),
-            MesgNum::ThreeDSensorCalibration => writeln!(f, "three_d_sensor_calibration"),
-            MesgNum::VideoFrame => writeln!(f, "video_frame"),
-            MesgNum::ObdiiData => writeln!(f, "obdii_data"),
-            MesgNum::NmeaSentence => writeln!(f, "nmea_sentence"),
-            MesgNum::AviationAttitude => writeln!(f, "aviation_attitude"),
-            MesgNum::Video => writeln!(f, "video"),
-            MesgNum::VideoTitle => writeln!(f, "video_title"),
-            MesgNum::VideoDescription => writeln!(f, "video_description"),
-            MesgNum::VideoClip => writeln!(f, "video_clip"),
-            MesgNum::OhrSettings => writeln!(f, "ohr_settings"),
-            MesgNum::ExdScreenConfiguration => writeln!(f, "exd_screen_configuration"),
-            MesgNum::ExdDataFieldConfiguration => writeln!(f, "exd_data_field_configuration"),
-            MesgNum::ExdDataConceptConfiguration => writeln!(f, "exd_data_concept_configuration"),
-            MesgNum::FieldDescription => writeln!(f, "field_description"),
-            MesgNum::DeveloperDataId => writeln!(f, "developer_data_id"),
-            MesgNum::MagnetometerData => writeln!(f, "magnetometer_data"),
-            MesgNum::BarometerData => writeln!(f, "barometer_data"),
-            MesgNum::OneDSensorCalibration => writeln!(f, "one_d_sensor_calibration"),
-            MesgNum::Set => writeln!(f, "set"),
-            MesgNum::StressLevel => writeln!(f, "stress_level"),
-            MesgNum::DiveSettings => writeln!(f, "dive_settings"),
-            MesgNum::DiveGas => writeln!(f, "dive_gas"),
-            MesgNum::DiveAlarm => writeln!(f, "dive_alarm"),
-            MesgNum::ExerciseTitle => writeln!(f, "exercise_title"),
-            MesgNum::DiveSummary => writeln!(f, "dive_summary"),
-            MesgNum::Jump => writeln!(f, "jump"),
-            MesgNum::ClimbPro => writeln!(f, "climb_pro"),
-            MesgNum::MfgRangeMin => writeln!(f, "mfg_range_min"),
-            MesgNum::MfgRangeMax => writeln!(f, "mfg_range_max"),
-            MesgNum::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            MesgNum::FileId => write!(f, "file_id"),
+            MesgNum::Capabilities => write!(f, "capabilities"),
+            MesgNum::DeviceSettings => write!(f, "device_settings"),
+            MesgNum::UserProfile => write!(f, "user_profile"),
+            MesgNum::HrmProfile => write!(f, "hrm_profile"),
+            MesgNum::SdmProfile => write!(f, "sdm_profile"),
+            MesgNum::BikeProfile => write!(f, "bike_profile"),
+            MesgNum::ZonesTarget => write!(f, "zones_target"),
+            MesgNum::HrZone => write!(f, "hr_zone"),
+            MesgNum::PowerZone => write!(f, "power_zone"),
+            MesgNum::MetZone => write!(f, "met_zone"),
+            MesgNum::Sport => write!(f, "sport"),
+            MesgNum::Goal => write!(f, "goal"),
+            MesgNum::Session => write!(f, "session"),
+            MesgNum::Lap => write!(f, "lap"),
+            MesgNum::Record => write!(f, "record"),
+            MesgNum::Event => write!(f, "event"),
+            MesgNum::DeviceInfo => write!(f, "device_info"),
+            MesgNum::Workout => write!(f, "workout"),
+            MesgNum::WorkoutStep => write!(f, "workout_step"),
+            MesgNum::Schedule => write!(f, "schedule"),
+            MesgNum::WeightScale => write!(f, "weight_scale"),
+            MesgNum::Course => write!(f, "course"),
+            MesgNum::CoursePoint => write!(f, "course_point"),
+            MesgNum::Totals => write!(f, "totals"),
+            MesgNum::Activity => write!(f, "activity"),
+            MesgNum::Software => write!(f, "software"),
+            MesgNum::FileCapabilities => write!(f, "file_capabilities"),
+            MesgNum::MesgCapabilities => write!(f, "mesg_capabilities"),
+            MesgNum::FieldCapabilities => write!(f, "field_capabilities"),
+            MesgNum::FileCreator => write!(f, "file_creator"),
+            MesgNum::BloodPressure => write!(f, "blood_pressure"),
+            MesgNum::SpeedZone => write!(f, "speed_zone"),
+            MesgNum::Monitoring => write!(f, "monitoring"),
+            MesgNum::TrainingFile => write!(f, "training_file"),
+            MesgNum::Hrv => write!(f, "hrv"),
+            MesgNum::AntRx => write!(f, "ant_rx"),
+            MesgNum::AntTx => write!(f, "ant_tx"),
+            MesgNum::AntChannelId => write!(f, "ant_channel_id"),
+            MesgNum::Length => write!(f, "length"),
+            MesgNum::MonitoringInfo => write!(f, "monitoring_info"),
+            MesgNum::Pad => write!(f, "pad"),
+            MesgNum::SlaveDevice => write!(f, "slave_device"),
+            MesgNum::Connectivity => write!(f, "connectivity"),
+            MesgNum::WeatherConditions => write!(f, "weather_conditions"),
+            MesgNum::WeatherAlert => write!(f, "weather_alert"),
+            MesgNum::CadenceZone => write!(f, "cadence_zone"),
+            MesgNum::Hr => write!(f, "hr"),
+            MesgNum::SegmentLap => write!(f, "segment_lap"),
+            MesgNum::MemoGlob => write!(f, "memo_glob"),
+            MesgNum::SegmentId => write!(f, "segment_id"),
+            MesgNum::SegmentLeaderboardEntry => write!(f, "segment_leaderboard_entry"),
+            MesgNum::SegmentPoint => write!(f, "segment_point"),
+            MesgNum::SegmentFile => write!(f, "segment_file"),
+            MesgNum::WorkoutSession => write!(f, "workout_session"),
+            MesgNum::WatchfaceSettings => write!(f, "watchface_settings"),
+            MesgNum::GpsMetadata => write!(f, "gps_metadata"),
+            MesgNum::CameraEvent => write!(f, "camera_event"),
+            MesgNum::TimestampCorrelation => write!(f, "timestamp_correlation"),
+            MesgNum::GyroscopeData => write!(f, "gyroscope_data"),
+            MesgNum::AccelerometerData => write!(f, "accelerometer_data"),
+            MesgNum::ThreeDSensorCalibration => write!(f, "three_d_sensor_calibration"),
+            MesgNum::VideoFrame => write!(f, "video_frame"),
+            MesgNum::ObdiiData => write!(f, "obdii_data"),
+            MesgNum::NmeaSentence => write!(f, "nmea_sentence"),
+            MesgNum::AviationAttitude => write!(f, "aviation_attitude"),
+            MesgNum::Video => write!(f, "video"),
+            MesgNum::VideoTitle => write!(f, "video_title"),
+            MesgNum::VideoDescription => write!(f, "video_description"),
+            MesgNum::VideoClip => write!(f, "video_clip"),
+            MesgNum::OhrSettings => write!(f, "ohr_settings"),
+            MesgNum::ExdScreenConfiguration => write!(f, "exd_screen_configuration"),
+            MesgNum::ExdDataFieldConfiguration => write!(f, "exd_data_field_configuration"),
+            MesgNum::ExdDataConceptConfiguration => write!(f, "exd_data_concept_configuration"),
+            MesgNum::FieldDescription => write!(f, "field_description"),
+            MesgNum::DeveloperDataId => write!(f, "developer_data_id"),
+            MesgNum::MagnetometerData => write!(f, "magnetometer_data"),
+            MesgNum::BarometerData => write!(f, "barometer_data"),
+            MesgNum::OneDSensorCalibration => write!(f, "one_d_sensor_calibration"),
+            MesgNum::Set => write!(f, "set"),
+            MesgNum::StressLevel => write!(f, "stress_level"),
+            MesgNum::DiveSettings => write!(f, "dive_settings"),
+            MesgNum::DiveGas => write!(f, "dive_gas"),
+            MesgNum::DiveAlarm => write!(f, "dive_alarm"),
+            MesgNum::ExerciseTitle => write!(f, "exercise_title"),
+            MesgNum::DiveSummary => write!(f, "dive_summary"),
+            MesgNum::Jump => write!(f, "jump"),
+            MesgNum::ClimbPro => write!(f, "climb_pro"),
+            MesgNum::MfgRangeMin => write!(f, "mfg_range_min"),
+            MesgNum::MfgRangeMax => write!(f, "mfg_range_max"),
+            MesgNum::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -555,9 +555,9 @@ impl Checksum {
 impl fmt::Display for Checksum {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            Checksum::Clear => writeln!(f, "clear"),
-            Checksum::Ok => writeln!(f, "ok"),
-            Checksum::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            Checksum::Clear => write!(f, "clear"),
+            Checksum::Ok => write!(f, "ok"),
+            Checksum::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -598,10 +598,10 @@ impl FileFlags {
 impl fmt::Display for FileFlags {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            FileFlags::Read => writeln!(f, "read"),
-            FileFlags::Write => writeln!(f, "write"),
-            FileFlags::Erase => writeln!(f, "erase"),
-            FileFlags::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            FileFlags::Read => write!(f, "read"),
+            FileFlags::Write => write!(f, "write"),
+            FileFlags::Erase => write!(f, "erase"),
+            FileFlags::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -643,10 +643,10 @@ impl MesgCount {
 impl fmt::Display for MesgCount {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            MesgCount::NumPerFile => writeln!(f, "num_per_file"),
-            MesgCount::MaxPerFile => writeln!(f, "max_per_file"),
-            MesgCount::MaxPerFileType => writeln!(f, "max_per_file_type"),
-            MesgCount::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            MesgCount::NumPerFile => write!(f, "num_per_file"),
+            MesgCount::MaxPerFile => write!(f, "max_per_file"),
+            MesgCount::MaxPerFileType => write!(f, "max_per_file_type"),
+            MesgCount::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -685,8 +685,8 @@ impl DateTime {
 impl fmt::Display for DateTime {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            DateTime::Min => writeln!(f, "min"),
-            DateTime::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            DateTime::Min => write!(f, "min"),
+            DateTime::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -723,8 +723,8 @@ impl LocalDateTime {
 impl fmt::Display for LocalDateTime {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            LocalDateTime::Min => writeln!(f, "min"),
-            LocalDateTime::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            LocalDateTime::Min => write!(f, "min"),
+            LocalDateTime::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -767,10 +767,10 @@ impl MessageIndex {
 impl fmt::Display for MessageIndex {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            MessageIndex::Mask => writeln!(f, "mask"),
-            MessageIndex::Reserved => writeln!(f, "reserved"),
-            MessageIndex::Selected => writeln!(f, "selected"),
-            MessageIndex::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            MessageIndex::Mask => write!(f, "mask"),
+            MessageIndex::Reserved => write!(f, "reserved"),
+            MessageIndex::Selected => write!(f, "selected"),
+            MessageIndex::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -809,8 +809,8 @@ impl DeviceIndex {
 impl fmt::Display for DeviceIndex {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            DeviceIndex::Creator => writeln!(f, "creator"),
-            DeviceIndex::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            DeviceIndex::Creator => write!(f, "creator"),
+            DeviceIndex::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -848,9 +848,9 @@ impl Gender {
 impl fmt::Display for Gender {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            Gender::Female => writeln!(f, "female"),
-            Gender::Male => writeln!(f, "male"),
-            Gender::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            Gender::Female => write!(f, "female"),
+            Gender::Male => write!(f, "male"),
+            Gender::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -963,46 +963,46 @@ impl Language {
 impl fmt::Display for Language {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            Language::English => writeln!(f, "english"),
-            Language::French => writeln!(f, "french"),
-            Language::Italian => writeln!(f, "italian"),
-            Language::German => writeln!(f, "german"),
-            Language::Spanish => writeln!(f, "spanish"),
-            Language::Croatian => writeln!(f, "croatian"),
-            Language::Czech => writeln!(f, "czech"),
-            Language::Danish => writeln!(f, "danish"),
-            Language::Dutch => writeln!(f, "dutch"),
-            Language::Finnish => writeln!(f, "finnish"),
-            Language::Greek => writeln!(f, "greek"),
-            Language::Hungarian => writeln!(f, "hungarian"),
-            Language::Norwegian => writeln!(f, "norwegian"),
-            Language::Polish => writeln!(f, "polish"),
-            Language::Portuguese => writeln!(f, "portuguese"),
-            Language::Slovakian => writeln!(f, "slovakian"),
-            Language::Slovenian => writeln!(f, "slovenian"),
-            Language::Swedish => writeln!(f, "swedish"),
-            Language::Russian => writeln!(f, "russian"),
-            Language::Turkish => writeln!(f, "turkish"),
-            Language::Latvian => writeln!(f, "latvian"),
-            Language::Ukrainian => writeln!(f, "ukrainian"),
-            Language::Arabic => writeln!(f, "arabic"),
-            Language::Farsi => writeln!(f, "farsi"),
-            Language::Bulgarian => writeln!(f, "bulgarian"),
-            Language::Romanian => writeln!(f, "romanian"),
-            Language::Chinese => writeln!(f, "chinese"),
-            Language::Japanese => writeln!(f, "japanese"),
-            Language::Korean => writeln!(f, "korean"),
-            Language::Taiwanese => writeln!(f, "taiwanese"),
-            Language::Thai => writeln!(f, "thai"),
-            Language::Hebrew => writeln!(f, "hebrew"),
-            Language::BrazilianPortuguese => writeln!(f, "brazilian_portuguese"),
-            Language::Indonesian => writeln!(f, "indonesian"),
-            Language::Malaysian => writeln!(f, "malaysian"),
-            Language::Vietnamese => writeln!(f, "vietnamese"),
-            Language::Burmese => writeln!(f, "burmese"),
-            Language::Mongolian => writeln!(f, "mongolian"),
-            Language::Custom => writeln!(f, "custom"),
-            Language::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            Language::English => write!(f, "english"),
+            Language::French => write!(f, "french"),
+            Language::Italian => write!(f, "italian"),
+            Language::German => write!(f, "german"),
+            Language::Spanish => write!(f, "spanish"),
+            Language::Croatian => write!(f, "croatian"),
+            Language::Czech => write!(f, "czech"),
+            Language::Danish => write!(f, "danish"),
+            Language::Dutch => write!(f, "dutch"),
+            Language::Finnish => write!(f, "finnish"),
+            Language::Greek => write!(f, "greek"),
+            Language::Hungarian => write!(f, "hungarian"),
+            Language::Norwegian => write!(f, "norwegian"),
+            Language::Polish => write!(f, "polish"),
+            Language::Portuguese => write!(f, "portuguese"),
+            Language::Slovakian => write!(f, "slovakian"),
+            Language::Slovenian => write!(f, "slovenian"),
+            Language::Swedish => write!(f, "swedish"),
+            Language::Russian => write!(f, "russian"),
+            Language::Turkish => write!(f, "turkish"),
+            Language::Latvian => write!(f, "latvian"),
+            Language::Ukrainian => write!(f, "ukrainian"),
+            Language::Arabic => write!(f, "arabic"),
+            Language::Farsi => write!(f, "farsi"),
+            Language::Bulgarian => write!(f, "bulgarian"),
+            Language::Romanian => write!(f, "romanian"),
+            Language::Chinese => write!(f, "chinese"),
+            Language::Japanese => write!(f, "japanese"),
+            Language::Korean => write!(f, "korean"),
+            Language::Taiwanese => write!(f, "taiwanese"),
+            Language::Thai => write!(f, "thai"),
+            Language::Hebrew => write!(f, "hebrew"),
+            Language::BrazilianPortuguese => write!(f, "brazilian_portuguese"),
+            Language::Indonesian => write!(f, "indonesian"),
+            Language::Malaysian => write!(f, "malaysian"),
+            Language::Vietnamese => write!(f, "vietnamese"),
+            Language::Burmese => write!(f, "burmese"),
+            Language::Mongolian => write!(f, "mongolian"),
+            Language::Custom => write!(f, "custom"),
+            Language::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -1090,15 +1090,15 @@ impl LanguageBits0 {
 impl fmt::Display for LanguageBits0 {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            LanguageBits0::English => writeln!(f, "english"),
-            LanguageBits0::French => writeln!(f, "french"),
-            LanguageBits0::Italian => writeln!(f, "italian"),
-            LanguageBits0::German => writeln!(f, "german"),
-            LanguageBits0::Spanish => writeln!(f, "spanish"),
-            LanguageBits0::Croatian => writeln!(f, "croatian"),
-            LanguageBits0::Czech => writeln!(f, "czech"),
-            LanguageBits0::Danish => writeln!(f, "danish"),
-            LanguageBits0::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            LanguageBits0::English => write!(f, "english"),
+            LanguageBits0::French => write!(f, "french"),
+            LanguageBits0::Italian => write!(f, "italian"),
+            LanguageBits0::German => write!(f, "german"),
+            LanguageBits0::Spanish => write!(f, "spanish"),
+            LanguageBits0::Croatian => write!(f, "croatian"),
+            LanguageBits0::Czech => write!(f, "czech"),
+            LanguageBits0::Danish => write!(f, "danish"),
+            LanguageBits0::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -1155,15 +1155,15 @@ impl LanguageBits1 {
 impl fmt::Display for LanguageBits1 {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            LanguageBits1::Dutch => writeln!(f, "dutch"),
-            LanguageBits1::Finnish => writeln!(f, "finnish"),
-            LanguageBits1::Greek => writeln!(f, "greek"),
-            LanguageBits1::Hungarian => writeln!(f, "hungarian"),
-            LanguageBits1::Norwegian => writeln!(f, "norwegian"),
-            LanguageBits1::Polish => writeln!(f, "polish"),
-            LanguageBits1::Portuguese => writeln!(f, "portuguese"),
-            LanguageBits1::Slovakian => writeln!(f, "slovakian"),
-            LanguageBits1::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            LanguageBits1::Dutch => write!(f, "dutch"),
+            LanguageBits1::Finnish => write!(f, "finnish"),
+            LanguageBits1::Greek => write!(f, "greek"),
+            LanguageBits1::Hungarian => write!(f, "hungarian"),
+            LanguageBits1::Norwegian => write!(f, "norwegian"),
+            LanguageBits1::Polish => write!(f, "polish"),
+            LanguageBits1::Portuguese => write!(f, "portuguese"),
+            LanguageBits1::Slovakian => write!(f, "slovakian"),
+            LanguageBits1::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -1220,15 +1220,15 @@ impl LanguageBits2 {
 impl fmt::Display for LanguageBits2 {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            LanguageBits2::Slovenian => writeln!(f, "slovenian"),
-            LanguageBits2::Swedish => writeln!(f, "swedish"),
-            LanguageBits2::Russian => writeln!(f, "russian"),
-            LanguageBits2::Turkish => writeln!(f, "turkish"),
-            LanguageBits2::Latvian => writeln!(f, "latvian"),
-            LanguageBits2::Ukrainian => writeln!(f, "ukrainian"),
-            LanguageBits2::Arabic => writeln!(f, "arabic"),
-            LanguageBits2::Farsi => writeln!(f, "farsi"),
-            LanguageBits2::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            LanguageBits2::Slovenian => write!(f, "slovenian"),
+            LanguageBits2::Swedish => write!(f, "swedish"),
+            LanguageBits2::Russian => write!(f, "russian"),
+            LanguageBits2::Turkish => write!(f, "turkish"),
+            LanguageBits2::Latvian => write!(f, "latvian"),
+            LanguageBits2::Ukrainian => write!(f, "ukrainian"),
+            LanguageBits2::Arabic => write!(f, "arabic"),
+            LanguageBits2::Farsi => write!(f, "farsi"),
+            LanguageBits2::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -1285,15 +1285,15 @@ impl LanguageBits3 {
 impl fmt::Display for LanguageBits3 {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            LanguageBits3::Bulgarian => writeln!(f, "bulgarian"),
-            LanguageBits3::Romanian => writeln!(f, "romanian"),
-            LanguageBits3::Chinese => writeln!(f, "chinese"),
-            LanguageBits3::Japanese => writeln!(f, "japanese"),
-            LanguageBits3::Korean => writeln!(f, "korean"),
-            LanguageBits3::Taiwanese => writeln!(f, "taiwanese"),
-            LanguageBits3::Thai => writeln!(f, "thai"),
-            LanguageBits3::Hebrew => writeln!(f, "hebrew"),
-            LanguageBits3::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            LanguageBits3::Bulgarian => write!(f, "bulgarian"),
+            LanguageBits3::Romanian => write!(f, "romanian"),
+            LanguageBits3::Chinese => write!(f, "chinese"),
+            LanguageBits3::Japanese => write!(f, "japanese"),
+            LanguageBits3::Korean => write!(f, "korean"),
+            LanguageBits3::Taiwanese => write!(f, "taiwanese"),
+            LanguageBits3::Thai => write!(f, "thai"),
+            LanguageBits3::Hebrew => write!(f, "hebrew"),
+            LanguageBits3::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -1346,13 +1346,13 @@ impl LanguageBits4 {
 impl fmt::Display for LanguageBits4 {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            LanguageBits4::BrazilianPortuguese => writeln!(f, "brazilian_portuguese"),
-            LanguageBits4::Indonesian => writeln!(f, "indonesian"),
-            LanguageBits4::Malaysian => writeln!(f, "malaysian"),
-            LanguageBits4::Vietnamese => writeln!(f, "vietnamese"),
-            LanguageBits4::Burmese => writeln!(f, "burmese"),
-            LanguageBits4::Mongolian => writeln!(f, "mongolian"),
-            LanguageBits4::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            LanguageBits4::BrazilianPortuguese => write!(f, "brazilian_portuguese"),
+            LanguageBits4::Indonesian => write!(f, "indonesian"),
+            LanguageBits4::Malaysian => write!(f, "malaysian"),
+            LanguageBits4::Vietnamese => write!(f, "vietnamese"),
+            LanguageBits4::Burmese => write!(f, "burmese"),
+            LanguageBits4::Mongolian => write!(f, "mongolian"),
+            LanguageBits4::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -1603,113 +1603,113 @@ impl TimeZone {
 impl fmt::Display for TimeZone {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            TimeZone::Almaty => writeln!(f, "almaty"),
-            TimeZone::Bangkok => writeln!(f, "bangkok"),
-            TimeZone::Bombay => writeln!(f, "bombay"),
-            TimeZone::Brasilia => writeln!(f, "brasilia"),
-            TimeZone::Cairo => writeln!(f, "cairo"),
-            TimeZone::CapeVerdeIs => writeln!(f, "cape_verde_is"),
-            TimeZone::Darwin => writeln!(f, "darwin"),
-            TimeZone::Eniwetok => writeln!(f, "eniwetok"),
-            TimeZone::Fiji => writeln!(f, "fiji"),
-            TimeZone::HongKong => writeln!(f, "hong_kong"),
-            TimeZone::Islamabad => writeln!(f, "islamabad"),
-            TimeZone::Kabul => writeln!(f, "kabul"),
-            TimeZone::Magadan => writeln!(f, "magadan"),
-            TimeZone::MidAtlantic => writeln!(f, "mid_atlantic"),
-            TimeZone::Moscow => writeln!(f, "moscow"),
-            TimeZone::Muscat => writeln!(f, "muscat"),
-            TimeZone::Newfoundland => writeln!(f, "newfoundland"),
-            TimeZone::Samoa => writeln!(f, "samoa"),
-            TimeZone::Sydney => writeln!(f, "sydney"),
-            TimeZone::Tehran => writeln!(f, "tehran"),
-            TimeZone::Tokyo => writeln!(f, "tokyo"),
-            TimeZone::UsAlaska => writeln!(f, "us_alaska"),
-            TimeZone::UsAtlantic => writeln!(f, "us_atlantic"),
-            TimeZone::UsCentral => writeln!(f, "us_central"),
-            TimeZone::UsEastern => writeln!(f, "us_eastern"),
-            TimeZone::UsHawaii => writeln!(f, "us_hawaii"),
-            TimeZone::UsMountain => writeln!(f, "us_mountain"),
-            TimeZone::UsPacific => writeln!(f, "us_pacific"),
-            TimeZone::Other => writeln!(f, "other"),
-            TimeZone::Auckland => writeln!(f, "auckland"),
-            TimeZone::Kathmandu => writeln!(f, "kathmandu"),
-            TimeZone::EuropeWesternWet => writeln!(f, "europe_western_wet"),
-            TimeZone::EuropeCentralCet => writeln!(f, "europe_central_cet"),
-            TimeZone::EuropeEasternEet => writeln!(f, "europe_eastern_eet"),
-            TimeZone::Jakarta => writeln!(f, "jakarta"),
-            TimeZone::Perth => writeln!(f, "perth"),
-            TimeZone::Adelaide => writeln!(f, "adelaide"),
-            TimeZone::Brisbane => writeln!(f, "brisbane"),
-            TimeZone::Tasmania => writeln!(f, "tasmania"),
-            TimeZone::Iceland => writeln!(f, "iceland"),
-            TimeZone::Amsterdam => writeln!(f, "amsterdam"),
-            TimeZone::Athens => writeln!(f, "athens"),
-            TimeZone::Barcelona => writeln!(f, "barcelona"),
-            TimeZone::Berlin => writeln!(f, "berlin"),
-            TimeZone::Brussels => writeln!(f, "brussels"),
-            TimeZone::Budapest => writeln!(f, "budapest"),
-            TimeZone::Copenhagen => writeln!(f, "copenhagen"),
-            TimeZone::Dublin => writeln!(f, "dublin"),
-            TimeZone::Helsinki => writeln!(f, "helsinki"),
-            TimeZone::Lisbon => writeln!(f, "lisbon"),
-            TimeZone::London => writeln!(f, "london"),
-            TimeZone::Madrid => writeln!(f, "madrid"),
-            TimeZone::Munich => writeln!(f, "munich"),
-            TimeZone::Oslo => writeln!(f, "oslo"),
-            TimeZone::Paris => writeln!(f, "paris"),
-            TimeZone::Prague => writeln!(f, "prague"),
-            TimeZone::Reykjavik => writeln!(f, "reykjavik"),
-            TimeZone::Rome => writeln!(f, "rome"),
-            TimeZone::Stockholm => writeln!(f, "stockholm"),
-            TimeZone::Vienna => writeln!(f, "vienna"),
-            TimeZone::Warsaw => writeln!(f, "warsaw"),
-            TimeZone::Zurich => writeln!(f, "zurich"),
-            TimeZone::Quebec => writeln!(f, "quebec"),
-            TimeZone::Ontario => writeln!(f, "ontario"),
-            TimeZone::Manitoba => writeln!(f, "manitoba"),
-            TimeZone::Saskatchewan => writeln!(f, "saskatchewan"),
-            TimeZone::Alberta => writeln!(f, "alberta"),
-            TimeZone::BritishColumbia => writeln!(f, "british_columbia"),
-            TimeZone::Boise => writeln!(f, "boise"),
-            TimeZone::Boston => writeln!(f, "boston"),
-            TimeZone::Chicago => writeln!(f, "chicago"),
-            TimeZone::Dallas => writeln!(f, "dallas"),
-            TimeZone::Denver => writeln!(f, "denver"),
-            TimeZone::KansasCity => writeln!(f, "kansas_city"),
-            TimeZone::LasVegas => writeln!(f, "las_vegas"),
-            TimeZone::LosAngeles => writeln!(f, "los_angeles"),
-            TimeZone::Miami => writeln!(f, "miami"),
-            TimeZone::Minneapolis => writeln!(f, "minneapolis"),
-            TimeZone::NewYork => writeln!(f, "new_york"),
-            TimeZone::NewOrleans => writeln!(f, "new_orleans"),
-            TimeZone::Phoenix => writeln!(f, "phoenix"),
-            TimeZone::SantaFe => writeln!(f, "santa_fe"),
-            TimeZone::Seattle => writeln!(f, "seattle"),
-            TimeZone::WashingtonDc => writeln!(f, "washington_dc"),
-            TimeZone::UsArizona => writeln!(f, "us_arizona"),
-            TimeZone::Chita => writeln!(f, "chita"),
-            TimeZone::Ekaterinburg => writeln!(f, "ekaterinburg"),
-            TimeZone::Irkutsk => writeln!(f, "irkutsk"),
-            TimeZone::Kaliningrad => writeln!(f, "kaliningrad"),
-            TimeZone::Krasnoyarsk => writeln!(f, "krasnoyarsk"),
-            TimeZone::Novosibirsk => writeln!(f, "novosibirsk"),
-            TimeZone::PetropavlovskKamchatskiy => writeln!(f, "petropavlovsk_kamchatskiy"),
-            TimeZone::Samara => writeln!(f, "samara"),
-            TimeZone::Vladivostok => writeln!(f, "vladivostok"),
-            TimeZone::MexicoCentral => writeln!(f, "mexico_central"),
-            TimeZone::MexicoMountain => writeln!(f, "mexico_mountain"),
-            TimeZone::MexicoPacific => writeln!(f, "mexico_pacific"),
-            TimeZone::CapeTown => writeln!(f, "cape_town"),
-            TimeZone::Winkhoek => writeln!(f, "winkhoek"),
-            TimeZone::Lagos => writeln!(f, "lagos"),
-            TimeZone::Riyahd => writeln!(f, "riyahd"),
-            TimeZone::Venezuela => writeln!(f, "venezuela"),
-            TimeZone::AustraliaLh => writeln!(f, "australia_lh"),
-            TimeZone::Santiago => writeln!(f, "santiago"),
-            TimeZone::Manual => writeln!(f, "manual"),
-            TimeZone::Automatic => writeln!(f, "automatic"),
-            TimeZone::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            TimeZone::Almaty => write!(f, "almaty"),
+            TimeZone::Bangkok => write!(f, "bangkok"),
+            TimeZone::Bombay => write!(f, "bombay"),
+            TimeZone::Brasilia => write!(f, "brasilia"),
+            TimeZone::Cairo => write!(f, "cairo"),
+            TimeZone::CapeVerdeIs => write!(f, "cape_verde_is"),
+            TimeZone::Darwin => write!(f, "darwin"),
+            TimeZone::Eniwetok => write!(f, "eniwetok"),
+            TimeZone::Fiji => write!(f, "fiji"),
+            TimeZone::HongKong => write!(f, "hong_kong"),
+            TimeZone::Islamabad => write!(f, "islamabad"),
+            TimeZone::Kabul => write!(f, "kabul"),
+            TimeZone::Magadan => write!(f, "magadan"),
+            TimeZone::MidAtlantic => write!(f, "mid_atlantic"),
+            TimeZone::Moscow => write!(f, "moscow"),
+            TimeZone::Muscat => write!(f, "muscat"),
+            TimeZone::Newfoundland => write!(f, "newfoundland"),
+            TimeZone::Samoa => write!(f, "samoa"),
+            TimeZone::Sydney => write!(f, "sydney"),
+            TimeZone::Tehran => write!(f, "tehran"),
+            TimeZone::Tokyo => write!(f, "tokyo"),
+            TimeZone::UsAlaska => write!(f, "us_alaska"),
+            TimeZone::UsAtlantic => write!(f, "us_atlantic"),
+            TimeZone::UsCentral => write!(f, "us_central"),
+            TimeZone::UsEastern => write!(f, "us_eastern"),
+            TimeZone::UsHawaii => write!(f, "us_hawaii"),
+            TimeZone::UsMountain => write!(f, "us_mountain"),
+            TimeZone::UsPacific => write!(f, "us_pacific"),
+            TimeZone::Other => write!(f, "other"),
+            TimeZone::Auckland => write!(f, "auckland"),
+            TimeZone::Kathmandu => write!(f, "kathmandu"),
+            TimeZone::EuropeWesternWet => write!(f, "europe_western_wet"),
+            TimeZone::EuropeCentralCet => write!(f, "europe_central_cet"),
+            TimeZone::EuropeEasternEet => write!(f, "europe_eastern_eet"),
+            TimeZone::Jakarta => write!(f, "jakarta"),
+            TimeZone::Perth => write!(f, "perth"),
+            TimeZone::Adelaide => write!(f, "adelaide"),
+            TimeZone::Brisbane => write!(f, "brisbane"),
+            TimeZone::Tasmania => write!(f, "tasmania"),
+            TimeZone::Iceland => write!(f, "iceland"),
+            TimeZone::Amsterdam => write!(f, "amsterdam"),
+            TimeZone::Athens => write!(f, "athens"),
+            TimeZone::Barcelona => write!(f, "barcelona"),
+            TimeZone::Berlin => write!(f, "berlin"),
+            TimeZone::Brussels => write!(f, "brussels"),
+            TimeZone::Budapest => write!(f, "budapest"),
+            TimeZone::Copenhagen => write!(f, "copenhagen"),
+            TimeZone::Dublin => write!(f, "dublin"),
+            TimeZone::Helsinki => write!(f, "helsinki"),
+            TimeZone::Lisbon => write!(f, "lisbon"),
+            TimeZone::London => write!(f, "london"),
+            TimeZone::Madrid => write!(f, "madrid"),
+            TimeZone::Munich => write!(f, "munich"),
+            TimeZone::Oslo => write!(f, "oslo"),
+            TimeZone::Paris => write!(f, "paris"),
+            TimeZone::Prague => write!(f, "prague"),
+            TimeZone::Reykjavik => write!(f, "reykjavik"),
+            TimeZone::Rome => write!(f, "rome"),
+            TimeZone::Stockholm => write!(f, "stockholm"),
+            TimeZone::Vienna => write!(f, "vienna"),
+            TimeZone::Warsaw => write!(f, "warsaw"),
+            TimeZone::Zurich => write!(f, "zurich"),
+            TimeZone::Quebec => write!(f, "quebec"),
+            TimeZone::Ontario => write!(f, "ontario"),
+            TimeZone::Manitoba => write!(f, "manitoba"),
+            TimeZone::Saskatchewan => write!(f, "saskatchewan"),
+            TimeZone::Alberta => write!(f, "alberta"),
+            TimeZone::BritishColumbia => write!(f, "british_columbia"),
+            TimeZone::Boise => write!(f, "boise"),
+            TimeZone::Boston => write!(f, "boston"),
+            TimeZone::Chicago => write!(f, "chicago"),
+            TimeZone::Dallas => write!(f, "dallas"),
+            TimeZone::Denver => write!(f, "denver"),
+            TimeZone::KansasCity => write!(f, "kansas_city"),
+            TimeZone::LasVegas => write!(f, "las_vegas"),
+            TimeZone::LosAngeles => write!(f, "los_angeles"),
+            TimeZone::Miami => write!(f, "miami"),
+            TimeZone::Minneapolis => write!(f, "minneapolis"),
+            TimeZone::NewYork => write!(f, "new_york"),
+            TimeZone::NewOrleans => write!(f, "new_orleans"),
+            TimeZone::Phoenix => write!(f, "phoenix"),
+            TimeZone::SantaFe => write!(f, "santa_fe"),
+            TimeZone::Seattle => write!(f, "seattle"),
+            TimeZone::WashingtonDc => write!(f, "washington_dc"),
+            TimeZone::UsArizona => write!(f, "us_arizona"),
+            TimeZone::Chita => write!(f, "chita"),
+            TimeZone::Ekaterinburg => write!(f, "ekaterinburg"),
+            TimeZone::Irkutsk => write!(f, "irkutsk"),
+            TimeZone::Kaliningrad => write!(f, "kaliningrad"),
+            TimeZone::Krasnoyarsk => write!(f, "krasnoyarsk"),
+            TimeZone::Novosibirsk => write!(f, "novosibirsk"),
+            TimeZone::PetropavlovskKamchatskiy => write!(f, "petropavlovsk_kamchatskiy"),
+            TimeZone::Samara => write!(f, "samara"),
+            TimeZone::Vladivostok => write!(f, "vladivostok"),
+            TimeZone::MexicoCentral => write!(f, "mexico_central"),
+            TimeZone::MexicoMountain => write!(f, "mexico_mountain"),
+            TimeZone::MexicoPacific => write!(f, "mexico_pacific"),
+            TimeZone::CapeTown => write!(f, "cape_town"),
+            TimeZone::Winkhoek => write!(f, "winkhoek"),
+            TimeZone::Lagos => write!(f, "lagos"),
+            TimeZone::Riyahd => write!(f, "riyahd"),
+            TimeZone::Venezuela => write!(f, "venezuela"),
+            TimeZone::AustraliaLh => write!(f, "australia_lh"),
+            TimeZone::Santiago => write!(f, "santiago"),
+            TimeZone::Manual => write!(f, "manual"),
+            TimeZone::Automatic => write!(f, "automatic"),
+            TimeZone::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -1854,10 +1854,10 @@ impl DisplayMeasure {
 impl fmt::Display for DisplayMeasure {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            DisplayMeasure::Metric => writeln!(f, "metric"),
-            DisplayMeasure::Statute => writeln!(f, "statute"),
-            DisplayMeasure::Nautical => writeln!(f, "nautical"),
-            DisplayMeasure::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            DisplayMeasure::Metric => write!(f, "metric"),
+            DisplayMeasure::Statute => write!(f, "statute"),
+            DisplayMeasure::Nautical => write!(f, "nautical"),
+            DisplayMeasure::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -1899,10 +1899,10 @@ impl DisplayHeart {
 impl fmt::Display for DisplayHeart {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            DisplayHeart::Bpm => writeln!(f, "bpm"),
-            DisplayHeart::Max => writeln!(f, "max"),
-            DisplayHeart::Reserve => writeln!(f, "reserve"),
-            DisplayHeart::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            DisplayHeart::Bpm => write!(f, "bpm"),
+            DisplayHeart::Max => write!(f, "max"),
+            DisplayHeart::Reserve => write!(f, "reserve"),
+            DisplayHeart::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -1942,9 +1942,9 @@ impl DisplayPower {
 impl fmt::Display for DisplayPower {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            DisplayPower::Watts => writeln!(f, "watts"),
-            DisplayPower::PercentFtp => writeln!(f, "percent_ftp"),
-            DisplayPower::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            DisplayPower::Watts => write!(f, "watts"),
+            DisplayPower::PercentFtp => write!(f, "percent_ftp"),
+            DisplayPower::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -2105,49 +2105,49 @@ impl DisplayPosition {
 impl fmt::Display for DisplayPosition {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            DisplayPosition::Degree => writeln!(f, "degree"),
-            DisplayPosition::DegreeMinute => writeln!(f, "degree_minute"),
-            DisplayPosition::DegreeMinuteSecond => writeln!(f, "degree_minute_second"),
-            DisplayPosition::AustrianGrid => writeln!(f, "austrian_grid"),
-            DisplayPosition::BritishGrid => writeln!(f, "british_grid"),
-            DisplayPosition::DutchGrid => writeln!(f, "dutch_grid"),
-            DisplayPosition::HungarianGrid => writeln!(f, "hungarian_grid"),
-            DisplayPosition::FinnishGrid => writeln!(f, "finnish_grid"),
-            DisplayPosition::GermanGrid => writeln!(f, "german_grid"),
-            DisplayPosition::IcelandicGrid => writeln!(f, "icelandic_grid"),
-            DisplayPosition::IndonesianEquatorial => writeln!(f, "indonesian_equatorial"),
-            DisplayPosition::IndonesianIrian => writeln!(f, "indonesian_irian"),
-            DisplayPosition::IndonesianSouthern => writeln!(f, "indonesian_southern"),
-            DisplayPosition::IndiaZone0 => writeln!(f, "india_zone_0"),
-            DisplayPosition::IndiaZoneIA => writeln!(f, "india_zone_IA"),
-            DisplayPosition::IndiaZoneIB => writeln!(f, "india_zone_IB"),
-            DisplayPosition::IndiaZoneIIA => writeln!(f, "india_zone_IIA"),
-            DisplayPosition::IndiaZoneIIB => writeln!(f, "india_zone_IIB"),
-            DisplayPosition::IndiaZoneIIIA => writeln!(f, "india_zone_IIIA"),
-            DisplayPosition::IndiaZoneIIIB => writeln!(f, "india_zone_IIIB"),
-            DisplayPosition::IndiaZoneIVA => writeln!(f, "india_zone_IVA"),
-            DisplayPosition::IndiaZoneIVB => writeln!(f, "india_zone_IVB"),
-            DisplayPosition::IrishTransverse => writeln!(f, "irish_transverse"),
-            DisplayPosition::IrishGrid => writeln!(f, "irish_grid"),
-            DisplayPosition::Loran => writeln!(f, "loran"),
-            DisplayPosition::MaidenheadGrid => writeln!(f, "maidenhead_grid"),
-            DisplayPosition::MgrsGrid => writeln!(f, "mgrs_grid"),
-            DisplayPosition::NewZealandGrid => writeln!(f, "new_zealand_grid"),
-            DisplayPosition::NewZealandTransverse => writeln!(f, "new_zealand_transverse"),
-            DisplayPosition::QatarGrid => writeln!(f, "qatar_grid"),
-            DisplayPosition::ModifiedSwedishGrid => writeln!(f, "modified_swedish_grid"),
-            DisplayPosition::SwedishGrid => writeln!(f, "swedish_grid"),
-            DisplayPosition::SouthAfricanGrid => writeln!(f, "south_african_grid"),
-            DisplayPosition::SwissGrid => writeln!(f, "swiss_grid"),
-            DisplayPosition::TaiwanGrid => writeln!(f, "taiwan_grid"),
-            DisplayPosition::UnitedStatesGrid => writeln!(f, "united_states_grid"),
-            DisplayPosition::UtmUpsGrid => writeln!(f, "utm_ups_grid"),
-            DisplayPosition::WestMalayan => writeln!(f, "west_malayan"),
-            DisplayPosition::BorneoRso => writeln!(f, "borneo_rso"),
-            DisplayPosition::EstonianGrid => writeln!(f, "estonian_grid"),
-            DisplayPosition::LatvianGrid => writeln!(f, "latvian_grid"),
-            DisplayPosition::SwedishRef99Grid => writeln!(f, "swedish_ref_99_grid"),
-            DisplayPosition::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            DisplayPosition::Degree => write!(f, "degree"),
+            DisplayPosition::DegreeMinute => write!(f, "degree_minute"),
+            DisplayPosition::DegreeMinuteSecond => write!(f, "degree_minute_second"),
+            DisplayPosition::AustrianGrid => write!(f, "austrian_grid"),
+            DisplayPosition::BritishGrid => write!(f, "british_grid"),
+            DisplayPosition::DutchGrid => write!(f, "dutch_grid"),
+            DisplayPosition::HungarianGrid => write!(f, "hungarian_grid"),
+            DisplayPosition::FinnishGrid => write!(f, "finnish_grid"),
+            DisplayPosition::GermanGrid => write!(f, "german_grid"),
+            DisplayPosition::IcelandicGrid => write!(f, "icelandic_grid"),
+            DisplayPosition::IndonesianEquatorial => write!(f, "indonesian_equatorial"),
+            DisplayPosition::IndonesianIrian => write!(f, "indonesian_irian"),
+            DisplayPosition::IndonesianSouthern => write!(f, "indonesian_southern"),
+            DisplayPosition::IndiaZone0 => write!(f, "india_zone_0"),
+            DisplayPosition::IndiaZoneIA => write!(f, "india_zone_IA"),
+            DisplayPosition::IndiaZoneIB => write!(f, "india_zone_IB"),
+            DisplayPosition::IndiaZoneIIA => write!(f, "india_zone_IIA"),
+            DisplayPosition::IndiaZoneIIB => write!(f, "india_zone_IIB"),
+            DisplayPosition::IndiaZoneIIIA => write!(f, "india_zone_IIIA"),
+            DisplayPosition::IndiaZoneIIIB => write!(f, "india_zone_IIIB"),
+            DisplayPosition::IndiaZoneIVA => write!(f, "india_zone_IVA"),
+            DisplayPosition::IndiaZoneIVB => write!(f, "india_zone_IVB"),
+            DisplayPosition::IrishTransverse => write!(f, "irish_transverse"),
+            DisplayPosition::IrishGrid => write!(f, "irish_grid"),
+            DisplayPosition::Loran => write!(f, "loran"),
+            DisplayPosition::MaidenheadGrid => write!(f, "maidenhead_grid"),
+            DisplayPosition::MgrsGrid => write!(f, "mgrs_grid"),
+            DisplayPosition::NewZealandGrid => write!(f, "new_zealand_grid"),
+            DisplayPosition::NewZealandTransverse => write!(f, "new_zealand_transverse"),
+            DisplayPosition::QatarGrid => write!(f, "qatar_grid"),
+            DisplayPosition::ModifiedSwedishGrid => write!(f, "modified_swedish_grid"),
+            DisplayPosition::SwedishGrid => write!(f, "swedish_grid"),
+            DisplayPosition::SouthAfricanGrid => write!(f, "south_african_grid"),
+            DisplayPosition::SwissGrid => write!(f, "swiss_grid"),
+            DisplayPosition::TaiwanGrid => write!(f, "taiwan_grid"),
+            DisplayPosition::UnitedStatesGrid => write!(f, "united_states_grid"),
+            DisplayPosition::UtmUpsGrid => write!(f, "utm_ups_grid"),
+            DisplayPosition::WestMalayan => write!(f, "west_malayan"),
+            DisplayPosition::BorneoRso => write!(f, "borneo_rso"),
+            DisplayPosition::EstonianGrid => write!(f, "estonian_grid"),
+            DisplayPosition::LatvianGrid => write!(f, "latvian_grid"),
+            DisplayPosition::SwedishRef99Grid => write!(f, "swedish_ref_99_grid"),
+            DisplayPosition::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -2228,10 +2228,10 @@ impl Switch {
 impl fmt::Display for Switch {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            Switch::Off => writeln!(f, "off"),
-            Switch::On => writeln!(f, "on"),
-            Switch::Auto => writeln!(f, "auto"),
-            Switch::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            Switch::Off => write!(f, "off"),
+            Switch::On => write!(f, "on"),
+            Switch::Auto => write!(f, "auto"),
+            Switch::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -2369,57 +2369,57 @@ impl Sport {
 impl fmt::Display for Sport {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            Sport::Generic => writeln!(f, "generic"),
-            Sport::Running => writeln!(f, "running"),
-            Sport::Cycling => writeln!(f, "cycling"),
-            Sport::Transition => writeln!(f, "transition"),
-            Sport::FitnessEquipment => writeln!(f, "fitness_equipment"),
-            Sport::Swimming => writeln!(f, "swimming"),
-            Sport::Basketball => writeln!(f, "basketball"),
-            Sport::Soccer => writeln!(f, "soccer"),
-            Sport::Tennis => writeln!(f, "tennis"),
-            Sport::AmericanFootball => writeln!(f, "american_football"),
-            Sport::Training => writeln!(f, "training"),
-            Sport::Walking => writeln!(f, "walking"),
-            Sport::CrossCountrySkiing => writeln!(f, "cross_country_skiing"),
-            Sport::AlpineSkiing => writeln!(f, "alpine_skiing"),
-            Sport::Snowboarding => writeln!(f, "snowboarding"),
-            Sport::Rowing => writeln!(f, "rowing"),
-            Sport::Mountaineering => writeln!(f, "mountaineering"),
-            Sport::Hiking => writeln!(f, "hiking"),
-            Sport::Multisport => writeln!(f, "multisport"),
-            Sport::Paddling => writeln!(f, "paddling"),
-            Sport::Flying => writeln!(f, "flying"),
-            Sport::EBiking => writeln!(f, "e_biking"),
-            Sport::Motorcycling => writeln!(f, "motorcycling"),
-            Sport::Boating => writeln!(f, "boating"),
-            Sport::Driving => writeln!(f, "driving"),
-            Sport::Golf => writeln!(f, "golf"),
-            Sport::HangGliding => writeln!(f, "hang_gliding"),
-            Sport::HorsebackRiding => writeln!(f, "horseback_riding"),
-            Sport::Hunting => writeln!(f, "hunting"),
-            Sport::Fishing => writeln!(f, "fishing"),
-            Sport::InlineSkating => writeln!(f, "inline_skating"),
-            Sport::RockClimbing => writeln!(f, "rock_climbing"),
-            Sport::Sailing => writeln!(f, "sailing"),
-            Sport::IceSkating => writeln!(f, "ice_skating"),
-            Sport::SkyDiving => writeln!(f, "sky_diving"),
-            Sport::Snowshoeing => writeln!(f, "snowshoeing"),
-            Sport::Snowmobiling => writeln!(f, "snowmobiling"),
-            Sport::StandUpPaddleboarding => writeln!(f, "stand_up_paddleboarding"),
-            Sport::Surfing => writeln!(f, "surfing"),
-            Sport::Wakeboarding => writeln!(f, "wakeboarding"),
-            Sport::WaterSkiing => writeln!(f, "water_skiing"),
-            Sport::Kayaking => writeln!(f, "kayaking"),
-            Sport::Rafting => writeln!(f, "rafting"),
-            Sport::Windsurfing => writeln!(f, "windsurfing"),
-            Sport::Kitesurfing => writeln!(f, "kitesurfing"),
-            Sport::Tactical => writeln!(f, "tactical"),
-            Sport::Jumpmaster => writeln!(f, "jumpmaster"),
-            Sport::Boxing => writeln!(f, "boxing"),
-            Sport::FloorClimbing => writeln!(f, "floor_climbing"),
-            Sport::All => writeln!(f, "all"),
-            Sport::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            Sport::Generic => write!(f, "generic"),
+            Sport::Running => write!(f, "running"),
+            Sport::Cycling => write!(f, "cycling"),
+            Sport::Transition => write!(f, "transition"),
+            Sport::FitnessEquipment => write!(f, "fitness_equipment"),
+            Sport::Swimming => write!(f, "swimming"),
+            Sport::Basketball => write!(f, "basketball"),
+            Sport::Soccer => write!(f, "soccer"),
+            Sport::Tennis => write!(f, "tennis"),
+            Sport::AmericanFootball => write!(f, "american_football"),
+            Sport::Training => write!(f, "training"),
+            Sport::Walking => write!(f, "walking"),
+            Sport::CrossCountrySkiing => write!(f, "cross_country_skiing"),
+            Sport::AlpineSkiing => write!(f, "alpine_skiing"),
+            Sport::Snowboarding => write!(f, "snowboarding"),
+            Sport::Rowing => write!(f, "rowing"),
+            Sport::Mountaineering => write!(f, "mountaineering"),
+            Sport::Hiking => write!(f, "hiking"),
+            Sport::Multisport => write!(f, "multisport"),
+            Sport::Paddling => write!(f, "paddling"),
+            Sport::Flying => write!(f, "flying"),
+            Sport::EBiking => write!(f, "e_biking"),
+            Sport::Motorcycling => write!(f, "motorcycling"),
+            Sport::Boating => write!(f, "boating"),
+            Sport::Driving => write!(f, "driving"),
+            Sport::Golf => write!(f, "golf"),
+            Sport::HangGliding => write!(f, "hang_gliding"),
+            Sport::HorsebackRiding => write!(f, "horseback_riding"),
+            Sport::Hunting => write!(f, "hunting"),
+            Sport::Fishing => write!(f, "fishing"),
+            Sport::InlineSkating => write!(f, "inline_skating"),
+            Sport::RockClimbing => write!(f, "rock_climbing"),
+            Sport::Sailing => write!(f, "sailing"),
+            Sport::IceSkating => write!(f, "ice_skating"),
+            Sport::SkyDiving => write!(f, "sky_diving"),
+            Sport::Snowshoeing => write!(f, "snowshoeing"),
+            Sport::Snowmobiling => write!(f, "snowmobiling"),
+            Sport::StandUpPaddleboarding => write!(f, "stand_up_paddleboarding"),
+            Sport::Surfing => write!(f, "surfing"),
+            Sport::Wakeboarding => write!(f, "wakeboarding"),
+            Sport::WaterSkiing => write!(f, "water_skiing"),
+            Sport::Kayaking => write!(f, "kayaking"),
+            Sport::Rafting => write!(f, "rafting"),
+            Sport::Windsurfing => write!(f, "windsurfing"),
+            Sport::Kitesurfing => write!(f, "kitesurfing"),
+            Sport::Tactical => write!(f, "tactical"),
+            Sport::Jumpmaster => write!(f, "jumpmaster"),
+            Sport::Boxing => write!(f, "boxing"),
+            Sport::FloorClimbing => write!(f, "floor_climbing"),
+            Sport::All => write!(f, "all"),
+            Sport::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -2519,15 +2519,15 @@ impl SportBits0 {
 impl fmt::Display for SportBits0 {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            SportBits0::Generic => writeln!(f, "generic"),
-            SportBits0::Running => writeln!(f, "running"),
-            SportBits0::Cycling => writeln!(f, "cycling"),
-            SportBits0::Transition => writeln!(f, "transition"),
-            SportBits0::FitnessEquipment => writeln!(f, "fitness_equipment"),
-            SportBits0::Swimming => writeln!(f, "swimming"),
-            SportBits0::Basketball => writeln!(f, "basketball"),
-            SportBits0::Soccer => writeln!(f, "soccer"),
-            SportBits0::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            SportBits0::Generic => write!(f, "generic"),
+            SportBits0::Running => write!(f, "running"),
+            SportBits0::Cycling => write!(f, "cycling"),
+            SportBits0::Transition => write!(f, "transition"),
+            SportBits0::FitnessEquipment => write!(f, "fitness_equipment"),
+            SportBits0::Swimming => write!(f, "swimming"),
+            SportBits0::Basketball => write!(f, "basketball"),
+            SportBits0::Soccer => write!(f, "soccer"),
+            SportBits0::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -2584,15 +2584,15 @@ impl SportBits1 {
 impl fmt::Display for SportBits1 {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            SportBits1::Tennis => writeln!(f, "tennis"),
-            SportBits1::AmericanFootball => writeln!(f, "american_football"),
-            SportBits1::Training => writeln!(f, "training"),
-            SportBits1::Walking => writeln!(f, "walking"),
-            SportBits1::CrossCountrySkiing => writeln!(f, "cross_country_skiing"),
-            SportBits1::AlpineSkiing => writeln!(f, "alpine_skiing"),
-            SportBits1::Snowboarding => writeln!(f, "snowboarding"),
-            SportBits1::Rowing => writeln!(f, "rowing"),
-            SportBits1::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            SportBits1::Tennis => write!(f, "tennis"),
+            SportBits1::AmericanFootball => write!(f, "american_football"),
+            SportBits1::Training => write!(f, "training"),
+            SportBits1::Walking => write!(f, "walking"),
+            SportBits1::CrossCountrySkiing => write!(f, "cross_country_skiing"),
+            SportBits1::AlpineSkiing => write!(f, "alpine_skiing"),
+            SportBits1::Snowboarding => write!(f, "snowboarding"),
+            SportBits1::Rowing => write!(f, "rowing"),
+            SportBits1::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -2649,15 +2649,15 @@ impl SportBits2 {
 impl fmt::Display for SportBits2 {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            SportBits2::Mountaineering => writeln!(f, "mountaineering"),
-            SportBits2::Hiking => writeln!(f, "hiking"),
-            SportBits2::Multisport => writeln!(f, "multisport"),
-            SportBits2::Paddling => writeln!(f, "paddling"),
-            SportBits2::Flying => writeln!(f, "flying"),
-            SportBits2::EBiking => writeln!(f, "e_biking"),
-            SportBits2::Motorcycling => writeln!(f, "motorcycling"),
-            SportBits2::Boating => writeln!(f, "boating"),
-            SportBits2::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            SportBits2::Mountaineering => write!(f, "mountaineering"),
+            SportBits2::Hiking => write!(f, "hiking"),
+            SportBits2::Multisport => write!(f, "multisport"),
+            SportBits2::Paddling => write!(f, "paddling"),
+            SportBits2::Flying => write!(f, "flying"),
+            SportBits2::EBiking => write!(f, "e_biking"),
+            SportBits2::Motorcycling => write!(f, "motorcycling"),
+            SportBits2::Boating => write!(f, "boating"),
+            SportBits2::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -2714,15 +2714,15 @@ impl SportBits3 {
 impl fmt::Display for SportBits3 {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            SportBits3::Driving => writeln!(f, "driving"),
-            SportBits3::Golf => writeln!(f, "golf"),
-            SportBits3::HangGliding => writeln!(f, "hang_gliding"),
-            SportBits3::HorsebackRiding => writeln!(f, "horseback_riding"),
-            SportBits3::Hunting => writeln!(f, "hunting"),
-            SportBits3::Fishing => writeln!(f, "fishing"),
-            SportBits3::InlineSkating => writeln!(f, "inline_skating"),
-            SportBits3::RockClimbing => writeln!(f, "rock_climbing"),
-            SportBits3::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            SportBits3::Driving => write!(f, "driving"),
+            SportBits3::Golf => write!(f, "golf"),
+            SportBits3::HangGliding => write!(f, "hang_gliding"),
+            SportBits3::HorsebackRiding => write!(f, "horseback_riding"),
+            SportBits3::Hunting => write!(f, "hunting"),
+            SportBits3::Fishing => write!(f, "fishing"),
+            SportBits3::InlineSkating => write!(f, "inline_skating"),
+            SportBits3::RockClimbing => write!(f, "rock_climbing"),
+            SportBits3::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -2779,15 +2779,15 @@ impl SportBits4 {
 impl fmt::Display for SportBits4 {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            SportBits4::Sailing => writeln!(f, "sailing"),
-            SportBits4::IceSkating => writeln!(f, "ice_skating"),
-            SportBits4::SkyDiving => writeln!(f, "sky_diving"),
-            SportBits4::Snowshoeing => writeln!(f, "snowshoeing"),
-            SportBits4::Snowmobiling => writeln!(f, "snowmobiling"),
-            SportBits4::StandUpPaddleboarding => writeln!(f, "stand_up_paddleboarding"),
-            SportBits4::Surfing => writeln!(f, "surfing"),
-            SportBits4::Wakeboarding => writeln!(f, "wakeboarding"),
-            SportBits4::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            SportBits4::Sailing => write!(f, "sailing"),
+            SportBits4::IceSkating => write!(f, "ice_skating"),
+            SportBits4::SkyDiving => write!(f, "sky_diving"),
+            SportBits4::Snowshoeing => write!(f, "snowshoeing"),
+            SportBits4::Snowmobiling => write!(f, "snowmobiling"),
+            SportBits4::StandUpPaddleboarding => write!(f, "stand_up_paddleboarding"),
+            SportBits4::Surfing => write!(f, "surfing"),
+            SportBits4::Wakeboarding => write!(f, "wakeboarding"),
+            SportBits4::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -2844,15 +2844,15 @@ impl SportBits5 {
 impl fmt::Display for SportBits5 {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            SportBits5::WaterSkiing => writeln!(f, "water_skiing"),
-            SportBits5::Kayaking => writeln!(f, "kayaking"),
-            SportBits5::Rafting => writeln!(f, "rafting"),
-            SportBits5::Windsurfing => writeln!(f, "windsurfing"),
-            SportBits5::Kitesurfing => writeln!(f, "kitesurfing"),
-            SportBits5::Tactical => writeln!(f, "tactical"),
-            SportBits5::Jumpmaster => writeln!(f, "jumpmaster"),
-            SportBits5::Boxing => writeln!(f, "boxing"),
-            SportBits5::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            SportBits5::WaterSkiing => write!(f, "water_skiing"),
+            SportBits5::Kayaking => write!(f, "kayaking"),
+            SportBits5::Rafting => write!(f, "rafting"),
+            SportBits5::Windsurfing => write!(f, "windsurfing"),
+            SportBits5::Kitesurfing => write!(f, "kitesurfing"),
+            SportBits5::Tactical => write!(f, "tactical"),
+            SportBits5::Jumpmaster => write!(f, "jumpmaster"),
+            SportBits5::Boxing => write!(f, "boxing"),
+            SportBits5::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -2895,8 +2895,8 @@ impl SportBits6 {
 impl fmt::Display for SportBits6 {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            SportBits6::FloorClimbing => writeln!(f, "floor_climbing"),
-            SportBits6::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            SportBits6::FloorClimbing => write!(f, "floor_climbing"),
+            SportBits6::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -3106,68 +3106,68 @@ impl SubSport {
 impl fmt::Display for SubSport {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            SubSport::Generic => writeln!(f, "generic"),
-            SubSport::Treadmill => writeln!(f, "treadmill"),
-            SubSport::Street => writeln!(f, "street"),
-            SubSport::Trail => writeln!(f, "trail"),
-            SubSport::Track => writeln!(f, "track"),
-            SubSport::Spin => writeln!(f, "spin"),
-            SubSport::IndoorCycling => writeln!(f, "indoor_cycling"),
-            SubSport::Road => writeln!(f, "road"),
-            SubSport::Mountain => writeln!(f, "mountain"),
-            SubSport::Downhill => writeln!(f, "downhill"),
-            SubSport::Recumbent => writeln!(f, "recumbent"),
-            SubSport::Cyclocross => writeln!(f, "cyclocross"),
-            SubSport::HandCycling => writeln!(f, "hand_cycling"),
-            SubSport::TrackCycling => writeln!(f, "track_cycling"),
-            SubSport::IndoorRowing => writeln!(f, "indoor_rowing"),
-            SubSport::Elliptical => writeln!(f, "elliptical"),
-            SubSport::StairClimbing => writeln!(f, "stair_climbing"),
-            SubSport::LapSwimming => writeln!(f, "lap_swimming"),
-            SubSport::OpenWater => writeln!(f, "open_water"),
-            SubSport::FlexibilityTraining => writeln!(f, "flexibility_training"),
-            SubSport::StrengthTraining => writeln!(f, "strength_training"),
-            SubSport::WarmUp => writeln!(f, "warm_up"),
-            SubSport::Match => writeln!(f, "match"),
-            SubSport::Exercise => writeln!(f, "exercise"),
-            SubSport::Challenge => writeln!(f, "challenge"),
-            SubSport::IndoorSkiing => writeln!(f, "indoor_skiing"),
-            SubSport::CardioTraining => writeln!(f, "cardio_training"),
-            SubSport::IndoorWalking => writeln!(f, "indoor_walking"),
-            SubSport::EBikeFitness => writeln!(f, "e_bike_fitness"),
-            SubSport::Bmx => writeln!(f, "bmx"),
-            SubSport::CasualWalking => writeln!(f, "casual_walking"),
-            SubSport::SpeedWalking => writeln!(f, "speed_walking"),
-            SubSport::BikeToRunTransition => writeln!(f, "bike_to_run_transition"),
-            SubSport::RunToBikeTransition => writeln!(f, "run_to_bike_transition"),
-            SubSport::SwimToBikeTransition => writeln!(f, "swim_to_bike_transition"),
-            SubSport::Atv => writeln!(f, "atv"),
-            SubSport::Motocross => writeln!(f, "motocross"),
-            SubSport::Backcountry => writeln!(f, "backcountry"),
-            SubSport::Resort => writeln!(f, "resort"),
-            SubSport::RcDrone => writeln!(f, "rc_drone"),
-            SubSport::Wingsuit => writeln!(f, "wingsuit"),
-            SubSport::Whitewater => writeln!(f, "whitewater"),
-            SubSport::SkateSkiing => writeln!(f, "skate_skiing"),
-            SubSport::Yoga => writeln!(f, "yoga"),
-            SubSport::Pilates => writeln!(f, "pilates"),
-            SubSport::IndoorRunning => writeln!(f, "indoor_running"),
-            SubSport::GravelCycling => writeln!(f, "gravel_cycling"),
-            SubSport::EBikeMountain => writeln!(f, "e_bike_mountain"),
-            SubSport::Commuting => writeln!(f, "commuting"),
-            SubSport::MixedSurface => writeln!(f, "mixed_surface"),
-            SubSport::Navigate => writeln!(f, "navigate"),
-            SubSport::TrackMe => writeln!(f, "track_me"),
-            SubSport::Map => writeln!(f, "map"),
-            SubSport::SingleGasDiving => writeln!(f, "single_gas_diving"),
-            SubSport::MultiGasDiving => writeln!(f, "multi_gas_diving"),
-            SubSport::GaugeDiving => writeln!(f, "gauge_diving"),
-            SubSport::ApneaDiving => writeln!(f, "apnea_diving"),
-            SubSport::ApneaHunting => writeln!(f, "apnea_hunting"),
-            SubSport::VirtualActivity => writeln!(f, "virtual_activity"),
-            SubSport::Obstacle => writeln!(f, "obstacle"),
-            SubSport::All => writeln!(f, "all"),
-            SubSport::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            SubSport::Generic => write!(f, "generic"),
+            SubSport::Treadmill => write!(f, "treadmill"),
+            SubSport::Street => write!(f, "street"),
+            SubSport::Trail => write!(f, "trail"),
+            SubSport::Track => write!(f, "track"),
+            SubSport::Spin => write!(f, "spin"),
+            SubSport::IndoorCycling => write!(f, "indoor_cycling"),
+            SubSport::Road => write!(f, "road"),
+            SubSport::Mountain => write!(f, "mountain"),
+            SubSport::Downhill => write!(f, "downhill"),
+            SubSport::Recumbent => write!(f, "recumbent"),
+            SubSport::Cyclocross => write!(f, "cyclocross"),
+            SubSport::HandCycling => write!(f, "hand_cycling"),
+            SubSport::TrackCycling => write!(f, "track_cycling"),
+            SubSport::IndoorRowing => write!(f, "indoor_rowing"),
+            SubSport::Elliptical => write!(f, "elliptical"),
+            SubSport::StairClimbing => write!(f, "stair_climbing"),
+            SubSport::LapSwimming => write!(f, "lap_swimming"),
+            SubSport::OpenWater => write!(f, "open_water"),
+            SubSport::FlexibilityTraining => write!(f, "flexibility_training"),
+            SubSport::StrengthTraining => write!(f, "strength_training"),
+            SubSport::WarmUp => write!(f, "warm_up"),
+            SubSport::Match => write!(f, "match"),
+            SubSport::Exercise => write!(f, "exercise"),
+            SubSport::Challenge => write!(f, "challenge"),
+            SubSport::IndoorSkiing => write!(f, "indoor_skiing"),
+            SubSport::CardioTraining => write!(f, "cardio_training"),
+            SubSport::IndoorWalking => write!(f, "indoor_walking"),
+            SubSport::EBikeFitness => write!(f, "e_bike_fitness"),
+            SubSport::Bmx => write!(f, "bmx"),
+            SubSport::CasualWalking => write!(f, "casual_walking"),
+            SubSport::SpeedWalking => write!(f, "speed_walking"),
+            SubSport::BikeToRunTransition => write!(f, "bike_to_run_transition"),
+            SubSport::RunToBikeTransition => write!(f, "run_to_bike_transition"),
+            SubSport::SwimToBikeTransition => write!(f, "swim_to_bike_transition"),
+            SubSport::Atv => write!(f, "atv"),
+            SubSport::Motocross => write!(f, "motocross"),
+            SubSport::Backcountry => write!(f, "backcountry"),
+            SubSport::Resort => write!(f, "resort"),
+            SubSport::RcDrone => write!(f, "rc_drone"),
+            SubSport::Wingsuit => write!(f, "wingsuit"),
+            SubSport::Whitewater => write!(f, "whitewater"),
+            SubSport::SkateSkiing => write!(f, "skate_skiing"),
+            SubSport::Yoga => write!(f, "yoga"),
+            SubSport::Pilates => write!(f, "pilates"),
+            SubSport::IndoorRunning => write!(f, "indoor_running"),
+            SubSport::GravelCycling => write!(f, "gravel_cycling"),
+            SubSport::EBikeMountain => write!(f, "e_bike_mountain"),
+            SubSport::Commuting => write!(f, "commuting"),
+            SubSport::MixedSurface => write!(f, "mixed_surface"),
+            SubSport::Navigate => write!(f, "navigate"),
+            SubSport::TrackMe => write!(f, "track_me"),
+            SubSport::Map => write!(f, "map"),
+            SubSport::SingleGasDiving => write!(f, "single_gas_diving"),
+            SubSport::MultiGasDiving => write!(f, "multi_gas_diving"),
+            SubSport::GaugeDiving => write!(f, "gauge_diving"),
+            SubSport::ApneaDiving => write!(f, "apnea_diving"),
+            SubSport::ApneaHunting => write!(f, "apnea_hunting"),
+            SubSport::VirtualActivity => write!(f, "virtual_activity"),
+            SubSport::Obstacle => write!(f, "obstacle"),
+            SubSport::All => write!(f, "all"),
+            SubSport::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -3279,16 +3279,16 @@ impl SportEvent {
 impl fmt::Display for SportEvent {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            SportEvent::Uncategorized => writeln!(f, "uncategorized"),
-            SportEvent::Geocaching => writeln!(f, "geocaching"),
-            SportEvent::Fitness => writeln!(f, "fitness"),
-            SportEvent::Recreation => writeln!(f, "recreation"),
-            SportEvent::Race => writeln!(f, "race"),
-            SportEvent::SpecialEvent => writeln!(f, "special_event"),
-            SportEvent::Training => writeln!(f, "training"),
-            SportEvent::Transportation => writeln!(f, "transportation"),
-            SportEvent::Touring => writeln!(f, "touring"),
-            SportEvent::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            SportEvent::Uncategorized => write!(f, "uncategorized"),
+            SportEvent::Geocaching => write!(f, "geocaching"),
+            SportEvent::Fitness => write!(f, "fitness"),
+            SportEvent::Recreation => write!(f, "recreation"),
+            SportEvent::Race => write!(f, "race"),
+            SportEvent::SpecialEvent => write!(f, "special_event"),
+            SportEvent::Training => write!(f, "training"),
+            SportEvent::Transportation => write!(f, "transportation"),
+            SportEvent::Touring => write!(f, "touring"),
+            SportEvent::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -3334,9 +3334,9 @@ impl Activity {
 impl fmt::Display for Activity {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            Activity::Manual => writeln!(f, "manual"),
-            Activity::AutoMultiSport => writeln!(f, "auto_multi_sport"),
-            Activity::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            Activity::Manual => write!(f, "manual"),
+            Activity::AutoMultiSport => write!(f, "auto_multi_sport"),
+            Activity::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -3379,11 +3379,11 @@ impl Intensity {
 impl fmt::Display for Intensity {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            Intensity::Active => writeln!(f, "active"),
-            Intensity::Rest => writeln!(f, "rest"),
-            Intensity::Warmup => writeln!(f, "warmup"),
-            Intensity::Cooldown => writeln!(f, "cooldown"),
-            Intensity::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            Intensity::Active => write!(f, "active"),
+            Intensity::Rest => write!(f, "rest"),
+            Intensity::Warmup => write!(f, "warmup"),
+            Intensity::Cooldown => write!(f, "cooldown"),
+            Intensity::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -3431,11 +3431,11 @@ impl SessionTrigger {
 impl fmt::Display for SessionTrigger {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            SessionTrigger::ActivityEnd => writeln!(f, "activity_end"),
-            SessionTrigger::Manual => writeln!(f, "manual"),
-            SessionTrigger::AutoMultiSport => writeln!(f, "auto_multi_sport"),
-            SessionTrigger::FitnessEquipment => writeln!(f, "fitness_equipment"),
-            SessionTrigger::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            SessionTrigger::ActivityEnd => write!(f, "activity_end"),
+            SessionTrigger::Manual => write!(f, "manual"),
+            SessionTrigger::AutoMultiSport => write!(f, "auto_multi_sport"),
+            SessionTrigger::FitnessEquipment => write!(f, "fitness_equipment"),
+            SessionTrigger::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -3486,14 +3486,14 @@ impl AutolapTrigger {
 impl fmt::Display for AutolapTrigger {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            AutolapTrigger::Time => writeln!(f, "time"),
-            AutolapTrigger::Distance => writeln!(f, "distance"),
-            AutolapTrigger::PositionStart => writeln!(f, "position_start"),
-            AutolapTrigger::PositionLap => writeln!(f, "position_lap"),
-            AutolapTrigger::PositionWaypoint => writeln!(f, "position_waypoint"),
-            AutolapTrigger::PositionMarked => writeln!(f, "position_marked"),
-            AutolapTrigger::Off => writeln!(f, "off"),
-            AutolapTrigger::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            AutolapTrigger::Time => write!(f, "time"),
+            AutolapTrigger::Distance => write!(f, "distance"),
+            AutolapTrigger::PositionStart => write!(f, "position_start"),
+            AutolapTrigger::PositionLap => write!(f, "position_lap"),
+            AutolapTrigger::PositionWaypoint => write!(f, "position_waypoint"),
+            AutolapTrigger::PositionMarked => write!(f, "position_marked"),
+            AutolapTrigger::Off => write!(f, "off"),
+            AutolapTrigger::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -3551,16 +3551,16 @@ impl LapTrigger {
 impl fmt::Display for LapTrigger {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            LapTrigger::Manual => writeln!(f, "manual"),
-            LapTrigger::Time => writeln!(f, "time"),
-            LapTrigger::Distance => writeln!(f, "distance"),
-            LapTrigger::PositionStart => writeln!(f, "position_start"),
-            LapTrigger::PositionLap => writeln!(f, "position_lap"),
-            LapTrigger::PositionWaypoint => writeln!(f, "position_waypoint"),
-            LapTrigger::PositionMarked => writeln!(f, "position_marked"),
-            LapTrigger::SessionEnd => writeln!(f, "session_end"),
-            LapTrigger::FitnessEquipment => writeln!(f, "fitness_equipment"),
-            LapTrigger::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            LapTrigger::Manual => write!(f, "manual"),
+            LapTrigger::Time => write!(f, "time"),
+            LapTrigger::Distance => write!(f, "distance"),
+            LapTrigger::PositionStart => write!(f, "position_start"),
+            LapTrigger::PositionLap => write!(f, "position_lap"),
+            LapTrigger::PositionWaypoint => write!(f, "position_waypoint"),
+            LapTrigger::PositionMarked => write!(f, "position_marked"),
+            LapTrigger::SessionEnd => write!(f, "session_end"),
+            LapTrigger::FitnessEquipment => write!(f, "fitness_equipment"),
+            LapTrigger::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -3616,13 +3616,13 @@ impl TimeMode {
 impl fmt::Display for TimeMode {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            TimeMode::Hour12 => writeln!(f, "hour12"),
-            TimeMode::Hour24 => writeln!(f, "hour24"),
-            TimeMode::Military => writeln!(f, "military"),
-            TimeMode::Hour12WithSeconds => writeln!(f, "hour_12_with_seconds"),
-            TimeMode::Hour24WithSeconds => writeln!(f, "hour_24_with_seconds"),
-            TimeMode::Utc => writeln!(f, "utc"),
-            TimeMode::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            TimeMode::Hour12 => write!(f, "hour12"),
+            TimeMode::Hour24 => write!(f, "hour24"),
+            TimeMode::Military => write!(f, "military"),
+            TimeMode::Hour12WithSeconds => write!(f, "hour_12_with_seconds"),
+            TimeMode::Hour24WithSeconds => write!(f, "hour_24_with_seconds"),
+            TimeMode::Utc => write!(f, "utc"),
+            TimeMode::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -3675,16 +3675,16 @@ impl BacklightMode {
 impl fmt::Display for BacklightMode {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            BacklightMode::Off => writeln!(f, "off"),
-            BacklightMode::Manual => writeln!(f, "manual"),
-            BacklightMode::KeyAndMessages => writeln!(f, "key_and_messages"),
-            BacklightMode::AutoBrightness => writeln!(f, "auto_brightness"),
-            BacklightMode::SmartNotifications => writeln!(f, "smart_notifications"),
-            BacklightMode::KeyAndMessagesNight => writeln!(f, "key_and_messages_night"),
+            BacklightMode::Off => write!(f, "off"),
+            BacklightMode::Manual => write!(f, "manual"),
+            BacklightMode::KeyAndMessages => write!(f, "key_and_messages"),
+            BacklightMode::AutoBrightness => write!(f, "auto_brightness"),
+            BacklightMode::SmartNotifications => write!(f, "smart_notifications"),
+            BacklightMode::KeyAndMessagesNight => write!(f, "key_and_messages_night"),
             BacklightMode::KeyAndMessagesAndSmartNotifications => {
-                writeln!(f, "key_and_messages_and_smart_notifications")
+                write!(f, "key_and_messages_and_smart_notifications")
             }
-            BacklightMode::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            BacklightMode::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -3728,9 +3728,9 @@ impl DateMode {
 impl fmt::Display for DateMode {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            DateMode::DayMonth => writeln!(f, "day_month"),
-            DateMode::MonthDay => writeln!(f, "month_day"),
-            DateMode::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            DateMode::DayMonth => write!(f, "day_month"),
+            DateMode::MonthDay => write!(f, "month_day"),
+            DateMode::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -3768,8 +3768,8 @@ impl BacklightTimeout {
 impl fmt::Display for BacklightTimeout {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            BacklightTimeout::Infinite => writeln!(f, "infinite"),
-            BacklightTimeout::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            BacklightTimeout::Infinite => write!(f, "infinite"),
+            BacklightTimeout::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -3911,43 +3911,43 @@ impl Event {
 impl fmt::Display for Event {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            Event::Timer => writeln!(f, "timer"),
-            Event::Workout => writeln!(f, "workout"),
-            Event::WorkoutStep => writeln!(f, "workout_step"),
-            Event::PowerDown => writeln!(f, "power_down"),
-            Event::PowerUp => writeln!(f, "power_up"),
-            Event::OffCourse => writeln!(f, "off_course"),
-            Event::Session => writeln!(f, "session"),
-            Event::Lap => writeln!(f, "lap"),
-            Event::CoursePoint => writeln!(f, "course_point"),
-            Event::Battery => writeln!(f, "battery"),
-            Event::VirtualPartnerPace => writeln!(f, "virtual_partner_pace"),
-            Event::HrHighAlert => writeln!(f, "hr_high_alert"),
-            Event::HrLowAlert => writeln!(f, "hr_low_alert"),
-            Event::SpeedHighAlert => writeln!(f, "speed_high_alert"),
-            Event::SpeedLowAlert => writeln!(f, "speed_low_alert"),
-            Event::CadHighAlert => writeln!(f, "cad_high_alert"),
-            Event::CadLowAlert => writeln!(f, "cad_low_alert"),
-            Event::PowerHighAlert => writeln!(f, "power_high_alert"),
-            Event::PowerLowAlert => writeln!(f, "power_low_alert"),
-            Event::RecoveryHr => writeln!(f, "recovery_hr"),
-            Event::BatteryLow => writeln!(f, "battery_low"),
-            Event::TimeDurationAlert => writeln!(f, "time_duration_alert"),
-            Event::DistanceDurationAlert => writeln!(f, "distance_duration_alert"),
-            Event::CalorieDurationAlert => writeln!(f, "calorie_duration_alert"),
-            Event::Activity => writeln!(f, "activity"),
-            Event::FitnessEquipment => writeln!(f, "fitness_equipment"),
-            Event::Length => writeln!(f, "length"),
-            Event::UserMarker => writeln!(f, "user_marker"),
-            Event::SportPoint => writeln!(f, "sport_point"),
-            Event::Calibration => writeln!(f, "calibration"),
-            Event::FrontGearChange => writeln!(f, "front_gear_change"),
-            Event::RearGearChange => writeln!(f, "rear_gear_change"),
-            Event::RiderPositionChange => writeln!(f, "rider_position_change"),
-            Event::ElevHighAlert => writeln!(f, "elev_high_alert"),
-            Event::ElevLowAlert => writeln!(f, "elev_low_alert"),
-            Event::CommTimeout => writeln!(f, "comm_timeout"),
-            Event::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            Event::Timer => write!(f, "timer"),
+            Event::Workout => write!(f, "workout"),
+            Event::WorkoutStep => write!(f, "workout_step"),
+            Event::PowerDown => write!(f, "power_down"),
+            Event::PowerUp => write!(f, "power_up"),
+            Event::OffCourse => write!(f, "off_course"),
+            Event::Session => write!(f, "session"),
+            Event::Lap => write!(f, "lap"),
+            Event::CoursePoint => write!(f, "course_point"),
+            Event::Battery => write!(f, "battery"),
+            Event::VirtualPartnerPace => write!(f, "virtual_partner_pace"),
+            Event::HrHighAlert => write!(f, "hr_high_alert"),
+            Event::HrLowAlert => write!(f, "hr_low_alert"),
+            Event::SpeedHighAlert => write!(f, "speed_high_alert"),
+            Event::SpeedLowAlert => write!(f, "speed_low_alert"),
+            Event::CadHighAlert => write!(f, "cad_high_alert"),
+            Event::CadLowAlert => write!(f, "cad_low_alert"),
+            Event::PowerHighAlert => write!(f, "power_high_alert"),
+            Event::PowerLowAlert => write!(f, "power_low_alert"),
+            Event::RecoveryHr => write!(f, "recovery_hr"),
+            Event::BatteryLow => write!(f, "battery_low"),
+            Event::TimeDurationAlert => write!(f, "time_duration_alert"),
+            Event::DistanceDurationAlert => write!(f, "distance_duration_alert"),
+            Event::CalorieDurationAlert => write!(f, "calorie_duration_alert"),
+            Event::Activity => write!(f, "activity"),
+            Event::FitnessEquipment => write!(f, "fitness_equipment"),
+            Event::Length => write!(f, "length"),
+            Event::UserMarker => write!(f, "user_marker"),
+            Event::SportPoint => write!(f, "sport_point"),
+            Event::Calibration => write!(f, "calibration"),
+            Event::FrontGearChange => write!(f, "front_gear_change"),
+            Event::RearGearChange => write!(f, "rear_gear_change"),
+            Event::RiderPositionChange => write!(f, "rider_position_change"),
+            Event::ElevHighAlert => write!(f, "elev_high_alert"),
+            Event::ElevLowAlert => write!(f, "elev_low_alert"),
+            Event::CommTimeout => write!(f, "comm_timeout"),
+            Event::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -4036,17 +4036,17 @@ impl EventType {
 impl fmt::Display for EventType {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            EventType::Start => writeln!(f, "start"),
-            EventType::Stop => writeln!(f, "stop"),
-            EventType::ConsecutiveDepreciated => writeln!(f, "consecutive_depreciated"),
-            EventType::Marker => writeln!(f, "marker"),
-            EventType::StopAll => writeln!(f, "stop_all"),
-            EventType::BeginDepreciated => writeln!(f, "begin_depreciated"),
-            EventType::EndDepreciated => writeln!(f, "end_depreciated"),
-            EventType::EndAllDepreciated => writeln!(f, "end_all_depreciated"),
-            EventType::StopDisable => writeln!(f, "stop_disable"),
-            EventType::StopDisableAll => writeln!(f, "stop_disable_all"),
-            EventType::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            EventType::Start => write!(f, "start"),
+            EventType::Stop => write!(f, "stop"),
+            EventType::ConsecutiveDepreciated => write!(f, "consecutive_depreciated"),
+            EventType::Marker => write!(f, "marker"),
+            EventType::StopAll => write!(f, "stop_all"),
+            EventType::BeginDepreciated => write!(f, "begin_depreciated"),
+            EventType::EndDepreciated => write!(f, "end_depreciated"),
+            EventType::EndAllDepreciated => write!(f, "end_all_depreciated"),
+            EventType::StopDisable => write!(f, "stop_disable"),
+            EventType::StopDisableAll => write!(f, "stop_disable_all"),
+            EventType::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -4095,10 +4095,10 @@ impl TimerTrigger {
 impl fmt::Display for TimerTrigger {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            TimerTrigger::Manual => writeln!(f, "manual"),
-            TimerTrigger::Auto => writeln!(f, "auto"),
-            TimerTrigger::FitnessEquipment => writeln!(f, "fitness_equipment"),
-            TimerTrigger::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            TimerTrigger::Manual => write!(f, "manual"),
+            TimerTrigger::Auto => write!(f, "auto"),
+            TimerTrigger::FitnessEquipment => write!(f, "fitness_equipment"),
+            TimerTrigger::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -4143,13 +4143,11 @@ impl FitnessEquipmentState {
 impl fmt::Display for FitnessEquipmentState {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            FitnessEquipmentState::Ready => writeln!(f, "ready"),
-            FitnessEquipmentState::InUse => writeln!(f, "in_use"),
-            FitnessEquipmentState::Paused => writeln!(f, "paused"),
-            FitnessEquipmentState::Unknown => writeln!(f, "unknown"),
-            FitnessEquipmentState::UnknownVariant(value) => {
-                writeln!(f, "unknown_variant_{}", *value)
-            }
+            FitnessEquipmentState::Ready => write!(f, "ready"),
+            FitnessEquipmentState::InUse => write!(f, "in_use"),
+            FitnessEquipmentState::Paused => write!(f, "paused"),
+            FitnessEquipmentState::Unknown => write!(f, "unknown"),
+            FitnessEquipmentState::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -4194,11 +4192,11 @@ impl Tone {
 impl fmt::Display for Tone {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            Tone::Off => writeln!(f, "off"),
-            Tone::Tone => writeln!(f, "tone"),
-            Tone::Vibrate => writeln!(f, "vibrate"),
-            Tone::ToneAndVibrate => writeln!(f, "tone_and_vibrate"),
-            Tone::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            Tone::Off => write!(f, "off"),
+            Tone::Tone => write!(f, "tone"),
+            Tone::Vibrate => write!(f, "vibrate"),
+            Tone::ToneAndVibrate => write!(f, "tone_and_vibrate"),
+            Tone::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -4243,11 +4241,11 @@ impl Autoscroll {
 impl fmt::Display for Autoscroll {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            Autoscroll::None => writeln!(f, "none"),
-            Autoscroll::Slow => writeln!(f, "slow"),
-            Autoscroll::Medium => writeln!(f, "medium"),
-            Autoscroll::Fast => writeln!(f, "fast"),
-            Autoscroll::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            Autoscroll::None => write!(f, "none"),
+            Autoscroll::Slow => write!(f, "slow"),
+            Autoscroll::Medium => write!(f, "medium"),
+            Autoscroll::Fast => write!(f, "fast"),
+            Autoscroll::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -4291,10 +4289,10 @@ impl ActivityClass {
 impl fmt::Display for ActivityClass {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            ActivityClass::LevelMax => writeln!(f, "level_max"),
-            ActivityClass::Level => writeln!(f, "level"),
-            ActivityClass::Athlete => writeln!(f, "athlete"),
-            ActivityClass::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            ActivityClass::LevelMax => write!(f, "level_max"),
+            ActivityClass::Level => write!(f, "level"),
+            ActivityClass::Athlete => write!(f, "athlete"),
+            ActivityClass::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -4336,10 +4334,10 @@ impl HrZoneCalc {
 impl fmt::Display for HrZoneCalc {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            HrZoneCalc::Custom => writeln!(f, "custom"),
-            HrZoneCalc::PercentMaxHr => writeln!(f, "percent_max_hr"),
-            HrZoneCalc::PercentHrr => writeln!(f, "percent_hrr"),
-            HrZoneCalc::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            HrZoneCalc::Custom => write!(f, "custom"),
+            HrZoneCalc::PercentMaxHr => write!(f, "percent_max_hr"),
+            HrZoneCalc::PercentHrr => write!(f, "percent_hrr"),
+            HrZoneCalc::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -4379,9 +4377,9 @@ impl PwrZoneCalc {
 impl fmt::Display for PwrZoneCalc {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            PwrZoneCalc::Custom => writeln!(f, "custom"),
-            PwrZoneCalc::PercentFtp => writeln!(f, "percent_ftp"),
-            PwrZoneCalc::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            PwrZoneCalc::Custom => write!(f, "custom"),
+            PwrZoneCalc::PercentFtp => write!(f, "percent_ftp"),
+            PwrZoneCalc::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -4476,49 +4474,45 @@ impl WktStepDuration {
 impl fmt::Display for WktStepDuration {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            WktStepDuration::Time => writeln!(f, "time"),
-            WktStepDuration::Distance => writeln!(f, "distance"),
-            WktStepDuration::HrLessThan => writeln!(f, "hr_less_than"),
-            WktStepDuration::HrGreaterThan => writeln!(f, "hr_greater_than"),
-            WktStepDuration::Calories => writeln!(f, "calories"),
-            WktStepDuration::Open => writeln!(f, "open"),
-            WktStepDuration::RepeatUntilStepsCmplt => writeln!(f, "repeat_until_steps_cmplt"),
-            WktStepDuration::RepeatUntilTime => writeln!(f, "repeat_until_time"),
-            WktStepDuration::RepeatUntilDistance => writeln!(f, "repeat_until_distance"),
-            WktStepDuration::RepeatUntilCalories => writeln!(f, "repeat_until_calories"),
-            WktStepDuration::RepeatUntilHrLessThan => writeln!(f, "repeat_until_hr_less_than"),
-            WktStepDuration::RepeatUntilHrGreaterThan => {
-                writeln!(f, "repeat_until_hr_greater_than")
-            }
-            WktStepDuration::RepeatUntilPowerLessThan => {
-                writeln!(f, "repeat_until_power_less_than")
-            }
+            WktStepDuration::Time => write!(f, "time"),
+            WktStepDuration::Distance => write!(f, "distance"),
+            WktStepDuration::HrLessThan => write!(f, "hr_less_than"),
+            WktStepDuration::HrGreaterThan => write!(f, "hr_greater_than"),
+            WktStepDuration::Calories => write!(f, "calories"),
+            WktStepDuration::Open => write!(f, "open"),
+            WktStepDuration::RepeatUntilStepsCmplt => write!(f, "repeat_until_steps_cmplt"),
+            WktStepDuration::RepeatUntilTime => write!(f, "repeat_until_time"),
+            WktStepDuration::RepeatUntilDistance => write!(f, "repeat_until_distance"),
+            WktStepDuration::RepeatUntilCalories => write!(f, "repeat_until_calories"),
+            WktStepDuration::RepeatUntilHrLessThan => write!(f, "repeat_until_hr_less_than"),
+            WktStepDuration::RepeatUntilHrGreaterThan => write!(f, "repeat_until_hr_greater_than"),
+            WktStepDuration::RepeatUntilPowerLessThan => write!(f, "repeat_until_power_less_than"),
             WktStepDuration::RepeatUntilPowerGreaterThan => {
-                writeln!(f, "repeat_until_power_greater_than")
+                write!(f, "repeat_until_power_greater_than")
             }
-            WktStepDuration::PowerLessThan => writeln!(f, "power_less_than"),
-            WktStepDuration::PowerGreaterThan => writeln!(f, "power_greater_than"),
-            WktStepDuration::TrainingPeaksTss => writeln!(f, "training_peaks_tss"),
+            WktStepDuration::PowerLessThan => write!(f, "power_less_than"),
+            WktStepDuration::PowerGreaterThan => write!(f, "power_greater_than"),
+            WktStepDuration::TrainingPeaksTss => write!(f, "training_peaks_tss"),
             WktStepDuration::RepeatUntilPowerLastLapLessThan => {
-                writeln!(f, "repeat_until_power_last_lap_less_than")
+                write!(f, "repeat_until_power_last_lap_less_than")
             }
             WktStepDuration::RepeatUntilMaxPowerLastLapLessThan => {
-                writeln!(f, "repeat_until_max_power_last_lap_less_than")
+                write!(f, "repeat_until_max_power_last_lap_less_than")
             }
-            WktStepDuration::Power3sLessThan => writeln!(f, "power_3s_less_than"),
-            WktStepDuration::Power10sLessThan => writeln!(f, "power_10s_less_than"),
-            WktStepDuration::Power30sLessThan => writeln!(f, "power_30s_less_than"),
-            WktStepDuration::Power3sGreaterThan => writeln!(f, "power_3s_greater_than"),
-            WktStepDuration::Power10sGreaterThan => writeln!(f, "power_10s_greater_than"),
-            WktStepDuration::Power30sGreaterThan => writeln!(f, "power_30s_greater_than"),
-            WktStepDuration::PowerLapLessThan => writeln!(f, "power_lap_less_than"),
-            WktStepDuration::PowerLapGreaterThan => writeln!(f, "power_lap_greater_than"),
+            WktStepDuration::Power3sLessThan => write!(f, "power_3s_less_than"),
+            WktStepDuration::Power10sLessThan => write!(f, "power_10s_less_than"),
+            WktStepDuration::Power30sLessThan => write!(f, "power_30s_less_than"),
+            WktStepDuration::Power3sGreaterThan => write!(f, "power_3s_greater_than"),
+            WktStepDuration::Power10sGreaterThan => write!(f, "power_10s_greater_than"),
+            WktStepDuration::Power30sGreaterThan => write!(f, "power_30s_greater_than"),
+            WktStepDuration::PowerLapLessThan => write!(f, "power_lap_less_than"),
+            WktStepDuration::PowerLapGreaterThan => write!(f, "power_lap_greater_than"),
             WktStepDuration::RepeatUntilTrainingPeaksTss => {
-                writeln!(f, "repeat_until_training_peaks_tss")
+                write!(f, "repeat_until_training_peaks_tss")
             }
-            WktStepDuration::RepetitionTime => writeln!(f, "repetition_time"),
-            WktStepDuration::Reps => writeln!(f, "reps"),
-            WktStepDuration::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            WktStepDuration::RepetitionTime => write!(f, "repetition_time"),
+            WktStepDuration::Reps => write!(f, "reps"),
+            WktStepDuration::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -4609,21 +4603,21 @@ impl WktStepTarget {
 impl fmt::Display for WktStepTarget {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            WktStepTarget::Speed => writeln!(f, "speed"),
-            WktStepTarget::HeartRate => writeln!(f, "heart_rate"),
-            WktStepTarget::Open => writeln!(f, "open"),
-            WktStepTarget::Cadence => writeln!(f, "cadence"),
-            WktStepTarget::Power => writeln!(f, "power"),
-            WktStepTarget::Grade => writeln!(f, "grade"),
-            WktStepTarget::Resistance => writeln!(f, "resistance"),
-            WktStepTarget::Power3s => writeln!(f, "power_3s"),
-            WktStepTarget::Power10s => writeln!(f, "power_10s"),
-            WktStepTarget::Power30s => writeln!(f, "power_30s"),
-            WktStepTarget::PowerLap => writeln!(f, "power_lap"),
-            WktStepTarget::SwimStroke => writeln!(f, "swim_stroke"),
-            WktStepTarget::SpeedLap => writeln!(f, "speed_lap"),
-            WktStepTarget::HeartRateLap => writeln!(f, "heart_rate_lap"),
-            WktStepTarget::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            WktStepTarget::Speed => write!(f, "speed"),
+            WktStepTarget::HeartRate => write!(f, "heart_rate"),
+            WktStepTarget::Open => write!(f, "open"),
+            WktStepTarget::Cadence => write!(f, "cadence"),
+            WktStepTarget::Power => write!(f, "power"),
+            WktStepTarget::Grade => write!(f, "grade"),
+            WktStepTarget::Resistance => write!(f, "resistance"),
+            WktStepTarget::Power3s => write!(f, "power_3s"),
+            WktStepTarget::Power10s => write!(f, "power_10s"),
+            WktStepTarget::Power30s => write!(f, "power_30s"),
+            WktStepTarget::PowerLap => write!(f, "power_lap"),
+            WktStepTarget::SwimStroke => write!(f, "swim_stroke"),
+            WktStepTarget::SpeedLap => write!(f, "speed_lap"),
+            WktStepTarget::HeartRateLap => write!(f, "heart_rate_lap"),
+            WktStepTarget::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -4684,14 +4678,14 @@ impl Goal {
 impl fmt::Display for Goal {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            Goal::Time => writeln!(f, "time"),
-            Goal::Distance => writeln!(f, "distance"),
-            Goal::Calories => writeln!(f, "calories"),
-            Goal::Frequency => writeln!(f, "frequency"),
-            Goal::Steps => writeln!(f, "steps"),
-            Goal::Ascent => writeln!(f, "ascent"),
-            Goal::ActiveMinutes => writeln!(f, "active_minutes"),
-            Goal::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            Goal::Time => write!(f, "time"),
+            Goal::Distance => write!(f, "distance"),
+            Goal::Calories => write!(f, "calories"),
+            Goal::Frequency => write!(f, "frequency"),
+            Goal::Steps => write!(f, "steps"),
+            Goal::Ascent => write!(f, "ascent"),
+            Goal::ActiveMinutes => write!(f, "active_minutes"),
+            Goal::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -4743,13 +4737,13 @@ impl GoalRecurrence {
 impl fmt::Display for GoalRecurrence {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            GoalRecurrence::Off => writeln!(f, "off"),
-            GoalRecurrence::Daily => writeln!(f, "daily"),
-            GoalRecurrence::Weekly => writeln!(f, "weekly"),
-            GoalRecurrence::Monthly => writeln!(f, "monthly"),
-            GoalRecurrence::Yearly => writeln!(f, "yearly"),
-            GoalRecurrence::Custom => writeln!(f, "custom"),
-            GoalRecurrence::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            GoalRecurrence::Off => write!(f, "off"),
+            GoalRecurrence::Daily => write!(f, "daily"),
+            GoalRecurrence::Weekly => write!(f, "weekly"),
+            GoalRecurrence::Monthly => write!(f, "monthly"),
+            GoalRecurrence::Yearly => write!(f, "yearly"),
+            GoalRecurrence::Custom => write!(f, "custom"),
+            GoalRecurrence::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -4797,10 +4791,10 @@ impl GoalSource {
 impl fmt::Display for GoalSource {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            GoalSource::Auto => writeln!(f, "auto"),
-            GoalSource::Community => writeln!(f, "community"),
-            GoalSource::User => writeln!(f, "user"),
-            GoalSource::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            GoalSource::Auto => write!(f, "auto"),
+            GoalSource::Community => write!(f, "community"),
+            GoalSource::User => write!(f, "user"),
+            GoalSource::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -4840,9 +4834,9 @@ impl Schedule {
 impl fmt::Display for Schedule {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            Schedule::Workout => writeln!(f, "workout"),
-            Schedule::Course => writeln!(f, "course"),
-            Schedule::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            Schedule::Workout => write!(f, "workout"),
+            Schedule::Course => write!(f, "course"),
+            Schedule::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -4929,33 +4923,33 @@ impl CoursePoint {
 impl fmt::Display for CoursePoint {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            CoursePoint::Generic => writeln!(f, "generic"),
-            CoursePoint::Summit => writeln!(f, "summit"),
-            CoursePoint::Valley => writeln!(f, "valley"),
-            CoursePoint::Water => writeln!(f, "water"),
-            CoursePoint::Food => writeln!(f, "food"),
-            CoursePoint::Danger => writeln!(f, "danger"),
-            CoursePoint::Left => writeln!(f, "left"),
-            CoursePoint::Right => writeln!(f, "right"),
-            CoursePoint::Straight => writeln!(f, "straight"),
-            CoursePoint::FirstAid => writeln!(f, "first_aid"),
-            CoursePoint::FourthCategory => writeln!(f, "fourth_category"),
-            CoursePoint::ThirdCategory => writeln!(f, "third_category"),
-            CoursePoint::SecondCategory => writeln!(f, "second_category"),
-            CoursePoint::FirstCategory => writeln!(f, "first_category"),
-            CoursePoint::HorsCategory => writeln!(f, "hors_category"),
-            CoursePoint::Sprint => writeln!(f, "sprint"),
-            CoursePoint::LeftFork => writeln!(f, "left_fork"),
-            CoursePoint::RightFork => writeln!(f, "right_fork"),
-            CoursePoint::MiddleFork => writeln!(f, "middle_fork"),
-            CoursePoint::SlightLeft => writeln!(f, "slight_left"),
-            CoursePoint::SharpLeft => writeln!(f, "sharp_left"),
-            CoursePoint::SlightRight => writeln!(f, "slight_right"),
-            CoursePoint::SharpRight => writeln!(f, "sharp_right"),
-            CoursePoint::UTurn => writeln!(f, "u_turn"),
-            CoursePoint::SegmentStart => writeln!(f, "segment_start"),
-            CoursePoint::SegmentEnd => writeln!(f, "segment_end"),
-            CoursePoint::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            CoursePoint::Generic => write!(f, "generic"),
+            CoursePoint::Summit => write!(f, "summit"),
+            CoursePoint::Valley => write!(f, "valley"),
+            CoursePoint::Water => write!(f, "water"),
+            CoursePoint::Food => write!(f, "food"),
+            CoursePoint::Danger => write!(f, "danger"),
+            CoursePoint::Left => write!(f, "left"),
+            CoursePoint::Right => write!(f, "right"),
+            CoursePoint::Straight => write!(f, "straight"),
+            CoursePoint::FirstAid => write!(f, "first_aid"),
+            CoursePoint::FourthCategory => write!(f, "fourth_category"),
+            CoursePoint::ThirdCategory => write!(f, "third_category"),
+            CoursePoint::SecondCategory => write!(f, "second_category"),
+            CoursePoint::FirstCategory => write!(f, "first_category"),
+            CoursePoint::HorsCategory => write!(f, "hors_category"),
+            CoursePoint::Sprint => write!(f, "sprint"),
+            CoursePoint::LeftFork => write!(f, "left_fork"),
+            CoursePoint::RightFork => write!(f, "right_fork"),
+            CoursePoint::MiddleFork => write!(f, "middle_fork"),
+            CoursePoint::SlightLeft => write!(f, "slight_left"),
+            CoursePoint::SharpLeft => write!(f, "sharp_left"),
+            CoursePoint::SlightRight => write!(f, "slight_right"),
+            CoursePoint::SharpRight => write!(f, "sharp_right"),
+            CoursePoint::UTurn => write!(f, "u_turn"),
+            CoursePoint::SegmentStart => write!(f, "segment_start"),
+            CoursePoint::SegmentEnd => write!(f, "segment_end"),
+            CoursePoint::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -5373,182 +5367,182 @@ impl Manufacturer {
 impl fmt::Display for Manufacturer {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            Manufacturer::Garmin => writeln!(f, "garmin"),
-            Manufacturer::GarminFr405Antfs => writeln!(f, "garmin_fr405_antfs"),
-            Manufacturer::Zephyr => writeln!(f, "zephyr"),
-            Manufacturer::Dayton => writeln!(f, "dayton"),
-            Manufacturer::Idt => writeln!(f, "idt"),
-            Manufacturer::Srm => writeln!(f, "srm"),
-            Manufacturer::Quarq => writeln!(f, "quarq"),
-            Manufacturer::Ibike => writeln!(f, "ibike"),
-            Manufacturer::Saris => writeln!(f, "saris"),
-            Manufacturer::SparkHk => writeln!(f, "spark_hk"),
-            Manufacturer::Tanita => writeln!(f, "tanita"),
-            Manufacturer::Echowell => writeln!(f, "echowell"),
-            Manufacturer::DynastreamOem => writeln!(f, "dynastream_oem"),
-            Manufacturer::Nautilus => writeln!(f, "nautilus"),
-            Manufacturer::Dynastream => writeln!(f, "dynastream"),
-            Manufacturer::Timex => writeln!(f, "timex"),
-            Manufacturer::Metrigear => writeln!(f, "metrigear"),
-            Manufacturer::Xelic => writeln!(f, "xelic"),
-            Manufacturer::Beurer => writeln!(f, "beurer"),
-            Manufacturer::Cardiosport => writeln!(f, "cardiosport"),
-            Manufacturer::AAndD => writeln!(f, "a_and_d"),
-            Manufacturer::Hmm => writeln!(f, "hmm"),
-            Manufacturer::Suunto => writeln!(f, "suunto"),
-            Manufacturer::ThitaElektronik => writeln!(f, "thita_elektronik"),
-            Manufacturer::Gpulse => writeln!(f, "gpulse"),
-            Manufacturer::CleanMobile => writeln!(f, "clean_mobile"),
-            Manufacturer::PedalBrain => writeln!(f, "pedal_brain"),
-            Manufacturer::Peaksware => writeln!(f, "peaksware"),
-            Manufacturer::Saxonar => writeln!(f, "saxonar"),
-            Manufacturer::LemondFitness => writeln!(f, "lemond_fitness"),
-            Manufacturer::Dexcom => writeln!(f, "dexcom"),
-            Manufacturer::WahooFitness => writeln!(f, "wahoo_fitness"),
-            Manufacturer::OctaneFitness => writeln!(f, "octane_fitness"),
-            Manufacturer::Archinoetics => writeln!(f, "archinoetics"),
-            Manufacturer::TheHurtBox => writeln!(f, "the_hurt_box"),
-            Manufacturer::CitizenSystems => writeln!(f, "citizen_systems"),
-            Manufacturer::Magellan => writeln!(f, "magellan"),
-            Manufacturer::Osynce => writeln!(f, "osynce"),
-            Manufacturer::Holux => writeln!(f, "holux"),
-            Manufacturer::Concept2 => writeln!(f, "concept2"),
-            Manufacturer::OneGiantLeap => writeln!(f, "one_giant_leap"),
-            Manufacturer::AceSensor => writeln!(f, "ace_sensor"),
-            Manufacturer::BrimBrothers => writeln!(f, "brim_brothers"),
-            Manufacturer::Xplova => writeln!(f, "xplova"),
-            Manufacturer::PerceptionDigital => writeln!(f, "perception_digital"),
-            Manufacturer::Bf1systems => writeln!(f, "bf1systems"),
-            Manufacturer::Pioneer => writeln!(f, "pioneer"),
-            Manufacturer::Spantec => writeln!(f, "spantec"),
-            Manufacturer::Metalogics => writeln!(f, "metalogics"),
-            Manufacturer::Name4iiiis => writeln!(f, "4iiiis"),
-            Manufacturer::SeikoEpson => writeln!(f, "seiko_epson"),
-            Manufacturer::SeikoEpsonOem => writeln!(f, "seiko_epson_oem"),
-            Manufacturer::IforPowell => writeln!(f, "ifor_powell"),
-            Manufacturer::MaxwellGuider => writeln!(f, "maxwell_guider"),
-            Manufacturer::StarTrac => writeln!(f, "star_trac"),
-            Manufacturer::Breakaway => writeln!(f, "breakaway"),
-            Manufacturer::AlatechTechnologyLtd => writeln!(f, "alatech_technology_ltd"),
-            Manufacturer::MioTechnologyEurope => writeln!(f, "mio_technology_europe"),
-            Manufacturer::Rotor => writeln!(f, "rotor"),
-            Manufacturer::Geonaute => writeln!(f, "geonaute"),
-            Manufacturer::IdBike => writeln!(f, "id_bike"),
-            Manufacturer::Specialized => writeln!(f, "specialized"),
-            Manufacturer::Wtek => writeln!(f, "wtek"),
-            Manufacturer::PhysicalEnterprises => writeln!(f, "physical_enterprises"),
-            Manufacturer::NorthPoleEngineering => writeln!(f, "north_pole_engineering"),
-            Manufacturer::Bkool => writeln!(f, "bkool"),
-            Manufacturer::Cateye => writeln!(f, "cateye"),
-            Manufacturer::StagesCycling => writeln!(f, "stages_cycling"),
-            Manufacturer::Sigmasport => writeln!(f, "sigmasport"),
-            Manufacturer::Tomtom => writeln!(f, "tomtom"),
-            Manufacturer::Peripedal => writeln!(f, "peripedal"),
-            Manufacturer::Wattbike => writeln!(f, "wattbike"),
-            Manufacturer::Moxy => writeln!(f, "moxy"),
-            Manufacturer::Ciclosport => writeln!(f, "ciclosport"),
-            Manufacturer::Powerbahn => writeln!(f, "powerbahn"),
-            Manufacturer::AcornProjectsAps => writeln!(f, "acorn_projects_aps"),
-            Manufacturer::Lifebeam => writeln!(f, "lifebeam"),
-            Manufacturer::Bontrager => writeln!(f, "bontrager"),
-            Manufacturer::Wellgo => writeln!(f, "wellgo"),
-            Manufacturer::Scosche => writeln!(f, "scosche"),
-            Manufacturer::Magura => writeln!(f, "magura"),
-            Manufacturer::Woodway => writeln!(f, "woodway"),
-            Manufacturer::Elite => writeln!(f, "elite"),
-            Manufacturer::NielsenKellerman => writeln!(f, "nielsen_kellerman"),
-            Manufacturer::DkCity => writeln!(f, "dk_city"),
-            Manufacturer::Tacx => writeln!(f, "tacx"),
-            Manufacturer::DirectionTechnology => writeln!(f, "direction_technology"),
-            Manufacturer::Magtonic => writeln!(f, "magtonic"),
-            Manufacturer::Name1partcarbon => writeln!(f, "1partcarbon"),
-            Manufacturer::InsideRideTechnologies => writeln!(f, "inside_ride_technologies"),
-            Manufacturer::SoundOfMotion => writeln!(f, "sound_of_motion"),
-            Manufacturer::Stryd => writeln!(f, "stryd"),
-            Manufacturer::Icg => writeln!(f, "icg"),
-            Manufacturer::MiPulse => writeln!(f, "MiPulse"),
-            Manufacturer::BsxAthletics => writeln!(f, "bsx_athletics"),
-            Manufacturer::Look => writeln!(f, "look"),
-            Manufacturer::CampagnoloSrl => writeln!(f, "campagnolo_srl"),
-            Manufacturer::BodyBikeSmart => writeln!(f, "body_bike_smart"),
-            Manufacturer::Praxisworks => writeln!(f, "praxisworks"),
-            Manufacturer::LimitsTechnology => writeln!(f, "limits_technology"),
-            Manufacturer::TopactionTechnology => writeln!(f, "topaction_technology"),
-            Manufacturer::Cosinuss => writeln!(f, "cosinuss"),
-            Manufacturer::Fitcare => writeln!(f, "fitcare"),
-            Manufacturer::Magene => writeln!(f, "magene"),
-            Manufacturer::GiantManufacturingCo => writeln!(f, "giant_manufacturing_co"),
-            Manufacturer::Tigrasport => writeln!(f, "tigrasport"),
-            Manufacturer::Salutron => writeln!(f, "salutron"),
-            Manufacturer::Technogym => writeln!(f, "technogym"),
-            Manufacturer::BrytonSensors => writeln!(f, "bryton_sensors"),
-            Manufacturer::LatitudeLimited => writeln!(f, "latitude_limited"),
-            Manufacturer::SoaringTechnology => writeln!(f, "soaring_technology"),
-            Manufacturer::Igpsport => writeln!(f, "igpsport"),
-            Manufacturer::Thinkrider => writeln!(f, "thinkrider"),
-            Manufacturer::GopherSport => writeln!(f, "gopher_sport"),
-            Manufacturer::Waterrower => writeln!(f, "waterrower"),
-            Manufacturer::Orangetheory => writeln!(f, "orangetheory"),
-            Manufacturer::Inpeak => writeln!(f, "inpeak"),
-            Manufacturer::Kinetic => writeln!(f, "kinetic"),
-            Manufacturer::JohnsonHealthTech => writeln!(f, "johnson_health_tech"),
-            Manufacturer::PolarElectro => writeln!(f, "polar_electro"),
-            Manufacturer::Seesense => writeln!(f, "seesense"),
-            Manufacturer::NciTechnology => writeln!(f, "nci_technology"),
-            Manufacturer::Iqsquare => writeln!(f, "iqsquare"),
-            Manufacturer::Leomo => writeln!(f, "leomo"),
-            Manufacturer::IfitCom => writeln!(f, "ifit_com"),
-            Manufacturer::CorosByte => writeln!(f, "coros_byte"),
-            Manufacturer::VersaDesign => writeln!(f, "versa_design"),
-            Manufacturer::Chileaf => writeln!(f, "chileaf"),
-            Manufacturer::Development => writeln!(f, "development"),
-            Manufacturer::Healthandlife => writeln!(f, "healthandlife"),
-            Manufacturer::Lezyne => writeln!(f, "lezyne"),
-            Manufacturer::ScribeLabs => writeln!(f, "scribe_labs"),
-            Manufacturer::Zwift => writeln!(f, "zwift"),
-            Manufacturer::Watteam => writeln!(f, "watteam"),
-            Manufacturer::Recon => writeln!(f, "recon"),
-            Manufacturer::FaveroElectronics => writeln!(f, "favero_electronics"),
-            Manufacturer::Dynovelo => writeln!(f, "dynovelo"),
-            Manufacturer::Strava => writeln!(f, "strava"),
-            Manufacturer::Precor => writeln!(f, "precor"),
-            Manufacturer::Bryton => writeln!(f, "bryton"),
-            Manufacturer::Sram => writeln!(f, "sram"),
-            Manufacturer::Navman => writeln!(f, "navman"),
-            Manufacturer::Cobi => writeln!(f, "cobi"),
-            Manufacturer::Spivi => writeln!(f, "spivi"),
-            Manufacturer::MioMagellan => writeln!(f, "mio_magellan"),
-            Manufacturer::Evesports => writeln!(f, "evesports"),
-            Manufacturer::SensitivusGauge => writeln!(f, "sensitivus_gauge"),
-            Manufacturer::Podoon => writeln!(f, "podoon"),
-            Manufacturer::LifeTimeFitness => writeln!(f, "life_time_fitness"),
-            Manufacturer::FalcoEMotors => writeln!(f, "falco_e_motors"),
-            Manufacturer::Minoura => writeln!(f, "minoura"),
-            Manufacturer::Cycliq => writeln!(f, "cycliq"),
-            Manufacturer::Luxottica => writeln!(f, "luxottica"),
-            Manufacturer::TrainerRoad => writeln!(f, "trainer_road"),
-            Manufacturer::TheSufferfest => writeln!(f, "the_sufferfest"),
-            Manufacturer::Fullspeedahead => writeln!(f, "fullspeedahead"),
-            Manufacturer::Virtualtraining => writeln!(f, "virtualtraining"),
-            Manufacturer::Feedbacksports => writeln!(f, "feedbacksports"),
-            Manufacturer::Omata => writeln!(f, "omata"),
-            Manufacturer::Vdo => writeln!(f, "vdo"),
-            Manufacturer::Magneticdays => writeln!(f, "magneticdays"),
-            Manufacturer::Hammerhead => writeln!(f, "hammerhead"),
-            Manufacturer::KineticByKurt => writeln!(f, "kinetic_by_kurt"),
-            Manufacturer::Shapelog => writeln!(f, "shapelog"),
-            Manufacturer::Dabuziduo => writeln!(f, "dabuziduo"),
-            Manufacturer::Jetblack => writeln!(f, "jetblack"),
-            Manufacturer::Coros => writeln!(f, "coros"),
-            Manufacturer::Virtugo => writeln!(f, "virtugo"),
-            Manufacturer::Velosense => writeln!(f, "velosense"),
-            Manufacturer::Cycligentinc => writeln!(f, "cycligentinc"),
-            Manufacturer::Trailforks => writeln!(f, "trailforks"),
-            Manufacturer::MahleEbikemotion => writeln!(f, "mahle_ebikemotion"),
-            Manufacturer::Nurvv => writeln!(f, "nurvv"),
-            Manufacturer::Microprogram => writeln!(f, "microprogram"),
-            Manufacturer::Actigraphcorp => writeln!(f, "actigraphcorp"),
-            Manufacturer::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            Manufacturer::Garmin => write!(f, "garmin"),
+            Manufacturer::GarminFr405Antfs => write!(f, "garmin_fr405_antfs"),
+            Manufacturer::Zephyr => write!(f, "zephyr"),
+            Manufacturer::Dayton => write!(f, "dayton"),
+            Manufacturer::Idt => write!(f, "idt"),
+            Manufacturer::Srm => write!(f, "srm"),
+            Manufacturer::Quarq => write!(f, "quarq"),
+            Manufacturer::Ibike => write!(f, "ibike"),
+            Manufacturer::Saris => write!(f, "saris"),
+            Manufacturer::SparkHk => write!(f, "spark_hk"),
+            Manufacturer::Tanita => write!(f, "tanita"),
+            Manufacturer::Echowell => write!(f, "echowell"),
+            Manufacturer::DynastreamOem => write!(f, "dynastream_oem"),
+            Manufacturer::Nautilus => write!(f, "nautilus"),
+            Manufacturer::Dynastream => write!(f, "dynastream"),
+            Manufacturer::Timex => write!(f, "timex"),
+            Manufacturer::Metrigear => write!(f, "metrigear"),
+            Manufacturer::Xelic => write!(f, "xelic"),
+            Manufacturer::Beurer => write!(f, "beurer"),
+            Manufacturer::Cardiosport => write!(f, "cardiosport"),
+            Manufacturer::AAndD => write!(f, "a_and_d"),
+            Manufacturer::Hmm => write!(f, "hmm"),
+            Manufacturer::Suunto => write!(f, "suunto"),
+            Manufacturer::ThitaElektronik => write!(f, "thita_elektronik"),
+            Manufacturer::Gpulse => write!(f, "gpulse"),
+            Manufacturer::CleanMobile => write!(f, "clean_mobile"),
+            Manufacturer::PedalBrain => write!(f, "pedal_brain"),
+            Manufacturer::Peaksware => write!(f, "peaksware"),
+            Manufacturer::Saxonar => write!(f, "saxonar"),
+            Manufacturer::LemondFitness => write!(f, "lemond_fitness"),
+            Manufacturer::Dexcom => write!(f, "dexcom"),
+            Manufacturer::WahooFitness => write!(f, "wahoo_fitness"),
+            Manufacturer::OctaneFitness => write!(f, "octane_fitness"),
+            Manufacturer::Archinoetics => write!(f, "archinoetics"),
+            Manufacturer::TheHurtBox => write!(f, "the_hurt_box"),
+            Manufacturer::CitizenSystems => write!(f, "citizen_systems"),
+            Manufacturer::Magellan => write!(f, "magellan"),
+            Manufacturer::Osynce => write!(f, "osynce"),
+            Manufacturer::Holux => write!(f, "holux"),
+            Manufacturer::Concept2 => write!(f, "concept2"),
+            Manufacturer::OneGiantLeap => write!(f, "one_giant_leap"),
+            Manufacturer::AceSensor => write!(f, "ace_sensor"),
+            Manufacturer::BrimBrothers => write!(f, "brim_brothers"),
+            Manufacturer::Xplova => write!(f, "xplova"),
+            Manufacturer::PerceptionDigital => write!(f, "perception_digital"),
+            Manufacturer::Bf1systems => write!(f, "bf1systems"),
+            Manufacturer::Pioneer => write!(f, "pioneer"),
+            Manufacturer::Spantec => write!(f, "spantec"),
+            Manufacturer::Metalogics => write!(f, "metalogics"),
+            Manufacturer::Name4iiiis => write!(f, "4iiiis"),
+            Manufacturer::SeikoEpson => write!(f, "seiko_epson"),
+            Manufacturer::SeikoEpsonOem => write!(f, "seiko_epson_oem"),
+            Manufacturer::IforPowell => write!(f, "ifor_powell"),
+            Manufacturer::MaxwellGuider => write!(f, "maxwell_guider"),
+            Manufacturer::StarTrac => write!(f, "star_trac"),
+            Manufacturer::Breakaway => write!(f, "breakaway"),
+            Manufacturer::AlatechTechnologyLtd => write!(f, "alatech_technology_ltd"),
+            Manufacturer::MioTechnologyEurope => write!(f, "mio_technology_europe"),
+            Manufacturer::Rotor => write!(f, "rotor"),
+            Manufacturer::Geonaute => write!(f, "geonaute"),
+            Manufacturer::IdBike => write!(f, "id_bike"),
+            Manufacturer::Specialized => write!(f, "specialized"),
+            Manufacturer::Wtek => write!(f, "wtek"),
+            Manufacturer::PhysicalEnterprises => write!(f, "physical_enterprises"),
+            Manufacturer::NorthPoleEngineering => write!(f, "north_pole_engineering"),
+            Manufacturer::Bkool => write!(f, "bkool"),
+            Manufacturer::Cateye => write!(f, "cateye"),
+            Manufacturer::StagesCycling => write!(f, "stages_cycling"),
+            Manufacturer::Sigmasport => write!(f, "sigmasport"),
+            Manufacturer::Tomtom => write!(f, "tomtom"),
+            Manufacturer::Peripedal => write!(f, "peripedal"),
+            Manufacturer::Wattbike => write!(f, "wattbike"),
+            Manufacturer::Moxy => write!(f, "moxy"),
+            Manufacturer::Ciclosport => write!(f, "ciclosport"),
+            Manufacturer::Powerbahn => write!(f, "powerbahn"),
+            Manufacturer::AcornProjectsAps => write!(f, "acorn_projects_aps"),
+            Manufacturer::Lifebeam => write!(f, "lifebeam"),
+            Manufacturer::Bontrager => write!(f, "bontrager"),
+            Manufacturer::Wellgo => write!(f, "wellgo"),
+            Manufacturer::Scosche => write!(f, "scosche"),
+            Manufacturer::Magura => write!(f, "magura"),
+            Manufacturer::Woodway => write!(f, "woodway"),
+            Manufacturer::Elite => write!(f, "elite"),
+            Manufacturer::NielsenKellerman => write!(f, "nielsen_kellerman"),
+            Manufacturer::DkCity => write!(f, "dk_city"),
+            Manufacturer::Tacx => write!(f, "tacx"),
+            Manufacturer::DirectionTechnology => write!(f, "direction_technology"),
+            Manufacturer::Magtonic => write!(f, "magtonic"),
+            Manufacturer::Name1partcarbon => write!(f, "1partcarbon"),
+            Manufacturer::InsideRideTechnologies => write!(f, "inside_ride_technologies"),
+            Manufacturer::SoundOfMotion => write!(f, "sound_of_motion"),
+            Manufacturer::Stryd => write!(f, "stryd"),
+            Manufacturer::Icg => write!(f, "icg"),
+            Manufacturer::MiPulse => write!(f, "MiPulse"),
+            Manufacturer::BsxAthletics => write!(f, "bsx_athletics"),
+            Manufacturer::Look => write!(f, "look"),
+            Manufacturer::CampagnoloSrl => write!(f, "campagnolo_srl"),
+            Manufacturer::BodyBikeSmart => write!(f, "body_bike_smart"),
+            Manufacturer::Praxisworks => write!(f, "praxisworks"),
+            Manufacturer::LimitsTechnology => write!(f, "limits_technology"),
+            Manufacturer::TopactionTechnology => write!(f, "topaction_technology"),
+            Manufacturer::Cosinuss => write!(f, "cosinuss"),
+            Manufacturer::Fitcare => write!(f, "fitcare"),
+            Manufacturer::Magene => write!(f, "magene"),
+            Manufacturer::GiantManufacturingCo => write!(f, "giant_manufacturing_co"),
+            Manufacturer::Tigrasport => write!(f, "tigrasport"),
+            Manufacturer::Salutron => write!(f, "salutron"),
+            Manufacturer::Technogym => write!(f, "technogym"),
+            Manufacturer::BrytonSensors => write!(f, "bryton_sensors"),
+            Manufacturer::LatitudeLimited => write!(f, "latitude_limited"),
+            Manufacturer::SoaringTechnology => write!(f, "soaring_technology"),
+            Manufacturer::Igpsport => write!(f, "igpsport"),
+            Manufacturer::Thinkrider => write!(f, "thinkrider"),
+            Manufacturer::GopherSport => write!(f, "gopher_sport"),
+            Manufacturer::Waterrower => write!(f, "waterrower"),
+            Manufacturer::Orangetheory => write!(f, "orangetheory"),
+            Manufacturer::Inpeak => write!(f, "inpeak"),
+            Manufacturer::Kinetic => write!(f, "kinetic"),
+            Manufacturer::JohnsonHealthTech => write!(f, "johnson_health_tech"),
+            Manufacturer::PolarElectro => write!(f, "polar_electro"),
+            Manufacturer::Seesense => write!(f, "seesense"),
+            Manufacturer::NciTechnology => write!(f, "nci_technology"),
+            Manufacturer::Iqsquare => write!(f, "iqsquare"),
+            Manufacturer::Leomo => write!(f, "leomo"),
+            Manufacturer::IfitCom => write!(f, "ifit_com"),
+            Manufacturer::CorosByte => write!(f, "coros_byte"),
+            Manufacturer::VersaDesign => write!(f, "versa_design"),
+            Manufacturer::Chileaf => write!(f, "chileaf"),
+            Manufacturer::Development => write!(f, "development"),
+            Manufacturer::Healthandlife => write!(f, "healthandlife"),
+            Manufacturer::Lezyne => write!(f, "lezyne"),
+            Manufacturer::ScribeLabs => write!(f, "scribe_labs"),
+            Manufacturer::Zwift => write!(f, "zwift"),
+            Manufacturer::Watteam => write!(f, "watteam"),
+            Manufacturer::Recon => write!(f, "recon"),
+            Manufacturer::FaveroElectronics => write!(f, "favero_electronics"),
+            Manufacturer::Dynovelo => write!(f, "dynovelo"),
+            Manufacturer::Strava => write!(f, "strava"),
+            Manufacturer::Precor => write!(f, "precor"),
+            Manufacturer::Bryton => write!(f, "bryton"),
+            Manufacturer::Sram => write!(f, "sram"),
+            Manufacturer::Navman => write!(f, "navman"),
+            Manufacturer::Cobi => write!(f, "cobi"),
+            Manufacturer::Spivi => write!(f, "spivi"),
+            Manufacturer::MioMagellan => write!(f, "mio_magellan"),
+            Manufacturer::Evesports => write!(f, "evesports"),
+            Manufacturer::SensitivusGauge => write!(f, "sensitivus_gauge"),
+            Manufacturer::Podoon => write!(f, "podoon"),
+            Manufacturer::LifeTimeFitness => write!(f, "life_time_fitness"),
+            Manufacturer::FalcoEMotors => write!(f, "falco_e_motors"),
+            Manufacturer::Minoura => write!(f, "minoura"),
+            Manufacturer::Cycliq => write!(f, "cycliq"),
+            Manufacturer::Luxottica => write!(f, "luxottica"),
+            Manufacturer::TrainerRoad => write!(f, "trainer_road"),
+            Manufacturer::TheSufferfest => write!(f, "the_sufferfest"),
+            Manufacturer::Fullspeedahead => write!(f, "fullspeedahead"),
+            Manufacturer::Virtualtraining => write!(f, "virtualtraining"),
+            Manufacturer::Feedbacksports => write!(f, "feedbacksports"),
+            Manufacturer::Omata => write!(f, "omata"),
+            Manufacturer::Vdo => write!(f, "vdo"),
+            Manufacturer::Magneticdays => write!(f, "magneticdays"),
+            Manufacturer::Hammerhead => write!(f, "hammerhead"),
+            Manufacturer::KineticByKurt => write!(f, "kinetic_by_kurt"),
+            Manufacturer::Shapelog => write!(f, "shapelog"),
+            Manufacturer::Dabuziduo => write!(f, "dabuziduo"),
+            Manufacturer::Jetblack => write!(f, "jetblack"),
+            Manufacturer::Coros => write!(f, "coros"),
+            Manufacturer::Virtugo => write!(f, "virtugo"),
+            Manufacturer::Velosense => write!(f, "velosense"),
+            Manufacturer::Cycligentinc => write!(f, "cycligentinc"),
+            Manufacturer::Trailforks => write!(f, "trailforks"),
+            Manufacturer::MahleEbikemotion => write!(f, "mahle_ebikemotion"),
+            Manufacturer::Nurvv => write!(f, "nurvv"),
+            Manufacturer::Microprogram => write!(f, "microprogram"),
+            Manufacturer::Actigraphcorp => write!(f, "actigraphcorp"),
+            Manufacturer::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -6153,201 +6147,197 @@ impl GarminProduct {
 impl fmt::Display for GarminProduct {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            GarminProduct::Hrm1 => writeln!(f, "hrm1"),
-            GarminProduct::Axh01 => writeln!(f, "axh01"),
-            GarminProduct::Axb01 => writeln!(f, "axb01"),
-            GarminProduct::Axb02 => writeln!(f, "axb02"),
-            GarminProduct::Hrm2ss => writeln!(f, "hrm2ss"),
-            GarminProduct::DsiAlf02 => writeln!(f, "dsi_alf02"),
-            GarminProduct::Hrm3ss => writeln!(f, "hrm3ss"),
-            GarminProduct::HrmRunSingleByteProductId => {
-                writeln!(f, "hrm_run_single_byte_product_id")
-            }
-            GarminProduct::Bsm => writeln!(f, "bsm"),
-            GarminProduct::Bcm => writeln!(f, "bcm"),
-            GarminProduct::Axs01 => writeln!(f, "axs01"),
-            GarminProduct::HrmTriSingleByteProductId => {
-                writeln!(f, "hrm_tri_single_byte_product_id")
-            }
-            GarminProduct::Fr225SingleByteProductId => writeln!(f, "fr225_single_byte_product_id"),
-            GarminProduct::Fr301China => writeln!(f, "fr301_china"),
-            GarminProduct::Fr301Japan => writeln!(f, "fr301_japan"),
-            GarminProduct::Fr301Korea => writeln!(f, "fr301_korea"),
-            GarminProduct::Fr301Taiwan => writeln!(f, "fr301_taiwan"),
-            GarminProduct::Fr405 => writeln!(f, "fr405"),
-            GarminProduct::Fr50 => writeln!(f, "fr50"),
-            GarminProduct::Fr405Japan => writeln!(f, "fr405_japan"),
-            GarminProduct::Fr60 => writeln!(f, "fr60"),
-            GarminProduct::DsiAlf01 => writeln!(f, "dsi_alf01"),
-            GarminProduct::Fr310xt => writeln!(f, "fr310xt"),
-            GarminProduct::Edge500 => writeln!(f, "edge500"),
-            GarminProduct::Fr110 => writeln!(f, "fr110"),
-            GarminProduct::Edge800 => writeln!(f, "edge800"),
-            GarminProduct::Edge500Taiwan => writeln!(f, "edge500_taiwan"),
-            GarminProduct::Edge500Japan => writeln!(f, "edge500_japan"),
-            GarminProduct::Chirp => writeln!(f, "chirp"),
-            GarminProduct::Fr110Japan => writeln!(f, "fr110_japan"),
-            GarminProduct::Edge200 => writeln!(f, "edge200"),
-            GarminProduct::Fr910xt => writeln!(f, "fr910xt"),
-            GarminProduct::Edge800Taiwan => writeln!(f, "edge800_taiwan"),
-            GarminProduct::Edge800Japan => writeln!(f, "edge800_japan"),
-            GarminProduct::Alf04 => writeln!(f, "alf04"),
-            GarminProduct::Fr610 => writeln!(f, "fr610"),
-            GarminProduct::Fr210Japan => writeln!(f, "fr210_japan"),
-            GarminProduct::VectorSs => writeln!(f, "vector_ss"),
-            GarminProduct::VectorCp => writeln!(f, "vector_cp"),
-            GarminProduct::Edge800China => writeln!(f, "edge800_china"),
-            GarminProduct::Edge500China => writeln!(f, "edge500_china"),
-            GarminProduct::Fr610Japan => writeln!(f, "fr610_japan"),
-            GarminProduct::Edge500Korea => writeln!(f, "edge500_korea"),
-            GarminProduct::Fr70 => writeln!(f, "fr70"),
-            GarminProduct::Fr310xt4t => writeln!(f, "fr310xt_4t"),
-            GarminProduct::Amx => writeln!(f, "amx"),
-            GarminProduct::Fr10 => writeln!(f, "fr10"),
-            GarminProduct::Edge800Korea => writeln!(f, "edge800_korea"),
-            GarminProduct::Swim => writeln!(f, "swim"),
-            GarminProduct::Fr910xtChina => writeln!(f, "fr910xt_china"),
-            GarminProduct::Fenix => writeln!(f, "fenix"),
-            GarminProduct::Edge200Taiwan => writeln!(f, "edge200_taiwan"),
-            GarminProduct::Edge510 => writeln!(f, "edge510"),
-            GarminProduct::Edge810 => writeln!(f, "edge810"),
-            GarminProduct::Tempe => writeln!(f, "tempe"),
-            GarminProduct::Fr910xtJapan => writeln!(f, "fr910xt_japan"),
-            GarminProduct::Fr620 => writeln!(f, "fr620"),
-            GarminProduct::Fr220 => writeln!(f, "fr220"),
-            GarminProduct::Fr910xtKorea => writeln!(f, "fr910xt_korea"),
-            GarminProduct::Fr10Japan => writeln!(f, "fr10_japan"),
-            GarminProduct::Edge810Japan => writeln!(f, "edge810_japan"),
-            GarminProduct::VirbElite => writeln!(f, "virb_elite"),
-            GarminProduct::EdgeTouring => writeln!(f, "edge_touring"),
-            GarminProduct::Edge510Japan => writeln!(f, "edge510_japan"),
-            GarminProduct::HrmTri => writeln!(f, "hrm_tri"),
-            GarminProduct::HrmRun => writeln!(f, "hrm_run"),
-            GarminProduct::Fr920xt => writeln!(f, "fr920xt"),
-            GarminProduct::Edge510Asia => writeln!(f, "edge510_asia"),
-            GarminProduct::Edge810China => writeln!(f, "edge810_china"),
-            GarminProduct::Edge810Taiwan => writeln!(f, "edge810_taiwan"),
-            GarminProduct::Edge1000 => writeln!(f, "edge1000"),
-            GarminProduct::VivoFit => writeln!(f, "vivo_fit"),
-            GarminProduct::VirbRemote => writeln!(f, "virb_remote"),
-            GarminProduct::VivoKi => writeln!(f, "vivo_ki"),
-            GarminProduct::Fr15 => writeln!(f, "fr15"),
-            GarminProduct::VivoActive => writeln!(f, "vivo_active"),
-            GarminProduct::Edge510Korea => writeln!(f, "edge510_korea"),
-            GarminProduct::Fr620Japan => writeln!(f, "fr620_japan"),
-            GarminProduct::Fr620China => writeln!(f, "fr620_china"),
-            GarminProduct::Fr220Japan => writeln!(f, "fr220_japan"),
-            GarminProduct::Fr220China => writeln!(f, "fr220_china"),
-            GarminProduct::ApproachS6 => writeln!(f, "approach_s6"),
-            GarminProduct::VivoSmart => writeln!(f, "vivo_smart"),
-            GarminProduct::Fenix2 => writeln!(f, "fenix2"),
-            GarminProduct::Epix => writeln!(f, "epix"),
-            GarminProduct::Fenix3 => writeln!(f, "fenix3"),
-            GarminProduct::Edge1000Taiwan => writeln!(f, "edge1000_taiwan"),
-            GarminProduct::Edge1000Japan => writeln!(f, "edge1000_japan"),
-            GarminProduct::Fr15Japan => writeln!(f, "fr15_japan"),
-            GarminProduct::Edge520 => writeln!(f, "edge520"),
-            GarminProduct::Edge1000China => writeln!(f, "edge1000_china"),
-            GarminProduct::Fr620Russia => writeln!(f, "fr620_russia"),
-            GarminProduct::Fr220Russia => writeln!(f, "fr220_russia"),
-            GarminProduct::VectorS => writeln!(f, "vector_s"),
-            GarminProduct::Edge1000Korea => writeln!(f, "edge1000_korea"),
-            GarminProduct::Fr920xtTaiwan => writeln!(f, "fr920xt_taiwan"),
-            GarminProduct::Fr920xtChina => writeln!(f, "fr920xt_china"),
-            GarminProduct::Fr920xtJapan => writeln!(f, "fr920xt_japan"),
-            GarminProduct::Virbx => writeln!(f, "virbx"),
-            GarminProduct::VivoSmartApac => writeln!(f, "vivo_smart_apac"),
-            GarminProduct::EtrexTouch => writeln!(f, "etrex_touch"),
-            GarminProduct::Edge25 => writeln!(f, "edge25"),
-            GarminProduct::Fr25 => writeln!(f, "fr25"),
-            GarminProduct::VivoFit2 => writeln!(f, "vivo_fit2"),
-            GarminProduct::Fr225 => writeln!(f, "fr225"),
-            GarminProduct::Fr630 => writeln!(f, "fr630"),
-            GarminProduct::Fr230 => writeln!(f, "fr230"),
-            GarminProduct::Fr735xt => writeln!(f, "fr735xt"),
-            GarminProduct::VivoActiveApac => writeln!(f, "vivo_active_apac"),
-            GarminProduct::Vector2 => writeln!(f, "vector_2"),
-            GarminProduct::Vector2s => writeln!(f, "vector_2s"),
-            GarminProduct::Virbxe => writeln!(f, "virbxe"),
-            GarminProduct::Fr620Taiwan => writeln!(f, "fr620_taiwan"),
-            GarminProduct::Fr220Taiwan => writeln!(f, "fr220_taiwan"),
-            GarminProduct::Truswing => writeln!(f, "truswing"),
-            GarminProduct::Fenix3China => writeln!(f, "fenix3_china"),
-            GarminProduct::Fenix3Twn => writeln!(f, "fenix3_twn"),
-            GarminProduct::VariaHeadlight => writeln!(f, "varia_headlight"),
-            GarminProduct::VariaTaillightOld => writeln!(f, "varia_taillight_old"),
-            GarminProduct::EdgeExplore1000 => writeln!(f, "edge_explore_1000"),
-            GarminProduct::Fr225Asia => writeln!(f, "fr225_asia"),
-            GarminProduct::VariaRadarTaillight => writeln!(f, "varia_radar_taillight"),
-            GarminProduct::VariaRadarDisplay => writeln!(f, "varia_radar_display"),
-            GarminProduct::Edge20 => writeln!(f, "edge20"),
-            GarminProduct::D2Bravo => writeln!(f, "d2_bravo"),
-            GarminProduct::ApproachS20 => writeln!(f, "approach_s20"),
-            GarminProduct::VariaRemote => writeln!(f, "varia_remote"),
-            GarminProduct::ApproachX40 => writeln!(f, "approach_x40"),
-            GarminProduct::Hrm4Run => writeln!(f, "hrm4_run"),
-            GarminProduct::VivoActiveHr => writeln!(f, "vivo_active_hr"),
-            GarminProduct::VivoSmartGpsHr => writeln!(f, "vivo_smart_gps_hr"),
-            GarminProduct::VivoSmartHr => writeln!(f, "vivo_smart_hr"),
-            GarminProduct::VivoMove => writeln!(f, "vivo_move"),
-            GarminProduct::VariaVision => writeln!(f, "varia_vision"),
-            GarminProduct::VivoFit3 => writeln!(f, "vivo_fit3"),
-            GarminProduct::Fenix3Hr => writeln!(f, "fenix3_hr"),
-            GarminProduct::VirbUltra30 => writeln!(f, "virb_ultra_30"),
-            GarminProduct::IndexSmartScale => writeln!(f, "index_smart_scale"),
-            GarminProduct::Fr235 => writeln!(f, "fr235"),
-            GarminProduct::Fenix3Chronos => writeln!(f, "fenix3_chronos"),
-            GarminProduct::Oregon7xx => writeln!(f, "oregon7xx"),
-            GarminProduct::Rino7xx => writeln!(f, "rino7xx"),
-            GarminProduct::Nautix => writeln!(f, "nautix"),
-            GarminProduct::Edge820 => writeln!(f, "edge_820"),
-            GarminProduct::EdgeExplore820 => writeln!(f, "edge_explore_820"),
-            GarminProduct::Fr735xtApac => writeln!(f, "fr735xt_apac"),
-            GarminProduct::Fr735xtJapan => writeln!(f, "fr735xt_japan"),
-            GarminProduct::Fenix5s => writeln!(f, "fenix5s"),
-            GarminProduct::D2BravoTitanium => writeln!(f, "d2_bravo_titanium"),
-            GarminProduct::VariaUt800 => writeln!(f, "varia_ut800"),
-            GarminProduct::RunningDynamicsPod => writeln!(f, "running_dynamics_pod"),
-            GarminProduct::Fenix5x => writeln!(f, "fenix5x"),
-            GarminProduct::VivoFitJr => writeln!(f, "vivo_fit_jr"),
-            GarminProduct::VivoSmart3 => writeln!(f, "vivo_smart3"),
-            GarminProduct::VivoSport => writeln!(f, "vivo_sport"),
-            GarminProduct::ApproachS60 => writeln!(f, "approach_s60"),
-            GarminProduct::Virb360 => writeln!(f, "virb_360"),
-            GarminProduct::Fr935 => writeln!(f, "fr935"),
-            GarminProduct::Fenix5 => writeln!(f, "fenix5"),
-            GarminProduct::Vivoactive3 => writeln!(f, "vivoactive3"),
-            GarminProduct::Edge1030 => writeln!(f, "edge_1030"),
-            GarminProduct::Foretrex601701 => writeln!(f, "foretrex_601_701"),
-            GarminProduct::VivoMoveHr => writeln!(f, "vivo_move_hr"),
-            GarminProduct::ApproachZ80 => writeln!(f, "approach_z80"),
-            GarminProduct::VivoSmart3Apac => writeln!(f, "vivo_smart3_apac"),
-            GarminProduct::VivoSportApac => writeln!(f, "vivo_sport_apac"),
-            GarminProduct::Descent => writeln!(f, "descent"),
-            GarminProduct::Fr645 => writeln!(f, "fr645"),
-            GarminProduct::Fr645m => writeln!(f, "fr645m"),
-            GarminProduct::Fenix5sPlus => writeln!(f, "fenix5s_plus"),
-            GarminProduct::Edge130 => writeln!(f, "Edge_130"),
-            GarminProduct::Vivosmart4 => writeln!(f, "vivosmart_4"),
-            GarminProduct::ApproachX10 => writeln!(f, "approach_x10"),
-            GarminProduct::Vivoactive3mW => writeln!(f, "vivoactive3m_w"),
-            GarminProduct::EdgeExplore => writeln!(f, "edge_explore"),
-            GarminProduct::Gpsmap66 => writeln!(f, "gpsmap66"),
-            GarminProduct::ApproachS10 => writeln!(f, "approach_s10"),
-            GarminProduct::Vivoactive3mL => writeln!(f, "vivoactive3m_l"),
-            GarminProduct::ApproachG80 => writeln!(f, "approach_g80"),
-            GarminProduct::Fenix5Plus => writeln!(f, "fenix5_plus"),
-            GarminProduct::Fenix5xPlus => writeln!(f, "fenix5x_plus"),
-            GarminProduct::Edge520Plus => writeln!(f, "edge_520_plus"),
-            GarminProduct::HrmDual => writeln!(f, "hrm_dual"),
-            GarminProduct::ApproachS40 => writeln!(f, "approach_s40"),
-            GarminProduct::Sdm4 => writeln!(f, "sdm4"),
-            GarminProduct::EdgeRemote => writeln!(f, "edge_remote"),
-            GarminProduct::TrainingCenter => writeln!(f, "training_center"),
-            GarminProduct::ConnectiqSimulator => writeln!(f, "connectiq_simulator"),
-            GarminProduct::AndroidAntplusPlugin => writeln!(f, "android_antplus_plugin"),
-            GarminProduct::Connect => writeln!(f, "connect"),
-            GarminProduct::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            GarminProduct::Hrm1 => write!(f, "hrm1"),
+            GarminProduct::Axh01 => write!(f, "axh01"),
+            GarminProduct::Axb01 => write!(f, "axb01"),
+            GarminProduct::Axb02 => write!(f, "axb02"),
+            GarminProduct::Hrm2ss => write!(f, "hrm2ss"),
+            GarminProduct::DsiAlf02 => write!(f, "dsi_alf02"),
+            GarminProduct::Hrm3ss => write!(f, "hrm3ss"),
+            GarminProduct::HrmRunSingleByteProductId => write!(f, "hrm_run_single_byte_product_id"),
+            GarminProduct::Bsm => write!(f, "bsm"),
+            GarminProduct::Bcm => write!(f, "bcm"),
+            GarminProduct::Axs01 => write!(f, "axs01"),
+            GarminProduct::HrmTriSingleByteProductId => write!(f, "hrm_tri_single_byte_product_id"),
+            GarminProduct::Fr225SingleByteProductId => write!(f, "fr225_single_byte_product_id"),
+            GarminProduct::Fr301China => write!(f, "fr301_china"),
+            GarminProduct::Fr301Japan => write!(f, "fr301_japan"),
+            GarminProduct::Fr301Korea => write!(f, "fr301_korea"),
+            GarminProduct::Fr301Taiwan => write!(f, "fr301_taiwan"),
+            GarminProduct::Fr405 => write!(f, "fr405"),
+            GarminProduct::Fr50 => write!(f, "fr50"),
+            GarminProduct::Fr405Japan => write!(f, "fr405_japan"),
+            GarminProduct::Fr60 => write!(f, "fr60"),
+            GarminProduct::DsiAlf01 => write!(f, "dsi_alf01"),
+            GarminProduct::Fr310xt => write!(f, "fr310xt"),
+            GarminProduct::Edge500 => write!(f, "edge500"),
+            GarminProduct::Fr110 => write!(f, "fr110"),
+            GarminProduct::Edge800 => write!(f, "edge800"),
+            GarminProduct::Edge500Taiwan => write!(f, "edge500_taiwan"),
+            GarminProduct::Edge500Japan => write!(f, "edge500_japan"),
+            GarminProduct::Chirp => write!(f, "chirp"),
+            GarminProduct::Fr110Japan => write!(f, "fr110_japan"),
+            GarminProduct::Edge200 => write!(f, "edge200"),
+            GarminProduct::Fr910xt => write!(f, "fr910xt"),
+            GarminProduct::Edge800Taiwan => write!(f, "edge800_taiwan"),
+            GarminProduct::Edge800Japan => write!(f, "edge800_japan"),
+            GarminProduct::Alf04 => write!(f, "alf04"),
+            GarminProduct::Fr610 => write!(f, "fr610"),
+            GarminProduct::Fr210Japan => write!(f, "fr210_japan"),
+            GarminProduct::VectorSs => write!(f, "vector_ss"),
+            GarminProduct::VectorCp => write!(f, "vector_cp"),
+            GarminProduct::Edge800China => write!(f, "edge800_china"),
+            GarminProduct::Edge500China => write!(f, "edge500_china"),
+            GarminProduct::Fr610Japan => write!(f, "fr610_japan"),
+            GarminProduct::Edge500Korea => write!(f, "edge500_korea"),
+            GarminProduct::Fr70 => write!(f, "fr70"),
+            GarminProduct::Fr310xt4t => write!(f, "fr310xt_4t"),
+            GarminProduct::Amx => write!(f, "amx"),
+            GarminProduct::Fr10 => write!(f, "fr10"),
+            GarminProduct::Edge800Korea => write!(f, "edge800_korea"),
+            GarminProduct::Swim => write!(f, "swim"),
+            GarminProduct::Fr910xtChina => write!(f, "fr910xt_china"),
+            GarminProduct::Fenix => write!(f, "fenix"),
+            GarminProduct::Edge200Taiwan => write!(f, "edge200_taiwan"),
+            GarminProduct::Edge510 => write!(f, "edge510"),
+            GarminProduct::Edge810 => write!(f, "edge810"),
+            GarminProduct::Tempe => write!(f, "tempe"),
+            GarminProduct::Fr910xtJapan => write!(f, "fr910xt_japan"),
+            GarminProduct::Fr620 => write!(f, "fr620"),
+            GarminProduct::Fr220 => write!(f, "fr220"),
+            GarminProduct::Fr910xtKorea => write!(f, "fr910xt_korea"),
+            GarminProduct::Fr10Japan => write!(f, "fr10_japan"),
+            GarminProduct::Edge810Japan => write!(f, "edge810_japan"),
+            GarminProduct::VirbElite => write!(f, "virb_elite"),
+            GarminProduct::EdgeTouring => write!(f, "edge_touring"),
+            GarminProduct::Edge510Japan => write!(f, "edge510_japan"),
+            GarminProduct::HrmTri => write!(f, "hrm_tri"),
+            GarminProduct::HrmRun => write!(f, "hrm_run"),
+            GarminProduct::Fr920xt => write!(f, "fr920xt"),
+            GarminProduct::Edge510Asia => write!(f, "edge510_asia"),
+            GarminProduct::Edge810China => write!(f, "edge810_china"),
+            GarminProduct::Edge810Taiwan => write!(f, "edge810_taiwan"),
+            GarminProduct::Edge1000 => write!(f, "edge1000"),
+            GarminProduct::VivoFit => write!(f, "vivo_fit"),
+            GarminProduct::VirbRemote => write!(f, "virb_remote"),
+            GarminProduct::VivoKi => write!(f, "vivo_ki"),
+            GarminProduct::Fr15 => write!(f, "fr15"),
+            GarminProduct::VivoActive => write!(f, "vivo_active"),
+            GarminProduct::Edge510Korea => write!(f, "edge510_korea"),
+            GarminProduct::Fr620Japan => write!(f, "fr620_japan"),
+            GarminProduct::Fr620China => write!(f, "fr620_china"),
+            GarminProduct::Fr220Japan => write!(f, "fr220_japan"),
+            GarminProduct::Fr220China => write!(f, "fr220_china"),
+            GarminProduct::ApproachS6 => write!(f, "approach_s6"),
+            GarminProduct::VivoSmart => write!(f, "vivo_smart"),
+            GarminProduct::Fenix2 => write!(f, "fenix2"),
+            GarminProduct::Epix => write!(f, "epix"),
+            GarminProduct::Fenix3 => write!(f, "fenix3"),
+            GarminProduct::Edge1000Taiwan => write!(f, "edge1000_taiwan"),
+            GarminProduct::Edge1000Japan => write!(f, "edge1000_japan"),
+            GarminProduct::Fr15Japan => write!(f, "fr15_japan"),
+            GarminProduct::Edge520 => write!(f, "edge520"),
+            GarminProduct::Edge1000China => write!(f, "edge1000_china"),
+            GarminProduct::Fr620Russia => write!(f, "fr620_russia"),
+            GarminProduct::Fr220Russia => write!(f, "fr220_russia"),
+            GarminProduct::VectorS => write!(f, "vector_s"),
+            GarminProduct::Edge1000Korea => write!(f, "edge1000_korea"),
+            GarminProduct::Fr920xtTaiwan => write!(f, "fr920xt_taiwan"),
+            GarminProduct::Fr920xtChina => write!(f, "fr920xt_china"),
+            GarminProduct::Fr920xtJapan => write!(f, "fr920xt_japan"),
+            GarminProduct::Virbx => write!(f, "virbx"),
+            GarminProduct::VivoSmartApac => write!(f, "vivo_smart_apac"),
+            GarminProduct::EtrexTouch => write!(f, "etrex_touch"),
+            GarminProduct::Edge25 => write!(f, "edge25"),
+            GarminProduct::Fr25 => write!(f, "fr25"),
+            GarminProduct::VivoFit2 => write!(f, "vivo_fit2"),
+            GarminProduct::Fr225 => write!(f, "fr225"),
+            GarminProduct::Fr630 => write!(f, "fr630"),
+            GarminProduct::Fr230 => write!(f, "fr230"),
+            GarminProduct::Fr735xt => write!(f, "fr735xt"),
+            GarminProduct::VivoActiveApac => write!(f, "vivo_active_apac"),
+            GarminProduct::Vector2 => write!(f, "vector_2"),
+            GarminProduct::Vector2s => write!(f, "vector_2s"),
+            GarminProduct::Virbxe => write!(f, "virbxe"),
+            GarminProduct::Fr620Taiwan => write!(f, "fr620_taiwan"),
+            GarminProduct::Fr220Taiwan => write!(f, "fr220_taiwan"),
+            GarminProduct::Truswing => write!(f, "truswing"),
+            GarminProduct::Fenix3China => write!(f, "fenix3_china"),
+            GarminProduct::Fenix3Twn => write!(f, "fenix3_twn"),
+            GarminProduct::VariaHeadlight => write!(f, "varia_headlight"),
+            GarminProduct::VariaTaillightOld => write!(f, "varia_taillight_old"),
+            GarminProduct::EdgeExplore1000 => write!(f, "edge_explore_1000"),
+            GarminProduct::Fr225Asia => write!(f, "fr225_asia"),
+            GarminProduct::VariaRadarTaillight => write!(f, "varia_radar_taillight"),
+            GarminProduct::VariaRadarDisplay => write!(f, "varia_radar_display"),
+            GarminProduct::Edge20 => write!(f, "edge20"),
+            GarminProduct::D2Bravo => write!(f, "d2_bravo"),
+            GarminProduct::ApproachS20 => write!(f, "approach_s20"),
+            GarminProduct::VariaRemote => write!(f, "varia_remote"),
+            GarminProduct::ApproachX40 => write!(f, "approach_x40"),
+            GarminProduct::Hrm4Run => write!(f, "hrm4_run"),
+            GarminProduct::VivoActiveHr => write!(f, "vivo_active_hr"),
+            GarminProduct::VivoSmartGpsHr => write!(f, "vivo_smart_gps_hr"),
+            GarminProduct::VivoSmartHr => write!(f, "vivo_smart_hr"),
+            GarminProduct::VivoMove => write!(f, "vivo_move"),
+            GarminProduct::VariaVision => write!(f, "varia_vision"),
+            GarminProduct::VivoFit3 => write!(f, "vivo_fit3"),
+            GarminProduct::Fenix3Hr => write!(f, "fenix3_hr"),
+            GarminProduct::VirbUltra30 => write!(f, "virb_ultra_30"),
+            GarminProduct::IndexSmartScale => write!(f, "index_smart_scale"),
+            GarminProduct::Fr235 => write!(f, "fr235"),
+            GarminProduct::Fenix3Chronos => write!(f, "fenix3_chronos"),
+            GarminProduct::Oregon7xx => write!(f, "oregon7xx"),
+            GarminProduct::Rino7xx => write!(f, "rino7xx"),
+            GarminProduct::Nautix => write!(f, "nautix"),
+            GarminProduct::Edge820 => write!(f, "edge_820"),
+            GarminProduct::EdgeExplore820 => write!(f, "edge_explore_820"),
+            GarminProduct::Fr735xtApac => write!(f, "fr735xt_apac"),
+            GarminProduct::Fr735xtJapan => write!(f, "fr735xt_japan"),
+            GarminProduct::Fenix5s => write!(f, "fenix5s"),
+            GarminProduct::D2BravoTitanium => write!(f, "d2_bravo_titanium"),
+            GarminProduct::VariaUt800 => write!(f, "varia_ut800"),
+            GarminProduct::RunningDynamicsPod => write!(f, "running_dynamics_pod"),
+            GarminProduct::Fenix5x => write!(f, "fenix5x"),
+            GarminProduct::VivoFitJr => write!(f, "vivo_fit_jr"),
+            GarminProduct::VivoSmart3 => write!(f, "vivo_smart3"),
+            GarminProduct::VivoSport => write!(f, "vivo_sport"),
+            GarminProduct::ApproachS60 => write!(f, "approach_s60"),
+            GarminProduct::Virb360 => write!(f, "virb_360"),
+            GarminProduct::Fr935 => write!(f, "fr935"),
+            GarminProduct::Fenix5 => write!(f, "fenix5"),
+            GarminProduct::Vivoactive3 => write!(f, "vivoactive3"),
+            GarminProduct::Edge1030 => write!(f, "edge_1030"),
+            GarminProduct::Foretrex601701 => write!(f, "foretrex_601_701"),
+            GarminProduct::VivoMoveHr => write!(f, "vivo_move_hr"),
+            GarminProduct::ApproachZ80 => write!(f, "approach_z80"),
+            GarminProduct::VivoSmart3Apac => write!(f, "vivo_smart3_apac"),
+            GarminProduct::VivoSportApac => write!(f, "vivo_sport_apac"),
+            GarminProduct::Descent => write!(f, "descent"),
+            GarminProduct::Fr645 => write!(f, "fr645"),
+            GarminProduct::Fr645m => write!(f, "fr645m"),
+            GarminProduct::Fenix5sPlus => write!(f, "fenix5s_plus"),
+            GarminProduct::Edge130 => write!(f, "Edge_130"),
+            GarminProduct::Vivosmart4 => write!(f, "vivosmart_4"),
+            GarminProduct::ApproachX10 => write!(f, "approach_x10"),
+            GarminProduct::Vivoactive3mW => write!(f, "vivoactive3m_w"),
+            GarminProduct::EdgeExplore => write!(f, "edge_explore"),
+            GarminProduct::Gpsmap66 => write!(f, "gpsmap66"),
+            GarminProduct::ApproachS10 => write!(f, "approach_s10"),
+            GarminProduct::Vivoactive3mL => write!(f, "vivoactive3m_l"),
+            GarminProduct::ApproachG80 => write!(f, "approach_g80"),
+            GarminProduct::Fenix5Plus => write!(f, "fenix5_plus"),
+            GarminProduct::Fenix5xPlus => write!(f, "fenix5x_plus"),
+            GarminProduct::Edge520Plus => write!(f, "edge_520_plus"),
+            GarminProduct::HrmDual => write!(f, "hrm_dual"),
+            GarminProduct::ApproachS40 => write!(f, "approach_s40"),
+            GarminProduct::Sdm4 => write!(f, "sdm4"),
+            GarminProduct::EdgeRemote => write!(f, "edge_remote"),
+            GarminProduct::TrainingCenter => write!(f, "training_center"),
+            GarminProduct::ConnectiqSimulator => write!(f, "connectiq_simulator"),
+            GarminProduct::AndroidAntplusPlugin => write!(f, "android_antplus_plugin"),
+            GarminProduct::Connect => write!(f, "connect"),
+            GarminProduct::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -6618,31 +6608,31 @@ impl AntplusDeviceType {
 impl fmt::Display for AntplusDeviceType {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            AntplusDeviceType::Antfs => writeln!(f, "antfs"),
-            AntplusDeviceType::BikePower => writeln!(f, "bike_power"),
-            AntplusDeviceType::EnvironmentSensorLegacy => writeln!(f, "environment_sensor_legacy"),
-            AntplusDeviceType::MultiSportSpeedDistance => writeln!(f, "multi_sport_speed_distance"),
-            AntplusDeviceType::Control => writeln!(f, "control"),
-            AntplusDeviceType::FitnessEquipment => writeln!(f, "fitness_equipment"),
-            AntplusDeviceType::BloodPressure => writeln!(f, "blood_pressure"),
-            AntplusDeviceType::GeocacheNode => writeln!(f, "geocache_node"),
-            AntplusDeviceType::LightElectricVehicle => writeln!(f, "light_electric_vehicle"),
-            AntplusDeviceType::EnvSensor => writeln!(f, "env_sensor"),
-            AntplusDeviceType::Racquet => writeln!(f, "racquet"),
-            AntplusDeviceType::ControlHub => writeln!(f, "control_hub"),
-            AntplusDeviceType::MuscleOxygen => writeln!(f, "muscle_oxygen"),
-            AntplusDeviceType::BikeLightMain => writeln!(f, "bike_light_main"),
-            AntplusDeviceType::BikeLightShared => writeln!(f, "bike_light_shared"),
-            AntplusDeviceType::Exd => writeln!(f, "exd"),
-            AntplusDeviceType::BikeRadar => writeln!(f, "bike_radar"),
-            AntplusDeviceType::BikeAero => writeln!(f, "bike_aero"),
-            AntplusDeviceType::WeightScale => writeln!(f, "weight_scale"),
-            AntplusDeviceType::HeartRate => writeln!(f, "heart_rate"),
-            AntplusDeviceType::BikeSpeedCadence => writeln!(f, "bike_speed_cadence"),
-            AntplusDeviceType::BikeCadence => writeln!(f, "bike_cadence"),
-            AntplusDeviceType::BikeSpeed => writeln!(f, "bike_speed"),
-            AntplusDeviceType::StrideSpeedDistance => writeln!(f, "stride_speed_distance"),
-            AntplusDeviceType::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            AntplusDeviceType::Antfs => write!(f, "antfs"),
+            AntplusDeviceType::BikePower => write!(f, "bike_power"),
+            AntplusDeviceType::EnvironmentSensorLegacy => write!(f, "environment_sensor_legacy"),
+            AntplusDeviceType::MultiSportSpeedDistance => write!(f, "multi_sport_speed_distance"),
+            AntplusDeviceType::Control => write!(f, "control"),
+            AntplusDeviceType::FitnessEquipment => write!(f, "fitness_equipment"),
+            AntplusDeviceType::BloodPressure => write!(f, "blood_pressure"),
+            AntplusDeviceType::GeocacheNode => write!(f, "geocache_node"),
+            AntplusDeviceType::LightElectricVehicle => write!(f, "light_electric_vehicle"),
+            AntplusDeviceType::EnvSensor => write!(f, "env_sensor"),
+            AntplusDeviceType::Racquet => write!(f, "racquet"),
+            AntplusDeviceType::ControlHub => write!(f, "control_hub"),
+            AntplusDeviceType::MuscleOxygen => write!(f, "muscle_oxygen"),
+            AntplusDeviceType::BikeLightMain => write!(f, "bike_light_main"),
+            AntplusDeviceType::BikeLightShared => write!(f, "bike_light_shared"),
+            AntplusDeviceType::Exd => write!(f, "exd"),
+            AntplusDeviceType::BikeRadar => write!(f, "bike_radar"),
+            AntplusDeviceType::BikeAero => write!(f, "bike_aero"),
+            AntplusDeviceType::WeightScale => write!(f, "weight_scale"),
+            AntplusDeviceType::HeartRate => write!(f, "heart_rate"),
+            AntplusDeviceType::BikeSpeedCadence => write!(f, "bike_speed_cadence"),
+            AntplusDeviceType::BikeCadence => write!(f, "bike_cadence"),
+            AntplusDeviceType::BikeSpeed => write!(f, "bike_speed"),
+            AntplusDeviceType::StrideSpeedDistance => write!(f, "stride_speed_distance"),
+            AntplusDeviceType::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -6707,11 +6697,11 @@ impl AntNetwork {
 impl fmt::Display for AntNetwork {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            AntNetwork::Public => writeln!(f, "public"),
-            AntNetwork::Antplus => writeln!(f, "antplus"),
-            AntNetwork::Antfs => writeln!(f, "antfs"),
-            AntNetwork::Private => writeln!(f, "private"),
-            AntNetwork::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            AntNetwork::Public => write!(f, "public"),
+            AntNetwork::Antplus => write!(f, "antplus"),
+            AntNetwork::Antfs => write!(f, "antfs"),
+            AntNetwork::Private => write!(f, "private"),
+            AntNetwork::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -6784,21 +6774,21 @@ impl WorkoutCapabilities {
 impl fmt::Display for WorkoutCapabilities {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            WorkoutCapabilities::Interval => writeln!(f, "interval"),
-            WorkoutCapabilities::Custom => writeln!(f, "custom"),
-            WorkoutCapabilities::FitnessEquipment => writeln!(f, "fitness_equipment"),
-            WorkoutCapabilities::Firstbeat => writeln!(f, "firstbeat"),
-            WorkoutCapabilities::NewLeaf => writeln!(f, "new_leaf"),
-            WorkoutCapabilities::Tcx => writeln!(f, "tcx"),
-            WorkoutCapabilities::Speed => writeln!(f, "speed"),
-            WorkoutCapabilities::HeartRate => writeln!(f, "heart_rate"),
-            WorkoutCapabilities::Distance => writeln!(f, "distance"),
-            WorkoutCapabilities::Cadence => writeln!(f, "cadence"),
-            WorkoutCapabilities::Power => writeln!(f, "power"),
-            WorkoutCapabilities::Grade => writeln!(f, "grade"),
-            WorkoutCapabilities::Resistance => writeln!(f, "resistance"),
-            WorkoutCapabilities::Protected => writeln!(f, "protected"),
-            WorkoutCapabilities::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            WorkoutCapabilities::Interval => write!(f, "interval"),
+            WorkoutCapabilities::Custom => write!(f, "custom"),
+            WorkoutCapabilities::FitnessEquipment => write!(f, "fitness_equipment"),
+            WorkoutCapabilities::Firstbeat => write!(f, "firstbeat"),
+            WorkoutCapabilities::NewLeaf => write!(f, "new_leaf"),
+            WorkoutCapabilities::Tcx => write!(f, "tcx"),
+            WorkoutCapabilities::Speed => write!(f, "speed"),
+            WorkoutCapabilities::HeartRate => write!(f, "heart_rate"),
+            WorkoutCapabilities::Distance => write!(f, "distance"),
+            WorkoutCapabilities::Cadence => write!(f, "cadence"),
+            WorkoutCapabilities::Power => write!(f, "power"),
+            WorkoutCapabilities::Grade => write!(f, "grade"),
+            WorkoutCapabilities::Resistance => write!(f, "resistance"),
+            WorkoutCapabilities::Protected => write!(f, "protected"),
+            WorkoutCapabilities::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -6859,14 +6849,14 @@ impl BatteryStatus {
 impl fmt::Display for BatteryStatus {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            BatteryStatus::New => writeln!(f, "new"),
-            BatteryStatus::Good => writeln!(f, "good"),
-            BatteryStatus::Ok => writeln!(f, "ok"),
-            BatteryStatus::Low => writeln!(f, "low"),
-            BatteryStatus::Critical => writeln!(f, "critical"),
-            BatteryStatus::Charging => writeln!(f, "charging"),
-            BatteryStatus::Unknown => writeln!(f, "unknown"),
-            BatteryStatus::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            BatteryStatus::New => write!(f, "new"),
+            BatteryStatus::Good => write!(f, "good"),
+            BatteryStatus::Ok => write!(f, "ok"),
+            BatteryStatus::Low => write!(f, "low"),
+            BatteryStatus::Critical => write!(f, "critical"),
+            BatteryStatus::Charging => write!(f, "charging"),
+            BatteryStatus::Unknown => write!(f, "unknown"),
+            BatteryStatus::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -6910,9 +6900,9 @@ impl HrType {
 impl fmt::Display for HrType {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            HrType::Normal => writeln!(f, "normal"),
-            HrType::Irregular => writeln!(f, "irregular"),
-            HrType::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            HrType::Normal => write!(f, "normal"),
+            HrType::Irregular => write!(f, "irregular"),
+            HrType::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -6969,18 +6959,18 @@ impl CourseCapabilities {
 impl fmt::Display for CourseCapabilities {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            CourseCapabilities::Processed => writeln!(f, "processed"),
-            CourseCapabilities::Valid => writeln!(f, "valid"),
-            CourseCapabilities::Time => writeln!(f, "time"),
-            CourseCapabilities::Distance => writeln!(f, "distance"),
-            CourseCapabilities::Position => writeln!(f, "position"),
-            CourseCapabilities::HeartRate => writeln!(f, "heart_rate"),
-            CourseCapabilities::Power => writeln!(f, "power"),
-            CourseCapabilities::Cadence => writeln!(f, "cadence"),
-            CourseCapabilities::Training => writeln!(f, "training"),
-            CourseCapabilities::Navigation => writeln!(f, "navigation"),
-            CourseCapabilities::Bikeway => writeln!(f, "bikeway"),
-            CourseCapabilities::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            CourseCapabilities::Processed => write!(f, "processed"),
+            CourseCapabilities::Valid => write!(f, "valid"),
+            CourseCapabilities::Time => write!(f, "time"),
+            CourseCapabilities::Distance => write!(f, "distance"),
+            CourseCapabilities::Position => write!(f, "position"),
+            CourseCapabilities::HeartRate => write!(f, "heart_rate"),
+            CourseCapabilities::Power => write!(f, "power"),
+            CourseCapabilities::Cadence => write!(f, "cadence"),
+            CourseCapabilities::Training => write!(f, "training"),
+            CourseCapabilities::Navigation => write!(f, "navigation"),
+            CourseCapabilities::Bikeway => write!(f, "bikeway"),
+            CourseCapabilities::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -7026,8 +7016,8 @@ impl Weight {
 impl fmt::Display for Weight {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            Weight::Calculating => writeln!(f, "calculating"),
-            Weight::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            Weight::Calculating => write!(f, "calculating"),
+            Weight::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -7063,8 +7053,8 @@ impl WorkoutHr {
 impl fmt::Display for WorkoutHr {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            WorkoutHr::BpmOffset => writeln!(f, "bpm_offset"),
-            WorkoutHr::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            WorkoutHr::BpmOffset => write!(f, "bpm_offset"),
+            WorkoutHr::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -7100,8 +7090,8 @@ impl WorkoutPower {
 impl fmt::Display for WorkoutPower {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            WorkoutPower::WattsOffset => writeln!(f, "watts_offset"),
-            WorkoutPower::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            WorkoutPower::WattsOffset => write!(f, "watts_offset"),
+            WorkoutPower::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -7145,12 +7135,12 @@ impl BpStatus {
 impl fmt::Display for BpStatus {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            BpStatus::NoError => writeln!(f, "no_error"),
-            BpStatus::ErrorIncompleteData => writeln!(f, "error_incomplete_data"),
-            BpStatus::ErrorNoMeasurement => writeln!(f, "error_no_measurement"),
-            BpStatus::ErrorDataOutOfRange => writeln!(f, "error_data_out_of_range"),
-            BpStatus::ErrorIrregularHeartRate => writeln!(f, "error_irregular_heart_rate"),
-            BpStatus::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            BpStatus::NoError => write!(f, "no_error"),
+            BpStatus::ErrorIncompleteData => write!(f, "error_incomplete_data"),
+            BpStatus::ErrorNoMeasurement => write!(f, "error_no_measurement"),
+            BpStatus::ErrorDataOutOfRange => write!(f, "error_data_out_of_range"),
+            BpStatus::ErrorIrregularHeartRate => write!(f, "error_irregular_heart_rate"),
+            BpStatus::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -7200,13 +7190,13 @@ impl UserLocalId {
 impl fmt::Display for UserLocalId {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            UserLocalId::LocalMin => writeln!(f, "local_min"),
-            UserLocalId::LocalMax => writeln!(f, "local_max"),
-            UserLocalId::StationaryMin => writeln!(f, "stationary_min"),
-            UserLocalId::StationaryMax => writeln!(f, "stationary_max"),
-            UserLocalId::PortableMin => writeln!(f, "portable_min"),
-            UserLocalId::PortableMax => writeln!(f, "portable_max"),
-            UserLocalId::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            UserLocalId::LocalMin => write!(f, "local_min"),
+            UserLocalId::LocalMax => write!(f, "local_max"),
+            UserLocalId::StationaryMin => write!(f, "stationary_min"),
+            UserLocalId::StationaryMax => write!(f, "stationary_max"),
+            UserLocalId::PortableMin => write!(f, "portable_min"),
+            UserLocalId::PortableMax => write!(f, "portable_max"),
+            UserLocalId::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -7260,14 +7250,14 @@ impl SwimStroke {
 impl fmt::Display for SwimStroke {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            SwimStroke::Freestyle => writeln!(f, "freestyle"),
-            SwimStroke::Backstroke => writeln!(f, "backstroke"),
-            SwimStroke::Breaststroke => writeln!(f, "breaststroke"),
-            SwimStroke::Butterfly => writeln!(f, "butterfly"),
-            SwimStroke::Drill => writeln!(f, "drill"),
-            SwimStroke::Mixed => writeln!(f, "mixed"),
-            SwimStroke::Im => writeln!(f, "im"),
-            SwimStroke::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            SwimStroke::Freestyle => write!(f, "freestyle"),
+            SwimStroke::Backstroke => write!(f, "backstroke"),
+            SwimStroke::Breaststroke => write!(f, "breaststroke"),
+            SwimStroke::Butterfly => write!(f, "butterfly"),
+            SwimStroke::Drill => write!(f, "drill"),
+            SwimStroke::Mixed => write!(f, "mixed"),
+            SwimStroke::Im => write!(f, "im"),
+            SwimStroke::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -7327,16 +7317,16 @@ impl ActivityType {
 impl fmt::Display for ActivityType {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            ActivityType::Generic => writeln!(f, "generic"),
-            ActivityType::Running => writeln!(f, "running"),
-            ActivityType::Cycling => writeln!(f, "cycling"),
-            ActivityType::Transition => writeln!(f, "transition"),
-            ActivityType::FitnessEquipment => writeln!(f, "fitness_equipment"),
-            ActivityType::Swimming => writeln!(f, "swimming"),
-            ActivityType::Walking => writeln!(f, "walking"),
-            ActivityType::Sedentary => writeln!(f, "sedentary"),
-            ActivityType::All => writeln!(f, "all"),
-            ActivityType::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            ActivityType::Generic => write!(f, "generic"),
+            ActivityType::Running => write!(f, "running"),
+            ActivityType::Cycling => write!(f, "cycling"),
+            ActivityType::Transition => write!(f, "transition"),
+            ActivityType::FitnessEquipment => write!(f, "fitness_equipment"),
+            ActivityType::Swimming => write!(f, "swimming"),
+            ActivityType::Walking => write!(f, "walking"),
+            ActivityType::Sedentary => write!(f, "sedentary"),
+            ActivityType::All => write!(f, "all"),
+            ActivityType::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -7436,27 +7426,27 @@ impl ActivitySubtype {
 impl fmt::Display for ActivitySubtype {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            ActivitySubtype::Generic => writeln!(f, "generic"),
-            ActivitySubtype::Treadmill => writeln!(f, "treadmill"),
-            ActivitySubtype::Street => writeln!(f, "street"),
-            ActivitySubtype::Trail => writeln!(f, "trail"),
-            ActivitySubtype::Track => writeln!(f, "track"),
-            ActivitySubtype::Spin => writeln!(f, "spin"),
-            ActivitySubtype::IndoorCycling => writeln!(f, "indoor_cycling"),
-            ActivitySubtype::Road => writeln!(f, "road"),
-            ActivitySubtype::Mountain => writeln!(f, "mountain"),
-            ActivitySubtype::Downhill => writeln!(f, "downhill"),
-            ActivitySubtype::Recumbent => writeln!(f, "recumbent"),
-            ActivitySubtype::Cyclocross => writeln!(f, "cyclocross"),
-            ActivitySubtype::HandCycling => writeln!(f, "hand_cycling"),
-            ActivitySubtype::TrackCycling => writeln!(f, "track_cycling"),
-            ActivitySubtype::IndoorRowing => writeln!(f, "indoor_rowing"),
-            ActivitySubtype::Elliptical => writeln!(f, "elliptical"),
-            ActivitySubtype::StairClimbing => writeln!(f, "stair_climbing"),
-            ActivitySubtype::LapSwimming => writeln!(f, "lap_swimming"),
-            ActivitySubtype::OpenWater => writeln!(f, "open_water"),
-            ActivitySubtype::All => writeln!(f, "all"),
-            ActivitySubtype::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            ActivitySubtype::Generic => write!(f, "generic"),
+            ActivitySubtype::Treadmill => write!(f, "treadmill"),
+            ActivitySubtype::Street => write!(f, "street"),
+            ActivitySubtype::Trail => write!(f, "trail"),
+            ActivitySubtype::Track => write!(f, "track"),
+            ActivitySubtype::Spin => write!(f, "spin"),
+            ActivitySubtype::IndoorCycling => write!(f, "indoor_cycling"),
+            ActivitySubtype::Road => write!(f, "road"),
+            ActivitySubtype::Mountain => write!(f, "mountain"),
+            ActivitySubtype::Downhill => write!(f, "downhill"),
+            ActivitySubtype::Recumbent => write!(f, "recumbent"),
+            ActivitySubtype::Cyclocross => write!(f, "cyclocross"),
+            ActivitySubtype::HandCycling => write!(f, "hand_cycling"),
+            ActivitySubtype::TrackCycling => write!(f, "track_cycling"),
+            ActivitySubtype::IndoorRowing => write!(f, "indoor_rowing"),
+            ActivitySubtype::Elliptical => write!(f, "elliptical"),
+            ActivitySubtype::StairClimbing => write!(f, "stair_climbing"),
+            ActivitySubtype::LapSwimming => write!(f, "lap_swimming"),
+            ActivitySubtype::OpenWater => write!(f, "open_water"),
+            ActivitySubtype::All => write!(f, "all"),
+            ActivitySubtype::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -7515,10 +7505,10 @@ impl ActivityLevel {
 impl fmt::Display for ActivityLevel {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            ActivityLevel::Low => writeln!(f, "low"),
-            ActivityLevel::Medium => writeln!(f, "medium"),
-            ActivityLevel::High => writeln!(f, "high"),
-            ActivityLevel::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            ActivityLevel::Low => write!(f, "low"),
+            ActivityLevel::Medium => write!(f, "medium"),
+            ActivityLevel::High => write!(f, "high"),
+            ActivityLevel::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -7558,9 +7548,9 @@ impl Side {
 impl fmt::Display for Side {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            Side::Right => writeln!(f, "right"),
-            Side::Left => writeln!(f, "left"),
-            Side::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            Side::Right => write!(f, "right"),
+            Side::Left => write!(f, "left"),
+            Side::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -7601,9 +7591,9 @@ impl LeftRightBalance {
 impl fmt::Display for LeftRightBalance {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            LeftRightBalance::Mask => writeln!(f, "mask"),
-            LeftRightBalance::Right => writeln!(f, "right"),
-            LeftRightBalance::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            LeftRightBalance::Mask => write!(f, "mask"),
+            LeftRightBalance::Right => write!(f, "right"),
+            LeftRightBalance::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -7644,9 +7634,9 @@ impl LeftRightBalance100 {
 impl fmt::Display for LeftRightBalance100 {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            LeftRightBalance100::Mask => writeln!(f, "mask"),
-            LeftRightBalance100::Right => writeln!(f, "right"),
-            LeftRightBalance100::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            LeftRightBalance100::Mask => write!(f, "mask"),
+            LeftRightBalance100::Right => write!(f, "right"),
+            LeftRightBalance100::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -7687,9 +7677,9 @@ impl LengthType {
 impl fmt::Display for LengthType {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            LengthType::Idle => writeln!(f, "idle"),
-            LengthType::Active => writeln!(f, "active"),
-            LengthType::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            LengthType::Idle => write!(f, "idle"),
+            LengthType::Active => write!(f, "active"),
+            LengthType::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -7738,14 +7728,14 @@ impl DayOfWeek {
 impl fmt::Display for DayOfWeek {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            DayOfWeek::Sunday => writeln!(f, "sunday"),
-            DayOfWeek::Monday => writeln!(f, "monday"),
-            DayOfWeek::Tuesday => writeln!(f, "tuesday"),
-            DayOfWeek::Wednesday => writeln!(f, "wednesday"),
-            DayOfWeek::Thursday => writeln!(f, "thursday"),
-            DayOfWeek::Friday => writeln!(f, "friday"),
-            DayOfWeek::Saturday => writeln!(f, "saturday"),
-            DayOfWeek::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            DayOfWeek::Sunday => write!(f, "sunday"),
+            DayOfWeek::Monday => write!(f, "monday"),
+            DayOfWeek::Tuesday => write!(f, "tuesday"),
+            DayOfWeek::Wednesday => write!(f, "wednesday"),
+            DayOfWeek::Thursday => write!(f, "thursday"),
+            DayOfWeek::Friday => write!(f, "friday"),
+            DayOfWeek::Saturday => write!(f, "saturday"),
+            DayOfWeek::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -7858,54 +7848,52 @@ impl ConnectivityCapabilities {
 impl fmt::Display for ConnectivityCapabilities {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            ConnectivityCapabilities::Bluetooth => writeln!(f, "bluetooth"),
-            ConnectivityCapabilities::BluetoothLe => writeln!(f, "bluetooth_le"),
-            ConnectivityCapabilities::Ant => writeln!(f, "ant"),
-            ConnectivityCapabilities::ActivityUpload => writeln!(f, "activity_upload"),
-            ConnectivityCapabilities::CourseDownload => writeln!(f, "course_download"),
-            ConnectivityCapabilities::WorkoutDownload => writeln!(f, "workout_download"),
-            ConnectivityCapabilities::LiveTrack => writeln!(f, "live_track"),
-            ConnectivityCapabilities::WeatherConditions => writeln!(f, "weather_conditions"),
-            ConnectivityCapabilities::WeatherAlerts => writeln!(f, "weather_alerts"),
-            ConnectivityCapabilities::GpsEphemerisDownload => writeln!(f, "gps_ephemeris_download"),
-            ConnectivityCapabilities::ExplicitArchive => writeln!(f, "explicit_archive"),
-            ConnectivityCapabilities::SetupIncomplete => writeln!(f, "setup_incomplete"),
+            ConnectivityCapabilities::Bluetooth => write!(f, "bluetooth"),
+            ConnectivityCapabilities::BluetoothLe => write!(f, "bluetooth_le"),
+            ConnectivityCapabilities::Ant => write!(f, "ant"),
+            ConnectivityCapabilities::ActivityUpload => write!(f, "activity_upload"),
+            ConnectivityCapabilities::CourseDownload => write!(f, "course_download"),
+            ConnectivityCapabilities::WorkoutDownload => write!(f, "workout_download"),
+            ConnectivityCapabilities::LiveTrack => write!(f, "live_track"),
+            ConnectivityCapabilities::WeatherConditions => write!(f, "weather_conditions"),
+            ConnectivityCapabilities::WeatherAlerts => write!(f, "weather_alerts"),
+            ConnectivityCapabilities::GpsEphemerisDownload => write!(f, "gps_ephemeris_download"),
+            ConnectivityCapabilities::ExplicitArchive => write!(f, "explicit_archive"),
+            ConnectivityCapabilities::SetupIncomplete => write!(f, "setup_incomplete"),
             ConnectivityCapabilities::ContinueSyncAfterSoftwareUpdate => {
-                writeln!(f, "continue_sync_after_software_update")
+                write!(f, "continue_sync_after_software_update")
             }
-            ConnectivityCapabilities::ConnectIqAppDownload => {
-                writeln!(f, "connect_iq_app_download")
-            }
-            ConnectivityCapabilities::GolfCourseDownload => writeln!(f, "golf_course_download"),
-            ConnectivityCapabilities::DeviceInitiatesSync => writeln!(f, "device_initiates_sync"),
+            ConnectivityCapabilities::ConnectIqAppDownload => write!(f, "connect_iq_app_download"),
+            ConnectivityCapabilities::GolfCourseDownload => write!(f, "golf_course_download"),
+            ConnectivityCapabilities::DeviceInitiatesSync => write!(f, "device_initiates_sync"),
             ConnectivityCapabilities::ConnectIqWatchAppDownload => {
-                writeln!(f, "connect_iq_watch_app_download")
+                write!(f, "connect_iq_watch_app_download")
             }
             ConnectivityCapabilities::ConnectIqWidgetDownload => {
-                writeln!(f, "connect_iq_widget_download")
+                write!(f, "connect_iq_widget_download")
             }
             ConnectivityCapabilities::ConnectIqWatchFaceDownload => {
-                writeln!(f, "connect_iq_watch_face_download")
+                write!(f, "connect_iq_watch_face_download")
             }
             ConnectivityCapabilities::ConnectIqDataFieldDownload => {
-                writeln!(f, "connect_iq_data_field_download")
+                write!(f, "connect_iq_data_field_download")
             }
             ConnectivityCapabilities::ConnectIqAppManagment => {
-                writeln!(f, "connect_iq_app_managment")
+                write!(f, "connect_iq_app_managment")
             }
-            ConnectivityCapabilities::SwingSensor => writeln!(f, "swing_sensor"),
-            ConnectivityCapabilities::SwingSensorRemote => writeln!(f, "swing_sensor_remote"),
-            ConnectivityCapabilities::IncidentDetection => writeln!(f, "incident_detection"),
-            ConnectivityCapabilities::AudioPrompts => writeln!(f, "audio_prompts"),
-            ConnectivityCapabilities::WifiVerification => writeln!(f, "wifi_verification"),
-            ConnectivityCapabilities::TrueUp => writeln!(f, "true_up"),
-            ConnectivityCapabilities::FindMyWatch => writeln!(f, "find_my_watch"),
-            ConnectivityCapabilities::RemoteManualSync => writeln!(f, "remote_manual_sync"),
-            ConnectivityCapabilities::LiveTrackAutoStart => writeln!(f, "live_track_auto_start"),
-            ConnectivityCapabilities::LiveTrackMessaging => writeln!(f, "live_track_messaging"),
-            ConnectivityCapabilities::InstantInput => writeln!(f, "instant_input"),
+            ConnectivityCapabilities::SwingSensor => write!(f, "swing_sensor"),
+            ConnectivityCapabilities::SwingSensorRemote => write!(f, "swing_sensor_remote"),
+            ConnectivityCapabilities::IncidentDetection => write!(f, "incident_detection"),
+            ConnectivityCapabilities::AudioPrompts => write!(f, "audio_prompts"),
+            ConnectivityCapabilities::WifiVerification => write!(f, "wifi_verification"),
+            ConnectivityCapabilities::TrueUp => write!(f, "true_up"),
+            ConnectivityCapabilities::FindMyWatch => write!(f, "find_my_watch"),
+            ConnectivityCapabilities::RemoteManualSync => write!(f, "remote_manual_sync"),
+            ConnectivityCapabilities::LiveTrackAutoStart => write!(f, "live_track_auto_start"),
+            ConnectivityCapabilities::LiveTrackMessaging => write!(f, "live_track_messaging"),
+            ConnectivityCapabilities::InstantInput => write!(f, "instant_input"),
             ConnectivityCapabilities::UnknownVariant(value) => {
-                writeln!(f, "unknown_variant_{}", *value)
+                write!(f, "unknown_variant_{}", *value)
             }
         }
     }
@@ -7977,10 +7965,10 @@ impl WeatherReport {
 impl fmt::Display for WeatherReport {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            WeatherReport::Current => writeln!(f, "current"),
-            WeatherReport::HourlyForecast => writeln!(f, "hourly_forecast"),
-            WeatherReport::DailyForecast => writeln!(f, "daily_forecast"),
-            WeatherReport::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            WeatherReport::Current => write!(f, "current"),
+            WeatherReport::HourlyForecast => write!(f, "hourly_forecast"),
+            WeatherReport::DailyForecast => write!(f, "daily_forecast"),
+            WeatherReport::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -8058,28 +8046,28 @@ impl WeatherStatus {
 impl fmt::Display for WeatherStatus {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            WeatherStatus::Clear => writeln!(f, "clear"),
-            WeatherStatus::PartlyCloudy => writeln!(f, "partly_cloudy"),
-            WeatherStatus::MostlyCloudy => writeln!(f, "mostly_cloudy"),
-            WeatherStatus::Rain => writeln!(f, "rain"),
-            WeatherStatus::Snow => writeln!(f, "snow"),
-            WeatherStatus::Windy => writeln!(f, "windy"),
-            WeatherStatus::Thunderstorms => writeln!(f, "thunderstorms"),
-            WeatherStatus::WintryMix => writeln!(f, "wintry_mix"),
-            WeatherStatus::Fog => writeln!(f, "fog"),
-            WeatherStatus::Hazy => writeln!(f, "hazy"),
-            WeatherStatus::Hail => writeln!(f, "hail"),
-            WeatherStatus::ScatteredShowers => writeln!(f, "scattered_showers"),
-            WeatherStatus::ScatteredThunderstorms => writeln!(f, "scattered_thunderstorms"),
-            WeatherStatus::UnknownPrecipitation => writeln!(f, "unknown_precipitation"),
-            WeatherStatus::LightRain => writeln!(f, "light_rain"),
-            WeatherStatus::HeavyRain => writeln!(f, "heavy_rain"),
-            WeatherStatus::LightSnow => writeln!(f, "light_snow"),
-            WeatherStatus::HeavySnow => writeln!(f, "heavy_snow"),
-            WeatherStatus::LightRainSnow => writeln!(f, "light_rain_snow"),
-            WeatherStatus::HeavyRainSnow => writeln!(f, "heavy_rain_snow"),
-            WeatherStatus::Cloudy => writeln!(f, "cloudy"),
-            WeatherStatus::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            WeatherStatus::Clear => write!(f, "clear"),
+            WeatherStatus::PartlyCloudy => write!(f, "partly_cloudy"),
+            WeatherStatus::MostlyCloudy => write!(f, "mostly_cloudy"),
+            WeatherStatus::Rain => write!(f, "rain"),
+            WeatherStatus::Snow => write!(f, "snow"),
+            WeatherStatus::Windy => write!(f, "windy"),
+            WeatherStatus::Thunderstorms => write!(f, "thunderstorms"),
+            WeatherStatus::WintryMix => write!(f, "wintry_mix"),
+            WeatherStatus::Fog => write!(f, "fog"),
+            WeatherStatus::Hazy => write!(f, "hazy"),
+            WeatherStatus::Hail => write!(f, "hail"),
+            WeatherStatus::ScatteredShowers => write!(f, "scattered_showers"),
+            WeatherStatus::ScatteredThunderstorms => write!(f, "scattered_thunderstorms"),
+            WeatherStatus::UnknownPrecipitation => write!(f, "unknown_precipitation"),
+            WeatherStatus::LightRain => write!(f, "light_rain"),
+            WeatherStatus::HeavyRain => write!(f, "heavy_rain"),
+            WeatherStatus::LightSnow => write!(f, "light_snow"),
+            WeatherStatus::HeavySnow => write!(f, "heavy_snow"),
+            WeatherStatus::LightRainSnow => write!(f, "light_rain_snow"),
+            WeatherStatus::HeavyRainSnow => write!(f, "heavy_rain_snow"),
+            WeatherStatus::Cloudy => write!(f, "cloudy"),
+            WeatherStatus::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -8143,12 +8131,12 @@ impl WeatherSeverity {
 impl fmt::Display for WeatherSeverity {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            WeatherSeverity::Unknown => writeln!(f, "unknown"),
-            WeatherSeverity::Warning => writeln!(f, "warning"),
-            WeatherSeverity::Watch => writeln!(f, "watch"),
-            WeatherSeverity::Advisory => writeln!(f, "advisory"),
-            WeatherSeverity::Statement => writeln!(f, "statement"),
-            WeatherSeverity::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            WeatherSeverity::Unknown => write!(f, "unknown"),
+            WeatherSeverity::Warning => write!(f, "warning"),
+            WeatherSeverity::Watch => write!(f, "watch"),
+            WeatherSeverity::Advisory => write!(f, "advisory"),
+            WeatherSeverity::Statement => write!(f, "statement"),
+            WeatherSeverity::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -8356,92 +8344,92 @@ impl WeatherSevereType {
 impl fmt::Display for WeatherSevereType {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            WeatherSevereType::Unspecified => writeln!(f, "unspecified"),
-            WeatherSevereType::Tornado => writeln!(f, "tornado"),
-            WeatherSevereType::Tsunami => writeln!(f, "tsunami"),
-            WeatherSevereType::Hurricane => writeln!(f, "hurricane"),
-            WeatherSevereType::ExtremeWind => writeln!(f, "extreme_wind"),
-            WeatherSevereType::Typhoon => writeln!(f, "typhoon"),
-            WeatherSevereType::InlandHurricane => writeln!(f, "inland_hurricane"),
-            WeatherSevereType::HurricaneForceWind => writeln!(f, "hurricane_force_wind"),
-            WeatherSevereType::Waterspout => writeln!(f, "waterspout"),
-            WeatherSevereType::SevereThunderstorm => writeln!(f, "severe_thunderstorm"),
-            WeatherSevereType::WreckhouseWinds => writeln!(f, "wreckhouse_winds"),
-            WeatherSevereType::LesSuetesWind => writeln!(f, "les_suetes_wind"),
-            WeatherSevereType::Avalanche => writeln!(f, "avalanche"),
-            WeatherSevereType::FlashFlood => writeln!(f, "flash_flood"),
-            WeatherSevereType::TropicalStorm => writeln!(f, "tropical_storm"),
-            WeatherSevereType::InlandTropicalStorm => writeln!(f, "inland_tropical_storm"),
-            WeatherSevereType::Blizzard => writeln!(f, "blizzard"),
-            WeatherSevereType::IceStorm => writeln!(f, "ice_storm"),
-            WeatherSevereType::FreezingRain => writeln!(f, "freezing_rain"),
-            WeatherSevereType::DebrisFlow => writeln!(f, "debris_flow"),
-            WeatherSevereType::FlashFreeze => writeln!(f, "flash_freeze"),
-            WeatherSevereType::DustStorm => writeln!(f, "dust_storm"),
-            WeatherSevereType::HighWind => writeln!(f, "high_wind"),
-            WeatherSevereType::WinterStorm => writeln!(f, "winter_storm"),
-            WeatherSevereType::HeavyFreezingSpray => writeln!(f, "heavy_freezing_spray"),
-            WeatherSevereType::ExtremeCold => writeln!(f, "extreme_cold"),
-            WeatherSevereType::WindChill => writeln!(f, "wind_chill"),
-            WeatherSevereType::ColdWave => writeln!(f, "cold_wave"),
-            WeatherSevereType::HeavySnowAlert => writeln!(f, "heavy_snow_alert"),
-            WeatherSevereType::LakeEffectBlowingSnow => writeln!(f, "lake_effect_blowing_snow"),
-            WeatherSevereType::SnowSquall => writeln!(f, "snow_squall"),
-            WeatherSevereType::LakeEffectSnow => writeln!(f, "lake_effect_snow"),
-            WeatherSevereType::WinterWeather => writeln!(f, "winter_weather"),
-            WeatherSevereType::Sleet => writeln!(f, "sleet"),
-            WeatherSevereType::Snowfall => writeln!(f, "snowfall"),
-            WeatherSevereType::SnowAndBlowingSnow => writeln!(f, "snow_and_blowing_snow"),
-            WeatherSevereType::BlowingSnow => writeln!(f, "blowing_snow"),
-            WeatherSevereType::SnowAlert => writeln!(f, "snow_alert"),
-            WeatherSevereType::ArcticOutflow => writeln!(f, "arctic_outflow"),
-            WeatherSevereType::FreezingDrizzle => writeln!(f, "freezing_drizzle"),
-            WeatherSevereType::Storm => writeln!(f, "storm"),
-            WeatherSevereType::StormSurge => writeln!(f, "storm_surge"),
-            WeatherSevereType::Rainfall => writeln!(f, "rainfall"),
-            WeatherSevereType::ArealFlood => writeln!(f, "areal_flood"),
-            WeatherSevereType::CoastalFlood => writeln!(f, "coastal_flood"),
-            WeatherSevereType::LakeshoreFlood => writeln!(f, "lakeshore_flood"),
-            WeatherSevereType::ExcessiveHeat => writeln!(f, "excessive_heat"),
-            WeatherSevereType::Heat => writeln!(f, "heat"),
-            WeatherSevereType::Weather => writeln!(f, "weather"),
-            WeatherSevereType::HighHeatAndHumidity => writeln!(f, "high_heat_and_humidity"),
-            WeatherSevereType::HumidexAndHealth => writeln!(f, "humidex_and_health"),
-            WeatherSevereType::Humidex => writeln!(f, "humidex"),
-            WeatherSevereType::Gale => writeln!(f, "gale"),
-            WeatherSevereType::FreezingSpray => writeln!(f, "freezing_spray"),
-            WeatherSevereType::SpecialMarine => writeln!(f, "special_marine"),
-            WeatherSevereType::Squall => writeln!(f, "squall"),
-            WeatherSevereType::StrongWind => writeln!(f, "strong_wind"),
-            WeatherSevereType::LakeWind => writeln!(f, "lake_wind"),
-            WeatherSevereType::MarineWeather => writeln!(f, "marine_weather"),
-            WeatherSevereType::Wind => writeln!(f, "wind"),
-            WeatherSevereType::SmallCraftHazardousSeas => writeln!(f, "small_craft_hazardous_seas"),
-            WeatherSevereType::HazardousSeas => writeln!(f, "hazardous_seas"),
-            WeatherSevereType::SmallCraft => writeln!(f, "small_craft"),
-            WeatherSevereType::SmallCraftWinds => writeln!(f, "small_craft_winds"),
-            WeatherSevereType::SmallCraftRoughBar => writeln!(f, "small_craft_rough_bar"),
-            WeatherSevereType::HighWaterLevel => writeln!(f, "high_water_level"),
-            WeatherSevereType::Ashfall => writeln!(f, "ashfall"),
-            WeatherSevereType::FreezingFog => writeln!(f, "freezing_fog"),
-            WeatherSevereType::DenseFog => writeln!(f, "dense_fog"),
-            WeatherSevereType::DenseSmoke => writeln!(f, "dense_smoke"),
-            WeatherSevereType::BlowingDust => writeln!(f, "blowing_dust"),
-            WeatherSevereType::HardFreeze => writeln!(f, "hard_freeze"),
-            WeatherSevereType::Freeze => writeln!(f, "freeze"),
-            WeatherSevereType::Frost => writeln!(f, "frost"),
-            WeatherSevereType::FireWeather => writeln!(f, "fire_weather"),
-            WeatherSevereType::Flood => writeln!(f, "flood"),
-            WeatherSevereType::RipTide => writeln!(f, "rip_tide"),
-            WeatherSevereType::HighSurf => writeln!(f, "high_surf"),
-            WeatherSevereType::Smog => writeln!(f, "smog"),
-            WeatherSevereType::AirQuality => writeln!(f, "air_quality"),
-            WeatherSevereType::BriskWind => writeln!(f, "brisk_wind"),
-            WeatherSevereType::AirStagnation => writeln!(f, "air_stagnation"),
-            WeatherSevereType::LowWater => writeln!(f, "low_water"),
-            WeatherSevereType::Hydrological => writeln!(f, "hydrological"),
-            WeatherSevereType::SpecialWeather => writeln!(f, "special_weather"),
-            WeatherSevereType::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            WeatherSevereType::Unspecified => write!(f, "unspecified"),
+            WeatherSevereType::Tornado => write!(f, "tornado"),
+            WeatherSevereType::Tsunami => write!(f, "tsunami"),
+            WeatherSevereType::Hurricane => write!(f, "hurricane"),
+            WeatherSevereType::ExtremeWind => write!(f, "extreme_wind"),
+            WeatherSevereType::Typhoon => write!(f, "typhoon"),
+            WeatherSevereType::InlandHurricane => write!(f, "inland_hurricane"),
+            WeatherSevereType::HurricaneForceWind => write!(f, "hurricane_force_wind"),
+            WeatherSevereType::Waterspout => write!(f, "waterspout"),
+            WeatherSevereType::SevereThunderstorm => write!(f, "severe_thunderstorm"),
+            WeatherSevereType::WreckhouseWinds => write!(f, "wreckhouse_winds"),
+            WeatherSevereType::LesSuetesWind => write!(f, "les_suetes_wind"),
+            WeatherSevereType::Avalanche => write!(f, "avalanche"),
+            WeatherSevereType::FlashFlood => write!(f, "flash_flood"),
+            WeatherSevereType::TropicalStorm => write!(f, "tropical_storm"),
+            WeatherSevereType::InlandTropicalStorm => write!(f, "inland_tropical_storm"),
+            WeatherSevereType::Blizzard => write!(f, "blizzard"),
+            WeatherSevereType::IceStorm => write!(f, "ice_storm"),
+            WeatherSevereType::FreezingRain => write!(f, "freezing_rain"),
+            WeatherSevereType::DebrisFlow => write!(f, "debris_flow"),
+            WeatherSevereType::FlashFreeze => write!(f, "flash_freeze"),
+            WeatherSevereType::DustStorm => write!(f, "dust_storm"),
+            WeatherSevereType::HighWind => write!(f, "high_wind"),
+            WeatherSevereType::WinterStorm => write!(f, "winter_storm"),
+            WeatherSevereType::HeavyFreezingSpray => write!(f, "heavy_freezing_spray"),
+            WeatherSevereType::ExtremeCold => write!(f, "extreme_cold"),
+            WeatherSevereType::WindChill => write!(f, "wind_chill"),
+            WeatherSevereType::ColdWave => write!(f, "cold_wave"),
+            WeatherSevereType::HeavySnowAlert => write!(f, "heavy_snow_alert"),
+            WeatherSevereType::LakeEffectBlowingSnow => write!(f, "lake_effect_blowing_snow"),
+            WeatherSevereType::SnowSquall => write!(f, "snow_squall"),
+            WeatherSevereType::LakeEffectSnow => write!(f, "lake_effect_snow"),
+            WeatherSevereType::WinterWeather => write!(f, "winter_weather"),
+            WeatherSevereType::Sleet => write!(f, "sleet"),
+            WeatherSevereType::Snowfall => write!(f, "snowfall"),
+            WeatherSevereType::SnowAndBlowingSnow => write!(f, "snow_and_blowing_snow"),
+            WeatherSevereType::BlowingSnow => write!(f, "blowing_snow"),
+            WeatherSevereType::SnowAlert => write!(f, "snow_alert"),
+            WeatherSevereType::ArcticOutflow => write!(f, "arctic_outflow"),
+            WeatherSevereType::FreezingDrizzle => write!(f, "freezing_drizzle"),
+            WeatherSevereType::Storm => write!(f, "storm"),
+            WeatherSevereType::StormSurge => write!(f, "storm_surge"),
+            WeatherSevereType::Rainfall => write!(f, "rainfall"),
+            WeatherSevereType::ArealFlood => write!(f, "areal_flood"),
+            WeatherSevereType::CoastalFlood => write!(f, "coastal_flood"),
+            WeatherSevereType::LakeshoreFlood => write!(f, "lakeshore_flood"),
+            WeatherSevereType::ExcessiveHeat => write!(f, "excessive_heat"),
+            WeatherSevereType::Heat => write!(f, "heat"),
+            WeatherSevereType::Weather => write!(f, "weather"),
+            WeatherSevereType::HighHeatAndHumidity => write!(f, "high_heat_and_humidity"),
+            WeatherSevereType::HumidexAndHealth => write!(f, "humidex_and_health"),
+            WeatherSevereType::Humidex => write!(f, "humidex"),
+            WeatherSevereType::Gale => write!(f, "gale"),
+            WeatherSevereType::FreezingSpray => write!(f, "freezing_spray"),
+            WeatherSevereType::SpecialMarine => write!(f, "special_marine"),
+            WeatherSevereType::Squall => write!(f, "squall"),
+            WeatherSevereType::StrongWind => write!(f, "strong_wind"),
+            WeatherSevereType::LakeWind => write!(f, "lake_wind"),
+            WeatherSevereType::MarineWeather => write!(f, "marine_weather"),
+            WeatherSevereType::Wind => write!(f, "wind"),
+            WeatherSevereType::SmallCraftHazardousSeas => write!(f, "small_craft_hazardous_seas"),
+            WeatherSevereType::HazardousSeas => write!(f, "hazardous_seas"),
+            WeatherSevereType::SmallCraft => write!(f, "small_craft"),
+            WeatherSevereType::SmallCraftWinds => write!(f, "small_craft_winds"),
+            WeatherSevereType::SmallCraftRoughBar => write!(f, "small_craft_rough_bar"),
+            WeatherSevereType::HighWaterLevel => write!(f, "high_water_level"),
+            WeatherSevereType::Ashfall => write!(f, "ashfall"),
+            WeatherSevereType::FreezingFog => write!(f, "freezing_fog"),
+            WeatherSevereType::DenseFog => write!(f, "dense_fog"),
+            WeatherSevereType::DenseSmoke => write!(f, "dense_smoke"),
+            WeatherSevereType::BlowingDust => write!(f, "blowing_dust"),
+            WeatherSevereType::HardFreeze => write!(f, "hard_freeze"),
+            WeatherSevereType::Freeze => write!(f, "freeze"),
+            WeatherSevereType::Frost => write!(f, "frost"),
+            WeatherSevereType::FireWeather => write!(f, "fire_weather"),
+            WeatherSevereType::Flood => write!(f, "flood"),
+            WeatherSevereType::RipTide => write!(f, "rip_tide"),
+            WeatherSevereType::HighSurf => write!(f, "high_surf"),
+            WeatherSevereType::Smog => write!(f, "smog"),
+            WeatherSevereType::AirQuality => write!(f, "air_quality"),
+            WeatherSevereType::BriskWind => write!(f, "brisk_wind"),
+            WeatherSevereType::AirStagnation => write!(f, "air_stagnation"),
+            WeatherSevereType::LowWater => write!(f, "low_water"),
+            WeatherSevereType::Hydrological => write!(f, "hydrological"),
+            WeatherSevereType::SpecialWeather => write!(f, "special_weather"),
+            WeatherSevereType::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -8572,13 +8560,13 @@ impl StrokeType {
 impl fmt::Display for StrokeType {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            StrokeType::NoEvent => writeln!(f, "no_event"),
-            StrokeType::Other => writeln!(f, "other"),
-            StrokeType::Serve => writeln!(f, "serve"),
-            StrokeType::Forehand => writeln!(f, "forehand"),
-            StrokeType::Backhand => writeln!(f, "backhand"),
-            StrokeType::Smash => writeln!(f, "smash"),
-            StrokeType::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            StrokeType::NoEvent => write!(f, "no_event"),
+            StrokeType::Other => write!(f, "other"),
+            StrokeType::Serve => write!(f, "serve"),
+            StrokeType::Forehand => write!(f, "forehand"),
+            StrokeType::Backhand => write!(f, "backhand"),
+            StrokeType::Smash => write!(f, "smash"),
+            StrokeType::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -8701,47 +8689,47 @@ impl BodyLocation {
 impl fmt::Display for BodyLocation {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            BodyLocation::LeftLeg => writeln!(f, "left_leg"),
-            BodyLocation::LeftCalf => writeln!(f, "left_calf"),
-            BodyLocation::LeftShin => writeln!(f, "left_shin"),
-            BodyLocation::LeftHamstring => writeln!(f, "left_hamstring"),
-            BodyLocation::LeftQuad => writeln!(f, "left_quad"),
-            BodyLocation::LeftGlute => writeln!(f, "left_glute"),
-            BodyLocation::RightLeg => writeln!(f, "right_leg"),
-            BodyLocation::RightCalf => writeln!(f, "right_calf"),
-            BodyLocation::RightShin => writeln!(f, "right_shin"),
-            BodyLocation::RightHamstring => writeln!(f, "right_hamstring"),
-            BodyLocation::RightQuad => writeln!(f, "right_quad"),
-            BodyLocation::RightGlute => writeln!(f, "right_glute"),
-            BodyLocation::TorsoBack => writeln!(f, "torso_back"),
-            BodyLocation::LeftLowerBack => writeln!(f, "left_lower_back"),
-            BodyLocation::LeftUpperBack => writeln!(f, "left_upper_back"),
-            BodyLocation::RightLowerBack => writeln!(f, "right_lower_back"),
-            BodyLocation::RightUpperBack => writeln!(f, "right_upper_back"),
-            BodyLocation::TorsoFront => writeln!(f, "torso_front"),
-            BodyLocation::LeftAbdomen => writeln!(f, "left_abdomen"),
-            BodyLocation::LeftChest => writeln!(f, "left_chest"),
-            BodyLocation::RightAbdomen => writeln!(f, "right_abdomen"),
-            BodyLocation::RightChest => writeln!(f, "right_chest"),
-            BodyLocation::LeftArm => writeln!(f, "left_arm"),
-            BodyLocation::LeftShoulder => writeln!(f, "left_shoulder"),
-            BodyLocation::LeftBicep => writeln!(f, "left_bicep"),
-            BodyLocation::LeftTricep => writeln!(f, "left_tricep"),
-            BodyLocation::LeftBrachioradialis => writeln!(f, "left_brachioradialis"),
-            BodyLocation::LeftForearmExtensors => writeln!(f, "left_forearm_extensors"),
-            BodyLocation::RightArm => writeln!(f, "right_arm"),
-            BodyLocation::RightShoulder => writeln!(f, "right_shoulder"),
-            BodyLocation::RightBicep => writeln!(f, "right_bicep"),
-            BodyLocation::RightTricep => writeln!(f, "right_tricep"),
-            BodyLocation::RightBrachioradialis => writeln!(f, "right_brachioradialis"),
-            BodyLocation::RightForearmExtensors => writeln!(f, "right_forearm_extensors"),
-            BodyLocation::Neck => writeln!(f, "neck"),
-            BodyLocation::Throat => writeln!(f, "throat"),
-            BodyLocation::WaistMidBack => writeln!(f, "waist_mid_back"),
-            BodyLocation::WaistFront => writeln!(f, "waist_front"),
-            BodyLocation::WaistLeft => writeln!(f, "waist_left"),
-            BodyLocation::WaistRight => writeln!(f, "waist_right"),
-            BodyLocation::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            BodyLocation::LeftLeg => write!(f, "left_leg"),
+            BodyLocation::LeftCalf => write!(f, "left_calf"),
+            BodyLocation::LeftShin => write!(f, "left_shin"),
+            BodyLocation::LeftHamstring => write!(f, "left_hamstring"),
+            BodyLocation::LeftQuad => write!(f, "left_quad"),
+            BodyLocation::LeftGlute => write!(f, "left_glute"),
+            BodyLocation::RightLeg => write!(f, "right_leg"),
+            BodyLocation::RightCalf => write!(f, "right_calf"),
+            BodyLocation::RightShin => write!(f, "right_shin"),
+            BodyLocation::RightHamstring => write!(f, "right_hamstring"),
+            BodyLocation::RightQuad => write!(f, "right_quad"),
+            BodyLocation::RightGlute => write!(f, "right_glute"),
+            BodyLocation::TorsoBack => write!(f, "torso_back"),
+            BodyLocation::LeftLowerBack => write!(f, "left_lower_back"),
+            BodyLocation::LeftUpperBack => write!(f, "left_upper_back"),
+            BodyLocation::RightLowerBack => write!(f, "right_lower_back"),
+            BodyLocation::RightUpperBack => write!(f, "right_upper_back"),
+            BodyLocation::TorsoFront => write!(f, "torso_front"),
+            BodyLocation::LeftAbdomen => write!(f, "left_abdomen"),
+            BodyLocation::LeftChest => write!(f, "left_chest"),
+            BodyLocation::RightAbdomen => write!(f, "right_abdomen"),
+            BodyLocation::RightChest => write!(f, "right_chest"),
+            BodyLocation::LeftArm => write!(f, "left_arm"),
+            BodyLocation::LeftShoulder => write!(f, "left_shoulder"),
+            BodyLocation::LeftBicep => write!(f, "left_bicep"),
+            BodyLocation::LeftTricep => write!(f, "left_tricep"),
+            BodyLocation::LeftBrachioradialis => write!(f, "left_brachioradialis"),
+            BodyLocation::LeftForearmExtensors => write!(f, "left_forearm_extensors"),
+            BodyLocation::RightArm => write!(f, "right_arm"),
+            BodyLocation::RightShoulder => write!(f, "right_shoulder"),
+            BodyLocation::RightBicep => write!(f, "right_bicep"),
+            BodyLocation::RightTricep => write!(f, "right_tricep"),
+            BodyLocation::RightBrachioradialis => write!(f, "right_brachioradialis"),
+            BodyLocation::RightForearmExtensors => write!(f, "right_forearm_extensors"),
+            BodyLocation::Neck => write!(f, "neck"),
+            BodyLocation::Throat => write!(f, "throat"),
+            BodyLocation::WaistMidBack => write!(f, "waist_mid_back"),
+            BodyLocation::WaistFront => write!(f, "waist_front"),
+            BodyLocation::WaistLeft => write!(f, "waist_left"),
+            BodyLocation::WaistRight => write!(f, "waist_right"),
+            BodyLocation::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -8818,9 +8806,9 @@ impl SegmentLapStatus {
 impl fmt::Display for SegmentLapStatus {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            SegmentLapStatus::End => writeln!(f, "end"),
-            SegmentLapStatus::Fail => writeln!(f, "fail"),
-            SegmentLapStatus::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            SegmentLapStatus::End => write!(f, "end"),
+            SegmentLapStatus::Fail => write!(f, "fail"),
+            SegmentLapStatus::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -8877,19 +8865,19 @@ impl SegmentLeaderboardType {
 impl fmt::Display for SegmentLeaderboardType {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            SegmentLeaderboardType::Overall => writeln!(f, "overall"),
-            SegmentLeaderboardType::PersonalBest => writeln!(f, "personal_best"),
-            SegmentLeaderboardType::Connections => writeln!(f, "connections"),
-            SegmentLeaderboardType::Group => writeln!(f, "group"),
-            SegmentLeaderboardType::Challenger => writeln!(f, "challenger"),
-            SegmentLeaderboardType::Kom => writeln!(f, "kom"),
-            SegmentLeaderboardType::Qom => writeln!(f, "qom"),
-            SegmentLeaderboardType::Pr => writeln!(f, "pr"),
-            SegmentLeaderboardType::Goal => writeln!(f, "goal"),
-            SegmentLeaderboardType::Rival => writeln!(f, "rival"),
-            SegmentLeaderboardType::ClubLeader => writeln!(f, "club_leader"),
+            SegmentLeaderboardType::Overall => write!(f, "overall"),
+            SegmentLeaderboardType::PersonalBest => write!(f, "personal_best"),
+            SegmentLeaderboardType::Connections => write!(f, "connections"),
+            SegmentLeaderboardType::Group => write!(f, "group"),
+            SegmentLeaderboardType::Challenger => write!(f, "challenger"),
+            SegmentLeaderboardType::Kom => write!(f, "kom"),
+            SegmentLeaderboardType::Qom => write!(f, "qom"),
+            SegmentLeaderboardType::Pr => write!(f, "pr"),
+            SegmentLeaderboardType::Goal => write!(f, "goal"),
+            SegmentLeaderboardType::Rival => write!(f, "rival"),
+            SegmentLeaderboardType::ClubLeader => write!(f, "club_leader"),
             SegmentLeaderboardType::UnknownVariant(value) => {
-                writeln!(f, "unknown_variant_{}", *value)
+                write!(f, "unknown_variant_{}", *value)
             }
         }
     }
@@ -8940,10 +8928,10 @@ impl SegmentDeleteStatus {
 impl fmt::Display for SegmentDeleteStatus {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            SegmentDeleteStatus::DoNotDelete => writeln!(f, "do_not_delete"),
-            SegmentDeleteStatus::DeleteOne => writeln!(f, "delete_one"),
-            SegmentDeleteStatus::DeleteAll => writeln!(f, "delete_all"),
-            SegmentDeleteStatus::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            SegmentDeleteStatus::DoNotDelete => write!(f, "do_not_delete"),
+            SegmentDeleteStatus::DeleteOne => write!(f, "delete_one"),
+            SegmentDeleteStatus::DeleteAll => write!(f, "delete_all"),
+            SegmentDeleteStatus::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -8983,11 +8971,9 @@ impl SegmentSelectionType {
 impl fmt::Display for SegmentSelectionType {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            SegmentSelectionType::Starred => writeln!(f, "starred"),
-            SegmentSelectionType::Suggested => writeln!(f, "suggested"),
-            SegmentSelectionType::UnknownVariant(value) => {
-                writeln!(f, "unknown_variant_{}", *value)
-            }
+            SegmentSelectionType::Starred => write!(f, "starred"),
+            SegmentSelectionType::Suggested => write!(f, "suggested"),
+            SegmentSelectionType::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -9040,13 +9026,13 @@ impl SourceType {
 impl fmt::Display for SourceType {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            SourceType::Ant => writeln!(f, "ant"),
-            SourceType::Antplus => writeln!(f, "antplus"),
-            SourceType::Bluetooth => writeln!(f, "bluetooth"),
-            SourceType::BluetoothLowEnergy => writeln!(f, "bluetooth_low_energy"),
-            SourceType::Wifi => writeln!(f, "wifi"),
-            SourceType::Local => writeln!(f, "local"),
-            SourceType::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            SourceType::Ant => write!(f, "ant"),
+            SourceType::Antplus => write!(f, "antplus"),
+            SourceType::Bluetooth => write!(f, "bluetooth"),
+            SourceType::BluetoothLowEnergy => write!(f, "bluetooth_low_energy"),
+            SourceType::Wifi => write!(f, "wifi"),
+            SourceType::Local => write!(f, "local"),
+            SourceType::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -9098,12 +9084,12 @@ impl DisplayOrientation {
 impl fmt::Display for DisplayOrientation {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            DisplayOrientation::Auto => writeln!(f, "auto"),
-            DisplayOrientation::Portrait => writeln!(f, "portrait"),
-            DisplayOrientation::Landscape => writeln!(f, "landscape"),
-            DisplayOrientation::PortraitFlipped => writeln!(f, "portrait_flipped"),
-            DisplayOrientation::LandscapeFlipped => writeln!(f, "landscape_flipped"),
-            DisplayOrientation::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            DisplayOrientation::Auto => write!(f, "auto"),
+            DisplayOrientation::Portrait => write!(f, "portrait"),
+            DisplayOrientation::Landscape => write!(f, "landscape"),
+            DisplayOrientation::PortraitFlipped => write!(f, "portrait_flipped"),
+            DisplayOrientation::LandscapeFlipped => write!(f, "landscape_flipped"),
+            DisplayOrientation::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -9153,13 +9139,13 @@ impl WorkoutEquipment {
 impl fmt::Display for WorkoutEquipment {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            WorkoutEquipment::None => writeln!(f, "none"),
-            WorkoutEquipment::SwimFins => writeln!(f, "swim_fins"),
-            WorkoutEquipment::SwimKickboard => writeln!(f, "swim_kickboard"),
-            WorkoutEquipment::SwimPaddles => writeln!(f, "swim_paddles"),
-            WorkoutEquipment::SwimPullBuoy => writeln!(f, "swim_pull_buoy"),
-            WorkoutEquipment::SwimSnorkel => writeln!(f, "swim_snorkel"),
-            WorkoutEquipment::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            WorkoutEquipment::None => write!(f, "none"),
+            WorkoutEquipment::SwimFins => write!(f, "swim_fins"),
+            WorkoutEquipment::SwimKickboard => write!(f, "swim_kickboard"),
+            WorkoutEquipment::SwimPaddles => write!(f, "swim_paddles"),
+            WorkoutEquipment::SwimPullBuoy => write!(f, "swim_pull_buoy"),
+            WorkoutEquipment::SwimSnorkel => write!(f, "swim_snorkel"),
+            WorkoutEquipment::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -9206,11 +9192,11 @@ impl WatchfaceMode {
 impl fmt::Display for WatchfaceMode {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            WatchfaceMode::Digital => writeln!(f, "digital"),
-            WatchfaceMode::Analog => writeln!(f, "analog"),
-            WatchfaceMode::ConnectIq => writeln!(f, "connect_iq"),
-            WatchfaceMode::Disabled => writeln!(f, "disabled"),
-            WatchfaceMode::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            WatchfaceMode::Digital => write!(f, "digital"),
+            WatchfaceMode::Analog => write!(f, "analog"),
+            WatchfaceMode::ConnectIq => write!(f, "connect_iq"),
+            WatchfaceMode::Disabled => write!(f, "disabled"),
+            WatchfaceMode::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -9253,11 +9239,11 @@ impl DigitalWatchfaceLayout {
 impl fmt::Display for DigitalWatchfaceLayout {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            DigitalWatchfaceLayout::Traditional => writeln!(f, "traditional"),
-            DigitalWatchfaceLayout::Modern => writeln!(f, "modern"),
-            DigitalWatchfaceLayout::Bold => writeln!(f, "bold"),
+            DigitalWatchfaceLayout::Traditional => write!(f, "traditional"),
+            DigitalWatchfaceLayout::Modern => write!(f, "modern"),
+            DigitalWatchfaceLayout::Bold => write!(f, "bold"),
             DigitalWatchfaceLayout::UnknownVariant(value) => {
-                writeln!(f, "unknown_variant_{}", *value)
+                write!(f, "unknown_variant_{}", *value)
             }
         }
     }
@@ -9300,12 +9286,10 @@ impl AnalogWatchfaceLayout {
 impl fmt::Display for AnalogWatchfaceLayout {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            AnalogWatchfaceLayout::Minimal => writeln!(f, "minimal"),
-            AnalogWatchfaceLayout::Traditional => writeln!(f, "traditional"),
-            AnalogWatchfaceLayout::Modern => writeln!(f, "modern"),
-            AnalogWatchfaceLayout::UnknownVariant(value) => {
-                writeln!(f, "unknown_variant_{}", *value)
-            }
+            AnalogWatchfaceLayout::Minimal => write!(f, "minimal"),
+            AnalogWatchfaceLayout::Traditional => write!(f, "traditional"),
+            AnalogWatchfaceLayout::Modern => write!(f, "modern"),
+            AnalogWatchfaceLayout::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -9349,11 +9333,11 @@ impl RiderPositionType {
 impl fmt::Display for RiderPositionType {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            RiderPositionType::Seated => writeln!(f, "seated"),
-            RiderPositionType::Standing => writeln!(f, "standing"),
-            RiderPositionType::TransitionToSeated => writeln!(f, "transition_to_seated"),
-            RiderPositionType::TransitionToStanding => writeln!(f, "transition_to_standing"),
-            RiderPositionType::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            RiderPositionType::Seated => write!(f, "seated"),
+            RiderPositionType::Standing => write!(f, "standing"),
+            RiderPositionType::TransitionToSeated => write!(f, "transition_to_seated"),
+            RiderPositionType::TransitionToStanding => write!(f, "transition_to_standing"),
+            RiderPositionType::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -9398,11 +9382,11 @@ impl PowerPhaseType {
 impl fmt::Display for PowerPhaseType {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            PowerPhaseType::PowerPhaseStartAngle => writeln!(f, "power_phase_start_angle"),
-            PowerPhaseType::PowerPhaseEndAngle => writeln!(f, "power_phase_end_angle"),
-            PowerPhaseType::PowerPhaseArcLength => writeln!(f, "power_phase_arc_length"),
-            PowerPhaseType::PowerPhaseCenter => writeln!(f, "power_phase_center"),
-            PowerPhaseType::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            PowerPhaseType::PowerPhaseStartAngle => write!(f, "power_phase_start_angle"),
+            PowerPhaseType::PowerPhaseEndAngle => write!(f, "power_phase_end_angle"),
+            PowerPhaseType::PowerPhaseArcLength => write!(f, "power_phase_arc_length"),
+            PowerPhaseType::PowerPhaseCenter => write!(f, "power_phase_center"),
+            PowerPhaseType::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -9472,22 +9456,22 @@ impl CameraEventType {
 impl fmt::Display for CameraEventType {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            CameraEventType::VideoStart => writeln!(f, "video_start"),
-            CameraEventType::VideoSplit => writeln!(f, "video_split"),
-            CameraEventType::VideoEnd => writeln!(f, "video_end"),
-            CameraEventType::PhotoTaken => writeln!(f, "photo_taken"),
-            CameraEventType::VideoSecondStreamStart => writeln!(f, "video_second_stream_start"),
-            CameraEventType::VideoSecondStreamSplit => writeln!(f, "video_second_stream_split"),
-            CameraEventType::VideoSecondStreamEnd => writeln!(f, "video_second_stream_end"),
-            CameraEventType::VideoSplitStart => writeln!(f, "video_split_start"),
+            CameraEventType::VideoStart => write!(f, "video_start"),
+            CameraEventType::VideoSplit => write!(f, "video_split"),
+            CameraEventType::VideoEnd => write!(f, "video_end"),
+            CameraEventType::PhotoTaken => write!(f, "photo_taken"),
+            CameraEventType::VideoSecondStreamStart => write!(f, "video_second_stream_start"),
+            CameraEventType::VideoSecondStreamSplit => write!(f, "video_second_stream_split"),
+            CameraEventType::VideoSecondStreamEnd => write!(f, "video_second_stream_end"),
+            CameraEventType::VideoSplitStart => write!(f, "video_split_start"),
             CameraEventType::VideoSecondStreamSplitStart => {
-                writeln!(f, "video_second_stream_split_start")
+                write!(f, "video_second_stream_split_start")
             }
-            CameraEventType::VideoPause => writeln!(f, "video_pause"),
-            CameraEventType::VideoSecondStreamPause => writeln!(f, "video_second_stream_pause"),
-            CameraEventType::VideoResume => writeln!(f, "video_resume"),
-            CameraEventType::VideoSecondStreamResume => writeln!(f, "video_second_stream_resume"),
-            CameraEventType::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            CameraEventType::VideoPause => write!(f, "video_pause"),
+            CameraEventType::VideoSecondStreamPause => write!(f, "video_second_stream_pause"),
+            CameraEventType::VideoResume => write!(f, "video_resume"),
+            CameraEventType::VideoSecondStreamResume => write!(f, "video_second_stream_resume"),
+            CameraEventType::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -9542,11 +9526,11 @@ impl SensorType {
 impl fmt::Display for SensorType {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            SensorType::Accelerometer => writeln!(f, "accelerometer"),
-            SensorType::Gyroscope => writeln!(f, "gyroscope"),
-            SensorType::Compass => writeln!(f, "compass"),
-            SensorType::Barometer => writeln!(f, "barometer"),
-            SensorType::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            SensorType::Accelerometer => write!(f, "accelerometer"),
+            SensorType::Gyroscope => write!(f, "gyroscope"),
+            SensorType::Compass => write!(f, "compass"),
+            SensorType::Barometer => write!(f, "barometer"),
+            SensorType::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -9591,12 +9575,12 @@ impl BikeLightNetworkConfigType {
 impl fmt::Display for BikeLightNetworkConfigType {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            BikeLightNetworkConfigType::Auto => writeln!(f, "auto"),
-            BikeLightNetworkConfigType::Individual => writeln!(f, "individual"),
-            BikeLightNetworkConfigType::HighVisibility => writeln!(f, "high_visibility"),
-            BikeLightNetworkConfigType::Trail => writeln!(f, "trail"),
+            BikeLightNetworkConfigType::Auto => write!(f, "auto"),
+            BikeLightNetworkConfigType::Individual => write!(f, "individual"),
+            BikeLightNetworkConfigType::HighVisibility => write!(f, "high_visibility"),
+            BikeLightNetworkConfigType::Trail => write!(f, "trail"),
             BikeLightNetworkConfigType::UnknownVariant(value) => {
-                writeln!(f, "unknown_variant_{}", *value)
+                write!(f, "unknown_variant_{}", *value)
             }
         }
     }
@@ -9646,11 +9630,11 @@ impl CommTimeoutType {
 impl fmt::Display for CommTimeoutType {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            CommTimeoutType::WildcardPairingTimeout => writeln!(f, "wildcard_pairing_timeout"),
-            CommTimeoutType::PairingTimeout => writeln!(f, "pairing_timeout"),
-            CommTimeoutType::ConnectionLost => writeln!(f, "connection_lost"),
-            CommTimeoutType::ConnectionTimeout => writeln!(f, "connection_timeout"),
-            CommTimeoutType::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            CommTimeoutType::WildcardPairingTimeout => write!(f, "wildcard_pairing_timeout"),
+            CommTimeoutType::PairingTimeout => write!(f, "pairing_timeout"),
+            CommTimeoutType::ConnectionLost => write!(f, "connection_lost"),
+            CommTimeoutType::ConnectionTimeout => write!(f, "connection_timeout"),
+            CommTimeoutType::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -9695,13 +9679,11 @@ impl CameraOrientationType {
 impl fmt::Display for CameraOrientationType {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            CameraOrientationType::CameraOrientation0 => writeln!(f, "camera_orientation_0"),
-            CameraOrientationType::CameraOrientation90 => writeln!(f, "camera_orientation_90"),
-            CameraOrientationType::CameraOrientation180 => writeln!(f, "camera_orientation_180"),
-            CameraOrientationType::CameraOrientation270 => writeln!(f, "camera_orientation_270"),
-            CameraOrientationType::UnknownVariant(value) => {
-                writeln!(f, "unknown_variant_{}", *value)
-            }
+            CameraOrientationType::CameraOrientation0 => write!(f, "camera_orientation_0"),
+            CameraOrientationType::CameraOrientation90 => write!(f, "camera_orientation_90"),
+            CameraOrientationType::CameraOrientation180 => write!(f, "camera_orientation_180"),
+            CameraOrientationType::CameraOrientation270 => write!(f, "camera_orientation_270"),
+            CameraOrientationType::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -9746,11 +9728,11 @@ impl AttitudeStage {
 impl fmt::Display for AttitudeStage {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            AttitudeStage::Failed => writeln!(f, "failed"),
-            AttitudeStage::Aligning => writeln!(f, "aligning"),
-            AttitudeStage::Degraded => writeln!(f, "degraded"),
-            AttitudeStage::Valid => writeln!(f, "valid"),
-            AttitudeStage::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            AttitudeStage::Failed => write!(f, "failed"),
+            AttitudeStage::Aligning => write!(f, "aligning"),
+            AttitudeStage::Degraded => write!(f, "degraded"),
+            AttitudeStage::Valid => write!(f, "valid"),
+            AttitudeStage::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -9813,20 +9795,20 @@ impl AttitudeValidity {
 impl fmt::Display for AttitudeValidity {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            AttitudeValidity::TrackAngleHeadingValid => writeln!(f, "track_angle_heading_valid"),
-            AttitudeValidity::PitchValid => writeln!(f, "pitch_valid"),
-            AttitudeValidity::RollValid => writeln!(f, "roll_valid"),
-            AttitudeValidity::LateralBodyAccelValid => writeln!(f, "lateral_body_accel_valid"),
-            AttitudeValidity::NormalBodyAccelValid => writeln!(f, "normal_body_accel_valid"),
-            AttitudeValidity::TurnRateValid => writeln!(f, "turn_rate_valid"),
-            AttitudeValidity::HwFail => writeln!(f, "hw_fail"),
-            AttitudeValidity::MagInvalid => writeln!(f, "mag_invalid"),
-            AttitudeValidity::NoGps => writeln!(f, "no_gps"),
-            AttitudeValidity::GpsInvalid => writeln!(f, "gps_invalid"),
-            AttitudeValidity::SolutionCoasting => writeln!(f, "solution_coasting"),
-            AttitudeValidity::TrueTrackAngle => writeln!(f, "true_track_angle"),
-            AttitudeValidity::MagneticHeading => writeln!(f, "magnetic_heading"),
-            AttitudeValidity::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            AttitudeValidity::TrackAngleHeadingValid => write!(f, "track_angle_heading_valid"),
+            AttitudeValidity::PitchValid => write!(f, "pitch_valid"),
+            AttitudeValidity::RollValid => write!(f, "roll_valid"),
+            AttitudeValidity::LateralBodyAccelValid => write!(f, "lateral_body_accel_valid"),
+            AttitudeValidity::NormalBodyAccelValid => write!(f, "normal_body_accel_valid"),
+            AttitudeValidity::TurnRateValid => write!(f, "turn_rate_valid"),
+            AttitudeValidity::HwFail => write!(f, "hw_fail"),
+            AttitudeValidity::MagInvalid => write!(f, "mag_invalid"),
+            AttitudeValidity::NoGps => write!(f, "no_gps"),
+            AttitudeValidity::GpsInvalid => write!(f, "gps_invalid"),
+            AttitudeValidity::SolutionCoasting => write!(f, "solution_coasting"),
+            AttitudeValidity::TrueTrackAngle => write!(f, "true_track_angle"),
+            AttitudeValidity::MagneticHeading => write!(f, "magnetic_heading"),
+            AttitudeValidity::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -9882,12 +9864,12 @@ impl AutoSyncFrequency {
 impl fmt::Display for AutoSyncFrequency {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            AutoSyncFrequency::Never => writeln!(f, "never"),
-            AutoSyncFrequency::Occasionally => writeln!(f, "occasionally"),
-            AutoSyncFrequency::Frequent => writeln!(f, "frequent"),
-            AutoSyncFrequency::OnceADay => writeln!(f, "once_a_day"),
-            AutoSyncFrequency::Remote => writeln!(f, "remote"),
-            AutoSyncFrequency::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            AutoSyncFrequency::Never => write!(f, "never"),
+            AutoSyncFrequency::Occasionally => write!(f, "occasionally"),
+            AutoSyncFrequency::Frequent => write!(f, "frequent"),
+            AutoSyncFrequency::OnceADay => write!(f, "once_a_day"),
+            AutoSyncFrequency::Remote => write!(f, "remote"),
+            AutoSyncFrequency::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -9941,15 +9923,15 @@ impl ExdLayout {
 impl fmt::Display for ExdLayout {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            ExdLayout::FullScreen => writeln!(f, "full_screen"),
-            ExdLayout::HalfVertical => writeln!(f, "half_vertical"),
-            ExdLayout::HalfHorizontal => writeln!(f, "half_horizontal"),
-            ExdLayout::HalfVerticalRightSplit => writeln!(f, "half_vertical_right_split"),
-            ExdLayout::HalfHorizontalBottomSplit => writeln!(f, "half_horizontal_bottom_split"),
-            ExdLayout::FullQuarterSplit => writeln!(f, "full_quarter_split"),
-            ExdLayout::HalfVerticalLeftSplit => writeln!(f, "half_vertical_left_split"),
-            ExdLayout::HalfHorizontalTopSplit => writeln!(f, "half_horizontal_top_split"),
-            ExdLayout::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            ExdLayout::FullScreen => write!(f, "full_screen"),
+            ExdLayout::HalfVertical => write!(f, "half_vertical"),
+            ExdLayout::HalfHorizontal => write!(f, "half_horizontal"),
+            ExdLayout::HalfVerticalRightSplit => write!(f, "half_vertical_right_split"),
+            ExdLayout::HalfHorizontalBottomSplit => write!(f, "half_horizontal_bottom_split"),
+            ExdLayout::FullQuarterSplit => write!(f, "full_quarter_split"),
+            ExdLayout::HalfVerticalLeftSplit => write!(f, "half_vertical_left_split"),
+            ExdLayout::HalfHorizontalTopSplit => write!(f, "half_horizontal_top_split"),
+            ExdLayout::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -10012,18 +9994,18 @@ impl ExdDisplayType {
 impl fmt::Display for ExdDisplayType {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            ExdDisplayType::Numerical => writeln!(f, "numerical"),
-            ExdDisplayType::Simple => writeln!(f, "simple"),
-            ExdDisplayType::Graph => writeln!(f, "graph"),
-            ExdDisplayType::Bar => writeln!(f, "bar"),
-            ExdDisplayType::CircleGraph => writeln!(f, "circle_graph"),
-            ExdDisplayType::VirtualPartner => writeln!(f, "virtual_partner"),
-            ExdDisplayType::Balance => writeln!(f, "balance"),
-            ExdDisplayType::StringList => writeln!(f, "string_list"),
-            ExdDisplayType::String => writeln!(f, "string"),
-            ExdDisplayType::SimpleDynamicIcon => writeln!(f, "simple_dynamic_icon"),
-            ExdDisplayType::Gauge => writeln!(f, "gauge"),
-            ExdDisplayType::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            ExdDisplayType::Numerical => write!(f, "numerical"),
+            ExdDisplayType::Simple => write!(f, "simple"),
+            ExdDisplayType::Graph => write!(f, "graph"),
+            ExdDisplayType::Bar => write!(f, "bar"),
+            ExdDisplayType::CircleGraph => write!(f, "circle_graph"),
+            ExdDisplayType::VirtualPartner => write!(f, "virtual_partner"),
+            ExdDisplayType::Balance => write!(f, "balance"),
+            ExdDisplayType::StringList => write!(f, "string_list"),
+            ExdDisplayType::String => write!(f, "string"),
+            ExdDisplayType::SimpleDynamicIcon => write!(f, "simple_dynamic_icon"),
+            ExdDisplayType::Gauge => write!(f, "gauge"),
+            ExdDisplayType::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -10167,63 +10149,61 @@ impl ExdDataUnits {
 impl fmt::Display for ExdDataUnits {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            ExdDataUnits::NoUnits => writeln!(f, "no_units"),
-            ExdDataUnits::Laps => writeln!(f, "laps"),
-            ExdDataUnits::MilesPerHour => writeln!(f, "miles_per_hour"),
-            ExdDataUnits::KilometersPerHour => writeln!(f, "kilometers_per_hour"),
-            ExdDataUnits::FeetPerHour => writeln!(f, "feet_per_hour"),
-            ExdDataUnits::MetersPerHour => writeln!(f, "meters_per_hour"),
-            ExdDataUnits::DegreesCelsius => writeln!(f, "degrees_celsius"),
-            ExdDataUnits::DegreesFarenheit => writeln!(f, "degrees_farenheit"),
-            ExdDataUnits::Zone => writeln!(f, "zone"),
-            ExdDataUnits::Gear => writeln!(f, "gear"),
-            ExdDataUnits::Rpm => writeln!(f, "rpm"),
-            ExdDataUnits::Bpm => writeln!(f, "bpm"),
-            ExdDataUnits::Degrees => writeln!(f, "degrees"),
-            ExdDataUnits::Millimeters => writeln!(f, "millimeters"),
-            ExdDataUnits::Meters => writeln!(f, "meters"),
-            ExdDataUnits::Kilometers => writeln!(f, "kilometers"),
-            ExdDataUnits::Feet => writeln!(f, "feet"),
-            ExdDataUnits::Yards => writeln!(f, "yards"),
-            ExdDataUnits::Kilofeet => writeln!(f, "kilofeet"),
-            ExdDataUnits::Miles => writeln!(f, "miles"),
-            ExdDataUnits::Time => writeln!(f, "time"),
-            ExdDataUnits::EnumTurnType => writeln!(f, "enum_turn_type"),
-            ExdDataUnits::Percent => writeln!(f, "percent"),
-            ExdDataUnits::Watts => writeln!(f, "watts"),
-            ExdDataUnits::WattsPerKilogram => writeln!(f, "watts_per_kilogram"),
-            ExdDataUnits::EnumBatteryStatus => writeln!(f, "enum_battery_status"),
+            ExdDataUnits::NoUnits => write!(f, "no_units"),
+            ExdDataUnits::Laps => write!(f, "laps"),
+            ExdDataUnits::MilesPerHour => write!(f, "miles_per_hour"),
+            ExdDataUnits::KilometersPerHour => write!(f, "kilometers_per_hour"),
+            ExdDataUnits::FeetPerHour => write!(f, "feet_per_hour"),
+            ExdDataUnits::MetersPerHour => write!(f, "meters_per_hour"),
+            ExdDataUnits::DegreesCelsius => write!(f, "degrees_celsius"),
+            ExdDataUnits::DegreesFarenheit => write!(f, "degrees_farenheit"),
+            ExdDataUnits::Zone => write!(f, "zone"),
+            ExdDataUnits::Gear => write!(f, "gear"),
+            ExdDataUnits::Rpm => write!(f, "rpm"),
+            ExdDataUnits::Bpm => write!(f, "bpm"),
+            ExdDataUnits::Degrees => write!(f, "degrees"),
+            ExdDataUnits::Millimeters => write!(f, "millimeters"),
+            ExdDataUnits::Meters => write!(f, "meters"),
+            ExdDataUnits::Kilometers => write!(f, "kilometers"),
+            ExdDataUnits::Feet => write!(f, "feet"),
+            ExdDataUnits::Yards => write!(f, "yards"),
+            ExdDataUnits::Kilofeet => write!(f, "kilofeet"),
+            ExdDataUnits::Miles => write!(f, "miles"),
+            ExdDataUnits::Time => write!(f, "time"),
+            ExdDataUnits::EnumTurnType => write!(f, "enum_turn_type"),
+            ExdDataUnits::Percent => write!(f, "percent"),
+            ExdDataUnits::Watts => write!(f, "watts"),
+            ExdDataUnits::WattsPerKilogram => write!(f, "watts_per_kilogram"),
+            ExdDataUnits::EnumBatteryStatus => write!(f, "enum_battery_status"),
             ExdDataUnits::EnumBikeLightBeamAngleMode => {
-                writeln!(f, "enum_bike_light_beam_angle_mode")
+                write!(f, "enum_bike_light_beam_angle_mode")
             }
-            ExdDataUnits::EnumBikeLightBatteryStatus => {
-                writeln!(f, "enum_bike_light_battery_status")
-            }
+            ExdDataUnits::EnumBikeLightBatteryStatus => write!(f, "enum_bike_light_battery_status"),
             ExdDataUnits::EnumBikeLightNetworkConfigType => {
-                writeln!(f, "enum_bike_light_network_config_type")
+                write!(f, "enum_bike_light_network_config_type")
             }
-            ExdDataUnits::Lights => writeln!(f, "lights"),
-            ExdDataUnits::Seconds => writeln!(f, "seconds"),
-            ExdDataUnits::Minutes => writeln!(f, "minutes"),
-            ExdDataUnits::Hours => writeln!(f, "hours"),
-            ExdDataUnits::Calories => writeln!(f, "calories"),
-            ExdDataUnits::Kilojoules => writeln!(f, "kilojoules"),
-            ExdDataUnits::Milliseconds => writeln!(f, "milliseconds"),
-            ExdDataUnits::SecondPerMile => writeln!(f, "second_per_mile"),
-            ExdDataUnits::SecondPerKilometer => writeln!(f, "second_per_kilometer"),
-            ExdDataUnits::Centimeter => writeln!(f, "centimeter"),
-            ExdDataUnits::EnumCoursePoint => writeln!(f, "enum_course_point"),
-            ExdDataUnits::Bradians => writeln!(f, "bradians"),
-            ExdDataUnits::EnumSport => writeln!(f, "enum_sport"),
-            ExdDataUnits::InchesHg => writeln!(f, "inches_hg"),
-            ExdDataUnits::MmHg => writeln!(f, "mm_hg"),
-            ExdDataUnits::Mbars => writeln!(f, "mbars"),
-            ExdDataUnits::HectoPascals => writeln!(f, "hecto_pascals"),
-            ExdDataUnits::FeetPerMin => writeln!(f, "feet_per_min"),
-            ExdDataUnits::MetersPerMin => writeln!(f, "meters_per_min"),
-            ExdDataUnits::MetersPerSec => writeln!(f, "meters_per_sec"),
-            ExdDataUnits::EightCardinal => writeln!(f, "eight_cardinal"),
-            ExdDataUnits::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            ExdDataUnits::Lights => write!(f, "lights"),
+            ExdDataUnits::Seconds => write!(f, "seconds"),
+            ExdDataUnits::Minutes => write!(f, "minutes"),
+            ExdDataUnits::Hours => write!(f, "hours"),
+            ExdDataUnits::Calories => write!(f, "calories"),
+            ExdDataUnits::Kilojoules => write!(f, "kilojoules"),
+            ExdDataUnits::Milliseconds => write!(f, "milliseconds"),
+            ExdDataUnits::SecondPerMile => write!(f, "second_per_mile"),
+            ExdDataUnits::SecondPerKilometer => write!(f, "second_per_kilometer"),
+            ExdDataUnits::Centimeter => write!(f, "centimeter"),
+            ExdDataUnits::EnumCoursePoint => write!(f, "enum_course_point"),
+            ExdDataUnits::Bradians => write!(f, "bradians"),
+            ExdDataUnits::EnumSport => write!(f, "enum_sport"),
+            ExdDataUnits::InchesHg => write!(f, "inches_hg"),
+            ExdDataUnits::MmHg => write!(f, "mm_hg"),
+            ExdDataUnits::Mbars => write!(f, "mbars"),
+            ExdDataUnits::HectoPascals => write!(f, "hecto_pascals"),
+            ExdDataUnits::FeetPerMin => write!(f, "feet_per_min"),
+            ExdDataUnits::MetersPerMin => write!(f, "meters_per_min"),
+            ExdDataUnits::MetersPerSec => write!(f, "meters_per_sec"),
+            ExdDataUnits::EightCardinal => write!(f, "eight_cardinal"),
+            ExdDataUnits::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -10394,51 +10374,51 @@ impl ExdQualifiers {
 impl fmt::Display for ExdQualifiers {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            ExdQualifiers::NoQualifier => writeln!(f, "no_qualifier"),
-            ExdQualifiers::Instantaneous => writeln!(f, "instantaneous"),
-            ExdQualifiers::Average => writeln!(f, "average"),
-            ExdQualifiers::Lap => writeln!(f, "lap"),
-            ExdQualifiers::Maximum => writeln!(f, "maximum"),
-            ExdQualifiers::MaximumAverage => writeln!(f, "maximum_average"),
-            ExdQualifiers::MaximumLap => writeln!(f, "maximum_lap"),
-            ExdQualifiers::LastLap => writeln!(f, "last_lap"),
-            ExdQualifiers::AverageLap => writeln!(f, "average_lap"),
-            ExdQualifiers::ToDestination => writeln!(f, "to_destination"),
-            ExdQualifiers::ToGo => writeln!(f, "to_go"),
-            ExdQualifiers::ToNext => writeln!(f, "to_next"),
-            ExdQualifiers::NextCoursePoint => writeln!(f, "next_course_point"),
-            ExdQualifiers::Total => writeln!(f, "total"),
-            ExdQualifiers::ThreeSecondAverage => writeln!(f, "three_second_average"),
-            ExdQualifiers::TenSecondAverage => writeln!(f, "ten_second_average"),
-            ExdQualifiers::ThirtySecondAverage => writeln!(f, "thirty_second_average"),
-            ExdQualifiers::PercentMaximum => writeln!(f, "percent_maximum"),
-            ExdQualifiers::PercentMaximumAverage => writeln!(f, "percent_maximum_average"),
-            ExdQualifiers::LapPercentMaximum => writeln!(f, "lap_percent_maximum"),
-            ExdQualifiers::Elapsed => writeln!(f, "elapsed"),
-            ExdQualifiers::Sunrise => writeln!(f, "sunrise"),
-            ExdQualifiers::Sunset => writeln!(f, "sunset"),
-            ExdQualifiers::ComparedToVirtualPartner => writeln!(f, "compared_to_virtual_partner"),
-            ExdQualifiers::Maximum24h => writeln!(f, "maximum_24h"),
-            ExdQualifiers::Minimum24h => writeln!(f, "minimum_24h"),
-            ExdQualifiers::Minimum => writeln!(f, "minimum"),
-            ExdQualifiers::First => writeln!(f, "first"),
-            ExdQualifiers::Second => writeln!(f, "second"),
-            ExdQualifiers::Third => writeln!(f, "third"),
-            ExdQualifiers::Shifter => writeln!(f, "shifter"),
-            ExdQualifiers::LastSport => writeln!(f, "last_sport"),
-            ExdQualifiers::Moving => writeln!(f, "moving"),
-            ExdQualifiers::Stopped => writeln!(f, "stopped"),
-            ExdQualifiers::EstimatedTotal => writeln!(f, "estimated_total"),
-            ExdQualifiers::Zone9 => writeln!(f, "zone_9"),
-            ExdQualifiers::Zone8 => writeln!(f, "zone_8"),
-            ExdQualifiers::Zone7 => writeln!(f, "zone_7"),
-            ExdQualifiers::Zone6 => writeln!(f, "zone_6"),
-            ExdQualifiers::Zone5 => writeln!(f, "zone_5"),
-            ExdQualifiers::Zone4 => writeln!(f, "zone_4"),
-            ExdQualifiers::Zone3 => writeln!(f, "zone_3"),
-            ExdQualifiers::Zone2 => writeln!(f, "zone_2"),
-            ExdQualifiers::Zone1 => writeln!(f, "zone_1"),
-            ExdQualifiers::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            ExdQualifiers::NoQualifier => write!(f, "no_qualifier"),
+            ExdQualifiers::Instantaneous => write!(f, "instantaneous"),
+            ExdQualifiers::Average => write!(f, "average"),
+            ExdQualifiers::Lap => write!(f, "lap"),
+            ExdQualifiers::Maximum => write!(f, "maximum"),
+            ExdQualifiers::MaximumAverage => write!(f, "maximum_average"),
+            ExdQualifiers::MaximumLap => write!(f, "maximum_lap"),
+            ExdQualifiers::LastLap => write!(f, "last_lap"),
+            ExdQualifiers::AverageLap => write!(f, "average_lap"),
+            ExdQualifiers::ToDestination => write!(f, "to_destination"),
+            ExdQualifiers::ToGo => write!(f, "to_go"),
+            ExdQualifiers::ToNext => write!(f, "to_next"),
+            ExdQualifiers::NextCoursePoint => write!(f, "next_course_point"),
+            ExdQualifiers::Total => write!(f, "total"),
+            ExdQualifiers::ThreeSecondAverage => write!(f, "three_second_average"),
+            ExdQualifiers::TenSecondAverage => write!(f, "ten_second_average"),
+            ExdQualifiers::ThirtySecondAverage => write!(f, "thirty_second_average"),
+            ExdQualifiers::PercentMaximum => write!(f, "percent_maximum"),
+            ExdQualifiers::PercentMaximumAverage => write!(f, "percent_maximum_average"),
+            ExdQualifiers::LapPercentMaximum => write!(f, "lap_percent_maximum"),
+            ExdQualifiers::Elapsed => write!(f, "elapsed"),
+            ExdQualifiers::Sunrise => write!(f, "sunrise"),
+            ExdQualifiers::Sunset => write!(f, "sunset"),
+            ExdQualifiers::ComparedToVirtualPartner => write!(f, "compared_to_virtual_partner"),
+            ExdQualifiers::Maximum24h => write!(f, "maximum_24h"),
+            ExdQualifiers::Minimum24h => write!(f, "minimum_24h"),
+            ExdQualifiers::Minimum => write!(f, "minimum"),
+            ExdQualifiers::First => write!(f, "first"),
+            ExdQualifiers::Second => write!(f, "second"),
+            ExdQualifiers::Third => write!(f, "third"),
+            ExdQualifiers::Shifter => write!(f, "shifter"),
+            ExdQualifiers::LastSport => write!(f, "last_sport"),
+            ExdQualifiers::Moving => write!(f, "moving"),
+            ExdQualifiers::Stopped => write!(f, "stopped"),
+            ExdQualifiers::EstimatedTotal => write!(f, "estimated_total"),
+            ExdQualifiers::Zone9 => write!(f, "zone_9"),
+            ExdQualifiers::Zone8 => write!(f, "zone_8"),
+            ExdQualifiers::Zone7 => write!(f, "zone_7"),
+            ExdQualifiers::Zone6 => write!(f, "zone_6"),
+            ExdQualifiers::Zone5 => write!(f, "zone_5"),
+            ExdQualifiers::Zone4 => write!(f, "zone_4"),
+            ExdQualifiers::Zone3 => write!(f, "zone_3"),
+            ExdQualifiers::Zone2 => write!(f, "zone_2"),
+            ExdQualifiers::Zone1 => write!(f, "zone_1"),
+            ExdQualifiers::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -10710,120 +10690,114 @@ impl ExdDescriptors {
 impl fmt::Display for ExdDescriptors {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            ExdDescriptors::BikeLightBatteryStatus => writeln!(f, "bike_light_battery_status"),
-            ExdDescriptors::BeamAngleStatus => writeln!(f, "beam_angle_status"),
-            ExdDescriptors::BateryLevel => writeln!(f, "batery_level"),
-            ExdDescriptors::LightNetworkMode => writeln!(f, "light_network_mode"),
-            ExdDescriptors::NumberLightsConnected => writeln!(f, "number_lights_connected"),
-            ExdDescriptors::Cadence => writeln!(f, "cadence"),
-            ExdDescriptors::Distance => writeln!(f, "distance"),
-            ExdDescriptors::EstimatedTimeOfArrival => writeln!(f, "estimated_time_of_arrival"),
-            ExdDescriptors::Heading => writeln!(f, "heading"),
-            ExdDescriptors::Time => writeln!(f, "time"),
-            ExdDescriptors::BatteryLevel => writeln!(f, "battery_level"),
-            ExdDescriptors::TrainerResistance => writeln!(f, "trainer_resistance"),
-            ExdDescriptors::TrainerTargetPower => writeln!(f, "trainer_target_power"),
-            ExdDescriptors::TimeSeated => writeln!(f, "time_seated"),
-            ExdDescriptors::TimeStanding => writeln!(f, "time_standing"),
-            ExdDescriptors::Elevation => writeln!(f, "elevation"),
-            ExdDescriptors::Grade => writeln!(f, "grade"),
-            ExdDescriptors::Ascent => writeln!(f, "ascent"),
-            ExdDescriptors::Descent => writeln!(f, "descent"),
-            ExdDescriptors::VerticalSpeed => writeln!(f, "vertical_speed"),
-            ExdDescriptors::Di2BatteryLevel => writeln!(f, "di2_battery_level"),
-            ExdDescriptors::FrontGear => writeln!(f, "front_gear"),
-            ExdDescriptors::RearGear => writeln!(f, "rear_gear"),
-            ExdDescriptors::GearRatio => writeln!(f, "gear_ratio"),
-            ExdDescriptors::HeartRate => writeln!(f, "heart_rate"),
-            ExdDescriptors::HeartRateZone => writeln!(f, "heart_rate_zone"),
-            ExdDescriptors::TimeInHeartRateZone => writeln!(f, "time_in_heart_rate_zone"),
-            ExdDescriptors::HeartRateReserve => writeln!(f, "heart_rate_reserve"),
-            ExdDescriptors::Calories => writeln!(f, "calories"),
-            ExdDescriptors::GpsAccuracy => writeln!(f, "gps_accuracy"),
-            ExdDescriptors::GpsSignalStrength => writeln!(f, "gps_signal_strength"),
-            ExdDescriptors::Temperature => writeln!(f, "temperature"),
-            ExdDescriptors::TimeOfDay => writeln!(f, "time_of_day"),
-            ExdDescriptors::Balance => writeln!(f, "balance"),
-            ExdDescriptors::PedalSmoothness => writeln!(f, "pedal_smoothness"),
-            ExdDescriptors::Power => writeln!(f, "power"),
-            ExdDescriptors::FunctionalThresholdPower => writeln!(f, "functional_threshold_power"),
-            ExdDescriptors::IntensityFactor => writeln!(f, "intensity_factor"),
-            ExdDescriptors::Work => writeln!(f, "work"),
-            ExdDescriptors::PowerRatio => writeln!(f, "power_ratio"),
-            ExdDescriptors::NormalizedPower => writeln!(f, "normalized_power"),
-            ExdDescriptors::TrainingStressScore => writeln!(f, "training_stress_Score"),
-            ExdDescriptors::TimeOnZone => writeln!(f, "time_on_zone"),
-            ExdDescriptors::Speed => writeln!(f, "speed"),
-            ExdDescriptors::Laps => writeln!(f, "laps"),
-            ExdDescriptors::Reps => writeln!(f, "reps"),
-            ExdDescriptors::WorkoutStep => writeln!(f, "workout_step"),
-            ExdDescriptors::CourseDistance => writeln!(f, "course_distance"),
-            ExdDescriptors::NavigationDistance => writeln!(f, "navigation_distance"),
+            ExdDescriptors::BikeLightBatteryStatus => write!(f, "bike_light_battery_status"),
+            ExdDescriptors::BeamAngleStatus => write!(f, "beam_angle_status"),
+            ExdDescriptors::BateryLevel => write!(f, "batery_level"),
+            ExdDescriptors::LightNetworkMode => write!(f, "light_network_mode"),
+            ExdDescriptors::NumberLightsConnected => write!(f, "number_lights_connected"),
+            ExdDescriptors::Cadence => write!(f, "cadence"),
+            ExdDescriptors::Distance => write!(f, "distance"),
+            ExdDescriptors::EstimatedTimeOfArrival => write!(f, "estimated_time_of_arrival"),
+            ExdDescriptors::Heading => write!(f, "heading"),
+            ExdDescriptors::Time => write!(f, "time"),
+            ExdDescriptors::BatteryLevel => write!(f, "battery_level"),
+            ExdDescriptors::TrainerResistance => write!(f, "trainer_resistance"),
+            ExdDescriptors::TrainerTargetPower => write!(f, "trainer_target_power"),
+            ExdDescriptors::TimeSeated => write!(f, "time_seated"),
+            ExdDescriptors::TimeStanding => write!(f, "time_standing"),
+            ExdDescriptors::Elevation => write!(f, "elevation"),
+            ExdDescriptors::Grade => write!(f, "grade"),
+            ExdDescriptors::Ascent => write!(f, "ascent"),
+            ExdDescriptors::Descent => write!(f, "descent"),
+            ExdDescriptors::VerticalSpeed => write!(f, "vertical_speed"),
+            ExdDescriptors::Di2BatteryLevel => write!(f, "di2_battery_level"),
+            ExdDescriptors::FrontGear => write!(f, "front_gear"),
+            ExdDescriptors::RearGear => write!(f, "rear_gear"),
+            ExdDescriptors::GearRatio => write!(f, "gear_ratio"),
+            ExdDescriptors::HeartRate => write!(f, "heart_rate"),
+            ExdDescriptors::HeartRateZone => write!(f, "heart_rate_zone"),
+            ExdDescriptors::TimeInHeartRateZone => write!(f, "time_in_heart_rate_zone"),
+            ExdDescriptors::HeartRateReserve => write!(f, "heart_rate_reserve"),
+            ExdDescriptors::Calories => write!(f, "calories"),
+            ExdDescriptors::GpsAccuracy => write!(f, "gps_accuracy"),
+            ExdDescriptors::GpsSignalStrength => write!(f, "gps_signal_strength"),
+            ExdDescriptors::Temperature => write!(f, "temperature"),
+            ExdDescriptors::TimeOfDay => write!(f, "time_of_day"),
+            ExdDescriptors::Balance => write!(f, "balance"),
+            ExdDescriptors::PedalSmoothness => write!(f, "pedal_smoothness"),
+            ExdDescriptors::Power => write!(f, "power"),
+            ExdDescriptors::FunctionalThresholdPower => write!(f, "functional_threshold_power"),
+            ExdDescriptors::IntensityFactor => write!(f, "intensity_factor"),
+            ExdDescriptors::Work => write!(f, "work"),
+            ExdDescriptors::PowerRatio => write!(f, "power_ratio"),
+            ExdDescriptors::NormalizedPower => write!(f, "normalized_power"),
+            ExdDescriptors::TrainingStressScore => write!(f, "training_stress_Score"),
+            ExdDescriptors::TimeOnZone => write!(f, "time_on_zone"),
+            ExdDescriptors::Speed => write!(f, "speed"),
+            ExdDescriptors::Laps => write!(f, "laps"),
+            ExdDescriptors::Reps => write!(f, "reps"),
+            ExdDescriptors::WorkoutStep => write!(f, "workout_step"),
+            ExdDescriptors::CourseDistance => write!(f, "course_distance"),
+            ExdDescriptors::NavigationDistance => write!(f, "navigation_distance"),
             ExdDescriptors::CourseEstimatedTimeOfArrival => {
-                writeln!(f, "course_estimated_time_of_arrival")
+                write!(f, "course_estimated_time_of_arrival")
             }
             ExdDescriptors::NavigationEstimatedTimeOfArrival => {
-                writeln!(f, "navigation_estimated_time_of_arrival")
+                write!(f, "navigation_estimated_time_of_arrival")
             }
-            ExdDescriptors::CourseTime => writeln!(f, "course_time"),
-            ExdDescriptors::NavigationTime => writeln!(f, "navigation_time"),
-            ExdDescriptors::CourseHeading => writeln!(f, "course_heading"),
-            ExdDescriptors::NavigationHeading => writeln!(f, "navigation_heading"),
-            ExdDescriptors::PowerZone => writeln!(f, "power_zone"),
-            ExdDescriptors::TorqueEffectiveness => writeln!(f, "torque_effectiveness"),
-            ExdDescriptors::TimerTime => writeln!(f, "timer_time"),
-            ExdDescriptors::PowerWeightRatio => writeln!(f, "power_weight_ratio"),
-            ExdDescriptors::LeftPlatformCenterOffset => writeln!(f, "left_platform_center_offset"),
-            ExdDescriptors::RightPlatformCenterOffset => {
-                writeln!(f, "right_platform_center_offset")
-            }
-            ExdDescriptors::LeftPowerPhaseStartAngle => writeln!(f, "left_power_phase_start_angle"),
-            ExdDescriptors::RightPowerPhaseStartAngle => {
-                writeln!(f, "right_power_phase_start_angle")
-            }
-            ExdDescriptors::LeftPowerPhaseFinishAngle => {
-                writeln!(f, "left_power_phase_finish_angle")
-            }
+            ExdDescriptors::CourseTime => write!(f, "course_time"),
+            ExdDescriptors::NavigationTime => write!(f, "navigation_time"),
+            ExdDescriptors::CourseHeading => write!(f, "course_heading"),
+            ExdDescriptors::NavigationHeading => write!(f, "navigation_heading"),
+            ExdDescriptors::PowerZone => write!(f, "power_zone"),
+            ExdDescriptors::TorqueEffectiveness => write!(f, "torque_effectiveness"),
+            ExdDescriptors::TimerTime => write!(f, "timer_time"),
+            ExdDescriptors::PowerWeightRatio => write!(f, "power_weight_ratio"),
+            ExdDescriptors::LeftPlatformCenterOffset => write!(f, "left_platform_center_offset"),
+            ExdDescriptors::RightPlatformCenterOffset => write!(f, "right_platform_center_offset"),
+            ExdDescriptors::LeftPowerPhaseStartAngle => write!(f, "left_power_phase_start_angle"),
+            ExdDescriptors::RightPowerPhaseStartAngle => write!(f, "right_power_phase_start_angle"),
+            ExdDescriptors::LeftPowerPhaseFinishAngle => write!(f, "left_power_phase_finish_angle"),
             ExdDescriptors::RightPowerPhaseFinishAngle => {
-                writeln!(f, "right_power_phase_finish_angle")
+                write!(f, "right_power_phase_finish_angle")
             }
-            ExdDescriptors::Gears => writeln!(f, "gears"),
-            ExdDescriptors::Pace => writeln!(f, "pace"),
-            ExdDescriptors::TrainingEffect => writeln!(f, "training_effect"),
-            ExdDescriptors::VerticalOscillation => writeln!(f, "vertical_oscillation"),
-            ExdDescriptors::VerticalRatio => writeln!(f, "vertical_ratio"),
-            ExdDescriptors::GroundContactTime => writeln!(f, "ground_contact_time"),
+            ExdDescriptors::Gears => write!(f, "gears"),
+            ExdDescriptors::Pace => write!(f, "pace"),
+            ExdDescriptors::TrainingEffect => write!(f, "training_effect"),
+            ExdDescriptors::VerticalOscillation => write!(f, "vertical_oscillation"),
+            ExdDescriptors::VerticalRatio => write!(f, "vertical_ratio"),
+            ExdDescriptors::GroundContactTime => write!(f, "ground_contact_time"),
             ExdDescriptors::LeftGroundContactTimeBalance => {
-                writeln!(f, "left_ground_contact_time_balance")
+                write!(f, "left_ground_contact_time_balance")
             }
             ExdDescriptors::RightGroundContactTimeBalance => {
-                writeln!(f, "right_ground_contact_time_balance")
+                write!(f, "right_ground_contact_time_balance")
             }
-            ExdDescriptors::StrideLength => writeln!(f, "stride_length"),
-            ExdDescriptors::RunningCadence => writeln!(f, "running_cadence"),
-            ExdDescriptors::PerformanceCondition => writeln!(f, "performance_condition"),
-            ExdDescriptors::CourseType => writeln!(f, "course_type"),
-            ExdDescriptors::TimeInPowerZone => writeln!(f, "time_in_power_zone"),
-            ExdDescriptors::NavigationTurn => writeln!(f, "navigation_turn"),
-            ExdDescriptors::CourseLocation => writeln!(f, "course_location"),
-            ExdDescriptors::NavigationLocation => writeln!(f, "navigation_location"),
-            ExdDescriptors::Compass => writeln!(f, "compass"),
-            ExdDescriptors::GearCombo => writeln!(f, "gear_combo"),
-            ExdDescriptors::MuscleOxygen => writeln!(f, "muscle_oxygen"),
-            ExdDescriptors::Icon => writeln!(f, "icon"),
-            ExdDescriptors::CompassHeading => writeln!(f, "compass_heading"),
-            ExdDescriptors::GpsHeading => writeln!(f, "gps_heading"),
-            ExdDescriptors::GpsElevation => writeln!(f, "gps_elevation"),
-            ExdDescriptors::AnaerobicTrainingEffect => writeln!(f, "anaerobic_training_effect"),
-            ExdDescriptors::Course => writeln!(f, "course"),
-            ExdDescriptors::OffCourse => writeln!(f, "off_course"),
-            ExdDescriptors::GlideRatio => writeln!(f, "glide_ratio"),
-            ExdDescriptors::VerticalDistance => writeln!(f, "vertical_distance"),
-            ExdDescriptors::Vmg => writeln!(f, "vmg"),
-            ExdDescriptors::AmbientPressure => writeln!(f, "ambient_pressure"),
-            ExdDescriptors::Pressure => writeln!(f, "pressure"),
-            ExdDescriptors::Vam => writeln!(f, "vam"),
-            ExdDescriptors::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            ExdDescriptors::StrideLength => write!(f, "stride_length"),
+            ExdDescriptors::RunningCadence => write!(f, "running_cadence"),
+            ExdDescriptors::PerformanceCondition => write!(f, "performance_condition"),
+            ExdDescriptors::CourseType => write!(f, "course_type"),
+            ExdDescriptors::TimeInPowerZone => write!(f, "time_in_power_zone"),
+            ExdDescriptors::NavigationTurn => write!(f, "navigation_turn"),
+            ExdDescriptors::CourseLocation => write!(f, "course_location"),
+            ExdDescriptors::NavigationLocation => write!(f, "navigation_location"),
+            ExdDescriptors::Compass => write!(f, "compass"),
+            ExdDescriptors::GearCombo => write!(f, "gear_combo"),
+            ExdDescriptors::MuscleOxygen => write!(f, "muscle_oxygen"),
+            ExdDescriptors::Icon => write!(f, "icon"),
+            ExdDescriptors::CompassHeading => write!(f, "compass_heading"),
+            ExdDescriptors::GpsHeading => write!(f, "gps_heading"),
+            ExdDescriptors::GpsElevation => write!(f, "gps_elevation"),
+            ExdDescriptors::AnaerobicTrainingEffect => write!(f, "anaerobic_training_effect"),
+            ExdDescriptors::Course => write!(f, "course"),
+            ExdDescriptors::OffCourse => write!(f, "off_course"),
+            ExdDescriptors::GlideRatio => write!(f, "glide_ratio"),
+            ExdDescriptors::VerticalDistance => write!(f, "vertical_distance"),
+            ExdDescriptors::Vmg => write!(f, "vmg"),
+            ExdDescriptors::AmbientPressure => write!(f, "ambient_pressure"),
+            ExdDescriptors::Pressure => write!(f, "pressure"),
+            ExdDescriptors::Vam => write!(f, "vam"),
+            ExdDescriptors::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -10967,14 +10941,14 @@ impl AutoActivityDetect {
 impl fmt::Display for AutoActivityDetect {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            AutoActivityDetect::None => writeln!(f, "none"),
-            AutoActivityDetect::Running => writeln!(f, "running"),
-            AutoActivityDetect::Cycling => writeln!(f, "cycling"),
-            AutoActivityDetect::Swimming => writeln!(f, "swimming"),
-            AutoActivityDetect::Walking => writeln!(f, "walking"),
-            AutoActivityDetect::Elliptical => writeln!(f, "elliptical"),
-            AutoActivityDetect::Sedentary => writeln!(f, "sedentary"),
-            AutoActivityDetect::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            AutoActivityDetect::None => write!(f, "none"),
+            AutoActivityDetect::Running => write!(f, "running"),
+            AutoActivityDetect::Cycling => write!(f, "cycling"),
+            AutoActivityDetect::Swimming => write!(f, "swimming"),
+            AutoActivityDetect::Walking => write!(f, "walking"),
+            AutoActivityDetect::Elliptical => write!(f, "elliptical"),
+            AutoActivityDetect::Sedentary => write!(f, "sedentary"),
+            AutoActivityDetect::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -11030,24 +11004,24 @@ impl SupportedExdScreenLayouts {
 impl fmt::Display for SupportedExdScreenLayouts {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            SupportedExdScreenLayouts::FullScreen => writeln!(f, "full_screen"),
-            SupportedExdScreenLayouts::HalfVertical => writeln!(f, "half_vertical"),
-            SupportedExdScreenLayouts::HalfHorizontal => writeln!(f, "half_horizontal"),
+            SupportedExdScreenLayouts::FullScreen => write!(f, "full_screen"),
+            SupportedExdScreenLayouts::HalfVertical => write!(f, "half_vertical"),
+            SupportedExdScreenLayouts::HalfHorizontal => write!(f, "half_horizontal"),
             SupportedExdScreenLayouts::HalfVerticalRightSplit => {
-                writeln!(f, "half_vertical_right_split")
+                write!(f, "half_vertical_right_split")
             }
             SupportedExdScreenLayouts::HalfHorizontalBottomSplit => {
-                writeln!(f, "half_horizontal_bottom_split")
+                write!(f, "half_horizontal_bottom_split")
             }
-            SupportedExdScreenLayouts::FullQuarterSplit => writeln!(f, "full_quarter_split"),
+            SupportedExdScreenLayouts::FullQuarterSplit => write!(f, "full_quarter_split"),
             SupportedExdScreenLayouts::HalfVerticalLeftSplit => {
-                writeln!(f, "half_vertical_left_split")
+                write!(f, "half_vertical_left_split")
             }
             SupportedExdScreenLayouts::HalfHorizontalTopSplit => {
-                writeln!(f, "half_horizontal_top_split")
+                write!(f, "half_horizontal_top_split")
             }
             SupportedExdScreenLayouts::UnknownVariant(value) => {
-                writeln!(f, "unknown_variant_{}", *value)
+                write!(f, "unknown_variant_{}", *value)
             }
         }
     }
@@ -11123,24 +11097,24 @@ impl FitBaseType {
 impl fmt::Display for FitBaseType {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            FitBaseType::Enum => writeln!(f, "enum"),
-            FitBaseType::Sint8 => writeln!(f, "sint8"),
-            FitBaseType::Uint8 => writeln!(f, "uint8"),
-            FitBaseType::String => writeln!(f, "string"),
-            FitBaseType::Uint8z => writeln!(f, "uint8z"),
-            FitBaseType::Byte => writeln!(f, "byte"),
-            FitBaseType::Sint16 => writeln!(f, "sint16"),
-            FitBaseType::Uint16 => writeln!(f, "uint16"),
-            FitBaseType::Sint32 => writeln!(f, "sint32"),
-            FitBaseType::Uint32 => writeln!(f, "uint32"),
-            FitBaseType::Float32 => writeln!(f, "float32"),
-            FitBaseType::Float64 => writeln!(f, "float64"),
-            FitBaseType::Uint16z => writeln!(f, "uint16z"),
-            FitBaseType::Uint32z => writeln!(f, "uint32z"),
-            FitBaseType::Sint64 => writeln!(f, "sint64"),
-            FitBaseType::Uint64 => writeln!(f, "uint64"),
-            FitBaseType::Uint64z => writeln!(f, "uint64z"),
-            FitBaseType::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            FitBaseType::Enum => write!(f, "enum"),
+            FitBaseType::Sint8 => write!(f, "sint8"),
+            FitBaseType::Uint8 => write!(f, "uint8"),
+            FitBaseType::String => write!(f, "string"),
+            FitBaseType::Uint8z => write!(f, "uint8z"),
+            FitBaseType::Byte => write!(f, "byte"),
+            FitBaseType::Sint16 => write!(f, "sint16"),
+            FitBaseType::Uint16 => write!(f, "uint16"),
+            FitBaseType::Sint32 => write!(f, "sint32"),
+            FitBaseType::Uint32 => write!(f, "uint32"),
+            FitBaseType::Float32 => write!(f, "float32"),
+            FitBaseType::Float64 => write!(f, "float64"),
+            FitBaseType::Uint16z => write!(f, "uint16z"),
+            FitBaseType::Uint32z => write!(f, "uint32z"),
+            FitBaseType::Sint64 => write!(f, "sint64"),
+            FitBaseType::Uint64 => write!(f, "uint64"),
+            FitBaseType::Uint64z => write!(f, "uint64z"),
+            FitBaseType::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -11266,45 +11240,45 @@ impl TurnType {
 impl fmt::Display for TurnType {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            TurnType::ArrivingIdx => writeln!(f, "arriving_idx"),
-            TurnType::ArrivingLeftIdx => writeln!(f, "arriving_left_idx"),
-            TurnType::ArrivingRightIdx => writeln!(f, "arriving_right_idx"),
-            TurnType::ArrivingViaIdx => writeln!(f, "arriving_via_idx"),
-            TurnType::ArrivingViaLeftIdx => writeln!(f, "arriving_via_left_idx"),
-            TurnType::ArrivingViaRightIdx => writeln!(f, "arriving_via_right_idx"),
-            TurnType::BearKeepLeftIdx => writeln!(f, "bear_keep_left_idx"),
-            TurnType::BearKeepRightIdx => writeln!(f, "bear_keep_right_idx"),
-            TurnType::ContinueIdx => writeln!(f, "continue_idx"),
-            TurnType::ExitLeftIdx => writeln!(f, "exit_left_idx"),
-            TurnType::ExitRightIdx => writeln!(f, "exit_right_idx"),
-            TurnType::FerryIdx => writeln!(f, "ferry_idx"),
-            TurnType::Roundabout45Idx => writeln!(f, "roundabout_45_idx"),
-            TurnType::Roundabout90Idx => writeln!(f, "roundabout_90_idx"),
-            TurnType::Roundabout135Idx => writeln!(f, "roundabout_135_idx"),
-            TurnType::Roundabout180Idx => writeln!(f, "roundabout_180_idx"),
-            TurnType::Roundabout225Idx => writeln!(f, "roundabout_225_idx"),
-            TurnType::Roundabout270Idx => writeln!(f, "roundabout_270_idx"),
-            TurnType::Roundabout315Idx => writeln!(f, "roundabout_315_idx"),
-            TurnType::Roundabout360Idx => writeln!(f, "roundabout_360_idx"),
-            TurnType::RoundaboutNeg45Idx => writeln!(f, "roundabout_neg_45_idx"),
-            TurnType::RoundaboutNeg90Idx => writeln!(f, "roundabout_neg_90_idx"),
-            TurnType::RoundaboutNeg135Idx => writeln!(f, "roundabout_neg_135_idx"),
-            TurnType::RoundaboutNeg180Idx => writeln!(f, "roundabout_neg_180_idx"),
-            TurnType::RoundaboutNeg225Idx => writeln!(f, "roundabout_neg_225_idx"),
-            TurnType::RoundaboutNeg270Idx => writeln!(f, "roundabout_neg_270_idx"),
-            TurnType::RoundaboutNeg315Idx => writeln!(f, "roundabout_neg_315_idx"),
-            TurnType::RoundaboutNeg360Idx => writeln!(f, "roundabout_neg_360_idx"),
-            TurnType::RoundaboutGenericIdx => writeln!(f, "roundabout_generic_idx"),
-            TurnType::RoundaboutNegGenericIdx => writeln!(f, "roundabout_neg_generic_idx"),
-            TurnType::SharpTurnLeftIdx => writeln!(f, "sharp_turn_left_idx"),
-            TurnType::SharpTurnRightIdx => writeln!(f, "sharp_turn_right_idx"),
-            TurnType::TurnLeftIdx => writeln!(f, "turn_left_idx"),
-            TurnType::TurnRightIdx => writeln!(f, "turn_right_idx"),
-            TurnType::UturnLeftIdx => writeln!(f, "uturn_left_idx"),
-            TurnType::UturnRightIdx => writeln!(f, "uturn_right_idx"),
-            TurnType::IconInvIdx => writeln!(f, "icon_inv_idx"),
-            TurnType::IconIdxCnt => writeln!(f, "icon_idx_cnt"),
-            TurnType::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            TurnType::ArrivingIdx => write!(f, "arriving_idx"),
+            TurnType::ArrivingLeftIdx => write!(f, "arriving_left_idx"),
+            TurnType::ArrivingRightIdx => write!(f, "arriving_right_idx"),
+            TurnType::ArrivingViaIdx => write!(f, "arriving_via_idx"),
+            TurnType::ArrivingViaLeftIdx => write!(f, "arriving_via_left_idx"),
+            TurnType::ArrivingViaRightIdx => write!(f, "arriving_via_right_idx"),
+            TurnType::BearKeepLeftIdx => write!(f, "bear_keep_left_idx"),
+            TurnType::BearKeepRightIdx => write!(f, "bear_keep_right_idx"),
+            TurnType::ContinueIdx => write!(f, "continue_idx"),
+            TurnType::ExitLeftIdx => write!(f, "exit_left_idx"),
+            TurnType::ExitRightIdx => write!(f, "exit_right_idx"),
+            TurnType::FerryIdx => write!(f, "ferry_idx"),
+            TurnType::Roundabout45Idx => write!(f, "roundabout_45_idx"),
+            TurnType::Roundabout90Idx => write!(f, "roundabout_90_idx"),
+            TurnType::Roundabout135Idx => write!(f, "roundabout_135_idx"),
+            TurnType::Roundabout180Idx => write!(f, "roundabout_180_idx"),
+            TurnType::Roundabout225Idx => write!(f, "roundabout_225_idx"),
+            TurnType::Roundabout270Idx => write!(f, "roundabout_270_idx"),
+            TurnType::Roundabout315Idx => write!(f, "roundabout_315_idx"),
+            TurnType::Roundabout360Idx => write!(f, "roundabout_360_idx"),
+            TurnType::RoundaboutNeg45Idx => write!(f, "roundabout_neg_45_idx"),
+            TurnType::RoundaboutNeg90Idx => write!(f, "roundabout_neg_90_idx"),
+            TurnType::RoundaboutNeg135Idx => write!(f, "roundabout_neg_135_idx"),
+            TurnType::RoundaboutNeg180Idx => write!(f, "roundabout_neg_180_idx"),
+            TurnType::RoundaboutNeg225Idx => write!(f, "roundabout_neg_225_idx"),
+            TurnType::RoundaboutNeg270Idx => write!(f, "roundabout_neg_270_idx"),
+            TurnType::RoundaboutNeg315Idx => write!(f, "roundabout_neg_315_idx"),
+            TurnType::RoundaboutNeg360Idx => write!(f, "roundabout_neg_360_idx"),
+            TurnType::RoundaboutGenericIdx => write!(f, "roundabout_generic_idx"),
+            TurnType::RoundaboutNegGenericIdx => write!(f, "roundabout_neg_generic_idx"),
+            TurnType::SharpTurnLeftIdx => write!(f, "sharp_turn_left_idx"),
+            TurnType::SharpTurnRightIdx => write!(f, "sharp_turn_right_idx"),
+            TurnType::TurnLeftIdx => write!(f, "turn_left_idx"),
+            TurnType::TurnRightIdx => write!(f, "turn_right_idx"),
+            TurnType::UturnLeftIdx => write!(f, "uturn_left_idx"),
+            TurnType::UturnRightIdx => write!(f, "uturn_right_idx"),
+            TurnType::IconInvIdx => write!(f, "icon_inv_idx"),
+            TurnType::IconIdxCnt => write!(f, "icon_idx_cnt"),
+            TurnType::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -11379,10 +11353,10 @@ impl BikeLightBeamAngleMode {
 impl fmt::Display for BikeLightBeamAngleMode {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            BikeLightBeamAngleMode::Manual => writeln!(f, "manual"),
-            BikeLightBeamAngleMode::Auto => writeln!(f, "auto"),
+            BikeLightBeamAngleMode::Manual => write!(f, "manual"),
+            BikeLightBeamAngleMode::Auto => write!(f, "auto"),
             BikeLightBeamAngleMode::UnknownVariant(value) => {
-                writeln!(f, "unknown_variant_{}", *value)
+                write!(f, "unknown_variant_{}", *value)
             }
         }
     }
@@ -11424,10 +11398,10 @@ impl FitBaseUnit {
 impl fmt::Display for FitBaseUnit {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            FitBaseUnit::Other => writeln!(f, "other"),
-            FitBaseUnit::Kilogram => writeln!(f, "kilogram"),
-            FitBaseUnit::Pound => writeln!(f, "pound"),
-            FitBaseUnit::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            FitBaseUnit::Other => write!(f, "other"),
+            FitBaseUnit::Kilogram => write!(f, "kilogram"),
+            FitBaseUnit::Pound => write!(f, "pound"),
+            FitBaseUnit::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -11467,9 +11441,9 @@ impl SetType {
 impl fmt::Display for SetType {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            SetType::Rest => writeln!(f, "rest"),
-            SetType::Active => writeln!(f, "active"),
-            SetType::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            SetType::Rest => write!(f, "rest"),
+            SetType::Active => write!(f, "active"),
+            SetType::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -11572,41 +11546,41 @@ impl ExerciseCategory {
 impl fmt::Display for ExerciseCategory {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            ExerciseCategory::BenchPress => writeln!(f, "bench_press"),
-            ExerciseCategory::CalfRaise => writeln!(f, "calf_raise"),
-            ExerciseCategory::Cardio => writeln!(f, "cardio"),
-            ExerciseCategory::Carry => writeln!(f, "carry"),
-            ExerciseCategory::Chop => writeln!(f, "chop"),
-            ExerciseCategory::Core => writeln!(f, "core"),
-            ExerciseCategory::Crunch => writeln!(f, "crunch"),
-            ExerciseCategory::Curl => writeln!(f, "curl"),
-            ExerciseCategory::Deadlift => writeln!(f, "deadlift"),
-            ExerciseCategory::Flye => writeln!(f, "flye"),
-            ExerciseCategory::HipRaise => writeln!(f, "hip_raise"),
-            ExerciseCategory::HipStability => writeln!(f, "hip_stability"),
-            ExerciseCategory::HipSwing => writeln!(f, "hip_swing"),
-            ExerciseCategory::Hyperextension => writeln!(f, "hyperextension"),
-            ExerciseCategory::LateralRaise => writeln!(f, "lateral_raise"),
-            ExerciseCategory::LegCurl => writeln!(f, "leg_curl"),
-            ExerciseCategory::LegRaise => writeln!(f, "leg_raise"),
-            ExerciseCategory::Lunge => writeln!(f, "lunge"),
-            ExerciseCategory::OlympicLift => writeln!(f, "olympic_lift"),
-            ExerciseCategory::Plank => writeln!(f, "plank"),
-            ExerciseCategory::Plyo => writeln!(f, "plyo"),
-            ExerciseCategory::PullUp => writeln!(f, "pull_up"),
-            ExerciseCategory::PushUp => writeln!(f, "push_up"),
-            ExerciseCategory::Row => writeln!(f, "row"),
-            ExerciseCategory::ShoulderPress => writeln!(f, "shoulder_press"),
-            ExerciseCategory::ShoulderStability => writeln!(f, "shoulder_stability"),
-            ExerciseCategory::Shrug => writeln!(f, "shrug"),
-            ExerciseCategory::SitUp => writeln!(f, "sit_up"),
-            ExerciseCategory::Squat => writeln!(f, "squat"),
-            ExerciseCategory::TotalBody => writeln!(f, "total_body"),
-            ExerciseCategory::TricepsExtension => writeln!(f, "triceps_extension"),
-            ExerciseCategory::WarmUp => writeln!(f, "warm_up"),
-            ExerciseCategory::Run => writeln!(f, "run"),
-            ExerciseCategory::Unknown => writeln!(f, "unknown"),
-            ExerciseCategory::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            ExerciseCategory::BenchPress => write!(f, "bench_press"),
+            ExerciseCategory::CalfRaise => write!(f, "calf_raise"),
+            ExerciseCategory::Cardio => write!(f, "cardio"),
+            ExerciseCategory::Carry => write!(f, "carry"),
+            ExerciseCategory::Chop => write!(f, "chop"),
+            ExerciseCategory::Core => write!(f, "core"),
+            ExerciseCategory::Crunch => write!(f, "crunch"),
+            ExerciseCategory::Curl => write!(f, "curl"),
+            ExerciseCategory::Deadlift => write!(f, "deadlift"),
+            ExerciseCategory::Flye => write!(f, "flye"),
+            ExerciseCategory::HipRaise => write!(f, "hip_raise"),
+            ExerciseCategory::HipStability => write!(f, "hip_stability"),
+            ExerciseCategory::HipSwing => write!(f, "hip_swing"),
+            ExerciseCategory::Hyperextension => write!(f, "hyperextension"),
+            ExerciseCategory::LateralRaise => write!(f, "lateral_raise"),
+            ExerciseCategory::LegCurl => write!(f, "leg_curl"),
+            ExerciseCategory::LegRaise => write!(f, "leg_raise"),
+            ExerciseCategory::Lunge => write!(f, "lunge"),
+            ExerciseCategory::OlympicLift => write!(f, "olympic_lift"),
+            ExerciseCategory::Plank => write!(f, "plank"),
+            ExerciseCategory::Plyo => write!(f, "plyo"),
+            ExerciseCategory::PullUp => write!(f, "pull_up"),
+            ExerciseCategory::PushUp => write!(f, "push_up"),
+            ExerciseCategory::Row => write!(f, "row"),
+            ExerciseCategory::ShoulderPress => write!(f, "shoulder_press"),
+            ExerciseCategory::ShoulderStability => write!(f, "shoulder_stability"),
+            ExerciseCategory::Shrug => write!(f, "shrug"),
+            ExerciseCategory::SitUp => write!(f, "sit_up"),
+            ExerciseCategory::Squat => write!(f, "squat"),
+            ExerciseCategory::TotalBody => write!(f, "total_body"),
+            ExerciseCategory::TricepsExtension => write!(f, "triceps_extension"),
+            ExerciseCategory::WarmUp => write!(f, "warm_up"),
+            ExerciseCategory::Run => write!(f, "run"),
+            ExerciseCategory::Unknown => write!(f, "unknown"),
+            ExerciseCategory::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -11728,74 +11702,74 @@ impl fmt::Display for BenchPressExerciseName {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
             BenchPressExerciseName::AlternatingDumbbellChestPressOnSwissBall => {
-                writeln!(f, "alternating_dumbbell_chest_press_on_swiss_ball")
+                write!(f, "alternating_dumbbell_chest_press_on_swiss_ball")
             }
-            BenchPressExerciseName::BarbellBenchPress => writeln!(f, "barbell_bench_press"),
+            BenchPressExerciseName::BarbellBenchPress => write!(f, "barbell_bench_press"),
             BenchPressExerciseName::BarbellBoardBenchPress => {
-                writeln!(f, "barbell_board_bench_press")
+                write!(f, "barbell_board_bench_press")
             }
-            BenchPressExerciseName::BarbellFloorPress => writeln!(f, "barbell_floor_press"),
+            BenchPressExerciseName::BarbellFloorPress => write!(f, "barbell_floor_press"),
             BenchPressExerciseName::CloseGripBarbellBenchPress => {
-                writeln!(f, "close_grip_barbell_bench_press")
+                write!(f, "close_grip_barbell_bench_press")
             }
             BenchPressExerciseName::DeclineDumbbellBenchPress => {
-                writeln!(f, "decline_dumbbell_bench_press")
+                write!(f, "decline_dumbbell_bench_press")
             }
-            BenchPressExerciseName::DumbbellBenchPress => writeln!(f, "dumbbell_bench_press"),
-            BenchPressExerciseName::DumbbellFloorPress => writeln!(f, "dumbbell_floor_press"),
+            BenchPressExerciseName::DumbbellBenchPress => write!(f, "dumbbell_bench_press"),
+            BenchPressExerciseName::DumbbellFloorPress => write!(f, "dumbbell_floor_press"),
             BenchPressExerciseName::InclineBarbellBenchPress => {
-                writeln!(f, "incline_barbell_bench_press")
+                write!(f, "incline_barbell_bench_press")
             }
             BenchPressExerciseName::InclineDumbbellBenchPress => {
-                writeln!(f, "incline_dumbbell_bench_press")
+                write!(f, "incline_dumbbell_bench_press")
             }
             BenchPressExerciseName::InclineSmithMachineBenchPress => {
-                writeln!(f, "incline_smith_machine_bench_press")
+                write!(f, "incline_smith_machine_bench_press")
             }
             BenchPressExerciseName::IsometricBarbellBenchPress => {
-                writeln!(f, "isometric_barbell_bench_press")
+                write!(f, "isometric_barbell_bench_press")
             }
-            BenchPressExerciseName::KettlebellChestPress => writeln!(f, "kettlebell_chest_press"),
+            BenchPressExerciseName::KettlebellChestPress => write!(f, "kettlebell_chest_press"),
             BenchPressExerciseName::NeutralGripDumbbellBenchPress => {
-                writeln!(f, "neutral_grip_dumbbell_bench_press")
+                write!(f, "neutral_grip_dumbbell_bench_press")
             }
             BenchPressExerciseName::NeutralGripDumbbellInclineBenchPress => {
-                writeln!(f, "neutral_grip_dumbbell_incline_bench_press")
+                write!(f, "neutral_grip_dumbbell_incline_bench_press")
             }
-            BenchPressExerciseName::OneArmFloorPress => writeln!(f, "one_arm_floor_press"),
+            BenchPressExerciseName::OneArmFloorPress => write!(f, "one_arm_floor_press"),
             BenchPressExerciseName::WeightedOneArmFloorPress => {
-                writeln!(f, "weighted_one_arm_floor_press")
+                write!(f, "weighted_one_arm_floor_press")
             }
-            BenchPressExerciseName::PartialLockout => writeln!(f, "partial_lockout"),
+            BenchPressExerciseName::PartialLockout => write!(f, "partial_lockout"),
             BenchPressExerciseName::ReverseGripBarbellBenchPress => {
-                writeln!(f, "reverse_grip_barbell_bench_press")
+                write!(f, "reverse_grip_barbell_bench_press")
             }
             BenchPressExerciseName::ReverseGripInclineBenchPress => {
-                writeln!(f, "reverse_grip_incline_bench_press")
+                write!(f, "reverse_grip_incline_bench_press")
             }
             BenchPressExerciseName::SingleArmCableChestPress => {
-                writeln!(f, "single_arm_cable_chest_press")
+                write!(f, "single_arm_cable_chest_press")
             }
             BenchPressExerciseName::SingleArmDumbbellBenchPress => {
-                writeln!(f, "single_arm_dumbbell_bench_press")
+                write!(f, "single_arm_dumbbell_bench_press")
             }
             BenchPressExerciseName::SmithMachineBenchPress => {
-                writeln!(f, "smith_machine_bench_press")
+                write!(f, "smith_machine_bench_press")
             }
             BenchPressExerciseName::SwissBallDumbbellChestPress => {
-                writeln!(f, "swiss_ball_dumbbell_chest_press")
+                write!(f, "swiss_ball_dumbbell_chest_press")
             }
             BenchPressExerciseName::TripleStopBarbellBenchPress => {
-                writeln!(f, "triple_stop_barbell_bench_press")
+                write!(f, "triple_stop_barbell_bench_press")
             }
             BenchPressExerciseName::WideGripBarbellBenchPress => {
-                writeln!(f, "wide_grip_barbell_bench_press")
+                write!(f, "wide_grip_barbell_bench_press")
             }
             BenchPressExerciseName::AlternatingDumbbellChestPress => {
-                writeln!(f, "alternating_dumbbell_chest_press")
+                write!(f, "alternating_dumbbell_chest_press")
             }
             BenchPressExerciseName::UnknownVariant(value) => {
-                writeln!(f, "unknown_variant_{}", *value)
+                write!(f, "unknown_variant_{}", *value)
             }
         }
     }
@@ -11898,64 +11872,60 @@ impl CalfRaiseExerciseName {
 impl fmt::Display for CalfRaiseExerciseName {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            CalfRaiseExerciseName::Name3WayCalfRaise => writeln!(f, "3_way_calf_raise"),
+            CalfRaiseExerciseName::Name3WayCalfRaise => write!(f, "3_way_calf_raise"),
             CalfRaiseExerciseName::Name3WayWeightedCalfRaise => {
-                writeln!(f, "3_way_weighted_calf_raise")
+                write!(f, "3_way_weighted_calf_raise")
             }
             CalfRaiseExerciseName::Name3WaySingleLegCalfRaise => {
-                writeln!(f, "3_way_single_leg_calf_raise")
+                write!(f, "3_way_single_leg_calf_raise")
             }
             CalfRaiseExerciseName::Name3WayWeightedSingleLegCalfRaise => {
-                writeln!(f, "3_way_weighted_single_leg_calf_raise")
+                write!(f, "3_way_weighted_single_leg_calf_raise")
             }
-            CalfRaiseExerciseName::DonkeyCalfRaise => writeln!(f, "donkey_calf_raise"),
+            CalfRaiseExerciseName::DonkeyCalfRaise => write!(f, "donkey_calf_raise"),
             CalfRaiseExerciseName::WeightedDonkeyCalfRaise => {
-                writeln!(f, "weighted_donkey_calf_raise")
+                write!(f, "weighted_donkey_calf_raise")
             }
-            CalfRaiseExerciseName::SeatedCalfRaise => writeln!(f, "seated_calf_raise"),
+            CalfRaiseExerciseName::SeatedCalfRaise => write!(f, "seated_calf_raise"),
             CalfRaiseExerciseName::WeightedSeatedCalfRaise => {
-                writeln!(f, "weighted_seated_calf_raise")
+                write!(f, "weighted_seated_calf_raise")
             }
-            CalfRaiseExerciseName::SeatedDumbbellToeRaise => {
-                writeln!(f, "seated_dumbbell_toe_raise")
-            }
+            CalfRaiseExerciseName::SeatedDumbbellToeRaise => write!(f, "seated_dumbbell_toe_raise"),
             CalfRaiseExerciseName::SingleLegBentKneeCalfRaise => {
-                writeln!(f, "single_leg_bent_knee_calf_raise")
+                write!(f, "single_leg_bent_knee_calf_raise")
             }
             CalfRaiseExerciseName::WeightedSingleLegBentKneeCalfRaise => {
-                writeln!(f, "weighted_single_leg_bent_knee_calf_raise")
+                write!(f, "weighted_single_leg_bent_knee_calf_raise")
             }
             CalfRaiseExerciseName::SingleLegDeclinePushUp => {
-                writeln!(f, "single_leg_decline_push_up")
+                write!(f, "single_leg_decline_push_up")
             }
             CalfRaiseExerciseName::SingleLegDonkeyCalfRaise => {
-                writeln!(f, "single_leg_donkey_calf_raise")
+                write!(f, "single_leg_donkey_calf_raise")
             }
             CalfRaiseExerciseName::WeightedSingleLegDonkeyCalfRaise => {
-                writeln!(f, "weighted_single_leg_donkey_calf_raise")
+                write!(f, "weighted_single_leg_donkey_calf_raise")
             }
             CalfRaiseExerciseName::SingleLegHipRaiseWithKneeHold => {
-                writeln!(f, "single_leg_hip_raise_with_knee_hold")
+                write!(f, "single_leg_hip_raise_with_knee_hold")
             }
             CalfRaiseExerciseName::SingleLegStandingCalfRaise => {
-                writeln!(f, "single_leg_standing_calf_raise")
+                write!(f, "single_leg_standing_calf_raise")
             }
             CalfRaiseExerciseName::SingleLegStandingDumbbellCalfRaise => {
-                writeln!(f, "single_leg_standing_dumbbell_calf_raise")
+                write!(f, "single_leg_standing_dumbbell_calf_raise")
             }
             CalfRaiseExerciseName::StandingBarbellCalfRaise => {
-                writeln!(f, "standing_barbell_calf_raise")
+                write!(f, "standing_barbell_calf_raise")
             }
-            CalfRaiseExerciseName::StandingCalfRaise => writeln!(f, "standing_calf_raise"),
+            CalfRaiseExerciseName::StandingCalfRaise => write!(f, "standing_calf_raise"),
             CalfRaiseExerciseName::WeightedStandingCalfRaise => {
-                writeln!(f, "weighted_standing_calf_raise")
+                write!(f, "weighted_standing_calf_raise")
             }
             CalfRaiseExerciseName::StandingDumbbellCalfRaise => {
-                writeln!(f, "standing_dumbbell_calf_raise")
+                write!(f, "standing_dumbbell_calf_raise")
             }
-            CalfRaiseExerciseName::UnknownVariant(value) => {
-                writeln!(f, "unknown_variant_{}", *value)
-            }
+            CalfRaiseExerciseName::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -12053,35 +12023,33 @@ impl CardioExerciseName {
 impl fmt::Display for CardioExerciseName {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            CardioExerciseName::BobAndWeaveCircle => writeln!(f, "bob_and_weave_circle"),
+            CardioExerciseName::BobAndWeaveCircle => write!(f, "bob_and_weave_circle"),
             CardioExerciseName::WeightedBobAndWeaveCircle => {
-                writeln!(f, "weighted_bob_and_weave_circle")
+                write!(f, "weighted_bob_and_weave_circle")
             }
-            CardioExerciseName::CardioCoreCrawl => writeln!(f, "cardio_core_crawl"),
-            CardioExerciseName::WeightedCardioCoreCrawl => {
-                writeln!(f, "weighted_cardio_core_crawl")
-            }
-            CardioExerciseName::DoubleUnder => writeln!(f, "double_under"),
-            CardioExerciseName::WeightedDoubleUnder => writeln!(f, "weighted_double_under"),
-            CardioExerciseName::JumpRope => writeln!(f, "jump_rope"),
-            CardioExerciseName::WeightedJumpRope => writeln!(f, "weighted_jump_rope"),
-            CardioExerciseName::JumpRopeCrossover => writeln!(f, "jump_rope_crossover"),
+            CardioExerciseName::CardioCoreCrawl => write!(f, "cardio_core_crawl"),
+            CardioExerciseName::WeightedCardioCoreCrawl => write!(f, "weighted_cardio_core_crawl"),
+            CardioExerciseName::DoubleUnder => write!(f, "double_under"),
+            CardioExerciseName::WeightedDoubleUnder => write!(f, "weighted_double_under"),
+            CardioExerciseName::JumpRope => write!(f, "jump_rope"),
+            CardioExerciseName::WeightedJumpRope => write!(f, "weighted_jump_rope"),
+            CardioExerciseName::JumpRopeCrossover => write!(f, "jump_rope_crossover"),
             CardioExerciseName::WeightedJumpRopeCrossover => {
-                writeln!(f, "weighted_jump_rope_crossover")
+                write!(f, "weighted_jump_rope_crossover")
             }
-            CardioExerciseName::JumpRopeJog => writeln!(f, "jump_rope_jog"),
-            CardioExerciseName::WeightedJumpRopeJog => writeln!(f, "weighted_jump_rope_jog"),
-            CardioExerciseName::JumpingJacks => writeln!(f, "jumping_jacks"),
-            CardioExerciseName::WeightedJumpingJacks => writeln!(f, "weighted_jumping_jacks"),
-            CardioExerciseName::SkiMoguls => writeln!(f, "ski_moguls"),
-            CardioExerciseName::WeightedSkiMoguls => writeln!(f, "weighted_ski_moguls"),
-            CardioExerciseName::SplitJacks => writeln!(f, "split_jacks"),
-            CardioExerciseName::WeightedSplitJacks => writeln!(f, "weighted_split_jacks"),
-            CardioExerciseName::SquatJacks => writeln!(f, "squat_jacks"),
-            CardioExerciseName::WeightedSquatJacks => writeln!(f, "weighted_squat_jacks"),
-            CardioExerciseName::TripleUnder => writeln!(f, "triple_under"),
-            CardioExerciseName::WeightedTripleUnder => writeln!(f, "weighted_triple_under"),
-            CardioExerciseName::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            CardioExerciseName::JumpRopeJog => write!(f, "jump_rope_jog"),
+            CardioExerciseName::WeightedJumpRopeJog => write!(f, "weighted_jump_rope_jog"),
+            CardioExerciseName::JumpingJacks => write!(f, "jumping_jacks"),
+            CardioExerciseName::WeightedJumpingJacks => write!(f, "weighted_jumping_jacks"),
+            CardioExerciseName::SkiMoguls => write!(f, "ski_moguls"),
+            CardioExerciseName::WeightedSkiMoguls => write!(f, "weighted_ski_moguls"),
+            CardioExerciseName::SplitJacks => write!(f, "split_jacks"),
+            CardioExerciseName::WeightedSplitJacks => write!(f, "weighted_split_jacks"),
+            CardioExerciseName::SquatJacks => write!(f, "squat_jacks"),
+            CardioExerciseName::WeightedSquatJacks => write!(f, "weighted_squat_jacks"),
+            CardioExerciseName::TripleUnder => write!(f, "triple_under"),
+            CardioExerciseName::WeightedTripleUnder => write!(f, "weighted_triple_under"),
+            CardioExerciseName::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -12146,12 +12114,12 @@ impl CarryExerciseName {
 impl fmt::Display for CarryExerciseName {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            CarryExerciseName::BarHolds => writeln!(f, "bar_holds"),
-            CarryExerciseName::FarmersWalk => writeln!(f, "farmers_walk"),
-            CarryExerciseName::FarmersWalkOnToes => writeln!(f, "farmers_walk_on_toes"),
-            CarryExerciseName::HexDumbbellHold => writeln!(f, "hex_dumbbell_hold"),
-            CarryExerciseName::OverheadCarry => writeln!(f, "overhead_carry"),
-            CarryExerciseName::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            CarryExerciseName::BarHolds => write!(f, "bar_holds"),
+            CarryExerciseName::FarmersWalk => write!(f, "farmers_walk"),
+            CarryExerciseName::FarmersWalkOnToes => write!(f, "farmers_walk_on_toes"),
+            CarryExerciseName::HexDumbbellHold => write!(f, "hex_dumbbell_hold"),
+            CarryExerciseName::OverheadCarry => write!(f, "overhead_carry"),
+            CarryExerciseName::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -12235,48 +12203,48 @@ impl ChopExerciseName {
 impl fmt::Display for ChopExerciseName {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            ChopExerciseName::CablePullThrough => writeln!(f, "cable_pull_through"),
-            ChopExerciseName::CableRotationalLift => writeln!(f, "cable_rotational_lift"),
-            ChopExerciseName::CableWoodchop => writeln!(f, "cable_woodchop"),
-            ChopExerciseName::CrossChopToKnee => writeln!(f, "cross_chop_to_knee"),
-            ChopExerciseName::WeightedCrossChopToKnee => writeln!(f, "weighted_cross_chop_to_knee"),
-            ChopExerciseName::DumbbellChop => writeln!(f, "dumbbell_chop"),
-            ChopExerciseName::HalfKneelingRotation => writeln!(f, "half_kneeling_rotation"),
+            ChopExerciseName::CablePullThrough => write!(f, "cable_pull_through"),
+            ChopExerciseName::CableRotationalLift => write!(f, "cable_rotational_lift"),
+            ChopExerciseName::CableWoodchop => write!(f, "cable_woodchop"),
+            ChopExerciseName::CrossChopToKnee => write!(f, "cross_chop_to_knee"),
+            ChopExerciseName::WeightedCrossChopToKnee => write!(f, "weighted_cross_chop_to_knee"),
+            ChopExerciseName::DumbbellChop => write!(f, "dumbbell_chop"),
+            ChopExerciseName::HalfKneelingRotation => write!(f, "half_kneeling_rotation"),
             ChopExerciseName::WeightedHalfKneelingRotation => {
-                writeln!(f, "weighted_half_kneeling_rotation")
+                write!(f, "weighted_half_kneeling_rotation")
             }
             ChopExerciseName::HalfKneelingRotationalChop => {
-                writeln!(f, "half_kneeling_rotational_chop")
+                write!(f, "half_kneeling_rotational_chop")
             }
             ChopExerciseName::HalfKneelingRotationalReverseChop => {
-                writeln!(f, "half_kneeling_rotational_reverse_chop")
+                write!(f, "half_kneeling_rotational_reverse_chop")
             }
             ChopExerciseName::HalfKneelingStabilityChop => {
-                writeln!(f, "half_kneeling_stability_chop")
+                write!(f, "half_kneeling_stability_chop")
             }
             ChopExerciseName::HalfKneelingStabilityReverseChop => {
-                writeln!(f, "half_kneeling_stability_reverse_chop")
+                write!(f, "half_kneeling_stability_reverse_chop")
             }
-            ChopExerciseName::KneelingRotationalChop => writeln!(f, "kneeling_rotational_chop"),
+            ChopExerciseName::KneelingRotationalChop => write!(f, "kneeling_rotational_chop"),
             ChopExerciseName::KneelingRotationalReverseChop => {
-                writeln!(f, "kneeling_rotational_reverse_chop")
+                write!(f, "kneeling_rotational_reverse_chop")
             }
-            ChopExerciseName::KneelingStabilityChop => writeln!(f, "kneeling_stability_chop"),
-            ChopExerciseName::KneelingWoodchopper => writeln!(f, "kneeling_woodchopper"),
-            ChopExerciseName::MedicineBallWoodChops => writeln!(f, "medicine_ball_wood_chops"),
-            ChopExerciseName::PowerSquatChops => writeln!(f, "power_squat_chops"),
-            ChopExerciseName::WeightedPowerSquatChops => writeln!(f, "weighted_power_squat_chops"),
-            ChopExerciseName::StandingRotationalChop => writeln!(f, "standing_rotational_chop"),
+            ChopExerciseName::KneelingStabilityChop => write!(f, "kneeling_stability_chop"),
+            ChopExerciseName::KneelingWoodchopper => write!(f, "kneeling_woodchopper"),
+            ChopExerciseName::MedicineBallWoodChops => write!(f, "medicine_ball_wood_chops"),
+            ChopExerciseName::PowerSquatChops => write!(f, "power_squat_chops"),
+            ChopExerciseName::WeightedPowerSquatChops => write!(f, "weighted_power_squat_chops"),
+            ChopExerciseName::StandingRotationalChop => write!(f, "standing_rotational_chop"),
             ChopExerciseName::StandingSplitRotationalChop => {
-                writeln!(f, "standing_split_rotational_chop")
+                write!(f, "standing_split_rotational_chop")
             }
             ChopExerciseName::StandingSplitRotationalReverseChop => {
-                writeln!(f, "standing_split_rotational_reverse_chop")
+                write!(f, "standing_split_rotational_reverse_chop")
             }
             ChopExerciseName::StandingStabilityReverseChop => {
-                writeln!(f, "standing_stability_reverse_chop")
+                write!(f, "standing_stability_reverse_chop")
             }
-            ChopExerciseName::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            ChopExerciseName::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -12478,104 +12446,98 @@ impl CoreExerciseName {
 impl fmt::Display for CoreExerciseName {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            CoreExerciseName::AbsJabs => writeln!(f, "abs_jabs"),
-            CoreExerciseName::WeightedAbsJabs => writeln!(f, "weighted_abs_jabs"),
-            CoreExerciseName::AlternatingPlateReach => writeln!(f, "alternating_plate_reach"),
-            CoreExerciseName::BarbellRollout => writeln!(f, "barbell_rollout"),
-            CoreExerciseName::WeightedBarbellRollout => writeln!(f, "weighted_barbell_rollout"),
-            CoreExerciseName::BodyBarObliqueTwist => writeln!(f, "body_bar_oblique_twist"),
-            CoreExerciseName::CableCorePress => writeln!(f, "cable_core_press"),
-            CoreExerciseName::CableSideBend => writeln!(f, "cable_side_bend"),
-            CoreExerciseName::SideBend => writeln!(f, "side_bend"),
-            CoreExerciseName::WeightedSideBend => writeln!(f, "weighted_side_bend"),
-            CoreExerciseName::CrescentCircle => writeln!(f, "crescent_circle"),
-            CoreExerciseName::WeightedCrescentCircle => writeln!(f, "weighted_crescent_circle"),
-            CoreExerciseName::CyclingRussianTwist => writeln!(f, "cycling_russian_twist"),
+            CoreExerciseName::AbsJabs => write!(f, "abs_jabs"),
+            CoreExerciseName::WeightedAbsJabs => write!(f, "weighted_abs_jabs"),
+            CoreExerciseName::AlternatingPlateReach => write!(f, "alternating_plate_reach"),
+            CoreExerciseName::BarbellRollout => write!(f, "barbell_rollout"),
+            CoreExerciseName::WeightedBarbellRollout => write!(f, "weighted_barbell_rollout"),
+            CoreExerciseName::BodyBarObliqueTwist => write!(f, "body_bar_oblique_twist"),
+            CoreExerciseName::CableCorePress => write!(f, "cable_core_press"),
+            CoreExerciseName::CableSideBend => write!(f, "cable_side_bend"),
+            CoreExerciseName::SideBend => write!(f, "side_bend"),
+            CoreExerciseName::WeightedSideBend => write!(f, "weighted_side_bend"),
+            CoreExerciseName::CrescentCircle => write!(f, "crescent_circle"),
+            CoreExerciseName::WeightedCrescentCircle => write!(f, "weighted_crescent_circle"),
+            CoreExerciseName::CyclingRussianTwist => write!(f, "cycling_russian_twist"),
             CoreExerciseName::WeightedCyclingRussianTwist => {
-                writeln!(f, "weighted_cycling_russian_twist")
+                write!(f, "weighted_cycling_russian_twist")
             }
-            CoreExerciseName::ElevatedFeetRussianTwist => {
-                writeln!(f, "elevated_feet_russian_twist")
-            }
+            CoreExerciseName::ElevatedFeetRussianTwist => write!(f, "elevated_feet_russian_twist"),
             CoreExerciseName::WeightedElevatedFeetRussianTwist => {
-                writeln!(f, "weighted_elevated_feet_russian_twist")
+                write!(f, "weighted_elevated_feet_russian_twist")
             }
-            CoreExerciseName::HalfTurkishGetUp => writeln!(f, "half_turkish_get_up"),
-            CoreExerciseName::KettlebellWindmill => writeln!(f, "kettlebell_windmill"),
-            CoreExerciseName::KneelingAbWheel => writeln!(f, "kneeling_ab_wheel"),
-            CoreExerciseName::WeightedKneelingAbWheel => writeln!(f, "weighted_kneeling_ab_wheel"),
-            CoreExerciseName::ModifiedFrontLever => writeln!(f, "modified_front_lever"),
-            CoreExerciseName::OpenKneeTucks => writeln!(f, "open_knee_tucks"),
-            CoreExerciseName::WeightedOpenKneeTucks => writeln!(f, "weighted_open_knee_tucks"),
-            CoreExerciseName::SideAbsLegLift => writeln!(f, "side_abs_leg_lift"),
-            CoreExerciseName::WeightedSideAbsLegLift => writeln!(f, "weighted_side_abs_leg_lift"),
-            CoreExerciseName::SwissBallJackknife => writeln!(f, "swiss_ball_jackknife"),
+            CoreExerciseName::HalfTurkishGetUp => write!(f, "half_turkish_get_up"),
+            CoreExerciseName::KettlebellWindmill => write!(f, "kettlebell_windmill"),
+            CoreExerciseName::KneelingAbWheel => write!(f, "kneeling_ab_wheel"),
+            CoreExerciseName::WeightedKneelingAbWheel => write!(f, "weighted_kneeling_ab_wheel"),
+            CoreExerciseName::ModifiedFrontLever => write!(f, "modified_front_lever"),
+            CoreExerciseName::OpenKneeTucks => write!(f, "open_knee_tucks"),
+            CoreExerciseName::WeightedOpenKneeTucks => write!(f, "weighted_open_knee_tucks"),
+            CoreExerciseName::SideAbsLegLift => write!(f, "side_abs_leg_lift"),
+            CoreExerciseName::WeightedSideAbsLegLift => write!(f, "weighted_side_abs_leg_lift"),
+            CoreExerciseName::SwissBallJackknife => write!(f, "swiss_ball_jackknife"),
             CoreExerciseName::WeightedSwissBallJackknife => {
-                writeln!(f, "weighted_swiss_ball_jackknife")
+                write!(f, "weighted_swiss_ball_jackknife")
             }
-            CoreExerciseName::SwissBallPike => writeln!(f, "swiss_ball_pike"),
-            CoreExerciseName::WeightedSwissBallPike => writeln!(f, "weighted_swiss_ball_pike"),
-            CoreExerciseName::SwissBallRollout => writeln!(f, "swiss_ball_rollout"),
-            CoreExerciseName::WeightedSwissBallRollout => {
-                writeln!(f, "weighted_swiss_ball_rollout")
-            }
-            CoreExerciseName::TriangleHipPress => writeln!(f, "triangle_hip_press"),
-            CoreExerciseName::WeightedTriangleHipPress => {
-                writeln!(f, "weighted_triangle_hip_press")
-            }
-            CoreExerciseName::TrxSuspendedJackknife => writeln!(f, "trx_suspended_jackknife"),
+            CoreExerciseName::SwissBallPike => write!(f, "swiss_ball_pike"),
+            CoreExerciseName::WeightedSwissBallPike => write!(f, "weighted_swiss_ball_pike"),
+            CoreExerciseName::SwissBallRollout => write!(f, "swiss_ball_rollout"),
+            CoreExerciseName::WeightedSwissBallRollout => write!(f, "weighted_swiss_ball_rollout"),
+            CoreExerciseName::TriangleHipPress => write!(f, "triangle_hip_press"),
+            CoreExerciseName::WeightedTriangleHipPress => write!(f, "weighted_triangle_hip_press"),
+            CoreExerciseName::TrxSuspendedJackknife => write!(f, "trx_suspended_jackknife"),
             CoreExerciseName::WeightedTrxSuspendedJackknife => {
-                writeln!(f, "weighted_trx_suspended_jackknife")
+                write!(f, "weighted_trx_suspended_jackknife")
             }
-            CoreExerciseName::UBoat => writeln!(f, "u_boat"),
-            CoreExerciseName::WeightedUBoat => writeln!(f, "weighted_u_boat"),
-            CoreExerciseName::WindmillSwitches => writeln!(f, "windmill_switches"),
-            CoreExerciseName::WeightedWindmillSwitches => writeln!(f, "weighted_windmill_switches"),
-            CoreExerciseName::AlternatingSlideOut => writeln!(f, "alternating_slide_out"),
+            CoreExerciseName::UBoat => write!(f, "u_boat"),
+            CoreExerciseName::WeightedUBoat => write!(f, "weighted_u_boat"),
+            CoreExerciseName::WindmillSwitches => write!(f, "windmill_switches"),
+            CoreExerciseName::WeightedWindmillSwitches => write!(f, "weighted_windmill_switches"),
+            CoreExerciseName::AlternatingSlideOut => write!(f, "alternating_slide_out"),
             CoreExerciseName::WeightedAlternatingSlideOut => {
-                writeln!(f, "weighted_alternating_slide_out")
+                write!(f, "weighted_alternating_slide_out")
             }
-            CoreExerciseName::GhdBackExtensions => writeln!(f, "ghd_back_extensions"),
+            CoreExerciseName::GhdBackExtensions => write!(f, "ghd_back_extensions"),
             CoreExerciseName::WeightedGhdBackExtensions => {
-                writeln!(f, "weighted_ghd_back_extensions")
+                write!(f, "weighted_ghd_back_extensions")
             }
-            CoreExerciseName::OverheadWalk => writeln!(f, "overhead_walk"),
-            CoreExerciseName::Inchworm => writeln!(f, "inchworm"),
+            CoreExerciseName::OverheadWalk => write!(f, "overhead_walk"),
+            CoreExerciseName::Inchworm => write!(f, "inchworm"),
             CoreExerciseName::WeightedModifiedFrontLever => {
-                writeln!(f, "weighted_modified_front_lever")
+                write!(f, "weighted_modified_front_lever")
             }
-            CoreExerciseName::RussianTwist => writeln!(f, "russian_twist"),
-            CoreExerciseName::AbdominalLegRotations => writeln!(f, "abdominal_leg_rotations"),
+            CoreExerciseName::RussianTwist => write!(f, "russian_twist"),
+            CoreExerciseName::AbdominalLegRotations => write!(f, "abdominal_leg_rotations"),
             CoreExerciseName::ArmAndLegExtensionOnKnees => {
-                writeln!(f, "arm_and_leg_extension_on_knees")
+                write!(f, "arm_and_leg_extension_on_knees")
             }
-            CoreExerciseName::Bicycle => writeln!(f, "bicycle"),
+            CoreExerciseName::Bicycle => write!(f, "bicycle"),
             CoreExerciseName::BicepCurlWithLegExtension => {
-                writeln!(f, "bicep_curl_with_leg_extension")
+                write!(f, "bicep_curl_with_leg_extension")
             }
-            CoreExerciseName::CatCow => writeln!(f, "cat_cow"),
-            CoreExerciseName::Corkscrew => writeln!(f, "corkscrew"),
-            CoreExerciseName::CrissCross => writeln!(f, "criss_cross"),
-            CoreExerciseName::CrissCrossWithBall => writeln!(f, "criss_cross_with_ball"),
-            CoreExerciseName::DoubleLegStretch => writeln!(f, "double_leg_stretch"),
-            CoreExerciseName::KneeFolds => writeln!(f, "knee_folds"),
-            CoreExerciseName::LowerLift => writeln!(f, "lower_lift"),
-            CoreExerciseName::NeckPull => writeln!(f, "neck_pull"),
-            CoreExerciseName::PelvicClocks => writeln!(f, "pelvic_clocks"),
-            CoreExerciseName::RollOver => writeln!(f, "roll_over"),
-            CoreExerciseName::RollUp => writeln!(f, "roll_up"),
-            CoreExerciseName::Rolling => writeln!(f, "rolling"),
-            CoreExerciseName::Rowing1 => writeln!(f, "rowing_1"),
-            CoreExerciseName::Rowing2 => writeln!(f, "rowing_2"),
-            CoreExerciseName::Scissors => writeln!(f, "scissors"),
-            CoreExerciseName::SingleLegCircles => writeln!(f, "single_leg_circles"),
-            CoreExerciseName::SingleLegStretch => writeln!(f, "single_leg_stretch"),
-            CoreExerciseName::SnakeTwist1And2 => writeln!(f, "snake_twist_1_and_2"),
-            CoreExerciseName::Swan => writeln!(f, "swan"),
-            CoreExerciseName::Swimming => writeln!(f, "swimming"),
-            CoreExerciseName::Teaser => writeln!(f, "teaser"),
-            CoreExerciseName::TheHundred => writeln!(f, "the_hundred"),
-            CoreExerciseName::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            CoreExerciseName::CatCow => write!(f, "cat_cow"),
+            CoreExerciseName::Corkscrew => write!(f, "corkscrew"),
+            CoreExerciseName::CrissCross => write!(f, "criss_cross"),
+            CoreExerciseName::CrissCrossWithBall => write!(f, "criss_cross_with_ball"),
+            CoreExerciseName::DoubleLegStretch => write!(f, "double_leg_stretch"),
+            CoreExerciseName::KneeFolds => write!(f, "knee_folds"),
+            CoreExerciseName::LowerLift => write!(f, "lower_lift"),
+            CoreExerciseName::NeckPull => write!(f, "neck_pull"),
+            CoreExerciseName::PelvicClocks => write!(f, "pelvic_clocks"),
+            CoreExerciseName::RollOver => write!(f, "roll_over"),
+            CoreExerciseName::RollUp => write!(f, "roll_up"),
+            CoreExerciseName::Rolling => write!(f, "rolling"),
+            CoreExerciseName::Rowing1 => write!(f, "rowing_1"),
+            CoreExerciseName::Rowing2 => write!(f, "rowing_2"),
+            CoreExerciseName::Scissors => write!(f, "scissors"),
+            CoreExerciseName::SingleLegCircles => write!(f, "single_leg_circles"),
+            CoreExerciseName::SingleLegStretch => write!(f, "single_leg_stretch"),
+            CoreExerciseName::SnakeTwist1And2 => write!(f, "snake_twist_1_and_2"),
+            CoreExerciseName::Swan => write!(f, "swan"),
+            CoreExerciseName::Swimming => write!(f, "swimming"),
+            CoreExerciseName::Teaser => write!(f, "teaser"),
+            CoreExerciseName::TheHundred => write!(f, "the_hundred"),
+            CoreExerciseName::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -12851,154 +12813,152 @@ impl CrunchExerciseName {
 impl fmt::Display for CrunchExerciseName {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            CrunchExerciseName::BicycleCrunch => writeln!(f, "bicycle_crunch"),
-            CrunchExerciseName::CableCrunch => writeln!(f, "cable_crunch"),
-            CrunchExerciseName::CircularArmCrunch => writeln!(f, "circular_arm_crunch"),
-            CrunchExerciseName::CrossedArmsCrunch => writeln!(f, "crossed_arms_crunch"),
+            CrunchExerciseName::BicycleCrunch => write!(f, "bicycle_crunch"),
+            CrunchExerciseName::CableCrunch => write!(f, "cable_crunch"),
+            CrunchExerciseName::CircularArmCrunch => write!(f, "circular_arm_crunch"),
+            CrunchExerciseName::CrossedArmsCrunch => write!(f, "crossed_arms_crunch"),
             CrunchExerciseName::WeightedCrossedArmsCrunch => {
-                writeln!(f, "weighted_crossed_arms_crunch")
+                write!(f, "weighted_crossed_arms_crunch")
             }
-            CrunchExerciseName::CrossLegReverseCrunch => writeln!(f, "cross_leg_reverse_crunch"),
+            CrunchExerciseName::CrossLegReverseCrunch => write!(f, "cross_leg_reverse_crunch"),
             CrunchExerciseName::WeightedCrossLegReverseCrunch => {
-                writeln!(f, "weighted_cross_leg_reverse_crunch")
+                write!(f, "weighted_cross_leg_reverse_crunch")
             }
-            CrunchExerciseName::CrunchChop => writeln!(f, "crunch_chop"),
-            CrunchExerciseName::WeightedCrunchChop => writeln!(f, "weighted_crunch_chop"),
-            CrunchExerciseName::DoubleCrunch => writeln!(f, "double_crunch"),
-            CrunchExerciseName::WeightedDoubleCrunch => writeln!(f, "weighted_double_crunch"),
-            CrunchExerciseName::ElbowToKneeCrunch => writeln!(f, "elbow_to_knee_crunch"),
+            CrunchExerciseName::CrunchChop => write!(f, "crunch_chop"),
+            CrunchExerciseName::WeightedCrunchChop => write!(f, "weighted_crunch_chop"),
+            CrunchExerciseName::DoubleCrunch => write!(f, "double_crunch"),
+            CrunchExerciseName::WeightedDoubleCrunch => write!(f, "weighted_double_crunch"),
+            CrunchExerciseName::ElbowToKneeCrunch => write!(f, "elbow_to_knee_crunch"),
             CrunchExerciseName::WeightedElbowToKneeCrunch => {
-                writeln!(f, "weighted_elbow_to_knee_crunch")
+                write!(f, "weighted_elbow_to_knee_crunch")
             }
-            CrunchExerciseName::FlutterKicks => writeln!(f, "flutter_kicks"),
-            CrunchExerciseName::WeightedFlutterKicks => writeln!(f, "weighted_flutter_kicks"),
+            CrunchExerciseName::FlutterKicks => write!(f, "flutter_kicks"),
+            CrunchExerciseName::WeightedFlutterKicks => write!(f, "weighted_flutter_kicks"),
             CrunchExerciseName::FoamRollerReverseCrunchOnBench => {
-                writeln!(f, "foam_roller_reverse_crunch_on_bench")
+                write!(f, "foam_roller_reverse_crunch_on_bench")
             }
             CrunchExerciseName::WeightedFoamRollerReverseCrunchOnBench => {
-                writeln!(f, "weighted_foam_roller_reverse_crunch_on_bench")
+                write!(f, "weighted_foam_roller_reverse_crunch_on_bench")
             }
             CrunchExerciseName::FoamRollerReverseCrunchWithDumbbell => {
-                writeln!(f, "foam_roller_reverse_crunch_with_dumbbell")
+                write!(f, "foam_roller_reverse_crunch_with_dumbbell")
             }
             CrunchExerciseName::FoamRollerReverseCrunchWithMedicineBall => {
-                writeln!(f, "foam_roller_reverse_crunch_with_medicine_ball")
+                write!(f, "foam_roller_reverse_crunch_with_medicine_ball")
             }
-            CrunchExerciseName::FrogPress => writeln!(f, "frog_press"),
+            CrunchExerciseName::FrogPress => write!(f, "frog_press"),
             CrunchExerciseName::HangingKneeRaiseObliqueCrunch => {
-                writeln!(f, "hanging_knee_raise_oblique_crunch")
+                write!(f, "hanging_knee_raise_oblique_crunch")
             }
             CrunchExerciseName::WeightedHangingKneeRaiseObliqueCrunch => {
-                writeln!(f, "weighted_hanging_knee_raise_oblique_crunch")
+                write!(f, "weighted_hanging_knee_raise_oblique_crunch")
             }
-            CrunchExerciseName::HipCrossover => writeln!(f, "hip_crossover"),
-            CrunchExerciseName::WeightedHipCrossover => writeln!(f, "weighted_hip_crossover"),
-            CrunchExerciseName::HollowRock => writeln!(f, "hollow_rock"),
-            CrunchExerciseName::WeightedHollowRock => writeln!(f, "weighted_hollow_rock"),
-            CrunchExerciseName::InclineReverseCrunch => writeln!(f, "incline_reverse_crunch"),
+            CrunchExerciseName::HipCrossover => write!(f, "hip_crossover"),
+            CrunchExerciseName::WeightedHipCrossover => write!(f, "weighted_hip_crossover"),
+            CrunchExerciseName::HollowRock => write!(f, "hollow_rock"),
+            CrunchExerciseName::WeightedHollowRock => write!(f, "weighted_hollow_rock"),
+            CrunchExerciseName::InclineReverseCrunch => write!(f, "incline_reverse_crunch"),
             CrunchExerciseName::WeightedInclineReverseCrunch => {
-                writeln!(f, "weighted_incline_reverse_crunch")
+                write!(f, "weighted_incline_reverse_crunch")
             }
-            CrunchExerciseName::KneelingCableCrunch => writeln!(f, "kneeling_cable_crunch"),
-            CrunchExerciseName::KneelingCrossCrunch => writeln!(f, "kneeling_cross_crunch"),
+            CrunchExerciseName::KneelingCableCrunch => write!(f, "kneeling_cable_crunch"),
+            CrunchExerciseName::KneelingCrossCrunch => write!(f, "kneeling_cross_crunch"),
             CrunchExerciseName::WeightedKneelingCrossCrunch => {
-                writeln!(f, "weighted_kneeling_cross_crunch")
+                write!(f, "weighted_kneeling_cross_crunch")
             }
             CrunchExerciseName::KneelingObliqueCableCrunch => {
-                writeln!(f, "kneeling_oblique_cable_crunch")
+                write!(f, "kneeling_oblique_cable_crunch")
             }
-            CrunchExerciseName::KneesToElbow => writeln!(f, "knees_to_elbow"),
-            CrunchExerciseName::LegExtensions => writeln!(f, "leg_extensions"),
-            CrunchExerciseName::WeightedLegExtensions => writeln!(f, "weighted_leg_extensions"),
-            CrunchExerciseName::LegLevers => writeln!(f, "leg_levers"),
-            CrunchExerciseName::McgillCurlUp => writeln!(f, "mcgill_curl_up"),
-            CrunchExerciseName::WeightedMcgillCurlUp => writeln!(f, "weighted_mcgill_curl_up"),
+            CrunchExerciseName::KneesToElbow => write!(f, "knees_to_elbow"),
+            CrunchExerciseName::LegExtensions => write!(f, "leg_extensions"),
+            CrunchExerciseName::WeightedLegExtensions => write!(f, "weighted_leg_extensions"),
+            CrunchExerciseName::LegLevers => write!(f, "leg_levers"),
+            CrunchExerciseName::McgillCurlUp => write!(f, "mcgill_curl_up"),
+            CrunchExerciseName::WeightedMcgillCurlUp => write!(f, "weighted_mcgill_curl_up"),
             CrunchExerciseName::ModifiedPilatesRollUpWithBall => {
-                writeln!(f, "modified_pilates_roll_up_with_ball")
+                write!(f, "modified_pilates_roll_up_with_ball")
             }
             CrunchExerciseName::WeightedModifiedPilatesRollUpWithBall => {
-                writeln!(f, "weighted_modified_pilates_roll_up_with_ball")
+                write!(f, "weighted_modified_pilates_roll_up_with_ball")
             }
-            CrunchExerciseName::PilatesCrunch => writeln!(f, "pilates_crunch"),
-            CrunchExerciseName::WeightedPilatesCrunch => writeln!(f, "weighted_pilates_crunch"),
-            CrunchExerciseName::PilatesRollUpWithBall => writeln!(f, "pilates_roll_up_with_ball"),
+            CrunchExerciseName::PilatesCrunch => write!(f, "pilates_crunch"),
+            CrunchExerciseName::WeightedPilatesCrunch => write!(f, "weighted_pilates_crunch"),
+            CrunchExerciseName::PilatesRollUpWithBall => write!(f, "pilates_roll_up_with_ball"),
             CrunchExerciseName::WeightedPilatesRollUpWithBall => {
-                writeln!(f, "weighted_pilates_roll_up_with_ball")
+                write!(f, "weighted_pilates_roll_up_with_ball")
             }
-            CrunchExerciseName::RaisedLegsCrunch => writeln!(f, "raised_legs_crunch"),
+            CrunchExerciseName::RaisedLegsCrunch => write!(f, "raised_legs_crunch"),
             CrunchExerciseName::WeightedRaisedLegsCrunch => {
-                writeln!(f, "weighted_raised_legs_crunch")
+                write!(f, "weighted_raised_legs_crunch")
             }
-            CrunchExerciseName::ReverseCrunch => writeln!(f, "reverse_crunch"),
-            CrunchExerciseName::WeightedReverseCrunch => writeln!(f, "weighted_reverse_crunch"),
-            CrunchExerciseName::ReverseCrunchOnABench => writeln!(f, "reverse_crunch_on_a_bench"),
+            CrunchExerciseName::ReverseCrunch => write!(f, "reverse_crunch"),
+            CrunchExerciseName::WeightedReverseCrunch => write!(f, "weighted_reverse_crunch"),
+            CrunchExerciseName::ReverseCrunchOnABench => write!(f, "reverse_crunch_on_a_bench"),
             CrunchExerciseName::WeightedReverseCrunchOnABench => {
-                writeln!(f, "weighted_reverse_crunch_on_a_bench")
+                write!(f, "weighted_reverse_crunch_on_a_bench")
             }
-            CrunchExerciseName::ReverseCurlAndLift => writeln!(f, "reverse_curl_and_lift"),
+            CrunchExerciseName::ReverseCurlAndLift => write!(f, "reverse_curl_and_lift"),
             CrunchExerciseName::WeightedReverseCurlAndLift => {
-                writeln!(f, "weighted_reverse_curl_and_lift")
+                write!(f, "weighted_reverse_curl_and_lift")
             }
-            CrunchExerciseName::RotationalLift => writeln!(f, "rotational_lift"),
-            CrunchExerciseName::WeightedRotationalLift => writeln!(f, "weighted_rotational_lift"),
+            CrunchExerciseName::RotationalLift => write!(f, "rotational_lift"),
+            CrunchExerciseName::WeightedRotationalLift => write!(f, "weighted_rotational_lift"),
             CrunchExerciseName::SeatedAlternatingReverseCrunch => {
-                writeln!(f, "seated_alternating_reverse_crunch")
+                write!(f, "seated_alternating_reverse_crunch")
             }
             CrunchExerciseName::WeightedSeatedAlternatingReverseCrunch => {
-                writeln!(f, "weighted_seated_alternating_reverse_crunch")
+                write!(f, "weighted_seated_alternating_reverse_crunch")
             }
-            CrunchExerciseName::SeatedLegU => writeln!(f, "seated_leg_u"),
-            CrunchExerciseName::WeightedSeatedLegU => writeln!(f, "weighted_seated_leg_u"),
+            CrunchExerciseName::SeatedLegU => write!(f, "seated_leg_u"),
+            CrunchExerciseName::WeightedSeatedLegU => write!(f, "weighted_seated_leg_u"),
             CrunchExerciseName::SideToSideCrunchAndWeave => {
-                writeln!(f, "side_to_side_crunch_and_weave")
+                write!(f, "side_to_side_crunch_and_weave")
             }
             CrunchExerciseName::WeightedSideToSideCrunchAndWeave => {
-                writeln!(f, "weighted_side_to_side_crunch_and_weave")
+                write!(f, "weighted_side_to_side_crunch_and_weave")
             }
-            CrunchExerciseName::SingleLegReverseCrunch => writeln!(f, "single_leg_reverse_crunch"),
+            CrunchExerciseName::SingleLegReverseCrunch => write!(f, "single_leg_reverse_crunch"),
             CrunchExerciseName::WeightedSingleLegReverseCrunch => {
-                writeln!(f, "weighted_single_leg_reverse_crunch")
+                write!(f, "weighted_single_leg_reverse_crunch")
             }
-            CrunchExerciseName::SkaterCrunchCross => writeln!(f, "skater_crunch_cross"),
+            CrunchExerciseName::SkaterCrunchCross => write!(f, "skater_crunch_cross"),
             CrunchExerciseName::WeightedSkaterCrunchCross => {
-                writeln!(f, "weighted_skater_crunch_cross")
+                write!(f, "weighted_skater_crunch_cross")
             }
-            CrunchExerciseName::StandingCableCrunch => writeln!(f, "standing_cable_crunch"),
-            CrunchExerciseName::StandingSideCrunch => writeln!(f, "standing_side_crunch"),
-            CrunchExerciseName::StepClimb => writeln!(f, "step_climb"),
-            CrunchExerciseName::WeightedStepClimb => writeln!(f, "weighted_step_climb"),
-            CrunchExerciseName::SwissBallCrunch => writeln!(f, "swiss_ball_crunch"),
-            CrunchExerciseName::SwissBallReverseCrunch => writeln!(f, "swiss_ball_reverse_crunch"),
+            CrunchExerciseName::StandingCableCrunch => write!(f, "standing_cable_crunch"),
+            CrunchExerciseName::StandingSideCrunch => write!(f, "standing_side_crunch"),
+            CrunchExerciseName::StepClimb => write!(f, "step_climb"),
+            CrunchExerciseName::WeightedStepClimb => write!(f, "weighted_step_climb"),
+            CrunchExerciseName::SwissBallCrunch => write!(f, "swiss_ball_crunch"),
+            CrunchExerciseName::SwissBallReverseCrunch => write!(f, "swiss_ball_reverse_crunch"),
             CrunchExerciseName::WeightedSwissBallReverseCrunch => {
-                writeln!(f, "weighted_swiss_ball_reverse_crunch")
+                write!(f, "weighted_swiss_ball_reverse_crunch")
             }
-            CrunchExerciseName::SwissBallRussianTwist => writeln!(f, "swiss_ball_russian_twist"),
+            CrunchExerciseName::SwissBallRussianTwist => write!(f, "swiss_ball_russian_twist"),
             CrunchExerciseName::WeightedSwissBallRussianTwist => {
-                writeln!(f, "weighted_swiss_ball_russian_twist")
+                write!(f, "weighted_swiss_ball_russian_twist")
             }
-            CrunchExerciseName::SwissBallSideCrunch => writeln!(f, "swiss_ball_side_crunch"),
+            CrunchExerciseName::SwissBallSideCrunch => write!(f, "swiss_ball_side_crunch"),
             CrunchExerciseName::WeightedSwissBallSideCrunch => {
-                writeln!(f, "weighted_swiss_ball_side_crunch")
+                write!(f, "weighted_swiss_ball_side_crunch")
             }
             CrunchExerciseName::ThoracicCrunchesOnFoamRoller => {
-                writeln!(f, "thoracic_crunches_on_foam_roller")
+                write!(f, "thoracic_crunches_on_foam_roller")
             }
             CrunchExerciseName::WeightedThoracicCrunchesOnFoamRoller => {
-                writeln!(f, "weighted_thoracic_crunches_on_foam_roller")
+                write!(f, "weighted_thoracic_crunches_on_foam_roller")
             }
-            CrunchExerciseName::TricepsCrunch => writeln!(f, "triceps_crunch"),
-            CrunchExerciseName::WeightedBicycleCrunch => writeln!(f, "weighted_bicycle_crunch"),
-            CrunchExerciseName::WeightedCrunch => writeln!(f, "weighted_crunch"),
-            CrunchExerciseName::WeightedSwissBallCrunch => {
-                writeln!(f, "weighted_swiss_ball_crunch")
-            }
-            CrunchExerciseName::ToesToBar => writeln!(f, "toes_to_bar"),
-            CrunchExerciseName::WeightedToesToBar => writeln!(f, "weighted_toes_to_bar"),
-            CrunchExerciseName::Crunch => writeln!(f, "crunch"),
+            CrunchExerciseName::TricepsCrunch => write!(f, "triceps_crunch"),
+            CrunchExerciseName::WeightedBicycleCrunch => write!(f, "weighted_bicycle_crunch"),
+            CrunchExerciseName::WeightedCrunch => write!(f, "weighted_crunch"),
+            CrunchExerciseName::WeightedSwissBallCrunch => write!(f, "weighted_swiss_ball_crunch"),
+            CrunchExerciseName::ToesToBar => write!(f, "toes_to_bar"),
+            CrunchExerciseName::WeightedToesToBar => write!(f, "weighted_toes_to_bar"),
+            CrunchExerciseName::Crunch => write!(f, "crunch"),
             CrunchExerciseName::StraightLegCrunchWithBall => {
-                writeln!(f, "straight_leg_crunch_with_ball")
+                write!(f, "straight_leg_crunch_with_ball")
             }
-            CrunchExerciseName::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            CrunchExerciseName::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -13205,98 +13165,92 @@ impl fmt::Display for CurlExerciseName {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
             CurlExerciseName::AlternatingDumbbellBicepsCurl => {
-                writeln!(f, "alternating_dumbbell_biceps_curl")
+                write!(f, "alternating_dumbbell_biceps_curl")
             }
             CurlExerciseName::AlternatingDumbbellBicepsCurlOnSwissBall => {
-                writeln!(f, "alternating_dumbbell_biceps_curl_on_swiss_ball")
+                write!(f, "alternating_dumbbell_biceps_curl_on_swiss_ball")
             }
             CurlExerciseName::AlternatingInclineDumbbellBicepsCurl => {
-                writeln!(f, "alternating_incline_dumbbell_biceps_curl")
+                write!(f, "alternating_incline_dumbbell_biceps_curl")
             }
-            CurlExerciseName::BarbellBicepsCurl => writeln!(f, "barbell_biceps_curl"),
-            CurlExerciseName::BarbellReverseWristCurl => writeln!(f, "barbell_reverse_wrist_curl"),
-            CurlExerciseName::BarbellWristCurl => writeln!(f, "barbell_wrist_curl"),
+            CurlExerciseName::BarbellBicepsCurl => write!(f, "barbell_biceps_curl"),
+            CurlExerciseName::BarbellReverseWristCurl => write!(f, "barbell_reverse_wrist_curl"),
+            CurlExerciseName::BarbellWristCurl => write!(f, "barbell_wrist_curl"),
             CurlExerciseName::BehindTheBackBarbellReverseWristCurl => {
-                writeln!(f, "behind_the_back_barbell_reverse_wrist_curl")
+                write!(f, "behind_the_back_barbell_reverse_wrist_curl")
             }
             CurlExerciseName::BehindTheBackOneArmCableCurl => {
-                writeln!(f, "behind_the_back_one_arm_cable_curl")
+                write!(f, "behind_the_back_one_arm_cable_curl")
             }
-            CurlExerciseName::CableBicepsCurl => writeln!(f, "cable_biceps_curl"),
-            CurlExerciseName::CableHammerCurl => writeln!(f, "cable_hammer_curl"),
+            CurlExerciseName::CableBicepsCurl => write!(f, "cable_biceps_curl"),
+            CurlExerciseName::CableHammerCurl => write!(f, "cable_hammer_curl"),
             CurlExerciseName::CheatingBarbellBicepsCurl => {
-                writeln!(f, "cheating_barbell_biceps_curl")
+                write!(f, "cheating_barbell_biceps_curl")
             }
             CurlExerciseName::CloseGripEzBarBicepsCurl => {
-                writeln!(f, "close_grip_ez_bar_biceps_curl")
+                write!(f, "close_grip_ez_bar_biceps_curl")
             }
             CurlExerciseName::CrossBodyDumbbellHammerCurl => {
-                writeln!(f, "cross_body_dumbbell_hammer_curl")
+                write!(f, "cross_body_dumbbell_hammer_curl")
             }
-            CurlExerciseName::DeadHangBicepsCurl => writeln!(f, "dead_hang_biceps_curl"),
-            CurlExerciseName::DeclineHammerCurl => writeln!(f, "decline_hammer_curl"),
+            CurlExerciseName::DeadHangBicepsCurl => write!(f, "dead_hang_biceps_curl"),
+            CurlExerciseName::DeclineHammerCurl => write!(f, "decline_hammer_curl"),
             CurlExerciseName::DumbbellBicepsCurlWithStaticHold => {
-                writeln!(f, "dumbbell_biceps_curl_with_static_hold")
+                write!(f, "dumbbell_biceps_curl_with_static_hold")
             }
-            CurlExerciseName::DumbbellHammerCurl => writeln!(f, "dumbbell_hammer_curl"),
-            CurlExerciseName::DumbbellReverseWristCurl => {
-                writeln!(f, "dumbbell_reverse_wrist_curl")
-            }
-            CurlExerciseName::DumbbellWristCurl => writeln!(f, "dumbbell_wrist_curl"),
-            CurlExerciseName::EzBarPreacherCurl => writeln!(f, "ez_bar_preacher_curl"),
-            CurlExerciseName::ForwardBendBicepsCurl => writeln!(f, "forward_bend_biceps_curl"),
-            CurlExerciseName::HammerCurlToPress => writeln!(f, "hammer_curl_to_press"),
+            CurlExerciseName::DumbbellHammerCurl => write!(f, "dumbbell_hammer_curl"),
+            CurlExerciseName::DumbbellReverseWristCurl => write!(f, "dumbbell_reverse_wrist_curl"),
+            CurlExerciseName::DumbbellWristCurl => write!(f, "dumbbell_wrist_curl"),
+            CurlExerciseName::EzBarPreacherCurl => write!(f, "ez_bar_preacher_curl"),
+            CurlExerciseName::ForwardBendBicepsCurl => write!(f, "forward_bend_biceps_curl"),
+            CurlExerciseName::HammerCurlToPress => write!(f, "hammer_curl_to_press"),
             CurlExerciseName::InclineDumbbellBicepsCurl => {
-                writeln!(f, "incline_dumbbell_biceps_curl")
+                write!(f, "incline_dumbbell_biceps_curl")
             }
             CurlExerciseName::InclineOffsetThumbDumbbellCurl => {
-                writeln!(f, "incline_offset_thumb_dumbbell_curl")
+                write!(f, "incline_offset_thumb_dumbbell_curl")
             }
-            CurlExerciseName::KettlebellBicepsCurl => writeln!(f, "kettlebell_biceps_curl"),
+            CurlExerciseName::KettlebellBicepsCurl => write!(f, "kettlebell_biceps_curl"),
             CurlExerciseName::LyingConcentrationCableCurl => {
-                writeln!(f, "lying_concentration_cable_curl")
+                write!(f, "lying_concentration_cable_curl")
             }
-            CurlExerciseName::OneArmPreacherCurl => writeln!(f, "one_arm_preacher_curl"),
-            CurlExerciseName::PlatePinchCurl => writeln!(f, "plate_pinch_curl"),
-            CurlExerciseName::PreacherCurlWithCable => writeln!(f, "preacher_curl_with_cable"),
-            CurlExerciseName::ReverseEzBarCurl => writeln!(f, "reverse_ez_bar_curl"),
-            CurlExerciseName::ReverseGripWristCurl => writeln!(f, "reverse_grip_wrist_curl"),
+            CurlExerciseName::OneArmPreacherCurl => write!(f, "one_arm_preacher_curl"),
+            CurlExerciseName::PlatePinchCurl => write!(f, "plate_pinch_curl"),
+            CurlExerciseName::PreacherCurlWithCable => write!(f, "preacher_curl_with_cable"),
+            CurlExerciseName::ReverseEzBarCurl => write!(f, "reverse_ez_bar_curl"),
+            CurlExerciseName::ReverseGripWristCurl => write!(f, "reverse_grip_wrist_curl"),
             CurlExerciseName::ReverseGripBarbellBicepsCurl => {
-                writeln!(f, "reverse_grip_barbell_biceps_curl")
+                write!(f, "reverse_grip_barbell_biceps_curl")
             }
             CurlExerciseName::SeatedAlternatingDumbbellBicepsCurl => {
-                writeln!(f, "seated_alternating_dumbbell_biceps_curl")
+                write!(f, "seated_alternating_dumbbell_biceps_curl")
             }
-            CurlExerciseName::SeatedDumbbellBicepsCurl => {
-                writeln!(f, "seated_dumbbell_biceps_curl")
-            }
+            CurlExerciseName::SeatedDumbbellBicepsCurl => write!(f, "seated_dumbbell_biceps_curl"),
             CurlExerciseName::SeatedReverseDumbbellCurl => {
-                writeln!(f, "seated_reverse_dumbbell_curl")
+                write!(f, "seated_reverse_dumbbell_curl")
             }
             CurlExerciseName::SplitStanceOffsetPinkyDumbbellCurl => {
-                writeln!(f, "split_stance_offset_pinky_dumbbell_curl")
+                write!(f, "split_stance_offset_pinky_dumbbell_curl")
             }
             CurlExerciseName::StandingAlternatingDumbbellCurls => {
-                writeln!(f, "standing_alternating_dumbbell_curls")
+                write!(f, "standing_alternating_dumbbell_curls")
             }
             CurlExerciseName::StandingDumbbellBicepsCurl => {
-                writeln!(f, "standing_dumbbell_biceps_curl")
+                write!(f, "standing_dumbbell_biceps_curl")
             }
-            CurlExerciseName::StandingEzBarBicepsCurl => writeln!(f, "standing_ez_bar_biceps_curl"),
-            CurlExerciseName::StaticCurl => writeln!(f, "static_curl"),
+            CurlExerciseName::StandingEzBarBicepsCurl => write!(f, "standing_ez_bar_biceps_curl"),
+            CurlExerciseName::StaticCurl => write!(f, "static_curl"),
             CurlExerciseName::SwissBallDumbbellOverheadTricepsExtension => {
-                writeln!(f, "swiss_ball_dumbbell_overhead_triceps_extension")
+                write!(f, "swiss_ball_dumbbell_overhead_triceps_extension")
             }
             CurlExerciseName::SwissBallEzBarPreacherCurl => {
-                writeln!(f, "swiss_ball_ez_bar_preacher_curl")
+                write!(f, "swiss_ball_ez_bar_preacher_curl")
             }
             CurlExerciseName::TwistingStandingDumbbellBicepsCurl => {
-                writeln!(f, "twisting_standing_dumbbell_biceps_curl")
+                write!(f, "twisting_standing_dumbbell_biceps_curl")
             }
-            CurlExerciseName::WideGripEzBarBicepsCurl => {
-                writeln!(f, "wide_grip_ez_bar_biceps_curl")
-            }
-            CurlExerciseName::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            CurlExerciseName::WideGripEzBarBicepsCurl => write!(f, "wide_grip_ez_bar_biceps_curl"),
+            CurlExerciseName::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -13411,48 +13365,44 @@ impl DeadliftExerciseName {
 impl fmt::Display for DeadliftExerciseName {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            DeadliftExerciseName::BarbellDeadlift => writeln!(f, "barbell_deadlift"),
+            DeadliftExerciseName::BarbellDeadlift => write!(f, "barbell_deadlift"),
             DeadliftExerciseName::BarbellStraightLegDeadlift => {
-                writeln!(f, "barbell_straight_leg_deadlift")
+                write!(f, "barbell_straight_leg_deadlift")
             }
-            DeadliftExerciseName::DumbbellDeadlift => writeln!(f, "dumbbell_deadlift"),
+            DeadliftExerciseName::DumbbellDeadlift => write!(f, "dumbbell_deadlift"),
             DeadliftExerciseName::DumbbellSingleLegDeadliftToRow => {
-                writeln!(f, "dumbbell_single_leg_deadlift_to_row")
+                write!(f, "dumbbell_single_leg_deadlift_to_row")
             }
             DeadliftExerciseName::DumbbellStraightLegDeadlift => {
-                writeln!(f, "dumbbell_straight_leg_deadlift")
+                write!(f, "dumbbell_straight_leg_deadlift")
             }
-            DeadliftExerciseName::KettlebellFloorToShelf => {
-                writeln!(f, "kettlebell_floor_to_shelf")
-            }
-            DeadliftExerciseName::OneArmOneLegDeadlift => writeln!(f, "one_arm_one_leg_deadlift"),
-            DeadliftExerciseName::RackPull => writeln!(f, "rack_pull"),
+            DeadliftExerciseName::KettlebellFloorToShelf => write!(f, "kettlebell_floor_to_shelf"),
+            DeadliftExerciseName::OneArmOneLegDeadlift => write!(f, "one_arm_one_leg_deadlift"),
+            DeadliftExerciseName::RackPull => write!(f, "rack_pull"),
             DeadliftExerciseName::RotationalDumbbellStraightLegDeadlift => {
-                writeln!(f, "rotational_dumbbell_straight_leg_deadlift")
+                write!(f, "rotational_dumbbell_straight_leg_deadlift")
             }
-            DeadliftExerciseName::SingleArmDeadlift => writeln!(f, "single_arm_deadlift"),
+            DeadliftExerciseName::SingleArmDeadlift => write!(f, "single_arm_deadlift"),
             DeadliftExerciseName::SingleLegBarbellDeadlift => {
-                writeln!(f, "single_leg_barbell_deadlift")
+                write!(f, "single_leg_barbell_deadlift")
             }
             DeadliftExerciseName::SingleLegBarbellStraightLegDeadlift => {
-                writeln!(f, "single_leg_barbell_straight_leg_deadlift")
+                write!(f, "single_leg_barbell_straight_leg_deadlift")
             }
             DeadliftExerciseName::SingleLegDeadliftWithBarbell => {
-                writeln!(f, "single_leg_deadlift_with_barbell")
+                write!(f, "single_leg_deadlift_with_barbell")
             }
-            DeadliftExerciseName::SingleLegRdlCircuit => writeln!(f, "single_leg_rdl_circuit"),
+            DeadliftExerciseName::SingleLegRdlCircuit => write!(f, "single_leg_rdl_circuit"),
             DeadliftExerciseName::SingleLegRomanianDeadliftWithDumbbell => {
-                writeln!(f, "single_leg_romanian_deadlift_with_dumbbell")
+                write!(f, "single_leg_romanian_deadlift_with_dumbbell")
             }
-            DeadliftExerciseName::SumoDeadlift => writeln!(f, "sumo_deadlift"),
-            DeadliftExerciseName::SumoDeadliftHighPull => writeln!(f, "sumo_deadlift_high_pull"),
-            DeadliftExerciseName::TrapBarDeadlift => writeln!(f, "trap_bar_deadlift"),
+            DeadliftExerciseName::SumoDeadlift => write!(f, "sumo_deadlift"),
+            DeadliftExerciseName::SumoDeadliftHighPull => write!(f, "sumo_deadlift_high_pull"),
+            DeadliftExerciseName::TrapBarDeadlift => write!(f, "trap_bar_deadlift"),
             DeadliftExerciseName::WideGripBarbellDeadlift => {
-                writeln!(f, "wide_grip_barbell_deadlift")
+                write!(f, "wide_grip_barbell_deadlift")
             }
-            DeadliftExerciseName::UnknownVariant(value) => {
-                writeln!(f, "unknown_variant_{}", *value)
-            }
+            DeadliftExerciseName::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -13524,19 +13474,19 @@ impl FlyeExerciseName {
 impl fmt::Display for FlyeExerciseName {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            FlyeExerciseName::CableCrossover => writeln!(f, "cable_crossover"),
-            FlyeExerciseName::DeclineDumbbellFlye => writeln!(f, "decline_dumbbell_flye"),
-            FlyeExerciseName::DumbbellFlye => writeln!(f, "dumbbell_flye"),
-            FlyeExerciseName::InclineDumbbellFlye => writeln!(f, "incline_dumbbell_flye"),
-            FlyeExerciseName::KettlebellFlye => writeln!(f, "kettlebell_flye"),
-            FlyeExerciseName::KneelingRearFlye => writeln!(f, "kneeling_rear_flye"),
+            FlyeExerciseName::CableCrossover => write!(f, "cable_crossover"),
+            FlyeExerciseName::DeclineDumbbellFlye => write!(f, "decline_dumbbell_flye"),
+            FlyeExerciseName::DumbbellFlye => write!(f, "dumbbell_flye"),
+            FlyeExerciseName::InclineDumbbellFlye => write!(f, "incline_dumbbell_flye"),
+            FlyeExerciseName::KettlebellFlye => write!(f, "kettlebell_flye"),
+            FlyeExerciseName::KneelingRearFlye => write!(f, "kneeling_rear_flye"),
             FlyeExerciseName::SingleArmStandingCableReverseFlye => {
-                writeln!(f, "single_arm_standing_cable_reverse_flye")
+                write!(f, "single_arm_standing_cable_reverse_flye")
             }
-            FlyeExerciseName::SwissBallDumbbellFlye => writeln!(f, "swiss_ball_dumbbell_flye"),
-            FlyeExerciseName::ArmRotations => writeln!(f, "arm_rotations"),
-            FlyeExerciseName::HugATree => writeln!(f, "hug_a_tree"),
-            FlyeExerciseName::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            FlyeExerciseName::SwissBallDumbbellFlye => write!(f, "swiss_ball_dumbbell_flye"),
+            FlyeExerciseName::ArmRotations => write!(f, "arm_rotations"),
+            FlyeExerciseName::HugATree => write!(f, "hug_a_tree"),
+            FlyeExerciseName::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -13680,129 +13630,125 @@ impl fmt::Display for HipRaiseExerciseName {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
             HipRaiseExerciseName::BarbellHipThrustOnFloor => {
-                writeln!(f, "barbell_hip_thrust_on_floor")
+                write!(f, "barbell_hip_thrust_on_floor")
             }
             HipRaiseExerciseName::BarbellHipThrustWithBench => {
-                writeln!(f, "barbell_hip_thrust_with_bench")
+                write!(f, "barbell_hip_thrust_with_bench")
             }
             HipRaiseExerciseName::BentKneeSwissBallReverseHipRaise => {
-                writeln!(f, "bent_knee_swiss_ball_reverse_hip_raise")
+                write!(f, "bent_knee_swiss_ball_reverse_hip_raise")
             }
             HipRaiseExerciseName::WeightedBentKneeSwissBallReverseHipRaise => {
-                writeln!(f, "weighted_bent_knee_swiss_ball_reverse_hip_raise")
+                write!(f, "weighted_bent_knee_swiss_ball_reverse_hip_raise")
             }
-            HipRaiseExerciseName::BridgeWithLegExtension => {
-                writeln!(f, "bridge_with_leg_extension")
-            }
+            HipRaiseExerciseName::BridgeWithLegExtension => write!(f, "bridge_with_leg_extension"),
             HipRaiseExerciseName::WeightedBridgeWithLegExtension => {
-                writeln!(f, "weighted_bridge_with_leg_extension")
+                write!(f, "weighted_bridge_with_leg_extension")
             }
-            HipRaiseExerciseName::ClamBridge => writeln!(f, "clam_bridge"),
-            HipRaiseExerciseName::FrontKickTabletop => writeln!(f, "front_kick_tabletop"),
+            HipRaiseExerciseName::ClamBridge => write!(f, "clam_bridge"),
+            HipRaiseExerciseName::FrontKickTabletop => write!(f, "front_kick_tabletop"),
             HipRaiseExerciseName::WeightedFrontKickTabletop => {
-                writeln!(f, "weighted_front_kick_tabletop")
+                write!(f, "weighted_front_kick_tabletop")
             }
-            HipRaiseExerciseName::HipExtensionAndCross => writeln!(f, "hip_extension_and_cross"),
+            HipRaiseExerciseName::HipExtensionAndCross => write!(f, "hip_extension_and_cross"),
             HipRaiseExerciseName::WeightedHipExtensionAndCross => {
-                writeln!(f, "weighted_hip_extension_and_cross")
+                write!(f, "weighted_hip_extension_and_cross")
             }
-            HipRaiseExerciseName::HipRaise => writeln!(f, "hip_raise"),
-            HipRaiseExerciseName::WeightedHipRaise => writeln!(f, "weighted_hip_raise"),
+            HipRaiseExerciseName::HipRaise => write!(f, "hip_raise"),
+            HipRaiseExerciseName::WeightedHipRaise => write!(f, "weighted_hip_raise"),
             HipRaiseExerciseName::HipRaiseWithFeetOnSwissBall => {
-                writeln!(f, "hip_raise_with_feet_on_swiss_ball")
+                write!(f, "hip_raise_with_feet_on_swiss_ball")
             }
             HipRaiseExerciseName::WeightedHipRaiseWithFeetOnSwissBall => {
-                writeln!(f, "weighted_hip_raise_with_feet_on_swiss_ball")
+                write!(f, "weighted_hip_raise_with_feet_on_swiss_ball")
             }
             HipRaiseExerciseName::HipRaiseWithHeadOnBosuBall => {
-                writeln!(f, "hip_raise_with_head_on_bosu_ball")
+                write!(f, "hip_raise_with_head_on_bosu_ball")
             }
             HipRaiseExerciseName::WeightedHipRaiseWithHeadOnBosuBall => {
-                writeln!(f, "weighted_hip_raise_with_head_on_bosu_ball")
+                write!(f, "weighted_hip_raise_with_head_on_bosu_ball")
             }
             HipRaiseExerciseName::HipRaiseWithHeadOnSwissBall => {
-                writeln!(f, "hip_raise_with_head_on_swiss_ball")
+                write!(f, "hip_raise_with_head_on_swiss_ball")
             }
             HipRaiseExerciseName::WeightedHipRaiseWithHeadOnSwissBall => {
-                writeln!(f, "weighted_hip_raise_with_head_on_swiss_ball")
+                write!(f, "weighted_hip_raise_with_head_on_swiss_ball")
             }
             HipRaiseExerciseName::HipRaiseWithKneeSqueeze => {
-                writeln!(f, "hip_raise_with_knee_squeeze")
+                write!(f, "hip_raise_with_knee_squeeze")
             }
             HipRaiseExerciseName::WeightedHipRaiseWithKneeSqueeze => {
-                writeln!(f, "weighted_hip_raise_with_knee_squeeze")
+                write!(f, "weighted_hip_raise_with_knee_squeeze")
             }
             HipRaiseExerciseName::InclineRearLegExtension => {
-                writeln!(f, "incline_rear_leg_extension")
+                write!(f, "incline_rear_leg_extension")
             }
             HipRaiseExerciseName::WeightedInclineRearLegExtension => {
-                writeln!(f, "weighted_incline_rear_leg_extension")
+                write!(f, "weighted_incline_rear_leg_extension")
             }
-            HipRaiseExerciseName::KettlebellSwing => writeln!(f, "kettlebell_swing"),
-            HipRaiseExerciseName::MarchingHipRaise => writeln!(f, "marching_hip_raise"),
+            HipRaiseExerciseName::KettlebellSwing => write!(f, "kettlebell_swing"),
+            HipRaiseExerciseName::MarchingHipRaise => write!(f, "marching_hip_raise"),
             HipRaiseExerciseName::WeightedMarchingHipRaise => {
-                writeln!(f, "weighted_marching_hip_raise")
+                write!(f, "weighted_marching_hip_raise")
             }
             HipRaiseExerciseName::MarchingHipRaiseWithFeetOnASwissBall => {
-                writeln!(f, "marching_hip_raise_with_feet_on_a_swiss_ball")
+                write!(f, "marching_hip_raise_with_feet_on_a_swiss_ball")
             }
             HipRaiseExerciseName::WeightedMarchingHipRaiseWithFeetOnASwissBall => {
-                writeln!(f, "weighted_marching_hip_raise_with_feet_on_a_swiss_ball")
+                write!(f, "weighted_marching_hip_raise_with_feet_on_a_swiss_ball")
             }
-            HipRaiseExerciseName::ReverseHipRaise => writeln!(f, "reverse_hip_raise"),
+            HipRaiseExerciseName::ReverseHipRaise => write!(f, "reverse_hip_raise"),
             HipRaiseExerciseName::WeightedReverseHipRaise => {
-                writeln!(f, "weighted_reverse_hip_raise")
+                write!(f, "weighted_reverse_hip_raise")
             }
-            HipRaiseExerciseName::SingleLegHipRaise => writeln!(f, "single_leg_hip_raise"),
+            HipRaiseExerciseName::SingleLegHipRaise => write!(f, "single_leg_hip_raise"),
             HipRaiseExerciseName::WeightedSingleLegHipRaise => {
-                writeln!(f, "weighted_single_leg_hip_raise")
+                write!(f, "weighted_single_leg_hip_raise")
             }
             HipRaiseExerciseName::SingleLegHipRaiseWithFootOnBench => {
-                writeln!(f, "single_leg_hip_raise_with_foot_on_bench")
+                write!(f, "single_leg_hip_raise_with_foot_on_bench")
             }
             HipRaiseExerciseName::WeightedSingleLegHipRaiseWithFootOnBench => {
-                writeln!(f, "weighted_single_leg_hip_raise_with_foot_on_bench")
+                write!(f, "weighted_single_leg_hip_raise_with_foot_on_bench")
             }
             HipRaiseExerciseName::SingleLegHipRaiseWithFootOnBosuBall => {
-                writeln!(f, "single_leg_hip_raise_with_foot_on_bosu_ball")
+                write!(f, "single_leg_hip_raise_with_foot_on_bosu_ball")
             }
             HipRaiseExerciseName::WeightedSingleLegHipRaiseWithFootOnBosuBall => {
-                writeln!(f, "weighted_single_leg_hip_raise_with_foot_on_bosu_ball")
+                write!(f, "weighted_single_leg_hip_raise_with_foot_on_bosu_ball")
             }
             HipRaiseExerciseName::SingleLegHipRaiseWithFootOnFoamRoller => {
-                writeln!(f, "single_leg_hip_raise_with_foot_on_foam_roller")
+                write!(f, "single_leg_hip_raise_with_foot_on_foam_roller")
             }
             HipRaiseExerciseName::WeightedSingleLegHipRaiseWithFootOnFoamRoller => {
-                writeln!(f, "weighted_single_leg_hip_raise_with_foot_on_foam_roller")
+                write!(f, "weighted_single_leg_hip_raise_with_foot_on_foam_roller")
             }
             HipRaiseExerciseName::SingleLegHipRaiseWithFootOnMedicineBall => {
-                writeln!(f, "single_leg_hip_raise_with_foot_on_medicine_ball")
+                write!(f, "single_leg_hip_raise_with_foot_on_medicine_ball")
             }
-            HipRaiseExerciseName::WeightedSingleLegHipRaiseWithFootOnMedicineBall => writeln!(
+            HipRaiseExerciseName::WeightedSingleLegHipRaiseWithFootOnMedicineBall => write!(
                 f,
                 "weighted_single_leg_hip_raise_with_foot_on_medicine_ball"
             ),
             HipRaiseExerciseName::SingleLegHipRaiseWithHeadOnBosuBall => {
-                writeln!(f, "single_leg_hip_raise_with_head_on_bosu_ball")
+                write!(f, "single_leg_hip_raise_with_head_on_bosu_ball")
             }
             HipRaiseExerciseName::WeightedSingleLegHipRaiseWithHeadOnBosuBall => {
-                writeln!(f, "weighted_single_leg_hip_raise_with_head_on_bosu_ball")
+                write!(f, "weighted_single_leg_hip_raise_with_head_on_bosu_ball")
             }
-            HipRaiseExerciseName::WeightedClamBridge => writeln!(f, "weighted_clam_bridge"),
+            HipRaiseExerciseName::WeightedClamBridge => write!(f, "weighted_clam_bridge"),
             HipRaiseExerciseName::SingleLegSwissBallHipRaiseAndLegCurl => {
-                writeln!(f, "single_leg_swiss_ball_hip_raise_and_leg_curl")
+                write!(f, "single_leg_swiss_ball_hip_raise_and_leg_curl")
             }
-            HipRaiseExerciseName::Clams => writeln!(f, "clams"),
-            HipRaiseExerciseName::InnerThighCircles => writeln!(f, "inner_thigh_circles"),
-            HipRaiseExerciseName::InnerThighSideLift => writeln!(f, "inner_thigh_side_lift"),
-            HipRaiseExerciseName::LegCircles => writeln!(f, "leg_circles"),
-            HipRaiseExerciseName::LegLift => writeln!(f, "leg_lift"),
+            HipRaiseExerciseName::Clams => write!(f, "clams"),
+            HipRaiseExerciseName::InnerThighCircles => write!(f, "inner_thigh_circles"),
+            HipRaiseExerciseName::InnerThighSideLift => write!(f, "inner_thigh_side_lift"),
+            HipRaiseExerciseName::LegCircles => write!(f, "leg_circles"),
+            HipRaiseExerciseName::LegLift => write!(f, "leg_lift"),
             HipRaiseExerciseName::LegLiftInExternalRotation => {
-                writeln!(f, "leg_lift_in_external_rotation")
+                write!(f, "leg_lift_in_external_rotation")
             }
-            HipRaiseExerciseName::UnknownVariant(value) => {
-                writeln!(f, "unknown_variant_{}", *value)
-            }
+            HipRaiseExerciseName::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -13954,83 +13900,77 @@ impl fmt::Display for HipStabilityExerciseName {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
             HipStabilityExerciseName::BandSideLyingLegRaise => {
-                writeln!(f, "band_side_lying_leg_raise")
+                write!(f, "band_side_lying_leg_raise")
             }
-            HipStabilityExerciseName::DeadBug => writeln!(f, "dead_bug"),
-            HipStabilityExerciseName::WeightedDeadBug => writeln!(f, "weighted_dead_bug"),
-            HipStabilityExerciseName::ExternalHipRaise => writeln!(f, "external_hip_raise"),
+            HipStabilityExerciseName::DeadBug => write!(f, "dead_bug"),
+            HipStabilityExerciseName::WeightedDeadBug => write!(f, "weighted_dead_bug"),
+            HipStabilityExerciseName::ExternalHipRaise => write!(f, "external_hip_raise"),
             HipStabilityExerciseName::WeightedExternalHipRaise => {
-                writeln!(f, "weighted_external_hip_raise")
+                write!(f, "weighted_external_hip_raise")
             }
-            HipStabilityExerciseName::FireHydrantKicks => writeln!(f, "fire_hydrant_kicks"),
+            HipStabilityExerciseName::FireHydrantKicks => write!(f, "fire_hydrant_kicks"),
             HipStabilityExerciseName::WeightedFireHydrantKicks => {
-                writeln!(f, "weighted_fire_hydrant_kicks")
+                write!(f, "weighted_fire_hydrant_kicks")
             }
-            HipStabilityExerciseName::HipCircles => writeln!(f, "hip_circles"),
-            HipStabilityExerciseName::WeightedHipCircles => writeln!(f, "weighted_hip_circles"),
-            HipStabilityExerciseName::InnerThighLift => writeln!(f, "inner_thigh_lift"),
+            HipStabilityExerciseName::HipCircles => write!(f, "hip_circles"),
+            HipStabilityExerciseName::WeightedHipCircles => write!(f, "weighted_hip_circles"),
+            HipStabilityExerciseName::InnerThighLift => write!(f, "inner_thigh_lift"),
             HipStabilityExerciseName::WeightedInnerThighLift => {
-                writeln!(f, "weighted_inner_thigh_lift")
+                write!(f, "weighted_inner_thigh_lift")
             }
             HipStabilityExerciseName::LateralWalksWithBandAtAnkles => {
-                writeln!(f, "lateral_walks_with_band_at_ankles")
+                write!(f, "lateral_walks_with_band_at_ankles")
             }
-            HipStabilityExerciseName::PretzelSideKick => writeln!(f, "pretzel_side_kick"),
+            HipStabilityExerciseName::PretzelSideKick => write!(f, "pretzel_side_kick"),
             HipStabilityExerciseName::WeightedPretzelSideKick => {
-                writeln!(f, "weighted_pretzel_side_kick")
+                write!(f, "weighted_pretzel_side_kick")
             }
             HipStabilityExerciseName::ProneHipInternalRotation => {
-                writeln!(f, "prone_hip_internal_rotation")
+                write!(f, "prone_hip_internal_rotation")
             }
             HipStabilityExerciseName::WeightedProneHipInternalRotation => {
-                writeln!(f, "weighted_prone_hip_internal_rotation")
+                write!(f, "weighted_prone_hip_internal_rotation")
             }
-            HipStabilityExerciseName::Quadruped => writeln!(f, "quadruped"),
-            HipStabilityExerciseName::QuadrupedHipExtension => {
-                writeln!(f, "quadruped_hip_extension")
-            }
+            HipStabilityExerciseName::Quadruped => write!(f, "quadruped"),
+            HipStabilityExerciseName::QuadrupedHipExtension => write!(f, "quadruped_hip_extension"),
             HipStabilityExerciseName::WeightedQuadrupedHipExtension => {
-                writeln!(f, "weighted_quadruped_hip_extension")
+                write!(f, "weighted_quadruped_hip_extension")
             }
-            HipStabilityExerciseName::QuadrupedWithLegLift => {
-                writeln!(f, "quadruped_with_leg_lift")
-            }
+            HipStabilityExerciseName::QuadrupedWithLegLift => write!(f, "quadruped_with_leg_lift"),
             HipStabilityExerciseName::WeightedQuadrupedWithLegLift => {
-                writeln!(f, "weighted_quadruped_with_leg_lift")
+                write!(f, "weighted_quadruped_with_leg_lift")
             }
-            HipStabilityExerciseName::SideLyingLegRaise => writeln!(f, "side_lying_leg_raise"),
+            HipStabilityExerciseName::SideLyingLegRaise => write!(f, "side_lying_leg_raise"),
             HipStabilityExerciseName::WeightedSideLyingLegRaise => {
-                writeln!(f, "weighted_side_lying_leg_raise")
+                write!(f, "weighted_side_lying_leg_raise")
             }
-            HipStabilityExerciseName::SlidingHipAdduction => writeln!(f, "sliding_hip_adduction"),
+            HipStabilityExerciseName::SlidingHipAdduction => write!(f, "sliding_hip_adduction"),
             HipStabilityExerciseName::WeightedSlidingHipAdduction => {
-                writeln!(f, "weighted_sliding_hip_adduction")
+                write!(f, "weighted_sliding_hip_adduction")
             }
-            HipStabilityExerciseName::StandingAdduction => writeln!(f, "standing_adduction"),
+            HipStabilityExerciseName::StandingAdduction => write!(f, "standing_adduction"),
             HipStabilityExerciseName::WeightedStandingAdduction => {
-                writeln!(f, "weighted_standing_adduction")
+                write!(f, "weighted_standing_adduction")
             }
             HipStabilityExerciseName::StandingCableHipAbduction => {
-                writeln!(f, "standing_cable_hip_abduction")
+                write!(f, "standing_cable_hip_abduction")
             }
-            HipStabilityExerciseName::StandingHipAbduction => writeln!(f, "standing_hip_abduction"),
+            HipStabilityExerciseName::StandingHipAbduction => write!(f, "standing_hip_abduction"),
             HipStabilityExerciseName::WeightedStandingHipAbduction => {
-                writeln!(f, "weighted_standing_hip_abduction")
+                write!(f, "weighted_standing_hip_abduction")
             }
-            HipStabilityExerciseName::StandingRearLegRaise => {
-                writeln!(f, "standing_rear_leg_raise")
-            }
+            HipStabilityExerciseName::StandingRearLegRaise => write!(f, "standing_rear_leg_raise"),
             HipStabilityExerciseName::WeightedStandingRearLegRaise => {
-                writeln!(f, "weighted_standing_rear_leg_raise")
+                write!(f, "weighted_standing_rear_leg_raise")
             }
             HipStabilityExerciseName::SupineHipInternalRotation => {
-                writeln!(f, "supine_hip_internal_rotation")
+                write!(f, "supine_hip_internal_rotation")
             }
             HipStabilityExerciseName::WeightedSupineHipInternalRotation => {
-                writeln!(f, "weighted_supine_hip_internal_rotation")
+                write!(f, "weighted_supine_hip_internal_rotation")
             }
             HipStabilityExerciseName::UnknownVariant(value) => {
-                writeln!(f, "unknown_variant_{}", *value)
+                write!(f, "unknown_variant_{}", *value)
             }
         }
     }
@@ -14105,15 +14045,11 @@ impl fmt::Display for HipSwingExerciseName {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
             HipSwingExerciseName::SingleArmKettlebellSwing => {
-                writeln!(f, "single_arm_kettlebell_swing")
+                write!(f, "single_arm_kettlebell_swing")
             }
-            HipSwingExerciseName::SingleArmDumbbellSwing => {
-                writeln!(f, "single_arm_dumbbell_swing")
-            }
-            HipSwingExerciseName::StepOutSwing => writeln!(f, "step_out_swing"),
-            HipSwingExerciseName::UnknownVariant(value) => {
-                writeln!(f, "unknown_variant_{}", *value)
-            }
+            HipSwingExerciseName::SingleArmDumbbellSwing => write!(f, "single_arm_dumbbell_swing"),
+            HipSwingExerciseName::StepOutSwing => write!(f, "step_out_swing"),
+            HipSwingExerciseName::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -14230,91 +14166,89 @@ impl fmt::Display for HyperextensionExerciseName {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
             HyperextensionExerciseName::BackExtensionWithOppositeArmAndLegReach => {
-                writeln!(f, "back_extension_with_opposite_arm_and_leg_reach")
+                write!(f, "back_extension_with_opposite_arm_and_leg_reach")
             }
             HyperextensionExerciseName::WeightedBackExtensionWithOppositeArmAndLegReach => {
-                writeln!(f, "weighted_back_extension_with_opposite_arm_and_leg_reach")
+                write!(f, "weighted_back_extension_with_opposite_arm_and_leg_reach")
             }
-            HyperextensionExerciseName::BaseRotations => writeln!(f, "base_rotations"),
+            HyperextensionExerciseName::BaseRotations => write!(f, "base_rotations"),
             HyperextensionExerciseName::WeightedBaseRotations => {
-                writeln!(f, "weighted_base_rotations")
+                write!(f, "weighted_base_rotations")
             }
             HyperextensionExerciseName::BentKneeReverseHyperextension => {
-                writeln!(f, "bent_knee_reverse_hyperextension")
+                write!(f, "bent_knee_reverse_hyperextension")
             }
             HyperextensionExerciseName::WeightedBentKneeReverseHyperextension => {
-                writeln!(f, "weighted_bent_knee_reverse_hyperextension")
+                write!(f, "weighted_bent_knee_reverse_hyperextension")
             }
-            HyperextensionExerciseName::HollowHoldAndRoll => writeln!(f, "hollow_hold_and_roll"),
+            HyperextensionExerciseName::HollowHoldAndRoll => write!(f, "hollow_hold_and_roll"),
             HyperextensionExerciseName::WeightedHollowHoldAndRoll => {
-                writeln!(f, "weighted_hollow_hold_and_roll")
+                write!(f, "weighted_hollow_hold_and_roll")
             }
-            HyperextensionExerciseName::Kicks => writeln!(f, "kicks"),
-            HyperextensionExerciseName::WeightedKicks => writeln!(f, "weighted_kicks"),
-            HyperextensionExerciseName::KneeRaises => writeln!(f, "knee_raises"),
-            HyperextensionExerciseName::WeightedKneeRaises => writeln!(f, "weighted_knee_raises"),
-            HyperextensionExerciseName::KneelingSuperman => writeln!(f, "kneeling_superman"),
+            HyperextensionExerciseName::Kicks => write!(f, "kicks"),
+            HyperextensionExerciseName::WeightedKicks => write!(f, "weighted_kicks"),
+            HyperextensionExerciseName::KneeRaises => write!(f, "knee_raises"),
+            HyperextensionExerciseName::WeightedKneeRaises => write!(f, "weighted_knee_raises"),
+            HyperextensionExerciseName::KneelingSuperman => write!(f, "kneeling_superman"),
             HyperextensionExerciseName::WeightedKneelingSuperman => {
-                writeln!(f, "weighted_kneeling_superman")
+                write!(f, "weighted_kneeling_superman")
             }
-            HyperextensionExerciseName::LatPullDownWithRow => writeln!(f, "lat_pull_down_with_row"),
+            HyperextensionExerciseName::LatPullDownWithRow => write!(f, "lat_pull_down_with_row"),
             HyperextensionExerciseName::MedicineBallDeadliftToReach => {
-                writeln!(f, "medicine_ball_deadlift_to_reach")
+                write!(f, "medicine_ball_deadlift_to_reach")
             }
-            HyperextensionExerciseName::OneArmOneLegRow => writeln!(f, "one_arm_one_leg_row"),
-            HyperextensionExerciseName::OneArmRowWithBand => writeln!(f, "one_arm_row_with_band"),
+            HyperextensionExerciseName::OneArmOneLegRow => write!(f, "one_arm_one_leg_row"),
+            HyperextensionExerciseName::OneArmRowWithBand => write!(f, "one_arm_row_with_band"),
             HyperextensionExerciseName::OverheadLungeWithMedicineBall => {
-                writeln!(f, "overhead_lunge_with_medicine_ball")
+                write!(f, "overhead_lunge_with_medicine_ball")
             }
-            HyperextensionExerciseName::PlankKneeTucks => writeln!(f, "plank_knee_tucks"),
+            HyperextensionExerciseName::PlankKneeTucks => write!(f, "plank_knee_tucks"),
             HyperextensionExerciseName::WeightedPlankKneeTucks => {
-                writeln!(f, "weighted_plank_knee_tucks")
+                write!(f, "weighted_plank_knee_tucks")
             }
-            HyperextensionExerciseName::SideStep => writeln!(f, "side_step"),
-            HyperextensionExerciseName::WeightedSideStep => writeln!(f, "weighted_side_step"),
+            HyperextensionExerciseName::SideStep => write!(f, "side_step"),
+            HyperextensionExerciseName::WeightedSideStep => write!(f, "weighted_side_step"),
             HyperextensionExerciseName::SingleLegBackExtension => {
-                writeln!(f, "single_leg_back_extension")
+                write!(f, "single_leg_back_extension")
             }
             HyperextensionExerciseName::WeightedSingleLegBackExtension => {
-                writeln!(f, "weighted_single_leg_back_extension")
+                write!(f, "weighted_single_leg_back_extension")
             }
-            HyperextensionExerciseName::SpineExtension => writeln!(f, "spine_extension"),
+            HyperextensionExerciseName::SpineExtension => write!(f, "spine_extension"),
             HyperextensionExerciseName::WeightedSpineExtension => {
-                writeln!(f, "weighted_spine_extension")
+                write!(f, "weighted_spine_extension")
             }
-            HyperextensionExerciseName::StaticBackExtension => writeln!(f, "static_back_extension"),
+            HyperextensionExerciseName::StaticBackExtension => write!(f, "static_back_extension"),
             HyperextensionExerciseName::WeightedStaticBackExtension => {
-                writeln!(f, "weighted_static_back_extension")
+                write!(f, "weighted_static_back_extension")
             }
-            HyperextensionExerciseName::SupermanFromFloor => writeln!(f, "superman_from_floor"),
+            HyperextensionExerciseName::SupermanFromFloor => write!(f, "superman_from_floor"),
             HyperextensionExerciseName::WeightedSupermanFromFloor => {
-                writeln!(f, "weighted_superman_from_floor")
+                write!(f, "weighted_superman_from_floor")
             }
             HyperextensionExerciseName::SwissBallBackExtension => {
-                writeln!(f, "swiss_ball_back_extension")
+                write!(f, "swiss_ball_back_extension")
             }
             HyperextensionExerciseName::WeightedSwissBallBackExtension => {
-                writeln!(f, "weighted_swiss_ball_back_extension")
+                write!(f, "weighted_swiss_ball_back_extension")
             }
             HyperextensionExerciseName::SwissBallHyperextension => {
-                writeln!(f, "swiss_ball_hyperextension")
+                write!(f, "swiss_ball_hyperextension")
             }
             HyperextensionExerciseName::WeightedSwissBallHyperextension => {
-                writeln!(f, "weighted_swiss_ball_hyperextension")
+                write!(f, "weighted_swiss_ball_hyperextension")
             }
             HyperextensionExerciseName::SwissBallOppositeArmAndLegLift => {
-                writeln!(f, "swiss_ball_opposite_arm_and_leg_lift")
+                write!(f, "swiss_ball_opposite_arm_and_leg_lift")
             }
             HyperextensionExerciseName::WeightedSwissBallOppositeArmAndLegLift => {
-                writeln!(f, "weighted_swiss_ball_opposite_arm_and_leg_lift")
+                write!(f, "weighted_swiss_ball_opposite_arm_and_leg_lift")
             }
-            HyperextensionExerciseName::SupermanOnSwissBall => {
-                writeln!(f, "superman_on_swiss_ball")
-            }
-            HyperextensionExerciseName::Cobra => writeln!(f, "cobra"),
-            HyperextensionExerciseName::SupineFloorBarre => writeln!(f, "supine_floor_barre"),
+            HyperextensionExerciseName::SupermanOnSwissBall => write!(f, "superman_on_swiss_ball"),
+            HyperextensionExerciseName::Cobra => write!(f, "cobra"),
+            HyperextensionExerciseName::SupineFloorBarre => write!(f, "supine_floor_barre"),
             HyperextensionExerciseName::UnknownVariant(value) => {
-                writeln!(f, "unknown_variant_{}", *value)
+                write!(f, "unknown_variant_{}", *value)
             }
         }
     }
@@ -14457,63 +14391,57 @@ impl fmt::Display for LateralRaiseExerciseName {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
             LateralRaiseExerciseName::Name45DegreeCableExternalRotation => {
-                writeln!(f, "45_degree_cable_external_rotation")
+                write!(f, "45_degree_cable_external_rotation")
             }
             LateralRaiseExerciseName::AlternatingLateralRaiseWithStaticHold => {
-                writeln!(f, "alternating_lateral_raise_with_static_hold")
+                write!(f, "alternating_lateral_raise_with_static_hold")
             }
-            LateralRaiseExerciseName::BarMuscleUp => writeln!(f, "bar_muscle_up"),
-            LateralRaiseExerciseName::BentOverLateralRaise => {
-                writeln!(f, "bent_over_lateral_raise")
-            }
-            LateralRaiseExerciseName::CableDiagonalRaise => writeln!(f, "cable_diagonal_raise"),
-            LateralRaiseExerciseName::CableFrontRaise => writeln!(f, "cable_front_raise"),
-            LateralRaiseExerciseName::CalorieRow => writeln!(f, "calorie_row"),
-            LateralRaiseExerciseName::ComboShoulderRaise => writeln!(f, "combo_shoulder_raise"),
-            LateralRaiseExerciseName::DumbbellDiagonalRaise => {
-                writeln!(f, "dumbbell_diagonal_raise")
-            }
-            LateralRaiseExerciseName::DumbbellVRaise => writeln!(f, "dumbbell_v_raise"),
-            LateralRaiseExerciseName::FrontRaise => writeln!(f, "front_raise"),
+            LateralRaiseExerciseName::BarMuscleUp => write!(f, "bar_muscle_up"),
+            LateralRaiseExerciseName::BentOverLateralRaise => write!(f, "bent_over_lateral_raise"),
+            LateralRaiseExerciseName::CableDiagonalRaise => write!(f, "cable_diagonal_raise"),
+            LateralRaiseExerciseName::CableFrontRaise => write!(f, "cable_front_raise"),
+            LateralRaiseExerciseName::CalorieRow => write!(f, "calorie_row"),
+            LateralRaiseExerciseName::ComboShoulderRaise => write!(f, "combo_shoulder_raise"),
+            LateralRaiseExerciseName::DumbbellDiagonalRaise => write!(f, "dumbbell_diagonal_raise"),
+            LateralRaiseExerciseName::DumbbellVRaise => write!(f, "dumbbell_v_raise"),
+            LateralRaiseExerciseName::FrontRaise => write!(f, "front_raise"),
             LateralRaiseExerciseName::LeaningDumbbellLateralRaise => {
-                writeln!(f, "leaning_dumbbell_lateral_raise")
+                write!(f, "leaning_dumbbell_lateral_raise")
             }
-            LateralRaiseExerciseName::LyingDumbbellRaise => writeln!(f, "lying_dumbbell_raise"),
-            LateralRaiseExerciseName::MuscleUp => writeln!(f, "muscle_up"),
+            LateralRaiseExerciseName::LyingDumbbellRaise => write!(f, "lying_dumbbell_raise"),
+            LateralRaiseExerciseName::MuscleUp => write!(f, "muscle_up"),
             LateralRaiseExerciseName::OneArmCableLateralRaise => {
-                writeln!(f, "one_arm_cable_lateral_raise")
+                write!(f, "one_arm_cable_lateral_raise")
             }
             LateralRaiseExerciseName::OverhandGripRearLateralRaise => {
-                writeln!(f, "overhand_grip_rear_lateral_raise")
+                write!(f, "overhand_grip_rear_lateral_raise")
             }
-            LateralRaiseExerciseName::PlateRaises => writeln!(f, "plate_raises"),
-            LateralRaiseExerciseName::RingDip => writeln!(f, "ring_dip"),
-            LateralRaiseExerciseName::WeightedRingDip => writeln!(f, "weighted_ring_dip"),
-            LateralRaiseExerciseName::RingMuscleUp => writeln!(f, "ring_muscle_up"),
-            LateralRaiseExerciseName::WeightedRingMuscleUp => {
-                writeln!(f, "weighted_ring_muscle_up")
-            }
-            LateralRaiseExerciseName::RopeClimb => writeln!(f, "rope_climb"),
-            LateralRaiseExerciseName::WeightedRopeClimb => writeln!(f, "weighted_rope_climb"),
-            LateralRaiseExerciseName::Scaption => writeln!(f, "scaption"),
-            LateralRaiseExerciseName::SeatedLateralRaise => writeln!(f, "seated_lateral_raise"),
+            LateralRaiseExerciseName::PlateRaises => write!(f, "plate_raises"),
+            LateralRaiseExerciseName::RingDip => write!(f, "ring_dip"),
+            LateralRaiseExerciseName::WeightedRingDip => write!(f, "weighted_ring_dip"),
+            LateralRaiseExerciseName::RingMuscleUp => write!(f, "ring_muscle_up"),
+            LateralRaiseExerciseName::WeightedRingMuscleUp => write!(f, "weighted_ring_muscle_up"),
+            LateralRaiseExerciseName::RopeClimb => write!(f, "rope_climb"),
+            LateralRaiseExerciseName::WeightedRopeClimb => write!(f, "weighted_rope_climb"),
+            LateralRaiseExerciseName::Scaption => write!(f, "scaption"),
+            LateralRaiseExerciseName::SeatedLateralRaise => write!(f, "seated_lateral_raise"),
             LateralRaiseExerciseName::SeatedRearLateralRaise => {
-                writeln!(f, "seated_rear_lateral_raise")
+                write!(f, "seated_rear_lateral_raise")
             }
             LateralRaiseExerciseName::SideLyingLateralRaise => {
-                writeln!(f, "side_lying_lateral_raise")
+                write!(f, "side_lying_lateral_raise")
             }
-            LateralRaiseExerciseName::StandingLift => writeln!(f, "standing_lift"),
-            LateralRaiseExerciseName::SuspendedRow => writeln!(f, "suspended_row"),
+            LateralRaiseExerciseName::StandingLift => write!(f, "standing_lift"),
+            LateralRaiseExerciseName::SuspendedRow => write!(f, "suspended_row"),
             LateralRaiseExerciseName::UnderhandGripRearLateralRaise => {
-                writeln!(f, "underhand_grip_rear_lateral_raise")
+                write!(f, "underhand_grip_rear_lateral_raise")
             }
-            LateralRaiseExerciseName::WallSlide => writeln!(f, "wall_slide"),
-            LateralRaiseExerciseName::WeightedWallSlide => writeln!(f, "weighted_wall_slide"),
-            LateralRaiseExerciseName::ArmCircles => writeln!(f, "arm_circles"),
-            LateralRaiseExerciseName::ShavingTheHead => writeln!(f, "shaving_the_head"),
+            LateralRaiseExerciseName::WallSlide => write!(f, "wall_slide"),
+            LateralRaiseExerciseName::WeightedWallSlide => write!(f, "weighted_wall_slide"),
+            LateralRaiseExerciseName::ArmCircles => write!(f, "arm_circles"),
+            LateralRaiseExerciseName::ShavingTheHead => write!(f, "shaving_the_head"),
             LateralRaiseExerciseName::UnknownVariant(value) => {
-                writeln!(f, "unknown_variant_{}", *value)
+                write!(f, "unknown_variant_{}", *value)
             }
         }
     }
@@ -14605,31 +14533,29 @@ impl LegCurlExerciseName {
 impl fmt::Display for LegCurlExerciseName {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            LegCurlExerciseName::LegCurl => writeln!(f, "leg_curl"),
-            LegCurlExerciseName::WeightedLegCurl => writeln!(f, "weighted_leg_curl"),
-            LegCurlExerciseName::GoodMorning => writeln!(f, "good_morning"),
+            LegCurlExerciseName::LegCurl => write!(f, "leg_curl"),
+            LegCurlExerciseName::WeightedLegCurl => write!(f, "weighted_leg_curl"),
+            LegCurlExerciseName::GoodMorning => write!(f, "good_morning"),
             LegCurlExerciseName::SeatedBarbellGoodMorning => {
-                writeln!(f, "seated_barbell_good_morning")
+                write!(f, "seated_barbell_good_morning")
             }
             LegCurlExerciseName::SingleLegBarbellGoodMorning => {
-                writeln!(f, "single_leg_barbell_good_morning")
+                write!(f, "single_leg_barbell_good_morning")
             }
             LegCurlExerciseName::SingleLegSlidingLegCurl => {
-                writeln!(f, "single_leg_sliding_leg_curl")
+                write!(f, "single_leg_sliding_leg_curl")
             }
-            LegCurlExerciseName::SlidingLegCurl => writeln!(f, "sliding_leg_curl"),
-            LegCurlExerciseName::SplitBarbellGoodMorning => {
-                writeln!(f, "split_barbell_good_morning")
-            }
-            LegCurlExerciseName::SplitStanceExtension => writeln!(f, "split_stance_extension"),
+            LegCurlExerciseName::SlidingLegCurl => write!(f, "sliding_leg_curl"),
+            LegCurlExerciseName::SplitBarbellGoodMorning => write!(f, "split_barbell_good_morning"),
+            LegCurlExerciseName::SplitStanceExtension => write!(f, "split_stance_extension"),
             LegCurlExerciseName::StaggeredStanceGoodMorning => {
-                writeln!(f, "staggered_stance_good_morning")
+                write!(f, "staggered_stance_good_morning")
             }
             LegCurlExerciseName::SwissBallHipRaiseAndLegCurl => {
-                writeln!(f, "swiss_ball_hip_raise_and_leg_curl")
+                write!(f, "swiss_ball_hip_raise_and_leg_curl")
             }
-            LegCurlExerciseName::ZercherGoodMorning => writeln!(f, "zercher_good_morning"),
-            LegCurlExerciseName::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            LegCurlExerciseName::ZercherGoodMorning => write!(f, "zercher_good_morning"),
+            LegCurlExerciseName::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -14718,55 +14644,49 @@ impl LegRaiseExerciseName {
 impl fmt::Display for LegRaiseExerciseName {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            LegRaiseExerciseName::HangingKneeRaise => writeln!(f, "hanging_knee_raise"),
-            LegRaiseExerciseName::HangingLegRaise => writeln!(f, "hanging_leg_raise"),
+            LegRaiseExerciseName::HangingKneeRaise => write!(f, "hanging_knee_raise"),
+            LegRaiseExerciseName::HangingLegRaise => write!(f, "hanging_leg_raise"),
             LegRaiseExerciseName::WeightedHangingLegRaise => {
-                writeln!(f, "weighted_hanging_leg_raise")
+                write!(f, "weighted_hanging_leg_raise")
             }
-            LegRaiseExerciseName::HangingSingleLegRaise => writeln!(f, "hanging_single_leg_raise"),
+            LegRaiseExerciseName::HangingSingleLegRaise => write!(f, "hanging_single_leg_raise"),
             LegRaiseExerciseName::WeightedHangingSingleLegRaise => {
-                writeln!(f, "weighted_hanging_single_leg_raise")
+                write!(f, "weighted_hanging_single_leg_raise")
             }
-            LegRaiseExerciseName::KettlebellLegRaises => writeln!(f, "kettlebell_leg_raises"),
-            LegRaiseExerciseName::LegLoweringDrill => writeln!(f, "leg_lowering_drill"),
+            LegRaiseExerciseName::KettlebellLegRaises => write!(f, "kettlebell_leg_raises"),
+            LegRaiseExerciseName::LegLoweringDrill => write!(f, "leg_lowering_drill"),
             LegRaiseExerciseName::WeightedLegLoweringDrill => {
-                writeln!(f, "weighted_leg_lowering_drill")
+                write!(f, "weighted_leg_lowering_drill")
             }
-            LegRaiseExerciseName::LyingStraightLegRaise => writeln!(f, "lying_straight_leg_raise"),
+            LegRaiseExerciseName::LyingStraightLegRaise => write!(f, "lying_straight_leg_raise"),
             LegRaiseExerciseName::WeightedLyingStraightLegRaise => {
-                writeln!(f, "weighted_lying_straight_leg_raise")
+                write!(f, "weighted_lying_straight_leg_raise")
             }
-            LegRaiseExerciseName::MedicineBallLegDrops => writeln!(f, "medicine_ball_leg_drops"),
-            LegRaiseExerciseName::QuadrupedLegRaise => writeln!(f, "quadruped_leg_raise"),
+            LegRaiseExerciseName::MedicineBallLegDrops => write!(f, "medicine_ball_leg_drops"),
+            LegRaiseExerciseName::QuadrupedLegRaise => write!(f, "quadruped_leg_raise"),
             LegRaiseExerciseName::WeightedQuadrupedLegRaise => {
-                writeln!(f, "weighted_quadruped_leg_raise")
+                write!(f, "weighted_quadruped_leg_raise")
             }
-            LegRaiseExerciseName::ReverseLegRaise => writeln!(f, "reverse_leg_raise"),
+            LegRaiseExerciseName::ReverseLegRaise => write!(f, "reverse_leg_raise"),
             LegRaiseExerciseName::WeightedReverseLegRaise => {
-                writeln!(f, "weighted_reverse_leg_raise")
+                write!(f, "weighted_reverse_leg_raise")
             }
             LegRaiseExerciseName::ReverseLegRaiseOnSwissBall => {
-                writeln!(f, "reverse_leg_raise_on_swiss_ball")
+                write!(f, "reverse_leg_raise_on_swiss_ball")
             }
             LegRaiseExerciseName::WeightedReverseLegRaiseOnSwissBall => {
-                writeln!(f, "weighted_reverse_leg_raise_on_swiss_ball")
+                write!(f, "weighted_reverse_leg_raise_on_swiss_ball")
             }
-            LegRaiseExerciseName::SingleLegLoweringDrill => {
-                writeln!(f, "single_leg_lowering_drill")
-            }
+            LegRaiseExerciseName::SingleLegLoweringDrill => write!(f, "single_leg_lowering_drill"),
             LegRaiseExerciseName::WeightedSingleLegLoweringDrill => {
-                writeln!(f, "weighted_single_leg_lowering_drill")
+                write!(f, "weighted_single_leg_lowering_drill")
             }
             LegRaiseExerciseName::WeightedHangingKneeRaise => {
-                writeln!(f, "weighted_hanging_knee_raise")
+                write!(f, "weighted_hanging_knee_raise")
             }
-            LegRaiseExerciseName::LateralStepover => writeln!(f, "lateral_stepover"),
-            LegRaiseExerciseName::WeightedLateralStepover => {
-                writeln!(f, "weighted_lateral_stepover")
-            }
-            LegRaiseExerciseName::UnknownVariant(value) => {
-                writeln!(f, "unknown_variant_{}", *value)
-            }
+            LegRaiseExerciseName::LateralStepover => write!(f, "lateral_stepover"),
+            LegRaiseExerciseName::WeightedLateralStepover => write!(f, "weighted_lateral_stepover"),
+            LegRaiseExerciseName::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -14983,152 +14903,148 @@ impl LungeExerciseName {
 impl fmt::Display for LungeExerciseName {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            LungeExerciseName::OverheadLunge => writeln!(f, "overhead_lunge"),
-            LungeExerciseName::LungeMatrix => writeln!(f, "lunge_matrix"),
-            LungeExerciseName::WeightedLungeMatrix => writeln!(f, "weighted_lunge_matrix"),
+            LungeExerciseName::OverheadLunge => write!(f, "overhead_lunge"),
+            LungeExerciseName::LungeMatrix => write!(f, "lunge_matrix"),
+            LungeExerciseName::WeightedLungeMatrix => write!(f, "weighted_lunge_matrix"),
             LungeExerciseName::AlternatingBarbellForwardLunge => {
-                writeln!(f, "alternating_barbell_forward_lunge")
+                write!(f, "alternating_barbell_forward_lunge")
             }
             LungeExerciseName::AlternatingDumbbellLungeWithReach => {
-                writeln!(f, "alternating_dumbbell_lunge_with_reach")
+                write!(f, "alternating_dumbbell_lunge_with_reach")
             }
             LungeExerciseName::BackFootElevatedDumbbellSplitSquat => {
-                writeln!(f, "back_foot_elevated_dumbbell_split_squat")
+                write!(f, "back_foot_elevated_dumbbell_split_squat")
             }
-            LungeExerciseName::BarbellBoxLunge => writeln!(f, "barbell_box_lunge"),
+            LungeExerciseName::BarbellBoxLunge => write!(f, "barbell_box_lunge"),
             LungeExerciseName::BarbellBulgarianSplitSquat => {
-                writeln!(f, "barbell_bulgarian_split_squat")
+                write!(f, "barbell_bulgarian_split_squat")
             }
-            LungeExerciseName::BarbellCrossoverLunge => writeln!(f, "barbell_crossover_lunge"),
-            LungeExerciseName::BarbellFrontSplitSquat => writeln!(f, "barbell_front_split_squat"),
-            LungeExerciseName::BarbellLunge => writeln!(f, "barbell_lunge"),
-            LungeExerciseName::BarbellReverseLunge => writeln!(f, "barbell_reverse_lunge"),
-            LungeExerciseName::BarbellSideLunge => writeln!(f, "barbell_side_lunge"),
-            LungeExerciseName::BarbellSplitSquat => writeln!(f, "barbell_split_squat"),
-            LungeExerciseName::CoreControlRearLunge => writeln!(f, "core_control_rear_lunge"),
-            LungeExerciseName::DiagonalLunge => writeln!(f, "diagonal_lunge"),
-            LungeExerciseName::DropLunge => writeln!(f, "drop_lunge"),
-            LungeExerciseName::DumbbellBoxLunge => writeln!(f, "dumbbell_box_lunge"),
+            LungeExerciseName::BarbellCrossoverLunge => write!(f, "barbell_crossover_lunge"),
+            LungeExerciseName::BarbellFrontSplitSquat => write!(f, "barbell_front_split_squat"),
+            LungeExerciseName::BarbellLunge => write!(f, "barbell_lunge"),
+            LungeExerciseName::BarbellReverseLunge => write!(f, "barbell_reverse_lunge"),
+            LungeExerciseName::BarbellSideLunge => write!(f, "barbell_side_lunge"),
+            LungeExerciseName::BarbellSplitSquat => write!(f, "barbell_split_squat"),
+            LungeExerciseName::CoreControlRearLunge => write!(f, "core_control_rear_lunge"),
+            LungeExerciseName::DiagonalLunge => write!(f, "diagonal_lunge"),
+            LungeExerciseName::DropLunge => write!(f, "drop_lunge"),
+            LungeExerciseName::DumbbellBoxLunge => write!(f, "dumbbell_box_lunge"),
             LungeExerciseName::DumbbellBulgarianSplitSquat => {
-                writeln!(f, "dumbbell_bulgarian_split_squat")
+                write!(f, "dumbbell_bulgarian_split_squat")
             }
-            LungeExerciseName::DumbbellCrossoverLunge => writeln!(f, "dumbbell_crossover_lunge"),
-            LungeExerciseName::DumbbellDiagonalLunge => writeln!(f, "dumbbell_diagonal_lunge"),
-            LungeExerciseName::DumbbellLunge => writeln!(f, "dumbbell_lunge"),
-            LungeExerciseName::DumbbellLungeAndRotation => {
-                writeln!(f, "dumbbell_lunge_and_rotation")
-            }
+            LungeExerciseName::DumbbellCrossoverLunge => write!(f, "dumbbell_crossover_lunge"),
+            LungeExerciseName::DumbbellDiagonalLunge => write!(f, "dumbbell_diagonal_lunge"),
+            LungeExerciseName::DumbbellLunge => write!(f, "dumbbell_lunge"),
+            LungeExerciseName::DumbbellLungeAndRotation => write!(f, "dumbbell_lunge_and_rotation"),
             LungeExerciseName::DumbbellOverheadBulgarianSplitSquat => {
-                writeln!(f, "dumbbell_overhead_bulgarian_split_squat")
+                write!(f, "dumbbell_overhead_bulgarian_split_squat")
             }
             LungeExerciseName::DumbbellReverseLungeToHighKneeAndPress => {
-                writeln!(f, "dumbbell_reverse_lunge_to_high_knee_and_press")
+                write!(f, "dumbbell_reverse_lunge_to_high_knee_and_press")
             }
-            LungeExerciseName::DumbbellSideLunge => writeln!(f, "dumbbell_side_lunge"),
+            LungeExerciseName::DumbbellSideLunge => write!(f, "dumbbell_side_lunge"),
             LungeExerciseName::ElevatedFrontFootBarbellSplitSquat => {
-                writeln!(f, "elevated_front_foot_barbell_split_squat")
+                write!(f, "elevated_front_foot_barbell_split_squat")
             }
             LungeExerciseName::FrontFootElevatedDumbbellSplitSquat => {
-                writeln!(f, "front_foot_elevated_dumbbell_split_squat")
+                write!(f, "front_foot_elevated_dumbbell_split_squat")
             }
-            LungeExerciseName::GunslingerLunge => writeln!(f, "gunslinger_lunge"),
-            LungeExerciseName::LawnmowerLunge => writeln!(f, "lawnmower_lunge"),
+            LungeExerciseName::GunslingerLunge => write!(f, "gunslinger_lunge"),
+            LungeExerciseName::LawnmowerLunge => write!(f, "lawnmower_lunge"),
             LungeExerciseName::LowLungeWithIsometricAdduction => {
-                writeln!(f, "low_lunge_with_isometric_adduction")
+                write!(f, "low_lunge_with_isometric_adduction")
             }
-            LungeExerciseName::LowSideToSideLunge => writeln!(f, "low_side_to_side_lunge"),
-            LungeExerciseName::Lunge => writeln!(f, "lunge"),
-            LungeExerciseName::WeightedLunge => writeln!(f, "weighted_lunge"),
-            LungeExerciseName::LungeWithArmReach => writeln!(f, "lunge_with_arm_reach"),
-            LungeExerciseName::LungeWithDiagonalReach => writeln!(f, "lunge_with_diagonal_reach"),
-            LungeExerciseName::LungeWithSideBend => writeln!(f, "lunge_with_side_bend"),
-            LungeExerciseName::OffsetDumbbellLunge => writeln!(f, "offset_dumbbell_lunge"),
+            LungeExerciseName::LowSideToSideLunge => write!(f, "low_side_to_side_lunge"),
+            LungeExerciseName::Lunge => write!(f, "lunge"),
+            LungeExerciseName::WeightedLunge => write!(f, "weighted_lunge"),
+            LungeExerciseName::LungeWithArmReach => write!(f, "lunge_with_arm_reach"),
+            LungeExerciseName::LungeWithDiagonalReach => write!(f, "lunge_with_diagonal_reach"),
+            LungeExerciseName::LungeWithSideBend => write!(f, "lunge_with_side_bend"),
+            LungeExerciseName::OffsetDumbbellLunge => write!(f, "offset_dumbbell_lunge"),
             LungeExerciseName::OffsetDumbbellReverseLunge => {
-                writeln!(f, "offset_dumbbell_reverse_lunge")
+                write!(f, "offset_dumbbell_reverse_lunge")
             }
             LungeExerciseName::OverheadBulgarianSplitSquat => {
-                writeln!(f, "overhead_bulgarian_split_squat")
+                write!(f, "overhead_bulgarian_split_squat")
             }
             LungeExerciseName::OverheadDumbbellReverseLunge => {
-                writeln!(f, "overhead_dumbbell_reverse_lunge")
+                write!(f, "overhead_dumbbell_reverse_lunge")
             }
             LungeExerciseName::OverheadDumbbellSplitSquat => {
-                writeln!(f, "overhead_dumbbell_split_squat")
+                write!(f, "overhead_dumbbell_split_squat")
             }
             LungeExerciseName::OverheadLungeWithRotation => {
-                writeln!(f, "overhead_lunge_with_rotation")
+                write!(f, "overhead_lunge_with_rotation")
             }
-            LungeExerciseName::ReverseBarbellBoxLunge => writeln!(f, "reverse_barbell_box_lunge"),
-            LungeExerciseName::ReverseBoxLunge => writeln!(f, "reverse_box_lunge"),
-            LungeExerciseName::ReverseDumbbellBoxLunge => writeln!(f, "reverse_dumbbell_box_lunge"),
+            LungeExerciseName::ReverseBarbellBoxLunge => write!(f, "reverse_barbell_box_lunge"),
+            LungeExerciseName::ReverseBoxLunge => write!(f, "reverse_box_lunge"),
+            LungeExerciseName::ReverseDumbbellBoxLunge => write!(f, "reverse_dumbbell_box_lunge"),
             LungeExerciseName::ReverseDumbbellCrossoverLunge => {
-                writeln!(f, "reverse_dumbbell_crossover_lunge")
+                write!(f, "reverse_dumbbell_crossover_lunge")
             }
             LungeExerciseName::ReverseDumbbellDiagonalLunge => {
-                writeln!(f, "reverse_dumbbell_diagonal_lunge")
+                write!(f, "reverse_dumbbell_diagonal_lunge")
             }
             LungeExerciseName::ReverseLungeWithReachBack => {
-                writeln!(f, "reverse_lunge_with_reach_back")
+                write!(f, "reverse_lunge_with_reach_back")
             }
             LungeExerciseName::WeightedReverseLungeWithReachBack => {
-                writeln!(f, "weighted_reverse_lunge_with_reach_back")
+                write!(f, "weighted_reverse_lunge_with_reach_back")
             }
             LungeExerciseName::ReverseLungeWithTwistAndOverheadReach => {
-                writeln!(f, "reverse_lunge_with_twist_and_overhead_reach")
+                write!(f, "reverse_lunge_with_twist_and_overhead_reach")
             }
             LungeExerciseName::WeightedReverseLungeWithTwistAndOverheadReach => {
-                writeln!(f, "weighted_reverse_lunge_with_twist_and_overhead_reach")
+                write!(f, "weighted_reverse_lunge_with_twist_and_overhead_reach")
             }
-            LungeExerciseName::ReverseSlidingBoxLunge => writeln!(f, "reverse_sliding_box_lunge"),
+            LungeExerciseName::ReverseSlidingBoxLunge => write!(f, "reverse_sliding_box_lunge"),
             LungeExerciseName::WeightedReverseSlidingBoxLunge => {
-                writeln!(f, "weighted_reverse_sliding_box_lunge")
+                write!(f, "weighted_reverse_sliding_box_lunge")
             }
-            LungeExerciseName::ReverseSlidingLunge => writeln!(f, "reverse_sliding_lunge"),
+            LungeExerciseName::ReverseSlidingLunge => write!(f, "reverse_sliding_lunge"),
             LungeExerciseName::WeightedReverseSlidingLunge => {
-                writeln!(f, "weighted_reverse_sliding_lunge")
+                write!(f, "weighted_reverse_sliding_lunge")
             }
-            LungeExerciseName::RunnersLungeToBalance => writeln!(f, "runners_lunge_to_balance"),
+            LungeExerciseName::RunnersLungeToBalance => write!(f, "runners_lunge_to_balance"),
             LungeExerciseName::WeightedRunnersLungeToBalance => {
-                writeln!(f, "weighted_runners_lunge_to_balance")
+                write!(f, "weighted_runners_lunge_to_balance")
             }
-            LungeExerciseName::ShiftingSideLunge => writeln!(f, "shifting_side_lunge"),
-            LungeExerciseName::SideAndCrossoverLunge => writeln!(f, "side_and_crossover_lunge"),
+            LungeExerciseName::ShiftingSideLunge => write!(f, "shifting_side_lunge"),
+            LungeExerciseName::SideAndCrossoverLunge => write!(f, "side_and_crossover_lunge"),
             LungeExerciseName::WeightedSideAndCrossoverLunge => {
-                writeln!(f, "weighted_side_and_crossover_lunge")
+                write!(f, "weighted_side_and_crossover_lunge")
             }
-            LungeExerciseName::SideLunge => writeln!(f, "side_lunge"),
-            LungeExerciseName::WeightedSideLunge => writeln!(f, "weighted_side_lunge"),
-            LungeExerciseName::SideLungeAndPress => writeln!(f, "side_lunge_and_press"),
-            LungeExerciseName::SideLungeJumpOff => writeln!(f, "side_lunge_jump_off"),
-            LungeExerciseName::SideLungeSweep => writeln!(f, "side_lunge_sweep"),
-            LungeExerciseName::WeightedSideLungeSweep => writeln!(f, "weighted_side_lunge_sweep"),
-            LungeExerciseName::SideLungeToCrossoverTap => {
-                writeln!(f, "side_lunge_to_crossover_tap")
-            }
+            LungeExerciseName::SideLunge => write!(f, "side_lunge"),
+            LungeExerciseName::WeightedSideLunge => write!(f, "weighted_side_lunge"),
+            LungeExerciseName::SideLungeAndPress => write!(f, "side_lunge_and_press"),
+            LungeExerciseName::SideLungeJumpOff => write!(f, "side_lunge_jump_off"),
+            LungeExerciseName::SideLungeSweep => write!(f, "side_lunge_sweep"),
+            LungeExerciseName::WeightedSideLungeSweep => write!(f, "weighted_side_lunge_sweep"),
+            LungeExerciseName::SideLungeToCrossoverTap => write!(f, "side_lunge_to_crossover_tap"),
             LungeExerciseName::WeightedSideLungeToCrossoverTap => {
-                writeln!(f, "weighted_side_lunge_to_crossover_tap")
+                write!(f, "weighted_side_lunge_to_crossover_tap")
             }
-            LungeExerciseName::SideToSideLungeChops => writeln!(f, "side_to_side_lunge_chops"),
+            LungeExerciseName::SideToSideLungeChops => write!(f, "side_to_side_lunge_chops"),
             LungeExerciseName::WeightedSideToSideLungeChops => {
-                writeln!(f, "weighted_side_to_side_lunge_chops")
+                write!(f, "weighted_side_to_side_lunge_chops")
             }
-            LungeExerciseName::SiffJumpLunge => writeln!(f, "siff_jump_lunge"),
-            LungeExerciseName::WeightedSiffJumpLunge => writeln!(f, "weighted_siff_jump_lunge"),
+            LungeExerciseName::SiffJumpLunge => write!(f, "siff_jump_lunge"),
+            LungeExerciseName::WeightedSiffJumpLunge => write!(f, "weighted_siff_jump_lunge"),
             LungeExerciseName::SingleArmReverseLungeAndPress => {
-                writeln!(f, "single_arm_reverse_lunge_and_press")
+                write!(f, "single_arm_reverse_lunge_and_press")
             }
-            LungeExerciseName::SlidingLateralLunge => writeln!(f, "sliding_lateral_lunge"),
+            LungeExerciseName::SlidingLateralLunge => write!(f, "sliding_lateral_lunge"),
             LungeExerciseName::WeightedSlidingLateralLunge => {
-                writeln!(f, "weighted_sliding_lateral_lunge")
+                write!(f, "weighted_sliding_lateral_lunge")
             }
-            LungeExerciseName::WalkingBarbellLunge => writeln!(f, "walking_barbell_lunge"),
-            LungeExerciseName::WalkingDumbbellLunge => writeln!(f, "walking_dumbbell_lunge"),
-            LungeExerciseName::WalkingLunge => writeln!(f, "walking_lunge"),
-            LungeExerciseName::WeightedWalkingLunge => writeln!(f, "weighted_walking_lunge"),
+            LungeExerciseName::WalkingBarbellLunge => write!(f, "walking_barbell_lunge"),
+            LungeExerciseName::WalkingDumbbellLunge => write!(f, "walking_dumbbell_lunge"),
+            LungeExerciseName::WalkingLunge => write!(f, "walking_lunge"),
+            LungeExerciseName::WeightedWalkingLunge => write!(f, "weighted_walking_lunge"),
             LungeExerciseName::WideGripOverheadBarbellSplitSquat => {
-                writeln!(f, "wide_grip_overhead_barbell_split_squat")
+                write!(f, "wide_grip_overhead_barbell_split_squat")
             }
-            LungeExerciseName::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            LungeExerciseName::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -15284,41 +15200,37 @@ impl OlympicLiftExerciseName {
 impl fmt::Display for OlympicLiftExerciseName {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            OlympicLiftExerciseName::BarbellHangPowerClean => {
-                writeln!(f, "barbell_hang_power_clean")
-            }
-            OlympicLiftExerciseName::BarbellHangSquatClean => {
-                writeln!(f, "barbell_hang_squat_clean")
-            }
-            OlympicLiftExerciseName::BarbellPowerClean => writeln!(f, "barbell_power_clean"),
-            OlympicLiftExerciseName::BarbellPowerSnatch => writeln!(f, "barbell_power_snatch"),
-            OlympicLiftExerciseName::BarbellSquatClean => writeln!(f, "barbell_squat_clean"),
-            OlympicLiftExerciseName::CleanAndJerk => writeln!(f, "clean_and_jerk"),
+            OlympicLiftExerciseName::BarbellHangPowerClean => write!(f, "barbell_hang_power_clean"),
+            OlympicLiftExerciseName::BarbellHangSquatClean => write!(f, "barbell_hang_squat_clean"),
+            OlympicLiftExerciseName::BarbellPowerClean => write!(f, "barbell_power_clean"),
+            OlympicLiftExerciseName::BarbellPowerSnatch => write!(f, "barbell_power_snatch"),
+            OlympicLiftExerciseName::BarbellSquatClean => write!(f, "barbell_squat_clean"),
+            OlympicLiftExerciseName::CleanAndJerk => write!(f, "clean_and_jerk"),
             OlympicLiftExerciseName::BarbellHangPowerSnatch => {
-                writeln!(f, "barbell_hang_power_snatch")
+                write!(f, "barbell_hang_power_snatch")
             }
-            OlympicLiftExerciseName::BarbellHangPull => writeln!(f, "barbell_hang_pull"),
-            OlympicLiftExerciseName::BarbellHighPull => writeln!(f, "barbell_high_pull"),
-            OlympicLiftExerciseName::BarbellSnatch => writeln!(f, "barbell_snatch"),
-            OlympicLiftExerciseName::BarbellSplitJerk => writeln!(f, "barbell_split_jerk"),
-            OlympicLiftExerciseName::Clean => writeln!(f, "clean"),
-            OlympicLiftExerciseName::DumbbellClean => writeln!(f, "dumbbell_clean"),
-            OlympicLiftExerciseName::DumbbellHangPull => writeln!(f, "dumbbell_hang_pull"),
+            OlympicLiftExerciseName::BarbellHangPull => write!(f, "barbell_hang_pull"),
+            OlympicLiftExerciseName::BarbellHighPull => write!(f, "barbell_high_pull"),
+            OlympicLiftExerciseName::BarbellSnatch => write!(f, "barbell_snatch"),
+            OlympicLiftExerciseName::BarbellSplitJerk => write!(f, "barbell_split_jerk"),
+            OlympicLiftExerciseName::Clean => write!(f, "clean"),
+            OlympicLiftExerciseName::DumbbellClean => write!(f, "dumbbell_clean"),
+            OlympicLiftExerciseName::DumbbellHangPull => write!(f, "dumbbell_hang_pull"),
             OlympicLiftExerciseName::OneHandDumbbellSplitSnatch => {
-                writeln!(f, "one_hand_dumbbell_split_snatch")
+                write!(f, "one_hand_dumbbell_split_snatch")
             }
-            OlympicLiftExerciseName::PushJerk => writeln!(f, "push_jerk"),
+            OlympicLiftExerciseName::PushJerk => write!(f, "push_jerk"),
             OlympicLiftExerciseName::SingleArmDumbbellSnatch => {
-                writeln!(f, "single_arm_dumbbell_snatch")
+                write!(f, "single_arm_dumbbell_snatch")
             }
-            OlympicLiftExerciseName::SingleArmHangSnatch => writeln!(f, "single_arm_hang_snatch"),
+            OlympicLiftExerciseName::SingleArmHangSnatch => write!(f, "single_arm_hang_snatch"),
             OlympicLiftExerciseName::SingleArmKettlebellSnatch => {
-                writeln!(f, "single_arm_kettlebell_snatch")
+                write!(f, "single_arm_kettlebell_snatch")
             }
-            OlympicLiftExerciseName::SplitJerk => writeln!(f, "split_jerk"),
-            OlympicLiftExerciseName::SquatCleanAndJerk => writeln!(f, "squat_clean_and_jerk"),
+            OlympicLiftExerciseName::SplitJerk => write!(f, "split_jerk"),
+            OlympicLiftExerciseName::SquatCleanAndJerk => write!(f, "squat_clean_and_jerk"),
             OlympicLiftExerciseName::UnknownVariant(value) => {
-                writeln!(f, "unknown_variant_{}", *value)
+                write!(f, "unknown_variant_{}", *value)
             }
         }
     }
@@ -15643,283 +15555,267 @@ impl PlankExerciseName {
 impl fmt::Display for PlankExerciseName {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            PlankExerciseName::Name45DegreePlank => writeln!(f, "45_degree_plank"),
-            PlankExerciseName::Weighted45DegreePlank => writeln!(f, "weighted_45_degree_plank"),
-            PlankExerciseName::Name90DegreeStaticHold => writeln!(f, "90_degree_static_hold"),
+            PlankExerciseName::Name45DegreePlank => write!(f, "45_degree_plank"),
+            PlankExerciseName::Weighted45DegreePlank => write!(f, "weighted_45_degree_plank"),
+            PlankExerciseName::Name90DegreeStaticHold => write!(f, "90_degree_static_hold"),
             PlankExerciseName::Weighted90DegreeStaticHold => {
-                writeln!(f, "weighted_90_degree_static_hold")
+                write!(f, "weighted_90_degree_static_hold")
             }
-            PlankExerciseName::BearCrawl => writeln!(f, "bear_crawl"),
-            PlankExerciseName::WeightedBearCrawl => writeln!(f, "weighted_bear_crawl"),
-            PlankExerciseName::CrossBodyMountainClimber => {
-                writeln!(f, "cross_body_mountain_climber")
-            }
+            PlankExerciseName::BearCrawl => write!(f, "bear_crawl"),
+            PlankExerciseName::WeightedBearCrawl => write!(f, "weighted_bear_crawl"),
+            PlankExerciseName::CrossBodyMountainClimber => write!(f, "cross_body_mountain_climber"),
             PlankExerciseName::WeightedCrossBodyMountainClimber => {
-                writeln!(f, "weighted_cross_body_mountain_climber")
+                write!(f, "weighted_cross_body_mountain_climber")
             }
-            PlankExerciseName::ElbowPlankPikeJacks => writeln!(f, "elbow_plank_pike_jacks"),
+            PlankExerciseName::ElbowPlankPikeJacks => write!(f, "elbow_plank_pike_jacks"),
             PlankExerciseName::WeightedElbowPlankPikeJacks => {
-                writeln!(f, "weighted_elbow_plank_pike_jacks")
+                write!(f, "weighted_elbow_plank_pike_jacks")
             }
-            PlankExerciseName::ElevatedFeetPlank => writeln!(f, "elevated_feet_plank"),
+            PlankExerciseName::ElevatedFeetPlank => write!(f, "elevated_feet_plank"),
             PlankExerciseName::WeightedElevatedFeetPlank => {
-                writeln!(f, "weighted_elevated_feet_plank")
+                write!(f, "weighted_elevated_feet_plank")
             }
-            PlankExerciseName::ElevatorAbs => writeln!(f, "elevator_abs"),
-            PlankExerciseName::WeightedElevatorAbs => writeln!(f, "weighted_elevator_abs"),
-            PlankExerciseName::ExtendedPlank => writeln!(f, "extended_plank"),
-            PlankExerciseName::WeightedExtendedPlank => writeln!(f, "weighted_extended_plank"),
-            PlankExerciseName::FullPlankPasseTwist => writeln!(f, "full_plank_passe_twist"),
+            PlankExerciseName::ElevatorAbs => write!(f, "elevator_abs"),
+            PlankExerciseName::WeightedElevatorAbs => write!(f, "weighted_elevator_abs"),
+            PlankExerciseName::ExtendedPlank => write!(f, "extended_plank"),
+            PlankExerciseName::WeightedExtendedPlank => write!(f, "weighted_extended_plank"),
+            PlankExerciseName::FullPlankPasseTwist => write!(f, "full_plank_passe_twist"),
             PlankExerciseName::WeightedFullPlankPasseTwist => {
-                writeln!(f, "weighted_full_plank_passe_twist")
+                write!(f, "weighted_full_plank_passe_twist")
             }
-            PlankExerciseName::InchingElbowPlank => writeln!(f, "inching_elbow_plank"),
+            PlankExerciseName::InchingElbowPlank => write!(f, "inching_elbow_plank"),
             PlankExerciseName::WeightedInchingElbowPlank => {
-                writeln!(f, "weighted_inching_elbow_plank")
+                write!(f, "weighted_inching_elbow_plank")
             }
-            PlankExerciseName::InchwormToSidePlank => writeln!(f, "inchworm_to_side_plank"),
+            PlankExerciseName::InchwormToSidePlank => write!(f, "inchworm_to_side_plank"),
             PlankExerciseName::WeightedInchwormToSidePlank => {
-                writeln!(f, "weighted_inchworm_to_side_plank")
+                write!(f, "weighted_inchworm_to_side_plank")
             }
-            PlankExerciseName::KneelingPlank => writeln!(f, "kneeling_plank"),
-            PlankExerciseName::WeightedKneelingPlank => writeln!(f, "weighted_kneeling_plank"),
+            PlankExerciseName::KneelingPlank => write!(f, "kneeling_plank"),
+            PlankExerciseName::WeightedKneelingPlank => write!(f, "weighted_kneeling_plank"),
             PlankExerciseName::KneelingSidePlankWithLegLift => {
-                writeln!(f, "kneeling_side_plank_with_leg_lift")
+                write!(f, "kneeling_side_plank_with_leg_lift")
             }
             PlankExerciseName::WeightedKneelingSidePlankWithLegLift => {
-                writeln!(f, "weighted_kneeling_side_plank_with_leg_lift")
+                write!(f, "weighted_kneeling_side_plank_with_leg_lift")
             }
-            PlankExerciseName::LateralRoll => writeln!(f, "lateral_roll"),
-            PlankExerciseName::WeightedLateralRoll => writeln!(f, "weighted_lateral_roll"),
-            PlankExerciseName::LyingReversePlank => writeln!(f, "lying_reverse_plank"),
+            PlankExerciseName::LateralRoll => write!(f, "lateral_roll"),
+            PlankExerciseName::WeightedLateralRoll => write!(f, "weighted_lateral_roll"),
+            PlankExerciseName::LyingReversePlank => write!(f, "lying_reverse_plank"),
             PlankExerciseName::WeightedLyingReversePlank => {
-                writeln!(f, "weighted_lying_reverse_plank")
+                write!(f, "weighted_lying_reverse_plank")
             }
             PlankExerciseName::MedicineBallMountainClimber => {
-                writeln!(f, "medicine_ball_mountain_climber")
+                write!(f, "medicine_ball_mountain_climber")
             }
             PlankExerciseName::WeightedMedicineBallMountainClimber => {
-                writeln!(f, "weighted_medicine_ball_mountain_climber")
+                write!(f, "weighted_medicine_ball_mountain_climber")
             }
             PlankExerciseName::ModifiedMountainClimberAndExtension => {
-                writeln!(f, "modified_mountain_climber_and_extension")
+                write!(f, "modified_mountain_climber_and_extension")
             }
             PlankExerciseName::WeightedModifiedMountainClimberAndExtension => {
-                writeln!(f, "weighted_modified_mountain_climber_and_extension")
+                write!(f, "weighted_modified_mountain_climber_and_extension")
             }
-            PlankExerciseName::MountainClimber => writeln!(f, "mountain_climber"),
-            PlankExerciseName::WeightedMountainClimber => writeln!(f, "weighted_mountain_climber"),
+            PlankExerciseName::MountainClimber => write!(f, "mountain_climber"),
+            PlankExerciseName::WeightedMountainClimber => write!(f, "weighted_mountain_climber"),
             PlankExerciseName::MountainClimberOnSlidingDiscs => {
-                writeln!(f, "mountain_climber_on_sliding_discs")
+                write!(f, "mountain_climber_on_sliding_discs")
             }
             PlankExerciseName::WeightedMountainClimberOnSlidingDiscs => {
-                writeln!(f, "weighted_mountain_climber_on_sliding_discs")
+                write!(f, "weighted_mountain_climber_on_sliding_discs")
             }
             PlankExerciseName::MountainClimberWithFeetOnBosuBall => {
-                writeln!(f, "mountain_climber_with_feet_on_bosu_ball")
+                write!(f, "mountain_climber_with_feet_on_bosu_ball")
             }
             PlankExerciseName::WeightedMountainClimberWithFeetOnBosuBall => {
-                writeln!(f, "weighted_mountain_climber_with_feet_on_bosu_ball")
+                write!(f, "weighted_mountain_climber_with_feet_on_bosu_ball")
             }
             PlankExerciseName::MountainClimberWithHandsOnBench => {
-                writeln!(f, "mountain_climber_with_hands_on_bench")
+                write!(f, "mountain_climber_with_hands_on_bench")
             }
             PlankExerciseName::MountainClimberWithHandsOnSwissBall => {
-                writeln!(f, "mountain_climber_with_hands_on_swiss_ball")
+                write!(f, "mountain_climber_with_hands_on_swiss_ball")
             }
             PlankExerciseName::WeightedMountainClimberWithHandsOnSwissBall => {
-                writeln!(f, "weighted_mountain_climber_with_hands_on_swiss_ball")
+                write!(f, "weighted_mountain_climber_with_hands_on_swiss_ball")
             }
-            PlankExerciseName::Plank => writeln!(f, "plank"),
+            PlankExerciseName::Plank => write!(f, "plank"),
             PlankExerciseName::PlankJacksWithFeetOnSlidingDiscs => {
-                writeln!(f, "plank_jacks_with_feet_on_sliding_discs")
+                write!(f, "plank_jacks_with_feet_on_sliding_discs")
             }
             PlankExerciseName::WeightedPlankJacksWithFeetOnSlidingDiscs => {
-                writeln!(f, "weighted_plank_jacks_with_feet_on_sliding_discs")
+                write!(f, "weighted_plank_jacks_with_feet_on_sliding_discs")
             }
-            PlankExerciseName::PlankKneeTwist => writeln!(f, "plank_knee_twist"),
-            PlankExerciseName::WeightedPlankKneeTwist => writeln!(f, "weighted_plank_knee_twist"),
-            PlankExerciseName::PlankPikeJumps => writeln!(f, "plank_pike_jumps"),
-            PlankExerciseName::WeightedPlankPikeJumps => writeln!(f, "weighted_plank_pike_jumps"),
-            PlankExerciseName::PlankPikes => writeln!(f, "plank_pikes"),
-            PlankExerciseName::WeightedPlankPikes => writeln!(f, "weighted_plank_pikes"),
-            PlankExerciseName::PlankToStandUp => writeln!(f, "plank_to_stand_up"),
-            PlankExerciseName::WeightedPlankToStandUp => writeln!(f, "weighted_plank_to_stand_up"),
-            PlankExerciseName::PlankWithArmRaise => writeln!(f, "plank_with_arm_raise"),
+            PlankExerciseName::PlankKneeTwist => write!(f, "plank_knee_twist"),
+            PlankExerciseName::WeightedPlankKneeTwist => write!(f, "weighted_plank_knee_twist"),
+            PlankExerciseName::PlankPikeJumps => write!(f, "plank_pike_jumps"),
+            PlankExerciseName::WeightedPlankPikeJumps => write!(f, "weighted_plank_pike_jumps"),
+            PlankExerciseName::PlankPikes => write!(f, "plank_pikes"),
+            PlankExerciseName::WeightedPlankPikes => write!(f, "weighted_plank_pikes"),
+            PlankExerciseName::PlankToStandUp => write!(f, "plank_to_stand_up"),
+            PlankExerciseName::WeightedPlankToStandUp => write!(f, "weighted_plank_to_stand_up"),
+            PlankExerciseName::PlankWithArmRaise => write!(f, "plank_with_arm_raise"),
             PlankExerciseName::WeightedPlankWithArmRaise => {
-                writeln!(f, "weighted_plank_with_arm_raise")
+                write!(f, "weighted_plank_with_arm_raise")
             }
-            PlankExerciseName::PlankWithKneeToElbow => writeln!(f, "plank_with_knee_to_elbow"),
+            PlankExerciseName::PlankWithKneeToElbow => write!(f, "plank_with_knee_to_elbow"),
             PlankExerciseName::WeightedPlankWithKneeToElbow => {
-                writeln!(f, "weighted_plank_with_knee_to_elbow")
+                write!(f, "weighted_plank_with_knee_to_elbow")
             }
-            PlankExerciseName::PlankWithObliqueCrunch => writeln!(f, "plank_with_oblique_crunch"),
+            PlankExerciseName::PlankWithObliqueCrunch => write!(f, "plank_with_oblique_crunch"),
             PlankExerciseName::WeightedPlankWithObliqueCrunch => {
-                writeln!(f, "weighted_plank_with_oblique_crunch")
+                write!(f, "weighted_plank_with_oblique_crunch")
             }
-            PlankExerciseName::PlyometricSidePlank => writeln!(f, "plyometric_side_plank"),
+            PlankExerciseName::PlyometricSidePlank => write!(f, "plyometric_side_plank"),
             PlankExerciseName::WeightedPlyometricSidePlank => {
-                writeln!(f, "weighted_plyometric_side_plank")
+                write!(f, "weighted_plyometric_side_plank")
             }
-            PlankExerciseName::RollingSidePlank => writeln!(f, "rolling_side_plank"),
-            PlankExerciseName::WeightedRollingSidePlank => {
-                writeln!(f, "weighted_rolling_side_plank")
-            }
-            PlankExerciseName::SideKickPlank => writeln!(f, "side_kick_plank"),
-            PlankExerciseName::WeightedSideKickPlank => writeln!(f, "weighted_side_kick_plank"),
-            PlankExerciseName::SidePlank => writeln!(f, "side_plank"),
-            PlankExerciseName::WeightedSidePlank => writeln!(f, "weighted_side_plank"),
-            PlankExerciseName::SidePlankAndRow => writeln!(f, "side_plank_and_row"),
-            PlankExerciseName::WeightedSidePlankAndRow => {
-                writeln!(f, "weighted_side_plank_and_row")
-            }
-            PlankExerciseName::SidePlankLift => writeln!(f, "side_plank_lift"),
-            PlankExerciseName::WeightedSidePlankLift => writeln!(f, "weighted_side_plank_lift"),
+            PlankExerciseName::RollingSidePlank => write!(f, "rolling_side_plank"),
+            PlankExerciseName::WeightedRollingSidePlank => write!(f, "weighted_rolling_side_plank"),
+            PlankExerciseName::SideKickPlank => write!(f, "side_kick_plank"),
+            PlankExerciseName::WeightedSideKickPlank => write!(f, "weighted_side_kick_plank"),
+            PlankExerciseName::SidePlank => write!(f, "side_plank"),
+            PlankExerciseName::WeightedSidePlank => write!(f, "weighted_side_plank"),
+            PlankExerciseName::SidePlankAndRow => write!(f, "side_plank_and_row"),
+            PlankExerciseName::WeightedSidePlankAndRow => write!(f, "weighted_side_plank_and_row"),
+            PlankExerciseName::SidePlankLift => write!(f, "side_plank_lift"),
+            PlankExerciseName::WeightedSidePlankLift => write!(f, "weighted_side_plank_lift"),
             PlankExerciseName::SidePlankWithElbowOnBosuBall => {
-                writeln!(f, "side_plank_with_elbow_on_bosu_ball")
+                write!(f, "side_plank_with_elbow_on_bosu_ball")
             }
             PlankExerciseName::WeightedSidePlankWithElbowOnBosuBall => {
-                writeln!(f, "weighted_side_plank_with_elbow_on_bosu_ball")
+                write!(f, "weighted_side_plank_with_elbow_on_bosu_ball")
             }
             PlankExerciseName::SidePlankWithFeetOnBench => {
-                writeln!(f, "side_plank_with_feet_on_bench")
+                write!(f, "side_plank_with_feet_on_bench")
             }
             PlankExerciseName::WeightedSidePlankWithFeetOnBench => {
-                writeln!(f, "weighted_side_plank_with_feet_on_bench")
+                write!(f, "weighted_side_plank_with_feet_on_bench")
             }
-            PlankExerciseName::SidePlankWithKneeCircle => {
-                writeln!(f, "side_plank_with_knee_circle")
-            }
+            PlankExerciseName::SidePlankWithKneeCircle => write!(f, "side_plank_with_knee_circle"),
             PlankExerciseName::WeightedSidePlankWithKneeCircle => {
-                writeln!(f, "weighted_side_plank_with_knee_circle")
+                write!(f, "weighted_side_plank_with_knee_circle")
             }
-            PlankExerciseName::SidePlankWithKneeTuck => writeln!(f, "side_plank_with_knee_tuck"),
+            PlankExerciseName::SidePlankWithKneeTuck => write!(f, "side_plank_with_knee_tuck"),
             PlankExerciseName::WeightedSidePlankWithKneeTuck => {
-                writeln!(f, "weighted_side_plank_with_knee_tuck")
+                write!(f, "weighted_side_plank_with_knee_tuck")
             }
-            PlankExerciseName::SidePlankWithLegLift => writeln!(f, "side_plank_with_leg_lift"),
+            PlankExerciseName::SidePlankWithLegLift => write!(f, "side_plank_with_leg_lift"),
             PlankExerciseName::WeightedSidePlankWithLegLift => {
-                writeln!(f, "weighted_side_plank_with_leg_lift")
+                write!(f, "weighted_side_plank_with_leg_lift")
             }
-            PlankExerciseName::SidePlankWithReachUnder => {
-                writeln!(f, "side_plank_with_reach_under")
-            }
+            PlankExerciseName::SidePlankWithReachUnder => write!(f, "side_plank_with_reach_under"),
             PlankExerciseName::WeightedSidePlankWithReachUnder => {
-                writeln!(f, "weighted_side_plank_with_reach_under")
+                write!(f, "weighted_side_plank_with_reach_under")
             }
             PlankExerciseName::SingleLegElevatedFeetPlank => {
-                writeln!(f, "single_leg_elevated_feet_plank")
+                write!(f, "single_leg_elevated_feet_plank")
             }
             PlankExerciseName::WeightedSingleLegElevatedFeetPlank => {
-                writeln!(f, "weighted_single_leg_elevated_feet_plank")
+                write!(f, "weighted_single_leg_elevated_feet_plank")
             }
-            PlankExerciseName::SingleLegFlexAndExtend => writeln!(f, "single_leg_flex_and_extend"),
+            PlankExerciseName::SingleLegFlexAndExtend => write!(f, "single_leg_flex_and_extend"),
             PlankExerciseName::WeightedSingleLegFlexAndExtend => {
-                writeln!(f, "weighted_single_leg_flex_and_extend")
+                write!(f, "weighted_single_leg_flex_and_extend")
             }
-            PlankExerciseName::SingleLegSidePlank => writeln!(f, "single_leg_side_plank"),
+            PlankExerciseName::SingleLegSidePlank => write!(f, "single_leg_side_plank"),
             PlankExerciseName::WeightedSingleLegSidePlank => {
-                writeln!(f, "weighted_single_leg_side_plank")
+                write!(f, "weighted_single_leg_side_plank")
             }
-            PlankExerciseName::SpidermanPlank => writeln!(f, "spiderman_plank"),
-            PlankExerciseName::WeightedSpidermanPlank => writeln!(f, "weighted_spiderman_plank"),
-            PlankExerciseName::StraightArmPlank => writeln!(f, "straight_arm_plank"),
-            PlankExerciseName::WeightedStraightArmPlank => {
-                writeln!(f, "weighted_straight_arm_plank")
-            }
+            PlankExerciseName::SpidermanPlank => write!(f, "spiderman_plank"),
+            PlankExerciseName::WeightedSpidermanPlank => write!(f, "weighted_spiderman_plank"),
+            PlankExerciseName::StraightArmPlank => write!(f, "straight_arm_plank"),
+            PlankExerciseName::WeightedStraightArmPlank => write!(f, "weighted_straight_arm_plank"),
             PlankExerciseName::StraightArmPlankWithShoulderTouch => {
-                writeln!(f, "straight_arm_plank_with_shoulder_touch")
+                write!(f, "straight_arm_plank_with_shoulder_touch")
             }
             PlankExerciseName::WeightedStraightArmPlankWithShoulderTouch => {
-                writeln!(f, "weighted_straight_arm_plank_with_shoulder_touch")
+                write!(f, "weighted_straight_arm_plank_with_shoulder_touch")
             }
-            PlankExerciseName::SwissBallPlank => writeln!(f, "swiss_ball_plank"),
-            PlankExerciseName::WeightedSwissBallPlank => writeln!(f, "weighted_swiss_ball_plank"),
-            PlankExerciseName::SwissBallPlankLegLift => writeln!(f, "swiss_ball_plank_leg_lift"),
+            PlankExerciseName::SwissBallPlank => write!(f, "swiss_ball_plank"),
+            PlankExerciseName::WeightedSwissBallPlank => write!(f, "weighted_swiss_ball_plank"),
+            PlankExerciseName::SwissBallPlankLegLift => write!(f, "swiss_ball_plank_leg_lift"),
             PlankExerciseName::WeightedSwissBallPlankLegLift => {
-                writeln!(f, "weighted_swiss_ball_plank_leg_lift")
+                write!(f, "weighted_swiss_ball_plank_leg_lift")
             }
             PlankExerciseName::SwissBallPlankLegLiftAndHold => {
-                writeln!(f, "swiss_ball_plank_leg_lift_and_hold")
+                write!(f, "swiss_ball_plank_leg_lift_and_hold")
             }
             PlankExerciseName::SwissBallPlankWithFeetOnBench => {
-                writeln!(f, "swiss_ball_plank_with_feet_on_bench")
+                write!(f, "swiss_ball_plank_with_feet_on_bench")
             }
             PlankExerciseName::WeightedSwissBallPlankWithFeetOnBench => {
-                writeln!(f, "weighted_swiss_ball_plank_with_feet_on_bench")
+                write!(f, "weighted_swiss_ball_plank_with_feet_on_bench")
             }
-            PlankExerciseName::SwissBallProneJackknife => writeln!(f, "swiss_ball_prone_jackknife"),
+            PlankExerciseName::SwissBallProneJackknife => write!(f, "swiss_ball_prone_jackknife"),
             PlankExerciseName::WeightedSwissBallProneJackknife => {
-                writeln!(f, "weighted_swiss_ball_prone_jackknife")
+                write!(f, "weighted_swiss_ball_prone_jackknife")
             }
-            PlankExerciseName::SwissBallSidePlank => writeln!(f, "swiss_ball_side_plank"),
+            PlankExerciseName::SwissBallSidePlank => write!(f, "swiss_ball_side_plank"),
             PlankExerciseName::WeightedSwissBallSidePlank => {
-                writeln!(f, "weighted_swiss_ball_side_plank")
+                write!(f, "weighted_swiss_ball_side_plank")
             }
-            PlankExerciseName::ThreeWayPlank => writeln!(f, "three_way_plank"),
-            PlankExerciseName::WeightedThreeWayPlank => writeln!(f, "weighted_three_way_plank"),
-            PlankExerciseName::TowelPlankAndKneeIn => writeln!(f, "towel_plank_and_knee_in"),
+            PlankExerciseName::ThreeWayPlank => write!(f, "three_way_plank"),
+            PlankExerciseName::WeightedThreeWayPlank => write!(f, "weighted_three_way_plank"),
+            PlankExerciseName::TowelPlankAndKneeIn => write!(f, "towel_plank_and_knee_in"),
             PlankExerciseName::WeightedTowelPlankAndKneeIn => {
-                writeln!(f, "weighted_towel_plank_and_knee_in")
+                write!(f, "weighted_towel_plank_and_knee_in")
             }
-            PlankExerciseName::TStabilization => writeln!(f, "t_stabilization"),
-            PlankExerciseName::WeightedTStabilization => writeln!(f, "weighted_t_stabilization"),
-            PlankExerciseName::TurkishGetUpToSidePlank => {
-                writeln!(f, "turkish_get_up_to_side_plank")
-            }
+            PlankExerciseName::TStabilization => write!(f, "t_stabilization"),
+            PlankExerciseName::WeightedTStabilization => write!(f, "weighted_t_stabilization"),
+            PlankExerciseName::TurkishGetUpToSidePlank => write!(f, "turkish_get_up_to_side_plank"),
             PlankExerciseName::WeightedTurkishGetUpToSidePlank => {
-                writeln!(f, "weighted_turkish_get_up_to_side_plank")
+                write!(f, "weighted_turkish_get_up_to_side_plank")
             }
-            PlankExerciseName::TwoPointPlank => writeln!(f, "two_point_plank"),
-            PlankExerciseName::WeightedTwoPointPlank => writeln!(f, "weighted_two_point_plank"),
-            PlankExerciseName::WeightedPlank => writeln!(f, "weighted_plank"),
+            PlankExerciseName::TwoPointPlank => write!(f, "two_point_plank"),
+            PlankExerciseName::WeightedTwoPointPlank => write!(f, "weighted_two_point_plank"),
+            PlankExerciseName::WeightedPlank => write!(f, "weighted_plank"),
             PlankExerciseName::WideStancePlankWithDiagonalArmLift => {
-                writeln!(f, "wide_stance_plank_with_diagonal_arm_lift")
+                write!(f, "wide_stance_plank_with_diagonal_arm_lift")
             }
             PlankExerciseName::WeightedWideStancePlankWithDiagonalArmLift => {
-                writeln!(f, "weighted_wide_stance_plank_with_diagonal_arm_lift")
+                write!(f, "weighted_wide_stance_plank_with_diagonal_arm_lift")
             }
             PlankExerciseName::WideStancePlankWithDiagonalLegLift => {
-                writeln!(f, "wide_stance_plank_with_diagonal_leg_lift")
+                write!(f, "wide_stance_plank_with_diagonal_leg_lift")
             }
             PlankExerciseName::WeightedWideStancePlankWithDiagonalLegLift => {
-                writeln!(f, "weighted_wide_stance_plank_with_diagonal_leg_lift")
+                write!(f, "weighted_wide_stance_plank_with_diagonal_leg_lift")
             }
             PlankExerciseName::WideStancePlankWithLegLift => {
-                writeln!(f, "wide_stance_plank_with_leg_lift")
+                write!(f, "wide_stance_plank_with_leg_lift")
             }
             PlankExerciseName::WeightedWideStancePlankWithLegLift => {
-                writeln!(f, "weighted_wide_stance_plank_with_leg_lift")
+                write!(f, "weighted_wide_stance_plank_with_leg_lift")
             }
             PlankExerciseName::WideStancePlankWithOppositeArmAndLegLift => {
-                writeln!(f, "wide_stance_plank_with_opposite_arm_and_leg_lift")
+                write!(f, "wide_stance_plank_with_opposite_arm_and_leg_lift")
             }
             PlankExerciseName::WeightedMountainClimberWithHandsOnBench => {
-                writeln!(f, "weighted_mountain_climber_with_hands_on_bench")
+                write!(f, "weighted_mountain_climber_with_hands_on_bench")
             }
             PlankExerciseName::WeightedSwissBallPlankLegLiftAndHold => {
-                writeln!(f, "weighted_swiss_ball_plank_leg_lift_and_hold")
+                write!(f, "weighted_swiss_ball_plank_leg_lift_and_hold")
             }
-            PlankExerciseName::WeightedWideStancePlankWithOppositeArmAndLegLift => writeln!(
+            PlankExerciseName::WeightedWideStancePlankWithOppositeArmAndLegLift => write!(
                 f,
                 "weighted_wide_stance_plank_with_opposite_arm_and_leg_lift"
             ),
             PlankExerciseName::PlankWithFeetOnSwissBall => {
-                writeln!(f, "plank_with_feet_on_swiss_ball")
+                write!(f, "plank_with_feet_on_swiss_ball")
             }
             PlankExerciseName::SidePlankToPlankWithReachUnder => {
-                writeln!(f, "side_plank_to_plank_with_reach_under")
+                write!(f, "side_plank_to_plank_with_reach_under")
             }
             PlankExerciseName::BridgeWithGluteLowerLift => {
-                writeln!(f, "bridge_with_glute_lower_lift")
+                write!(f, "bridge_with_glute_lower_lift")
             }
-            PlankExerciseName::BridgeOneLegBridge => writeln!(f, "bridge_one_leg_bridge"),
-            PlankExerciseName::PlankWithArmVariations => writeln!(f, "plank_with_arm_variations"),
-            PlankExerciseName::PlankWithLegLift => writeln!(f, "plank_with_leg_lift"),
-            PlankExerciseName::ReversePlankWithLegPull => {
-                writeln!(f, "reverse_plank_with_leg_pull")
-            }
-            PlankExerciseName::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            PlankExerciseName::BridgeOneLegBridge => write!(f, "bridge_one_leg_bridge"),
+            PlankExerciseName::PlankWithArmVariations => write!(f, "plank_with_arm_variations"),
+            PlankExerciseName::PlankWithLegLift => write!(f, "plank_with_leg_lift"),
+            PlankExerciseName::ReversePlankWithLegPull => write!(f, "reverse_plank_with_leg_pull"),
+            PlankExerciseName::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -16153,60 +16049,58 @@ impl PlyoExerciseName {
 impl fmt::Display for PlyoExerciseName {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            PlyoExerciseName::AlternatingJumpLunge => writeln!(f, "alternating_jump_lunge"),
+            PlyoExerciseName::AlternatingJumpLunge => write!(f, "alternating_jump_lunge"),
             PlyoExerciseName::WeightedAlternatingJumpLunge => {
-                writeln!(f, "weighted_alternating_jump_lunge")
+                write!(f, "weighted_alternating_jump_lunge")
             }
-            PlyoExerciseName::BarbellJumpSquat => writeln!(f, "barbell_jump_squat"),
-            PlyoExerciseName::BodyWeightJumpSquat => writeln!(f, "body_weight_jump_squat"),
-            PlyoExerciseName::WeightedJumpSquat => writeln!(f, "weighted_jump_squat"),
-            PlyoExerciseName::CrossKneeStrike => writeln!(f, "cross_knee_strike"),
-            PlyoExerciseName::WeightedCrossKneeStrike => writeln!(f, "weighted_cross_knee_strike"),
-            PlyoExerciseName::DepthJump => writeln!(f, "depth_jump"),
-            PlyoExerciseName::WeightedDepthJump => writeln!(f, "weighted_depth_jump"),
-            PlyoExerciseName::DumbbellJumpSquat => writeln!(f, "dumbbell_jump_squat"),
-            PlyoExerciseName::DumbbellSplitJump => writeln!(f, "dumbbell_split_jump"),
-            PlyoExerciseName::FrontKneeStrike => writeln!(f, "front_knee_strike"),
-            PlyoExerciseName::WeightedFrontKneeStrike => writeln!(f, "weighted_front_knee_strike"),
-            PlyoExerciseName::HighBoxJump => writeln!(f, "high_box_jump"),
-            PlyoExerciseName::WeightedHighBoxJump => writeln!(f, "weighted_high_box_jump"),
+            PlyoExerciseName::BarbellJumpSquat => write!(f, "barbell_jump_squat"),
+            PlyoExerciseName::BodyWeightJumpSquat => write!(f, "body_weight_jump_squat"),
+            PlyoExerciseName::WeightedJumpSquat => write!(f, "weighted_jump_squat"),
+            PlyoExerciseName::CrossKneeStrike => write!(f, "cross_knee_strike"),
+            PlyoExerciseName::WeightedCrossKneeStrike => write!(f, "weighted_cross_knee_strike"),
+            PlyoExerciseName::DepthJump => write!(f, "depth_jump"),
+            PlyoExerciseName::WeightedDepthJump => write!(f, "weighted_depth_jump"),
+            PlyoExerciseName::DumbbellJumpSquat => write!(f, "dumbbell_jump_squat"),
+            PlyoExerciseName::DumbbellSplitJump => write!(f, "dumbbell_split_jump"),
+            PlyoExerciseName::FrontKneeStrike => write!(f, "front_knee_strike"),
+            PlyoExerciseName::WeightedFrontKneeStrike => write!(f, "weighted_front_knee_strike"),
+            PlyoExerciseName::HighBoxJump => write!(f, "high_box_jump"),
+            PlyoExerciseName::WeightedHighBoxJump => write!(f, "weighted_high_box_jump"),
             PlyoExerciseName::IsometricExplosiveBodyWeightJumpSquat => {
-                writeln!(f, "isometric_explosive_body_weight_jump_squat")
+                write!(f, "isometric_explosive_body_weight_jump_squat")
             }
             PlyoExerciseName::WeightedIsometricExplosiveJumpSquat => {
-                writeln!(f, "weighted_isometric_explosive_jump_squat")
+                write!(f, "weighted_isometric_explosive_jump_squat")
             }
-            PlyoExerciseName::LateralLeapAndHop => writeln!(f, "lateral_leap_and_hop"),
+            PlyoExerciseName::LateralLeapAndHop => write!(f, "lateral_leap_and_hop"),
             PlyoExerciseName::WeightedLateralLeapAndHop => {
-                writeln!(f, "weighted_lateral_leap_and_hop")
+                write!(f, "weighted_lateral_leap_and_hop")
             }
-            PlyoExerciseName::LateralPlyoSquats => writeln!(f, "lateral_plyo_squats"),
+            PlyoExerciseName::LateralPlyoSquats => write!(f, "lateral_plyo_squats"),
             PlyoExerciseName::WeightedLateralPlyoSquats => {
-                writeln!(f, "weighted_lateral_plyo_squats")
+                write!(f, "weighted_lateral_plyo_squats")
             }
-            PlyoExerciseName::LateralSlide => writeln!(f, "lateral_slide"),
-            PlyoExerciseName::WeightedLateralSlide => writeln!(f, "weighted_lateral_slide"),
+            PlyoExerciseName::LateralSlide => write!(f, "lateral_slide"),
+            PlyoExerciseName::WeightedLateralSlide => write!(f, "weighted_lateral_slide"),
             PlyoExerciseName::MedicineBallOverheadThrows => {
-                writeln!(f, "medicine_ball_overhead_throws")
+                write!(f, "medicine_ball_overhead_throws")
             }
-            PlyoExerciseName::MedicineBallSideThrow => writeln!(f, "medicine_ball_side_throw"),
-            PlyoExerciseName::MedicineBallSlam => writeln!(f, "medicine_ball_slam"),
+            PlyoExerciseName::MedicineBallSideThrow => write!(f, "medicine_ball_side_throw"),
+            PlyoExerciseName::MedicineBallSlam => write!(f, "medicine_ball_slam"),
             PlyoExerciseName::SideToSideMedicineBallThrows => {
-                writeln!(f, "side_to_side_medicine_ball_throws")
+                write!(f, "side_to_side_medicine_ball_throws")
             }
-            PlyoExerciseName::SideToSideShuffleJump => writeln!(f, "side_to_side_shuffle_jump"),
+            PlyoExerciseName::SideToSideShuffleJump => write!(f, "side_to_side_shuffle_jump"),
             PlyoExerciseName::WeightedSideToSideShuffleJump => {
-                writeln!(f, "weighted_side_to_side_shuffle_jump")
+                write!(f, "weighted_side_to_side_shuffle_jump")
             }
-            PlyoExerciseName::SquatJumpOntoBox => writeln!(f, "squat_jump_onto_box"),
-            PlyoExerciseName::WeightedSquatJumpOntoBox => {
-                writeln!(f, "weighted_squat_jump_onto_box")
-            }
-            PlyoExerciseName::SquatJumpsInAndOut => writeln!(f, "squat_jumps_in_and_out"),
+            PlyoExerciseName::SquatJumpOntoBox => write!(f, "squat_jump_onto_box"),
+            PlyoExerciseName::WeightedSquatJumpOntoBox => write!(f, "weighted_squat_jump_onto_box"),
+            PlyoExerciseName::SquatJumpsInAndOut => write!(f, "squat_jumps_in_and_out"),
             PlyoExerciseName::WeightedSquatJumpsInAndOut => {
-                writeln!(f, "weighted_squat_jumps_in_and_out")
+                write!(f, "weighted_squat_jumps_in_and_out")
             }
-            PlyoExerciseName::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            PlyoExerciseName::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -16350,58 +16244,48 @@ impl PullUpExerciseName {
 impl fmt::Display for PullUpExerciseName {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            PullUpExerciseName::BandedPullUps => writeln!(f, "banded_pull_ups"),
-            PullUpExerciseName::Name30DegreeLatPulldown => writeln!(f, "30_degree_lat_pulldown"),
-            PullUpExerciseName::BandAssistedChinUp => writeln!(f, "band_assisted_chin_up"),
-            PullUpExerciseName::CloseGripChinUp => writeln!(f, "close_grip_chin_up"),
-            PullUpExerciseName::WeightedCloseGripChinUp => {
-                writeln!(f, "weighted_close_grip_chin_up")
-            }
-            PullUpExerciseName::CloseGripLatPulldown => writeln!(f, "close_grip_lat_pulldown"),
-            PullUpExerciseName::CrossoverChinUp => writeln!(f, "crossover_chin_up"),
-            PullUpExerciseName::WeightedCrossoverChinUp => {
-                writeln!(f, "weighted_crossover_chin_up")
-            }
-            PullUpExerciseName::EzBarPullover => writeln!(f, "ez_bar_pullover"),
-            PullUpExerciseName::HangingHurdle => writeln!(f, "hanging_hurdle"),
-            PullUpExerciseName::WeightedHangingHurdle => writeln!(f, "weighted_hanging_hurdle"),
-            PullUpExerciseName::KneelingLatPulldown => writeln!(f, "kneeling_lat_pulldown"),
+            PullUpExerciseName::BandedPullUps => write!(f, "banded_pull_ups"),
+            PullUpExerciseName::Name30DegreeLatPulldown => write!(f, "30_degree_lat_pulldown"),
+            PullUpExerciseName::BandAssistedChinUp => write!(f, "band_assisted_chin_up"),
+            PullUpExerciseName::CloseGripChinUp => write!(f, "close_grip_chin_up"),
+            PullUpExerciseName::WeightedCloseGripChinUp => write!(f, "weighted_close_grip_chin_up"),
+            PullUpExerciseName::CloseGripLatPulldown => write!(f, "close_grip_lat_pulldown"),
+            PullUpExerciseName::CrossoverChinUp => write!(f, "crossover_chin_up"),
+            PullUpExerciseName::WeightedCrossoverChinUp => write!(f, "weighted_crossover_chin_up"),
+            PullUpExerciseName::EzBarPullover => write!(f, "ez_bar_pullover"),
+            PullUpExerciseName::HangingHurdle => write!(f, "hanging_hurdle"),
+            PullUpExerciseName::WeightedHangingHurdle => write!(f, "weighted_hanging_hurdle"),
+            PullUpExerciseName::KneelingLatPulldown => write!(f, "kneeling_lat_pulldown"),
             PullUpExerciseName::KneelingUnderhandGripLatPulldown => {
-                writeln!(f, "kneeling_underhand_grip_lat_pulldown")
+                write!(f, "kneeling_underhand_grip_lat_pulldown")
             }
-            PullUpExerciseName::LatPulldown => writeln!(f, "lat_pulldown"),
-            PullUpExerciseName::MixedGripChinUp => writeln!(f, "mixed_grip_chin_up"),
-            PullUpExerciseName::WeightedMixedGripChinUp => {
-                writeln!(f, "weighted_mixed_grip_chin_up")
-            }
-            PullUpExerciseName::MixedGripPullUp => writeln!(f, "mixed_grip_pull_up"),
-            PullUpExerciseName::WeightedMixedGripPullUp => {
-                writeln!(f, "weighted_mixed_grip_pull_up")
-            }
-            PullUpExerciseName::ReverseGripPulldown => writeln!(f, "reverse_grip_pulldown"),
-            PullUpExerciseName::StandingCablePullover => writeln!(f, "standing_cable_pullover"),
-            PullUpExerciseName::StraightArmPulldown => writeln!(f, "straight_arm_pulldown"),
-            PullUpExerciseName::SwissBallEzBarPullover => writeln!(f, "swiss_ball_ez_bar_pullover"),
-            PullUpExerciseName::TowelPullUp => writeln!(f, "towel_pull_up"),
-            PullUpExerciseName::WeightedTowelPullUp => writeln!(f, "weighted_towel_pull_up"),
-            PullUpExerciseName::WeightedPullUp => writeln!(f, "weighted_pull_up"),
-            PullUpExerciseName::WideGripLatPulldown => writeln!(f, "wide_grip_lat_pulldown"),
-            PullUpExerciseName::WideGripPullUp => writeln!(f, "wide_grip_pull_up"),
-            PullUpExerciseName::WeightedWideGripPullUp => writeln!(f, "weighted_wide_grip_pull_up"),
-            PullUpExerciseName::BurpeePullUp => writeln!(f, "burpee_pull_up"),
-            PullUpExerciseName::WeightedBurpeePullUp => writeln!(f, "weighted_burpee_pull_up"),
-            PullUpExerciseName::JumpingPullUps => writeln!(f, "jumping_pull_ups"),
-            PullUpExerciseName::WeightedJumpingPullUps => writeln!(f, "weighted_jumping_pull_ups"),
-            PullUpExerciseName::KippingPullUp => writeln!(f, "kipping_pull_up"),
-            PullUpExerciseName::WeightedKippingPullUp => writeln!(f, "weighted_kipping_pull_up"),
-            PullUpExerciseName::LPullUp => writeln!(f, "l_pull_up"),
-            PullUpExerciseName::WeightedLPullUp => writeln!(f, "weighted_l_pull_up"),
-            PullUpExerciseName::SuspendedChinUp => writeln!(f, "suspended_chin_up"),
-            PullUpExerciseName::WeightedSuspendedChinUp => {
-                writeln!(f, "weighted_suspended_chin_up")
-            }
-            PullUpExerciseName::PullUp => writeln!(f, "pull_up"),
-            PullUpExerciseName::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            PullUpExerciseName::LatPulldown => write!(f, "lat_pulldown"),
+            PullUpExerciseName::MixedGripChinUp => write!(f, "mixed_grip_chin_up"),
+            PullUpExerciseName::WeightedMixedGripChinUp => write!(f, "weighted_mixed_grip_chin_up"),
+            PullUpExerciseName::MixedGripPullUp => write!(f, "mixed_grip_pull_up"),
+            PullUpExerciseName::WeightedMixedGripPullUp => write!(f, "weighted_mixed_grip_pull_up"),
+            PullUpExerciseName::ReverseGripPulldown => write!(f, "reverse_grip_pulldown"),
+            PullUpExerciseName::StandingCablePullover => write!(f, "standing_cable_pullover"),
+            PullUpExerciseName::StraightArmPulldown => write!(f, "straight_arm_pulldown"),
+            PullUpExerciseName::SwissBallEzBarPullover => write!(f, "swiss_ball_ez_bar_pullover"),
+            PullUpExerciseName::TowelPullUp => write!(f, "towel_pull_up"),
+            PullUpExerciseName::WeightedTowelPullUp => write!(f, "weighted_towel_pull_up"),
+            PullUpExerciseName::WeightedPullUp => write!(f, "weighted_pull_up"),
+            PullUpExerciseName::WideGripLatPulldown => write!(f, "wide_grip_lat_pulldown"),
+            PullUpExerciseName::WideGripPullUp => write!(f, "wide_grip_pull_up"),
+            PullUpExerciseName::WeightedWideGripPullUp => write!(f, "weighted_wide_grip_pull_up"),
+            PullUpExerciseName::BurpeePullUp => write!(f, "burpee_pull_up"),
+            PullUpExerciseName::WeightedBurpeePullUp => write!(f, "weighted_burpee_pull_up"),
+            PullUpExerciseName::JumpingPullUps => write!(f, "jumping_pull_ups"),
+            PullUpExerciseName::WeightedJumpingPullUps => write!(f, "weighted_jumping_pull_ups"),
+            PullUpExerciseName::KippingPullUp => write!(f, "kipping_pull_up"),
+            PullUpExerciseName::WeightedKippingPullUp => write!(f, "weighted_kipping_pull_up"),
+            PullUpExerciseName::LPullUp => write!(f, "l_pull_up"),
+            PullUpExerciseName::WeightedLPullUp => write!(f, "weighted_l_pull_up"),
+            PullUpExerciseName::SuspendedChinUp => write!(f, "suspended_chin_up"),
+            PullUpExerciseName::WeightedSuspendedChinUp => write!(f, "weighted_suspended_chin_up"),
+            PullUpExerciseName::PullUp => write!(f, "pull_up"),
+            PullUpExerciseName::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -16631,154 +16515,142 @@ impl PushUpExerciseName {
 impl fmt::Display for PushUpExerciseName {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            PushUpExerciseName::ChestPressWithBand => writeln!(f, "chest_press_with_band"),
+            PushUpExerciseName::ChestPressWithBand => write!(f, "chest_press_with_band"),
             PushUpExerciseName::AlternatingStaggeredPushUp => {
-                writeln!(f, "alternating_staggered_push_up")
+                write!(f, "alternating_staggered_push_up")
             }
             PushUpExerciseName::WeightedAlternatingStaggeredPushUp => {
-                writeln!(f, "weighted_alternating_staggered_push_up")
+                write!(f, "weighted_alternating_staggered_push_up")
             }
             PushUpExerciseName::AlternatingHandsMedicineBallPushUp => {
-                writeln!(f, "alternating_hands_medicine_ball_push_up")
+                write!(f, "alternating_hands_medicine_ball_push_up")
             }
             PushUpExerciseName::WeightedAlternatingHandsMedicineBallPushUp => {
-                writeln!(f, "weighted_alternating_hands_medicine_ball_push_up")
+                write!(f, "weighted_alternating_hands_medicine_ball_push_up")
             }
-            PushUpExerciseName::BosuBallPushUp => writeln!(f, "bosu_ball_push_up"),
-            PushUpExerciseName::WeightedBosuBallPushUp => writeln!(f, "weighted_bosu_ball_push_up"),
-            PushUpExerciseName::ClappingPushUp => writeln!(f, "clapping_push_up"),
-            PushUpExerciseName::WeightedClappingPushUp => writeln!(f, "weighted_clapping_push_up"),
+            PushUpExerciseName::BosuBallPushUp => write!(f, "bosu_ball_push_up"),
+            PushUpExerciseName::WeightedBosuBallPushUp => write!(f, "weighted_bosu_ball_push_up"),
+            PushUpExerciseName::ClappingPushUp => write!(f, "clapping_push_up"),
+            PushUpExerciseName::WeightedClappingPushUp => write!(f, "weighted_clapping_push_up"),
             PushUpExerciseName::CloseGripMedicineBallPushUp => {
-                writeln!(f, "close_grip_medicine_ball_push_up")
+                write!(f, "close_grip_medicine_ball_push_up")
             }
             PushUpExerciseName::WeightedCloseGripMedicineBallPushUp => {
-                writeln!(f, "weighted_close_grip_medicine_ball_push_up")
+                write!(f, "weighted_close_grip_medicine_ball_push_up")
             }
-            PushUpExerciseName::CloseHandsPushUp => writeln!(f, "close_hands_push_up"),
+            PushUpExerciseName::CloseHandsPushUp => write!(f, "close_hands_push_up"),
             PushUpExerciseName::WeightedCloseHandsPushUp => {
-                writeln!(f, "weighted_close_hands_push_up")
+                write!(f, "weighted_close_hands_push_up")
             }
-            PushUpExerciseName::DeclinePushUp => writeln!(f, "decline_push_up"),
-            PushUpExerciseName::WeightedDeclinePushUp => writeln!(f, "weighted_decline_push_up"),
-            PushUpExerciseName::DiamondPushUp => writeln!(f, "diamond_push_up"),
-            PushUpExerciseName::WeightedDiamondPushUp => writeln!(f, "weighted_diamond_push_up"),
+            PushUpExerciseName::DeclinePushUp => write!(f, "decline_push_up"),
+            PushUpExerciseName::WeightedDeclinePushUp => write!(f, "weighted_decline_push_up"),
+            PushUpExerciseName::DiamondPushUp => write!(f, "diamond_push_up"),
+            PushUpExerciseName::WeightedDiamondPushUp => write!(f, "weighted_diamond_push_up"),
             PushUpExerciseName::ExplosiveCrossoverPushUp => {
-                writeln!(f, "explosive_crossover_push_up")
+                write!(f, "explosive_crossover_push_up")
             }
             PushUpExerciseName::WeightedExplosiveCrossoverPushUp => {
-                writeln!(f, "weighted_explosive_crossover_push_up")
+                write!(f, "weighted_explosive_crossover_push_up")
             }
-            PushUpExerciseName::ExplosivePushUp => writeln!(f, "explosive_push_up"),
-            PushUpExerciseName::WeightedExplosivePushUp => {
-                writeln!(f, "weighted_explosive_push_up")
-            }
+            PushUpExerciseName::ExplosivePushUp => write!(f, "explosive_push_up"),
+            PushUpExerciseName::WeightedExplosivePushUp => write!(f, "weighted_explosive_push_up"),
             PushUpExerciseName::FeetElevatedSideToSidePushUp => {
-                writeln!(f, "feet_elevated_side_to_side_push_up")
+                write!(f, "feet_elevated_side_to_side_push_up")
             }
             PushUpExerciseName::WeightedFeetElevatedSideToSidePushUp => {
-                writeln!(f, "weighted_feet_elevated_side_to_side_push_up")
+                write!(f, "weighted_feet_elevated_side_to_side_push_up")
             }
-            PushUpExerciseName::HandReleasePushUp => writeln!(f, "hand_release_push_up"),
+            PushUpExerciseName::HandReleasePushUp => write!(f, "hand_release_push_up"),
             PushUpExerciseName::WeightedHandReleasePushUp => {
-                writeln!(f, "weighted_hand_release_push_up")
+                write!(f, "weighted_hand_release_push_up")
             }
-            PushUpExerciseName::HandstandPushUp => writeln!(f, "handstand_push_up"),
-            PushUpExerciseName::WeightedHandstandPushUp => {
-                writeln!(f, "weighted_handstand_push_up")
-            }
-            PushUpExerciseName::InclinePushUp => writeln!(f, "incline_push_up"),
-            PushUpExerciseName::WeightedInclinePushUp => writeln!(f, "weighted_incline_push_up"),
+            PushUpExerciseName::HandstandPushUp => write!(f, "handstand_push_up"),
+            PushUpExerciseName::WeightedHandstandPushUp => write!(f, "weighted_handstand_push_up"),
+            PushUpExerciseName::InclinePushUp => write!(f, "incline_push_up"),
+            PushUpExerciseName::WeightedInclinePushUp => write!(f, "weighted_incline_push_up"),
             PushUpExerciseName::IsometricExplosivePushUp => {
-                writeln!(f, "isometric_explosive_push_up")
+                write!(f, "isometric_explosive_push_up")
             }
             PushUpExerciseName::WeightedIsometricExplosivePushUp => {
-                writeln!(f, "weighted_isometric_explosive_push_up")
+                write!(f, "weighted_isometric_explosive_push_up")
             }
-            PushUpExerciseName::JudoPushUp => writeln!(f, "judo_push_up"),
-            PushUpExerciseName::WeightedJudoPushUp => writeln!(f, "weighted_judo_push_up"),
-            PushUpExerciseName::KneelingPushUp => writeln!(f, "kneeling_push_up"),
-            PushUpExerciseName::WeightedKneelingPushUp => writeln!(f, "weighted_kneeling_push_up"),
-            PushUpExerciseName::MedicineBallChestPass => writeln!(f, "medicine_ball_chest_pass"),
-            PushUpExerciseName::MedicineBallPushUp => writeln!(f, "medicine_ball_push_up"),
+            PushUpExerciseName::JudoPushUp => write!(f, "judo_push_up"),
+            PushUpExerciseName::WeightedJudoPushUp => write!(f, "weighted_judo_push_up"),
+            PushUpExerciseName::KneelingPushUp => write!(f, "kneeling_push_up"),
+            PushUpExerciseName::WeightedKneelingPushUp => write!(f, "weighted_kneeling_push_up"),
+            PushUpExerciseName::MedicineBallChestPass => write!(f, "medicine_ball_chest_pass"),
+            PushUpExerciseName::MedicineBallPushUp => write!(f, "medicine_ball_push_up"),
             PushUpExerciseName::WeightedMedicineBallPushUp => {
-                writeln!(f, "weighted_medicine_ball_push_up")
+                write!(f, "weighted_medicine_ball_push_up")
             }
-            PushUpExerciseName::OneArmPushUp => writeln!(f, "one_arm_push_up"),
-            PushUpExerciseName::WeightedOneArmPushUp => writeln!(f, "weighted_one_arm_push_up"),
-            PushUpExerciseName::WeightedPushUp => writeln!(f, "weighted_push_up"),
-            PushUpExerciseName::PushUpAndRow => writeln!(f, "push_up_and_row"),
-            PushUpExerciseName::WeightedPushUpAndRow => writeln!(f, "weighted_push_up_and_row"),
-            PushUpExerciseName::PushUpPlus => writeln!(f, "push_up_plus"),
-            PushUpExerciseName::WeightedPushUpPlus => writeln!(f, "weighted_push_up_plus"),
+            PushUpExerciseName::OneArmPushUp => write!(f, "one_arm_push_up"),
+            PushUpExerciseName::WeightedOneArmPushUp => write!(f, "weighted_one_arm_push_up"),
+            PushUpExerciseName::WeightedPushUp => write!(f, "weighted_push_up"),
+            PushUpExerciseName::PushUpAndRow => write!(f, "push_up_and_row"),
+            PushUpExerciseName::WeightedPushUpAndRow => write!(f, "weighted_push_up_and_row"),
+            PushUpExerciseName::PushUpPlus => write!(f, "push_up_plus"),
+            PushUpExerciseName::WeightedPushUpPlus => write!(f, "weighted_push_up_plus"),
             PushUpExerciseName::PushUpWithFeetOnSwissBall => {
-                writeln!(f, "push_up_with_feet_on_swiss_ball")
+                write!(f, "push_up_with_feet_on_swiss_ball")
             }
             PushUpExerciseName::WeightedPushUpWithFeetOnSwissBall => {
-                writeln!(f, "weighted_push_up_with_feet_on_swiss_ball")
+                write!(f, "weighted_push_up_with_feet_on_swiss_ball")
             }
             PushUpExerciseName::PushUpWithOneHandOnMedicineBall => {
-                writeln!(f, "push_up_with_one_hand_on_medicine_ball")
+                write!(f, "push_up_with_one_hand_on_medicine_ball")
             }
             PushUpExerciseName::WeightedPushUpWithOneHandOnMedicineBall => {
-                writeln!(f, "weighted_push_up_with_one_hand_on_medicine_ball")
+                write!(f, "weighted_push_up_with_one_hand_on_medicine_ball")
             }
-            PushUpExerciseName::ShoulderPushUp => writeln!(f, "shoulder_push_up"),
-            PushUpExerciseName::WeightedShoulderPushUp => writeln!(f, "weighted_shoulder_push_up"),
+            PushUpExerciseName::ShoulderPushUp => write!(f, "shoulder_push_up"),
+            PushUpExerciseName::WeightedShoulderPushUp => write!(f, "weighted_shoulder_push_up"),
             PushUpExerciseName::SingleArmMedicineBallPushUp => {
-                writeln!(f, "single_arm_medicine_ball_push_up")
+                write!(f, "single_arm_medicine_ball_push_up")
             }
             PushUpExerciseName::WeightedSingleArmMedicineBallPushUp => {
-                writeln!(f, "weighted_single_arm_medicine_ball_push_up")
+                write!(f, "weighted_single_arm_medicine_ball_push_up")
             }
-            PushUpExerciseName::SpidermanPushUp => writeln!(f, "spiderman_push_up"),
-            PushUpExerciseName::WeightedSpidermanPushUp => {
-                writeln!(f, "weighted_spiderman_push_up")
-            }
-            PushUpExerciseName::StackedFeetPushUp => writeln!(f, "stacked_feet_push_up"),
+            PushUpExerciseName::SpidermanPushUp => write!(f, "spiderman_push_up"),
+            PushUpExerciseName::WeightedSpidermanPushUp => write!(f, "weighted_spiderman_push_up"),
+            PushUpExerciseName::StackedFeetPushUp => write!(f, "stacked_feet_push_up"),
             PushUpExerciseName::WeightedStackedFeetPushUp => {
-                writeln!(f, "weighted_stacked_feet_push_up")
+                write!(f, "weighted_stacked_feet_push_up")
             }
-            PushUpExerciseName::StaggeredHandsPushUp => writeln!(f, "staggered_hands_push_up"),
+            PushUpExerciseName::StaggeredHandsPushUp => write!(f, "staggered_hands_push_up"),
             PushUpExerciseName::WeightedStaggeredHandsPushUp => {
-                writeln!(f, "weighted_staggered_hands_push_up")
+                write!(f, "weighted_staggered_hands_push_up")
             }
-            PushUpExerciseName::SuspendedPushUp => writeln!(f, "suspended_push_up"),
-            PushUpExerciseName::WeightedSuspendedPushUp => {
-                writeln!(f, "weighted_suspended_push_up")
-            }
-            PushUpExerciseName::SwissBallPushUp => writeln!(f, "swiss_ball_push_up"),
-            PushUpExerciseName::WeightedSwissBallPushUp => {
-                writeln!(f, "weighted_swiss_ball_push_up")
-            }
-            PushUpExerciseName::SwissBallPushUpPlus => writeln!(f, "swiss_ball_push_up_plus"),
+            PushUpExerciseName::SuspendedPushUp => write!(f, "suspended_push_up"),
+            PushUpExerciseName::WeightedSuspendedPushUp => write!(f, "weighted_suspended_push_up"),
+            PushUpExerciseName::SwissBallPushUp => write!(f, "swiss_ball_push_up"),
+            PushUpExerciseName::WeightedSwissBallPushUp => write!(f, "weighted_swiss_ball_push_up"),
+            PushUpExerciseName::SwissBallPushUpPlus => write!(f, "swiss_ball_push_up_plus"),
             PushUpExerciseName::WeightedSwissBallPushUpPlus => {
-                writeln!(f, "weighted_swiss_ball_push_up_plus")
+                write!(f, "weighted_swiss_ball_push_up_plus")
             }
-            PushUpExerciseName::TPushUp => writeln!(f, "t_push_up"),
-            PushUpExerciseName::WeightedTPushUp => writeln!(f, "weighted_t_push_up"),
-            PushUpExerciseName::TripleStopPushUp => writeln!(f, "triple_stop_push_up"),
+            PushUpExerciseName::TPushUp => write!(f, "t_push_up"),
+            PushUpExerciseName::WeightedTPushUp => write!(f, "weighted_t_push_up"),
+            PushUpExerciseName::TripleStopPushUp => write!(f, "triple_stop_push_up"),
             PushUpExerciseName::WeightedTripleStopPushUp => {
-                writeln!(f, "weighted_triple_stop_push_up")
+                write!(f, "weighted_triple_stop_push_up")
             }
-            PushUpExerciseName::WideHandsPushUp => writeln!(f, "wide_hands_push_up"),
-            PushUpExerciseName::WeightedWideHandsPushUp => {
-                writeln!(f, "weighted_wide_hands_push_up")
-            }
+            PushUpExerciseName::WideHandsPushUp => write!(f, "wide_hands_push_up"),
+            PushUpExerciseName::WeightedWideHandsPushUp => write!(f, "weighted_wide_hands_push_up"),
             PushUpExerciseName::ParalletteHandstandPushUp => {
-                writeln!(f, "parallette_handstand_push_up")
+                write!(f, "parallette_handstand_push_up")
             }
             PushUpExerciseName::WeightedParalletteHandstandPushUp => {
-                writeln!(f, "weighted_parallette_handstand_push_up")
+                write!(f, "weighted_parallette_handstand_push_up")
             }
-            PushUpExerciseName::RingHandstandPushUp => writeln!(f, "ring_handstand_push_up"),
+            PushUpExerciseName::RingHandstandPushUp => write!(f, "ring_handstand_push_up"),
             PushUpExerciseName::WeightedRingHandstandPushUp => {
-                writeln!(f, "weighted_ring_handstand_push_up")
+                write!(f, "weighted_ring_handstand_push_up")
             }
-            PushUpExerciseName::RingPushUp => writeln!(f, "ring_push_up"),
-            PushUpExerciseName::WeightedRingPushUp => writeln!(f, "weighted_ring_push_up"),
-            PushUpExerciseName::PushUp => writeln!(f, "push_up"),
-            PushUpExerciseName::PilatesPushup => writeln!(f, "pilates_pushup"),
-            PushUpExerciseName::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            PushUpExerciseName::RingPushUp => write!(f, "ring_push_up"),
+            PushUpExerciseName::WeightedRingPushUp => write!(f, "weighted_ring_push_up"),
+            PushUpExerciseName::PushUp => write!(f, "push_up"),
+            PushUpExerciseName::PilatesPushup => write!(f, "pilates_pushup"),
+            PushUpExerciseName::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -16959,66 +16831,66 @@ impl fmt::Display for RowExerciseName {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
             RowExerciseName::BarbellStraightLegDeadliftToRow => {
-                writeln!(f, "barbell_straight_leg_deadlift_to_row")
+                write!(f, "barbell_straight_leg_deadlift_to_row")
             }
-            RowExerciseName::CableRowStanding => writeln!(f, "cable_row_standing"),
-            RowExerciseName::DumbbellRow => writeln!(f, "dumbbell_row"),
-            RowExerciseName::ElevatedFeetInvertedRow => writeln!(f, "elevated_feet_inverted_row"),
+            RowExerciseName::CableRowStanding => write!(f, "cable_row_standing"),
+            RowExerciseName::DumbbellRow => write!(f, "dumbbell_row"),
+            RowExerciseName::ElevatedFeetInvertedRow => write!(f, "elevated_feet_inverted_row"),
             RowExerciseName::WeightedElevatedFeetInvertedRow => {
-                writeln!(f, "weighted_elevated_feet_inverted_row")
+                write!(f, "weighted_elevated_feet_inverted_row")
             }
-            RowExerciseName::FacePull => writeln!(f, "face_pull"),
+            RowExerciseName::FacePull => write!(f, "face_pull"),
             RowExerciseName::FacePullWithExternalRotation => {
-                writeln!(f, "face_pull_with_external_rotation")
+                write!(f, "face_pull_with_external_rotation")
             }
             RowExerciseName::InvertedRowWithFeetOnSwissBall => {
-                writeln!(f, "inverted_row_with_feet_on_swiss_ball")
+                write!(f, "inverted_row_with_feet_on_swiss_ball")
             }
             RowExerciseName::WeightedInvertedRowWithFeetOnSwissBall => {
-                writeln!(f, "weighted_inverted_row_with_feet_on_swiss_ball")
+                write!(f, "weighted_inverted_row_with_feet_on_swiss_ball")
             }
-            RowExerciseName::KettlebellRow => writeln!(f, "kettlebell_row"),
-            RowExerciseName::ModifiedInvertedRow => writeln!(f, "modified_inverted_row"),
+            RowExerciseName::KettlebellRow => write!(f, "kettlebell_row"),
+            RowExerciseName::ModifiedInvertedRow => write!(f, "modified_inverted_row"),
             RowExerciseName::WeightedModifiedInvertedRow => {
-                writeln!(f, "weighted_modified_inverted_row")
+                write!(f, "weighted_modified_inverted_row")
             }
             RowExerciseName::NeutralGripAlternatingDumbbellRow => {
-                writeln!(f, "neutral_grip_alternating_dumbbell_row")
+                write!(f, "neutral_grip_alternating_dumbbell_row")
             }
-            RowExerciseName::OneArmBentOverRow => writeln!(f, "one_arm_bent_over_row"),
-            RowExerciseName::OneLeggedDumbbellRow => writeln!(f, "one_legged_dumbbell_row"),
-            RowExerciseName::RenegadeRow => writeln!(f, "renegade_row"),
-            RowExerciseName::ReverseGripBarbellRow => writeln!(f, "reverse_grip_barbell_row"),
-            RowExerciseName::RopeHandleCableRow => writeln!(f, "rope_handle_cable_row"),
-            RowExerciseName::SeatedCableRow => writeln!(f, "seated_cable_row"),
-            RowExerciseName::SeatedDumbbellRow => writeln!(f, "seated_dumbbell_row"),
-            RowExerciseName::SingleArmCableRow => writeln!(f, "single_arm_cable_row"),
+            RowExerciseName::OneArmBentOverRow => write!(f, "one_arm_bent_over_row"),
+            RowExerciseName::OneLeggedDumbbellRow => write!(f, "one_legged_dumbbell_row"),
+            RowExerciseName::RenegadeRow => write!(f, "renegade_row"),
+            RowExerciseName::ReverseGripBarbellRow => write!(f, "reverse_grip_barbell_row"),
+            RowExerciseName::RopeHandleCableRow => write!(f, "rope_handle_cable_row"),
+            RowExerciseName::SeatedCableRow => write!(f, "seated_cable_row"),
+            RowExerciseName::SeatedDumbbellRow => write!(f, "seated_dumbbell_row"),
+            RowExerciseName::SingleArmCableRow => write!(f, "single_arm_cable_row"),
             RowExerciseName::SingleArmCableRowAndRotation => {
-                writeln!(f, "single_arm_cable_row_and_rotation")
+                write!(f, "single_arm_cable_row_and_rotation")
             }
-            RowExerciseName::SingleArmInvertedRow => writeln!(f, "single_arm_inverted_row"),
+            RowExerciseName::SingleArmInvertedRow => write!(f, "single_arm_inverted_row"),
             RowExerciseName::WeightedSingleArmInvertedRow => {
-                writeln!(f, "weighted_single_arm_inverted_row")
+                write!(f, "weighted_single_arm_inverted_row")
             }
             RowExerciseName::SingleArmNeutralGripDumbbellRow => {
-                writeln!(f, "single_arm_neutral_grip_dumbbell_row")
+                write!(f, "single_arm_neutral_grip_dumbbell_row")
             }
             RowExerciseName::SingleArmNeutralGripDumbbellRowAndRotation => {
-                writeln!(f, "single_arm_neutral_grip_dumbbell_row_and_rotation")
+                write!(f, "single_arm_neutral_grip_dumbbell_row_and_rotation")
             }
-            RowExerciseName::SuspendedInvertedRow => writeln!(f, "suspended_inverted_row"),
+            RowExerciseName::SuspendedInvertedRow => write!(f, "suspended_inverted_row"),
             RowExerciseName::WeightedSuspendedInvertedRow => {
-                writeln!(f, "weighted_suspended_inverted_row")
+                write!(f, "weighted_suspended_inverted_row")
             }
-            RowExerciseName::TBarRow => writeln!(f, "t_bar_row"),
-            RowExerciseName::TowelGripInvertedRow => writeln!(f, "towel_grip_inverted_row"),
+            RowExerciseName::TBarRow => write!(f, "t_bar_row"),
+            RowExerciseName::TowelGripInvertedRow => write!(f, "towel_grip_inverted_row"),
             RowExerciseName::WeightedTowelGripInvertedRow => {
-                writeln!(f, "weighted_towel_grip_inverted_row")
+                write!(f, "weighted_towel_grip_inverted_row")
             }
-            RowExerciseName::UnderhandGripCableRow => writeln!(f, "underhand_grip_cable_row"),
-            RowExerciseName::VGripCableRow => writeln!(f, "v_grip_cable_row"),
-            RowExerciseName::WideGripSeatedCableRow => writeln!(f, "wide_grip_seated_cable_row"),
-            RowExerciseName::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            RowExerciseName::UnderhandGripCableRow => write!(f, "underhand_grip_cable_row"),
+            RowExerciseName::VGripCableRow => write!(f, "v_grip_cable_row"),
+            RowExerciseName::WideGripSeatedCableRow => write!(f, "wide_grip_seated_cable_row"),
+            RowExerciseName::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -17134,69 +17006,65 @@ impl fmt::Display for ShoulderPressExerciseName {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
             ShoulderPressExerciseName::AlternatingDumbbellShoulderPress => {
-                writeln!(f, "alternating_dumbbell_shoulder_press")
+                write!(f, "alternating_dumbbell_shoulder_press")
             }
-            ShoulderPressExerciseName::ArnoldPress => writeln!(f, "arnold_press"),
+            ShoulderPressExerciseName::ArnoldPress => write!(f, "arnold_press"),
             ShoulderPressExerciseName::BarbellFrontSquatToPushPress => {
-                writeln!(f, "barbell_front_squat_to_push_press")
+                write!(f, "barbell_front_squat_to_push_press")
             }
-            ShoulderPressExerciseName::BarbellPushPress => writeln!(f, "barbell_push_press"),
-            ShoulderPressExerciseName::BarbellShoulderPress => {
-                writeln!(f, "barbell_shoulder_press")
-            }
-            ShoulderPressExerciseName::DeadCurlPress => writeln!(f, "dead_curl_press"),
+            ShoulderPressExerciseName::BarbellPushPress => write!(f, "barbell_push_press"),
+            ShoulderPressExerciseName::BarbellShoulderPress => write!(f, "barbell_shoulder_press"),
+            ShoulderPressExerciseName::DeadCurlPress => write!(f, "dead_curl_press"),
             ShoulderPressExerciseName::DumbbellAlternatingShoulderPressAndTwist => {
-                writeln!(f, "dumbbell_alternating_shoulder_press_and_twist")
+                write!(f, "dumbbell_alternating_shoulder_press_and_twist")
             }
             ShoulderPressExerciseName::DumbbellHammerCurlToLungeToPress => {
-                writeln!(f, "dumbbell_hammer_curl_to_lunge_to_press")
+                write!(f, "dumbbell_hammer_curl_to_lunge_to_press")
             }
-            ShoulderPressExerciseName::DumbbellPushPress => writeln!(f, "dumbbell_push_press"),
+            ShoulderPressExerciseName::DumbbellPushPress => write!(f, "dumbbell_push_press"),
             ShoulderPressExerciseName::FloorInvertedShoulderPress => {
-                writeln!(f, "floor_inverted_shoulder_press")
+                write!(f, "floor_inverted_shoulder_press")
             }
             ShoulderPressExerciseName::WeightedFloorInvertedShoulderPress => {
-                writeln!(f, "weighted_floor_inverted_shoulder_press")
+                write!(f, "weighted_floor_inverted_shoulder_press")
             }
             ShoulderPressExerciseName::InvertedShoulderPress => {
-                writeln!(f, "inverted_shoulder_press")
+                write!(f, "inverted_shoulder_press")
             }
             ShoulderPressExerciseName::WeightedInvertedShoulderPress => {
-                writeln!(f, "weighted_inverted_shoulder_press")
+                write!(f, "weighted_inverted_shoulder_press")
             }
-            ShoulderPressExerciseName::OneArmPushPress => writeln!(f, "one_arm_push_press"),
-            ShoulderPressExerciseName::OverheadBarbellPress => {
-                writeln!(f, "overhead_barbell_press")
-            }
+            ShoulderPressExerciseName::OneArmPushPress => write!(f, "one_arm_push_press"),
+            ShoulderPressExerciseName::OverheadBarbellPress => write!(f, "overhead_barbell_press"),
             ShoulderPressExerciseName::OverheadDumbbellPress => {
-                writeln!(f, "overhead_dumbbell_press")
+                write!(f, "overhead_dumbbell_press")
             }
             ShoulderPressExerciseName::SeatedBarbellShoulderPress => {
-                writeln!(f, "seated_barbell_shoulder_press")
+                write!(f, "seated_barbell_shoulder_press")
             }
             ShoulderPressExerciseName::SeatedDumbbellShoulderPress => {
-                writeln!(f, "seated_dumbbell_shoulder_press")
+                write!(f, "seated_dumbbell_shoulder_press")
             }
             ShoulderPressExerciseName::SingleArmDumbbellShoulderPress => {
-                writeln!(f, "single_arm_dumbbell_shoulder_press")
+                write!(f, "single_arm_dumbbell_shoulder_press")
             }
             ShoulderPressExerciseName::SingleArmStepUpAndPress => {
-                writeln!(f, "single_arm_step_up_and_press")
+                write!(f, "single_arm_step_up_and_press")
             }
             ShoulderPressExerciseName::SmithMachineOverheadPress => {
-                writeln!(f, "smith_machine_overhead_press")
+                write!(f, "smith_machine_overhead_press")
             }
             ShoulderPressExerciseName::SplitStanceHammerCurlToPress => {
-                writeln!(f, "split_stance_hammer_curl_to_press")
+                write!(f, "split_stance_hammer_curl_to_press")
             }
             ShoulderPressExerciseName::SwissBallDumbbellShoulderPress => {
-                writeln!(f, "swiss_ball_dumbbell_shoulder_press")
+                write!(f, "swiss_ball_dumbbell_shoulder_press")
             }
             ShoulderPressExerciseName::WeightPlateFrontRaise => {
-                writeln!(f, "weight_plate_front_raise")
+                write!(f, "weight_plate_front_raise")
             }
             ShoulderPressExerciseName::UnknownVariant(value) => {
-                writeln!(f, "unknown_variant_{}", *value)
+                write!(f, "unknown_variant_{}", *value)
             }
         }
     }
@@ -17321,80 +17189,80 @@ impl fmt::Display for ShoulderStabilityExerciseName {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
             ShoulderStabilityExerciseName::Name90DegreeCableExternalRotation => {
-                writeln!(f, "90_degree_cable_external_rotation")
+                write!(f, "90_degree_cable_external_rotation")
             }
             ShoulderStabilityExerciseName::BandExternalRotation => {
-                writeln!(f, "band_external_rotation")
+                write!(f, "band_external_rotation")
             }
             ShoulderStabilityExerciseName::BandInternalRotation => {
-                writeln!(f, "band_internal_rotation")
+                write!(f, "band_internal_rotation")
             }
             ShoulderStabilityExerciseName::BentArmLateralRaiseAndExternalRotation => {
-                writeln!(f, "bent_arm_lateral_raise_and_external_rotation")
+                write!(f, "bent_arm_lateral_raise_and_external_rotation")
             }
             ShoulderStabilityExerciseName::CableExternalRotation => {
-                writeln!(f, "cable_external_rotation")
+                write!(f, "cable_external_rotation")
             }
             ShoulderStabilityExerciseName::DumbbellFacePullWithExternalRotation => {
-                writeln!(f, "dumbbell_face_pull_with_external_rotation")
+                write!(f, "dumbbell_face_pull_with_external_rotation")
             }
-            ShoulderStabilityExerciseName::FloorIRaise => writeln!(f, "floor_i_raise"),
+            ShoulderStabilityExerciseName::FloorIRaise => write!(f, "floor_i_raise"),
             ShoulderStabilityExerciseName::WeightedFloorIRaise => {
-                writeln!(f, "weighted_floor_i_raise")
+                write!(f, "weighted_floor_i_raise")
             }
-            ShoulderStabilityExerciseName::FloorTRaise => writeln!(f, "floor_t_raise"),
+            ShoulderStabilityExerciseName::FloorTRaise => write!(f, "floor_t_raise"),
             ShoulderStabilityExerciseName::WeightedFloorTRaise => {
-                writeln!(f, "weighted_floor_t_raise")
+                write!(f, "weighted_floor_t_raise")
             }
-            ShoulderStabilityExerciseName::FloorYRaise => writeln!(f, "floor_y_raise"),
+            ShoulderStabilityExerciseName::FloorYRaise => write!(f, "floor_y_raise"),
             ShoulderStabilityExerciseName::WeightedFloorYRaise => {
-                writeln!(f, "weighted_floor_y_raise")
+                write!(f, "weighted_floor_y_raise")
             }
-            ShoulderStabilityExerciseName::InclineIRaise => writeln!(f, "incline_i_raise"),
+            ShoulderStabilityExerciseName::InclineIRaise => write!(f, "incline_i_raise"),
             ShoulderStabilityExerciseName::WeightedInclineIRaise => {
-                writeln!(f, "weighted_incline_i_raise")
+                write!(f, "weighted_incline_i_raise")
             }
-            ShoulderStabilityExerciseName::InclineLRaise => writeln!(f, "incline_l_raise"),
+            ShoulderStabilityExerciseName::InclineLRaise => write!(f, "incline_l_raise"),
             ShoulderStabilityExerciseName::WeightedInclineLRaise => {
-                writeln!(f, "weighted_incline_l_raise")
+                write!(f, "weighted_incline_l_raise")
             }
-            ShoulderStabilityExerciseName::InclineTRaise => writeln!(f, "incline_t_raise"),
+            ShoulderStabilityExerciseName::InclineTRaise => write!(f, "incline_t_raise"),
             ShoulderStabilityExerciseName::WeightedInclineTRaise => {
-                writeln!(f, "weighted_incline_t_raise")
+                write!(f, "weighted_incline_t_raise")
             }
-            ShoulderStabilityExerciseName::InclineWRaise => writeln!(f, "incline_w_raise"),
+            ShoulderStabilityExerciseName::InclineWRaise => write!(f, "incline_w_raise"),
             ShoulderStabilityExerciseName::WeightedInclineWRaise => {
-                writeln!(f, "weighted_incline_w_raise")
+                write!(f, "weighted_incline_w_raise")
             }
-            ShoulderStabilityExerciseName::InclineYRaise => writeln!(f, "incline_y_raise"),
+            ShoulderStabilityExerciseName::InclineYRaise => write!(f, "incline_y_raise"),
             ShoulderStabilityExerciseName::WeightedInclineYRaise => {
-                writeln!(f, "weighted_incline_y_raise")
+                write!(f, "weighted_incline_y_raise")
             }
             ShoulderStabilityExerciseName::LyingExternalRotation => {
-                writeln!(f, "lying_external_rotation")
+                write!(f, "lying_external_rotation")
             }
             ShoulderStabilityExerciseName::SeatedDumbbellExternalRotation => {
-                writeln!(f, "seated_dumbbell_external_rotation")
+                write!(f, "seated_dumbbell_external_rotation")
             }
-            ShoulderStabilityExerciseName::StandingLRaise => writeln!(f, "standing_l_raise"),
-            ShoulderStabilityExerciseName::SwissBallIRaise => writeln!(f, "swiss_ball_i_raise"),
+            ShoulderStabilityExerciseName::StandingLRaise => write!(f, "standing_l_raise"),
+            ShoulderStabilityExerciseName::SwissBallIRaise => write!(f, "swiss_ball_i_raise"),
             ShoulderStabilityExerciseName::WeightedSwissBallIRaise => {
-                writeln!(f, "weighted_swiss_ball_i_raise")
+                write!(f, "weighted_swiss_ball_i_raise")
             }
-            ShoulderStabilityExerciseName::SwissBallTRaise => writeln!(f, "swiss_ball_t_raise"),
+            ShoulderStabilityExerciseName::SwissBallTRaise => write!(f, "swiss_ball_t_raise"),
             ShoulderStabilityExerciseName::WeightedSwissBallTRaise => {
-                writeln!(f, "weighted_swiss_ball_t_raise")
+                write!(f, "weighted_swiss_ball_t_raise")
             }
-            ShoulderStabilityExerciseName::SwissBallWRaise => writeln!(f, "swiss_ball_w_raise"),
+            ShoulderStabilityExerciseName::SwissBallWRaise => write!(f, "swiss_ball_w_raise"),
             ShoulderStabilityExerciseName::WeightedSwissBallWRaise => {
-                writeln!(f, "weighted_swiss_ball_w_raise")
+                write!(f, "weighted_swiss_ball_w_raise")
             }
-            ShoulderStabilityExerciseName::SwissBallYRaise => writeln!(f, "swiss_ball_y_raise"),
+            ShoulderStabilityExerciseName::SwissBallYRaise => write!(f, "swiss_ball_y_raise"),
             ShoulderStabilityExerciseName::WeightedSwissBallYRaise => {
-                writeln!(f, "weighted_swiss_ball_y_raise")
+                write!(f, "weighted_swiss_ball_y_raise")
             }
             ShoulderStabilityExerciseName::UnknownVariant(value) => {
-                writeln!(f, "unknown_variant_{}", *value)
+                write!(f, "unknown_variant_{}", *value)
             }
         }
     }
@@ -17495,28 +17363,28 @@ impl ShrugExerciseName {
 impl fmt::Display for ShrugExerciseName {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            ShrugExerciseName::BarbellJumpShrug => writeln!(f, "barbell_jump_shrug"),
-            ShrugExerciseName::BarbellShrug => writeln!(f, "barbell_shrug"),
-            ShrugExerciseName::BarbellUprightRow => writeln!(f, "barbell_upright_row"),
+            ShrugExerciseName::BarbellJumpShrug => write!(f, "barbell_jump_shrug"),
+            ShrugExerciseName::BarbellShrug => write!(f, "barbell_shrug"),
+            ShrugExerciseName::BarbellUprightRow => write!(f, "barbell_upright_row"),
             ShrugExerciseName::BehindTheBackSmithMachineShrug => {
-                writeln!(f, "behind_the_back_smith_machine_shrug")
+                write!(f, "behind_the_back_smith_machine_shrug")
             }
-            ShrugExerciseName::DumbbellJumpShrug => writeln!(f, "dumbbell_jump_shrug"),
-            ShrugExerciseName::DumbbellShrug => writeln!(f, "dumbbell_shrug"),
-            ShrugExerciseName::DumbbellUprightRow => writeln!(f, "dumbbell_upright_row"),
-            ShrugExerciseName::InclineDumbbellShrug => writeln!(f, "incline_dumbbell_shrug"),
-            ShrugExerciseName::OverheadBarbellShrug => writeln!(f, "overhead_barbell_shrug"),
-            ShrugExerciseName::OverheadDumbbellShrug => writeln!(f, "overhead_dumbbell_shrug"),
-            ShrugExerciseName::ScaptionAndShrug => writeln!(f, "scaption_and_shrug"),
-            ShrugExerciseName::ScapularRetraction => writeln!(f, "scapular_retraction"),
-            ShrugExerciseName::SerratusChairShrug => writeln!(f, "serratus_chair_shrug"),
+            ShrugExerciseName::DumbbellJumpShrug => write!(f, "dumbbell_jump_shrug"),
+            ShrugExerciseName::DumbbellShrug => write!(f, "dumbbell_shrug"),
+            ShrugExerciseName::DumbbellUprightRow => write!(f, "dumbbell_upright_row"),
+            ShrugExerciseName::InclineDumbbellShrug => write!(f, "incline_dumbbell_shrug"),
+            ShrugExerciseName::OverheadBarbellShrug => write!(f, "overhead_barbell_shrug"),
+            ShrugExerciseName::OverheadDumbbellShrug => write!(f, "overhead_dumbbell_shrug"),
+            ShrugExerciseName::ScaptionAndShrug => write!(f, "scaption_and_shrug"),
+            ShrugExerciseName::ScapularRetraction => write!(f, "scapular_retraction"),
+            ShrugExerciseName::SerratusChairShrug => write!(f, "serratus_chair_shrug"),
             ShrugExerciseName::WeightedSerratusChairShrug => {
-                writeln!(f, "weighted_serratus_chair_shrug")
+                write!(f, "weighted_serratus_chair_shrug")
             }
-            ShrugExerciseName::SerratusShrug => writeln!(f, "serratus_shrug"),
-            ShrugExerciseName::WeightedSerratusShrug => writeln!(f, "weighted_serratus_shrug"),
-            ShrugExerciseName::WideGripJumpShrug => writeln!(f, "wide_grip_jump_shrug"),
-            ShrugExerciseName::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            ShrugExerciseName::SerratusShrug => write!(f, "serratus_shrug"),
+            ShrugExerciseName::WeightedSerratusShrug => write!(f, "weighted_serratus_shrug"),
+            ShrugExerciseName::WideGripJumpShrug => write!(f, "wide_grip_jump_shrug"),
+            ShrugExerciseName::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -17642,61 +17510,59 @@ impl SitUpExerciseName {
 impl fmt::Display for SitUpExerciseName {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            SitUpExerciseName::AlternatingSitUp => writeln!(f, "alternating_sit_up"),
-            SitUpExerciseName::WeightedAlternatingSitUp => {
-                writeln!(f, "weighted_alternating_sit_up")
-            }
-            SitUpExerciseName::BentKneeVUp => writeln!(f, "bent_knee_v_up"),
-            SitUpExerciseName::WeightedBentKneeVUp => writeln!(f, "weighted_bent_knee_v_up"),
-            SitUpExerciseName::ButterflySitUp => writeln!(f, "butterfly_sit_up"),
-            SitUpExerciseName::WeightedButterflySitup => writeln!(f, "weighted_butterfly_situp"),
-            SitUpExerciseName::CrossPunchRollUp => writeln!(f, "cross_punch_roll_up"),
+            SitUpExerciseName::AlternatingSitUp => write!(f, "alternating_sit_up"),
+            SitUpExerciseName::WeightedAlternatingSitUp => write!(f, "weighted_alternating_sit_up"),
+            SitUpExerciseName::BentKneeVUp => write!(f, "bent_knee_v_up"),
+            SitUpExerciseName::WeightedBentKneeVUp => write!(f, "weighted_bent_knee_v_up"),
+            SitUpExerciseName::ButterflySitUp => write!(f, "butterfly_sit_up"),
+            SitUpExerciseName::WeightedButterflySitup => write!(f, "weighted_butterfly_situp"),
+            SitUpExerciseName::CrossPunchRollUp => write!(f, "cross_punch_roll_up"),
             SitUpExerciseName::WeightedCrossPunchRollUp => {
-                writeln!(f, "weighted_cross_punch_roll_up")
+                write!(f, "weighted_cross_punch_roll_up")
             }
-            SitUpExerciseName::CrossedArmsSitUp => writeln!(f, "crossed_arms_sit_up"),
+            SitUpExerciseName::CrossedArmsSitUp => write!(f, "crossed_arms_sit_up"),
             SitUpExerciseName::WeightedCrossedArmsSitUp => {
-                writeln!(f, "weighted_crossed_arms_sit_up")
+                write!(f, "weighted_crossed_arms_sit_up")
             }
-            SitUpExerciseName::GetUpSitUp => writeln!(f, "get_up_sit_up"),
-            SitUpExerciseName::WeightedGetUpSitUp => writeln!(f, "weighted_get_up_sit_up"),
-            SitUpExerciseName::HoveringSitUp => writeln!(f, "hovering_sit_up"),
-            SitUpExerciseName::WeightedHoveringSitUp => writeln!(f, "weighted_hovering_sit_up"),
-            SitUpExerciseName::KettlebellSitUp => writeln!(f, "kettlebell_sit_up"),
+            SitUpExerciseName::GetUpSitUp => write!(f, "get_up_sit_up"),
+            SitUpExerciseName::WeightedGetUpSitUp => write!(f, "weighted_get_up_sit_up"),
+            SitUpExerciseName::HoveringSitUp => write!(f, "hovering_sit_up"),
+            SitUpExerciseName::WeightedHoveringSitUp => write!(f, "weighted_hovering_sit_up"),
+            SitUpExerciseName::KettlebellSitUp => write!(f, "kettlebell_sit_up"),
             SitUpExerciseName::MedicineBallAlternatingVUp => {
-                writeln!(f, "medicine_ball_alternating_v_up")
+                write!(f, "medicine_ball_alternating_v_up")
             }
-            SitUpExerciseName::MedicineBallSitUp => writeln!(f, "medicine_ball_sit_up"),
-            SitUpExerciseName::MedicineBallVUp => writeln!(f, "medicine_ball_v_up"),
-            SitUpExerciseName::ModifiedSitUp => writeln!(f, "modified_sit_up"),
-            SitUpExerciseName::NegativeSitUp => writeln!(f, "negative_sit_up"),
-            SitUpExerciseName::OneArmFullSitUp => writeln!(f, "one_arm_full_sit_up"),
-            SitUpExerciseName::RecliningCircle => writeln!(f, "reclining_circle"),
-            SitUpExerciseName::WeightedRecliningCircle => writeln!(f, "weighted_reclining_circle"),
-            SitUpExerciseName::ReverseCurlUp => writeln!(f, "reverse_curl_up"),
-            SitUpExerciseName::WeightedReverseCurlUp => writeln!(f, "weighted_reverse_curl_up"),
+            SitUpExerciseName::MedicineBallSitUp => write!(f, "medicine_ball_sit_up"),
+            SitUpExerciseName::MedicineBallVUp => write!(f, "medicine_ball_v_up"),
+            SitUpExerciseName::ModifiedSitUp => write!(f, "modified_sit_up"),
+            SitUpExerciseName::NegativeSitUp => write!(f, "negative_sit_up"),
+            SitUpExerciseName::OneArmFullSitUp => write!(f, "one_arm_full_sit_up"),
+            SitUpExerciseName::RecliningCircle => write!(f, "reclining_circle"),
+            SitUpExerciseName::WeightedRecliningCircle => write!(f, "weighted_reclining_circle"),
+            SitUpExerciseName::ReverseCurlUp => write!(f, "reverse_curl_up"),
+            SitUpExerciseName::WeightedReverseCurlUp => write!(f, "weighted_reverse_curl_up"),
             SitUpExerciseName::SingleLegSwissBallJackknife => {
-                writeln!(f, "single_leg_swiss_ball_jackknife")
+                write!(f, "single_leg_swiss_ball_jackknife")
             }
             SitUpExerciseName::WeightedSingleLegSwissBallJackknife => {
-                writeln!(f, "weighted_single_leg_swiss_ball_jackknife")
+                write!(f, "weighted_single_leg_swiss_ball_jackknife")
             }
-            SitUpExerciseName::TheTeaser => writeln!(f, "the_teaser"),
-            SitUpExerciseName::TheTeaserWeighted => writeln!(f, "the_teaser_weighted"),
-            SitUpExerciseName::ThreePartRollDown => writeln!(f, "three_part_roll_down"),
+            SitUpExerciseName::TheTeaser => write!(f, "the_teaser"),
+            SitUpExerciseName::TheTeaserWeighted => write!(f, "the_teaser_weighted"),
+            SitUpExerciseName::ThreePartRollDown => write!(f, "three_part_roll_down"),
             SitUpExerciseName::WeightedThreePartRollDown => {
-                writeln!(f, "weighted_three_part_roll_down")
+                write!(f, "weighted_three_part_roll_down")
             }
-            SitUpExerciseName::VUp => writeln!(f, "v_up"),
-            SitUpExerciseName::WeightedVUp => writeln!(f, "weighted_v_up"),
+            SitUpExerciseName::VUp => write!(f, "v_up"),
+            SitUpExerciseName::WeightedVUp => write!(f, "weighted_v_up"),
             SitUpExerciseName::WeightedRussianTwistOnSwissBall => {
-                writeln!(f, "weighted_russian_twist_on_swiss_ball")
+                write!(f, "weighted_russian_twist_on_swiss_ball")
             }
-            SitUpExerciseName::WeightedSitUp => writeln!(f, "weighted_sit_up"),
-            SitUpExerciseName::XAbs => writeln!(f, "x_abs"),
-            SitUpExerciseName::WeightedXAbs => writeln!(f, "weighted_x_abs"),
-            SitUpExerciseName::SitUp => writeln!(f, "sit_up"),
-            SitUpExerciseName::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            SitUpExerciseName::WeightedSitUp => write!(f, "weighted_sit_up"),
+            SitUpExerciseName::XAbs => write!(f, "x_abs"),
+            SitUpExerciseName::WeightedXAbs => write!(f, "weighted_x_abs"),
+            SitUpExerciseName::SitUp => write!(f, "sit_up"),
+            SitUpExerciseName::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -17951,138 +17817,136 @@ impl SquatExerciseName {
 impl fmt::Display for SquatExerciseName {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            SquatExerciseName::LegPress => writeln!(f, "leg_press"),
-            SquatExerciseName::BackSquatWithBodyBar => writeln!(f, "back_squat_with_body_bar"),
-            SquatExerciseName::BackSquats => writeln!(f, "back_squats"),
-            SquatExerciseName::WeightedBackSquats => writeln!(f, "weighted_back_squats"),
-            SquatExerciseName::BalancingSquat => writeln!(f, "balancing_squat"),
-            SquatExerciseName::WeightedBalancingSquat => writeln!(f, "weighted_balancing_squat"),
-            SquatExerciseName::BarbellBackSquat => writeln!(f, "barbell_back_squat"),
-            SquatExerciseName::BarbellBoxSquat => writeln!(f, "barbell_box_squat"),
-            SquatExerciseName::BarbellFrontSquat => writeln!(f, "barbell_front_squat"),
-            SquatExerciseName::BarbellHackSquat => writeln!(f, "barbell_hack_squat"),
-            SquatExerciseName::BarbellHangSquatSnatch => writeln!(f, "barbell_hang_squat_snatch"),
-            SquatExerciseName::BarbellLateralStepUp => writeln!(f, "barbell_lateral_step_up"),
-            SquatExerciseName::BarbellQuarterSquat => writeln!(f, "barbell_quarter_squat"),
-            SquatExerciseName::BarbellSiffSquat => writeln!(f, "barbell_siff_squat"),
-            SquatExerciseName::BarbellSquatSnatch => writeln!(f, "barbell_squat_snatch"),
+            SquatExerciseName::LegPress => write!(f, "leg_press"),
+            SquatExerciseName::BackSquatWithBodyBar => write!(f, "back_squat_with_body_bar"),
+            SquatExerciseName::BackSquats => write!(f, "back_squats"),
+            SquatExerciseName::WeightedBackSquats => write!(f, "weighted_back_squats"),
+            SquatExerciseName::BalancingSquat => write!(f, "balancing_squat"),
+            SquatExerciseName::WeightedBalancingSquat => write!(f, "weighted_balancing_squat"),
+            SquatExerciseName::BarbellBackSquat => write!(f, "barbell_back_squat"),
+            SquatExerciseName::BarbellBoxSquat => write!(f, "barbell_box_squat"),
+            SquatExerciseName::BarbellFrontSquat => write!(f, "barbell_front_squat"),
+            SquatExerciseName::BarbellHackSquat => write!(f, "barbell_hack_squat"),
+            SquatExerciseName::BarbellHangSquatSnatch => write!(f, "barbell_hang_squat_snatch"),
+            SquatExerciseName::BarbellLateralStepUp => write!(f, "barbell_lateral_step_up"),
+            SquatExerciseName::BarbellQuarterSquat => write!(f, "barbell_quarter_squat"),
+            SquatExerciseName::BarbellSiffSquat => write!(f, "barbell_siff_squat"),
+            SquatExerciseName::BarbellSquatSnatch => write!(f, "barbell_squat_snatch"),
             SquatExerciseName::BarbellSquatWithHeelsRaised => {
-                writeln!(f, "barbell_squat_with_heels_raised")
+                write!(f, "barbell_squat_with_heels_raised")
             }
-            SquatExerciseName::BarbellStepover => writeln!(f, "barbell_stepover"),
-            SquatExerciseName::BarbellStepUp => writeln!(f, "barbell_step_up"),
+            SquatExerciseName::BarbellStepover => write!(f, "barbell_stepover"),
+            SquatExerciseName::BarbellStepUp => write!(f, "barbell_step_up"),
             SquatExerciseName::BenchSquatWithRotationalChop => {
-                writeln!(f, "bench_squat_with_rotational_chop")
+                write!(f, "bench_squat_with_rotational_chop")
             }
             SquatExerciseName::WeightedBenchSquatWithRotationalChop => {
-                writeln!(f, "weighted_bench_squat_with_rotational_chop")
+                write!(f, "weighted_bench_squat_with_rotational_chop")
             }
-            SquatExerciseName::BodyWeightWallSquat => writeln!(f, "body_weight_wall_squat"),
-            SquatExerciseName::WeightedWallSquat => writeln!(f, "weighted_wall_squat"),
-            SquatExerciseName::BoxStepSquat => writeln!(f, "box_step_squat"),
-            SquatExerciseName::WeightedBoxStepSquat => writeln!(f, "weighted_box_step_squat"),
-            SquatExerciseName::BracedSquat => writeln!(f, "braced_squat"),
+            SquatExerciseName::BodyWeightWallSquat => write!(f, "body_weight_wall_squat"),
+            SquatExerciseName::WeightedWallSquat => write!(f, "weighted_wall_squat"),
+            SquatExerciseName::BoxStepSquat => write!(f, "box_step_squat"),
+            SquatExerciseName::WeightedBoxStepSquat => write!(f, "weighted_box_step_squat"),
+            SquatExerciseName::BracedSquat => write!(f, "braced_squat"),
             SquatExerciseName::CrossedArmBarbellFrontSquat => {
-                writeln!(f, "crossed_arm_barbell_front_squat")
+                write!(f, "crossed_arm_barbell_front_squat")
             }
-            SquatExerciseName::CrossoverDumbbellStepUp => writeln!(f, "crossover_dumbbell_step_up"),
-            SquatExerciseName::DumbbellFrontSquat => writeln!(f, "dumbbell_front_squat"),
-            SquatExerciseName::DumbbellSplitSquat => writeln!(f, "dumbbell_split_squat"),
-            SquatExerciseName::DumbbellSquat => writeln!(f, "dumbbell_squat"),
-            SquatExerciseName::DumbbellSquatClean => writeln!(f, "dumbbell_squat_clean"),
-            SquatExerciseName::DumbbellStepover => writeln!(f, "dumbbell_stepover"),
-            SquatExerciseName::DumbbellStepUp => writeln!(f, "dumbbell_step_up"),
-            SquatExerciseName::ElevatedSingleLegSquat => writeln!(f, "elevated_single_leg_squat"),
+            SquatExerciseName::CrossoverDumbbellStepUp => write!(f, "crossover_dumbbell_step_up"),
+            SquatExerciseName::DumbbellFrontSquat => write!(f, "dumbbell_front_squat"),
+            SquatExerciseName::DumbbellSplitSquat => write!(f, "dumbbell_split_squat"),
+            SquatExerciseName::DumbbellSquat => write!(f, "dumbbell_squat"),
+            SquatExerciseName::DumbbellSquatClean => write!(f, "dumbbell_squat_clean"),
+            SquatExerciseName::DumbbellStepover => write!(f, "dumbbell_stepover"),
+            SquatExerciseName::DumbbellStepUp => write!(f, "dumbbell_step_up"),
+            SquatExerciseName::ElevatedSingleLegSquat => write!(f, "elevated_single_leg_squat"),
             SquatExerciseName::WeightedElevatedSingleLegSquat => {
-                writeln!(f, "weighted_elevated_single_leg_squat")
+                write!(f, "weighted_elevated_single_leg_squat")
             }
-            SquatExerciseName::FigureFourSquats => writeln!(f, "figure_four_squats"),
-            SquatExerciseName::WeightedFigureFourSquats => {
-                writeln!(f, "weighted_figure_four_squats")
-            }
-            SquatExerciseName::GobletSquat => writeln!(f, "goblet_squat"),
-            SquatExerciseName::KettlebellSquat => writeln!(f, "kettlebell_squat"),
-            SquatExerciseName::KettlebellSwingOverhead => writeln!(f, "kettlebell_swing_overhead"),
+            SquatExerciseName::FigureFourSquats => write!(f, "figure_four_squats"),
+            SquatExerciseName::WeightedFigureFourSquats => write!(f, "weighted_figure_four_squats"),
+            SquatExerciseName::GobletSquat => write!(f, "goblet_squat"),
+            SquatExerciseName::KettlebellSquat => write!(f, "kettlebell_squat"),
+            SquatExerciseName::KettlebellSwingOverhead => write!(f, "kettlebell_swing_overhead"),
             SquatExerciseName::KettlebellSwingWithFlipToSquat => {
-                writeln!(f, "kettlebell_swing_with_flip_to_squat")
+                write!(f, "kettlebell_swing_with_flip_to_squat")
             }
-            SquatExerciseName::LateralDumbbellStepUp => writeln!(f, "lateral_dumbbell_step_up"),
-            SquatExerciseName::OneLeggedSquat => writeln!(f, "one_legged_squat"),
-            SquatExerciseName::OverheadDumbbellSquat => writeln!(f, "overhead_dumbbell_squat"),
-            SquatExerciseName::OverheadSquat => writeln!(f, "overhead_squat"),
-            SquatExerciseName::PartialSingleLegSquat => writeln!(f, "partial_single_leg_squat"),
+            SquatExerciseName::LateralDumbbellStepUp => write!(f, "lateral_dumbbell_step_up"),
+            SquatExerciseName::OneLeggedSquat => write!(f, "one_legged_squat"),
+            SquatExerciseName::OverheadDumbbellSquat => write!(f, "overhead_dumbbell_squat"),
+            SquatExerciseName::OverheadSquat => write!(f, "overhead_squat"),
+            SquatExerciseName::PartialSingleLegSquat => write!(f, "partial_single_leg_squat"),
             SquatExerciseName::WeightedPartialSingleLegSquat => {
-                writeln!(f, "weighted_partial_single_leg_squat")
+                write!(f, "weighted_partial_single_leg_squat")
             }
-            SquatExerciseName::PistolSquat => writeln!(f, "pistol_squat"),
-            SquatExerciseName::WeightedPistolSquat => writeln!(f, "weighted_pistol_squat"),
-            SquatExerciseName::PlieSlides => writeln!(f, "plie_slides"),
-            SquatExerciseName::WeightedPlieSlides => writeln!(f, "weighted_plie_slides"),
-            SquatExerciseName::PlieSquat => writeln!(f, "plie_squat"),
-            SquatExerciseName::WeightedPlieSquat => writeln!(f, "weighted_plie_squat"),
-            SquatExerciseName::PrisonerSquat => writeln!(f, "prisoner_squat"),
-            SquatExerciseName::WeightedPrisonerSquat => writeln!(f, "weighted_prisoner_squat"),
-            SquatExerciseName::SingleLegBenchGetUp => writeln!(f, "single_leg_bench_get_up"),
+            SquatExerciseName::PistolSquat => write!(f, "pistol_squat"),
+            SquatExerciseName::WeightedPistolSquat => write!(f, "weighted_pistol_squat"),
+            SquatExerciseName::PlieSlides => write!(f, "plie_slides"),
+            SquatExerciseName::WeightedPlieSlides => write!(f, "weighted_plie_slides"),
+            SquatExerciseName::PlieSquat => write!(f, "plie_squat"),
+            SquatExerciseName::WeightedPlieSquat => write!(f, "weighted_plie_squat"),
+            SquatExerciseName::PrisonerSquat => write!(f, "prisoner_squat"),
+            SquatExerciseName::WeightedPrisonerSquat => write!(f, "weighted_prisoner_squat"),
+            SquatExerciseName::SingleLegBenchGetUp => write!(f, "single_leg_bench_get_up"),
             SquatExerciseName::WeightedSingleLegBenchGetUp => {
-                writeln!(f, "weighted_single_leg_bench_get_up")
+                write!(f, "weighted_single_leg_bench_get_up")
             }
-            SquatExerciseName::SingleLegBenchSquat => writeln!(f, "single_leg_bench_squat"),
+            SquatExerciseName::SingleLegBenchSquat => write!(f, "single_leg_bench_squat"),
             SquatExerciseName::WeightedSingleLegBenchSquat => {
-                writeln!(f, "weighted_single_leg_bench_squat")
+                write!(f, "weighted_single_leg_bench_squat")
             }
             SquatExerciseName::SingleLegSquatOnSwissBall => {
-                writeln!(f, "single_leg_squat_on_swiss_ball")
+                write!(f, "single_leg_squat_on_swiss_ball")
             }
             SquatExerciseName::WeightedSingleLegSquatOnSwissBall => {
-                writeln!(f, "weighted_single_leg_squat_on_swiss_ball")
+                write!(f, "weighted_single_leg_squat_on_swiss_ball")
             }
-            SquatExerciseName::Squat => writeln!(f, "squat"),
-            SquatExerciseName::WeightedSquat => writeln!(f, "weighted_squat"),
-            SquatExerciseName::SquatsWithBand => writeln!(f, "squats_with_band"),
-            SquatExerciseName::StaggeredSquat => writeln!(f, "staggered_squat"),
-            SquatExerciseName::WeightedStaggeredSquat => writeln!(f, "weighted_staggered_squat"),
-            SquatExerciseName::StepUp => writeln!(f, "step_up"),
-            SquatExerciseName::WeightedStepUp => writeln!(f, "weighted_step_up"),
-            SquatExerciseName::SuitcaseSquats => writeln!(f, "suitcase_squats"),
-            SquatExerciseName::SumoSquat => writeln!(f, "sumo_squat"),
-            SquatExerciseName::SumoSquatSlideIn => writeln!(f, "sumo_squat_slide_in"),
+            SquatExerciseName::Squat => write!(f, "squat"),
+            SquatExerciseName::WeightedSquat => write!(f, "weighted_squat"),
+            SquatExerciseName::SquatsWithBand => write!(f, "squats_with_band"),
+            SquatExerciseName::StaggeredSquat => write!(f, "staggered_squat"),
+            SquatExerciseName::WeightedStaggeredSquat => write!(f, "weighted_staggered_squat"),
+            SquatExerciseName::StepUp => write!(f, "step_up"),
+            SquatExerciseName::WeightedStepUp => write!(f, "weighted_step_up"),
+            SquatExerciseName::SuitcaseSquats => write!(f, "suitcase_squats"),
+            SquatExerciseName::SumoSquat => write!(f, "sumo_squat"),
+            SquatExerciseName::SumoSquatSlideIn => write!(f, "sumo_squat_slide_in"),
             SquatExerciseName::WeightedSumoSquatSlideIn => {
-                writeln!(f, "weighted_sumo_squat_slide_in")
+                write!(f, "weighted_sumo_squat_slide_in")
             }
-            SquatExerciseName::SumoSquatToHighPull => writeln!(f, "sumo_squat_to_high_pull"),
-            SquatExerciseName::SumoSquatToStand => writeln!(f, "sumo_squat_to_stand"),
+            SquatExerciseName::SumoSquatToHighPull => write!(f, "sumo_squat_to_high_pull"),
+            SquatExerciseName::SumoSquatToStand => write!(f, "sumo_squat_to_stand"),
             SquatExerciseName::WeightedSumoSquatToStand => {
-                writeln!(f, "weighted_sumo_squat_to_stand")
+                write!(f, "weighted_sumo_squat_to_stand")
             }
-            SquatExerciseName::SumoSquatWithRotation => writeln!(f, "sumo_squat_with_rotation"),
+            SquatExerciseName::SumoSquatWithRotation => write!(f, "sumo_squat_with_rotation"),
             SquatExerciseName::WeightedSumoSquatWithRotation => {
-                writeln!(f, "weighted_sumo_squat_with_rotation")
+                write!(f, "weighted_sumo_squat_with_rotation")
             }
             SquatExerciseName::SwissBallBodyWeightWallSquat => {
-                writeln!(f, "swiss_ball_body_weight_wall_squat")
+                write!(f, "swiss_ball_body_weight_wall_squat")
             }
             SquatExerciseName::WeightedSwissBallWallSquat => {
-                writeln!(f, "weighted_swiss_ball_wall_squat")
+                write!(f, "weighted_swiss_ball_wall_squat")
             }
-            SquatExerciseName::Thrusters => writeln!(f, "thrusters"),
-            SquatExerciseName::UnevenSquat => writeln!(f, "uneven_squat"),
-            SquatExerciseName::WeightedUnevenSquat => writeln!(f, "weighted_uneven_squat"),
-            SquatExerciseName::WaistSlimmingSquat => writeln!(f, "waist_slimming_squat"),
-            SquatExerciseName::WallBall => writeln!(f, "wall_ball"),
-            SquatExerciseName::WideStanceBarbellSquat => writeln!(f, "wide_stance_barbell_squat"),
-            SquatExerciseName::WideStanceGobletSquat => writeln!(f, "wide_stance_goblet_squat"),
-            SquatExerciseName::ZercherSquat => writeln!(f, "zercher_squat"),
-            SquatExerciseName::KbsOverhead => writeln!(f, "kbs_overhead"),
-            SquatExerciseName::SquatAndSideKick => writeln!(f, "squat_and_side_kick"),
-            SquatExerciseName::SquatJumpsInNOut => writeln!(f, "squat_jumps_in_n_out"),
+            SquatExerciseName::Thrusters => write!(f, "thrusters"),
+            SquatExerciseName::UnevenSquat => write!(f, "uneven_squat"),
+            SquatExerciseName::WeightedUnevenSquat => write!(f, "weighted_uneven_squat"),
+            SquatExerciseName::WaistSlimmingSquat => write!(f, "waist_slimming_squat"),
+            SquatExerciseName::WallBall => write!(f, "wall_ball"),
+            SquatExerciseName::WideStanceBarbellSquat => write!(f, "wide_stance_barbell_squat"),
+            SquatExerciseName::WideStanceGobletSquat => write!(f, "wide_stance_goblet_squat"),
+            SquatExerciseName::ZercherSquat => write!(f, "zercher_squat"),
+            SquatExerciseName::KbsOverhead => write!(f, "kbs_overhead"),
+            SquatExerciseName::SquatAndSideKick => write!(f, "squat_and_side_kick"),
+            SquatExerciseName::SquatJumpsInNOut => write!(f, "squat_jumps_in_n_out"),
             SquatExerciseName::PilatesPlieSquatsParallelTurnedOutFlatAndHeels => {
-                writeln!(f, "pilates_plie_squats_parallel_turned_out_flat_and_heels")
+                write!(f, "pilates_plie_squats_parallel_turned_out_flat_and_heels")
             }
-            SquatExerciseName::ReleveStraightLegAndKneeBentWithOneLegVariation => writeln!(
+            SquatExerciseName::ReleveStraightLegAndKneeBentWithOneLegVariation => write!(
                 f,
                 "releve_straight_leg_and_knee_bent_with_one_leg_variation"
             ),
-            SquatExerciseName::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            SquatExerciseName::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -18233,28 +18097,26 @@ impl TotalBodyExerciseName {
 impl fmt::Display for TotalBodyExerciseName {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            TotalBodyExerciseName::Burpee => writeln!(f, "burpee"),
-            TotalBodyExerciseName::WeightedBurpee => writeln!(f, "weighted_burpee"),
-            TotalBodyExerciseName::BurpeeBoxJump => writeln!(f, "burpee_box_jump"),
-            TotalBodyExerciseName::WeightedBurpeeBoxJump => writeln!(f, "weighted_burpee_box_jump"),
-            TotalBodyExerciseName::HighPullBurpee => writeln!(f, "high_pull_burpee"),
-            TotalBodyExerciseName::ManMakers => writeln!(f, "man_makers"),
-            TotalBodyExerciseName::OneArmBurpee => writeln!(f, "one_arm_burpee"),
-            TotalBodyExerciseName::SquatThrusts => writeln!(f, "squat_thrusts"),
-            TotalBodyExerciseName::WeightedSquatThrusts => writeln!(f, "weighted_squat_thrusts"),
-            TotalBodyExerciseName::SquatPlankPushUp => writeln!(f, "squat_plank_push_up"),
+            TotalBodyExerciseName::Burpee => write!(f, "burpee"),
+            TotalBodyExerciseName::WeightedBurpee => write!(f, "weighted_burpee"),
+            TotalBodyExerciseName::BurpeeBoxJump => write!(f, "burpee_box_jump"),
+            TotalBodyExerciseName::WeightedBurpeeBoxJump => write!(f, "weighted_burpee_box_jump"),
+            TotalBodyExerciseName::HighPullBurpee => write!(f, "high_pull_burpee"),
+            TotalBodyExerciseName::ManMakers => write!(f, "man_makers"),
+            TotalBodyExerciseName::OneArmBurpee => write!(f, "one_arm_burpee"),
+            TotalBodyExerciseName::SquatThrusts => write!(f, "squat_thrusts"),
+            TotalBodyExerciseName::WeightedSquatThrusts => write!(f, "weighted_squat_thrusts"),
+            TotalBodyExerciseName::SquatPlankPushUp => write!(f, "squat_plank_push_up"),
             TotalBodyExerciseName::WeightedSquatPlankPushUp => {
-                writeln!(f, "weighted_squat_plank_push_up")
+                write!(f, "weighted_squat_plank_push_up")
             }
             TotalBodyExerciseName::StandingTRotationBalance => {
-                writeln!(f, "standing_t_rotation_balance")
+                write!(f, "standing_t_rotation_balance")
             }
             TotalBodyExerciseName::WeightedStandingTRotationBalance => {
-                writeln!(f, "weighted_standing_t_rotation_balance")
+                write!(f, "weighted_standing_t_rotation_balance")
             }
-            TotalBodyExerciseName::UnknownVariant(value) => {
-                writeln!(f, "unknown_variant_{}", *value)
-            }
+            TotalBodyExerciseName::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -18382,105 +18244,103 @@ impl TricepsExtensionExerciseName {
 impl fmt::Display for TricepsExtensionExerciseName {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            TricepsExtensionExerciseName::BenchDip => writeln!(f, "bench_dip"),
-            TricepsExtensionExerciseName::WeightedBenchDip => writeln!(f, "weighted_bench_dip"),
-            TricepsExtensionExerciseName::BodyWeightDip => writeln!(f, "body_weight_dip"),
-            TricepsExtensionExerciseName::CableKickback => writeln!(f, "cable_kickback"),
+            TricepsExtensionExerciseName::BenchDip => write!(f, "bench_dip"),
+            TricepsExtensionExerciseName::WeightedBenchDip => write!(f, "weighted_bench_dip"),
+            TricepsExtensionExerciseName::BodyWeightDip => write!(f, "body_weight_dip"),
+            TricepsExtensionExerciseName::CableKickback => write!(f, "cable_kickback"),
             TricepsExtensionExerciseName::CableLyingTricepsExtension => {
-                writeln!(f, "cable_lying_triceps_extension")
+                write!(f, "cable_lying_triceps_extension")
             }
             TricepsExtensionExerciseName::CableOverheadTricepsExtension => {
-                writeln!(f, "cable_overhead_triceps_extension")
+                write!(f, "cable_overhead_triceps_extension")
             }
-            TricepsExtensionExerciseName::DumbbellKickback => writeln!(f, "dumbbell_kickback"),
+            TricepsExtensionExerciseName::DumbbellKickback => write!(f, "dumbbell_kickback"),
             TricepsExtensionExerciseName::DumbbellLyingTricepsExtension => {
-                writeln!(f, "dumbbell_lying_triceps_extension")
+                write!(f, "dumbbell_lying_triceps_extension")
             }
             TricepsExtensionExerciseName::EzBarOverheadTricepsExtension => {
-                writeln!(f, "ez_bar_overhead_triceps_extension")
+                write!(f, "ez_bar_overhead_triceps_extension")
             }
-            TricepsExtensionExerciseName::InclineDip => writeln!(f, "incline_dip"),
-            TricepsExtensionExerciseName::WeightedInclineDip => writeln!(f, "weighted_incline_dip"),
+            TricepsExtensionExerciseName::InclineDip => write!(f, "incline_dip"),
+            TricepsExtensionExerciseName::WeightedInclineDip => write!(f, "weighted_incline_dip"),
             TricepsExtensionExerciseName::InclineEzBarLyingTricepsExtension => {
-                writeln!(f, "incline_ez_bar_lying_triceps_extension")
+                write!(f, "incline_ez_bar_lying_triceps_extension")
             }
             TricepsExtensionExerciseName::LyingDumbbellPulloverToExtension => {
-                writeln!(f, "lying_dumbbell_pullover_to_extension")
+                write!(f, "lying_dumbbell_pullover_to_extension")
             }
             TricepsExtensionExerciseName::LyingEzBarTricepsExtension => {
-                writeln!(f, "lying_ez_bar_triceps_extension")
+                write!(f, "lying_ez_bar_triceps_extension")
             }
             TricepsExtensionExerciseName::LyingTricepsExtensionToCloseGripBenchPress => {
-                writeln!(f, "lying_triceps_extension_to_close_grip_bench_press")
+                write!(f, "lying_triceps_extension_to_close_grip_bench_press")
             }
             TricepsExtensionExerciseName::OverheadDumbbellTricepsExtension => {
-                writeln!(f, "overhead_dumbbell_triceps_extension")
+                write!(f, "overhead_dumbbell_triceps_extension")
             }
             TricepsExtensionExerciseName::RecliningTricepsPress => {
-                writeln!(f, "reclining_triceps_press")
+                write!(f, "reclining_triceps_press")
             }
             TricepsExtensionExerciseName::ReverseGripPressdown => {
-                writeln!(f, "reverse_grip_pressdown")
+                write!(f, "reverse_grip_pressdown")
             }
             TricepsExtensionExerciseName::ReverseGripTricepsPressdown => {
-                writeln!(f, "reverse_grip_triceps_pressdown")
+                write!(f, "reverse_grip_triceps_pressdown")
             }
-            TricepsExtensionExerciseName::RopePressdown => writeln!(f, "rope_pressdown"),
+            TricepsExtensionExerciseName::RopePressdown => write!(f, "rope_pressdown"),
             TricepsExtensionExerciseName::SeatedBarbellOverheadTricepsExtension => {
-                writeln!(f, "seated_barbell_overhead_triceps_extension")
+                write!(f, "seated_barbell_overhead_triceps_extension")
             }
             TricepsExtensionExerciseName::SeatedDumbbellOverheadTricepsExtension => {
-                writeln!(f, "seated_dumbbell_overhead_triceps_extension")
+                write!(f, "seated_dumbbell_overhead_triceps_extension")
             }
             TricepsExtensionExerciseName::SeatedEzBarOverheadTricepsExtension => {
-                writeln!(f, "seated_ez_bar_overhead_triceps_extension")
+                write!(f, "seated_ez_bar_overhead_triceps_extension")
             }
             TricepsExtensionExerciseName::SeatedSingleArmOverheadDumbbellExtension => {
-                writeln!(f, "seated_single_arm_overhead_dumbbell_extension")
+                write!(f, "seated_single_arm_overhead_dumbbell_extension")
             }
             TricepsExtensionExerciseName::SingleArmDumbbellOverheadTricepsExtension => {
-                writeln!(f, "single_arm_dumbbell_overhead_triceps_extension")
+                write!(f, "single_arm_dumbbell_overhead_triceps_extension")
             }
             TricepsExtensionExerciseName::SingleDumbbellSeatedOverheadTricepsExtension => {
-                writeln!(f, "single_dumbbell_seated_overhead_triceps_extension")
+                write!(f, "single_dumbbell_seated_overhead_triceps_extension")
             }
             TricepsExtensionExerciseName::SingleLegBenchDipAndKick => {
-                writeln!(f, "single_leg_bench_dip_and_kick")
+                write!(f, "single_leg_bench_dip_and_kick")
             }
             TricepsExtensionExerciseName::WeightedSingleLegBenchDipAndKick => {
-                writeln!(f, "weighted_single_leg_bench_dip_and_kick")
+                write!(f, "weighted_single_leg_bench_dip_and_kick")
             }
-            TricepsExtensionExerciseName::SingleLegDip => writeln!(f, "single_leg_dip"),
+            TricepsExtensionExerciseName::SingleLegDip => write!(f, "single_leg_dip"),
             TricepsExtensionExerciseName::WeightedSingleLegDip => {
-                writeln!(f, "weighted_single_leg_dip")
+                write!(f, "weighted_single_leg_dip")
             }
             TricepsExtensionExerciseName::StaticLyingTricepsExtension => {
-                writeln!(f, "static_lying_triceps_extension")
+                write!(f, "static_lying_triceps_extension")
             }
-            TricepsExtensionExerciseName::SuspendedDip => writeln!(f, "suspended_dip"),
+            TricepsExtensionExerciseName::SuspendedDip => write!(f, "suspended_dip"),
             TricepsExtensionExerciseName::WeightedSuspendedDip => {
-                writeln!(f, "weighted_suspended_dip")
+                write!(f, "weighted_suspended_dip")
             }
             TricepsExtensionExerciseName::SwissBallDumbbellLyingTricepsExtension => {
-                writeln!(f, "swiss_ball_dumbbell_lying_triceps_extension")
+                write!(f, "swiss_ball_dumbbell_lying_triceps_extension")
             }
             TricepsExtensionExerciseName::SwissBallEzBarLyingTricepsExtension => {
-                writeln!(f, "swiss_ball_ez_bar_lying_triceps_extension")
+                write!(f, "swiss_ball_ez_bar_lying_triceps_extension")
             }
             TricepsExtensionExerciseName::SwissBallEzBarOverheadTricepsExtension => {
-                writeln!(f, "swiss_ball_ez_bar_overhead_triceps_extension")
+                write!(f, "swiss_ball_ez_bar_overhead_triceps_extension")
             }
-            TricepsExtensionExerciseName::TabletopDip => writeln!(f, "tabletop_dip"),
-            TricepsExtensionExerciseName::WeightedTabletopDip => {
-                writeln!(f, "weighted_tabletop_dip")
-            }
+            TricepsExtensionExerciseName::TabletopDip => write!(f, "tabletop_dip"),
+            TricepsExtensionExerciseName::WeightedTabletopDip => write!(f, "weighted_tabletop_dip"),
             TricepsExtensionExerciseName::TricepsExtensionOnFloor => {
-                writeln!(f, "triceps_extension_on_floor")
+                write!(f, "triceps_extension_on_floor")
             }
-            TricepsExtensionExerciseName::TricepsPressdown => writeln!(f, "triceps_pressdown"),
-            TricepsExtensionExerciseName::WeightedDip => writeln!(f, "weighted_dip"),
+            TricepsExtensionExerciseName::TricepsPressdown => write!(f, "triceps_pressdown"),
+            TricepsExtensionExerciseName::WeightedDip => write!(f, "weighted_dip"),
             TricepsExtensionExerciseName::UnknownVariant(value) => {
-                writeln!(f, "unknown_variant_{}", *value)
+                write!(f, "unknown_variant_{}", *value)
             }
         }
     }
@@ -18617,52 +18477,50 @@ impl WarmUpExerciseName {
 impl fmt::Display for WarmUpExerciseName {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            WarmUpExerciseName::QuadrupedRocking => writeln!(f, "quadruped_rocking"),
-            WarmUpExerciseName::NeckTilts => writeln!(f, "neck_tilts"),
-            WarmUpExerciseName::AnkleCircles => writeln!(f, "ankle_circles"),
+            WarmUpExerciseName::QuadrupedRocking => write!(f, "quadruped_rocking"),
+            WarmUpExerciseName::NeckTilts => write!(f, "neck_tilts"),
+            WarmUpExerciseName::AnkleCircles => write!(f, "ankle_circles"),
             WarmUpExerciseName::AnkleDorsiflexionWithBand => {
-                writeln!(f, "ankle_dorsiflexion_with_band")
+                write!(f, "ankle_dorsiflexion_with_band")
             }
-            WarmUpExerciseName::AnkleInternalRotation => writeln!(f, "ankle_internal_rotation"),
-            WarmUpExerciseName::ArmCircles => writeln!(f, "arm_circles"),
-            WarmUpExerciseName::BentOverReachToSky => writeln!(f, "bent_over_reach_to_sky"),
-            WarmUpExerciseName::CatCamel => writeln!(f, "cat_camel"),
-            WarmUpExerciseName::ElbowToFootLunge => writeln!(f, "elbow_to_foot_lunge"),
+            WarmUpExerciseName::AnkleInternalRotation => write!(f, "ankle_internal_rotation"),
+            WarmUpExerciseName::ArmCircles => write!(f, "arm_circles"),
+            WarmUpExerciseName::BentOverReachToSky => write!(f, "bent_over_reach_to_sky"),
+            WarmUpExerciseName::CatCamel => write!(f, "cat_camel"),
+            WarmUpExerciseName::ElbowToFootLunge => write!(f, "elbow_to_foot_lunge"),
             WarmUpExerciseName::ForwardAndBackwardLegSwings => {
-                writeln!(f, "forward_and_backward_leg_swings")
+                write!(f, "forward_and_backward_leg_swings")
             }
-            WarmUpExerciseName::Groiners => writeln!(f, "groiners"),
-            WarmUpExerciseName::InvertedHamstringStretch => {
-                writeln!(f, "inverted_hamstring_stretch")
-            }
-            WarmUpExerciseName::LateralDuckUnder => writeln!(f, "lateral_duck_under"),
-            WarmUpExerciseName::NeckRotations => writeln!(f, "neck_rotations"),
+            WarmUpExerciseName::Groiners => write!(f, "groiners"),
+            WarmUpExerciseName::InvertedHamstringStretch => write!(f, "inverted_hamstring_stretch"),
+            WarmUpExerciseName::LateralDuckUnder => write!(f, "lateral_duck_under"),
+            WarmUpExerciseName::NeckRotations => write!(f, "neck_rotations"),
             WarmUpExerciseName::OppositeArmAndLegBalance => {
-                writeln!(f, "opposite_arm_and_leg_balance")
+                write!(f, "opposite_arm_and_leg_balance")
             }
-            WarmUpExerciseName::ReachRollAndLift => writeln!(f, "reach_roll_and_lift"),
-            WarmUpExerciseName::Scorpion => writeln!(f, "scorpion"),
-            WarmUpExerciseName::ShoulderCircles => writeln!(f, "shoulder_circles"),
-            WarmUpExerciseName::SideToSideLegSwings => writeln!(f, "side_to_side_leg_swings"),
-            WarmUpExerciseName::SleeperStretch => writeln!(f, "sleeper_stretch"),
-            WarmUpExerciseName::SlideOut => writeln!(f, "slide_out"),
-            WarmUpExerciseName::SwissBallHipCrossover => writeln!(f, "swiss_ball_hip_crossover"),
+            WarmUpExerciseName::ReachRollAndLift => write!(f, "reach_roll_and_lift"),
+            WarmUpExerciseName::Scorpion => write!(f, "scorpion"),
+            WarmUpExerciseName::ShoulderCircles => write!(f, "shoulder_circles"),
+            WarmUpExerciseName::SideToSideLegSwings => write!(f, "side_to_side_leg_swings"),
+            WarmUpExerciseName::SleeperStretch => write!(f, "sleeper_stretch"),
+            WarmUpExerciseName::SlideOut => write!(f, "slide_out"),
+            WarmUpExerciseName::SwissBallHipCrossover => write!(f, "swiss_ball_hip_crossover"),
             WarmUpExerciseName::SwissBallReachRollAndLift => {
-                writeln!(f, "swiss_ball_reach_roll_and_lift")
+                write!(f, "swiss_ball_reach_roll_and_lift")
             }
             WarmUpExerciseName::SwissBallWindshieldWipers => {
-                writeln!(f, "swiss_ball_windshield_wipers")
+                write!(f, "swiss_ball_windshield_wipers")
             }
-            WarmUpExerciseName::ThoracicRotation => writeln!(f, "thoracic_rotation"),
-            WarmUpExerciseName::WalkingHighKicks => writeln!(f, "walking_high_kicks"),
-            WarmUpExerciseName::WalkingHighKnees => writeln!(f, "walking_high_knees"),
-            WarmUpExerciseName::WalkingKneeHugs => writeln!(f, "walking_knee_hugs"),
-            WarmUpExerciseName::WalkingLegCradles => writeln!(f, "walking_leg_cradles"),
-            WarmUpExerciseName::Walkout => writeln!(f, "walkout"),
+            WarmUpExerciseName::ThoracicRotation => write!(f, "thoracic_rotation"),
+            WarmUpExerciseName::WalkingHighKicks => write!(f, "walking_high_kicks"),
+            WarmUpExerciseName::WalkingHighKnees => write!(f, "walking_high_knees"),
+            WarmUpExerciseName::WalkingKneeHugs => write!(f, "walking_knee_hugs"),
+            WarmUpExerciseName::WalkingLegCradles => write!(f, "walking_leg_cradles"),
+            WarmUpExerciseName::Walkout => write!(f, "walkout"),
             WarmUpExerciseName::WalkoutFromPushUpPosition => {
-                writeln!(f, "walkout_from_push_up_position")
+                write!(f, "walkout_from_push_up_position")
             }
-            WarmUpExerciseName::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            WarmUpExerciseName::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -18734,11 +18592,11 @@ impl RunExerciseName {
 impl fmt::Display for RunExerciseName {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            RunExerciseName::Run => writeln!(f, "run"),
-            RunExerciseName::Walk => writeln!(f, "walk"),
-            RunExerciseName::Jog => writeln!(f, "jog"),
-            RunExerciseName::Sprint => writeln!(f, "sprint"),
-            RunExerciseName::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            RunExerciseName::Run => write!(f, "run"),
+            RunExerciseName::Walk => write!(f, "walk"),
+            RunExerciseName::Jog => write!(f, "jog"),
+            RunExerciseName::Sprint => write!(f, "sprint"),
+            RunExerciseName::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -18783,11 +18641,11 @@ impl WaterType {
 impl fmt::Display for WaterType {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            WaterType::Fresh => writeln!(f, "fresh"),
-            WaterType::Salt => writeln!(f, "salt"),
-            WaterType::En13319 => writeln!(f, "en13319"),
-            WaterType::Custom => writeln!(f, "custom"),
-            WaterType::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            WaterType::Fresh => write!(f, "fresh"),
+            WaterType::Salt => write!(f, "salt"),
+            WaterType::En13319 => write!(f, "en13319"),
+            WaterType::Custom => write!(f, "custom"),
+            WaterType::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -18827,8 +18685,8 @@ impl TissueModelType {
 impl fmt::Display for TissueModelType {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            TissueModelType::Zhl16c => writeln!(f, "zhl_16c"),
-            TissueModelType::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            TissueModelType::Zhl16c => write!(f, "zhl_16c"),
+            TissueModelType::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -18868,10 +18726,10 @@ impl DiveGasStatus {
 impl fmt::Display for DiveGasStatus {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            DiveGasStatus::Disabled => writeln!(f, "disabled"),
-            DiveGasStatus::Enabled => writeln!(f, "enabled"),
-            DiveGasStatus::BackupOnly => writeln!(f, "backup_only"),
-            DiveGasStatus::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            DiveGasStatus::Disabled => write!(f, "disabled"),
+            DiveGasStatus::Enabled => write!(f, "enabled"),
+            DiveGasStatus::BackupOnly => write!(f, "backup_only"),
+            DiveGasStatus::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -18911,9 +18769,9 @@ impl DiveAlarmType {
 impl fmt::Display for DiveAlarmType {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            DiveAlarmType::Depth => writeln!(f, "depth"),
-            DiveAlarmType::Time => writeln!(f, "time"),
-            DiveAlarmType::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            DiveAlarmType::Depth => write!(f, "depth"),
+            DiveAlarmType::Time => write!(f, "time"),
+            DiveAlarmType::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -18952,9 +18810,9 @@ impl DiveBacklightMode {
 impl fmt::Display for DiveBacklightMode {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            DiveBacklightMode::AtDepth => writeln!(f, "at_depth"),
-            DiveBacklightMode::AlwaysOn => writeln!(f, "always_on"),
-            DiveBacklightMode::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            DiveBacklightMode::AtDepth => write!(f, "at_depth"),
+            DiveBacklightMode::AlwaysOn => write!(f, "always_on"),
+            DiveBacklightMode::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -18993,9 +18851,9 @@ impl FaveroProduct {
 impl fmt::Display for FaveroProduct {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            FaveroProduct::AssiomaUno => writeln!(f, "assioma_uno"),
-            FaveroProduct::AssiomaDuo => writeln!(f, "assioma_duo"),
-            FaveroProduct::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            FaveroProduct::AssiomaUno => write!(f, "assioma_uno"),
+            FaveroProduct::AssiomaDuo => write!(f, "assioma_duo"),
+            FaveroProduct::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
@@ -19036,10 +18894,10 @@ impl ClimbProEvent {
 impl fmt::Display for ClimbProEvent {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            ClimbProEvent::Approach => writeln!(f, "approach"),
-            ClimbProEvent::Start => writeln!(f, "start"),
-            ClimbProEvent::Complete => writeln!(f, "complete"),
-            ClimbProEvent::UnknownVariant(value) => writeln!(f, "unknown_variant_{}", *value),
+            ClimbProEvent::Approach => write!(f, "approach"),
+            ClimbProEvent::Start => write!(f, "start"),
+            ClimbProEvent::Complete => write!(f, "complete"),
+            ClimbProEvent::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
 }
