@@ -144,6 +144,22 @@ impl FieldTypeDefintion {
         writeln!(out, "}}")?;
         writeln!(out, "}}")?;
 
+        writeln!(
+            out,
+            "impl Serialize for {} {{",
+            titlecase_string(&self.name)
+        )?;
+        writeln!(
+            out,
+            "fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>"
+        )?;
+        writeln!(out, "where")?;
+        writeln!(out, "S: Serializer,")?;
+        writeln!(out, "{{")?;
+        writeln!(out, "serializer.serialize_str(&self.to_string())")?;
+        writeln!(out, "}}")?;
+        writeln!(out, "}}")?;
+
         Ok(())
     }
 }
@@ -722,6 +738,8 @@ fn write_types_files(profile: &FitProfile) -> Result<(), std::io::Error> {
     writeln!(out, "#![allow(missing_docs)]")?;
     writeln!(out, "#![allow(dead_code)]")?;
     writeln!(out, "#![allow(clippy::unreadable_literal)]")?;
+    writeln!(out, "use serde::Serialize;")?;
+    writeln!(out, "use serde::ser::Serializer;")?;
     writeln!(out, "use std::convert;")?;
     writeln!(out, "use std::fmt;")?;
 

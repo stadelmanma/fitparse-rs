@@ -33,6 +33,7 @@ use std::fmt;
 mod de;
 mod error;
 pub mod profile;
+use profile::MesgNum;
 
 pub use de::{from_bytes, from_reader, Deserializer};
 pub use error::{Error, ErrorKind, Result};
@@ -42,14 +43,14 @@ pub use error::{Error, ErrorKind, Result};
 pub struct FitDataRecord {
     /// The kind of message the data came from, the FIT profile defines several messages and
     /// custom messages can be defined by altering the profile
-    kind: String,
+    kind: MesgNum,
     /// All the fields present in this message, a record may not have every possible field defined
     fields: BTreeMap<String, FieldValue>,
 }
 
 impl FitDataRecord {
     /// Create an empty data record with a given kind
-    pub fn new(kind: String) -> Self {
+    pub fn new(kind: MesgNum) -> Self {
         FitDataRecord {
             kind,
             fields: BTreeMap::new(),

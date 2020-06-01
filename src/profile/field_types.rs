@@ -3,6 +3,8 @@
 #![allow(missing_docs)]
 #![allow(dead_code)]
 #![allow(clippy::unreadable_literal)]
+use serde::ser::Serializer;
+use serde::Serialize;
 use std::convert;
 use std::fmt;
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -135,6 +137,14 @@ impl convert::From<u8> for File {
 impl convert::From<i64> for File {
     fn from(value: i64) -> Self {
         File::from(value as u8)
+    }
+}
+impl Serialize for File {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -532,6 +542,14 @@ impl convert::From<i64> for MesgNum {
         MesgNum::from(value as u16)
     }
 }
+impl Serialize for MesgNum {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum Checksum {
     /// Allows clear of checksum for flash memory where can only write 1 to 0 without erasing sector.
@@ -573,6 +591,14 @@ impl convert::From<u8> for Checksum {
 impl convert::From<i64> for Checksum {
     fn from(value: i64) -> Self {
         Checksum::from(value as u8)
+    }
+}
+impl Serialize for Checksum {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -620,6 +646,14 @@ impl convert::From<i64> for FileFlags {
         FileFlags::from(value as u8)
     }
 }
+impl Serialize for FileFlags {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum MesgCount {
     NumPerFile,
@@ -665,6 +699,14 @@ impl convert::From<i64> for MesgCount {
         MesgCount::from(value as u8)
     }
 }
+impl Serialize for MesgCount {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum DateTime {
     /// if date_time is < 0x10000000 then it is system time (seconds from device power on)
@@ -703,6 +745,14 @@ impl convert::From<i64> for DateTime {
         DateTime::from(value as u32)
     }
 }
+impl Serialize for DateTime {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum LocalDateTime {
     /// if date_time is < 0x10000000 then it is system time (seconds from device power on)
@@ -739,6 +789,14 @@ impl convert::From<u32> for LocalDateTime {
 impl convert::From<i64> for LocalDateTime {
     fn from(value: i64) -> Self {
         LocalDateTime::from(value as u32)
+    }
+}
+impl Serialize for LocalDateTime {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -789,6 +847,14 @@ impl convert::From<i64> for MessageIndex {
         MessageIndex::from(value as u16)
     }
 }
+impl Serialize for MessageIndex {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum DeviceIndex {
     /// Creator of the file is always device index 0.
@@ -825,6 +891,14 @@ impl convert::From<u8> for DeviceIndex {
 impl convert::From<i64> for DeviceIndex {
     fn from(value: i64) -> Self {
         DeviceIndex::from(value as u8)
+    }
+}
+impl Serialize for DeviceIndex {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -866,6 +940,14 @@ impl convert::From<u8> for Gender {
 impl convert::From<i64> for Gender {
     fn from(value: i64) -> Self {
         Gender::from(value as u8)
+    }
+}
+impl Serialize for Gender {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -1057,6 +1139,14 @@ impl convert::From<i64> for Language {
         Language::from(value as u8)
     }
 }
+impl Serialize for Language {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum LanguageBits0 {
     English,
@@ -1120,6 +1210,14 @@ impl convert::From<u8> for LanguageBits0 {
 impl convert::From<i64> for LanguageBits0 {
     fn from(value: i64) -> Self {
         LanguageBits0::from(value as u8)
+    }
+}
+impl Serialize for LanguageBits0 {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -1187,6 +1285,14 @@ impl convert::From<i64> for LanguageBits1 {
         LanguageBits1::from(value as u8)
     }
 }
+impl Serialize for LanguageBits1 {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum LanguageBits2 {
     Slovenian,
@@ -1250,6 +1356,14 @@ impl convert::From<u8> for LanguageBits2 {
 impl convert::From<i64> for LanguageBits2 {
     fn from(value: i64) -> Self {
         LanguageBits2::from(value as u8)
+    }
+}
+impl Serialize for LanguageBits2 {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -1317,6 +1431,14 @@ impl convert::From<i64> for LanguageBits3 {
         LanguageBits3::from(value as u8)
     }
 }
+impl Serialize for LanguageBits3 {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum LanguageBits4 {
     BrazilianPortuguese,
@@ -1372,6 +1494,14 @@ impl convert::From<u8> for LanguageBits4 {
 impl convert::From<i64> for LanguageBits4 {
     fn from(value: i64) -> Self {
         LanguageBits4::from(value as u8)
+    }
+}
+impl Serialize for LanguageBits4 {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -1831,6 +1961,14 @@ impl convert::From<i64> for TimeZone {
         TimeZone::from(value as u8)
     }
 }
+impl Serialize for TimeZone {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum DisplayMeasure {
     Metric,
@@ -1874,6 +2012,14 @@ impl convert::From<u8> for DisplayMeasure {
 impl convert::From<i64> for DisplayMeasure {
     fn from(value: i64) -> Self {
         DisplayMeasure::from(value as u8)
+    }
+}
+impl Serialize for DisplayMeasure {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -1921,6 +2067,14 @@ impl convert::From<i64> for DisplayHeart {
         DisplayHeart::from(value as u8)
     }
 }
+impl Serialize for DisplayHeart {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum DisplayPower {
     Watts,
@@ -1960,6 +2114,14 @@ impl convert::From<u8> for DisplayPower {
 impl convert::From<i64> for DisplayPower {
     fn from(value: i64) -> Self {
         DisplayPower::from(value as u8)
+    }
+}
+impl Serialize for DisplayPower {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -2205,6 +2367,14 @@ impl convert::From<i64> for DisplayPosition {
         DisplayPosition::from(value as u8)
     }
 }
+impl Serialize for DisplayPosition {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum Switch {
     Off,
@@ -2248,6 +2418,14 @@ impl convert::From<u8> for Switch {
 impl convert::From<i64> for Switch {
     fn from(value: i64) -> Self {
         Switch::from(value as u8)
+    }
+}
+impl Serialize for Switch {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -2485,6 +2663,14 @@ impl convert::From<i64> for Sport {
         Sport::from(value as u8)
     }
 }
+impl Serialize for Sport {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum SportBits0 {
     Generic,
@@ -2549,6 +2735,14 @@ impl convert::From<u8> for SportBits0 {
 impl convert::From<i64> for SportBits0 {
     fn from(value: i64) -> Self {
         SportBits0::from(value as u8)
+    }
+}
+impl Serialize for SportBits0 {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -2616,6 +2810,14 @@ impl convert::From<i64> for SportBits1 {
         SportBits1::from(value as u8)
     }
 }
+impl Serialize for SportBits1 {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum SportBits2 {
     Mountaineering,
@@ -2679,6 +2881,14 @@ impl convert::From<u8> for SportBits2 {
 impl convert::From<i64> for SportBits2 {
     fn from(value: i64) -> Self {
         SportBits2::from(value as u8)
+    }
+}
+impl Serialize for SportBits2 {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -2746,6 +2956,14 @@ impl convert::From<i64> for SportBits3 {
         SportBits3::from(value as u8)
     }
 }
+impl Serialize for SportBits3 {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum SportBits4 {
     Sailing,
@@ -2809,6 +3027,14 @@ impl convert::From<u8> for SportBits4 {
 impl convert::From<i64> for SportBits4 {
     fn from(value: i64) -> Self {
         SportBits4::from(value as u8)
+    }
+}
+impl Serialize for SportBits4 {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -2876,6 +3102,14 @@ impl convert::From<i64> for SportBits5 {
         SportBits5::from(value as u8)
     }
 }
+impl Serialize for SportBits5 {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum SportBits6 {
     FloorClimbing,
@@ -2911,6 +3145,14 @@ impl convert::From<u8> for SportBits6 {
 impl convert::From<i64> for SportBits6 {
     fn from(value: i64) -> Self {
         SportBits6::from(value as u8)
+    }
+}
+impl Serialize for SportBits6 {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -3244,6 +3486,14 @@ impl convert::From<i64> for SubSport {
         SubSport::from(value as u8)
     }
 }
+impl Serialize for SubSport {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum SportEvent {
     Uncategorized,
@@ -3313,6 +3563,14 @@ impl convert::From<i64> for SportEvent {
         SportEvent::from(value as u8)
     }
 }
+impl Serialize for SportEvent {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum Activity {
     Manual,
@@ -3352,6 +3610,14 @@ impl convert::From<u8> for Activity {
 impl convert::From<i64> for Activity {
     fn from(value: i64) -> Self {
         Activity::from(value as u8)
+    }
+}
+impl Serialize for Activity {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -3401,6 +3667,14 @@ impl convert::From<u8> for Intensity {
 impl convert::From<i64> for Intensity {
     fn from(value: i64) -> Self {
         Intensity::from(value as u8)
+    }
+}
+impl Serialize for Intensity {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -3453,6 +3727,14 @@ impl convert::From<u8> for SessionTrigger {
 impl convert::From<i64> for SessionTrigger {
     fn from(value: i64) -> Self {
         SessionTrigger::from(value as u8)
+    }
+}
+impl Serialize for SessionTrigger {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -3514,6 +3796,14 @@ impl convert::From<u8> for AutolapTrigger {
 impl convert::From<i64> for AutolapTrigger {
     fn from(value: i64) -> Self {
         AutolapTrigger::from(value as u8)
+    }
+}
+impl Serialize for AutolapTrigger {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -3585,6 +3875,14 @@ impl convert::From<i64> for LapTrigger {
         LapTrigger::from(value as u8)
     }
 }
+impl Serialize for LapTrigger {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum TimeMode {
     Hour12,
@@ -3642,6 +3940,14 @@ impl convert::From<u8> for TimeMode {
 impl convert::From<i64> for TimeMode {
     fn from(value: i64) -> Self {
         TimeMode::from(value as u8)
+    }
+}
+impl Serialize for TimeMode {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -3707,6 +4013,14 @@ impl convert::From<i64> for BacklightMode {
         BacklightMode::from(value as u8)
     }
 }
+impl Serialize for BacklightMode {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum DateMode {
     DayMonth,
@@ -3748,6 +4062,14 @@ impl convert::From<i64> for DateMode {
         DateMode::from(value as u8)
     }
 }
+impl Serialize for DateMode {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum BacklightTimeout {
     /// Backlight stays on forever.
@@ -3784,6 +4106,14 @@ impl convert::From<u8> for BacklightTimeout {
 impl convert::From<i64> for BacklightTimeout {
     fn from(value: i64) -> Self {
         BacklightTimeout::from(value as u8)
+    }
+}
+impl Serialize for BacklightTimeout {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -3999,6 +4329,14 @@ impl convert::From<i64> for Event {
         Event::from(value as u8)
     }
 }
+impl Serialize for Event {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum EventType {
     Start,
@@ -4072,6 +4410,14 @@ impl convert::From<i64> for EventType {
         EventType::from(value as u8)
     }
 }
+impl Serialize for EventType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum TimerTrigger {
     Manual,
@@ -4115,6 +4461,14 @@ impl convert::From<u8> for TimerTrigger {
 impl convert::From<i64> for TimerTrigger {
     fn from(value: i64) -> Self {
         TimerTrigger::from(value as u8)
+    }
+}
+impl Serialize for TimerTrigger {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -4167,6 +4521,14 @@ impl convert::From<i64> for FitnessEquipmentState {
         FitnessEquipmentState::from(value as u8)
     }
 }
+impl Serialize for FitnessEquipmentState {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum Tone {
     Off,
@@ -4214,6 +4576,14 @@ impl convert::From<u8> for Tone {
 impl convert::From<i64> for Tone {
     fn from(value: i64) -> Self {
         Tone::from(value as u8)
+    }
+}
+impl Serialize for Tone {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -4265,6 +4635,14 @@ impl convert::From<i64> for Autoscroll {
         Autoscroll::from(value as u8)
     }
 }
+impl Serialize for Autoscroll {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum ActivityClass {
     LevelMax,
@@ -4309,6 +4687,14 @@ impl convert::From<u8> for ActivityClass {
 impl convert::From<i64> for ActivityClass {
     fn from(value: i64) -> Self {
         ActivityClass::from(value as u8)
+    }
+}
+impl Serialize for ActivityClass {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -4356,6 +4742,14 @@ impl convert::From<i64> for HrZoneCalc {
         HrZoneCalc::from(value as u8)
     }
 }
+impl Serialize for HrZoneCalc {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum PwrZoneCalc {
     Custom,
@@ -4395,6 +4789,14 @@ impl convert::From<u8> for PwrZoneCalc {
 impl convert::From<i64> for PwrZoneCalc {
     fn from(value: i64) -> Self {
         PwrZoneCalc::from(value as u8)
+    }
+}
+impl Serialize for PwrZoneCalc {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -4558,6 +4960,14 @@ impl convert::From<i64> for WktStepDuration {
         WktStepDuration::from(value as u8)
     }
 }
+impl Serialize for WktStepDuration {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum WktStepTarget {
     Speed,
@@ -4647,6 +5057,14 @@ impl convert::From<i64> for WktStepTarget {
         WktStepTarget::from(value as u8)
     }
 }
+impl Serialize for WktStepTarget {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum Goal {
     Time,
@@ -4708,6 +5126,14 @@ impl convert::From<i64> for Goal {
         Goal::from(value as u8)
     }
 }
+impl Serialize for Goal {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum GoalRecurrence {
     Off,
@@ -4765,6 +5191,14 @@ impl convert::From<i64> for GoalRecurrence {
         GoalRecurrence::from(value as u8)
     }
 }
+impl Serialize for GoalRecurrence {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum GoalSource {
     /// Device generated
@@ -4813,6 +5247,14 @@ impl convert::From<i64> for GoalSource {
         GoalSource::from(value as u8)
     }
 }
+impl Serialize for GoalSource {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum Schedule {
     Workout,
@@ -4852,6 +5294,14 @@ impl convert::From<u8> for Schedule {
 impl convert::From<i64> for Schedule {
     fn from(value: i64) -> Self {
         Schedule::from(value as u8)
+    }
+}
+impl Serialize for Schedule {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -4989,6 +5439,14 @@ impl convert::From<u8> for CoursePoint {
 impl convert::From<i64> for CoursePoint {
     fn from(value: i64) -> Self {
         CoursePoint::from(value as u8)
+    }
+}
+impl Serialize for CoursePoint {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -5731,6 +6189,14 @@ impl convert::From<u16> for Manufacturer {
 impl convert::From<i64> for Manufacturer {
     fn from(value: i64) -> Self {
         Manufacturer::from(value as u16)
+    }
+}
+impl Serialize for Manufacturer {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -6543,6 +7009,14 @@ impl convert::From<i64> for GarminProduct {
         GarminProduct::from(value as u16)
     }
 }
+impl Serialize for GarminProduct {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum AntplusDeviceType {
     Antfs,
@@ -6672,6 +7146,14 @@ impl convert::From<i64> for AntplusDeviceType {
         AntplusDeviceType::from(value as u8)
     }
 }
+impl Serialize for AntplusDeviceType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum AntNetwork {
     Public,
@@ -6719,6 +7201,14 @@ impl convert::From<u8> for AntNetwork {
 impl convert::From<i64> for AntNetwork {
     fn from(value: i64) -> Self {
         AntNetwork::from(value as u8)
+    }
+}
+impl Serialize for AntNetwork {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -6818,6 +7308,14 @@ impl convert::From<i64> for WorkoutCapabilities {
         WorkoutCapabilities::from(value as u32)
     }
 }
+impl Serialize for WorkoutCapabilities {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum BatteryStatus {
     New,
@@ -6879,6 +7377,14 @@ impl convert::From<i64> for BatteryStatus {
         BatteryStatus::from(value as u8)
     }
 }
+impl Serialize for BatteryStatus {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum HrType {
     Normal,
@@ -6918,6 +7424,14 @@ impl convert::From<u8> for HrType {
 impl convert::From<i64> for HrType {
     fn from(value: i64) -> Self {
         HrType::from(value as u8)
+    }
+}
+impl Serialize for HrType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -6997,6 +7511,14 @@ impl convert::From<i64> for CourseCapabilities {
         CourseCapabilities::from(value as u32)
     }
 }
+impl Serialize for CourseCapabilities {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum Weight {
     Calculating,
@@ -7032,6 +7554,14 @@ impl convert::From<u16> for Weight {
 impl convert::From<i64> for Weight {
     fn from(value: i64) -> Self {
         Weight::from(value as u16)
+    }
+}
+impl Serialize for Weight {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -7071,6 +7601,14 @@ impl convert::From<i64> for WorkoutHr {
         WorkoutHr::from(value as u32)
     }
 }
+impl Serialize for WorkoutHr {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum WorkoutPower {
     WattsOffset,
@@ -7106,6 +7644,14 @@ impl convert::From<u32> for WorkoutPower {
 impl convert::From<i64> for WorkoutPower {
     fn from(value: i64) -> Self {
         WorkoutPower::from(value as u32)
+    }
+}
+impl Serialize for WorkoutPower {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -7159,6 +7705,14 @@ impl convert::From<u8> for BpStatus {
 impl convert::From<i64> for BpStatus {
     fn from(value: i64) -> Self {
         BpStatus::from(value as u8)
+    }
+}
+impl Serialize for BpStatus {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -7216,6 +7770,14 @@ impl convert::From<u16> for UserLocalId {
 impl convert::From<i64> for UserLocalId {
     fn from(value: i64) -> Self {
         UserLocalId::from(value as u16)
+    }
+}
+impl Serialize for UserLocalId {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -7278,6 +7840,14 @@ impl convert::From<u8> for SwimStroke {
 impl convert::From<i64> for SwimStroke {
     fn from(value: i64) -> Self {
         SwimStroke::from(value as u8)
+    }
+}
+impl Serialize for SwimStroke {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -7349,6 +7919,14 @@ impl convert::From<u8> for ActivityType {
 impl convert::From<i64> for ActivityType {
     fn from(value: i64) -> Self {
         ActivityType::from(value as u8)
+    }
+}
+impl Serialize for ActivityType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -7482,6 +8060,14 @@ impl convert::From<i64> for ActivitySubtype {
         ActivitySubtype::from(value as u8)
     }
 }
+impl Serialize for ActivitySubtype {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum ActivityLevel {
     Low,
@@ -7527,6 +8113,14 @@ impl convert::From<i64> for ActivityLevel {
         ActivityLevel::from(value as u8)
     }
 }
+impl Serialize for ActivityLevel {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum Side {
     Right,
@@ -7566,6 +8160,14 @@ impl convert::From<u8> for Side {
 impl convert::From<i64> for Side {
     fn from(value: i64) -> Self {
         Side::from(value as u8)
+    }
+}
+impl Serialize for Side {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -7611,6 +8213,14 @@ impl convert::From<i64> for LeftRightBalance {
         LeftRightBalance::from(value as u8)
     }
 }
+impl Serialize for LeftRightBalance {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum LeftRightBalance100 {
     /// % contribution scaled by 100
@@ -7654,6 +8264,14 @@ impl convert::From<i64> for LeftRightBalance100 {
         LeftRightBalance100::from(value as u16)
     }
 }
+impl Serialize for LeftRightBalance100 {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum LengthType {
     /// Rest period. Length with no strokes
@@ -7695,6 +8313,14 @@ impl convert::From<u8> for LengthType {
 impl convert::From<i64> for LengthType {
     fn from(value: i64) -> Self {
         LengthType::from(value as u8)
+    }
+}
+impl Serialize for LengthType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -7756,6 +8382,14 @@ impl convert::From<u8> for DayOfWeek {
 impl convert::From<i64> for DayOfWeek {
     fn from(value: i64) -> Self {
         DayOfWeek::from(value as u8)
+    }
+}
+impl Serialize for DayOfWeek {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -7942,6 +8576,14 @@ impl convert::From<i64> for ConnectivityCapabilities {
         ConnectivityCapabilities::from(value as u32)
     }
 }
+impl Serialize for ConnectivityCapabilities {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum WeatherReport {
     Current,
@@ -7985,6 +8627,14 @@ impl convert::From<u8> for WeatherReport {
 impl convert::From<i64> for WeatherReport {
     fn from(value: i64) -> Self {
         WeatherReport::from(value as u8)
+    }
+}
+impl Serialize for WeatherReport {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -8104,6 +8754,14 @@ impl convert::From<i64> for WeatherStatus {
         WeatherStatus::from(value as u8)
     }
 }
+impl Serialize for WeatherStatus {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum WeatherSeverity {
     Unknown,
@@ -8155,6 +8813,14 @@ impl convert::From<u8> for WeatherSeverity {
 impl convert::From<i64> for WeatherSeverity {
     fn from(value: i64) -> Self {
         WeatherSeverity::from(value as u8)
+    }
+}
+impl Serialize for WeatherSeverity {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -8530,6 +9196,14 @@ impl convert::From<i64> for WeatherSevereType {
         WeatherSevereType::from(value as u8)
     }
 }
+impl Serialize for WeatherSevereType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum StrokeType {
     NoEvent,
@@ -8586,6 +9260,14 @@ impl convert::From<u8> for StrokeType {
 impl convert::From<i64> for StrokeType {
     fn from(value: i64) -> Self {
         StrokeType::from(value as u8)
+    }
+}
+impl Serialize for StrokeType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -8785,6 +9467,14 @@ impl convert::From<i64> for BodyLocation {
         BodyLocation::from(value as u8)
     }
 }
+impl Serialize for BodyLocation {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum SegmentLapStatus {
     End,
@@ -8824,6 +9514,14 @@ impl convert::From<u8> for SegmentLapStatus {
 impl convert::From<i64> for SegmentLapStatus {
     fn from(value: i64) -> Self {
         SegmentLapStatus::from(value as u8)
+    }
+}
+impl Serialize for SegmentLapStatus {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -8905,6 +9603,14 @@ impl convert::From<i64> for SegmentLeaderboardType {
         SegmentLeaderboardType::from(value as u8)
     }
 }
+impl Serialize for SegmentLeaderboardType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum SegmentDeleteStatus {
     DoNotDelete,
@@ -8950,6 +9656,14 @@ impl convert::From<i64> for SegmentDeleteStatus {
         SegmentDeleteStatus::from(value as u8)
     }
 }
+impl Serialize for SegmentDeleteStatus {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum SegmentSelectionType {
     Starred,
@@ -8989,6 +9703,14 @@ impl convert::From<u8> for SegmentSelectionType {
 impl convert::From<i64> for SegmentSelectionType {
     fn from(value: i64) -> Self {
         SegmentSelectionType::from(value as u8)
+    }
+}
+impl Serialize for SegmentSelectionType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -9054,6 +9776,14 @@ impl convert::From<i64> for SourceType {
         SourceType::from(value as u8)
     }
 }
+impl Serialize for SourceType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum DisplayOrientation {
     /// automatic if the device supports it
@@ -9108,6 +9838,14 @@ impl convert::From<u8> for DisplayOrientation {
 impl convert::From<i64> for DisplayOrientation {
     fn from(value: i64) -> Self {
         DisplayOrientation::from(value as u8)
+    }
+}
+impl Serialize for DisplayOrientation {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -9167,6 +9905,14 @@ impl convert::From<i64> for WorkoutEquipment {
         WorkoutEquipment::from(value as u8)
     }
 }
+impl Serialize for WorkoutEquipment {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum WatchfaceMode {
     Digital,
@@ -9216,6 +9962,14 @@ impl convert::From<i64> for WatchfaceMode {
         WatchfaceMode::from(value as u8)
     }
 }
+impl Serialize for WatchfaceMode {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum DigitalWatchfaceLayout {
     Traditional,
@@ -9263,6 +10017,14 @@ impl convert::From<i64> for DigitalWatchfaceLayout {
         DigitalWatchfaceLayout::from(value as u8)
     }
 }
+impl Serialize for DigitalWatchfaceLayout {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum AnalogWatchfaceLayout {
     Minimal,
@@ -9306,6 +10068,14 @@ impl convert::From<u8> for AnalogWatchfaceLayout {
 impl convert::From<i64> for AnalogWatchfaceLayout {
     fn from(value: i64) -> Self {
         AnalogWatchfaceLayout::from(value as u8)
+    }
+}
+impl Serialize for AnalogWatchfaceLayout {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -9357,6 +10127,14 @@ impl convert::From<i64> for RiderPositionType {
         RiderPositionType::from(value as u8)
     }
 }
+impl Serialize for RiderPositionType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum PowerPhaseType {
     PowerPhaseStartAngle,
@@ -9404,6 +10182,14 @@ impl convert::From<u8> for PowerPhaseType {
 impl convert::From<i64> for PowerPhaseType {
     fn from(value: i64) -> Self {
         PowerPhaseType::from(value as u8)
+    }
+}
+impl Serialize for PowerPhaseType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -9500,6 +10286,14 @@ impl convert::From<i64> for CameraEventType {
         CameraEventType::from(value as u8)
     }
 }
+impl Serialize for CameraEventType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum SensorType {
     Accelerometer,
@@ -9548,6 +10342,14 @@ impl convert::From<u8> for SensorType {
 impl convert::From<i64> for SensorType {
     fn from(value: i64) -> Self {
         SensorType::from(value as u8)
+    }
+}
+impl Serialize for SensorType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -9599,6 +10401,14 @@ impl convert::From<u8> for BikeLightNetworkConfigType {
 impl convert::From<i64> for BikeLightNetworkConfigType {
     fn from(value: i64) -> Self {
         BikeLightNetworkConfigType::from(value as u8)
+    }
+}
+impl Serialize for BikeLightNetworkConfigType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -9654,6 +10464,14 @@ impl convert::From<i64> for CommTimeoutType {
         CommTimeoutType::from(value as u16)
     }
 }
+impl Serialize for CommTimeoutType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum CameraOrientationType {
     CameraOrientation0,
@@ -9703,6 +10521,14 @@ impl convert::From<i64> for CameraOrientationType {
         CameraOrientationType::from(value as u8)
     }
 }
+impl Serialize for CameraOrientationType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum AttitudeStage {
     Failed,
@@ -9750,6 +10576,14 @@ impl convert::From<u8> for AttitudeStage {
 impl convert::From<i64> for AttitudeStage {
     fn from(value: i64) -> Self {
         AttitudeStage::from(value as u8)
+    }
+}
+impl Serialize for AttitudeStage {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -9837,6 +10671,14 @@ impl convert::From<i64> for AttitudeValidity {
         AttitudeValidity::from(value as u16)
     }
 }
+impl Serialize for AttitudeValidity {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum AutoSyncFrequency {
     Never,
@@ -9888,6 +10730,14 @@ impl convert::From<u8> for AutoSyncFrequency {
 impl convert::From<i64> for AutoSyncFrequency {
     fn from(value: i64) -> Self {
         AutoSyncFrequency::from(value as u8)
+    }
+}
+impl Serialize for AutoSyncFrequency {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -9953,6 +10803,14 @@ impl convert::From<u8> for ExdLayout {
 impl convert::From<i64> for ExdLayout {
     fn from(value: i64) -> Self {
         ExdLayout::from(value as u8)
+    }
+}
+impl Serialize for ExdLayout {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -10030,6 +10888,14 @@ impl convert::From<u8> for ExdDisplayType {
 impl convert::From<i64> for ExdDisplayType {
     fn from(value: i64) -> Self {
         ExdDisplayType::from(value as u8)
+    }
+}
+impl Serialize for ExdDisplayType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -10269,6 +11135,14 @@ impl convert::From<i64> for ExdDataUnits {
         ExdDataUnits::from(value as u8)
     }
 }
+impl Serialize for ExdDataUnits {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum ExdQualifiers {
     NoQualifier,
@@ -10476,6 +11350,14 @@ impl convert::From<u8> for ExdQualifiers {
 impl convert::From<i64> for ExdQualifiers {
     fn from(value: i64) -> Self {
         ExdQualifiers::from(value as u8)
+    }
+}
+impl Serialize for ExdQualifiers {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -10910,6 +11792,14 @@ impl convert::From<i64> for ExdDescriptors {
         ExdDescriptors::from(value as u8)
     }
 }
+impl Serialize for ExdDescriptors {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum AutoActivityDetect {
     None,
@@ -10969,6 +11859,14 @@ impl convert::From<u32> for AutoActivityDetect {
 impl convert::From<i64> for AutoActivityDetect {
     fn from(value: i64) -> Self {
         AutoActivityDetect::from(value as u32)
+    }
+}
+impl Serialize for AutoActivityDetect {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -11044,6 +11942,14 @@ impl convert::From<u32> for SupportedExdScreenLayouts {
 impl convert::From<i64> for SupportedExdScreenLayouts {
     fn from(value: i64) -> Self {
         SupportedExdScreenLayouts::from(value as u32)
+    }
+}
+impl Serialize for SupportedExdScreenLayouts {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -11145,6 +12051,14 @@ impl convert::From<u8> for FitBaseType {
 impl convert::From<i64> for FitBaseType {
     fn from(value: i64) -> Self {
         FitBaseType::from(value as u8)
+    }
+}
+impl Serialize for FitBaseType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -11332,6 +12246,14 @@ impl convert::From<i64> for TurnType {
         TurnType::from(value as u8)
     }
 }
+impl Serialize for TurnType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum BikeLightBeamAngleMode {
     Manual,
@@ -11373,6 +12295,14 @@ impl convert::From<u8> for BikeLightBeamAngleMode {
 impl convert::From<i64> for BikeLightBeamAngleMode {
     fn from(value: i64) -> Self {
         BikeLightBeamAngleMode::from(value as u8)
+    }
+}
+impl Serialize for BikeLightBeamAngleMode {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -11420,6 +12350,14 @@ impl convert::From<i64> for FitBaseUnit {
         FitBaseUnit::from(value as u16)
     }
 }
+impl Serialize for FitBaseUnit {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum SetType {
     Rest,
@@ -11459,6 +12397,14 @@ impl convert::From<u8> for SetType {
 impl convert::From<i64> for SetType {
     fn from(value: i64) -> Self {
         SetType::from(value as u8)
+    }
+}
+impl Serialize for SetType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -11628,6 +12574,14 @@ impl convert::From<u16> for ExerciseCategory {
 impl convert::From<i64> for ExerciseCategory {
     fn from(value: i64) -> Self {
         ExerciseCategory::from(value as u16)
+    }
+}
+impl Serialize for ExerciseCategory {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -11813,6 +12767,14 @@ impl convert::From<i64> for BenchPressExerciseName {
         BenchPressExerciseName::from(value as u16)
     }
 }
+impl Serialize for BenchPressExerciseName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum CalfRaiseExerciseName {
     Name3WayCalfRaise,
@@ -11962,6 +12924,14 @@ impl convert::From<i64> for CalfRaiseExerciseName {
         CalfRaiseExerciseName::from(value as u16)
     }
 }
+impl Serialize for CalfRaiseExerciseName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum CardioExerciseName {
     BobAndWeaveCircle,
@@ -12087,6 +13057,14 @@ impl convert::From<i64> for CardioExerciseName {
         CardioExerciseName::from(value as u16)
     }
 }
+impl Serialize for CardioExerciseName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum CarryExerciseName {
     BarHolds,
@@ -12138,6 +13116,14 @@ impl convert::From<u16> for CarryExerciseName {
 impl convert::From<i64> for CarryExerciseName {
     fn from(value: i64) -> Self {
         CarryExerciseName::from(value as u16)
+    }
+}
+impl Serialize for CarryExerciseName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -12281,6 +13267,14 @@ impl convert::From<u16> for ChopExerciseName {
 impl convert::From<i64> for ChopExerciseName {
     fn from(value: i64) -> Self {
         ChopExerciseName::from(value as u16)
+    }
+}
+impl Serialize for ChopExerciseName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -12624,6 +13618,14 @@ impl convert::From<u16> for CoreExerciseName {
 impl convert::From<i64> for CoreExerciseName {
     fn from(value: i64) -> Self {
         CoreExerciseName::from(value as u16)
+    }
+}
+impl Serialize for CoreExerciseName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -13059,6 +14061,14 @@ impl convert::From<i64> for CrunchExerciseName {
         CrunchExerciseName::from(value as u16)
     }
 }
+impl Serialize for CrunchExerciseName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum CurlExerciseName {
     AlternatingDumbbellBicepsCurl,
@@ -13310,6 +14320,14 @@ impl convert::From<i64> for CurlExerciseName {
         CurlExerciseName::from(value as u16)
     }
 }
+impl Serialize for CurlExerciseName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum DeadliftExerciseName {
     BarbellDeadlift,
@@ -13437,6 +14455,14 @@ impl convert::From<i64> for DeadliftExerciseName {
         DeadliftExerciseName::from(value as u16)
     }
 }
+impl Serialize for DeadliftExerciseName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum FlyeExerciseName {
     CableCrossover,
@@ -13510,6 +14536,14 @@ impl convert::From<u16> for FlyeExerciseName {
 impl convert::From<i64> for FlyeExerciseName {
     fn from(value: i64) -> Self {
         FlyeExerciseName::from(value as u16)
+    }
+}
+impl Serialize for FlyeExerciseName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -13814,6 +14848,14 @@ impl convert::From<i64> for HipRaiseExerciseName {
         HipRaiseExerciseName::from(value as u16)
     }
 }
+impl Serialize for HipRaiseExerciseName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum HipStabilityExerciseName {
     BandSideLyingLegRaise,
@@ -14021,6 +15063,14 @@ impl convert::From<i64> for HipStabilityExerciseName {
         HipStabilityExerciseName::from(value as u16)
     }
 }
+impl Serialize for HipStabilityExerciseName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum HipSwingExerciseName {
     SingleArmKettlebellSwing,
@@ -14066,6 +15116,14 @@ impl convert::From<u16> for HipSwingExerciseName {
 impl convert::From<i64> for HipSwingExerciseName {
     fn from(value: i64) -> Self {
         HipSwingExerciseName::from(value as u16)
+    }
+}
+impl Serialize for HipSwingExerciseName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -14305,6 +15363,14 @@ impl convert::From<i64> for HyperextensionExerciseName {
         HyperextensionExerciseName::from(value as u16)
     }
 }
+impl Serialize for HyperextensionExerciseName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum LateralRaiseExerciseName {
     Name45DegreeCableExternalRotation,
@@ -14492,6 +15558,14 @@ impl convert::From<i64> for LateralRaiseExerciseName {
         LateralRaiseExerciseName::from(value as u16)
     }
 }
+impl Serialize for LateralRaiseExerciseName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum LegCurlExerciseName {
     LegCurl,
@@ -14581,6 +15655,14 @@ impl convert::From<u16> for LegCurlExerciseName {
 impl convert::From<i64> for LegCurlExerciseName {
     fn from(value: i64) -> Self {
         LegCurlExerciseName::from(value as u16)
+    }
+}
+impl Serialize for LegCurlExerciseName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -14722,6 +15804,14 @@ impl convert::From<u16> for LegRaiseExerciseName {
 impl convert::From<i64> for LegRaiseExerciseName {
     fn from(value: i64) -> Self {
         LegRaiseExerciseName::from(value as u16)
+    }
+}
+impl Serialize for LegRaiseExerciseName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -15141,6 +16231,14 @@ impl convert::From<i64> for LungeExerciseName {
         LungeExerciseName::from(value as u16)
     }
 }
+impl Serialize for LungeExerciseName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum OlympicLiftExerciseName {
     BarbellHangPowerClean,
@@ -15266,6 +16364,14 @@ impl convert::From<u16> for OlympicLiftExerciseName {
 impl convert::From<i64> for OlympicLiftExerciseName {
     fn from(value: i64) -> Self {
         OlympicLiftExerciseName::from(value as u16)
+    }
+}
+impl Serialize for OlympicLiftExerciseName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -15966,6 +17072,14 @@ impl convert::From<i64> for PlankExerciseName {
         PlankExerciseName::from(value as u16)
     }
 }
+impl Serialize for PlankExerciseName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum PlyoExerciseName {
     AlternatingJumpLunge,
@@ -16147,6 +17261,14 @@ impl convert::From<u16> for PlyoExerciseName {
 impl convert::From<i64> for PlyoExerciseName {
     fn from(value: i64) -> Self {
         PlyoExerciseName::from(value as u16)
+    }
+}
+impl Serialize for PlyoExerciseName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -16338,6 +17460,14 @@ impl convert::From<u16> for PullUpExerciseName {
 impl convert::From<i64> for PullUpExerciseName {
     fn from(value: i64) -> Self {
         PullUpExerciseName::from(value as u16)
+    }
+}
+impl Serialize for PullUpExerciseName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -16745,6 +17875,14 @@ impl convert::From<i64> for PushUpExerciseName {
         PushUpExerciseName::from(value as u16)
     }
 }
+impl Serialize for PushUpExerciseName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum RowExerciseName {
     BarbellStraightLegDeadliftToRow,
@@ -16940,6 +18078,14 @@ impl convert::From<i64> for RowExerciseName {
         RowExerciseName::from(value as u16)
     }
 }
+impl Serialize for RowExerciseName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum ShoulderPressExerciseName {
     AlternatingDumbbellShoulderPress,
@@ -17103,6 +18249,14 @@ impl convert::From<u16> for ShoulderPressExerciseName {
 impl convert::From<i64> for ShoulderPressExerciseName {
     fn from(value: i64) -> Self {
         ShoulderPressExerciseName::from(value as u16)
+    }
+}
+impl Serialize for ShoulderPressExerciseName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -17312,6 +18466,14 @@ impl convert::From<i64> for ShoulderStabilityExerciseName {
         ShoulderStabilityExerciseName::from(value as u16)
     }
 }
+impl Serialize for ShoulderStabilityExerciseName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum ShrugExerciseName {
     BarbellJumpShrug,
@@ -17415,6 +18577,14 @@ impl convert::From<u16> for ShrugExerciseName {
 impl convert::From<i64> for ShrugExerciseName {
     fn from(value: i64) -> Self {
         ShrugExerciseName::from(value as u16)
+    }
+}
+impl Serialize for ShrugExerciseName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -17614,6 +18784,14 @@ impl convert::From<u16> for SitUpExerciseName {
 impl convert::From<i64> for SitUpExerciseName {
     fn from(value: i64) -> Self {
         SitUpExerciseName::from(value as u16)
+    }
+}
+impl Serialize for SitUpExerciseName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -18054,6 +19232,14 @@ impl convert::From<i64> for SquatExerciseName {
         SquatExerciseName::from(value as u16)
     }
 }
+impl Serialize for SquatExerciseName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum TotalBodyExerciseName {
     Burpee,
@@ -18143,6 +19329,14 @@ impl convert::From<u16> for TotalBodyExerciseName {
 impl convert::From<i64> for TotalBodyExerciseName {
     fn from(value: i64) -> Self {
         TotalBodyExerciseName::from(value as u16)
+    }
+}
+impl Serialize for TotalBodyExerciseName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -18398,6 +19592,14 @@ impl convert::From<i64> for TricepsExtensionExerciseName {
         TricepsExtensionExerciseName::from(value as u16)
     }
 }
+impl Serialize for TricepsExtensionExerciseName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum WarmUpExerciseName {
     QuadrupedRocking,
@@ -18567,6 +19769,14 @@ impl convert::From<i64> for WarmUpExerciseName {
         WarmUpExerciseName::from(value as u16)
     }
 }
+impl Serialize for WarmUpExerciseName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum RunExerciseName {
     Run,
@@ -18614,6 +19824,14 @@ impl convert::From<u16> for RunExerciseName {
 impl convert::From<i64> for RunExerciseName {
     fn from(value: i64) -> Self {
         RunExerciseName::from(value as u16)
+    }
+}
+impl Serialize for RunExerciseName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -18665,6 +19883,14 @@ impl convert::From<i64> for WaterType {
         WaterType::from(value as u8)
     }
 }
+impl Serialize for WaterType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum TissueModelType {
     /// Buhlmann's decompression algorithm, version C
@@ -18701,6 +19927,14 @@ impl convert::From<u8> for TissueModelType {
 impl convert::From<i64> for TissueModelType {
     fn from(value: i64) -> Self {
         TissueModelType::from(value as u8)
+    }
+}
+impl Serialize for TissueModelType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -18748,6 +19982,14 @@ impl convert::From<i64> for DiveGasStatus {
         DiveGasStatus::from(value as u8)
     }
 }
+impl Serialize for DiveGasStatus {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum DiveAlarmType {
     Depth,
@@ -18787,6 +20029,14 @@ impl convert::From<u8> for DiveAlarmType {
 impl convert::From<i64> for DiveAlarmType {
     fn from(value: i64) -> Self {
         DiveAlarmType::from(value as u8)
+    }
+}
+impl Serialize for DiveAlarmType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -18830,6 +20080,14 @@ impl convert::From<i64> for DiveBacklightMode {
         DiveBacklightMode::from(value as u8)
     }
 }
+impl Serialize for DiveBacklightMode {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
 pub enum FaveroProduct {
     AssiomaUno,
@@ -18869,6 +20127,14 @@ impl convert::From<u16> for FaveroProduct {
 impl convert::From<i64> for FaveroProduct {
     fn from(value: i64) -> Self {
         FaveroProduct::from(value as u16)
+    }
+}
+impl Serialize for FaveroProduct {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
@@ -18914,6 +20180,14 @@ impl convert::From<u8> for ClimbProEvent {
 impl convert::From<i64> for ClimbProEvent {
     fn from(value: i64) -> Self {
         ClimbProEvent::from(value as u8)
+    }
+}
+impl Serialize for ClimbProEvent {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
     }
 }
 

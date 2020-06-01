@@ -100,7 +100,7 @@ impl Decoder {
     ) -> Result<FitDataRecord> {
         let mesg_num = MesgNum::from(message.global_message_number());
         let mesg_info = mesg_num.message_info();
-        let mut record = FitDataRecord::new(mesg_num.to_string());
+        let mut record = FitDataRecord::new(mesg_num);
 
         // check if we have a real timestamp field to set the reference
         if let Some(Some(value)) = message.fields().get(&253) {
