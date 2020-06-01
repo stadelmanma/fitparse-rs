@@ -26,7 +26,6 @@
 #![warn(missing_docs)]
 use chrono::{DateTime, Local};
 use serde::Serialize;
-use std::collections::BTreeMap;
 use std::convert;
 use std::fmt;
 
@@ -45,40 +44,64 @@ pub struct FitDataRecord {
     /// custom messages can be defined by altering the profile
     kind: MesgNum,
     /// All the fields present in this message, a record may not have every possible field defined
-    fields: BTreeMap<String, FieldValue>,
+    fields: Vec<FitDataField>,
 }
+
+// TODO, maybe I make "kind" a MesgNum variant, and instead of String keys I use a "FieldName"
+// struct/tuple as the key which stores both the field name and definition number. All while keeping
+// the serialized version the same. This would provide better info to the end user if they wanted
+// to "look stuff up" in the profile without them needing to reconvert everything. Instead of changing
+// the map's keys I could add a second hash that retains the def number for look ups but I don't like
+// that idea as much
 
 impl FitDataRecord {
     /// Create an empty data record with a given kind
     pub fn new(kind: MesgNum) -> Self {
         FitDataRecord {
             kind,
-            fields: BTreeMap::new(),
+            fields: Vec::new(),
         }
     }
 
     /// Fetch a field from the record
-    pub fn get(&self, key: &str) -> Option<&FieldValue> {
-        self.fields.get(key)
+    pub fn fields(&self) -> &[FitDataField] {
+        &self.fields
     }
 
     /// Add a field to the record
-    pub fn insert(&mut self, key: String, value: FieldValue) -> Option<FieldValue> {
-        self.fields.insert(key, value)
+    pub fn push(&mut self, field: FitDataField) {
+        self.fields.push(field)
     }
 }
 
 /// Stores a value and it's defined units which are set by the FIT profile during decoding
 #[derive(Clone, Debug, Serialize)]
-pub struct FieldValue {
+pub struct FitDataField {
+    name: String,
+    number: u8,
     value: Value,
     units: String,
 }
 
-impl FieldValue {
-    /// Create a new FieldValue
-    pub fn new(value: Value, units: String) -> Self {
-        FieldValue { value, units }
+impl FitDataField {
+    /// Create a new FitDataField
+    pub fn new(name: String, number: u8, value: Value, units: String) -> Self {
+        FitDataField {
+            name,
+            number,
+            value,
+            units,
+        }
+    }
+
+    /// Return stored value
+    pub fn name(&self) -> &str {
+        &self.name
+    }
+
+    /// Return stored value
+    pub fn number(&self) -> u8 {
+        self.number
     }
 
     /// Return stored value
@@ -92,7 +115,7 @@ impl FieldValue {
     }
 }
 
-impl fmt::Display for FieldValue {
+impl fmt::Display for FitDataField {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         if self.units.is_empty() {
             write!(f, "{}", self.value)
@@ -143,7 +166,7 @@ pub enum Value {
     UInt64(u64),
     /// Unsigned 64bit integer data where the invalid value is 0x0 instead of 0xFFFFFFFFFFFFFFFF
     UInt64z(u64),
-    /// Array of DataFieldValue, while this allows nested arrays and mixed types this is not possible
+    /// Array of DataFitDataField, while this allows nested arrays and mixed types this is not possible
     /// in a properly formatted FIT file
     Array(Vec<Self>),
 }

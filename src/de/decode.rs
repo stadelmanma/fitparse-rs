@@ -4,7 +4,7 @@ use crate::error::{ErrorKind, Result};
 use crate::profile::{
     get_field_variant_as_string, ComponentFieldInfo, FieldDataType, FieldInfo, MesgNum, MessageInfo,
 };
-use crate::{FieldValue, FitDataRecord, Value};
+use crate::{FitDataField, FitDataRecord, Value};
 use chrono::{DateTime, Duration, Local, NaiveDate, TimeZone};
 use std::collections::HashMap;
 use std::convert::{From, TryInto};
@@ -119,16 +119,18 @@ impl Decoder {
         }
 
         // process raw data
-        for (key, value) in self.build_data_fields_from_map(mesg_info, message.fields())? {
-            record.insert(key, value);
+        for field in self.build_data_fields_from_map(mesg_info, message.fields())? {
+            record.push(field);
         }
 
         // Add a timestamp field if we have a time offset
         if let Some(time_offset) = header.time_offset() {
-            record.insert(
+            record.push(FitDataField::new(
                 String::from("timestamp"),
-                FieldValue::new(self.update_timestamp(time_offset), String::new()),
-            );
+                253,
+                self.update_timestamp(time_offset),
+                String::new(),
+            ));
         }
 
         // TODO: process developer fields
@@ -141,7 +143,7 @@ impl Decoder {
         &mut self,
         mesg_info: MessageInfo,
         data_map: &HashMap<u8, Option<Value>>,
-    ) -> Result<Vec<(String, FieldValue)>> {
+    ) -> Result<Vec<FitDataField>> {
         // initialize process queue with field info for parsed, valid fields.
         let msg_num = mesg_info.global_message_number();
         let mut data_fields = Vec::new();
@@ -192,6 +194,7 @@ impl Decoder {
             }
         }
 
+        data_fields.sort_by_key(|f| f.number());
         Ok(data_fields)
     }
 
@@ -371,18 +374,22 @@ fn convert_value(field_info: &FieldInfo, value: Value) -> Result<Value> {
 }
 
 /// Build a data field using the provided FIT profile information
-fn data_field_with_info(field_info: &FieldInfo, value: Value) -> Result<(String, FieldValue)> {
+fn data_field_with_info(field_info: &FieldInfo, value: Value) -> Result<FitDataField> {
     let value = convert_value(field_info, value)?;
-    Ok((
+    Ok(FitDataField::new(
         field_info.name().to_string(),
-        FieldValue::new(value, field_info.units().to_string()),
+        field_info.def_number(),
+        value,
+        field_info.units().to_string(),
     ))
 }
 
 /// Create an "unknown" field as a placeholder if we don't have any field information
-fn unknown_field(field_def_num: u8, value: Value) -> (String, FieldValue) {
-    (
+fn unknown_field(field_def_num: u8, value: Value) -> FitDataField {
+    FitDataField::new(
         format!("unknown_field_{}", field_def_num),
-        FieldValue::new(value, String::new()),
+        field_def_num,
+        value,
+        String::new(),
     )
 }
