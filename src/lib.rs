@@ -32,9 +32,11 @@ use std::fmt;
 mod de;
 mod error;
 pub mod profile;
+pub mod ser;
 
 pub use de::{from_bytes, from_reader, Deserializer};
 pub use error::{Error, ErrorKind, Result};
+use ser::{FitDataRecordSerializer, ValueWithUnits};
 
 /// Defines a set of data derived from a FIT Data message.
 #[derive(Clone, Debug, Serialize)]
@@ -45,13 +47,6 @@ pub struct FitDataRecord {
     /// All the fields present in this message, a record may not have every possible field defined
     fields: Vec<FitDataField>,
 }
-
-// TODO, maybe I make "kind" a MesgNum variant, and instead of String keys I use a "FieldName"
-// struct/tuple as the key which stores both the field name and definition number. All while keeping
-// the serialized version the same. This would provide better info to the end user if they wanted
-// to "look stuff up" in the profile without them needing to reconvert everything. Instead of changing
-// the map's keys I could add a second hash that retains the def number for look ups but I don't like
-// that idea as much
 
 impl FitDataRecord {
     /// Create an empty data record with a given kind
@@ -75,6 +70,56 @@ impl FitDataRecord {
     /// Add a field to the record
     pub fn push(&mut self, field: FitDataField) {
         self.fields.push(field)
+    }
+
+    /// Restructure the record so fields are accessed by their definition number and values are
+    /// stored without the units defined in the FIT profile. This conscise format assumes the
+    /// consumer knows the FIT profile in use or uses the data in a way that it doesn't need to
+    /// know about the FIT profile.
+    pub fn into_number_key_plain_value_mapping(self) -> FitDataRecordSerializer<u16, u8, Value> {
+        let mut record_ser = FitDataRecordSerializer::new(self.kind.as_u16());
+        for field in self.fields {
+            record_ser.insert(field.number, field.value);
+        }
+        record_ser
+    }
+
+    /// Same as the `into_number_key_plain_value_mapping` function except each value is stored
+    /// with the units defined by the FIT profile (if any)
+    pub fn into_number_key_value_with_units_mapping(
+        self,
+    ) -> FitDataRecordSerializer<u16, u8, ValueWithUnits> {
+        let mut record_ser = FitDataRecordSerializer::new(self.kind.as_u16());
+        for field in self.fields {
+            record_ser.insert(field.number, ValueWithUnits::new(field.value, field.units));
+        }
+        record_ser
+    }
+
+    /// Restructure the record so fields are accessed by their `name`, this is preferable if the
+    /// consumer is not aware of the defined FIT profile and therefore cannot decode the name from
+    /// the message number + definition number combination. Values are provided without units.
+    pub fn into_name_key_plain_value_mapping(
+        self,
+    ) -> FitDataRecordSerializer<String, String, Value> {
+        let mut record_ser = FitDataRecordSerializer::new(self.kind.to_string());
+        for field in self.fields {
+            record_ser.insert(field.name, field.value);
+        }
+        record_ser
+    }
+
+    /// Same as the `into_name_key_plain_value_mapping` function, except each value is stored with
+    /// the units defined by the FIT profile (if any). This is the most verbose format and is ideal
+    /// when the consumer has no knowledge of the FIT profile in use.
+    pub fn into_name_key_value_with_units_mapping(
+        self,
+    ) -> FitDataRecordSerializer<String, String, ValueWithUnits> {
+        let mut record_ser = FitDataRecordSerializer::new(self.kind.to_string());
+        for field in self.fields {
+            record_ser.insert(field.name, ValueWithUnits::new(field.value, field.units));
+        }
+        record_ser
     }
 }
 

@@ -1,5 +1,6 @@
 //! Read one or more FIT files and dump their contents as JSON
 use fitparser;
+use fitparser::ser::{FitDataRecordSerializer, ValueWithUnits};
 use std::fs::File;
 use std::io::prelude::*;
 use std::path::PathBuf;
@@ -44,13 +45,9 @@ impl OutputLocation {
     fn write_json_file(
         &self,
         filename: &PathBuf,
-        data: &[fitparser::FitDataRecord],
+        data: &[FitDataRecordSerializer<String, String, ValueWithUnits>],
     ) -> std::io::Result<()> {
-        let j = if data.len() == 1 {
-            serde_json::to_string(&data[0]).unwrap()
-        } else {
-            serde_json::to_string(data).unwrap()
-        };
+        let j = serde_json::to_string(data).unwrap();
 
         let outname = match self {
             Self::Inplace => filename.with_extension("json"),
@@ -81,13 +78,13 @@ fn main() {
     };
 
     // Read each FIT file and output it
-    let mut fit_data: Vec<fitparser::FitDataRecord> = Vec::new();
+    let mut fit_data: Vec<FitDataRecordSerializer<String, String, ValueWithUnits>> = Vec::new();
     for file in opt.files {
         // open file and parse data
         let mut f = File::open(&file).unwrap();
-        let mut buffer = Vec::new();
-        f.read_to_end(&mut buffer).unwrap();
-        fit_data.extend_from_slice(&fitparser::from_bytes(&buffer).unwrap());
+        for record in fitparser::from_reader(&mut f).unwrap() {
+            fit_data.push(record.into_name_key_value_with_units_mapping());
+        }
 
         // output a single fit file's data into a single output file
         if !collect_all {
