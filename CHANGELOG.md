@@ -1,6 +1,11 @@
 # Change Log
 
 ## HEAD
+* Improve the API to allow manipulating the data with less cloning
+* Expose the actual MesgNum enum value to the user in the `kind` field
+of each FitDataRecord instead of it's name.
+* Upated FitDataRecord to store fields as a Vec, sorted by definition
+number. Each field contains the name, number, value and units (if defined).
 * Rewrote parser logic to more closely resemble how serde deserializers are
 typically implemented.
 * Added formal error handling so the code should no longer panic anywhere
