@@ -11,7 +11,7 @@ pub mod messages;
 #[derive(Clone, Debug)]
 pub struct MessageInfo {
     name: &'static str,
-    global_message_number: u16,
+    global_message_number: MesgNum,
     fields: HashMap<u8, FieldInfo>,
 }
 
@@ -22,7 +22,7 @@ impl MessageInfo {
     }
 
     /// Return global message number as defined in FIT profile
-    pub fn global_message_number(&self) -> u16 {
+    pub fn global_message_number(&self) -> MesgNum {
         self.global_message_number
     }
 

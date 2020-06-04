@@ -145,7 +145,7 @@ impl Decoder {
         data_map: &HashMap<u8, Option<Value>>,
     ) -> Result<Vec<FitDataField>> {
         // initialize process queue with field info for parsed, valid fields.
-        let msg_num = mesg_info.global_message_number();
+        let msg_num = mesg_info.global_message_number().as_u16();
         let mut data_fields = Vec::new();
         let mut data_map: HashMap<u8, Value> = HashMap::from_iter(
             data_map

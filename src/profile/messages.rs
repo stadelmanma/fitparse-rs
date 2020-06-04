@@ -5,7 +5,7 @@
 use super::field_types::*;
 use super::{ComponentFieldInfo, FieldDataType, FieldInfo, MessageInfo};
 use std::collections::HashMap;
-fn file_id_message(global_message_number: u16) -> MessageInfo {
+pub fn file_id_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
         name: "type",
@@ -145,11 +145,11 @@ fn file_id_message(global_message_number: u16) -> MessageInfo {
     fields.insert(8, field);
     MessageInfo {
         name: "file_id",
-        global_message_number,
+        global_message_number: MesgNum::FileId,
         fields,
     }
 }
-fn file_creator_message(global_message_number: u16) -> MessageInfo {
+pub fn file_creator_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
         name: "software_version",
@@ -177,11 +177,11 @@ fn file_creator_message(global_message_number: u16) -> MessageInfo {
     fields.insert(1, field);
     MessageInfo {
         name: "file_creator",
-        global_message_number,
+        global_message_number: MesgNum::FileCreator,
         fields,
     }
 }
-fn timestamp_correlation_message(global_message_number: u16) -> MessageInfo {
+pub fn timestamp_correlation_message() -> MessageInfo {
     let mut fields = HashMap::new();
     // Fractional part of the UTC timestamp at the time the system timestamp was recorded.
     let field = FieldInfo {
@@ -276,11 +276,11 @@ fn timestamp_correlation_message(global_message_number: u16) -> MessageInfo {
     fields.insert(253, field);
     MessageInfo {
         name: "timestamp_correlation",
-        global_message_number,
+        global_message_number: MesgNum::TimestampCorrelation,
         fields,
     }
 }
-fn software_message(global_message_number: u16) -> MessageInfo {
+pub fn software_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
         name: "version",
@@ -320,11 +320,11 @@ fn software_message(global_message_number: u16) -> MessageInfo {
     fields.insert(254, field);
     MessageInfo {
         name: "software",
-        global_message_number,
+        global_message_number: MesgNum::Software,
         fields,
     }
 }
-fn slave_device_message(global_message_number: u16) -> MessageInfo {
+pub fn slave_device_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
         name: "manufacturer",
@@ -401,11 +401,11 @@ fn slave_device_message(global_message_number: u16) -> MessageInfo {
     fields.insert(1, field);
     MessageInfo {
         name: "slave_device",
-        global_message_number,
+        global_message_number: MesgNum::SlaveDevice,
         fields,
     }
 }
-fn capabilities_message(global_message_number: u16) -> MessageInfo {
+pub fn capabilities_message() -> MessageInfo {
     let mut fields = HashMap::new();
     // Use language_bits_x types where x is index of array.
     let field = FieldInfo {
@@ -459,11 +459,11 @@ fn capabilities_message(global_message_number: u16) -> MessageInfo {
     fields.insert(23, field);
     MessageInfo {
         name: "capabilities",
-        global_message_number,
+        global_message_number: MesgNum::Capabilities,
         fields,
     }
 }
-fn file_capabilities_message(global_message_number: u16) -> MessageInfo {
+pub fn file_capabilities_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
         name: "type",
@@ -539,11 +539,11 @@ fn file_capabilities_message(global_message_number: u16) -> MessageInfo {
     fields.insert(254, field);
     MessageInfo {
         name: "file_capabilities",
-        global_message_number,
+        global_message_number: MesgNum::FileCapabilities,
         fields,
     }
 }
-fn mesg_capabilities_message(global_message_number: u16) -> MessageInfo {
+pub fn mesg_capabilities_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
         name: "file",
@@ -644,11 +644,11 @@ fn mesg_capabilities_message(global_message_number: u16) -> MessageInfo {
     fields.insert(254, field);
     MessageInfo {
         name: "mesg_capabilities",
-        global_message_number,
+        global_message_number: MesgNum::MesgCapabilities,
         fields,
     }
 }
-fn field_capabilities_message(global_message_number: u16) -> MessageInfo {
+pub fn field_capabilities_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
         name: "file",
@@ -712,11 +712,11 @@ fn field_capabilities_message(global_message_number: u16) -> MessageInfo {
     fields.insert(254, field);
     MessageInfo {
         name: "field_capabilities",
-        global_message_number,
+        global_message_number: MesgNum::FieldCapabilities,
         fields,
     }
 }
-fn device_settings_message(global_message_number: u16) -> MessageInfo {
+pub fn device_settings_message() -> MessageInfo {
     let mut fields = HashMap::new();
     // Index into time zone arrays.
     let field = FieldInfo {
@@ -1016,11 +1016,11 @@ fn device_settings_message(global_message_number: u16) -> MessageInfo {
     fields.insert(134, field);
     MessageInfo {
         name: "device_settings",
-        global_message_number,
+        global_message_number: MesgNum::DeviceSettings,
         fields,
     }
 }
-fn user_profile_message(global_message_number: u16) -> MessageInfo {
+pub fn user_profile_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
         name: "friendly_name",
@@ -1376,11 +1376,11 @@ fn user_profile_message(global_message_number: u16) -> MessageInfo {
     fields.insert(254, field);
     MessageInfo {
         name: "user_profile",
-        global_message_number,
+        global_message_number: MesgNum::UserProfile,
         fields,
     }
 }
-fn hrm_profile_message(global_message_number: u16) -> MessageInfo {
+pub fn hrm_profile_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
         name: "enabled",
@@ -1444,11 +1444,11 @@ fn hrm_profile_message(global_message_number: u16) -> MessageInfo {
     fields.insert(254, field);
     MessageInfo {
         name: "hrm_profile",
-        global_message_number,
+        global_message_number: MesgNum::HrmProfile,
         fields,
     }
 }
-fn sdm_profile_message(global_message_number: u16) -> MessageInfo {
+pub fn sdm_profile_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
         name: "enabled",
@@ -1550,11 +1550,11 @@ fn sdm_profile_message(global_message_number: u16) -> MessageInfo {
     fields.insert(254, field);
     MessageInfo {
         name: "sdm_profile",
-        global_message_number,
+        global_message_number: MesgNum::SdmProfile,
         fields,
     }
 }
-fn bike_profile_message(global_message_number: u16) -> MessageInfo {
+pub fn bike_profile_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
         name: "name",
@@ -1947,11 +1947,11 @@ fn bike_profile_message(global_message_number: u16) -> MessageInfo {
     fields.insert(254, field);
     MessageInfo {
         name: "bike_profile",
-        global_message_number,
+        global_message_number: MesgNum::BikeProfile,
         fields,
     }
 }
-fn connectivity_message(global_message_number: u16) -> MessageInfo {
+pub fn connectivity_message() -> MessageInfo {
     let mut fields = HashMap::new();
     // Use Bluetooth for connectivity features
     let field = FieldInfo {
@@ -2114,11 +2114,11 @@ fn connectivity_message(global_message_number: u16) -> MessageInfo {
     fields.insert(12, field);
     MessageInfo {
         name: "connectivity",
-        global_message_number,
+        global_message_number: MesgNum::Connectivity,
         fields,
     }
 }
-fn watchface_settings_message(global_message_number: u16) -> MessageInfo {
+pub fn watchface_settings_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
         name: "mode",
@@ -2183,11 +2183,11 @@ fn watchface_settings_message(global_message_number: u16) -> MessageInfo {
     fields.insert(254, field);
     MessageInfo {
         name: "watchface_settings",
-        global_message_number,
+        global_message_number: MesgNum::WatchfaceSettings,
         fields,
     }
 }
-fn ohr_settings_message(global_message_number: u16) -> MessageInfo {
+pub fn ohr_settings_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
         name: "enabled",
@@ -2215,11 +2215,11 @@ fn ohr_settings_message(global_message_number: u16) -> MessageInfo {
     fields.insert(253, field);
     MessageInfo {
         name: "ohr_settings",
-        global_message_number,
+        global_message_number: MesgNum::OhrSettings,
         fields,
     }
 }
-fn zones_target_message(global_message_number: u16) -> MessageInfo {
+pub fn zones_target_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
         name: "max_heart_rate",
@@ -2283,11 +2283,11 @@ fn zones_target_message(global_message_number: u16) -> MessageInfo {
     fields.insert(7, field);
     MessageInfo {
         name: "zones_target",
-        global_message_number,
+        global_message_number: MesgNum::ZonesTarget,
         fields,
     }
 }
-fn sport_message(global_message_number: u16) -> MessageInfo {
+pub fn sport_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
         name: "sport",
@@ -2327,11 +2327,11 @@ fn sport_message(global_message_number: u16) -> MessageInfo {
     fields.insert(3, field);
     MessageInfo {
         name: "sport",
-        global_message_number,
+        global_message_number: MesgNum::Sport,
         fields,
     }
 }
-fn hr_zone_message(global_message_number: u16) -> MessageInfo {
+pub fn hr_zone_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
         name: "high_bpm",
@@ -2371,11 +2371,11 @@ fn hr_zone_message(global_message_number: u16) -> MessageInfo {
     fields.insert(254, field);
     MessageInfo {
         name: "hr_zone",
-        global_message_number,
+        global_message_number: MesgNum::HrZone,
         fields,
     }
 }
-fn speed_zone_message(global_message_number: u16) -> MessageInfo {
+pub fn speed_zone_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
         name: "high_value",
@@ -2415,11 +2415,11 @@ fn speed_zone_message(global_message_number: u16) -> MessageInfo {
     fields.insert(254, field);
     MessageInfo {
         name: "speed_zone",
-        global_message_number,
+        global_message_number: MesgNum::SpeedZone,
         fields,
     }
 }
-fn cadence_zone_message(global_message_number: u16) -> MessageInfo {
+pub fn cadence_zone_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
         name: "high_value",
@@ -2459,11 +2459,11 @@ fn cadence_zone_message(global_message_number: u16) -> MessageInfo {
     fields.insert(254, field);
     MessageInfo {
         name: "cadence_zone",
-        global_message_number,
+        global_message_number: MesgNum::CadenceZone,
         fields,
     }
 }
-fn power_zone_message(global_message_number: u16) -> MessageInfo {
+pub fn power_zone_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
         name: "high_value",
@@ -2503,11 +2503,11 @@ fn power_zone_message(global_message_number: u16) -> MessageInfo {
     fields.insert(254, field);
     MessageInfo {
         name: "power_zone",
-        global_message_number,
+        global_message_number: MesgNum::PowerZone,
         fields,
     }
 }
-fn met_zone_message(global_message_number: u16) -> MessageInfo {
+pub fn met_zone_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
         name: "high_bpm",
@@ -2559,11 +2559,11 @@ fn met_zone_message(global_message_number: u16) -> MessageInfo {
     fields.insert(254, field);
     MessageInfo {
         name: "met_zone",
-        global_message_number,
+        global_message_number: MesgNum::MetZone,
         fields,
     }
 }
-fn dive_settings_message(global_message_number: u16) -> MessageInfo {
+pub fn dive_settings_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
         name: "name",
@@ -2861,11 +2861,11 @@ fn dive_settings_message(global_message_number: u16) -> MessageInfo {
     fields.insert(254, field);
     MessageInfo {
         name: "dive_settings",
-        global_message_number,
+        global_message_number: MesgNum::DiveSettings,
         fields,
     }
 }
-fn dive_alarm_message(global_message_number: u16) -> MessageInfo {
+pub fn dive_alarm_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
         name: "depth",
@@ -2954,11 +2954,11 @@ fn dive_alarm_message(global_message_number: u16) -> MessageInfo {
     fields.insert(254, field);
     MessageInfo {
         name: "dive_alarm",
-        global_message_number,
+        global_message_number: MesgNum::DiveAlarm,
         fields,
     }
 }
-fn dive_gas_message(global_message_number: u16) -> MessageInfo {
+pub fn dive_gas_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
         name: "helium_content",
@@ -3010,11 +3010,11 @@ fn dive_gas_message(global_message_number: u16) -> MessageInfo {
     fields.insert(254, field);
     MessageInfo {
         name: "dive_gas",
-        global_message_number,
+        global_message_number: MesgNum::DiveGas,
         fields,
     }
 }
-fn goal_message(global_message_number: u16) -> MessageInfo {
+pub fn goal_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
         name: "sport",
@@ -3174,11 +3174,11 @@ fn goal_message(global_message_number: u16) -> MessageInfo {
     fields.insert(254, field);
     MessageInfo {
         name: "goal",
-        global_message_number,
+        global_message_number: MesgNum::Goal,
         fields,
     }
 }
-fn activity_message(global_message_number: u16) -> MessageInfo {
+pub fn activity_message() -> MessageInfo {
     let mut fields = HashMap::new();
     // Exclude pauses
     let field = FieldInfo {
@@ -3280,11 +3280,11 @@ fn activity_message(global_message_number: u16) -> MessageInfo {
     fields.insert(253, field);
     MessageInfo {
         name: "activity",
-        global_message_number,
+        global_message_number: MesgNum::Activity,
         fields,
     }
 }
-fn session_message(global_message_number: u16) -> MessageInfo {
+pub fn session_message() -> MessageInfo {
     let mut fields = HashMap::new();
     // session
     let field = FieldInfo {
@@ -4919,11 +4919,11 @@ fn session_message(global_message_number: u16) -> MessageInfo {
     fields.insert(254, field);
     MessageInfo {
         name: "session",
-        global_message_number,
+        global_message_number: MesgNum::Session,
         fields,
     }
 }
-fn lap_message(global_message_number: u16) -> MessageInfo {
+pub fn lap_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
         name: "event",
@@ -6398,11 +6398,11 @@ fn lap_message(global_message_number: u16) -> MessageInfo {
     fields.insert(254, field);
     MessageInfo {
         name: "lap",
-        global_message_number,
+        global_message_number: MesgNum::Lap,
         fields,
     }
 }
-fn length_message(global_message_number: u16) -> MessageInfo {
+pub fn length_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
         name: "event",
@@ -6624,11 +6624,11 @@ fn length_message(global_message_number: u16) -> MessageInfo {
     fields.insert(254, field);
     MessageInfo {
         name: "length",
-        global_message_number,
+        global_message_number: MesgNum::Length,
         fields,
     }
 }
-fn record_message(global_message_number: u16) -> MessageInfo {
+pub fn record_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
         name: "position_lat",
@@ -7590,11 +7590,11 @@ m",
     fields.insert(253, field);
     MessageInfo {
         name: "record",
-        global_message_number,
+        global_message_number: MesgNum::Record,
         fields,
     }
 }
-fn event_message(global_message_number: u16) -> MessageInfo {
+pub fn event_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
         name: "event",
@@ -8117,11 +8117,11 @@ fn event_message(global_message_number: u16) -> MessageInfo {
     fields.insert(253, field);
     MessageInfo {
         name: "event",
-        global_message_number,
+        global_message_number: MesgNum::Event,
         fields,
     }
 }
-fn device_info_message(global_message_number: u16) -> MessageInfo {
+pub fn device_info_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
         name: "device_index",
@@ -8419,11 +8419,11 @@ fn device_info_message(global_message_number: u16) -> MessageInfo {
     fields.insert(253, field);
     MessageInfo {
         name: "device_info",
-        global_message_number,
+        global_message_number: MesgNum::DeviceInfo,
         fields,
     }
 }
-fn training_file_message(global_message_number: u16) -> MessageInfo {
+pub fn training_file_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
         name: "type",
@@ -8548,11 +8548,11 @@ fn training_file_message(global_message_number: u16) -> MessageInfo {
     fields.insert(253, field);
     MessageInfo {
         name: "training_file",
-        global_message_number,
+        global_message_number: MesgNum::TrainingFile,
         fields,
     }
 }
-fn hrv_message(global_message_number: u16) -> MessageInfo {
+pub fn hrv_message() -> MessageInfo {
     let mut fields = HashMap::new();
     // Time between beats
     let field = FieldInfo {
@@ -8569,11 +8569,11 @@ fn hrv_message(global_message_number: u16) -> MessageInfo {
     fields.insert(0, field);
     MessageInfo {
         name: "hrv",
-        global_message_number,
+        global_message_number: MesgNum::Hrv,
         fields,
     }
 }
-fn weather_conditions_message(global_message_number: u16) -> MessageInfo {
+pub fn weather_conditions_message() -> MessageInfo {
     let mut fields = HashMap::new();
     // Current or forecast
     let field = FieldInfo {
@@ -8775,11 +8775,11 @@ fn weather_conditions_message(global_message_number: u16) -> MessageInfo {
     fields.insert(253, field);
     MessageInfo {
         name: "weather_conditions",
-        global_message_number,
+        global_message_number: MesgNum::WeatherConditions,
         fields,
     }
 }
-fn weather_alert_message(global_message_number: u16) -> MessageInfo {
+pub fn weather_alert_message() -> MessageInfo {
     let mut fields = HashMap::new();
     // Unique identifier from GCS report ID string, length is 12
     let field = FieldInfo {
@@ -8860,11 +8860,11 @@ fn weather_alert_message(global_message_number: u16) -> MessageInfo {
     fields.insert(253, field);
     MessageInfo {
         name: "weather_alert",
-        global_message_number,
+        global_message_number: MesgNum::WeatherAlert,
         fields,
     }
 }
-fn gps_metadata_message(global_message_number: u16) -> MessageInfo {
+pub fn gps_metadata_message() -> MessageInfo {
     let mut fields = HashMap::new();
     // Millisecond part of the timestamp.
     let field = FieldInfo {
@@ -8980,11 +8980,11 @@ fn gps_metadata_message(global_message_number: u16) -> MessageInfo {
     fields.insert(253, field);
     MessageInfo {
         name: "gps_metadata",
-        global_message_number,
+        global_message_number: MesgNum::GpsMetadata,
         fields,
     }
 }
-fn camera_event_message(global_message_number: u16) -> MessageInfo {
+pub fn camera_event_message() -> MessageInfo {
     let mut fields = HashMap::new();
     // Millisecond part of the timestamp.
     let field = FieldInfo {
@@ -9050,11 +9050,11 @@ fn camera_event_message(global_message_number: u16) -> MessageInfo {
     fields.insert(253, field);
     MessageInfo {
         name: "camera_event",
-        global_message_number,
+        global_message_number: MesgNum::CameraEvent,
         fields,
     }
 }
-fn gyroscope_data_message(global_message_number: u16) -> MessageInfo {
+pub fn gyroscope_data_message() -> MessageInfo {
     let mut fields = HashMap::new();
     // Millisecond part of the timestamp.
     let field = FieldInfo {
@@ -9175,11 +9175,11 @@ fn gyroscope_data_message(global_message_number: u16) -> MessageInfo {
     fields.insert(253, field);
     MessageInfo {
         name: "gyroscope_data",
-        global_message_number,
+        global_message_number: MesgNum::GyroscopeData,
         fields,
     }
 }
-fn accelerometer_data_message(global_message_number: u16) -> MessageInfo {
+pub fn accelerometer_data_message() -> MessageInfo {
     let mut fields = HashMap::new();
     // Millisecond part of the timestamp.
     let field = FieldInfo {
@@ -9339,11 +9339,11 @@ fn accelerometer_data_message(global_message_number: u16) -> MessageInfo {
     fields.insert(253, field);
     MessageInfo {
         name: "accelerometer_data",
-        global_message_number,
+        global_message_number: MesgNum::AccelerometerData,
         fields,
     }
 }
-fn magnetometer_data_message(global_message_number: u16) -> MessageInfo {
+pub fn magnetometer_data_message() -> MessageInfo {
     let mut fields = HashMap::new();
     // Millisecond part of the timestamp.
     let field = FieldInfo {
@@ -9464,11 +9464,11 @@ fn magnetometer_data_message(global_message_number: u16) -> MessageInfo {
     fields.insert(253, field);
     MessageInfo {
         name: "magnetometer_data",
-        global_message_number,
+        global_message_number: MesgNum::MagnetometerData,
         fields,
     }
 }
-fn barometer_data_message(global_message_number: u16) -> MessageInfo {
+pub fn barometer_data_message() -> MessageInfo {
     let mut fields = HashMap::new();
     // Millisecond part of the timestamp.
     let field = FieldInfo {
@@ -9524,11 +9524,11 @@ fn barometer_data_message(global_message_number: u16) -> MessageInfo {
     fields.insert(253, field);
     MessageInfo {
         name: "barometer_data",
-        global_message_number,
+        global_message_number: MesgNum::BarometerData,
         fields,
     }
 }
-fn three_d_sensor_calibration_message(global_message_number: u16) -> MessageInfo {
+pub fn three_d_sensor_calibration_message() -> MessageInfo {
     let mut fields = HashMap::new();
     // Indicates which sensor the calibration is for
     let field = FieldInfo {
@@ -9650,11 +9650,11 @@ fn three_d_sensor_calibration_message(global_message_number: u16) -> MessageInfo
     fields.insert(253, field);
     MessageInfo {
         name: "three_d_sensor_calibration",
-        global_message_number,
+        global_message_number: MesgNum::ThreeDSensorCalibration,
         fields,
     }
 }
-fn one_d_sensor_calibration_message(global_message_number: u16) -> MessageInfo {
+pub fn one_d_sensor_calibration_message() -> MessageInfo {
     let mut fields = HashMap::new();
     // Indicates which sensor the calibration is for
     let field = FieldInfo {
@@ -9750,11 +9750,11 @@ fn one_d_sensor_calibration_message(global_message_number: u16) -> MessageInfo {
     fields.insert(253, field);
     MessageInfo {
         name: "one_d_sensor_calibration",
-        global_message_number,
+        global_message_number: MesgNum::OneDSensorCalibration,
         fields,
     }
 }
-fn video_frame_message(global_message_number: u16) -> MessageInfo {
+pub fn video_frame_message() -> MessageInfo {
     let mut fields = HashMap::new();
     // Millisecond part of the timestamp.
     let field = FieldInfo {
@@ -9797,11 +9797,11 @@ fn video_frame_message(global_message_number: u16) -> MessageInfo {
     fields.insert(253, field);
     MessageInfo {
         name: "video_frame",
-        global_message_number,
+        global_message_number: MesgNum::VideoFrame,
         fields,
     }
 }
-fn obdii_data_message(global_message_number: u16) -> MessageInfo {
+pub fn obdii_data_message() -> MessageInfo {
     let mut fields = HashMap::new();
     // Fractional part of timestamp, added to timestamp
     let field = FieldInfo {
@@ -9922,11 +9922,11 @@ fn obdii_data_message(global_message_number: u16) -> MessageInfo {
     fields.insert(253, field);
     MessageInfo {
         name: "obdii_data",
-        global_message_number,
+        global_message_number: MesgNum::ObdiiData,
         fields,
     }
 }
-fn nmea_sentence_message(global_message_number: u16) -> MessageInfo {
+pub fn nmea_sentence_message() -> MessageInfo {
     let mut fields = HashMap::new();
     // Fractional part of timestamp, added to timestamp
     let field = FieldInfo {
@@ -9969,11 +9969,11 @@ fn nmea_sentence_message(global_message_number: u16) -> MessageInfo {
     fields.insert(253, field);
     MessageInfo {
         name: "nmea_sentence",
-        global_message_number,
+        global_message_number: MesgNum::NmeaSentence,
         fields,
     }
 }
-fn aviation_attitude_message(global_message_number: u16) -> MessageInfo {
+pub fn aviation_attitude_message() -> MessageInfo {
     let mut fields = HashMap::new();
     // Fractional part of timestamp, added to timestamp
     let field = FieldInfo {
@@ -10131,11 +10131,11 @@ fn aviation_attitude_message(global_message_number: u16) -> MessageInfo {
     fields.insert(253, field);
     MessageInfo {
         name: "aviation_attitude",
-        global_message_number,
+        global_message_number: MesgNum::AviationAttitude,
         fields,
     }
 }
-fn video_message(global_message_number: u16) -> MessageInfo {
+pub fn video_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
         name: "url",
@@ -10176,11 +10176,11 @@ fn video_message(global_message_number: u16) -> MessageInfo {
     fields.insert(2, field);
     MessageInfo {
         name: "video",
-        global_message_number,
+        global_message_number: MesgNum::Video,
         fields,
     }
 }
-fn video_title_message(global_message_number: u16) -> MessageInfo {
+pub fn video_title_message() -> MessageInfo {
     let mut fields = HashMap::new();
     // Total number of title parts
     let field = FieldInfo {
@@ -10222,11 +10222,11 @@ fn video_title_message(global_message_number: u16) -> MessageInfo {
     fields.insert(254, field);
     MessageInfo {
         name: "video_title",
-        global_message_number,
+        global_message_number: MesgNum::VideoTitle,
         fields,
     }
 }
-fn video_description_message(global_message_number: u16) -> MessageInfo {
+pub fn video_description_message() -> MessageInfo {
     let mut fields = HashMap::new();
     // Total number of description parts
     let field = FieldInfo {
@@ -10268,11 +10268,11 @@ fn video_description_message(global_message_number: u16) -> MessageInfo {
     fields.insert(254, field);
     MessageInfo {
         name: "video_description",
-        global_message_number,
+        global_message_number: MesgNum::VideoDescription,
         fields,
     }
 }
-fn video_clip_message(global_message_number: u16) -> MessageInfo {
+pub fn video_clip_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
         name: "clip_number",
@@ -10362,11 +10362,11 @@ fn video_clip_message(global_message_number: u16) -> MessageInfo {
     fields.insert(7, field);
     MessageInfo {
         name: "video_clip",
-        global_message_number,
+        global_message_number: MesgNum::VideoClip,
         fields,
     }
 }
-fn set_message(global_message_number: u16) -> MessageInfo {
+pub fn set_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
         name: "duration",
@@ -10507,11 +10507,11 @@ fn set_message(global_message_number: u16) -> MessageInfo {
     fields.insert(254, field);
     MessageInfo {
         name: "set",
-        global_message_number,
+        global_message_number: MesgNum::Set,
         fields,
     }
 }
-fn jump_message(global_message_number: u16) -> MessageInfo {
+pub fn jump_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
         name: "distance",
@@ -10646,11 +10646,11 @@ fn jump_message(global_message_number: u16) -> MessageInfo {
     fields.insert(253, field);
     MessageInfo {
         name: "jump",
-        global_message_number,
+        global_message_number: MesgNum::Jump,
         fields,
     }
 }
-fn course_message(global_message_number: u16) -> MessageInfo {
+pub fn course_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
         name: "sport",
@@ -10702,11 +10702,11 @@ fn course_message(global_message_number: u16) -> MessageInfo {
     fields.insert(7, field);
     MessageInfo {
         name: "course",
-        global_message_number,
+        global_message_number: MesgNum::Course,
         fields,
     }
 }
-fn course_point_message(global_message_number: u16) -> MessageInfo {
+pub fn course_point_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
         name: "timestamp",
@@ -10806,11 +10806,11 @@ fn course_point_message(global_message_number: u16) -> MessageInfo {
     fields.insert(254, field);
     MessageInfo {
         name: "course_point",
-        global_message_number,
+        global_message_number: MesgNum::CoursePoint,
         fields,
     }
 }
-fn segment_id_message(global_message_number: u16) -> MessageInfo {
+pub fn segment_id_message() -> MessageInfo {
     let mut fields = HashMap::new();
     // Friendly name assigned to segment
     let field = FieldInfo {
@@ -10931,11 +10931,11 @@ fn segment_id_message(global_message_number: u16) -> MessageInfo {
     fields.insert(8, field);
     MessageInfo {
         name: "segment_id",
-        global_message_number,
+        global_message_number: MesgNum::SegmentId,
         fields,
     }
 }
-fn segment_leaderboard_entry_message(global_message_number: u16) -> MessageInfo {
+pub fn segment_leaderboard_entry_message() -> MessageInfo {
     let mut fields = HashMap::new();
     // Friendly name assigned to leader
     let field = FieldInfo {
@@ -11029,11 +11029,11 @@ fn segment_leaderboard_entry_message(global_message_number: u16) -> MessageInfo 
     fields.insert(254, field);
     MessageInfo {
         name: "segment_leaderboard_entry",
-        global_message_number,
+        global_message_number: MesgNum::SegmentLeaderboardEntry,
         fields,
     }
 }
-fn segment_point_message(global_message_number: u16) -> MessageInfo {
+pub fn segment_point_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
         name: "position_lat",
@@ -11112,11 +11112,11 @@ fn segment_point_message(global_message_number: u16) -> MessageInfo {
     fields.insert(254, field);
     MessageInfo {
         name: "segment_point",
-        global_message_number,
+        global_message_number: MesgNum::SegmentPoint,
         fields,
     }
 }
-fn segment_lap_message(global_message_number: u16) -> MessageInfo {
+pub fn segment_lap_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
         name: "event",
@@ -12243,11 +12243,11 @@ fn segment_lap_message(global_message_number: u16) -> MessageInfo {
     fields.insert(254, field);
     MessageInfo {
         name: "segment_lap",
-        global_message_number,
+        global_message_number: MesgNum::SegmentLap,
         fields,
     }
 }
-fn segment_file_message(global_message_number: u16) -> MessageInfo {
+pub fn segment_file_message() -> MessageInfo {
     let mut fields = HashMap::new();
     // UUID of the segment file
     let field = FieldInfo {
@@ -12367,11 +12367,11 @@ fn segment_file_message(global_message_number: u16) -> MessageInfo {
     fields.insert(254, field);
     MessageInfo {
         name: "segment_file",
-        global_message_number,
+        global_message_number: MesgNum::SegmentFile,
         fields,
     }
 }
-fn workout_message(global_message_number: u16) -> MessageInfo {
+pub fn workout_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
         name: "sport",
@@ -12460,11 +12460,11 @@ fn workout_message(global_message_number: u16) -> MessageInfo {
     fields.insert(15, field);
     MessageInfo {
         name: "workout",
-        global_message_number,
+        global_message_number: MesgNum::Workout,
         fields,
     }
 }
-fn workout_session_message(global_message_number: u16) -> MessageInfo {
+pub fn workout_session_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
         name: "sport",
@@ -12552,11 +12552,11 @@ fn workout_session_message(global_message_number: u16) -> MessageInfo {
     fields.insert(254, field);
     MessageInfo {
         name: "workout_session",
-        global_message_number,
+        global_message_number: MesgNum::WorkoutSession,
         fields,
     }
 }
-fn workout_step_message(global_message_number: u16) -> MessageInfo {
+pub fn workout_step_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
         name: "wkt_step_name",
@@ -13237,11 +13237,11 @@ fn workout_step_message(global_message_number: u16) -> MessageInfo {
     fields.insert(254, field);
     MessageInfo {
         name: "workout_step",
-        global_message_number,
+        global_message_number: MesgNum::WorkoutStep,
         fields,
     }
 }
-fn exercise_title_message(global_message_number: u16) -> MessageInfo {
+pub fn exercise_title_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
         name: "exercise_category",
@@ -13293,11 +13293,11 @@ fn exercise_title_message(global_message_number: u16) -> MessageInfo {
     fields.insert(254, field);
     MessageInfo {
         name: "exercise_title",
-        global_message_number,
+        global_message_number: MesgNum::ExerciseTitle,
         fields,
     }
 }
-fn schedule_message(global_message_number: u16) -> MessageInfo {
+pub fn schedule_message() -> MessageInfo {
     let mut fields = HashMap::new();
     // Corresponds to file_id of scheduled workout / course.
     let field = FieldInfo {
@@ -13439,11 +13439,11 @@ fn schedule_message(global_message_number: u16) -> MessageInfo {
     fields.insert(6, field);
     MessageInfo {
         name: "schedule",
-        global_message_number,
+        global_message_number: MesgNum::Schedule,
         fields,
     }
 }
-fn totals_message(global_message_number: u16) -> MessageInfo {
+pub fn totals_message() -> MessageInfo {
     let mut fields = HashMap::new();
     // Excludes pauses
     let field = FieldInfo {
@@ -13569,11 +13569,11 @@ fn totals_message(global_message_number: u16) -> MessageInfo {
     fields.insert(254, field);
     MessageInfo {
         name: "totals",
-        global_message_number,
+        global_message_number: MesgNum::Totals,
         fields,
     }
 }
-fn weight_scale_message(global_message_number: u16) -> MessageInfo {
+pub fn weight_scale_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
         name: "weight",
@@ -13735,11 +13735,11 @@ fn weight_scale_message(global_message_number: u16) -> MessageInfo {
     fields.insert(253, field);
     MessageInfo {
         name: "weight_scale",
-        global_message_number,
+        global_message_number: MesgNum::WeightScale,
         fields,
     }
 }
-fn blood_pressure_message(global_message_number: u16) -> MessageInfo {
+pub fn blood_pressure_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
         name: "systolic_pressure",
@@ -13876,11 +13876,11 @@ fn blood_pressure_message(global_message_number: u16) -> MessageInfo {
     fields.insert(253, field);
     MessageInfo {
         name: "blood_pressure",
-        global_message_number,
+        global_message_number: MesgNum::BloodPressure,
         fields,
     }
 }
-fn monitoring_info_message(global_message_number: u16) -> MessageInfo {
+pub fn monitoring_info_message() -> MessageInfo {
     let mut fields = HashMap::new();
     // Use to convert activity timestamps to local time if device does not support time zone and daylight savings time correction.
     let field = FieldInfo {
@@ -13959,11 +13959,11 @@ fn monitoring_info_message(global_message_number: u16) -> MessageInfo {
     fields.insert(253, field);
     MessageInfo {
         name: "monitoring_info",
-        global_message_number,
+        global_message_number: MesgNum::MonitoringInfo,
         fields,
     }
 }
-fn monitoring_message(global_message_number: u16) -> MessageInfo {
+pub fn monitoring_message() -> MessageInfo {
     let mut fields = HashMap::new();
     // Associates this data to device_info message.  Not required for file with single device (sensor).
     let field = FieldInfo {
@@ -14394,11 +14394,11 @@ fn monitoring_message(global_message_number: u16) -> MessageInfo {
     fields.insert(253, field);
     MessageInfo {
         name: "monitoring",
-        global_message_number,
+        global_message_number: MesgNum::Monitoring,
         fields,
     }
 }
-fn hr_message(global_message_number: u16) -> MessageInfo {
+pub fn hr_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
         name: "fractional_timestamp",
@@ -14575,11 +14575,11 @@ fn hr_message(global_message_number: u16) -> MessageInfo {
     fields.insert(253, field);
     MessageInfo {
         name: "hr",
-        global_message_number,
+        global_message_number: MesgNum::Hr,
         fields,
     }
 }
-fn stress_level_message(global_message_number: u16) -> MessageInfo {
+pub fn stress_level_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
         name: "stress_level_value",
@@ -14608,11 +14608,11 @@ fn stress_level_message(global_message_number: u16) -> MessageInfo {
     fields.insert(1, field);
     MessageInfo {
         name: "stress_level",
-        global_message_number,
+        global_message_number: MesgNum::StressLevel,
         fields,
     }
 }
-fn memo_glob_message(global_message_number: u16) -> MessageInfo {
+pub fn memo_glob_message() -> MessageInfo {
     let mut fields = HashMap::new();
     // Block of utf8 bytes
     let field = FieldInfo {
@@ -14668,11 +14668,11 @@ fn memo_glob_message(global_message_number: u16) -> MessageInfo {
     fields.insert(250, field);
     MessageInfo {
         name: "memo_glob",
-        global_message_number,
+        global_message_number: MesgNum::MemoGlob,
         fields,
     }
 }
-fn ant_channel_id_message(global_message_number: u16) -> MessageInfo {
+pub fn ant_channel_id_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
         name: "channel_number",
@@ -14736,11 +14736,11 @@ fn ant_channel_id_message(global_message_number: u16) -> MessageInfo {
     fields.insert(4, field);
     MessageInfo {
         name: "ant_channel_id",
-        global_message_number,
+        global_message_number: MesgNum::AntChannelId,
         fields,
     }
 }
-fn ant_rx_message(global_message_number: u16) -> MessageInfo {
+pub fn ant_rx_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
         name: "fractional_timestamp",
@@ -14898,11 +14898,11 @@ fn ant_rx_message(global_message_number: u16) -> MessageInfo {
     fields.insert(253, field);
     MessageInfo {
         name: "ant_rx",
-        global_message_number,
+        global_message_number: MesgNum::AntRx,
         fields,
     }
 }
-fn ant_tx_message(global_message_number: u16) -> MessageInfo {
+pub fn ant_tx_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
         name: "fractional_timestamp",
@@ -15060,11 +15060,11 @@ fn ant_tx_message(global_message_number: u16) -> MessageInfo {
     fields.insert(253, field);
     MessageInfo {
         name: "ant_tx",
-        global_message_number,
+        global_message_number: MesgNum::AntTx,
         fields,
     }
 }
-fn exd_screen_configuration_message(global_message_number: u16) -> MessageInfo {
+pub fn exd_screen_configuration_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
         name: "screen_index",
@@ -15117,11 +15117,11 @@ fn exd_screen_configuration_message(global_message_number: u16) -> MessageInfo {
     fields.insert(3, field);
     MessageInfo {
         name: "exd_screen_configuration",
-        global_message_number,
+        global_message_number: MesgNum::ExdScreenConfiguration,
         fields,
     }
 }
-fn exd_data_field_configuration_message(global_message_number: u16) -> MessageInfo {
+pub fn exd_data_field_configuration_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
         name: "screen_index",
@@ -15216,11 +15216,11 @@ fn exd_data_field_configuration_message(global_message_number: u16) -> MessageIn
     fields.insert(5, field);
     MessageInfo {
         name: "exd_data_field_configuration",
-        global_message_number,
+        global_message_number: MesgNum::ExdDataFieldConfiguration,
         fields,
     }
 }
-fn exd_data_concept_configuration_message(global_message_number: u16) -> MessageInfo {
+pub fn exd_data_concept_configuration_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
         name: "screen_index",
@@ -15375,11 +15375,11 @@ fn exd_data_concept_configuration_message(global_message_number: u16) -> Message
     fields.insert(11, field);
     MessageInfo {
         name: "exd_data_concept_configuration",
-        global_message_number,
+        global_message_number: MesgNum::ExdDataConceptConfiguration,
         fields,
     }
 }
-fn field_description_message(global_message_number: u16) -> MessageInfo {
+pub fn field_description_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
         name: "developer_data_index",
@@ -15551,11 +15551,11 @@ fn field_description_message(global_message_number: u16) -> MessageInfo {
     fields.insert(15, field);
     MessageInfo {
         name: "field_description",
-        global_message_number,
+        global_message_number: MesgNum::FieldDescription,
         fields,
     }
 }
-fn developer_data_id_message(global_message_number: u16) -> MessageInfo {
+pub fn developer_data_id_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
         name: "developer_id",
@@ -15619,11 +15619,11 @@ fn developer_data_id_message(global_message_number: u16) -> MessageInfo {
     fields.insert(4, field);
     MessageInfo {
         name: "developer_data_id",
-        global_message_number,
+        global_message_number: MesgNum::DeveloperDataId,
         fields,
     }
 }
-fn dive_summary_message(global_message_number: u16) -> MessageInfo {
+pub fn dive_summary_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
         name: "reference_mesg",
@@ -15786,11 +15786,11 @@ fn dive_summary_message(global_message_number: u16) -> MessageInfo {
     fields.insert(253, field);
     MessageInfo {
         name: "dive_summary",
-        global_message_number,
+        global_message_number: MesgNum::DiveSummary,
         fields,
     }
 }
-fn climb_pro_message(global_message_number: u16) -> MessageInfo {
+pub fn climb_pro_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
         name: "position_lat",
@@ -15878,11 +15878,11 @@ fn climb_pro_message(global_message_number: u16) -> MessageInfo {
     fields.insert(253, field);
     MessageInfo {
         name: "climb_pro",
-        global_message_number,
+        global_message_number: MesgNum::ClimbPro,
         fields,
     }
 }
-fn unknown_message(global_message_number: u16) -> MessageInfo {
+fn unknown_message(global_message_number: MesgNum) -> MessageInfo {
     MessageInfo {
         name: "unknown",
         global_message_number,
@@ -15892,98 +15892,94 @@ fn unknown_message(global_message_number: u16) -> MessageInfo {
 impl MesgNum {
     pub fn message_info(self) -> MessageInfo {
         match self {
-            MesgNum::FileId => file_id_message(self.as_u16()),
-            MesgNum::FileCreator => file_creator_message(self.as_u16()),
-            MesgNum::TimestampCorrelation => timestamp_correlation_message(self.as_u16()),
-            MesgNum::Software => software_message(self.as_u16()),
-            MesgNum::SlaveDevice => slave_device_message(self.as_u16()),
-            MesgNum::Capabilities => capabilities_message(self.as_u16()),
-            MesgNum::FileCapabilities => file_capabilities_message(self.as_u16()),
-            MesgNum::MesgCapabilities => mesg_capabilities_message(self.as_u16()),
-            MesgNum::FieldCapabilities => field_capabilities_message(self.as_u16()),
-            MesgNum::DeviceSettings => device_settings_message(self.as_u16()),
-            MesgNum::UserProfile => user_profile_message(self.as_u16()),
-            MesgNum::HrmProfile => hrm_profile_message(self.as_u16()),
-            MesgNum::SdmProfile => sdm_profile_message(self.as_u16()),
-            MesgNum::BikeProfile => bike_profile_message(self.as_u16()),
-            MesgNum::Connectivity => connectivity_message(self.as_u16()),
-            MesgNum::WatchfaceSettings => watchface_settings_message(self.as_u16()),
-            MesgNum::OhrSettings => ohr_settings_message(self.as_u16()),
-            MesgNum::ZonesTarget => zones_target_message(self.as_u16()),
-            MesgNum::Sport => sport_message(self.as_u16()),
-            MesgNum::HrZone => hr_zone_message(self.as_u16()),
-            MesgNum::SpeedZone => speed_zone_message(self.as_u16()),
-            MesgNum::CadenceZone => cadence_zone_message(self.as_u16()),
-            MesgNum::PowerZone => power_zone_message(self.as_u16()),
-            MesgNum::MetZone => met_zone_message(self.as_u16()),
-            MesgNum::DiveSettings => dive_settings_message(self.as_u16()),
-            MesgNum::DiveAlarm => dive_alarm_message(self.as_u16()),
-            MesgNum::DiveGas => dive_gas_message(self.as_u16()),
-            MesgNum::Goal => goal_message(self.as_u16()),
-            MesgNum::Activity => activity_message(self.as_u16()),
-            MesgNum::Session => session_message(self.as_u16()),
-            MesgNum::Lap => lap_message(self.as_u16()),
-            MesgNum::Length => length_message(self.as_u16()),
-            MesgNum::Record => record_message(self.as_u16()),
-            MesgNum::Event => event_message(self.as_u16()),
-            MesgNum::DeviceInfo => device_info_message(self.as_u16()),
-            MesgNum::TrainingFile => training_file_message(self.as_u16()),
-            MesgNum::Hrv => hrv_message(self.as_u16()),
-            MesgNum::WeatherConditions => weather_conditions_message(self.as_u16()),
-            MesgNum::WeatherAlert => weather_alert_message(self.as_u16()),
-            MesgNum::GpsMetadata => gps_metadata_message(self.as_u16()),
-            MesgNum::CameraEvent => camera_event_message(self.as_u16()),
-            MesgNum::GyroscopeData => gyroscope_data_message(self.as_u16()),
-            MesgNum::AccelerometerData => accelerometer_data_message(self.as_u16()),
-            MesgNum::MagnetometerData => magnetometer_data_message(self.as_u16()),
-            MesgNum::BarometerData => barometer_data_message(self.as_u16()),
-            MesgNum::ThreeDSensorCalibration => three_d_sensor_calibration_message(self.as_u16()),
-            MesgNum::OneDSensorCalibration => one_d_sensor_calibration_message(self.as_u16()),
-            MesgNum::VideoFrame => video_frame_message(self.as_u16()),
-            MesgNum::ObdiiData => obdii_data_message(self.as_u16()),
-            MesgNum::NmeaSentence => nmea_sentence_message(self.as_u16()),
-            MesgNum::AviationAttitude => aviation_attitude_message(self.as_u16()),
-            MesgNum::Video => video_message(self.as_u16()),
-            MesgNum::VideoTitle => video_title_message(self.as_u16()),
-            MesgNum::VideoDescription => video_description_message(self.as_u16()),
-            MesgNum::VideoClip => video_clip_message(self.as_u16()),
-            MesgNum::Set => set_message(self.as_u16()),
-            MesgNum::Jump => jump_message(self.as_u16()),
-            MesgNum::Course => course_message(self.as_u16()),
-            MesgNum::CoursePoint => course_point_message(self.as_u16()),
-            MesgNum::SegmentId => segment_id_message(self.as_u16()),
-            MesgNum::SegmentLeaderboardEntry => segment_leaderboard_entry_message(self.as_u16()),
-            MesgNum::SegmentPoint => segment_point_message(self.as_u16()),
-            MesgNum::SegmentLap => segment_lap_message(self.as_u16()),
-            MesgNum::SegmentFile => segment_file_message(self.as_u16()),
-            MesgNum::Workout => workout_message(self.as_u16()),
-            MesgNum::WorkoutSession => workout_session_message(self.as_u16()),
-            MesgNum::WorkoutStep => workout_step_message(self.as_u16()),
-            MesgNum::ExerciseTitle => exercise_title_message(self.as_u16()),
-            MesgNum::Schedule => schedule_message(self.as_u16()),
-            MesgNum::Totals => totals_message(self.as_u16()),
-            MesgNum::WeightScale => weight_scale_message(self.as_u16()),
-            MesgNum::BloodPressure => blood_pressure_message(self.as_u16()),
-            MesgNum::MonitoringInfo => monitoring_info_message(self.as_u16()),
-            MesgNum::Monitoring => monitoring_message(self.as_u16()),
-            MesgNum::Hr => hr_message(self.as_u16()),
-            MesgNum::StressLevel => stress_level_message(self.as_u16()),
-            MesgNum::MemoGlob => memo_glob_message(self.as_u16()),
-            MesgNum::AntChannelId => ant_channel_id_message(self.as_u16()),
-            MesgNum::AntRx => ant_rx_message(self.as_u16()),
-            MesgNum::AntTx => ant_tx_message(self.as_u16()),
-            MesgNum::ExdScreenConfiguration => exd_screen_configuration_message(self.as_u16()),
-            MesgNum::ExdDataFieldConfiguration => {
-                exd_data_field_configuration_message(self.as_u16())
-            }
-            MesgNum::ExdDataConceptConfiguration => {
-                exd_data_concept_configuration_message(self.as_u16())
-            }
-            MesgNum::FieldDescription => field_description_message(self.as_u16()),
-            MesgNum::DeveloperDataId => developer_data_id_message(self.as_u16()),
-            MesgNum::DiveSummary => dive_summary_message(self.as_u16()),
-            MesgNum::ClimbPro => climb_pro_message(self.as_u16()),
-            _ => unknown_message(self.as_u16()),
+            MesgNum::FileId => file_id_message(),
+            MesgNum::FileCreator => file_creator_message(),
+            MesgNum::TimestampCorrelation => timestamp_correlation_message(),
+            MesgNum::Software => software_message(),
+            MesgNum::SlaveDevice => slave_device_message(),
+            MesgNum::Capabilities => capabilities_message(),
+            MesgNum::FileCapabilities => file_capabilities_message(),
+            MesgNum::MesgCapabilities => mesg_capabilities_message(),
+            MesgNum::FieldCapabilities => field_capabilities_message(),
+            MesgNum::DeviceSettings => device_settings_message(),
+            MesgNum::UserProfile => user_profile_message(),
+            MesgNum::HrmProfile => hrm_profile_message(),
+            MesgNum::SdmProfile => sdm_profile_message(),
+            MesgNum::BikeProfile => bike_profile_message(),
+            MesgNum::Connectivity => connectivity_message(),
+            MesgNum::WatchfaceSettings => watchface_settings_message(),
+            MesgNum::OhrSettings => ohr_settings_message(),
+            MesgNum::ZonesTarget => zones_target_message(),
+            MesgNum::Sport => sport_message(),
+            MesgNum::HrZone => hr_zone_message(),
+            MesgNum::SpeedZone => speed_zone_message(),
+            MesgNum::CadenceZone => cadence_zone_message(),
+            MesgNum::PowerZone => power_zone_message(),
+            MesgNum::MetZone => met_zone_message(),
+            MesgNum::DiveSettings => dive_settings_message(),
+            MesgNum::DiveAlarm => dive_alarm_message(),
+            MesgNum::DiveGas => dive_gas_message(),
+            MesgNum::Goal => goal_message(),
+            MesgNum::Activity => activity_message(),
+            MesgNum::Session => session_message(),
+            MesgNum::Lap => lap_message(),
+            MesgNum::Length => length_message(),
+            MesgNum::Record => record_message(),
+            MesgNum::Event => event_message(),
+            MesgNum::DeviceInfo => device_info_message(),
+            MesgNum::TrainingFile => training_file_message(),
+            MesgNum::Hrv => hrv_message(),
+            MesgNum::WeatherConditions => weather_conditions_message(),
+            MesgNum::WeatherAlert => weather_alert_message(),
+            MesgNum::GpsMetadata => gps_metadata_message(),
+            MesgNum::CameraEvent => camera_event_message(),
+            MesgNum::GyroscopeData => gyroscope_data_message(),
+            MesgNum::AccelerometerData => accelerometer_data_message(),
+            MesgNum::MagnetometerData => magnetometer_data_message(),
+            MesgNum::BarometerData => barometer_data_message(),
+            MesgNum::ThreeDSensorCalibration => three_d_sensor_calibration_message(),
+            MesgNum::OneDSensorCalibration => one_d_sensor_calibration_message(),
+            MesgNum::VideoFrame => video_frame_message(),
+            MesgNum::ObdiiData => obdii_data_message(),
+            MesgNum::NmeaSentence => nmea_sentence_message(),
+            MesgNum::AviationAttitude => aviation_attitude_message(),
+            MesgNum::Video => video_message(),
+            MesgNum::VideoTitle => video_title_message(),
+            MesgNum::VideoDescription => video_description_message(),
+            MesgNum::VideoClip => video_clip_message(),
+            MesgNum::Set => set_message(),
+            MesgNum::Jump => jump_message(),
+            MesgNum::Course => course_message(),
+            MesgNum::CoursePoint => course_point_message(),
+            MesgNum::SegmentId => segment_id_message(),
+            MesgNum::SegmentLeaderboardEntry => segment_leaderboard_entry_message(),
+            MesgNum::SegmentPoint => segment_point_message(),
+            MesgNum::SegmentLap => segment_lap_message(),
+            MesgNum::SegmentFile => segment_file_message(),
+            MesgNum::Workout => workout_message(),
+            MesgNum::WorkoutSession => workout_session_message(),
+            MesgNum::WorkoutStep => workout_step_message(),
+            MesgNum::ExerciseTitle => exercise_title_message(),
+            MesgNum::Schedule => schedule_message(),
+            MesgNum::Totals => totals_message(),
+            MesgNum::WeightScale => weight_scale_message(),
+            MesgNum::BloodPressure => blood_pressure_message(),
+            MesgNum::MonitoringInfo => monitoring_info_message(),
+            MesgNum::Monitoring => monitoring_message(),
+            MesgNum::Hr => hr_message(),
+            MesgNum::StressLevel => stress_level_message(),
+            MesgNum::MemoGlob => memo_glob_message(),
+            MesgNum::AntChannelId => ant_channel_id_message(),
+            MesgNum::AntRx => ant_rx_message(),
+            MesgNum::AntTx => ant_tx_message(),
+            MesgNum::ExdScreenConfiguration => exd_screen_configuration_message(),
+            MesgNum::ExdDataFieldConfiguration => exd_data_field_configuration_message(),
+            MesgNum::ExdDataConceptConfiguration => exd_data_concept_configuration_message(),
+            MesgNum::FieldDescription => field_description_message(),
+            MesgNum::DeveloperDataId => developer_data_id_message(),
+            MesgNum::DiveSummary => dive_summary_message(),
+            MesgNum::ClimbPro => climb_pro_message(),
+            _ => unknown_message(self),
         }
     }
 }

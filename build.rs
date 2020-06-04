@@ -221,11 +221,7 @@ impl MessageDefinition {
     }
 
     fn write_function_def(&self, out: &mut File) -> Result<(), std::io::Error> {
-        writeln!(
-            out,
-            "fn {}(global_message_number: u16) -> MessageInfo {{",
-            self.function_name()
-        )?;
+        writeln!(out, "pub fn {}() -> MessageInfo {{", self.function_name())?;
         writeln!(out, "    let mut fields = HashMap::new();")?;
         for field in self.field_map.values() {
             field.generate_field_info_struct(out, &self, "field")?;
@@ -233,7 +229,11 @@ impl MessageDefinition {
         }
         writeln!(out, "    MessageInfo {{")?;
         writeln!(out, "        name: \"{}\",", self.name)?;
-        writeln!(out, "        global_message_number,")?;
+        writeln!(
+            out,
+            "        global_message_number: MesgNum::{},",
+            titlecase_string(&self.name)
+        )?;
         writeln!(out, "        fields")?;
         writeln!(out, "    }}")?;
         writeln!(out, "}}")?;
@@ -702,12 +702,12 @@ fn create_mesg_num_to_mesg_info_fn(
     for msg in messages {
         writeln!(
             out,
-            "            MesgNum::{} => {}(self.as_u16()),",
+            "            MesgNum::{} => {}(),",
             titlecase_string(&msg.name),
             msg.function_name()
         )?;
     }
-    writeln!(out, "            _ => unknown_message(self.as_u16()),")?;
+    writeln!(out, "            _ => unknown_message(self),")?;
     writeln!(out, "        }}")?;
     writeln!(out, "    }}")?;
     writeln!(out, "}}")?;
@@ -781,7 +781,7 @@ fn write_messages_file(profile: &FitProfile) -> Result<(), std::io::Error> {
     // output an unknown_message() fn that has no fields
     writeln!(
         out,
-        "fn unknown_message(global_message_number: u16) -> MessageInfo {{"
+        "fn unknown_message(global_message_number: MesgNum) -> MessageInfo {{"
     )?;
     writeln!(out, "    MessageInfo {{")?;
     writeln!(out, "        name: \"unknown\",")?;
