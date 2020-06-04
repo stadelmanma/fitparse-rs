@@ -7,8 +7,9 @@
 //!
 //! ## Example
 //! Open a file or pass in any other object that implements the Read
-//! trait. FIT files can be chained so a single file can contain more than
-//! one dataset which is why `parse` returns a Vec.
+//! trait. A vector of data records is returned if deserialization is
+//! successful. See the `fit_to_json` example for a command line utility
+//! that parses FIT files and exports them as JSON.
 //! ```
 //! use fitparser;
 //! use std::fs::File;
@@ -18,8 +19,6 @@
 //! for data in fitparser::from_reader(&mut fp)? {
 //!     // print the data in FIT file
 //!     println!("{:#?}", data);
-//!     // alternatively reserialize the data into a new format with serde
-//!     // println!("{:#?}",  serde_json::to_string(data)?);
 //! }
 //! # Ok::<(), Box<dyn std::error::Error>>(())
 //! ```
@@ -33,7 +32,7 @@ mod de;
 mod error;
 pub mod profile;
 
-pub use de::{from_bytes, from_reader, Deserializer};
+pub use de::{from_bytes, from_reader};
 pub use error::{Error, ErrorKind, Result};
 
 /// Defines a set of data derived from a FIT Data message.
@@ -96,17 +95,17 @@ impl FitDataField {
         }
     }
 
-    /// Return stored value
+    /// Return the field name as defined in the FIT profile
     pub fn name(&self) -> &str {
         &self.name
     }
 
-    /// Return stored value
+    /// Return the field definition number
     pub fn number(&self) -> u8 {
         self.number
     }
 
-    /// Return stored value
+    /// Return a reference to the stored value
     pub fn value(&self) -> &Value {
         &self.value
     }
@@ -132,8 +131,7 @@ impl fmt::Display for FitDataField {
     }
 }
 
-/// Contains arbitrary data in the defined format. These types are condensed from the full list of
-/// possible types defined by the FIT profile
+/// Contains arbitrary data in the defined format.
 #[derive(Clone, Debug, PartialEq, PartialOrd, Serialize)]
 #[serde(untagged)]
 pub enum Value {
@@ -161,19 +159,19 @@ pub enum Value {
     Float32(f32),
     /// 64bit floating point data
     Float64(f64),
-    /// Unsigned 8bit integer data where the invalid value is 0x0 instead of 0xFF
+    /// Unsigned 8bit integer data where the invalid value is `0x0` instead of `0xFF`
     UInt8z(u8),
-    /// Unsigned 16bit integer data where the invalid value is 0x0 instead of 0xFFFF
+    /// Unsigned 16bit integer data where the invalid value is `0x0` instead of `0xFFFF`
     UInt16z(u16),
-    /// Unsigned 16bit integer data where the invalid value is 0x0 instead of 0xFFFFFFFF
+    /// Unsigned 16bit integer data where the invalid value is `0x0` instead of `0xFFFFFFFF`
     UInt32z(u32),
     /// Signed 64bit integer data
     SInt64(i64),
     /// Unsigned 64bit integer data
     UInt64(u64),
-    /// Unsigned 64bit integer data where the invalid value is 0x0 instead of 0xFFFFFFFFFFFFFFFF
+    /// Unsigned 64bit integer data where the invalid value is `0x0` instead of `0xFFFFFFFFFFFFFFFF`
     UInt64z(u64),
-    /// Array of DataFitDataField, while this allows nested arrays and mixed types this is not possible
+    /// Array of Values, while this allows nested arrays and mixed types this is not possible
     /// in a properly formatted FIT file
     Array(Vec<Self>),
 }
@@ -272,9 +270,9 @@ impl convert::TryInto<i64> for Value {
     }
 }
 
-
 /// Describes a field value along with it's defined units (if any), this struct is useful for
 /// serializing data in a key-value store where the key is either the name or definition number
+/// since it can be created from a `FitDataField` with minimal data cloning.
 #[derive(Clone, Debug, Serialize)]
 pub struct ValueWithUnits {
     value: Value,
@@ -282,7 +280,7 @@ pub struct ValueWithUnits {
 }
 
 impl ValueWithUnits {
-    /// Create a new data field with the given information
+    /// Create a new value with the given information
     pub fn new(value: Value, units: String) -> Self {
         ValueWithUnits { value, units }
     }
@@ -293,7 +291,6 @@ impl convert::From<FitDataField> for ValueWithUnits {
         ValueWithUnits::new(field.value, field.units)
     }
 }
-
 
 impl fmt::Display for ValueWithUnits {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {

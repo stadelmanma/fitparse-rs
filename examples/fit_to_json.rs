@@ -4,8 +4,8 @@ use serde::Serialize;
 use std::collections::BTreeMap;
 use std::error::Error;
 use std::fs::File;
-use std::iter::FromIterator;
 use std::io::prelude::*;
+use std::iter::FromIterator;
 use std::path::PathBuf;
 use structopt::StructOpt;
 
@@ -30,14 +30,19 @@ struct Cli {
 #[derive(Clone, Debug, Serialize)]
 struct FitDataMap {
     kind: fitparser::profile::MesgNum,
-    fields: BTreeMap<String, fitparser::ValueWithUnits>
+    fields: BTreeMap<String, fitparser::ValueWithUnits>,
 }
 
 impl FitDataMap {
     fn new(record: fitparser::FitDataRecord) -> Self {
         FitDataMap {
             kind: record.kind(),
-            fields: BTreeMap::from_iter(record.into_vec().into_iter().map(|f| (f.name().to_owned(), fitparser::ValueWithUnits::from(f))))
+            fields: BTreeMap::from_iter(
+                record
+                    .into_vec()
+                    .into_iter()
+                    .map(|f| (f.name().to_owned(), fitparser::ValueWithUnits::from(f))),
+            ),
         }
     }
 }
@@ -66,7 +71,7 @@ impl OutputLocation {
         filename: &PathBuf,
         data: Vec<fitparser::FitDataRecord>,
     ) -> Result<(), Box<dyn Error>> {
-        // convert data to a name -> {value, units} map before serializing
+        // convert data to a name: {value, units} map before serializing
         let data: Vec<FitDataMap> = data.into_iter().map(|r| FitDataMap::new(r)).collect();
         let json = serde_json::to_string(&data)?;
 
@@ -85,7 +90,7 @@ impl OutputLocation {
         let mut fp = File::create(outname)?;
         match fp.write_all(json.as_bytes()) {
             Ok(_) => Ok(()),
-            Err(e) => Err(Box::new(e))
+            Err(e) => Err(Box::new(e)),
         }
     }
 }
@@ -110,15 +115,13 @@ fn main() -> Result<(), Box<dyn Error>> {
         // output a single fit file's data into a single output file
         if collect_all {
             all_fit_data.append(&mut data);
-        }
-        else {
+        } else {
             output_loc.write_json_file(&file, data)?;
         }
     }
     // output fit data from all files into a single file
     if collect_all {
-        output_loc
-            .write_json_file(&PathBuf::new(), all_fit_data)?;
+        output_loc.write_json_file(&PathBuf::new(), all_fit_data)?;
     }
 
     Ok(())

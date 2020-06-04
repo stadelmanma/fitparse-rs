@@ -3,13 +3,13 @@ use std::error::Error as StdError;
 use std::io;
 use std::{error, fmt};
 
-/// The result of a serialization or deserialization operation.
+/// The result of a deserialization operation.
 pub type Result<T> = ::std::result::Result<T, Error>;
 
-/// An error that can be produced during (de)serializing.
+/// An error that can be produced during deserializing.
 pub type Error = Box<ErrorKind>;
 
-/// The kind of error that can be produced during a serialization or deserialization.
+/// The kind of error that can be produced during deserialization.
 /// TODO: Handle errors produced by nom cleanly
 #[derive(Debug)]
 pub enum ErrorKind {

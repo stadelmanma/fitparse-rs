@@ -41,8 +41,6 @@ let mut fp = File::open("tests/fixtures/Activity.fit")?;
 for data in fitparser::from_reader(&mut fp)? {
     // print the data in FIT file
     println!("{:#?}", data);
-    // alternatively re-serialize the data into a new format with serde
-    // println!("{:#?}",  serde_json::to_string(data)?);
 }
 ```
 

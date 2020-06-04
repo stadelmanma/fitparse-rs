@@ -1,4 +1,5 @@
-//! Defines the FIT profile used to convert an AST into final values
+//! Defines the FIT profile used to convert raw parser output into final values that can be
+//! interpreted without using the FIT profile.
 use std::collections::HashMap;
 
 pub mod field_types;
