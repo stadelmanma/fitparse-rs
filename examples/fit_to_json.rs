@@ -1,7 +1,10 @@
 //! Read one or more FIT files and dump their contents as JSON
 use fitparser;
-use fitparser::ser::{FitDataRecordSerializer, ValueWithUnits};
+use serde::Serialize;
+use std::collections::BTreeMap;
+use std::error::Error;
 use std::fs::File;
+use std::iter::FromIterator;
 use std::io::prelude::*;
 use std::path::PathBuf;
 use structopt::StructOpt;
@@ -21,6 +24,22 @@ struct Cli {
     /// a "-" as the output file name will result in all content being printed to STDOUT.
     #[structopt(short, long, parse(from_os_str))]
     output: Option<PathBuf>,
+}
+
+/// Alternate serialization format
+#[derive(Clone, Debug, Serialize)]
+struct FitDataMap {
+    kind: fitparser::profile::MesgNum,
+    fields: BTreeMap<String, fitparser::ValueWithUnits>
+}
+
+impl FitDataMap {
+    fn new(record: fitparser::FitDataRecord) -> Self {
+        FitDataMap {
+            kind: record.kind(),
+            fields: BTreeMap::from_iter(record.into_vec().into_iter().map(|f| (f.name().to_owned(), fitparser::ValueWithUnits::from(f))))
+        }
+    }
 }
 
 #[derive(Clone, Debug)]
@@ -45,9 +64,11 @@ impl OutputLocation {
     fn write_json_file(
         &self,
         filename: &PathBuf,
-        data: &[FitDataRecordSerializer<String, String, ValueWithUnits>],
-    ) -> std::io::Result<()> {
-        let j = serde_json::to_string(data).unwrap();
+        data: Vec<fitparser::FitDataRecord>,
+    ) -> Result<(), Box<dyn Error>> {
+        // convert data to a name -> {value, units} map before serializing
+        let data: Vec<FitDataMap> = data.into_iter().map(|r| FitDataMap::new(r)).collect();
+        let json = serde_json::to_string(&data)?;
 
         let outname = match self {
             Self::Inplace => filename.with_extension("json"),
@@ -57,17 +78,19 @@ impl OutputLocation {
                 .with_extension("json"),
             Self::LocalFile(dest) => dest.clone(),
             Self::Stdout => {
-                println!("{}", j);
+                println!("{}", json);
                 return Ok(());
             }
         };
-
-        let mut f = File::create(outname).unwrap();
-        f.write_all(j.as_bytes())
+        let mut fp = File::create(outname)?;
+        match fp.write_all(json.as_bytes()) {
+            Ok(_) => Ok(()),
+            Err(e) => Err(Box::new(e))
+        }
     }
 }
 
-fn main() {
+fn main() -> Result<(), Box<dyn Error>> {
     let opt = Cli::from_args();
     let output_loc = opt
         .output
@@ -78,24 +101,25 @@ fn main() {
     };
 
     // Read each FIT file and output it
-    let mut fit_data: Vec<FitDataRecordSerializer<String, String, ValueWithUnits>> = Vec::new();
+    let mut all_fit_data: Vec<fitparser::FitDataRecord> = Vec::new();
     for file in opt.files {
         // open file and parse data
-        let mut f = File::open(&file).unwrap();
-        for record in fitparser::from_reader(&mut f).unwrap() {
-            fit_data.push(record.into_name_key_value_with_units_mapping());
-        }
+        let mut fp = File::open(&file)?;
+        let mut data = fitparser::from_reader(&mut fp)?;
 
         // output a single fit file's data into a single output file
-        if !collect_all {
-            output_loc.write_json_file(&file, &fit_data).unwrap();
-            fit_data.clear();
+        if collect_all {
+            all_fit_data.append(&mut data);
+        }
+        else {
+            output_loc.write_json_file(&file, data)?;
         }
     }
     // output fit data from all files into a single file
     if collect_all {
         output_loc
-            .write_json_file(&PathBuf::new(), &fit_data)
-            .unwrap();
+            .write_json_file(&PathBuf::new(), all_fit_data)?;
     }
+
+    Ok(())
 }
