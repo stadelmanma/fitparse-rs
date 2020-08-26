@@ -1,6 +1,6 @@
 # Change Log
 
-## HEAD
+## v0.2.0
 * Improve the API to allow manipulating the data with less cloning
 * Expose the actual MesgNum enum value to the user in the `kind` field
 of each FitDataRecord instead of it's name.
