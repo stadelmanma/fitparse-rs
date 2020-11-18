@@ -10,7 +10,7 @@ use chrono::{DateTime, Duration, Local, NaiveDate, TimeZone};
 use std::collections::HashMap;
 use std::convert::{From, TryInto};
 use std::f64::EPSILON;
-use std::iter::{FromIterator, Iterator};
+use std::iter::{FromIterator, IntoIterator};
 
 impl Value {
     /// Convert the value into a vector of bytes
@@ -100,8 +100,8 @@ impl Decoder {
     }
 
     /// Decode a stream of FitObjects returning only the data records
-    pub fn decode_messages<T: Iterator<Item=Result<FitObject>>>(&mut self, fit_objs: T) -> Result<Vec<FitDataRecord>> {
-        fit_objs.filter_map(|o| {
+    pub fn decode_messages<T: IntoIterator<Item=Result<FitObject>>>(&mut self, fit_objs: T) -> Result<Vec<FitDataRecord>> {
+        fit_objs.into_iter().filter_map(|o| {
             match o {
                 Ok(FitObject::Crc(..)) => None,
                 Ok(FitObject::Header(..)) => {self.reset(); None}
