@@ -11,31 +11,22 @@ mod decode;
 use decode::Decoder;
 mod parser;
 
-/// Stores a definition message or a DataMessage
+/// Stores a FIT file object (header, message or CRC)
 #[derive(Clone, Debug)]
-pub enum FitMessage {
+pub enum FitObject {
+    /// Checksum at end of data section
+    Crc(u16),
+    /// Header containing FIT file info
+    Header(parser::FitFileHeader),
     /// A raw data message
-    Data(parser::FitMessageHeader, parser::FitDataMessage),
+    DataMessage(parser::FitMessageHeader, parser::FitDataMessage),
     /// A definition message used to define upcoming data messages
-    Definition(parser::FitMessageHeader, parser::FitDefinitionMessage),
+    DefinitionMessage(parser::FitMessageHeader, parser::FitDefinitionMessage),
 }
 
-/// Stores data and manages the deserialization of a FIT data stream into Rust constructs
-pub struct Deserializer<'de> {
-    // These fields describe FIT file info that may be of use.
-    /// Length of header in bytes, should be either 12 or 14
-    header_size: u8,
-    /// Length of the Data Records section in bytes
-    data_size: u32,
-    /// Protocol version number as provided in SDK
-    protocol_ver_enc: f32,
-    /// Profile version number as provided in SDK
-    profile_ver_enc: f32,
 
-    // These fields deal with the current parser state
-    /// input data stream, bytes are shifted from the front as data gets processed.
-    /// TODO: Eventually, this could just be something "readable"
-    input: &'de [u8],
+/// Manages the deserialization of a FIT data stream into Rust constructs.
+struct Deserializer {
     /// Track the current set of FIT message definitions, these are what allows the format to
     /// be self describing.
     definitions: HashMap<u8, parser::FitDefinitionMessage>,
@@ -44,68 +35,69 @@ pub struct Deserializer<'de> {
     position: usize,
     /// Stores the location that the current FIT message ends, for chained FIT messges this will
     /// be updated to reflect the new end position
-    end_of_messages: usize,
-    /// Applys the FIT profile to the data
-    decoder: Decoder,
+    end_of_messages: usize
 }
 
-impl<'de> Deserializer<'de> {
-    /// Create the deserializer from an input byte array
-    fn new(input: &'de [u8]) -> Self {
-        // initialize the deserializer with the remaining input data and header info
+impl Deserializer {
+    /// Create the deserializer from something "readable"
+    pub fn new() -> Self {
         Deserializer {
-            header_size: 0,
-            data_size: 0,
-            protocol_ver_enc: 0.0,
-            profile_ver_enc: 0.0,
-            input,
             definitions: HashMap::new(),
             position: 0,
             end_of_messages: 0,
-            decoder: Decoder::new(),
         }
     }
 
-    /// Deserialize a FIT file stored as an array of bytes
-    fn from_bytes(input: &'de [u8]) -> Self {
-        Deserializer::new(input)
+    /// Create an iterable that will process the provided byte slice into a set of
+    /// FitObjects.
+    pub fn deserialize<'de>(&'de mut self, input: &'de [u8]) -> DeserializerIter<'de> {
+        DeserializerIter { buffer: input, deserializer: self }
+    }
+
+    /// Advance the parser state returning one of four possible objects defined within the
+    /// FIT file.
+    pub fn deserialize_any<'de>(&mut self, input: &'de [u8]) -> Result<(&'de [u8], FitObject)> {
+        if self.position > 0 && self.position == self.end_of_messages {
+            // extract the CRC, eventually we'd want to validate it
+            return self.deserialize_crc(input);
+        }
+        if self.position == 0 || (self.position > self.end_of_messages && !input.is_empty()) {
+            // if there is extra bytes remaining the FIT file must be chained so we parse
+            // the header and continue on.
+            return self.deserialize_header(input);
+        }
+        // if we reach this point then we must be at some position: 0 < X < self.end_of_messages
+        // and a message should exist (either data or definition).
+        self.deserialize_message(input)
     }
 
     /// Parse the FIT header
-    fn parse_header(&mut self) -> Result<()> {
-        let (input, header) = parser::fit_file_header(self.input)?;
-        self.input = input;
-        self.header_size = header.header_size();
-        self.data_size = header.data_size();
-        self.protocol_ver_enc = header.protocol_ver_enc();
-        self.profile_ver_enc = header.profile_ver_enc();
+    fn deserialize_header<'de>(&mut self, input: &'de [u8]) -> Result<(&'de [u8], FitObject)> {
+        let (input, header) = parser::fit_file_header(input)?;
+        self.end_of_messages = self.position + header.header_size() as usize + header.data_size() as usize;
+        self.position += header.header_size() as usize;
 
-        self.end_of_messages = self.position + self.header_size as usize + self.data_size as usize;
-        self.position += self.header_size as usize;
-
-        Ok(())
+        Ok((input, FitObject::Header(header)))
     }
 
     /// Extract a 2 byte CRC
-    fn parse_crc(&mut self) -> Result<u16> {
-        let (input, crc) = le_u16(self.input)?;
-        self.input = input;
+    fn deserialize_crc<'de>(&mut self, input: &'de [u8]) -> Result<(&'de [u8], FitObject)> {
+        let (input, crc) = le_u16(input)?;
         self.position += 2;
-        Ok(crc)
+        Ok((input, FitObject::Crc(crc)))
     }
 
-    /// Parse and decode the next data record
-    fn get_next_message(&mut self) -> Result<FitMessage> {
-        // parse a single message of eithe variety
-        let init_len = self.input.len();
-        let (input, header) = parser::message_header(self.input)?;
+    /// Parse a FIT data or definition message
+    fn deserialize_message<'de>(&mut self, input: &'de [u8]) -> Result<(&'de [u8], FitObject)> {
+        // parse a single message of either variety
+        let init_len = input.len();
+        let (input, header) = parser::message_header(input)?;
         match header.message_type() {
             parser::FitMessageType::Data => {
                 if let Some(def_mesg) = self.definitions.get(&header.local_message_type()) {
                     let (input, message) = parser::data_message(input, &def_mesg)?;
-                    self.input = input;
                     self.position += init_len - input.len();
-                    Ok(FitMessage::Data(header, message))
+                    Ok((input, FitObject::DataMessage(header, message)))
                 } else {
                     Err(ErrorKind::MissingDefinitionMessage(
                         header.local_message_type(),
@@ -118,63 +110,59 @@ impl<'de> Deserializer<'de> {
                 let (input, message) = parser::definition_message(input, &header)?;
                 self.definitions
                     .insert(header.local_message_type(), message.clone());
-                self.input = input;
                 self.position += init_len - input.len();
-                Ok(FitMessage::Definition(header, message))
+                Ok((input, FitObject::DefinitionMessage(header, message)))
             }
         }
     }
 }
 
-impl<'de> Iterator for Deserializer<'de> {
-    type Item = Result<FitDataRecord>;
+/// Iterable version that processes a buffer.
+struct DeserializerIter<'de> {
+    /// Fit data buffer
+    buffer: &'de [u8],
+    /// Deserializer reference to track state
+    deserializer: &'de mut Deserializer,
+}
 
-    fn next(&mut self) -> Option<Result<FitDataRecord>> {
-        if self.position > 0 && self.position == self.end_of_messages {
-            // extract the CRC, eventually we'd want to validate it
-            if let Err(e) = self.parse_crc() {
-                return Some(Err(e));
-            }
-        }
-        if self.position == 0 || (self.position > self.end_of_messages && !self.input.is_empty()) {
-            // if there is extra bytes remaining the FIT file must be chained so we parse
-            // the header and continue on
-            if let Err(e) = self.parse_header() {
-                return Some(Err(e));
-            }
-        }
-        if self.input.is_empty() {
-            return None;
-        }
+impl<'de> Iterator for DeserializerIter<'de> {
+    type Item = Result<FitObject>;
 
-        // loop over messages until we get a data message, valid FIT files always end with a
-        // data message as far as I know
-        loop {
-            match self.get_next_message() {
-                Ok(fit_message) => {
-                    if let FitMessage::Data(header, message) = fit_message {
-                        return Some(self.decoder.decode_message(header, message));
-                    }
-                }
-                Err(e) => return Some(Err(e)),
+    fn next(&mut self) -> Option<Result<FitObject>> {
+        // consume data until buffer is empty or the parsing errors, as far as
+        // I know a valid FIT file should have no trailing bytes.
+        if self.buffer.is_empty() {
+            return None
+        }
+        match self.deserializer.deserialize_any(self.buffer) {
+            Ok((input, obj)) => {
+                self.buffer = input;
+                Some(Ok(obj))
+            },
+            Err(e) => {
+                // this works now but I need to return the remaining data
+                // or position that the error occured since otherwise I don't know where the problem
+                // happened and I can't recover from it. This is an issue that's existed since the
+                // initial creation of the parser. I could also copy the remaining bytes and return
+                // them with the error. Not as "efficient" but the parsing as already failed so...
+                Some(Err(e))
             }
         }
     }
 }
 
-/// Deserialize a FIT file stored as an array of bytes
-pub fn from_bytes(input: &[u8]) -> Result<Vec<FitDataRecord>> {
-    let deserializer = Deserializer::from_bytes(input);
-    deserializer.collect()
+/// Deserialize a FIT file stored as an array of bytes.
+pub fn from_bytes(buffer: &[u8]) -> Result<Vec<FitDataRecord>> {
+    let mut deserializer = Deserializer::new();
+    let mut decoder = Decoder::new();
+    decoder.decode_messages(deserializer.deserialize(buffer))
 }
 
-/// Deserialize a FIT file stored in a 'readable' source.
-/// Currently this just reads all available data into a buffer
-/// and then calls `from_bytes`. This will not be reliable for
-/// sources that stream data and may not contain a full FIT file
-/// at the time of reading.
+/// Deserialize a FIT file stored in a source that implements io::Read.
 pub fn from_reader<T: Read>(source: &mut T) -> Result<Vec<FitDataRecord>> {
     let mut buffer = Vec::new();
     source.read_to_end(&mut buffer)?;
-    from_bytes(&buffer)
+    let mut deserializer = Deserializer::new();
+    let mut decoder = Decoder::new();
+    decoder.decode_messages(deserializer.deserialize(&buffer))
 }

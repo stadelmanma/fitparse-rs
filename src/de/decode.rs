@@ -1,5 +1,6 @@
 //! Helper functions and structures needed to decode a FIT file using the defined profile.
 use super::parser::{FitDataMessage, FitMessageHeader};
+use super::FitObject;
 use crate::error::{ErrorKind, Result};
 use crate::profile::{
     get_field_variant_as_string, ComponentFieldInfo, FieldDataType, FieldInfo, MesgNum, MessageInfo,
@@ -9,7 +10,7 @@ use chrono::{DateTime, Duration, Local, NaiveDate, TimeZone};
 use std::collections::HashMap;
 use std::convert::{From, TryInto};
 use std::f64::EPSILON;
-use std::iter::FromIterator;
+use std::iter::{FromIterator, Iterator};
 
 impl Value {
     /// Convert the value into a vector of bytes
@@ -84,12 +85,31 @@ pub struct Decoder {
 }
 
 impl Decoder {
-    /// Create a new accumulator
+    /// Create a new decoder
     pub fn new() -> Self {
         Decoder {
             base_timestamp: TimestampField::Utc(0),
             accumulate_fields: HashMap::new(),
         }
+    }
+
+    /// Reset accumation related fields
+    pub fn reset(&mut self) {
+        self.base_timestamp = TimestampField::Utc(0);
+        self.accumulate_fields = HashMap::new();
+    }
+
+    /// Decode a stream of FitObjects returning only the data records
+    pub fn decode_messages<T: Iterator<Item=Result<FitObject>>>(&mut self, fit_objs: T) -> Result<Vec<FitDataRecord>> {
+        fit_objs.filter_map(|o| {
+            match o {
+                Ok(FitObject::Crc(..)) => None,
+                Ok(FitObject::Header(..)) => {self.reset(); None}
+                Ok(FitObject::DataMessage(hdr, msg)) => Some(self.decode_message(hdr, msg)),
+                Ok(FitObject::DefinitionMessage(..)) => None,
+                Err(e) => Some(Err(e))
+            }
+        }).collect()
     }
 
     /// Decode a raw FIT data message by applying the defined profile

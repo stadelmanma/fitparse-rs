@@ -1,5 +1,8 @@
 # Change Log
 
+## HEAD
+* Refactor the internal de-serialization and decoding logic.
+
 ## v0.2.0
 * Improve the API to allow manipulating the data with less cloning
 * Expose the actual MesgNum enum value to the user in the `kind` field
