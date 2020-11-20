@@ -162,7 +162,5 @@ pub fn from_bytes(buffer: &[u8]) -> Result<Vec<FitDataRecord>> {
 pub fn from_reader<T: Read>(source: &mut T) -> Result<Vec<FitDataRecord>> {
     let mut buffer = Vec::new();
     source.read_to_end(&mut buffer)?;
-    let mut deserializer = Deserializer::new();
-    let mut decoder = Decoder::new();
-    decoder.decode_messages(deserializer.deserialize(&buffer))
+    from_bytes(&buffer)
 }
