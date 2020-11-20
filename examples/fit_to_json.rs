@@ -4,6 +4,7 @@ use serde::Serialize;
 use std::collections::BTreeMap;
 use std::error::Error;
 use std::fs::File;
+use std::io;
 use std::io::prelude::*;
 use std::iter::FromIterator;
 use std::path::PathBuf;
@@ -104,6 +105,12 @@ fn main() -> Result<(), Box<dyn Error>> {
         OutputLocation::LocalFile(_) => true,
         _ => false,
     };
+    if opt.files.is_empty() {
+        let mut stdin = io::stdin();
+        let data = fitparser::from_reader(&mut stdin)?;
+        output_loc.write_json_file(&PathBuf::from("<stdin>"), data)?;
+        return Ok(());
+    }
 
     // Read each FIT file and output it
     let mut all_fit_data: Vec<fitparser::FitDataRecord> = Vec::new();
