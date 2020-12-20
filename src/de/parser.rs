@@ -324,7 +324,7 @@ pub fn definition_message<'a>(
     input: &'a [u8],
     header: &FitMessageHeader,
 ) -> IResult<&'a [u8], FitDefinitionMessage> {
-    let (input, _) = take(1usize)(input)?;
+    let (input, _) = take(1usize)(input)?; // reserved byte, consume it and ignore the value
     let (input, arch_byte) = le_u8(input)?;
     let byte_order = if arch_byte == 1 {
         Endianness::Big
