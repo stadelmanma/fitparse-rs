@@ -95,7 +95,7 @@ impl Deserializer {
         match header.message_type() {
             parser::FitMessageType::Data => {
                 if let Some(def_mesg) = self.definitions.get(&header.local_message_type()) {
-                    let (input, message) = parser::data_message(input, &def_mesg)?;
+                    let (input, message) = parser::data_message_fields(input, &def_mesg)?;
                     self.position += init_len - input.len();
                     Ok((input, FitObject::DataMessage(header, message)))
                 } else {

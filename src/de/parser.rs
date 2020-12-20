@@ -6,8 +6,8 @@ use nom::multi::count;
 use nom::number::streaming::{le_i8, le_u16, le_u32, le_u8};
 use nom::number::Endianness;
 use nom::sequence::tuple;
-use nom::IResult;
 use nom::{i16, i32, i64, u16, u32, u64};
+use nom::{Err, IResult, Needed};
 use std::collections::HashMap;
 use std::convert::From;
 use std::fmt::Display;
@@ -137,6 +137,18 @@ pub struct FitDefinitionMessage {
     field_definitions: Vec<FieldDefinition>,
     number_of_developer_fields: u8,
     developer_field_definitions: Vec<DeveloperFieldDefinition>,
+}
+
+impl FitDefinitionMessage {
+    /// Calculate and return the size of the data message described
+    pub fn data_message_size(&self) -> u8 {
+        // start accumlator at one to account for the message header
+        self.field_definitions.iter().fold(1, |l, f| l + f.size)
+            + self
+                .developer_field_definitions
+                .iter()
+                .fold(0, |l, f| l + f.size)
+    }
 }
 
 /// The Field Definition bytes are used to specify which FIT fields of the global FIT message are to
@@ -375,7 +387,25 @@ fn developer_field_definition(input: &[u8]) -> IResult<&[u8], DeveloperFieldDefi
 }
 
 /// Parse a data message
-pub fn data_message<'a>(
+pub fn data_message_fields<'a>(
+    input: &'a [u8],
+    def_mesg: &FitDefinitionMessage,
+) -> IResult<&'a [u8], FitDataMessage> {
+    match data_message_fields_impl(input, def_mesg) {
+        Ok(r) => Ok(r),
+        Err(Err::Incomplete(_)) => {
+            // output a correct "needed" value, subtract one because we've already parsed the header
+            Err(Err::Incomplete(Needed::Size(
+                def_mesg.data_message_size() as usize - input.len() - 1,
+            )))
+        }
+        Err(r) => Err(r),
+    }
+}
+
+/// Function to actually parse the data fields, the public function wraps incomplete errors to provide
+/// an accurate number for the bytes "needed" if we hit an incomplete error
+fn data_message_fields_impl<'a>(
     input: &'a [u8],
     def_mesg: &FitDefinitionMessage,
 ) -> IResult<&'a [u8], FitDataMessage> {
