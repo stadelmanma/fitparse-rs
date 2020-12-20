@@ -1,9 +1,9 @@
 //! Helper functions and structures needed to parse a FIT file.
 use crate::Value;
-use nom::bytes::complete::{tag, take};
+use nom::bytes::streaming::{tag, take};
 use nom::combinator::cond;
 use nom::multi::count;
-use nom::number::complete::{le_i8, le_u16, le_u32, le_u8};
+use nom::number::streaming::{le_i8, le_u16, le_u32, le_u8};
 use nom::number::Endianness;
 use nom::sequence::tuple;
 use nom::IResult;
