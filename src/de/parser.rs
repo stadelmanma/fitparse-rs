@@ -255,10 +255,24 @@ impl From<u8> for BaseType {
 
 /// Parse the FIT file header
 pub fn fit_file_header(input: &[u8]) -> IResult<&[u8], FitFileHeader> {
+    match fit_file_header_impl(input) {
+        Ok(r) => Ok(r),
+        Err(Err::Incomplete(_)) => {
+            // output a correct "needed" value, assume 14 bytes as default since that's preferred
+            Err(Err::Incomplete(Needed::Size(
+                input.first().map_or(14, |v| *v as usize - input.len()),
+            )))
+        }
+        Err(r) => Err(r),
+    }
+}
+
+/// Parse the FIT file header, the public function wraps an incomplete error to fix the needed bytes
+fn fit_file_header_impl(input: &[u8]) -> IResult<&[u8], FitFileHeader> {
     let (input, (header_size, proto, prof, data_size)) =
         tuple((le_u8, le_u8, le_u16, le_u32))(input)?;
     let (input, _) = tag(".FIT")(input)?;
-    let (input, crc) = cond(header_size - 12 >= 2, le_u16)(input)?;
+    let (input, crc) = cond(header_size > 12, le_u16)(input)?;
     let protocol_ver_enc = split_decimal_to_float(proto >> 4, proto & ((1 << 4) - 1));
     let profile_ver_enc = split_decimal_to_float(prof / 100, prof % 100);
 
