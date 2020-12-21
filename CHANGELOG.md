@@ -2,6 +2,7 @@
 
 ## HEAD
 * Refactor the internal de-serialization and decoding logic.
+* Return better errors when data buffer is incomplete
 
 ## v0.2.0
 * Improve the API to allow manipulating the data with less cloning
