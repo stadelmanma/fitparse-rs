@@ -8,6 +8,7 @@ use std::process::Command;
 // the fields in these structs are mostly duplicated from code in src/profile/parser.rs
 #[derive(Clone, Debug)]
 pub struct FitProfile {
+    version: String,
     field_types: Vec<FieldTypeDefintion>,
     messages: Vec<MessageDefinition>,
 }
@@ -669,7 +670,7 @@ fn process_messages(sheet: Range<DataType>) -> Vec<MessageDefinition> {
     messages
 }
 
-pub fn parse_profile(profile_fname: &str) -> Result<FitProfile, Box<dyn std::error::Error>> {
+pub fn parse_profile(profile_fname: &str, version: String) -> Result<FitProfile, Box<dyn std::error::Error>> {
     let mut excel: Xlsx<_> = open_workbook(&profile_fname)?;
 
     // process Types sheet
@@ -687,6 +688,7 @@ pub fn parse_profile(profile_fname: &str) -> Result<FitProfile, Box<dyn std::err
     };
 
     Ok(FitProfile {
+        version,
         field_types,
         messages,
     })
@@ -729,7 +731,8 @@ fn write_types_files(profile: &FitProfile) -> Result<(), std::io::Error> {
 
     writeln!(
         out,
-        "//! Auto generated profile field types from FIT SDK Release: XXX"
+        "//! Auto generated profile field types from FIT SDK Release: {}",
+        profile.version
     )?;
     writeln!(
         out,
@@ -761,7 +764,8 @@ fn write_messages_file(profile: &FitProfile) -> Result<(), std::io::Error> {
 
     writeln!(
         out,
-        "//! Auto generated profile messages from FIT SDK Release: XXX"
+        "//! Auto generated profile messages from FIT SDK Release: {}",
+        profile.version
     )?;
     writeln!(out, "#![allow(missing_docs)]")?;
     writeln!(out, "#![allow(clippy::redundant_field_names)]")?;
@@ -772,6 +776,7 @@ fn write_messages_file(profile: &FitProfile) -> Result<(), std::io::Error> {
         "use super::{{ComponentFieldInfo, FieldDataType, FieldInfo, MessageInfo}};"
     )?;
     writeln!(out, "use super::field_types::*;")?;
+    writeln!(out, "pub const VERSION: &str = \"{}\";", profile.version)?;
 
     // output all message functions
     for msg in &profile.messages {
@@ -798,6 +803,7 @@ fn write_messages_file(profile: &FitProfile) -> Result<(), std::io::Error> {
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
+    // FIT_PROFILE should be set to the profile.xlsx file path
     println!("cargo:rerun-if-env-changed=FIT_PROFILE");
     let profile_fname = match env::var("FIT_PROFILE") {
         Ok(val) => {
@@ -809,9 +815,20 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             return Ok(());
         }
     };
+    let profile_vers = match env::var("FIT_PROFILE_VERSION") {
+        Ok(val) => {
+            eprintln!("Setting profile version to {}", &val);
+            val
+        }
+        Err(e) => {
+            println!("cargo:error=Did not update FIT profile, could not read FIT_PROFILE_VERSION environment variable");
+            return Err(e.into());
+        }
+    };
+
 
     // process excel file and output
-    let profile = parse_profile(&profile_fname).unwrap();
+    let profile = parse_profile(&profile_fname, profile_vers).unwrap();
     write_types_files(&profile)?;
     write_messages_file(&profile)?;
 

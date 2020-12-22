@@ -1,4 +1,4 @@
-//! Auto generated profile field types from FIT SDK Release: XXX
+//! Auto generated profile field types from FIT SDK Release: 21.22.00
 //! Not all of these may be used by the defined set of FIT messages
 #![allow(missing_docs)]
 #![allow(dead_code)]

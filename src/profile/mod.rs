@@ -6,6 +6,7 @@ pub mod field_types;
 pub use field_types::{get_field_variant_as_string, FieldDataType, MesgNum};
 
 pub mod messages;
+pub use messages::VERSION;
 
 /// Describes a single message pulled from the FIT profile.
 #[derive(Clone, Debug)]
