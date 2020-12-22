@@ -26,6 +26,9 @@ Notes:
  * Files with Developer Data fields can be parsed but the developer
    fields are dropped.
   * We do not validate the CRC values at this time
+  * The FIT SDK is regularly updated by Garmin/Ant this library may not
+    be up to date; check the `src/profile/messages.rs` for the packaged version.
+    Submit an issue and I will gladly bump it!
 
 ## Usage
 
@@ -49,14 +52,16 @@ for data in fitparser::from_reader(&mut fp)? {
 
 All FIT files are generated based on a customizable profile. The profile
 used here is pulled from ANT's offical SDK which can be accessed
-[here](https://www.thisisant.com/developer/resources/downloads/). To
-update the FIT profile set the environment variable `FIT_PROFILE` to the
-path of the desired Profile.xlsx file and then run `cargo build`. When
-this variable is not set cargo will simply emit a warning stating that
-the profile was not updated.
+[here](https://www.thisisant.com/developer/resources/downloads/). The
+cargo build command expects the environment variable `FIT_PROFILE` to be set to the
+path of the desired Profile.xlsx file and the `FIT_PROFILE_VERSION` variable to
+the appropriate version. To make updating simpler a script is provided
+`./bin/update_profile.sh` that accepts the profile path the as first argument
+and optionally a profile version as the second. The version can be omitted
+if the path to the Profile.xlsx file contains `FitSDKRelease_XX.YY.ZZ`.
 
 ```sh
-FIT_PROFILE=./FitSDKRelease_21.22.00/Profile.xlsx cargo build
+./bin/update_profile.sh ~/Downloads/FitSDKRelease_21.40.00/Profile.xlsx
 ```
 
 A profile file is not required for building the library as the files

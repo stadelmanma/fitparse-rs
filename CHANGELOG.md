@@ -3,6 +3,8 @@
 ## HEAD
 * Refactor the internal de-serialization and decoding logic.
 * Return better errors when data buffer is incomplete
+* Add the FIT Profile version to the profile module as a constant
+* Add a script to regenerate the profile module from a new SDK
 
 ## v0.2.0
 * Improve the API to allow manipulating the data with less cloning
