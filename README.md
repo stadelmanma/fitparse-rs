@@ -40,6 +40,7 @@ use fitparser;
 use std::fs::File;
 use std::io::prelude::*;
 
+println!("Parsing FIT files using Profile version: {}", fitparser::profile::VERSION);
 let mut fp = File::open("tests/fixtures/Activity.fit")?;
 for data in fitparser::from_reader(&mut fp)? {
     // print the data in FIT file

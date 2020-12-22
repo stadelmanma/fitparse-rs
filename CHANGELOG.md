@@ -1,6 +1,8 @@
 # Change Log
 
 ## HEAD
+
+## v0.3.0
 * Refactor the internal de-serialization and decoding logic.
 * Return better errors when data buffer is incomplete
 * Add the FIT Profile version to the profile module as a constant
