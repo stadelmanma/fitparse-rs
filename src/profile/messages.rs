@@ -1,11 +1,11 @@
-//! Auto generated profile messages from FIT SDK Release: 21.22.00
+//! Auto generated profile messages from FIT SDK Release: 21.40.00
 #![allow(missing_docs)]
 #![allow(clippy::redundant_field_names)]
 #![allow(clippy::unreadable_literal)]
 use super::field_types::*;
 use super::{ComponentFieldInfo, FieldDataType, FieldInfo, MessageInfo};
 use std::collections::HashMap;
-pub const VERSION: &str = "21.22.00";
+pub const VERSION: &str = "21.40.00";
 pub fn file_id_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
@@ -81,6 +81,18 @@ pub fn file_id_message() -> MessageInfo {
         components: Vec::new(),
     };
     subfields.push((1, Manufacturer::DynastreamOem.as_i64(), sub_fld));
+    let sub_fld = FieldInfo {
+        name: "garmin_product",
+        field_type: FieldDataType::GarminProduct,
+        def_number: 2,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    subfields.push((1, Manufacturer::Tacx.as_i64(), sub_fld));
     let field = FieldInfo {
         name: "product",
         field_type: FieldDataType::UInt16,
@@ -388,6 +400,18 @@ pub fn slave_device_message() -> MessageInfo {
         components: Vec::new(),
     };
     subfields.push((0, Manufacturer::DynastreamOem.as_i64(), sub_fld));
+    let sub_fld = FieldInfo {
+        name: "garmin_product",
+        field_type: FieldDataType::GarminProduct,
+        def_number: 1,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    subfields.push((0, Manufacturer::Tacx.as_i64(), sub_fld));
     let field = FieldInfo {
         name: "product",
         field_type: FieldDataType::UInt16,
@@ -1015,6 +1039,19 @@ pub fn device_settings_message() -> MessageInfo {
         components: Vec::new(),
     };
     fields.insert(134, field);
+    // Used to hold the tap threshold setting
+    let field = FieldInfo {
+        name: "tap_sensitivity",
+        field_type: FieldDataType::TapSensitivity,
+        def_number: 174,
+        scale: 1.000000,
+        offset: 1.000000,
+        units: "",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    fields.insert(174, field);
     MessageInfo {
         name: "device_settings",
         global_message_number: MesgNum::DeviceSettings,
@@ -3436,6 +3473,54 @@ pub fn session_message() -> MessageInfo {
         components: Vec::new(),
     };
     subfields.push((5, Sport::Walking.as_i64(), sub_fld));
+    let sub_fld = FieldInfo {
+        name: "total_strokes",
+        field_type: FieldDataType::UInt32,
+        def_number: 10,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "strokes",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    subfields.push((5, Sport::Cycling.as_i64(), sub_fld));
+    let sub_fld = FieldInfo {
+        name: "total_strokes",
+        field_type: FieldDataType::UInt32,
+        def_number: 10,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "strokes",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    subfields.push((5, Sport::Swimming.as_i64(), sub_fld));
+    let sub_fld = FieldInfo {
+        name: "total_strokes",
+        field_type: FieldDataType::UInt32,
+        def_number: 10,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "strokes",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    subfields.push((5, Sport::Rowing.as_i64(), sub_fld));
+    let sub_fld = FieldInfo {
+        name: "total_strokes",
+        field_type: FieldDataType::UInt32,
+        def_number: 10,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "strokes",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    subfields.push((5, Sport::StandUpPaddleboarding.as_i64(), sub_fld));
     let field = FieldInfo {
         name: "total_cycles",
         field_type: FieldDataType::UInt32,
@@ -3702,6 +3787,7 @@ pub fn session_message() -> MessageInfo {
         components: Vec::new(),
     };
     fields.insert(28, field);
+    // North east corner latitude
     let field = FieldInfo {
         name: "nec_lat",
         field_type: FieldDataType::SInt32,
@@ -3714,6 +3800,7 @@ pub fn session_message() -> MessageInfo {
         components: Vec::new(),
     };
     fields.insert(29, field);
+    // North east corner longitude
     let field = FieldInfo {
         name: "nec_long",
         field_type: FieldDataType::SInt32,
@@ -3726,6 +3813,7 @@ pub fn session_message() -> MessageInfo {
         components: Vec::new(),
     };
     fields.insert(30, field);
+    // South west corner latitude
     let field = FieldInfo {
         name: "swc_lat",
         field_type: FieldDataType::SInt32,
@@ -3738,6 +3826,7 @@ pub fn session_message() -> MessageInfo {
         components: Vec::new(),
     };
     fields.insert(31, field);
+    // South west corner longitude
     let field = FieldInfo {
         name: "swc_long",
         field_type: FieldDataType::SInt32,
@@ -3750,6 +3839,19 @@ pub fn session_message() -> MessageInfo {
         components: Vec::new(),
     };
     fields.insert(32, field);
+    // # of lengths of swim pool
+    let field = FieldInfo {
+        name: "num_lengths",
+        field_type: FieldDataType::UInt16,
+        def_number: 33,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "lengths",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    fields.insert(33, field);
     let field = FieldInfo {
         name: "normalized_power",
         field_type: FieldDataType::UInt16,
@@ -4892,6 +4994,32 @@ pub fn session_message() -> MessageInfo {
         components: Vec::new(),
     };
     fields.insert(187, field);
+    // fractional part of total_ascent
+    let field = FieldInfo {
+        name: "total_fractional_ascent",
+        field_type: FieldDataType::UInt8,
+        def_number: 199,
+        scale: 100.000000,
+        offset: 0.000000,
+        units: "m",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    fields.insert(199, field);
+    // fractional part of total_descent
+    let field = FieldInfo {
+        name: "total_fractional_descent",
+        field_type: FieldDataType::UInt8,
+        def_number: 200,
+        scale: 100.000000,
+        offset: 0.000000,
+        units: "m",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    fields.insert(200, field);
     // Sesson end time.
     let field = FieldInfo {
         name: "timestamp",
@@ -5073,6 +5201,54 @@ pub fn lap_message() -> MessageInfo {
         components: Vec::new(),
     };
     subfields.push((25, Sport::Walking.as_i64(), sub_fld));
+    let sub_fld = FieldInfo {
+        name: "total_strokes",
+        field_type: FieldDataType::UInt32,
+        def_number: 10,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "strokes",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    subfields.push((25, Sport::Cycling.as_i64(), sub_fld));
+    let sub_fld = FieldInfo {
+        name: "total_strokes",
+        field_type: FieldDataType::UInt32,
+        def_number: 10,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "strokes",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    subfields.push((25, Sport::Swimming.as_i64(), sub_fld));
+    let sub_fld = FieldInfo {
+        name: "total_strokes",
+        field_type: FieldDataType::UInt32,
+        def_number: 10,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "strokes",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    subfields.push((25, Sport::Rowing.as_i64(), sub_fld));
+    let sub_fld = FieldInfo {
+        name: "total_strokes",
+        field_type: FieldDataType::UInt32,
+        def_number: 10,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "strokes",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    subfields.push((25, Sport::StandUpPaddleboarding.as_i64(), sub_fld));
     let field = FieldInfo {
         name: "total_cycles",
         field_type: FieldDataType::UInt32,
@@ -6372,6 +6548,32 @@ pub fn lap_message() -> MessageInfo {
         components: Vec::new(),
     };
     fields.insert(154, field);
+    // fractional part of total_ascent
+    let field = FieldInfo {
+        name: "total_fractional_ascent",
+        field_type: FieldDataType::UInt8,
+        def_number: 156,
+        scale: 100.000000,
+        offset: 0.000000,
+        units: "m",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    fields.insert(156, field);
+    // fractional part of total_descent
+    let field = FieldInfo {
+        name: "total_fractional_descent",
+        field_type: FieldDataType::UInt8,
+        def_number: 157,
+        scale: 100.000000,
+        offset: 0.000000,
+        units: "m",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    fields.insert(157, field);
     // Lap end time.
     let field = FieldInfo {
         name: "timestamp",
@@ -7990,6 +8192,38 @@ pub fn event_message() -> MessageInfo {
         components: Vec::new(),
     };
     subfields.push((0, Event::CommTimeout.as_i64(), sub_fld));
+    let mut components = Vec::new();
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 21,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        bits: 8,
+        accumulate: false,
+    };
+    components.push(comp_fld);
+    let comp_fld = ComponentFieldInfo {
+        dest_def_number: 22,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        bits: 8,
+        accumulate: false,
+    };
+    components.push(comp_fld);
+    // The first byte is the radar_threat_level_max, the second byte is the radar_threat_count, and the last 16 bits are reserved for future use and should be set to FFFF.
+    let sub_fld = FieldInfo {
+        name: "radar_threat_alert",
+        field_type: FieldDataType::UInt32,
+        def_number: 3,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: components,
+    };
+    subfields.push((0, Event::RadarThreatAlert.as_i64(), sub_fld));
     let field = FieldInfo {
         name: "data",
         field_type: FieldDataType::UInt32,
@@ -8014,7 +8248,7 @@ pub fn event_message() -> MessageInfo {
         components: Vec::new(),
     };
     fields.insert(4, field);
-    // Do not populate directly.  Autogenerated by decoder for sport_point subfield components
+    // Do not populate directly. Autogenerated by decoder for sport_point subfield components
     let field = FieldInfo {
         name: "score",
         field_type: FieldDataType::UInt16,
@@ -8027,7 +8261,7 @@ pub fn event_message() -> MessageInfo {
         components: Vec::new(),
     };
     fields.insert(7, field);
-    // Do not populate directly.  Autogenerated by decoder for sport_point subfield components
+    // Do not populate directly. Autogenerated by decoder for sport_point subfield components
     let field = FieldInfo {
         name: "opponent_score",
         field_type: FieldDataType::UInt16,
@@ -8040,7 +8274,7 @@ pub fn event_message() -> MessageInfo {
         components: Vec::new(),
     };
     fields.insert(8, field);
-    // Do not populate directly.  Autogenerated by decoder for gear_change subfield components.  Front gear number. 1 is innermost.
+    // Do not populate directly. Autogenerated by decoder for gear_change subfield components.  Front gear number. 1 is innermost.
     let field = FieldInfo {
         name: "front_gear_num",
         field_type: FieldDataType::UInt8z,
@@ -8053,7 +8287,7 @@ pub fn event_message() -> MessageInfo {
         components: Vec::new(),
     };
     fields.insert(9, field);
-    // Do not populate directly.  Autogenerated by decoder for gear_change subfield components.  Number of front teeth.
+    // Do not populate directly. Autogenerated by decoder for gear_change subfield components.  Number of front teeth.
     let field = FieldInfo {
         name: "front_gear",
         field_type: FieldDataType::UInt8z,
@@ -8066,7 +8300,7 @@ pub fn event_message() -> MessageInfo {
         components: Vec::new(),
     };
     fields.insert(10, field);
-    // Do not populate directly.  Autogenerated by decoder for gear_change subfield components.  Rear gear number. 1 is innermost.
+    // Do not populate directly. Autogenerated by decoder for gear_change subfield components.  Rear gear number. 1 is innermost.
     let field = FieldInfo {
         name: "rear_gear_num",
         field_type: FieldDataType::UInt8z,
@@ -8079,7 +8313,7 @@ pub fn event_message() -> MessageInfo {
         components: Vec::new(),
     };
     fields.insert(11, field);
-    // Do not populate directly.  Autogenerated by decoder for gear_change subfield components.  Number of rear teeth.
+    // Do not populate directly. Autogenerated by decoder for gear_change subfield components.  Number of rear teeth.
     let field = FieldInfo {
         name: "rear_gear",
         field_type: FieldDataType::UInt8z,
@@ -8104,6 +8338,32 @@ pub fn event_message() -> MessageInfo {
         components: Vec::new(),
     };
     fields.insert(13, field);
+    // Do not populate directly. Autogenerated by decoder for threat_alert subfield components.
+    let field = FieldInfo {
+        name: "radar_threat_level_max",
+        field_type: FieldDataType::RadarThreatLevelType,
+        def_number: 21,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    fields.insert(21, field);
+    // Do not populate directly. Autogenerated by decoder for threat_alert subfield components.
+    let field = FieldInfo {
+        name: "radar_threat_count",
+        field_type: FieldDataType::UInt8,
+        def_number: 22,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    fields.insert(22, field);
     let field = FieldInfo {
         name: "timestamp",
         field_type: FieldDataType::DateTime,
@@ -8246,6 +8506,18 @@ pub fn device_info_message() -> MessageInfo {
         components: Vec::new(),
     };
     subfields.push((2, Manufacturer::DynastreamOem.as_i64(), sub_fld));
+    let sub_fld = FieldInfo {
+        name: "garmin_product",
+        field_type: FieldDataType::GarminProduct,
+        def_number: 4,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    subfields.push((2, Manufacturer::Tacx.as_i64(), sub_fld));
     let field = FieldInfo {
         name: "product",
         field_type: FieldDataType::UInt16,
@@ -8499,6 +8771,18 @@ pub fn training_file_message() -> MessageInfo {
         components: Vec::new(),
     };
     subfields.push((1, Manufacturer::DynastreamOem.as_i64(), sub_fld));
+    let sub_fld = FieldInfo {
+        name: "garmin_product",
+        field_type: FieldDataType::GarminProduct,
+        def_number: 2,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    subfields.push((1, Manufacturer::Tacx.as_i64(), sub_fld));
     let field = FieldInfo {
         name: "product",
         field_type: FieldDataType::UInt16,
@@ -12217,6 +12501,32 @@ pub fn segment_lap_message() -> MessageInfo {
         components: Vec::new(),
     };
     fields.insert(87, field);
+    // fractional part of total_ascent
+    let field = FieldInfo {
+        name: "total_fractional_ascent",
+        field_type: FieldDataType::UInt8,
+        def_number: 89,
+        scale: 100.000000,
+        offset: 0.000000,
+        units: "m",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    fields.insert(89, field);
+    // fractional part of total_descent
+    let field = FieldInfo {
+        name: "total_fractional_descent",
+        field_type: FieldDataType::UInt8,
+        def_number: 90,
+        scale: 100.000000,
+        offset: 0.000000,
+        units: "m",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    fields.insert(90, field);
     // Lap end time.
     let field = FieldInfo {
         name: "timestamp",
@@ -13362,6 +13672,18 @@ pub fn schedule_message() -> MessageInfo {
         components: Vec::new(),
     };
     subfields.push((0, Manufacturer::DynastreamOem.as_i64(), sub_fld));
+    let sub_fld = FieldInfo {
+        name: "garmin_product",
+        field_type: FieldDataType::GarminProduct,
+        def_number: 1,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    subfields.push((0, Manufacturer::Tacx.as_i64(), sub_fld));
     // Corresponds to file_id of scheduled workout / course.
     let field = FieldInfo {
         name: "product",
