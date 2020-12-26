@@ -1,6 +1,8 @@
 # Change Log
 
 ## HEAD
+* Improve parser error handling so that the user gets the byte position
+where parsing failed intead of the number of bytes remaining
 
 ## v0.3.0
 * Refactor the internal de-serialization and decoding logic.

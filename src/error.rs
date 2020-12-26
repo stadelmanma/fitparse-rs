@@ -55,7 +55,7 @@ impl fmt::Display for ErrorKind {
             }
             ErrorKind::MissingDefinitionMessage(local_number, position) => write!(
                 fmt,
-                "No definition found for local message number {} at position {:x}",
+                "No definition found for local message number {} at position {:#x}",
                 local_number, position
             ),
             ErrorKind::ParseError(pos, ref err) => write!(
