@@ -46,20 +46,6 @@ impl From<io::Error> for Error {
     }
 }
 
-impl From<nom::Err<(&[u8], nom::error::ErrorKind)>> for Error {
-    fn from(err: nom::Err<(&[u8], nom::error::ErrorKind)>) -> Error {
-        match err {
-            nom::Err::Error((remaining, kind)) => {
-                ErrorKind::ParseError(remaining.len(), kind).into()
-            }
-            nom::Err::Failure((remaining, kind)) => {
-                ErrorKind::ParseError(remaining.len(), kind).into()
-            }
-            nom::Err::Incomplete(needed) => ErrorKind::UnexpectedEof(needed).into(),
-        }
-    }
-}
-
 impl fmt::Display for ErrorKind {
     fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
         match *self {
@@ -72,11 +58,11 @@ impl fmt::Display for ErrorKind {
                 "No definition found for local message number {} at position {:x}",
                 local_number, position
             ),
-            ErrorKind::ParseError(rem, ref err) => write!(
+            ErrorKind::ParseError(pos, ref err) => write!(
                 fmt,
-                "parser error: '{}' bytes remaining: {}",
+                "parser error: '{}' at position: {:#x}",
                 err.description(),
-                rem
+                pos
             ),
             ErrorKind::UnexpectedEof(nom::Needed::Size(n)) => {
                 write!(fmt, "parser error: requires {} more bytes", n)

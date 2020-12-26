@@ -24,7 +24,6 @@ pub enum FitObject {
     DefinitionMessage(parser::FitMessageHeader, parser::FitDefinitionMessage),
 }
 
-
 /// Manages the deserialization of a FIT data stream into Rust constructs.
 struct Deserializer {
     /// Track the current set of FIT message definitions, these are what allows the format to
@@ -35,7 +34,7 @@ struct Deserializer {
     position: usize,
     /// Stores the location that the current FIT message ends, for chained FIT messges this will
     /// be updated to reflect the new end position
-    end_of_messages: usize
+    end_of_messages: usize,
 }
 
 impl Deserializer {
@@ -51,7 +50,10 @@ impl Deserializer {
     /// Create an iterable that will process the provided byte slice into a set of
     /// FitObjects.
     pub fn deserialize<'de>(&'de mut self, input: &'de [u8]) -> DeserializerIter<'de> {
-        DeserializerIter { buffer: input, deserializer: self }
+        DeserializerIter {
+            buffer: input,
+            deserializer: self,
+        }
     }
 
     /// Advance the parser state returning one of four possible objects defined within the
@@ -73,8 +75,9 @@ impl Deserializer {
 
     /// Parse the FIT header
     fn deserialize_header<'de>(&mut self, input: &'de [u8]) -> Result<(&'de [u8], FitObject)> {
-        let (input, header) = parser::fit_file_header(input)?;
-        self.end_of_messages = self.position + header.header_size() as usize + header.data_size() as usize;
+        let (input, header) = parser::fit_file_header(input).map_err(|e| self.to_parse_err(e))?;
+        self.end_of_messages =
+            self.position + header.header_size() as usize + header.data_size() as usize;
         self.position += header.header_size() as usize;
 
         Ok((input, FitObject::Header(header)))
@@ -82,7 +85,7 @@ impl Deserializer {
 
     /// Extract a 2 byte CRC
     fn deserialize_crc<'de>(&mut self, input: &'de [u8]) -> Result<(&'de [u8], FitObject)> {
-        let (input, crc) = le_u16(input)?;
+        let (input, crc) = le_u16(input).map_err(|e| self.to_parse_err(e))?;
         self.position += 2;
         Ok((input, FitObject::Crc(crc)))
     }
@@ -91,11 +94,12 @@ impl Deserializer {
     fn deserialize_message<'de>(&mut self, input: &'de [u8]) -> Result<(&'de [u8], FitObject)> {
         // parse a single message of either variety
         let init_len = input.len();
-        let (input, header) = parser::message_header(input)?;
+        let (input, header) = parser::message_header(input).map_err(|e| self.to_parse_err(e))?;
         match header.message_type() {
             parser::FitMessageType::Data => {
                 if let Some(def_mesg) = self.definitions.get(&header.local_message_type()) {
-                    let (input, message) = parser::data_message_fields(input, &def_mesg)?;
+                    let (input, message) = parser::data_message_fields(input, &def_mesg)
+                        .map_err(|e| self.to_parse_err(e))?;
                     self.position += init_len - input.len();
                     Ok((input, FitObject::DataMessage(header, message)))
                 } else {
@@ -107,12 +111,23 @@ impl Deserializer {
                 }
             }
             parser::FitMessageType::Definition => {
-                let (input, message) = parser::definition_message(input, &header)?;
+                let (input, message) =
+                    parser::definition_message(input, &header).map_err(|e| self.to_parse_err(e))?;
                 self.definitions
                     .insert(header.local_message_type(), message.clone());
                 self.position += init_len - input.len();
                 Ok((input, FitObject::DefinitionMessage(header, message)))
             }
+        }
+    }
+
+    /// Inject the byte stream position into the Error when converting a nom parsing error. This
+    /// is not easy to get using the vanilla From trait since we need outside information.
+    fn to_parse_err(&self, err: nom::Err<(&[u8], nom::error::ErrorKind)>) -> crate::Error {
+        match err {
+            nom::Err::Error((_, kind)) => ErrorKind::ParseError(self.position, kind).into(),
+            nom::Err::Failure((_, kind)) => ErrorKind::ParseError(self.position, kind).into(),
+            nom::Err::Incomplete(needed) => ErrorKind::UnexpectedEof(needed).into(),
         }
     }
 }
@@ -132,13 +147,13 @@ impl<'de> Iterator for DeserializerIter<'de> {
         // consume data until buffer is empty or the parsing errors, as far as
         // I know a valid FIT file should have no trailing bytes.
         if self.buffer.is_empty() {
-            return None
+            return None;
         }
         match self.deserializer.deserialize_any(self.buffer) {
             Ok((input, obj)) => {
                 self.buffer = input;
                 Some(Ok(obj))
-            },
+            }
             Err(e) => {
                 // this works now but I need to return the remaining data
                 // or position that the error occured since otherwise I don't know where the problem
