@@ -155,11 +155,6 @@ impl<'de> Iterator for DeserializerIter<'de> {
                 Some(Ok(obj))
             }
             Err(e) => {
-                // this works now but I need to return the remaining data
-                // or position that the error occured since otherwise I don't know where the problem
-                // happened and I can't recover from it. This is an issue that's existed since the
-                // initial creation of the parser. I could also copy the remaining bytes and return
-                // them with the error. Not as "efficient" but the parsing as already failed so...
                 Some(Err(e))
             }
         }
