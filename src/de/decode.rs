@@ -1,6 +1,5 @@
 //! Helper functions and structures needed to decode a FIT file using the defined profile.
 use super::parser::{FitDataMessage, FitMessageHeader};
-use super::FitObject;
 use crate::error::{ErrorKind, Result};
 use crate::profile::{
     get_field_variant_as_string, ComponentFieldInfo, FieldDataType, FieldInfo, MesgNum, MessageInfo,
@@ -97,19 +96,6 @@ impl Decoder {
     pub fn reset(&mut self) {
         self.base_timestamp = TimestampField::Utc(0);
         self.accumulate_fields = HashMap::new();
-    }
-
-    /// Decode a stream of FitObjects returning only the data records
-    pub fn decode_messages<T: IntoIterator<Item=Result<FitObject>>>(&mut self, fit_objs: T) -> Result<Vec<FitDataRecord>> {
-        fit_objs.into_iter().filter_map(|o| {
-            match o {
-                Ok(FitObject::Crc(..)) => None,
-                Ok(FitObject::Header(..)) => {self.reset(); None}
-                Ok(FitObject::DataMessage(hdr, msg)) => Some(self.decode_message(hdr, msg)),
-                Ok(FitObject::DefinitionMessage(..)) => None,
-                Err(e) => Some(Err(e))
-            }
-        }).collect()
     }
 
     /// Decode a raw FIT data message by applying the defined profile

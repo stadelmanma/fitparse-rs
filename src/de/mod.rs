@@ -161,11 +161,25 @@ impl<'de> Iterator for DeserializerIter<'de> {
     }
 }
 
+
+/// Decode a stream of FitObjects returning only the data records
+fn decode_messages<T: IntoIterator<Item=Result<FitObject>>>(decoder: &mut Decoder, fit_objs: T) -> Result<Vec<FitDataRecord>> {
+    fit_objs.into_iter().filter_map(|o| {
+        match o {
+            Ok(FitObject::Crc(..)) => None,
+            Ok(FitObject::Header(..)) => {decoder.reset(); None}
+            Ok(FitObject::DataMessage(hdr, msg)) => Some(decoder.decode_message(hdr, msg)),
+            Ok(FitObject::DefinitionMessage(..)) => None,
+            Err(e) => Some(Err(e))
+        }
+    }).collect()  // we have to return a vec because of the closure using a decoder ref
+}
+
 /// Deserialize a FIT file stored as an array of bytes.
 pub fn from_bytes(buffer: &[u8]) -> Result<Vec<FitDataRecord>> {
     let mut deserializer = Deserializer::new();
     let mut decoder = Decoder::new();
-    decoder.decode_messages(deserializer.deserialize(buffer))
+    decode_messages(&mut decoder, deserializer.deserialize(buffer))
 }
 
 /// Deserialize a FIT file stored in a source that implements io::Read.
