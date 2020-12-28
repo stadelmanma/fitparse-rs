@@ -1,5 +1,5 @@
 //! Helper functions and structures needed to decode a FIT file using the defined profile.
-use super::parser::{FitDataMessage, FitMessageHeader};
+use super::parser::FitDataMessage;
 use crate::error::{ErrorKind, Result};
 use crate::profile::{
     get_field_variant_as_string, ComponentFieldInfo, FieldDataType, FieldInfo, MesgNum, MessageInfo,
@@ -101,7 +101,6 @@ impl Decoder {
     /// Decode a raw FIT data message by applying the defined profile
     pub fn decode_message(
         &mut self,
-        header: FitMessageHeader,
         message: FitDataMessage,
     ) -> Result<FitDataRecord> {
         let mesg_num = MesgNum::from(message.global_message_number());
@@ -130,7 +129,7 @@ impl Decoder {
         }
 
         // Add a timestamp field if we have a time offset
-        if let Some(time_offset) = header.time_offset() {
+        if let Some(time_offset) = message.time_offset() {
             record.push(FitDataField::new(
                 String::from("timestamp"),
                 253,
