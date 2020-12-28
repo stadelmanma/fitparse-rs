@@ -90,7 +90,7 @@ impl FitFileHeader {
 
 /// Type of FIT message being read as specified by the header byte
 #[derive(Clone, Copy, Debug, PartialEq)]
-pub enum FitMessageType {
+enum FitMessageType {
     Data,
     Definition,
 }
@@ -100,9 +100,9 @@ pub enum FitMessageType {
 /// The value of the bits inside is different for the two message header types but for simplicity
 /// we treat them the same here and make the time_offset optionnal.
 #[derive(Clone, Debug)]
-pub struct FitMessageHeader {
+struct FitMessageHeader {
     contains_developer_data: bool,
-    local_message_type: u8,
+    local_message_number: u8,
     message_type: FitMessageType,
     time_offset: Option<u8>,
 }
@@ -112,8 +112,8 @@ impl FitMessageHeader {
         self.contains_developer_data
     }
 
-    pub fn local_message_type(&self) -> u8 {
-        self.local_message_type
+    pub fn local_message_number(&self) -> u8 {
+        self.local_message_number
     }
 
     pub fn message_type(&self) -> FitMessageType {
@@ -125,6 +125,15 @@ impl FitMessageHeader {
     }
 }
 
+/// Enum used to return either a data message or a new definition message when parsing the body of
+/// the FIT file.
+pub enum FitMessage {
+    Data(FitDataMessage),
+    Definition(FitDefinitionMessage),
+    /// Used to pass an error up the chain so we can emit a proper error of our own type
+    MissingDefinitionMessage(u8),
+}
+
 /// The definition message is used to create an association between the local message type
 /// contained in the record header, and a Global Message Number (mesg_num) that relates to the
 /// global FIT message. Although 1 byte is available for the number of fields and 1 byte is
@@ -132,14 +141,33 @@ impl FitMessageHeader {
 #[derive(Clone, Debug)]
 pub struct FitDefinitionMessage {
     byte_order: Endianness,
+    local_message_number: u8,
     global_message_number: u16,
-    number_of_fields: u8,
     field_definitions: Vec<FieldDefinition>,
-    number_of_developer_fields: u8,
     developer_field_definitions: Vec<DeveloperFieldDefinition>,
 }
 
 impl FitDefinitionMessage {
+    pub fn byte_order(&self) -> Endianness {
+        self.byte_order
+    }
+
+    pub fn local_message_number(&self) -> u8 {
+        self.local_message_number
+    }
+
+    pub fn global_message_number(&self) -> u16 {
+        self.global_message_number
+    }
+
+    pub fn field_definitions(&self) -> &[FieldDefinition] {
+        &self.field_definitions
+    }
+
+    pub fn developer_field_definitions(&self) -> &[DeveloperFieldDefinition] {
+        &self.developer_field_definitions
+    }
+
     /// Calculate and return the size of the data message described
     pub fn data_message_size(&self) -> u8 {
         // start accumlator at one to account for the message header
@@ -181,6 +209,7 @@ pub struct DeveloperFieldDefinition {
 #[derive(Clone, Debug)]
 pub struct FitDataMessage {
     global_message_number: u16,
+    time_offset: Option<u8>,
     fields: HashMap<u8, Option<Value>>,
     developer_fields: Vec<Option<Value>>,
 }
@@ -188,6 +217,10 @@ pub struct FitDataMessage {
 impl FitDataMessage {
     pub fn global_message_number(&self) -> u16 {
         self.global_message_number
+    }
+
+    pub fn time_offset(&self) -> Option<u8> {
+        self.time_offset
     }
 
     pub fn fields(&self) -> &HashMap<u8, Option<Value>> {
@@ -203,7 +236,7 @@ impl FitDataMessage {
 /// Base types defined by the FIT protocol. The "z" variants have a different invalid value
 /// than the versions without the suffix.
 #[derive(Clone, Copy, Debug)]
-pub enum BaseType {
+enum BaseType {
     Enum = 0x00,
     SInt8 = 0x01,
     UInt8 = 0x02,
@@ -295,29 +328,64 @@ fn split_decimal_to_float<T: Display>(left: T, right: T) -> f32 {
     format!("{}.{}", left, right).parse().unwrap()
 }
 
+/// Parse a FIT data or definition message
+pub fn fit_message<'a>(
+    input: &'a [u8],
+    definitions: &HashMap<u8, FitDefinitionMessage>,
+) -> IResult<&'a [u8], FitMessage> {
+    // parse a single message of either variety
+    let (input, header) = message_header(input)?;
+    match header.message_type() {
+        FitMessageType::Data => {
+            if let Some(def_mesg) = definitions.get(&header.local_message_number()) {
+                let (input, (fields, developer_fields)) = data_message_fields(input, &def_mesg)?;
+                Ok((
+                    input,
+                    FitMessage::Data(FitDataMessage {
+                        fields,
+                        developer_fields,
+                        global_message_number: def_mesg.global_message_number,
+                        time_offset: header.time_offset(),
+                    }),
+                ))
+            } else {
+                // this is technically is an Error but nom can't represent it well
+                Ok((
+                    input,
+                    FitMessage::MissingDefinitionMessage(header.local_message_number()),
+                ))
+            }
+        }
+        FitMessageType::Definition => {
+            let (input, message) = definition_message(input, &header)?;
+            Ok((input, FitMessage::Definition(message)))
+        }
+    }
+}
+
 /// Parse the header of a single FIT message
-pub fn message_header(input: &[u8]) -> IResult<&[u8], FitMessageHeader> {
+fn message_header(input: &[u8]) -> IResult<&[u8], FitMessageHeader> {
     let (input, msg_header_byte) = le_u8(input)?;
     let contains_developer_data: bool;
-    let local_message_type: u8;
+    let local_message_number: u8;
     let message_type: FitMessageType;
     let time_offset: Option<u8>;
 
     if msg_header_byte & 0x80 == 0x80 {
         // compressed timestamp header
         contains_developer_data = false;
-        local_message_type = (msg_header_byte >> 5) & 0x3; // bits 5-6
+        local_message_number = (msg_header_byte >> 5) & 0x3; // bits 5-6
         message_type = FitMessageType::Data;
         time_offset = Some(msg_header_byte & 0x1F);
     } else if (msg_header_byte & 0x40) == 0x40 {
         contains_developer_data = msg_header_byte & 0x20 == 0x20;
-        local_message_type = msg_header_byte & 0xF;
+        local_message_number = msg_header_byte & 0xF;
         message_type = FitMessageType::Definition;
         time_offset = None;
     } else {
         // developer data bit is reserved for Data messages and should be 0, so we don't check it
         contains_developer_data = false;
-        local_message_type = msg_header_byte & 0xF;
+        local_message_number = msg_header_byte & 0xF;
         message_type = FitMessageType::Data;
         time_offset = None;
     }
@@ -326,7 +394,7 @@ pub fn message_header(input: &[u8]) -> IResult<&[u8], FitMessageHeader> {
         input,
         FitMessageHeader {
             contains_developer_data,
-            local_message_type,
+            local_message_number,
             message_type,
             time_offset,
         },
@@ -334,7 +402,7 @@ pub fn message_header(input: &[u8]) -> IResult<&[u8], FitMessageHeader> {
 }
 
 /// parse a definition message
-pub fn definition_message<'a>(
+fn definition_message<'a>(
     input: &'a [u8],
     header: &FitMessageHeader,
 ) -> IResult<&'a [u8], FitDefinitionMessage> {
@@ -348,23 +416,21 @@ pub fn definition_message<'a>(
     let (input, global_message_number) = u16!(input, byte_order)?;
     let (input, number_of_fields) = le_u8(input)?;
     let (input, field_definitions) = count(field_definition, number_of_fields as usize)(input)?;
-    let (input, number_of_developer_fields, developer_field_definitions) =
-        if header.contains_developer_data() {
-            let (input, nflds) = le_u8(input)?;
-            let (input, dev_fld_defs) = count(developer_field_definition, nflds as usize)(input)?;
-            (input, nflds, dev_fld_defs)
-        } else {
-            (input, 0, Vec::new())
-        };
+    let (input, developer_field_definitions) = if header.contains_developer_data() {
+        let (input, nflds) = le_u8(input)?;
+        let (input, dev_fld_defs) = count(developer_field_definition, nflds as usize)(input)?;
+        (input, dev_fld_defs)
+    } else {
+        (input, Vec::new())
+    };
 
     Ok((
         input,
         FitDefinitionMessage {
             byte_order,
+            local_message_number: header.local_message_number(),
             global_message_number,
-            number_of_fields,
             field_definitions,
-            number_of_developer_fields,
             developer_field_definitions,
         },
     ))
@@ -401,10 +467,10 @@ fn developer_field_definition(input: &[u8]) -> IResult<&[u8], DeveloperFieldDefi
 }
 
 /// Parse a data message
-pub fn data_message_fields<'a>(
+fn data_message_fields<'a>(
     input: &'a [u8],
     def_mesg: &FitDefinitionMessage,
-) -> IResult<&'a [u8], FitDataMessage> {
+) -> IResult<&'a [u8], (HashMap<u8, Option<Value>>, Vec<Option<Value>>)> {
     match data_message_fields_impl(input, def_mesg) {
         Ok(r) => Ok(r),
         Err(Err::Incomplete(_)) => {
@@ -422,7 +488,7 @@ pub fn data_message_fields<'a>(
 fn data_message_fields_impl<'a>(
     input: &'a [u8],
     def_mesg: &FitDefinitionMessage,
-) -> IResult<&'a [u8], FitDataMessage> {
+) -> IResult<&'a [u8], (HashMap<u8, Option<Value>>, Vec<Option<Value>>)> {
     let mut fields = HashMap::new();
     let mut input = input;
     for field_def in &def_mesg.field_definitions {
@@ -449,14 +515,7 @@ fn data_message_fields_impl<'a>(
         input = i;
     }
 
-    Ok((
-        input,
-        FitDataMessage {
-            global_message_number: def_mesg.global_message_number,
-            fields,
-            developer_fields,
-        },
-    ))
+    Ok((input, (fields, developer_fields)))
 }
 
 macro_rules! parse_f32 ( ($i:expr, $e:expr) => ( {if nom::number::Endianness::Big == $e { nom::number::complete::be_f32($i) } else { nom::number::complete::le_f32($i) } } ););
@@ -603,7 +662,7 @@ mod tests {
         let (_, hdr) = message_header(sl).unwrap();
 
         assert_eq!(hdr.contains_developer_data, false);
-        assert_eq!(hdr.local_message_type, 0);
+        assert_eq!(hdr.local_message_number, 0);
         assert_eq!(hdr.message_type, FitMessageType::Definition);
         assert_eq!(hdr.time_offset, None);
     }
