@@ -19,9 +19,9 @@ pub enum FitObject {
     /// Header containing FIT file info
     Header(parser::FitFileHeader),
     /// A raw data message
-    DataMessage(parser::FitMessageHeader, parser::FitDataMessage),
+    DataMessage(parser::FitDataMessage),
     /// A definition message used to define upcoming data messages
-    DefinitionMessage(parser::FitMessageHeader, parser::FitDefinitionMessage),
+    DefinitionMessage(parser::FitDefinitionMessage),
 }
 
 /// Manages the deserialization of a FIT data stream into Rust constructs.
@@ -38,7 +38,7 @@ struct Deserializer {
 }
 
 impl Deserializer {
-    /// Create the deserializer from something "readable"
+    /// Create the deserializer with an empty state
     pub fn new() -> Self {
         Deserializer {
             definitions: HashMap::new(),
@@ -47,8 +47,13 @@ impl Deserializer {
         }
     }
 
-    /// Create an iterable that will process the provided byte slice into a set of
-    /// FitObjects.
+    /// Clear the definition messages used to decode data messages. This can be called between
+    /// distinct FIT files but if they are properly formed it should not be necessary since new
+    /// definitions will replace the old in the mapping.
+    pub fn clear_definitions(&mut self) {
+        self.definitions = HashMap::new();
+    }
+
     pub fn deserialize<'de>(&'de mut self, input: &'de [u8]) -> DeserializerIter<'de> {
         DeserializerIter {
             buffer: input,
@@ -58,7 +63,7 @@ impl Deserializer {
 
     /// Advance the parser state returning one of four possible objects defined within the
     /// FIT file.
-    pub fn deserialize_any<'de>(&mut self, input: &'de [u8]) -> Result<(&'de [u8], FitObject)> {
+    pub fn deserialize_next<'de>(&mut self, input: &'de [u8]) -> Result<(&'de [u8], FitObject)> {
         if self.position > 0 && self.position == self.end_of_messages {
             // extract the CRC, eventually we'd want to validate it
             return self.deserialize_crc(input);
@@ -94,29 +99,22 @@ impl Deserializer {
     fn deserialize_message<'de>(&mut self, input: &'de [u8]) -> Result<(&'de [u8], FitObject)> {
         // parse a single message of either variety
         let init_len = input.len();
-        let (input, header) = parser::message_header(input).map_err(|e| self.to_parse_err(e))?;
-        match header.message_type() {
-            parser::FitMessageType::Data => {
-                if let Some(def_mesg) = self.definitions.get(&header.local_message_type()) {
-                    let (input, message) = parser::data_message_fields(input, &def_mesg)
-                        .map_err(|e| self.to_parse_err(e))?;
-                    self.position += init_len - input.len();
-                    Ok((input, FitObject::DataMessage(header, message)))
-                } else {
-                    Err(ErrorKind::MissingDefinitionMessage(
-                        header.local_message_type(),
-                        self.position,
-                    )
-                    .into())
-                }
-            }
-            parser::FitMessageType::Definition => {
-                let (input, message) =
-                    parser::definition_message(input, &header).map_err(|e| self.to_parse_err(e))?;
-                self.definitions
-                    .insert(header.local_message_type(), message.clone());
+        let (input, message) = parser::fit_message(input, &self.definitions).map_err(|e| self.to_parse_err(e))?;
+        match message {
+            parser::FitMessage::Data(message) => {
                 self.position += init_len - input.len();
-                Ok((input, FitObject::DefinitionMessage(header, message)))
+                Ok((input, FitObject::DataMessage(message)))
+            }
+            parser::FitMessage::Definition(message) => {
+                // I could use an Rc here to avoid cloning the definition message directly.
+                // I don't think I need an Arc since multithreaded parsing of a single FIT file
+                // doesn't make a ton of sense.
+                self.definitions.insert(message.local_message_number(), message.clone());
+                self.position += init_len - input.len();
+                Ok((input, FitObject::DefinitionMessage(message)))
+            }
+            parser::FitMessage::MissingDefinitionMessage(n) => {
+                Err(ErrorKind::MissingDefinitionMessage(n, self.position).into())
             }
         }
     }
