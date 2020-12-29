@@ -11,6 +11,7 @@ use nom::{Err, IResult, Needed};
 use std::collections::HashMap;
 use std::convert::From;
 use std::fmt::Display;
+use std::rc::Rc;
 
 /// Define an is_valid function needed for parsing here, this function is not needed for normal use
 impl Value {
@@ -331,7 +332,7 @@ fn split_decimal_to_float<T: Display>(left: T, right: T) -> f32 {
 /// Parse a FIT data or definition message
 pub fn fit_message<'a>(
     input: &'a [u8],
-    definitions: &HashMap<u8, FitDefinitionMessage>,
+    definitions: &HashMap<u8, Rc<FitDefinitionMessage>>,
 ) -> IResult<&'a [u8], FitMessage> {
     // parse a single message of either variety
     let (input, header) = message_header(input)?;

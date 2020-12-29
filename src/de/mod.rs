@@ -5,6 +5,7 @@ use crate::FitDataRecord;
 use nom::number::complete::le_u16;
 use std::collections::HashMap;
 use std::io::Read;
+use std::rc::Rc;
 
 mod decode;
 use decode::Decoder;
@@ -21,14 +22,14 @@ pub enum FitObject {
     /// A raw data message
     DataMessage(FitDataMessage),
     /// A definition message used to define upcoming data messages
-    DefinitionMessage(FitDefinitionMessage),
+    DefinitionMessage(Rc<FitDefinitionMessage>),
 }
 
 /// Manages the deserialization of a FIT data stream into Rust constructs.
 struct Deserializer {
     /// Track the current set of FIT message definitions, these are what allows the format to
     /// be self describing.
-    definitions: HashMap<u8, parser::FitDefinitionMessage>,
+    definitions: HashMap<u8, Rc<parser::FitDefinitionMessage>>,
     /// Stores the current position in the byte stream, this is needed for error generation and
     /// checking the state of the parser
     position: usize,
@@ -100,13 +101,11 @@ impl Deserializer {
                 Ok((input, FitObject::DataMessage(message)))
             }
             parser::FitMessage::Definition(message) => {
-                // I could use an Rc here to avoid cloning the definition message directly.
-                // I don't think I need an Arc since multithreaded parsing of a single FIT file
-                // doesn't make a ton of sense.
-                self.definitions
-                    .insert(message.local_message_number(), message.clone());
+                // Use an Rc to avoid an expensive clone of the DefinitionMessage itself
+                let msg_rc = Rc::new(message);
+                self.definitions.insert(msg_rc.local_message_number(), Rc::clone(&msg_rc));
                 self.position += init_len - input.len();
-                Ok((input, FitObject::DefinitionMessage(message)))
+                Ok((input, FitObject::DefinitionMessage(msg_rc)))
             }
             parser::FitMessage::MissingDefinitionMessage(n) => {
                 Err(ErrorKind::MissingDefinitionMessage(n, self.position).into())
