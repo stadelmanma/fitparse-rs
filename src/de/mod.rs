@@ -2,7 +2,6 @@
 //! applying the packaged FIT profile to the data.
 use crate::error::{ErrorKind, Result};
 use crate::FitDataRecord;
-use core::iter::Iterator;
 use nom::number::complete::le_u16;
 use std::collections::HashMap;
 use std::io::Read;
@@ -10,6 +9,7 @@ use std::io::Read;
 mod decode;
 use decode::Decoder;
 mod parser;
+pub use parser::{FitDataMessage, FitDefinitionMessage, FitFileHeader};
 
 /// Stores a FIT file object (header, message or CRC)
 #[derive(Clone, Debug)]
@@ -17,11 +17,11 @@ pub enum FitObject {
     /// Checksum at end of data section
     Crc(u16),
     /// Header containing FIT file info
-    Header(parser::FitFileHeader),
+    Header(FitFileHeader),
     /// A raw data message
-    DataMessage(parser::FitDataMessage),
+    DataMessage(FitDataMessage),
     /// A definition message used to define upcoming data messages
-    DefinitionMessage(parser::FitDefinitionMessage),
+    DefinitionMessage(FitDefinitionMessage),
 }
 
 /// Manages the deserialization of a FIT data stream into Rust constructs.
@@ -52,13 +52,6 @@ impl Deserializer {
     /// definitions will replace the old in the mapping.
     pub fn clear_definitions(&mut self) {
         self.definitions = HashMap::new();
-    }
-
-    pub fn deserialize<'de>(&'de mut self, input: &'de [u8]) -> DeserializerIter<'de> {
-        DeserializerIter {
-            buffer: input,
-            deserializer: self,
-        }
     }
 
     /// Advance the parser state returning one of four possible objects defined within the
@@ -99,7 +92,8 @@ impl Deserializer {
     fn deserialize_message<'de>(&mut self, input: &'de [u8]) -> Result<(&'de [u8], FitObject)> {
         // parse a single message of either variety
         let init_len = input.len();
-        let (input, message) = parser::fit_message(input, &self.definitions).map_err(|e| self.to_parse_err(e))?;
+        let (input, message) =
+            parser::fit_message(input, &self.definitions).map_err(|e| self.to_parse_err(e))?;
         match message {
             parser::FitMessage::Data(message) => {
                 self.position += init_len - input.len();
@@ -109,7 +103,8 @@ impl Deserializer {
                 // I could use an Rc here to avoid cloning the definition message directly.
                 // I don't think I need an Arc since multithreaded parsing of a single FIT file
                 // doesn't make a ton of sense.
-                self.definitions.insert(message.local_message_number(), message.clone());
+                self.definitions
+                    .insert(message.local_message_number(), message.clone());
                 self.position += init_len - input.len();
                 Ok((input, FitObject::DefinitionMessage(message)))
             }
@@ -130,54 +125,58 @@ impl Deserializer {
     }
 }
 
-/// Iterable version that processes a buffer.
-struct DeserializerIter<'de> {
-    /// Fit data buffer
-    buffer: &'de [u8],
-    /// Deserializer reference to track state
-    deserializer: &'de mut Deserializer,
+/// Deserialize and decode a stream of bytes
+pub struct FitStreamProcessor {
+    decoder: Decoder,
+    deserializer: Deserializer,
 }
 
-impl<'de> Iterator for DeserializerIter<'de> {
-    type Item = Result<FitObject>;
+impl FitStreamProcessor {
+    /// Create the processor
+    pub fn new() -> Self {
+        FitStreamProcessor {
+            decoder: Decoder::new(),
+            deserializer: Deserializer::new(),
+        }
+    }
 
-    fn next(&mut self) -> Option<Result<FitObject>> {
-        // consume data until buffer is empty or the parsing errors, as far as
-        // I know a valid FIT file should have no trailing bytes.
-        if self.buffer.is_empty() {
-            return None;
-        }
-        match self.deserializer.deserialize_any(self.buffer) {
-            Ok((input, obj)) => {
-                self.buffer = input;
-                Some(Ok(obj))
-            }
-            Err(e) => {
-                Some(Err(e))
-            }
-        }
+    /// Reset the decoder state and definition messages in use, this should be called at the end of
+    /// each FIT file to ensure the accumlator fields in the decoder will produce the right values
+    /// per file.
+    pub fn reset(&mut self) {
+        self.decoder.reset();
+        self.deserializer.clear_definitions();
+    }
+
+    /// Create an iterable that will process the provided byte slice into a set of
+    /// FitObjects.
+    fn deserialize_next<'de>(&mut self, input: &'de [u8]) -> Result<(&'de [u8], FitObject)> {
+        self.deserializer.deserialize_next(input)
+    }
+
+    /// Decode a FIT data message into a FIT data record using the defined FIT profile.
+    fn decode_message(&mut self, msg: FitDataMessage) -> Result<FitDataRecord> {
+        self.decoder.decode_message(msg)
     }
 }
 
+/// Deserialize a FIT file stored as an array of bytes and return the decoded data messages.
+pub fn from_bytes(mut buffer: &[u8]) -> Result<Vec<FitDataRecord>> {
+    let mut processor = FitStreamProcessor::new();
+    let mut records = Vec::new();
 
-/// Decode a stream of FitObjects returning only the data records
-fn decode_messages<T: IntoIterator<Item=Result<FitObject>>>(decoder: &mut Decoder, fit_objs: T) -> Result<Vec<FitDataRecord>> {
-    fit_objs.into_iter().filter_map(|o| {
-        match o {
-            Ok(FitObject::Crc(..)) => None,
-            Ok(FitObject::Header(..)) => {decoder.reset(); None}
-            Ok(FitObject::DataMessage(hdr, msg)) => Some(decoder.decode_message(hdr, msg)),
-            Ok(FitObject::DefinitionMessage(..)) => None,
-            Err(e) => Some(Err(e))
+    while !buffer.is_empty() {
+        let (buf, obj) = processor.deserialize_next(buffer)?;
+        match obj {
+            FitObject::Crc(..) => {}
+            FitObject::Header(..) => processor.reset(),
+            FitObject::DataMessage(msg) => records.push(processor.decode_message(msg)?),
+            FitObject::DefinitionMessage(..) => {}
         }
-    }).collect()  // we have to return a vec because of the closure using a decoder ref
-}
+        buffer = buf;
+    }
 
-/// Deserialize a FIT file stored as an array of bytes.
-pub fn from_bytes(buffer: &[u8]) -> Result<Vec<FitDataRecord>> {
-    let mut deserializer = Deserializer::new();
-    let mut decoder = Decoder::new();
-    decode_messages(&mut decoder, deserializer.deserialize(buffer))
+    Ok(records)
 }
 
 /// Deserialize a FIT file stored in a source that implements io::Read.
