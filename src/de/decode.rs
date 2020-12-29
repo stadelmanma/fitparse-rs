@@ -99,10 +99,7 @@ impl Decoder {
     }
 
     /// Decode a raw FIT data message by applying the defined profile
-    pub fn decode_message(
-        &mut self,
-        message: FitDataMessage,
-    ) -> Result<FitDataRecord> {
+    pub fn decode_message(&mut self, message: FitDataMessage) -> Result<FitDataRecord> {
         let mesg_num = MesgNum::from(message.global_message_number());
         let mesg_info = mesg_num.message_info();
         let mut record = FitDataRecord::new(mesg_num);
