@@ -29,7 +29,7 @@ use serde::Serialize;
 use std::convert;
 use std::fmt;
 
-mod de;
+pub mod de;
 mod error;
 pub mod profile;
 

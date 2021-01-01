@@ -149,12 +149,12 @@ impl FitStreamProcessor {
 
     /// Create an iterable that will process the provided byte slice into a set of
     /// FitObjects.
-    fn deserialize_next<'de>(&mut self, input: &'de [u8]) -> Result<(&'de [u8], FitObject)> {
+    pub fn deserialize_next<'de>(&mut self, input: &'de [u8]) -> Result<(&'de [u8], FitObject)> {
         self.deserializer.deserialize_next(input)
     }
 
     /// Decode a FIT data message into a FIT data record using the defined FIT profile.
-    fn decode_message(&mut self, msg: FitDataMessage) -> Result<FitDataRecord> {
+    pub fn decode_message(&mut self, msg: FitDataMessage) -> Result<FitDataRecord> {
         self.decoder.decode_message(msg)
     }
 }
