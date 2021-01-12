@@ -13,7 +13,7 @@ categories = ["encoding", "parser-implementations"]
 
 [dependencies]
 chrono = { version = "0.4", features = ["serde"] }
-nom = "5"
+nom = "6"
 serde = { version = "1.0", features = ["derive"] }
 
 [build-dependencies]

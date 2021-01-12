@@ -289,7 +289,7 @@ pub fn fit_file_header(input: &[u8]) -> IResult<&[u8], FitFileHeader> {
         Ok(r) => Ok(r),
         Err(Err::Incomplete(_)) => {
             // output a correct "needed" value, assume 14 bytes as default since that's preferred
-            Err(Err::Incomplete(Needed::Size(
+            Err(Err::Incomplete(Needed::new(
                 input.first().map_or(14, |v| *v as usize - input.len()),
             )))
         }
@@ -472,7 +472,7 @@ fn data_message_fields<'a>(
         Ok(r) => Ok(r),
         Err(Err::Incomplete(_)) => {
             // output a correct "needed" value, subtract one because we've already parsed the header
-            Err(Err::Incomplete(Needed::Size(
+            Err(Err::Incomplete(Needed::new(
                 def_mesg.data_message_size() as usize - input.len() - 1,
             )))
         }
