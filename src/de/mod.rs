@@ -123,10 +123,10 @@ impl Deserializer {
 
     /// Inject the byte stream position into the Error when converting a nom parsing error. This
     /// is not easy to get using the vanilla From trait since we need outside information.
-    fn to_parse_err(&self, err: nom::Err<(&[u8], nom::error::ErrorKind)>) -> crate::Error {
+    fn to_parse_err(&self, err: nom::Err<nom::error::Error<&[u8]>>) -> crate::Error {
         match err {
-            nom::Err::Error((_, kind)) => ErrorKind::ParseError(self.position, kind).into(),
-            nom::Err::Failure((_, kind)) => ErrorKind::ParseError(self.position, kind).into(),
+            nom::Err::Error(inner_err) => ErrorKind::ParseError(self.position, inner_err.code).into(),
+            nom::Err::Failure(inner_err) => ErrorKind::ParseError(self.position, inner_err.code).into(),
             nom::Err::Incomplete(needed) => ErrorKind::UnexpectedEof(needed).into(),
         }
     }
