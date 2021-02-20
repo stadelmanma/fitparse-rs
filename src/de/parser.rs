@@ -108,23 +108,6 @@ struct FitMessageHeader {
     time_offset: Option<u8>,
 }
 
-impl FitMessageHeader {
-    pub fn contains_developer_data(&self) -> bool {
-        self.contains_developer_data
-    }
-
-    pub fn local_message_number(&self) -> u8 {
-        self.local_message_number
-    }
-
-    pub fn message_type(&self) -> FitMessageType {
-        self.message_type
-    }
-
-    pub fn time_offset(&self) -> Option<u8> {
-        self.time_offset
-    }
-}
 
 /// Enum used to return either a data message or a new definition message when parsing the body of
 /// the FIT file.
@@ -336,9 +319,9 @@ pub fn fit_message<'a>(
 ) -> IResult<&'a [u8], FitMessage> {
     // parse a single message of either variety
     let (input, header) = message_header(input)?;
-    match header.message_type() {
+    match header.message_type {
         FitMessageType::Data => {
-            if let Some(def_mesg) = definitions.get(&header.local_message_number()) {
+            if let Some(def_mesg) = definitions.get(&header.local_message_number) {
                 let (input, (fields, developer_fields)) = data_message_fields(input, &def_mesg)?;
                 Ok((
                     input,
@@ -346,14 +329,14 @@ pub fn fit_message<'a>(
                         fields,
                         developer_fields,
                         global_message_number: def_mesg.global_message_number,
-                        time_offset: header.time_offset(),
+                        time_offset: header.time_offset,
                     }),
                 ))
             } else {
                 // this is technically is an Error but nom can't represent it well
                 Ok((
                     input,
-                    FitMessage::MissingDefinitionMessage(header.local_message_number()),
+                    FitMessage::MissingDefinitionMessage(header.local_message_number),
                 ))
             }
         }
@@ -417,7 +400,7 @@ fn definition_message<'a>(
     let (input, global_message_number) = u16!(input, byte_order)?;
     let (input, number_of_fields) = le_u8(input)?;
     let (input, field_definitions) = count(field_definition, number_of_fields as usize)(input)?;
-    let (input, developer_field_definitions) = if header.contains_developer_data() {
+    let (input, developer_field_definitions) = if header.contains_developer_data {
         let (input, nflds) = le_u8(input)?;
         let (input, dev_fld_defs) = count(developer_field_definition, nflds as usize)(input)?;
         (input, dev_fld_defs)
@@ -429,7 +412,7 @@ fn definition_message<'a>(
         input,
         FitDefinitionMessage {
             byte_order,
-            local_message_number: header.local_message_number(),
+            local_message_number: header.local_message_number,
             global_message_number,
             field_definitions,
             developer_field_definitions,
