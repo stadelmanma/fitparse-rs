@@ -108,7 +108,6 @@ struct FitMessageHeader {
     time_offset: Option<u8>,
 }
 
-
 /// Enum used to return either a data message or a new definition message when parsing the body of
 /// the FIT file.
 pub enum FitMessage {
@@ -132,22 +131,27 @@ pub struct FitDefinitionMessage {
 }
 
 impl FitDefinitionMessage {
+    /// The byte order of the data fields in the associated FIT data message
     pub fn byte_order(&self) -> Endianness {
         self.byte_order
     }
 
+    /// Local message number used when decoding a file
     pub fn local_message_number(&self) -> u8 {
         self.local_message_number
     }
 
+    /// Global message number defined in FIT profile
     pub fn global_message_number(&self) -> u16 {
         self.global_message_number
     }
 
+    /// Definitions for each data field encoded in the associated FIT data message
     pub fn field_definitions(&self) -> &[FieldDefinition] {
         &self.field_definitions
     }
 
+    /// Developer field definitions
     pub fn developer_field_definitions(&self) -> &[DeveloperFieldDefinition] {
         &self.developer_field_definitions
     }
@@ -199,19 +203,23 @@ pub struct FitDataMessage {
 }
 
 impl FitDataMessage {
+    /// Global message number defined in the FIT profile, set by definition message
     pub fn global_message_number(&self) -> u16 {
         self.global_message_number
     }
 
+    /// Time offset used to generate a full timestamp from a reference time
     pub fn time_offset(&self) -> Option<u8> {
         self.time_offset
     }
 
+    /// Data field mapping of <field_number, Value>
     pub fn fields(&self) -> &HashMap<u8, Option<Value>> {
         &self.fields
     }
 
     #[allow(dead_code)]
+    /// Developer field data
     pub fn developer_fields(&self) -> &[Option<Value>] {
         &self.developer_fields
     }

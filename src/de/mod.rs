@@ -40,7 +40,7 @@ struct Deserializer {
 
 impl Deserializer {
     /// Create the deserializer with an empty state
-    pub fn new() -> Self {
+    fn new() -> Self {
         Deserializer {
             definitions: HashMap::new(),
             position: 0,
@@ -51,13 +51,13 @@ impl Deserializer {
     /// Clear the definition messages used to decode data messages. This can be called between
     /// distinct FIT files but if they are properly formed it should not be necessary since new
     /// definitions will replace the old in the mapping.
-    pub fn clear_definitions(&mut self) {
+    fn clear_definitions(&mut self) {
         self.definitions = HashMap::new();
     }
 
     /// Advance the parser state returning one of four possible objects defined within the
     /// FIT file.
-    pub fn deserialize_next<'de>(&mut self, input: &'de [u8]) -> Result<(&'de [u8], FitObject)> {
+    fn deserialize_next<'de>(&mut self, input: &'de [u8]) -> Result<(&'de [u8], FitObject)> {
         if self.position > 0 && self.position == self.end_of_messages {
             // extract the CRC, eventually we'd want to validate it
             return self.deserialize_crc(input);
@@ -103,7 +103,8 @@ impl Deserializer {
             parser::FitMessage::Definition(message) => {
                 // Use an Rc to avoid an expensive clone of the DefinitionMessage itself
                 let msg_rc = Rc::new(message);
-                self.definitions.insert(msg_rc.local_message_number(), Rc::clone(&msg_rc));
+                self.definitions
+                    .insert(msg_rc.local_message_number(), Rc::clone(&msg_rc));
                 self.position += init_len - input.len();
                 Ok((input, FitObject::DefinitionMessage(msg_rc)))
             }
@@ -147,8 +148,7 @@ impl FitStreamProcessor {
         self.deserializer.clear_definitions();
     }
 
-    /// Create an iterable that will process the provided byte slice into a set of
-    /// FitObjects.
+    /// Deserialize a FitObject from the byte stream.
     pub fn deserialize_next<'de>(&mut self, input: &'de [u8]) -> Result<(&'de [u8], FitObject)> {
         self.deserializer.deserialize_next(input)
     }

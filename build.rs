@@ -670,7 +670,10 @@ fn process_messages(sheet: Range<DataType>) -> Vec<MessageDefinition> {
     messages
 }
 
-pub fn parse_profile(profile_fname: &str, version: String) -> Result<FitProfile, Box<dyn std::error::Error>> {
+pub fn parse_profile(
+    profile_fname: &str,
+    version: String,
+) -> Result<FitProfile, Box<dyn std::error::Error>> {
     let mut excel: Xlsx<_> = open_workbook(&profile_fname)?;
 
     // process Types sheet
@@ -825,7 +828,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             return Err(e.into());
         }
     };
-
 
     // process excel file and output
     let profile = parse_profile(&profile_fname, profile_vers).unwrap();
