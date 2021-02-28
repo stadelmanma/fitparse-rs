@@ -18,7 +18,7 @@ if [ -z "$2" ]; then
     echo "extracted FIT profile version from path: $FIT_PROFILE_VERSION"
 fi
 if [ -z "$FIT_PROFILE_VERSION" ]; then
-    echo "error no profile version provided and c"
+    echo "error no profile version provided and could not parse it from the file path"
     echo $help
     exit 1
 fi
