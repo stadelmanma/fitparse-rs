@@ -48,6 +48,11 @@ for data in fitparser::from_reader(&mut fp)? {
 }
 ```
 
+For lower level control of the deserialization process, such as reading from
+a streaming data source you can use the `de::FitStreamProcessor` struct. See
+the `streaming.rs` example file for basic usage and manual processing of
+`FitObject` variants.
+
 
 ## Updating the FIT profile
 
