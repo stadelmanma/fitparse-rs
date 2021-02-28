@@ -22,6 +22,3 @@ calamine = "0.16.1"
 [dev-dependencies]
 structopt = "0.3"
 serde_json = { version = "1.0" }
-
-[[example]]
-name = "fit_to_json"
