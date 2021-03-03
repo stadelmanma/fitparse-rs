@@ -82,7 +82,7 @@ fn run() -> Result<(), Box<dyn Error>> {
             process_obj(&mut processor, obj)?;
             buffer = buf;
         }
-        // shift remaining data over into front of buffer prior to appending mores
+        // shift remaining data to the front of buffer prior to appending more
         rem = buffer.len();
         let tmp = Vec::from(buffer);
         for i in 0..rem {

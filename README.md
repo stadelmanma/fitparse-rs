@@ -25,10 +25,10 @@ Notes:
  * This library **does not** support writing FIT files at this time.
  * Files with Developer Data fields can be parsed but the developer
    fields are dropped.
-  * We do not validate the CRC values at this time
-  * The FIT SDK is regularly updated by Garmin/Ant this library may not
-    be up to date; check the `src/profile/messages.rs` for the packaged version.
-    Submit an issue and I will gladly bump it!
+ * We do not validate the CRC values at this time
+ * The FIT SDK is regularly updated by Garmin/Ant this library may not
+   be up to date; check the `src/profile/messages.rs` for the packaged version.
+   Submit an issue and I will gladly bump it!
 
 ## Usage
 

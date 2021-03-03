@@ -3,10 +3,10 @@
 ## HEAD
 * Improve parser error handling so that the user gets the byte position
 where parsing failed instead of the number of bytes remaining
-* Expand public API to expose more low level de-serialization objects.
-* Use an Rc<...> to hold definition messages to avoid unnecessary copies
-* Provide and interface that allows streaming data into it in addition
-to batch processing. (See examples/streaming.rs)
+* Expand public API to expose more low level deserialization objects.
+* Use an Rc<...> to hold definition messages to avoid unnecessary copying.
+* Provide an interface that allows a continous stream of data in addition
+to batch processing (see examples/streaming.rs).
 
 ## v0.3.0
 * Refactor the internal de-serialization and decoding logic.
