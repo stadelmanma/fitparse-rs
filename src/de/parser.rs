@@ -87,6 +87,11 @@ impl FitFileHeader {
     pub fn data_size(&self) -> u32 {
         self.data_size
     }
+
+    /// Return the header CRC for the FIT file if present
+    pub fn crc(&self) -> Option<u16> {
+        self.crc
+    }
 }
 
 /// Type of FIT message being read as specified by the header byte
