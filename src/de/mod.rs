@@ -7,6 +7,8 @@ use std::collections::HashMap;
 use std::io::Read;
 use std::rc::Rc;
 
+mod crc;
+use crc::{caculate_crc, update_crc};
 mod decode;
 use decode::Decoder;
 mod parser;
@@ -36,6 +38,8 @@ struct Deserializer {
     /// Stores the location that the current FIT message ends, for chained FIT messges this will
     /// be updated to reflect the new end position
     end_of_messages: usize,
+    /// Stores the current CRC value
+    crc: u16,
 }
 
 impl Deserializer {
@@ -45,13 +49,16 @@ impl Deserializer {
             definitions: HashMap::new(),
             position: 0,
             end_of_messages: 0,
+            crc: 0,
         }
     }
 
-    /// Clear the definition messages used to decode data messages. This can be called between
-    /// distinct FIT files but if they are properly formed it should not be necessary since new
-    /// definitions will replace the old in the mapping.
-    fn clear_definitions(&mut self) {
+    /// Clear the definition messages used to decode data messages and reset the CRC value. This
+    /// can be called between distinct FIT files but if they are properly formed it should not be
+    /// necessary since new definitions will replace the old in the mapping unless we are validating
+    /// the CRC values.
+    fn reset(&mut self) {
+        self.crc = 0;
         self.definitions = HashMap::new();
     }
 
@@ -59,7 +66,7 @@ impl Deserializer {
     /// FIT file.
     fn deserialize_next<'de>(&mut self, input: &'de [u8]) -> Result<(&'de [u8], FitObject)> {
         if self.position > 0 && self.position == self.end_of_messages {
-            // extract the CRC, eventually we'd want to validate it
+            // extract the CRC
             return self.deserialize_crc(input);
         }
         if self.position == 0 || (self.position > self.end_of_messages && !input.is_empty()) {
@@ -74,12 +81,18 @@ impl Deserializer {
 
     /// Parse the FIT header
     fn deserialize_header<'de>(&mut self, input: &'de [u8]) -> Result<(&'de [u8], FitObject)> {
-        let (input, header) = parser::fit_file_header(input).map_err(|e| self.to_parse_err(e))?;
+        let (remaining, header) =
+            parser::fit_file_header(input).map_err(|e| self.to_parse_err(e))?;
         self.end_of_messages =
             self.position + header.header_size() as usize + header.data_size() as usize;
         self.position += header.header_size() as usize;
+        self.crc = 0;
 
-        Ok((input, FitObject::Header(header)))
+        if let Some(value) = header.crc() {
+            let checksum = caculate_crc(&input[0..(header.header_size() - 2) as usize]);
+        }
+
+        Ok((remaining, FitObject::Header(header)))
     }
 
     /// Extract a 2 byte CRC
@@ -93,20 +106,23 @@ impl Deserializer {
     fn deserialize_message<'de>(&mut self, input: &'de [u8]) -> Result<(&'de [u8], FitObject)> {
         // parse a single message of either variety
         let init_len = input.len();
-        let (input, message) =
+        let (remaining, message) =
             parser::fit_message(input, &self.definitions).map_err(|e| self.to_parse_err(e))?;
+        // update CRC with the consumed bytes
+        self.crc = update_crc(self.crc, &input[0..(input.len() - remaining.len())]);
+
         match message {
             parser::FitMessage::Data(message) => {
-                self.position += init_len - input.len();
-                Ok((input, FitObject::DataMessage(message)))
+                self.position += init_len - remaining.len();
+                Ok((remaining, FitObject::DataMessage(message)))
             }
             parser::FitMessage::Definition(message) => {
                 // Use an Rc to avoid an expensive clone of the DefinitionMessage itself
                 let msg_rc = Rc::new(message);
                 self.definitions
                     .insert(msg_rc.local_message_number(), Rc::clone(&msg_rc));
-                self.position += init_len - input.len();
-                Ok((input, FitObject::DefinitionMessage(msg_rc)))
+                self.position += init_len - remaining.len();
+                Ok((remaining, FitObject::DefinitionMessage(msg_rc)))
             }
             parser::FitMessage::MissingDefinitionMessage(n) => {
                 Err(ErrorKind::MissingDefinitionMessage(n, self.position).into())
@@ -131,13 +147,19 @@ pub struct FitStreamProcessor {
     deserializer: Deserializer,
 }
 
-impl FitStreamProcessor {
-    /// Create the processor
-    pub fn new() -> Self {
+impl Default for FitStreamProcessor {
+    fn default() -> Self {
         FitStreamProcessor {
             decoder: Decoder::new(),
             deserializer: Deserializer::new(),
         }
+    }
+}
+
+impl FitStreamProcessor {
+    /// Create the processor
+    pub fn new() -> Self {
+        Self::default()
     }
 
     /// Reset the decoder state and definition messages in use, this should be called at the end of
@@ -145,7 +167,7 @@ impl FitStreamProcessor {
     /// per file.
     pub fn reset(&mut self) {
         self.decoder.reset();
-        self.deserializer.clear_definitions();
+        self.deserializer.reset();
     }
 
     /// Deserialize a FitObject from the byte stream.
