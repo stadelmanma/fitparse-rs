@@ -90,6 +90,9 @@ impl Deserializer {
 
         if let Some(value) = header.crc() {
             let checksum = caculate_crc(&input[0..(header.header_size() - 2) as usize]);
+            if checksum != value {
+                todo!();
+            }
         }
 
         Ok((remaining, FitObject::Header(header)))
@@ -99,6 +102,9 @@ impl Deserializer {
     fn deserialize_crc<'de>(&mut self, input: &'de [u8]) -> Result<(&'de [u8], FitObject)> {
         let (input, crc) = le_u16(input).map_err(|e| self.to_parse_err(e))?;
         self.position += 2;
+        if crc != self.crc {
+            todo!();
+        }
         Ok((input, FitObject::Crc(crc)))
     }
 
