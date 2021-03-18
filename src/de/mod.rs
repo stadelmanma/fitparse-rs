@@ -55,8 +55,7 @@ impl Deserializer {
 
     /// Clear the definition messages used to decode data messages and reset the CRC value. This
     /// can be called between distinct FIT files but if they are properly formed it should not be
-    /// necessary since new definitions will replace the old in the mapping unless we are validating
-    /// the CRC values.
+    /// necessary since new definitions will replace the old in the mapping.
     fn reset(&mut self) {
         self.crc = 0;
         self.definitions = HashMap::new();
@@ -91,8 +90,17 @@ impl Deserializer {
         if let Some(value) = header.crc() {
             let checksum = caculate_crc(&input[0..(header.header_size() - 2) as usize]);
             if checksum != value {
-                todo!();
+                return Err(Box::new(ErrorKind::InvalidCrc((
+                    Vec::from(remaining),
+                    FitObject::Header(header),
+                    value,
+                    checksum,
+                ))));
             }
+        } else {
+            // if the header doesn't have its own CRC then the header bytes are included in
+            // the data CRC
+            self.crc = update_crc(0, &input[0..(header.header_size() as usize)]);
         }
 
         Ok((remaining, FitObject::Header(header)))
@@ -103,7 +111,12 @@ impl Deserializer {
         let (input, crc) = le_u16(input).map_err(|e| self.to_parse_err(e))?;
         self.position += 2;
         if crc != self.crc {
-            todo!();
+            return Err(Box::new(ErrorKind::InvalidCrc((
+                Vec::from(input),
+                FitObject::Crc(crc),
+                crc,
+                self.crc,
+            ))));
         }
         Ok((input, FitObject::Crc(crc)))
     }
@@ -195,8 +208,8 @@ pub fn from_bytes(mut buffer: &[u8]) -> Result<Vec<FitDataRecord>> {
     while !buffer.is_empty() {
         let (buf, obj) = processor.deserialize_next(buffer)?;
         match obj {
-            FitObject::Crc(..) => {}
-            FitObject::Header(..) => processor.reset(),
+            FitObject::Crc(..) => processor.reset(),
+            FitObject::Header(..) => {}
             FitObject::DataMessage(msg) => records.push(processor.decode_message(msg)?),
             FitObject::DefinitionMessage(..) => {}
         }

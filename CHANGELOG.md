@@ -5,8 +5,9 @@
 where parsing failed instead of the number of bytes remaining
 * Expand public API to expose more low level deserialization objects.
 * Use an Rc<...> to hold definition messages to avoid unnecessary copying.
-* Provide an interface that allows a continous stream of data in addition
+* Provide an interface that allows a continuous stream of data in addition
 to batch processing (see examples/streaming.rs).
+* Implement CRC validation of both the header and data sections.
 
 ## v0.3.0
 * Refactor the internal de-serialization and decoding logic.
