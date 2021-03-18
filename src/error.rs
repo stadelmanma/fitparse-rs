@@ -17,7 +17,7 @@ pub enum ErrorKind {
     /// We store the successful parsing result incase we want to ignore the CRC failure and containue
     /// parsing. The first u16 value is the expected CRC, the second is what was calculated from the
     /// data.
-    InvalidCrc((Vec<u8>, FitObject, u16, u16)), // TODO: This is better as a slice
+    InvalidCrc((Vec<u8>, FitObject, u16, u16)),
     /// Errors tied to IO issues and not the actual parsing steps.
     Io(io::Error),
     /// If a definition mesage can't be found, postion of message and local message number
