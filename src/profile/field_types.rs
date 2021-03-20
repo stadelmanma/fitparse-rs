@@ -1,4 +1,4 @@
-//! Auto generated profile field types from FIT SDK Release: 21.40.00
+//! Auto generated profile field types from FIT SDK Release: 21.47.00
 //! Not all of these may be used by the defined set of FIT messages
 #![allow(missing_docs)]
 #![allow(dead_code)]
@@ -7,7 +7,7 @@ use serde::ser::Serializer;
 use serde::Serialize;
 use std::convert;
 use std::fmt;
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum File {
     /// Read only, single file. Must be in root directory.
     Device,
@@ -147,7 +147,7 @@ impl Serialize for File {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum MesgNum {
     FileId,
     Capabilities,
@@ -550,7 +550,7 @@ impl Serialize for MesgNum {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum Checksum {
     /// Allows clear of checksum for flash memory where can only write 1 to 0 without erasing sector.
     Clear,
@@ -601,7 +601,7 @@ impl Serialize for Checksum {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum FileFlags {
     Read,
     Write,
@@ -654,7 +654,7 @@ impl Serialize for FileFlags {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum MesgCount {
     NumPerFile,
     MaxPerFile,
@@ -707,7 +707,7 @@ impl Serialize for MesgCount {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum DateTime {
     /// if date_time is < 0x10000000 then it is system time (seconds from device power on)
     Min,
@@ -753,7 +753,7 @@ impl Serialize for DateTime {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum LocalDateTime {
     /// if date_time is < 0x10000000 then it is system time (seconds from device power on)
     Min,
@@ -799,7 +799,7 @@ impl Serialize for LocalDateTime {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum MessageIndex {
     /// index
     Mask,
@@ -855,7 +855,7 @@ impl Serialize for MessageIndex {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum DeviceIndex {
     /// Creator of the file is always device index 0.
     Creator,
@@ -901,7 +901,7 @@ impl Serialize for DeviceIndex {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum Gender {
     Female,
     Male,
@@ -950,7 +950,7 @@ impl Serialize for Gender {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum Language {
     English,
     French,
@@ -1147,7 +1147,7 @@ impl Serialize for Language {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum LanguageBits0 {
     English,
     French,
@@ -1220,7 +1220,7 @@ impl Serialize for LanguageBits0 {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum LanguageBits1 {
     Dutch,
     Finnish,
@@ -1293,7 +1293,7 @@ impl Serialize for LanguageBits1 {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum LanguageBits2 {
     Slovenian,
     Swedish,
@@ -1366,7 +1366,7 @@ impl Serialize for LanguageBits2 {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum LanguageBits3 {
     Bulgarian,
     Romanian,
@@ -1439,7 +1439,7 @@ impl Serialize for LanguageBits3 {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum LanguageBits4 {
     BrazilianPortuguese,
     Indonesian,
@@ -1504,7 +1504,7 @@ impl Serialize for LanguageBits4 {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum TimeZone {
     Almaty,
     Bangkok,
@@ -1969,7 +1969,7 @@ impl Serialize for TimeZone {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum DisplayMeasure {
     Metric,
     Statute,
@@ -2022,7 +2022,7 @@ impl Serialize for DisplayMeasure {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum DisplayHeart {
     Bpm,
     Max,
@@ -2075,7 +2075,7 @@ impl Serialize for DisplayHeart {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum DisplayPower {
     Watts,
     PercentFtp,
@@ -2124,7 +2124,7 @@ impl Serialize for DisplayPower {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum DisplayPosition {
     /// dd.dddddd
     Degree,
@@ -2375,7 +2375,7 @@ impl Serialize for DisplayPosition {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum Switch {
     Off,
     On,
@@ -2428,7 +2428,7 @@ impl Serialize for Switch {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum Sport {
     Generic,
     Running,
@@ -2675,7 +2675,7 @@ impl Serialize for Sport {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SportBits0 {
     Generic,
     Running,
@@ -2749,7 +2749,7 @@ impl Serialize for SportBits0 {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SportBits1 {
     Tennis,
     AmericanFootball,
@@ -2822,7 +2822,7 @@ impl Serialize for SportBits1 {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SportBits2 {
     Mountaineering,
     Hiking,
@@ -2895,7 +2895,7 @@ impl Serialize for SportBits2 {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SportBits3 {
     Driving,
     Golf,
@@ -2968,7 +2968,7 @@ impl Serialize for SportBits3 {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SportBits4 {
     Sailing,
     IceSkating,
@@ -3041,7 +3041,7 @@ impl Serialize for SportBits4 {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SportBits5 {
     WaterSkiing,
     Kayaking,
@@ -3114,7 +3114,7 @@ impl Serialize for SportBits5 {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SportBits6 {
     FloorClimbing,
     UnknownVariant(u8),
@@ -3159,7 +3159,7 @@ impl Serialize for SportBits6 {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SubSport {
     Generic,
     /// Run/Fitness Equipment
@@ -3498,7 +3498,7 @@ impl Serialize for SubSport {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SportEvent {
     Uncategorized,
     Geocaching,
@@ -3575,7 +3575,7 @@ impl Serialize for SportEvent {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum Activity {
     Manual,
     AutoMultiSport,
@@ -3624,12 +3624,15 @@ impl Serialize for Activity {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum Intensity {
     Active,
     Rest,
     Warmup,
     Cooldown,
+    Recovery,
+    Interval,
+    Other,
     UnknownVariant(u8),
 }
 impl Intensity {
@@ -3639,6 +3642,9 @@ impl Intensity {
             Intensity::Rest => 1,
             Intensity::Warmup => 2,
             Intensity::Cooldown => 3,
+            Intensity::Recovery => 4,
+            Intensity::Interval => 5,
+            Intensity::Other => 6,
             Intensity::UnknownVariant(value) => value,
         }
     }
@@ -3653,6 +3659,9 @@ impl fmt::Display for Intensity {
             Intensity::Rest => write!(f, "rest"),
             Intensity::Warmup => write!(f, "warmup"),
             Intensity::Cooldown => write!(f, "cooldown"),
+            Intensity::Recovery => write!(f, "recovery"),
+            Intensity::Interval => write!(f, "interval"),
+            Intensity::Other => write!(f, "other"),
             Intensity::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
@@ -3664,6 +3673,9 @@ impl convert::From<u8> for Intensity {
             1 => Intensity::Rest,
             2 => Intensity::Warmup,
             3 => Intensity::Cooldown,
+            4 => Intensity::Recovery,
+            5 => Intensity::Interval,
+            6 => Intensity::Other,
             _ => Intensity::UnknownVariant(value),
         }
     }
@@ -3681,7 +3693,7 @@ impl Serialize for Intensity {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SessionTrigger {
     ActivityEnd,
     /// User changed sport.
@@ -3741,7 +3753,7 @@ impl Serialize for SessionTrigger {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum AutolapTrigger {
     Time,
     Distance,
@@ -3810,7 +3822,7 @@ impl Serialize for AutolapTrigger {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum LapTrigger {
     Manual,
     Time,
@@ -3887,7 +3899,7 @@ impl Serialize for LapTrigger {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum TimeMode {
     Hour12,
     /// Does not use a leading zero and has a colon
@@ -3954,7 +3966,7 @@ impl Serialize for TimeMode {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum BacklightMode {
     Off,
     Manual,
@@ -4025,7 +4037,7 @@ impl Serialize for BacklightMode {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum DateMode {
     DayMonth,
     MonthDay,
@@ -4074,7 +4086,7 @@ impl Serialize for DateMode {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum BacklightTimeout {
     /// Backlight stays on forever.
     Infinite,
@@ -4120,7 +4132,7 @@ impl Serialize for BacklightTimeout {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum Event {
     /// Group 0.  Start / stop_all
     Timer,
@@ -4346,7 +4358,7 @@ impl Serialize for Event {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum EventType {
     Start,
     Stop,
@@ -4427,7 +4439,7 @@ impl Serialize for EventType {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum TimerTrigger {
     Manual,
     Auto,
@@ -4480,7 +4492,7 @@ impl Serialize for TimerTrigger {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum FitnessEquipmentState {
     Ready,
     InUse,
@@ -4538,7 +4550,7 @@ impl Serialize for FitnessEquipmentState {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum Tone {
     Off,
     Tone,
@@ -4595,7 +4607,7 @@ impl Serialize for Tone {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum Autoscroll {
     None,
     Slow,
@@ -4652,7 +4664,7 @@ impl Serialize for Autoscroll {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum ActivityClass {
     LevelMax,
     /// 0 to 100
@@ -4706,7 +4718,7 @@ impl Serialize for ActivityClass {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum HrZoneCalc {
     Custom,
     PercentMaxHr,
@@ -4759,7 +4771,7 @@ impl Serialize for HrZoneCalc {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum PwrZoneCalc {
     Custom,
     PercentFtp,
@@ -4808,7 +4820,7 @@ impl Serialize for PwrZoneCalc {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum WktStepDuration {
     Time,
     Distance,
@@ -4981,7 +4993,7 @@ impl Serialize for WktStepDuration {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum WktStepTarget {
     Speed,
     HeartRate,
@@ -5078,7 +5090,7 @@ impl Serialize for WktStepTarget {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum Goal {
     Time,
     Distance,
@@ -5147,7 +5159,7 @@ impl Serialize for Goal {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum GoalRecurrence {
     Off,
     Daily,
@@ -5212,7 +5224,7 @@ impl Serialize for GoalRecurrence {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum GoalSource {
     /// Device generated
     Auto,
@@ -5268,7 +5280,7 @@ impl Serialize for GoalSource {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum Schedule {
     Workout,
     Course,
@@ -5317,7 +5329,7 @@ impl Serialize for Schedule {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum CoursePoint {
     Generic,
     Summit,
@@ -5462,7 +5474,7 @@ impl Serialize for CoursePoint {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum Manufacturer {
     Garmin,
     /// Do not use.  Used by FR405 for ANTFS man id.
@@ -5599,6 +5611,7 @@ pub enum Manufacturer {
     Chileaf,
     Cycplus,
     GravaaByte,
+    Sigeyi,
     Development,
     Healthandlife,
     Lezyne,
@@ -5657,6 +5670,7 @@ pub enum Manufacturer {
     Onelap,
     MonarkExercise,
     Form,
+    Decathlon,
     Actigraphcorp,
     UnknownVariant(u16),
 }
@@ -5793,6 +5807,7 @@ impl Manufacturer {
             Manufacturer::Chileaf => 131,
             Manufacturer::Cycplus => 132,
             Manufacturer::GravaaByte => 133,
+            Manufacturer::Sigeyi => 134,
             Manufacturer::Development => 255,
             Manufacturer::Healthandlife => 257,
             Manufacturer::Lezyne => 258,
@@ -5847,6 +5862,7 @@ impl Manufacturer {
             Manufacturer::Onelap => 307,
             Manufacturer::MonarkExercise => 308,
             Manufacturer::Form => 309,
+            Manufacturer::Decathlon => 310,
             Manufacturer::Actigraphcorp => 5759,
             Manufacturer::UnknownVariant(value) => value,
         }
@@ -5988,6 +6004,7 @@ impl fmt::Display for Manufacturer {
             Manufacturer::Chileaf => write!(f, "chileaf"),
             Manufacturer::Cycplus => write!(f, "cycplus"),
             Manufacturer::GravaaByte => write!(f, "gravaa_byte"),
+            Manufacturer::Sigeyi => write!(f, "sigeyi"),
             Manufacturer::Development => write!(f, "development"),
             Manufacturer::Healthandlife => write!(f, "healthandlife"),
             Manufacturer::Lezyne => write!(f, "lezyne"),
@@ -6042,6 +6059,7 @@ impl fmt::Display for Manufacturer {
             Manufacturer::Onelap => write!(f, "onelap"),
             Manufacturer::MonarkExercise => write!(f, "monark_exercise"),
             Manufacturer::Form => write!(f, "form"),
+            Manufacturer::Decathlon => write!(f, "decathlon"),
             Manufacturer::Actigraphcorp => write!(f, "actigraphcorp"),
             Manufacturer::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
@@ -6180,6 +6198,7 @@ impl convert::From<u16> for Manufacturer {
             131 => Manufacturer::Chileaf,
             132 => Manufacturer::Cycplus,
             133 => Manufacturer::GravaaByte,
+            134 => Manufacturer::Sigeyi,
             255 => Manufacturer::Development,
             257 => Manufacturer::Healthandlife,
             258 => Manufacturer::Lezyne,
@@ -6234,6 +6253,7 @@ impl convert::From<u16> for Manufacturer {
             307 => Manufacturer::Onelap,
             308 => Manufacturer::MonarkExercise,
             309 => Manufacturer::Form,
+            310 => Manufacturer::Decathlon,
             5759 => Manufacturer::Actigraphcorp,
             _ => Manufacturer::UnknownVariant(value),
         }
@@ -6252,7 +6272,7 @@ impl Serialize for Manufacturer {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum GarminProduct {
     Hrm1,
     /// AXH01 HRM chipset
@@ -6512,6 +6532,7 @@ pub enum GarminProduct {
     Fr945,
     Edge530,
     Edge830,
+    InstinctEsports,
     Fenix5sPlusApac,
     Fenix5xPlusApac,
     Edge520PlusApac,
@@ -6532,6 +6553,7 @@ pub enum GarminProduct {
     MarqCommander,
     MarqExpedition,
     MarqAthlete,
+    DescentMk2,
     Fenix6SSport,
     Fenix6S,
     Fenix6Sport,
@@ -6572,6 +6594,8 @@ pub enum GarminProduct {
     MarqAdventurer,
     Swim2Apac,
     MarqAdventurerAsia,
+    /// Mk2 and Mk2i
+    DescentMk2Asia,
     VenuDaimlerAsia,
     MarqGolfer,
     VenuDaimler,
@@ -6840,6 +6864,7 @@ impl GarminProduct {
             GarminProduct::Fr945 => 3113,
             GarminProduct::Edge530 => 3121,
             GarminProduct::Edge830 => 3122,
+            GarminProduct::InstinctEsports => 3126,
             GarminProduct::Fenix5sPlusApac => 3134,
             GarminProduct::Fenix5xPlusApac => 3135,
             GarminProduct::Edge520PlusApac => 3142,
@@ -6858,6 +6883,7 @@ impl GarminProduct {
             GarminProduct::MarqCommander => 3249,
             GarminProduct::MarqExpedition => 3250,
             GarminProduct::MarqAthlete => 3251,
+            GarminProduct::DescentMk2 => 3258,
             GarminProduct::Fenix6SSport => 3287,
             GarminProduct::Fenix6S => 3288,
             GarminProduct::Fenix6Sport => 3289,
@@ -6897,6 +6923,7 @@ impl GarminProduct {
             GarminProduct::MarqAdventurer => 3624,
             GarminProduct::Swim2Apac => 3639,
             GarminProduct::MarqAdventurerAsia => 3648,
+            GarminProduct::DescentMk2Asia => 3702,
             GarminProduct::VenuDaimlerAsia => 3737,
             GarminProduct::MarqGolfer => 3739,
             GarminProduct::VenuDaimler => 3740,
@@ -7174,6 +7201,7 @@ impl fmt::Display for GarminProduct {
             GarminProduct::Fr945 => write!(f, "fr945"),
             GarminProduct::Edge530 => write!(f, "edge_530"),
             GarminProduct::Edge830 => write!(f, "edge_830"),
+            GarminProduct::InstinctEsports => write!(f, "instinct_esports"),
             GarminProduct::Fenix5sPlusApac => write!(f, "fenix5s_plus_apac"),
             GarminProduct::Fenix5xPlusApac => write!(f, "fenix5x_plus_apac"),
             GarminProduct::Edge520PlusApac => write!(f, "edge_520_plus_apac"),
@@ -7192,6 +7220,7 @@ impl fmt::Display for GarminProduct {
             GarminProduct::MarqCommander => write!(f, "marq_commander"),
             GarminProduct::MarqExpedition => write!(f, "marq_expedition"),
             GarminProduct::MarqAthlete => write!(f, "marq_athlete"),
+            GarminProduct::DescentMk2 => write!(f, "descent_mk2"),
             GarminProduct::Fenix6SSport => write!(f, "fenix6S_sport"),
             GarminProduct::Fenix6S => write!(f, "fenix6S"),
             GarminProduct::Fenix6Sport => write!(f, "fenix6_sport"),
@@ -7231,6 +7260,7 @@ impl fmt::Display for GarminProduct {
             GarminProduct::MarqAdventurer => write!(f, "marq_adventurer"),
             GarminProduct::Swim2Apac => write!(f, "swim2_apac"),
             GarminProduct::MarqAdventurerAsia => write!(f, "marq_adventurer_asia"),
+            GarminProduct::DescentMk2Asia => write!(f, "descent_mk2_asia"),
             GarminProduct::VenuDaimlerAsia => write!(f, "venu_daimler_asia"),
             GarminProduct::MarqGolfer => write!(f, "marq_golfer"),
             GarminProduct::VenuDaimler => write!(f, "venu_daimler"),
@@ -7499,6 +7529,7 @@ impl convert::From<u16> for GarminProduct {
             3113 => GarminProduct::Fr945,
             3121 => GarminProduct::Edge530,
             3122 => GarminProduct::Edge830,
+            3126 => GarminProduct::InstinctEsports,
             3134 => GarminProduct::Fenix5sPlusApac,
             3135 => GarminProduct::Fenix5xPlusApac,
             3142 => GarminProduct::Edge520PlusApac,
@@ -7517,6 +7548,7 @@ impl convert::From<u16> for GarminProduct {
             3249 => GarminProduct::MarqCommander,
             3250 => GarminProduct::MarqExpedition,
             3251 => GarminProduct::MarqAthlete,
+            3258 => GarminProduct::DescentMk2,
             3287 => GarminProduct::Fenix6SSport,
             3288 => GarminProduct::Fenix6S,
             3289 => GarminProduct::Fenix6Sport,
@@ -7556,6 +7588,7 @@ impl convert::From<u16> for GarminProduct {
             3624 => GarminProduct::MarqAdventurer,
             3639 => GarminProduct::Swim2Apac,
             3648 => GarminProduct::MarqAdventurerAsia,
+            3702 => GarminProduct::DescentMk2Asia,
             3737 => GarminProduct::VenuDaimlerAsia,
             3739 => GarminProduct::MarqGolfer,
             3740 => GarminProduct::VenuDaimler,
@@ -7593,7 +7626,7 @@ impl Serialize for GarminProduct {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum AntplusDeviceType {
     Antfs,
     BikePower,
@@ -7730,7 +7763,7 @@ impl Serialize for AntplusDeviceType {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum AntNetwork {
     Public,
     Antplus,
@@ -7787,7 +7820,7 @@ impl Serialize for AntNetwork {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum WorkoutCapabilities {
     Interval,
     Custom,
@@ -7892,7 +7925,7 @@ impl Serialize for WorkoutCapabilities {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum BatteryStatus {
     New,
     Good,
@@ -7961,7 +7994,7 @@ impl Serialize for BatteryStatus {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum HrType {
     Normal,
     Irregular,
@@ -8010,7 +8043,7 @@ impl Serialize for HrType {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum CourseCapabilities {
     Processed,
     Valid,
@@ -8095,7 +8128,7 @@ impl Serialize for CourseCapabilities {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum Weight {
     Calculating,
     UnknownVariant(u16),
@@ -8140,7 +8173,7 @@ impl Serialize for Weight {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum WorkoutHr {
     BpmOffset,
     UnknownVariant(u32),
@@ -8185,7 +8218,7 @@ impl Serialize for WorkoutHr {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum WorkoutPower {
     WattsOffset,
     UnknownVariant(u32),
@@ -8230,7 +8263,7 @@ impl Serialize for WorkoutPower {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum BpStatus {
     NoError,
     ErrorIncompleteData,
@@ -8291,7 +8324,7 @@ impl Serialize for BpStatus {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum UserLocalId {
     LocalMin,
     LocalMax,
@@ -8356,7 +8389,7 @@ impl Serialize for UserLocalId {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SwimStroke {
     Freestyle,
     Backstroke,
@@ -8426,7 +8459,7 @@ impl Serialize for SwimStroke {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum ActivityType {
     Generic,
     Running,
@@ -8505,7 +8538,7 @@ impl Serialize for ActivityType {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum ActivitySubtype {
     Generic,
     /// Run
@@ -8644,7 +8677,7 @@ impl Serialize for ActivitySubtype {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum ActivityLevel {
     Low,
     Medium,
@@ -8697,7 +8730,7 @@ impl Serialize for ActivityLevel {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum Side {
     Right,
     Left,
@@ -8746,7 +8779,7 @@ impl Serialize for Side {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum LeftRightBalance {
     /// % contribution
     Mask,
@@ -8797,7 +8830,7 @@ impl Serialize for LeftRightBalance {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum LeftRightBalance100 {
     /// % contribution scaled by 100
     Mask,
@@ -8848,7 +8881,7 @@ impl Serialize for LeftRightBalance100 {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum LengthType {
     /// Rest period. Length with no strokes
     Idle,
@@ -8899,7 +8932,7 @@ impl Serialize for LengthType {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum DayOfWeek {
     Sunday,
     Monday,
@@ -8968,7 +9001,7 @@ impl Serialize for DayOfWeek {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum ConnectivityCapabilities {
     Bluetooth,
     BluetoothLe,
@@ -9160,7 +9193,7 @@ impl Serialize for ConnectivityCapabilities {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum WeatherReport {
     Current,
     HourlyForecast,
@@ -9213,7 +9246,7 @@ impl Serialize for WeatherReport {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum WeatherStatus {
     Clear,
     PartlyCloudy,
@@ -9338,7 +9371,7 @@ impl Serialize for WeatherStatus {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum WeatherSeverity {
     Unknown,
     Warning,
@@ -9399,7 +9432,7 @@ impl Serialize for WeatherSeverity {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum WeatherSevereType {
     Unspecified,
     Tornado,
@@ -9780,7 +9813,7 @@ impl Serialize for WeatherSevereType {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum StrokeType {
     NoEvent,
     /// stroke was detected but cannot be identified
@@ -9846,7 +9879,7 @@ impl Serialize for StrokeType {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum BodyLocation {
     LeftLeg,
     LeftCalf,
@@ -10051,7 +10084,7 @@ impl Serialize for BodyLocation {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SegmentLapStatus {
     End,
     Fail,
@@ -10100,7 +10133,7 @@ impl Serialize for SegmentLapStatus {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SegmentLeaderboardType {
     Overall,
     PersonalBest,
@@ -10187,7 +10220,7 @@ impl Serialize for SegmentLeaderboardType {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SegmentDeleteStatus {
     DoNotDelete,
     DeleteOne,
@@ -10240,7 +10273,7 @@ impl Serialize for SegmentDeleteStatus {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SegmentSelectionType {
     Starred,
     Suggested,
@@ -10289,7 +10322,7 @@ impl Serialize for SegmentSelectionType {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SourceType {
     /// External device connected with ANT
     Ant,
@@ -10360,7 +10393,7 @@ impl Serialize for SourceType {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum DisplayOrientation {
     /// automatic if the device supports it
     Auto,
@@ -10424,7 +10457,7 @@ impl Serialize for DisplayOrientation {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum WorkoutEquipment {
     None,
     SwimFins,
@@ -10489,7 +10522,7 @@ impl Serialize for WorkoutEquipment {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum WatchfaceMode {
     Digital,
     Analog,
@@ -10546,7 +10579,7 @@ impl Serialize for WatchfaceMode {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum DigitalWatchfaceLayout {
     Traditional,
     Modern,
@@ -10601,7 +10634,7 @@ impl Serialize for DigitalWatchfaceLayout {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum AnalogWatchfaceLayout {
     Minimal,
     Traditional,
@@ -10654,7 +10687,7 @@ impl Serialize for AnalogWatchfaceLayout {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum RiderPositionType {
     Seated,
     Standing,
@@ -10711,7 +10744,7 @@ impl Serialize for RiderPositionType {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum PowerPhaseType {
     PowerPhaseStartAngle,
     PowerPhaseEndAngle,
@@ -10768,7 +10801,7 @@ impl Serialize for PowerPhaseType {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum CameraEventType {
     /// Start of video recording
     VideoStart,
@@ -10870,7 +10903,7 @@ impl Serialize for CameraEventType {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SensorType {
     Accelerometer,
     Gyroscope,
@@ -10928,7 +10961,7 @@ impl Serialize for SensorType {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum BikeLightNetworkConfigType {
     Auto,
     Individual,
@@ -10987,7 +11020,7 @@ impl Serialize for BikeLightNetworkConfigType {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum CommTimeoutType {
     /// Timeout pairing to any device
     WildcardPairingTimeout,
@@ -11048,7 +11081,7 @@ impl Serialize for CommTimeoutType {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum CameraOrientationType {
     CameraOrientation0,
     CameraOrientation90,
@@ -11105,7 +11138,7 @@ impl Serialize for CameraOrientationType {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum AttitudeStage {
     Failed,
     Aligning,
@@ -11162,7 +11195,7 @@ impl Serialize for AttitudeStage {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum AttitudeValidity {
     TrackAngleHeadingValid,
     PitchValid,
@@ -11255,7 +11288,7 @@ impl Serialize for AttitudeValidity {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum AutoSyncFrequency {
     Never,
     Occasionally,
@@ -11316,7 +11349,7 @@ impl Serialize for AutoSyncFrequency {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum ExdLayout {
     FullScreen,
     HalfVertical,
@@ -11326,6 +11359,8 @@ pub enum ExdLayout {
     FullQuarterSplit,
     HalfVerticalLeftSplit,
     HalfHorizontalTopSplit,
+    /// The EXD may display the configured concepts in any layout it sees fit.
+    Dynamic,
     UnknownVariant(u8),
 }
 impl ExdLayout {
@@ -11339,6 +11374,7 @@ impl ExdLayout {
             ExdLayout::FullQuarterSplit => 5,
             ExdLayout::HalfVerticalLeftSplit => 6,
             ExdLayout::HalfHorizontalTopSplit => 7,
+            ExdLayout::Dynamic => 8,
             ExdLayout::UnknownVariant(value) => value,
         }
     }
@@ -11357,6 +11393,7 @@ impl fmt::Display for ExdLayout {
             ExdLayout::FullQuarterSplit => write!(f, "full_quarter_split"),
             ExdLayout::HalfVerticalLeftSplit => write!(f, "half_vertical_left_split"),
             ExdLayout::HalfHorizontalTopSplit => write!(f, "half_horizontal_top_split"),
+            ExdLayout::Dynamic => write!(f, "dynamic"),
             ExdLayout::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
@@ -11372,6 +11409,7 @@ impl convert::From<u8> for ExdLayout {
             5 => ExdLayout::FullQuarterSplit,
             6 => ExdLayout::HalfVerticalLeftSplit,
             7 => ExdLayout::HalfHorizontalTopSplit,
+            8 => ExdLayout::Dynamic,
             _ => ExdLayout::UnknownVariant(value),
         }
     }
@@ -11389,7 +11427,7 @@ impl Serialize for ExdLayout {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum ExdDisplayType {
     Numerical,
     Simple,
@@ -11474,7 +11512,7 @@ impl Serialize for ExdDisplayType {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum ExdDataUnits {
     NoUnits,
     Laps,
@@ -11719,7 +11757,7 @@ impl Serialize for ExdDataUnits {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum ExdQualifiers {
     NoQualifier,
     Instantaneous,
@@ -11936,7 +11974,7 @@ impl Serialize for ExdQualifiers {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum ExdDescriptors {
     BikeLightBatteryStatus,
     BeamAngleStatus,
@@ -12376,7 +12414,7 @@ impl Serialize for ExdDescriptors {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum AutoActivityDetect {
     None,
     Running,
@@ -12445,7 +12483,7 @@ impl Serialize for AutoActivityDetect {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SupportedExdScreenLayouts {
     FullScreen,
     HalfVertical,
@@ -12528,7 +12566,7 @@ impl Serialize for SupportedExdScreenLayouts {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum FitBaseType {
     Enum,
     Sint8,
@@ -12637,7 +12675,7 @@ impl Serialize for FitBaseType {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum TurnType {
     ArrivingIdx,
     ArrivingLeftIdx,
@@ -12830,7 +12868,7 @@ impl Serialize for TurnType {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum BikeLightBeamAngleMode {
     Manual,
     Auto,
@@ -12881,7 +12919,7 @@ impl Serialize for BikeLightBeamAngleMode {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum FitBaseUnit {
     Other,
     Kilogram,
@@ -12934,7 +12972,7 @@ impl Serialize for FitBaseUnit {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SetType {
     Rest,
     Active,
@@ -12983,7 +13021,7 @@ impl Serialize for SetType {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum ExerciseCategory {
     BenchPress,
     CalfRaise,
@@ -13160,7 +13198,7 @@ impl Serialize for ExerciseCategory {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum BenchPressExerciseName {
     AlternatingDumbbellChestPressOnSwissBall,
     BarbellBenchPress,
@@ -13351,7 +13389,7 @@ impl Serialize for BenchPressExerciseName {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum CalfRaiseExerciseName {
     Name3WayCalfRaise,
     Name3WayWeightedCalfRaise,
@@ -13508,7 +13546,7 @@ impl Serialize for CalfRaiseExerciseName {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum CardioExerciseName {
     BobAndWeaveCircle,
     WeightedBobAndWeaveCircle,
@@ -13641,7 +13679,7 @@ impl Serialize for CardioExerciseName {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum CarryExerciseName {
     BarHolds,
     FarmersWalk,
@@ -13702,7 +13740,7 @@ impl Serialize for CarryExerciseName {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum ChopExerciseName {
     CablePullThrough,
     CableRotationalLift,
@@ -13853,7 +13891,7 @@ impl Serialize for ChopExerciseName {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum CoreExerciseName {
     AbsJabs,
     WeightedAbsJabs,
@@ -14207,7 +14245,7 @@ impl Serialize for CoreExerciseName {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum CrunchExerciseName {
     BicycleCrunch,
     CableCrunch,
@@ -14648,7 +14686,7 @@ impl Serialize for CrunchExerciseName {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum CurlExerciseName {
     AlternatingDumbbellBicepsCurl,
     AlternatingDumbbellBicepsCurlOnSwissBall,
@@ -14907,7 +14945,7 @@ impl Serialize for CurlExerciseName {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum DeadliftExerciseName {
     BarbellDeadlift,
     BarbellStraightLegDeadlift,
@@ -15042,7 +15080,7 @@ impl Serialize for DeadliftExerciseName {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum FlyeExerciseName {
     CableCrossover,
     DeclineDumbbellFlye,
@@ -15125,7 +15163,7 @@ impl Serialize for FlyeExerciseName {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum HipRaiseExerciseName {
     BarbellHipThrustOnFloor,
     BarbellHipThrustWithBench,
@@ -15437,7 +15475,7 @@ impl Serialize for HipRaiseExerciseName {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum HipStabilityExerciseName {
     BandSideLyingLegRaise,
     DeadBug,
@@ -15652,7 +15690,7 @@ impl Serialize for HipStabilityExerciseName {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum HipSwingExerciseName {
     SingleArmKettlebellSwing,
     SingleArmDumbbellSwing,
@@ -15707,7 +15745,7 @@ impl Serialize for HipSwingExerciseName {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum HyperextensionExerciseName {
     BackExtensionWithOppositeArmAndLegReach,
     WeightedBackExtensionWithOppositeArmAndLegReach,
@@ -15953,7 +15991,7 @@ impl Serialize for HyperextensionExerciseName {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum LateralRaiseExerciseName {
     Name45DegreeCableExternalRotation,
     AlternatingLateralRaiseWithStaticHold,
@@ -16148,7 +16186,7 @@ impl Serialize for LateralRaiseExerciseName {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum LegCurlExerciseName {
     LegCurl,
     WeightedLegCurl,
@@ -16247,7 +16285,7 @@ impl Serialize for LegCurlExerciseName {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum LegRaiseExerciseName {
     HangingKneeRaise,
     HangingLegRaise,
@@ -16396,7 +16434,7 @@ impl Serialize for LegRaiseExerciseName {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum LungeExerciseName {
     OverheadLunge,
     LungeMatrix,
@@ -16821,7 +16859,7 @@ impl Serialize for LungeExerciseName {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum OlympicLiftExerciseName {
     BarbellHangPowerClean,
     BarbellHangSquatClean,
@@ -16956,7 +16994,7 @@ impl Serialize for OlympicLiftExerciseName {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum PlankExerciseName {
     Name45DegreePlank,
     Weighted45DegreePlank,
@@ -17662,7 +17700,7 @@ impl Serialize for PlankExerciseName {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum PlyoExerciseName {
     AlternatingJumpLunge,
     WeightedAlternatingJumpLunge,
@@ -17853,7 +17891,7 @@ impl Serialize for PlyoExerciseName {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum PullUpExerciseName {
     BandedPullUps,
     Name30DegreeLatPulldown,
@@ -18052,7 +18090,7 @@ impl Serialize for PullUpExerciseName {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum PushUpExerciseName {
     ChestPressWithBand,
     AlternatingStaggeredPushUp,
@@ -18465,7 +18503,7 @@ impl Serialize for PushUpExerciseName {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum RowExerciseName {
     BarbellStraightLegDeadliftToRow,
     CableRowStanding,
@@ -18668,7 +18706,7 @@ impl Serialize for RowExerciseName {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum ShoulderPressExerciseName {
     AlternatingDumbbellShoulderPress,
     ArnoldPress,
@@ -18841,7 +18879,7 @@ impl Serialize for ShoulderPressExerciseName {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum ShoulderStabilityExerciseName {
     Name90DegreeCableExternalRotation,
     BandExternalRotation,
@@ -19056,7 +19094,7 @@ impl Serialize for ShoulderStabilityExerciseName {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum ShrugExerciseName {
     BarbellJumpShrug,
     BarbellShrug,
@@ -19169,7 +19207,7 @@ impl Serialize for ShrugExerciseName {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SitUpExerciseName {
     AlternatingSitUp,
     WeightedAlternatingSitUp,
@@ -19376,7 +19414,7 @@ impl Serialize for SitUpExerciseName {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SquatExerciseName {
     LegPress,
     BackSquatWithBodyBar,
@@ -19823,7 +19861,7 @@ impl Serialize for SquatExerciseName {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum TotalBodyExerciseName {
     Burpee,
     WeightedBurpee,
@@ -19922,7 +19960,7 @@ impl Serialize for TotalBodyExerciseName {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum TricepsExtensionExerciseName {
     BenchDip,
     WeightedBenchDip,
@@ -20183,7 +20221,7 @@ impl Serialize for TricepsExtensionExerciseName {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum WarmUpExerciseName {
     QuadrupedRocking,
     NeckTilts,
@@ -20361,7 +20399,7 @@ impl Serialize for WarmUpExerciseName {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum RunExerciseName {
     Run,
     Walk,
@@ -20418,7 +20456,7 @@ impl Serialize for RunExerciseName {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum WaterType {
     Fresh,
     Salt,
@@ -20475,7 +20513,7 @@ impl Serialize for WaterType {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum TissueModelType {
     /// Buhlmann's decompression algorithm, version C
     Zhl16c,
@@ -20521,7 +20559,7 @@ impl Serialize for TissueModelType {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum DiveGasStatus {
     Disabled,
     Enabled,
@@ -20574,7 +20612,7 @@ impl Serialize for DiveGasStatus {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum DiveAlarmType {
     Depth,
     Time,
@@ -20623,7 +20661,7 @@ impl Serialize for DiveAlarmType {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum DiveBacklightMode {
     AtDepth,
     AlwaysOn,
@@ -20672,7 +20710,7 @@ impl Serialize for DiveBacklightMode {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum FaveroProduct {
     AssiomaUno,
     AssiomaDuo,
@@ -20721,7 +20759,7 @@ impl Serialize for FaveroProduct {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum ClimbProEvent {
     Approach,
     Start,
@@ -20774,7 +20812,7 @@ impl Serialize for ClimbProEvent {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum TapSensitivity {
     High,
     Medium,
@@ -20827,7 +20865,7 @@ impl Serialize for TapSensitivity {
         serializer.serialize_str(&self.to_string())
     }
 }
-#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum RadarThreatLevelType {
     ThreatUnknown,
     ThreatNone,
