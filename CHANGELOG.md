@@ -1,6 +1,6 @@
 # Change Log
 
-## HEAD
+## v0.4.0
 * Improve parser error handling so that the user gets the byte position
 where parsing failed instead of the number of bytes remaining
 * Expand public API to expose more low level deserialization objects.
@@ -8,6 +8,8 @@ where parsing failed instead of the number of bytes remaining
 * Provide an interface that allows a continuous stream of data in addition
 to batch processing (see examples/streaming.rs).
 * Implement CRC validation of both the header and data sections.
+* Bump packaged FIT SDK version to 21.47.00
+
 
 ## v0.3.0
 * Refactor the internal de-serialization and decoding logic.
