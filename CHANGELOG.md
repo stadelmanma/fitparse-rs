@@ -1,5 +1,8 @@
 # Change Log
 
+## v0.4.1
+* Bump packaged FIT SDK version to 21.53.00
+
 ## v0.4.0
 * Improve parser error handling so that the user gets the byte position
 where parsing failed instead of the number of bytes remaining

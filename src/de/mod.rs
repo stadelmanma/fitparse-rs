@@ -153,8 +153,12 @@ impl Deserializer {
     /// is not easy to get using the vanilla From trait since we need outside information.
     fn to_parse_err(&self, err: nom::Err<nom::error::Error<&[u8]>>) -> crate::Error {
         match err {
-            nom::Err::Error(inner_err) => ErrorKind::ParseError(self.position, inner_err.code).into(),
-            nom::Err::Failure(inner_err) => ErrorKind::ParseError(self.position, inner_err.code).into(),
+            nom::Err::Error(inner_err) => {
+                ErrorKind::ParseError(self.position, inner_err.code).into()
+            }
+            nom::Err::Failure(inner_err) => {
+                ErrorKind::ParseError(self.position, inner_err.code).into()
+            }
             nom::Err::Incomplete(needed) => ErrorKind::UnexpectedEof(needed).into(),
         }
     }

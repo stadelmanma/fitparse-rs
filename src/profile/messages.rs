@@ -1,11 +1,11 @@
-//! Auto generated profile messages from FIT SDK Release: 21.47.00
+//! Auto generated profile messages from FIT SDK Release: 21.53.00
 #![allow(missing_docs)]
 #![allow(clippy::redundant_field_names)]
 #![allow(clippy::unreadable_literal)]
 use super::field_types::*;
 use super::{ComponentFieldInfo, FieldDataType, FieldInfo, MessageInfo};
 use std::collections::HashMap;
-pub const VERSION: &str = "21.47.00";
+pub const VERSION: &str = "21.53.00";
 pub fn file_id_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
@@ -5020,6 +5020,42 @@ pub fn session_message() -> MessageInfo {
         components: Vec::new(),
     };
     fields.insert(200, field);
+    let field = FieldInfo {
+        name: "avg_core_temperature",
+        field_type: FieldDataType::UInt16,
+        def_number: 208,
+        scale: 100.000000,
+        offset: 0.000000,
+        units: "C",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    fields.insert(208, field);
+    let field = FieldInfo {
+        name: "min_core_temperature",
+        field_type: FieldDataType::UInt16,
+        def_number: 209,
+        scale: 100.000000,
+        offset: 0.000000,
+        units: "C",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    fields.insert(209, field);
+    let field = FieldInfo {
+        name: "max_core_temperature",
+        field_type: FieldDataType::UInt16,
+        def_number: 210,
+        scale: 100.000000,
+        offset: 0.000000,
+        units: "C",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    fields.insert(210, field);
     // Sesson end time.
     let field = FieldInfo {
         name: "timestamp",
@@ -6574,6 +6610,42 @@ pub fn lap_message() -> MessageInfo {
         components: Vec::new(),
     };
     fields.insert(157, field);
+    let field = FieldInfo {
+        name: "avg_core_temperature",
+        field_type: FieldDataType::UInt16,
+        def_number: 158,
+        scale: 100.000000,
+        offset: 0.000000,
+        units: "C",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    fields.insert(158, field);
+    let field = FieldInfo {
+        name: "min_core_temperature",
+        field_type: FieldDataType::UInt16,
+        def_number: 159,
+        scale: 100.000000,
+        offset: 0.000000,
+        units: "C",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    fields.insert(159, field);
+    let field = FieldInfo {
+        name: "max_core_temperature",
+        field_type: FieldDataType::UInt16,
+        def_number: 160,
+        scale: 100.000000,
+        offset: 0.000000,
+        units: "C",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    fields.insert(160, field);
     // Lap end time.
     let field = FieldInfo {
         name: "timestamp",
@@ -7779,6 +7851,18 @@ m",
         components: Vec::new(),
     };
     fields.insert(120, field);
+    let field = FieldInfo {
+        name: "core_temperature",
+        field_type: FieldDataType::UInt16,
+        def_number: 139,
+        scale: 100.000000,
+        offset: 0.000000,
+        units: "C",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    fields.insert(139, field);
     let field = FieldInfo {
         name: "timestamp",
         field_type: FieldDataType::DateTime,
