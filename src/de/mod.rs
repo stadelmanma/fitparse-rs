@@ -91,7 +91,7 @@ impl Deserializer {
         if let Some(value) = header.crc() {
             let checksum = caculate_crc(&input[0..(header.header_size() - 2) as usize]);
             if checksum != value {
-                warn!("invalid checksum {} {}", checksum, value);
+                warn!("invalid checksum header {} {}", checksum, value);
                 // return Err(Box::new(ErrorKind::InvalidCrc((
                 //     Vec::from(remaining),
                 //     FitObject::Header(header),
@@ -113,7 +113,7 @@ impl Deserializer {
         let (input, crc) = le_u16(input).map_err(|e| self.to_parse_err(e))?;
         self.position += 2;
         if crc != self.crc {
-            warn!("invalid checksum {} {}", crc, self.crc);
+            warn!("invalid checksum crc {} {}", crc, self.crc);
             // return Err(Box::new(ErrorKind::InvalidCrc((
             //     Vec::from(input),
             //     FitObject::Crc(crc),
