@@ -6,7 +6,6 @@ use nom::number::complete::le_u16;
 use std::collections::HashMap;
 use std::io::Read;
 use std::rc::Rc;
-use log::warn;
 
 mod crc;
 use crc::{caculate_crc, update_crc};
@@ -88,19 +87,17 @@ impl Deserializer {
         self.position += header.header_size() as usize;
         self.crc = 0;
 
-        if let Some(value) = header.crc() {
+        let value = header.crc().unwrap_or(0);
+
+        if value > 0 {
             let checksum = caculate_crc(&input[0..(header.header_size() - 2) as usize]);
             if checksum != value {
-                warn!("invalid checksum header {} {}", checksum, value);
-                // return Err(Box::new(ErrorKind::InvalidCrc((
-                //     Vec::from(remaining),
-                //     FitObject::Header(header),
-                //     value,
-                //     checksum,
-                // ))));
-            }
-            if value == 0 {
-                self.crc = update_crc(0, &input[0..(header.header_size() as usize)]);
+                return Err(Box::new(ErrorKind::InvalidCrc((
+                    Vec::from(remaining),
+                    FitObject::Header(header),
+                    value,
+                    checksum,
+                ))));
             }
         } else {
             // if the header doesn't have its own CRC then the header bytes are included in
@@ -116,13 +113,12 @@ impl Deserializer {
         let (input, crc) = le_u16(input).map_err(|e| self.to_parse_err(e))?;
         self.position += 2;
         if crc != self.crc {
-            warn!("invalid checksum crc {} {}", crc, self.crc);
-            // return Err(Box::new(ErrorKind::InvalidCrc((
-            //     Vec::from(input),
-            //     FitObject::Crc(crc),
-            //     crc,
-            //     self.crc,
-            // ))));
+            return Err(Box::new(ErrorKind::InvalidCrc((
+                Vec::from(input),
+                FitObject::Crc(crc),
+                crc,
+                self.crc,
+            ))));
         }
         Ok((input, FitObject::Crc(crc)))
     }
