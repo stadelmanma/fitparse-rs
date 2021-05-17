@@ -99,6 +99,9 @@ impl Deserializer {
                 //     checksum,
                 // ))));
             }
+            if value == 0 {
+                self.crc = update_crc(0, &input[0..(header.header_size() as usize)]);
+            }
         } else {
             // if the header doesn't have its own CRC then the header bytes are included in
             // the data CRC
