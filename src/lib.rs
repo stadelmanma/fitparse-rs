@@ -393,4 +393,11 @@ mod tests {
         let fit_data = from_bytes(&data).unwrap();
         assert_eq!(fit_data.len(), 3023);
     }
+
+    #[test]
+    fn parse_sample_zero_header_crc() {
+        let data = include_bytes!("../tests/fixtures/ZeroHeaderCrc.fit").to_vec();
+        let fit_data = from_bytes(&data).unwrap();
+        assert_eq!(fit_data.len(), 105);
+    }
 }
