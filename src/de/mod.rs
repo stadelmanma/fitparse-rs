@@ -87,7 +87,9 @@ impl Deserializer {
         self.position += header.header_size() as usize;
         self.crc = 0;
 
-        if let Some(value) = header.crc() {
+        let value = header.crc().unwrap_or(0);
+
+        if value > 0 {
             let checksum = caculate_crc(&input[0..(header.header_size() - 2) as usize]);
             if checksum != value {
                 return Err(Box::new(ErrorKind::InvalidCrc((
