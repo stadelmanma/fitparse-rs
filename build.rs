@@ -18,21 +18,26 @@ struct FieldTypeDefintion {
     name: String,
     titlized_name: String,
     base_type: &'static str,
+    comment: Option<String>,
     variant_map: BTreeMap<i64, FieldTypeVariant>,
 }
 
 impl FieldTypeDefintion {
-    fn new(name: String, base_type: &'static str) -> Self {
+    fn new(name: String, base_type: &'static str, comment: Option<String>) -> Self {
         FieldTypeDefintion {
             name: name.clone(),
             titlized_name: titlecase_string(&name),
             base_type,
+            comment,
             variant_map: BTreeMap::new(),
         }
     }
 
     /// Generate an enum from the field type variants
     fn generate_enum(&self, out: &mut File) -> Result<(), std::io::Error> {
+        if let Some(v) = &self.comment {
+            writeln!(out, "/// {}", v)?;
+        }
         writeln!(
             out,
             "#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]"
@@ -507,7 +512,8 @@ fn process_types(sheet: Range<DataType>) -> Vec<FieldTypeDefintion> {
                 Some(v) => base_type_to_rust_type(v),
                 None => panic!(format!("Base type name must be a string row={:?}.", row)),
             };
-            field_types.push(FieldTypeDefintion::new(enum_name, rust_type));
+            let comment = row[4].get_string().map(|v| v.to_string());
+            field_types.push(FieldTypeDefintion::new(enum_name, rust_type, comment));
         } else if !row[2].is_empty() {
             let field_type = match field_types.last_mut() {
                 Some(v) => v,
