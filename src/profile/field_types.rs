@@ -707,6 +707,7 @@ impl Serialize for MesgCount {
         serializer.serialize_str(&self.to_string())
     }
 }
+/// seconds since UTC 00:00 Dec 31 1989
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum DateTime {
     /// if date_time is < 0x10000000 then it is system time (seconds from device power on)
@@ -753,6 +754,7 @@ impl Serialize for DateTime {
         serializer.serialize_str(&self.to_string())
     }
 }
+/// seconds since 00:00 Dec 31 1989 in local time zone
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum LocalDateTime {
     /// if date_time is < 0x10000000 then it is system time (seconds from device power on)
@@ -1147,6 +1149,7 @@ impl Serialize for Language {
         serializer.serialize_str(&self.to_string())
     }
 }
+/// Bit field corresponding to language enum type (1 << language).
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum LanguageBits0 {
     English,
@@ -2675,6 +2678,7 @@ impl Serialize for Sport {
         serializer.serialize_str(&self.to_string())
     }
 }
+/// Bit field corresponding to sport enum type (1 << sport).
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SportBits0 {
     Generic,
@@ -2749,6 +2753,7 @@ impl Serialize for SportBits0 {
         serializer.serialize_str(&self.to_string())
     }
 }
+/// Bit field corresponding to sport enum type (1 << (sport-8)).
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SportBits1 {
     Tennis,
@@ -2822,6 +2827,7 @@ impl Serialize for SportBits1 {
         serializer.serialize_str(&self.to_string())
     }
 }
+/// Bit field corresponding to sport enum type (1 << (sport-16)).
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SportBits2 {
     Mountaineering,
@@ -2895,6 +2901,7 @@ impl Serialize for SportBits2 {
         serializer.serialize_str(&self.to_string())
     }
 }
+/// Bit field corresponding to sport enum type (1 << (sport-24)).
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SportBits3 {
     Driving,
@@ -2968,6 +2975,7 @@ impl Serialize for SportBits3 {
         serializer.serialize_str(&self.to_string())
     }
 }
+/// Bit field corresponding to sport enum type (1 << (sport-32)).
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SportBits4 {
     Sailing,
@@ -3041,6 +3049,7 @@ impl Serialize for SportBits4 {
         serializer.serialize_str(&self.to_string())
     }
 }
+/// Bit field corresponding to sport enum type (1 << (sport-40)).
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SportBits5 {
     WaterSkiing,
@@ -3114,6 +3123,7 @@ impl Serialize for SportBits5 {
         serializer.serialize_str(&self.to_string())
     }
 }
+/// Bit field corresponding to sport enum type (1 << (sport-48)).
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SportBits6 {
     FloorClimbing,
@@ -4086,6 +4096,7 @@ impl Serialize for DateMode {
         serializer.serialize_str(&self.to_string())
     }
 }
+/// Timeout in seconds.
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum BacklightTimeout {
     /// Backlight stays on forever.
@@ -4439,6 +4450,7 @@ impl Serialize for EventType {
         serializer.serialize_str(&self.to_string())
     }
 }
+/// timer event data
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum TimerTrigger {
     Manual,
@@ -4492,6 +4504,7 @@ impl Serialize for TimerTrigger {
         serializer.serialize_str(&self.to_string())
     }
 }
+/// fitness equipment event data
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum FitnessEquipmentState {
     Ready,
@@ -8292,6 +8305,7 @@ impl Serialize for Weight {
         serializer.serialize_str(&self.to_string())
     }
 }
+/// 0 - 100 indicates% of max hr; >100 indicates bpm (255 max) plus 100
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum WorkoutHr {
     BpmOffset,
@@ -8337,6 +8351,7 @@ impl Serialize for WorkoutHr {
         serializer.serialize_str(&self.to_string())
     }
 }
+/// 0 - 1000 indicates % of functional threshold power; >1000 indicates watts plus 1000.
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum WorkoutPower {
     WattsOffset,
