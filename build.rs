@@ -183,7 +183,7 @@ impl FieldTypeVariant {
 
         // First letter isn't between A-Z in ASCII
         let first_let = titlized_name.as_bytes()[0];
-        if first_let < 65 || first_let > 90 {
+        if !(65..=90).contains(&first_let) {
             titlized_name = format!("Name{}", titlized_name);
         }
 
@@ -230,7 +230,7 @@ impl MessageDefinition {
         writeln!(out, "pub fn {}() -> MessageInfo {{", self.function_name())?;
         writeln!(out, "    let mut fields = HashMap::new();")?;
         for field in self.field_map.values() {
-            field.generate_field_info_struct(out, &self, "field")?;
+            field.generate_field_info_struct(out, self, "field")?;
             writeln!(out, "fields.insert({}, field);", field.def_number)?;
         }
         writeln!(out, "    MessageInfo {{")?;
@@ -538,10 +538,7 @@ fn process_types(sheet: Range<DataType>) -> Vec<FieldTypeDefintion> {
                     ));
                 }
             };
-            let comment = match row[4].get_string() {
-                Some(v) => Some(v.to_string()),
-                None => None,
-            };
+            let comment = row[4].get_string().map(|v| v.to_string());
             field_type.variant_map.insert(
                 value,
                 FieldTypeVariant {
@@ -602,11 +599,8 @@ fn new_message_field_definition(row: &[DataType]) -> MessageFieldDefinition {
     let ftype = row[3]
         .get_string()
         .unwrap_or_else(|| panic!("Field type must be a string, row={:?}.", row));
-    let components = parse_message_field_components(&row);
-    let comment = match row[13].get_string() {
-        Some(v) => Some(v.to_string()),
-        None => None,
-    };
+    let components = parse_message_field_components(row);
+    let comment = row[13].get_string().map(|v| v.to_string());
 
     MessageFieldDefinition {
         def_number,
@@ -763,7 +757,7 @@ fn write_types_files(profile: &FitProfile) -> Result<(), std::io::Error> {
     }
     generate_main_field_type_enum(&profile.field_types, &mut out)?;
 
-    rustfmt(&fname);
+    rustfmt(fname);
     Ok(())
 }
 
@@ -807,7 +801,7 @@ fn write_messages_file(profile: &FitProfile) -> Result<(), std::io::Error> {
     // output MesgNum implementation to allow parser to fetch info
     create_mesg_num_to_mesg_info_fn(&profile.messages, &mut out)?;
 
-    rustfmt(&fname);
+    rustfmt(fname);
     Ok(())
 }
 
