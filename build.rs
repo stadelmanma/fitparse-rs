@@ -540,7 +540,6 @@ fn process_types(sheet: Range<DataType>) -> Vec<FieldTypeDefintion> {
                 }
             };
             let comment = row[4].get_string().map(|v| v.to_string());
-
             field_type.variant_map.insert(
                 value,
                 FieldTypeVariant {
