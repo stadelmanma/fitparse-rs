@@ -219,7 +219,7 @@ impl MessageDefinition {
                 return field;
             }
         }
-        panic!(format!("No field with name: {:?}", name));
+        panic!("No field with name: {:?}", name);
     }
 
     fn function_name(&self) -> String {
@@ -401,10 +401,7 @@ fn base_type_to_rust_type(base_type_str: &str) -> &'static str {
         "sint32" => "i32",
         "uint32" => "u32",
         "uint32z" => "u32",
-        _ => panic!(format!(
-            "unsupported base_type for enum field: {}",
-            base_type_str
-        )),
+        _ => panic!("unsupported base_type for enum field: {}", base_type_str),
     }
 }
 
@@ -504,13 +501,13 @@ fn process_types(sheet: Range<DataType>) -> Vec<FieldTypeDefintion> {
             // extract enum name
             let enum_name = match row[0].get_string() {
                 Some(v) => v.to_string(),
-                None => panic!(format!("Enum type name must be a string row={:?}.", row)),
+                None => panic!("Enum type name must be a string row={:?}.", row),
             };
 
             // extract base type and convert to it's rust equivalent
             let rust_type = match row[1].get_string() {
                 Some(v) => base_type_to_rust_type(v),
-                None => panic!(format!("Base type name must be a string row={:?}.", row)),
+                None => panic!("Base type name must be a string row={:?}.", row),
             };
             let comment = row[4].get_string().map(|v| v.to_string());
             field_types.push(FieldTypeDefintion::new(enum_name, rust_type, comment));
@@ -523,7 +520,7 @@ fn process_types(sheet: Range<DataType>) -> Vec<FieldTypeDefintion> {
             // extract enum name
             let name = match row[2].get_string() {
                 Some(v) => v.to_string(),
-                None => panic!(format!("Enum variant name must be a string row={:?}.", row)),
+                None => panic!("Enum variant name must be a string row={:?}.", row),
             };
 
             // handle mix of numeric and hex string data values
@@ -532,10 +529,7 @@ fn process_types(sheet: Range<DataType>) -> Vec<FieldTypeDefintion> {
                 DataType::Int(v) => *v,
                 DataType::String(v) => i64::from_str_radix(&v[2..], 16).unwrap(),
                 _ => {
-                    panic!(format!(
-                        "Unsupported enum variant value data type row={:?}.",
-                        row
-                    ));
+                    panic!("Unsupported enum variant value data type row={:?}.", row);
                 }
             };
             let comment = row[4].get_string().map(|v| v.to_string());
