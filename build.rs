@@ -504,7 +504,7 @@ fn process_types(sheet: Range<DataType>) -> Vec<FieldTypeDefintion> {
                 None => panic!("Enum type name must be a string row={:?}.", row),
             };
 
-            // extract base type and convert to it's rust equivalent
+            // extract base type and convert to its rust equivalent
             let rust_type = match row[1].get_string() {
                 Some(v) => base_type_to_rust_type(v),
                 None => panic!("Base type name must be a string row={:?}.", row),
