@@ -1,11 +1,11 @@
-//! Auto generated profile messages from FIT SDK Release: 21.54.01
+//! Auto generated profile messages from FIT SDK Release: 21.60.00
 #![allow(missing_docs)]
 #![allow(clippy::redundant_field_names)]
 #![allow(clippy::unreadable_literal)]
 use super::field_types::*;
 use super::{ComponentFieldInfo, FieldDataType, FieldInfo, MessageInfo};
 use std::collections::HashMap;
-pub const VERSION: &str = "21.54.01";
+pub const VERSION: &str = "21.60.00";
 pub fn file_id_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {

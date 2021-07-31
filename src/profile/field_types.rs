@@ -1,4 +1,4 @@
-//! Auto generated profile field types from FIT SDK Release: 21.54.01
+//! Auto generated profile field types from FIT SDK Release: 21.60.00
 //! Not all of these may be used by the defined set of FIT messages
 #![allow(missing_docs)]
 #![allow(dead_code)]
@@ -3285,6 +3285,8 @@ pub enum SubSport {
     VirtualActivity,
     /// Used for events where participants run, crawl through mud, climb over walls, etc.
     Obstacle,
+    /// Sailing
+    SailRace,
     All,
     UnknownVariant(u8),
 }
@@ -3351,6 +3353,7 @@ impl SubSport {
             SubSport::ApneaHunting => 57,
             SubSport::VirtualActivity => 58,
             SubSport::Obstacle => 59,
+            SubSport::SailRace => 65,
             SubSport::All => 254,
             SubSport::UnknownVariant(value) => value,
         }
@@ -3422,6 +3425,7 @@ impl fmt::Display for SubSport {
             SubSport::ApneaHunting => write!(f, "apnea_hunting"),
             SubSport::VirtualActivity => write!(f, "virtual_activity"),
             SubSport::Obstacle => write!(f, "obstacle"),
+            SubSport::SailRace => write!(f, "sail_race"),
             SubSport::All => write!(f, "all"),
             SubSport::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
@@ -3490,6 +3494,7 @@ impl convert::From<u8> for SubSport {
             57 => SubSport::ApneaHunting,
             58 => SubSport::VirtualActivity,
             59 => SubSport::Obstacle,
+            65 => SubSport::SailRace,
             254 => SubSport::All,
             _ => SubSport::UnknownVariant(value),
         }
@@ -6628,6 +6633,7 @@ pub enum GarminProduct {
     LegacyFirstAvengerAsia,
     LegacyReyAsia,
     LegacyDarthVaderAsia,
+    DescentMk2s,
     Edge130Plus,
     Edge1030Plus,
     /// Rally 100/200 Power Meter Series
@@ -6654,6 +6660,7 @@ pub enum GarminProduct {
     VenusqAsia,
     MarqGolferAsia,
     EnduroAsia,
+    DescentMk2sAsia,
     ApproachS42,
     Venu2sAsia,
     Venu2Asia,
@@ -6984,6 +6991,7 @@ impl GarminProduct {
             GarminProduct::LegacyFirstAvengerAsia => 3536,
             GarminProduct::LegacyReyAsia => 3537,
             GarminProduct::LegacyDarthVaderAsia => 3538,
+            GarminProduct::DescentMk2s => 3542,
             GarminProduct::Edge130Plus => 3558,
             GarminProduct::Edge1030Plus => 3570,
             GarminProduct::Rally200 => 3578,
@@ -7008,6 +7016,7 @@ impl GarminProduct {
             GarminProduct::VenusqAsia => 3837,
             GarminProduct::MarqGolferAsia => 3850,
             GarminProduct::EnduroAsia => 3872,
+            GarminProduct::DescentMk2sAsia => 3930,
             GarminProduct::ApproachS42 => 3934,
             GarminProduct::Venu2sAsia => 3949,
             GarminProduct::Venu2Asia => 3950,
@@ -7347,6 +7356,7 @@ impl fmt::Display for GarminProduct {
             GarminProduct::LegacyFirstAvengerAsia => write!(f, "legacy_first_avenger_asia"),
             GarminProduct::LegacyReyAsia => write!(f, "legacy_rey_asia"),
             GarminProduct::LegacyDarthVaderAsia => write!(f, "legacy_darth_vader_asia"),
+            GarminProduct::DescentMk2s => write!(f, "descent_mk2s"),
             GarminProduct::Edge130Plus => write!(f, "edge_130_plus"),
             GarminProduct::Edge1030Plus => write!(f, "edge_1030_plus"),
             GarminProduct::Rally200 => write!(f, "rally_200"),
@@ -7371,6 +7381,7 @@ impl fmt::Display for GarminProduct {
             GarminProduct::VenusqAsia => write!(f, "venusq_asia"),
             GarminProduct::MarqGolferAsia => write!(f, "marq_golfer_asia"),
             GarminProduct::EnduroAsia => write!(f, "enduro_asia"),
+            GarminProduct::DescentMk2sAsia => write!(f, "descent_mk2s_asia"),
             GarminProduct::ApproachS42 => write!(f, "approach_s42"),
             GarminProduct::Venu2sAsia => write!(f, "venu2s_asia"),
             GarminProduct::Venu2Asia => write!(f, "venu2_asia"),
@@ -7701,6 +7712,7 @@ impl convert::From<u16> for GarminProduct {
             3536 => GarminProduct::LegacyFirstAvengerAsia,
             3537 => GarminProduct::LegacyReyAsia,
             3538 => GarminProduct::LegacyDarthVaderAsia,
+            3542 => GarminProduct::DescentMk2s,
             3558 => GarminProduct::Edge130Plus,
             3570 => GarminProduct::Edge1030Plus,
             3578 => GarminProduct::Rally200,
@@ -7725,6 +7737,7 @@ impl convert::From<u16> for GarminProduct {
             3837 => GarminProduct::VenusqAsia,
             3850 => GarminProduct::MarqGolferAsia,
             3872 => GarminProduct::EnduroAsia,
+            3930 => GarminProduct::DescentMk2sAsia,
             3934 => GarminProduct::ApproachS42,
             3949 => GarminProduct::Venu2sAsia,
             3950 => GarminProduct::Venu2Asia,
