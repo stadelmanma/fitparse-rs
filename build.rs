@@ -401,10 +401,7 @@ fn base_type_to_rust_type(base_type_str: &str) -> &'static str {
         "sint32" => "i32",
         "uint32" => "u32",
         "uint32z" => "u32",
-        _ => panic!(
-            "unsupported base_type for enum field: {}",
-            base_type_str
-        ),
+        _ => panic!("unsupported base_type for enum field: {}", base_type_str),
     }
 }
 
@@ -533,10 +530,7 @@ fn process_types(sheet: Range<DataType>) -> Vec<FieldTypeDefintion> {
                 DataType::Int(v) => *v,
                 DataType::String(v) => i64::from_str_radix(&v[2..], 16).unwrap(),
                 _ => {
-                    panic!(
-                        "Unsupported enum variant value data type row={:?}.",
-                        row
-                    );
+                    panic!("Unsupported enum variant value data type row={:?}.", row);
                 }
             };
             let comment = row[4].get_string().map(|v| v.to_string());
