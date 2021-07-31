@@ -153,7 +153,6 @@ impl Decoder {
             .iter()
             .filter_map(|(key, val)| val.as_ref().map(|v| (*key, v.clone())))
             .collect();
-
         let mut process_queue: Vec<(u8, Option<FieldInfo>)> = data_map
             .keys()
             .map(|k| (*k, get_message_field(&mesg_info, *k, &data_map).cloned()))
