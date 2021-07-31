@@ -202,13 +202,15 @@ impl FieldTypeVariant {
 #[derive(Clone, Debug)]
 struct MessageDefinition {
     name: String,
+    comment: Option<String>,
     field_map: BTreeMap<u8, MessageFieldDefinition>,
 }
 
 impl MessageDefinition {
-    fn new(name: &str) -> Self {
+    fn new(name: &str, comment: Option<String>) -> Self {
         MessageDefinition {
             name: name.to_string(),
+            comment,
             field_map: BTreeMap::new(),
         }
     }
@@ -227,6 +229,9 @@ impl MessageDefinition {
     }
 
     fn write_function_def(&self, out: &mut File) -> Result<(), std::io::Error> {
+        if let Some(v) = &self.comment {
+            writeln!(out, "/// {}", v)?;
+        }
         writeln!(out, "pub fn {}() -> MessageInfo {{", self.function_name())?;
         writeln!(out, "    let mut fields = HashMap::new();")?;
         for field in self.field_map.values() {
@@ -620,7 +625,7 @@ fn process_messages(sheet: Range<DataType>) -> Vec<MessageDefinition> {
     // parse first message row to initialize first message to prevent unitialized compile error in loop
     let row = rows.next().unwrap();
     if let Some(v) = row[0].get_string() {
-        msg = MessageDefinition::new(v);
+        msg = MessageDefinition::new(v, row[13].get_string().map(|v| v.to_string()));
     } else {
         panic!("Message name must be a string row={:?}.", row);
     }
@@ -631,7 +636,7 @@ fn process_messages(sheet: Range<DataType>) -> Vec<MessageDefinition> {
         if !row[0].is_empty() {
             if let Some(v) = row[0].get_string() {
                 messages.push(msg);
-                msg = MessageDefinition::new(v);
+                msg = MessageDefinition::new(v, row[13].get_string().map(|v| v.to_string()));
             } else {
                 panic!("Message name must be a string row={:?}.", row);
             }
