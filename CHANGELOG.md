@@ -6,9 +6,6 @@
 ## v0.4.2
 * Bump packaged FIT SDK version to 21.54.01
 
-## v0.4.2
-* Bump packaged FIT SDK version to 21.54.01
-
 ## v0.4.1
 * Bump packaged FIT SDK version to 21.53.00
 
