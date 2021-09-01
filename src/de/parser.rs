@@ -3,10 +3,11 @@ use crate::Value;
 use nom::bytes::streaming::{tag, take};
 use nom::combinator::cond;
 use nom::multi::count;
-use nom::number::streaming::{le_i8, le_u16, le_u32, le_u8};
+use nom::number::streaming::{
+    f32, f64, i16, i32, i64, le_i8, le_u16, le_u32, le_u8, u16, u32, u64,
+};
 use nom::number::Endianness;
 use nom::sequence::tuple;
-use nom::{i16, i32, i64, u16, u32, u64};
 use nom::{Err, IResult, Needed};
 use std::collections::HashMap;
 use std::convert::From;
@@ -410,7 +411,7 @@ fn definition_message<'a>(
     } else {
         Endianness::Little
     };
-    let (input, global_message_number) = u16!(input, byte_order)?;
+    let (input, global_message_number) = u16(byte_order)(input)?;
     let (input, number_of_fields) = le_u8(input)?;
     let (input, field_definitions) = count(field_definition, number_of_fields as usize)(input)?;
     let (input, developer_field_definitions) = if header.contains_developer_data {
@@ -515,9 +516,6 @@ fn data_message_fields_impl<'a>(
     Ok((input, (fields, developer_fields)))
 }
 
-macro_rules! parse_f32 ( ($i:expr, $e:expr) => ( {if nom::number::Endianness::Big == $e { nom::number::complete::be_f32($i) } else { nom::number::complete::le_f32($i) } } ););
-macro_rules! parse_f64 ( ($i:expr, $e:expr) => ( {if nom::number::Endianness::Big == $e { nom::number::complete::be_f64($i) } else { nom::number::complete::le_f64($i) } } ););
-
 /// Parse a single raw data value
 fn data_field_value(
     input: &[u8],
@@ -545,19 +543,19 @@ fn data_field_value(
             }
             BaseType::SInt16 => {
                 bytes_consumed += 2;
-                i16!(input, byte_order).map(|(i, v)| (i, Value::SInt16(v)))?
+                i16(byte_order)(input).map(|(i, v)| (i, Value::SInt16(v)))?
             }
             BaseType::UInt16 => {
                 bytes_consumed += 2;
-                u16!(input, byte_order).map(|(i, v)| (i, Value::UInt16(v)))?
+                u16(byte_order)(input).map(|(i, v)| (i, Value::UInt16(v)))?
             }
             BaseType::SInt32 => {
                 bytes_consumed += 4;
-                i32!(input, byte_order).map(|(i, v)| (i, Value::SInt32(v)))?
+                i32(byte_order)(input).map(|(i, v)| (i, Value::SInt32(v)))?
             }
             BaseType::UInt32 => {
                 bytes_consumed += 4;
-                u32!(input, byte_order).map(|(i, v)| (i, Value::UInt32(v)))?
+                u32(byte_order)(input).map(|(i, v)| (i, Value::UInt32(v)))?
             }
             BaseType::String => {
                 bytes_consumed += size;
@@ -579,11 +577,11 @@ fn data_field_value(
             }
             BaseType::Float32 => {
                 bytes_consumed += 4;
-                parse_f32!(input, byte_order).map(|(i, v)| (i, Value::Float32(v)))?
+                f32(byte_order)(input).map(|(i, v)| (i, Value::Float32(v)))?
             }
             BaseType::Float64 => {
                 bytes_consumed += 8;
-                parse_f64!(input, byte_order).map(|(i, v)| (i, Value::Float64(v)))?
+                f64(byte_order)(input).map(|(i, v)| (i, Value::Float64(v)))?
             }
             BaseType::UInt8z => {
                 bytes_consumed += 1;
@@ -591,11 +589,11 @@ fn data_field_value(
             }
             BaseType::UInt16z => {
                 bytes_consumed += 2;
-                u16!(input, byte_order).map(|(i, v)| (i, Value::UInt16z(v)))?
+                u16(byte_order)(input).map(|(i, v)| (i, Value::UInt16z(v)))?
             }
             BaseType::UInt32z => {
                 bytes_consumed += 4;
-                u32!(input, byte_order).map(|(i, v)| (i, Value::UInt32z(v)))?
+                u32(byte_order)(input).map(|(i, v)| (i, Value::UInt32z(v)))?
             }
             BaseType::Byte => {
                 bytes_consumed += 1;
@@ -603,15 +601,15 @@ fn data_field_value(
             }
             BaseType::SInt64 => {
                 bytes_consumed += 8;
-                i64!(input, byte_order).map(|(i, v)| (i, Value::SInt64(v)))?
+                i64(byte_order)(input).map(|(i, v)| (i, Value::SInt64(v)))?
             }
             BaseType::UInt64 => {
                 bytes_consumed += 8;
-                u64!(input, byte_order).map(|(i, v)| (i, Value::UInt64(v)))?
+                u64(byte_order)(input).map(|(i, v)| (i, Value::UInt64(v)))?
             }
             BaseType::UInt64z => {
                 bytes_consumed += 8;
-                u64!(input, byte_order).map(|(i, v)| (i, Value::UInt64z(v)))?
+                u64(byte_order)(input).map(|(i, v)| (i, Value::UInt64z(v)))?
             }
         };
         values.push(value);
