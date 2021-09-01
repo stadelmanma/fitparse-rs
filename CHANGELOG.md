@@ -1,4 +1,7 @@
-# Change Log
+# Changelog
+
+## HEAD
+* Upgrade nom parser to version 7.0
 
 ## v0.4.2
 * Bump packaged FIT SDK version to 21.54.01
