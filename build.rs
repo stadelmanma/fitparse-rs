@@ -183,7 +183,7 @@ impl FieldTypeVariant {
 
         // First letter isn't between A-Z in ASCII
         let first_let = titlized_name.as_bytes()[0];
-        if !(65..=90).contains(&first_let) {
+        if !first_let.is_ascii_alphabetic() {
             titlized_name = format!("Name{}", titlized_name);
         }
 
@@ -465,6 +465,7 @@ pub enum FieldDataType {{
     writeln!(out, "}}")?;
 
     writeln!(out, "impl FieldDataType {{")?;
+    writeln!(out, "    #[allow(clippy::match_like_matches_macro)]")?;
     writeln!(out, "    pub fn is_enum_type(self) -> bool {{")?;
     writeln!(out, "        match self {{")?;
     for field_type in field_types {

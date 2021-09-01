@@ -465,6 +465,7 @@ fn developer_field_definition(input: &[u8]) -> IResult<&[u8], DeveloperFieldDefi
 }
 
 /// Parse a data message
+#[allow(clippy::type_complexity)]
 fn data_message_fields<'a>(
     input: &'a [u8],
     def_mesg: &FitDefinitionMessage,
@@ -483,6 +484,7 @@ fn data_message_fields<'a>(
 
 /// Function to actually parse the data fields, the public function wraps incomplete errors to provide
 /// an accurate number for the bytes "needed" if we hit an incomplete error
+#[allow(clippy::type_complexity)]
 fn data_message_fields_impl<'a>(
     input: &'a [u8],
     def_mesg: &FitDefinitionMessage,

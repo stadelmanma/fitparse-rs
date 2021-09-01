@@ -21258,6 +21258,7 @@ pub enum FieldDataType {
     RadarThreatLevelType,
 }
 impl FieldDataType {
+    #[allow(clippy::match_like_matches_macro)]
     pub fn is_enum_type(self) -> bool {
         match self {
             FieldDataType::File => true,
