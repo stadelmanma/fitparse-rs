@@ -3,7 +3,7 @@
 use crate::error::{ErrorKind, Result};
 use crate::FitDataRecord;
 use nom::number::complete::le_u16;
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 use std::io::Read;
 use std::rc::Rc;
 
@@ -13,6 +13,15 @@ mod decode;
 use decode::Decoder;
 mod parser;
 pub use parser::{FitDataMessage, FitDefinitionMessage, FitFileHeader};
+
+/// Decoding options for the deserializer
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
+pub enum DecodeOption {
+    /// Ignore header section checksum value if it exists
+    SkipHeaderCrcValidation,
+    /// Ignore data section checksum value
+    SkipDataCrcValidation,
+}
 
 /// Stores a FIT file object (header, message or CRC)
 #[derive(Clone, Debug)]
@@ -29,6 +38,8 @@ pub enum FitObject {
 
 /// Manages the deserialization of a FIT data stream into Rust constructs.
 struct Deserializer {
+    /// The current set of deserialization options
+    options: HashSet<DecodeOption>,
     /// Track the current set of FIT message definitions, these are what allows the format to
     /// be self describing.
     definitions: HashMap<u8, Rc<parser::FitDefinitionMessage>>,
@@ -46,11 +57,17 @@ impl Deserializer {
     /// Create the deserializer with an empty state
     fn new() -> Self {
         Deserializer {
+            options: HashSet::new(),
             definitions: HashMap::new(),
             position: 0,
             end_of_messages: 0,
             crc: 0,
         }
+    }
+
+    /// Add or remove decoding options for deserializer by manipulating the set
+    fn options_mut(&mut self) -> &mut HashSet<DecodeOption> {
+        &mut self.options
     }
 
     /// Clear the definition messages used to decode data messages and reset the CRC value. This
@@ -185,6 +202,16 @@ impl FitStreamProcessor {
         Self::default()
     }
 
+    /// Add a decoding option to the processor
+    pub fn add_option(&mut self, opt: DecodeOption) {
+        self.deserializer.options_mut().insert(opt);
+    }
+
+    /// Add a decoding option to the processor
+    pub fn remove_option(&mut self, opt: DecodeOption) {
+        self.deserializer.options_mut().remove(&opt);
+    }
+
     /// Reset the decoder state and definition messages in use, this should be called at the end of
     /// each FIT file to ensure the accumlator fields in the decoder will produce the right values
     /// per file.
@@ -204,11 +231,16 @@ impl FitStreamProcessor {
     }
 }
 
-/// Deserialize a FIT file stored as an array of bytes and return the decoded data messages.
-pub fn from_bytes(mut buffer: &[u8]) -> Result<Vec<FitDataRecord>> {
+/// Deserialize a FIT file stored as an array of bytes and return the decoded data messages,
+/// with additional decode options
+pub fn from_bytes_with_options(
+    mut buffer: &[u8],
+    options: &HashSet<DecodeOption>,
+) -> Result<Vec<FitDataRecord>> {
     let mut processor = FitStreamProcessor::new();
     let mut records = Vec::new();
 
+    options.iter().for_each(|o| processor.add_option(*o));
     while !buffer.is_empty() {
         let (buf, obj) = processor.deserialize_next(buffer)?;
         match obj {
@@ -223,9 +255,24 @@ pub fn from_bytes(mut buffer: &[u8]) -> Result<Vec<FitDataRecord>> {
     Ok(records)
 }
 
+/// Deserialize a FIT file stored as an array of bytes and return the decoded data messages.
+pub fn from_bytes(mut buffer: &[u8]) -> Result<Vec<FitDataRecord>> {
+    from_bytes_with_options(&mut buffer, &HashSet::new())
+}
+
+/// Deserialize a FIT file stored in a source that implements io::Read, with additional decode options
+pub fn from_reader_with_options<T: Read>(
+    source: &mut T,
+    options: HashSet<DecodeOption>,
+) -> Result<Vec<FitDataRecord>> {
+    let mut buffer = Vec::new();
+    source.read_to_end(&mut buffer)?;
+    from_bytes_with_options(&buffer, &options)
+}
+
 /// Deserialize a FIT file stored in a source that implements io::Read.
 pub fn from_reader<T: Read>(source: &mut T) -> Result<Vec<FitDataRecord>> {
     let mut buffer = Vec::new();
     source.read_to_end(&mut buffer)?;
-    from_bytes(&buffer)
+    from_bytes_with_options(&buffer, &HashSet::new())
 }
