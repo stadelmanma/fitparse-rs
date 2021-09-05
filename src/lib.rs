@@ -306,6 +306,7 @@ impl fmt::Display for ValueWithUnits {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::collections::HashSet;
 
     #[test]
     fn parse_activity() {
@@ -392,5 +393,54 @@ mod tests {
         let data = include_bytes!("../tests/fixtures/sample_mulitple_header.fit").to_vec();
         let fit_data = from_bytes(&data).unwrap();
         assert_eq!(fit_data.len(), 3023);
+    }
+
+    #[test]
+    fn parse_with_invalid_header_crc_with_options() {
+        // this test case includes a chained FIT file
+        let mut data = include_bytes!("../tests/fixtures/MonitoringFile.fit").to_vec();
+        data[12] = 0;
+        data[13] = 0;
+        let mut options = HashSet::new();
+        match de::from_bytes_with_options(&data, &options) {
+            Ok(_) => assert!(
+                false,
+                "This test should fail without the SkipHeaderCrcValidation option."
+            ),
+            Err(e) => match *e {
+                ErrorKind::InvalidCrc(..) => {}
+                _ => assert!(false, "Incorrect error returned {:?}", e),
+            },
+        }
+
+        // add proper option to decode file
+        options.insert(de::DecodeOption::SkipHeaderCrcValidation);
+        let fit_data = de::from_bytes_with_options(&data, &options).unwrap();
+        assert_eq!(fit_data.len(), 355);
+    }
+
+    #[test]
+    fn parse_with_invalid_data_crc_with_options() {
+        // this test case includes a chained FIT file
+        let mut data = include_bytes!("../tests/fixtures/MonitoringFile.fit").to_vec();
+        let leng = data.len();
+        data[leng - 2] = 0;
+        data[leng - 1] = 0;
+        let mut options = HashSet::new();
+        match de::from_bytes_with_options(&data, &options) {
+            Ok(_) => assert!(
+                false,
+                "This test should fail without the SkipDataCrcValidation option."
+            ),
+            Err(e) => match *e {
+                ErrorKind::InvalidCrc(..) => {}
+                _ => assert!(false, "Incorrect error returned {:?}", e),
+            },
+        }
+
+        // add proper option to decode file
+        options.insert(de::DecodeOption::SkipDataCrcValidation);
+        let fit_data = de::from_bytes_with_options(&data, &options).unwrap();
+        assert_eq!(fit_data.len(), 355);
     }
 }
