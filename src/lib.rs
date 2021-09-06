@@ -12,6 +12,7 @@
 //! that parses FIT files and exports them as JSON.
 //! ```
 //! use fitparser;
+//! use fitparser::de::{DecodeOption, from_reader_with_options};
 //! use std::fs::File;
 //! use std::io::prelude::*;
 //!
@@ -21,6 +22,16 @@
 //!     // print the data in FIT file
 //!     println!("{:#?}", data);
 //! }
+//!
+//! // Optionally ignore CRC validation
+//! let opts = [DecodeOption::SkipHeaderCrcValidation,
+//!             DecodeOption::SkipDataCrcValidation].iter().map(|o| *o).collect();
+//! let mut fp = File::open("tests/fixtures/Activity.fit")?;
+//! for data in from_reader_with_options(&mut fp, &opts)? {
+//!     // print the data in FIT file
+//!     println!("{:#?}", data);
+//! }
+//!
 //! # Ok::<(), Box<dyn std::error::Error>>(())
 //! ```
 #![warn(missing_docs)]

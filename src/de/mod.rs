@@ -267,7 +267,7 @@ pub fn from_bytes(mut buffer: &[u8]) -> Result<Vec<FitDataRecord>> {
 /// Deserialize a FIT file stored in a source that implements io::Read, with additional decode options
 pub fn from_reader_with_options<T: Read>(
     source: &mut T,
-    options: HashSet<DecodeOption>,
+    options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataRecord>> {
     let mut buffer = Vec::new();
     source.read_to_end(&mut buffer)?;
