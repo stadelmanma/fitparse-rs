@@ -5,6 +5,7 @@
 * Bump packaged FIT SDK version to 21.60.00 (by xehpuk)
 * Clippy/Typo cleanup (by danielalvsaaker, xehpuk)
 * Add doc comments to field types and messages (by xehpuk)
+* Allow CRC validation to be skipped.
 
 ## v0.4.2
 * Bump packaged FIT SDK version to 21.54.01
