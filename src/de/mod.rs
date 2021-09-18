@@ -104,17 +104,21 @@ impl Deserializer {
         self.position += header.header_size() as usize;
         self.crc = 0;
 
-        if let Some(value) = header.crc() {
+        // Check CRC if the header was 14 bytes. If the value is 0 treat it like the CRC doesn't
+        // exist. This behavior doesn't appear to be documented but was verified using the
+        // FitTestTool.jar utility included with the SDK.
+        let crc_value = header.crc().unwrap_or(0);
+        if crc_value > 0 {
             let checksum = caculate_crc(&input[0..(header.header_size() - 2) as usize]);
             if !self
                 .options
                 .contains(&DecodeOption::SkipHeaderCrcValidation)
-                && checksum != value
+                && checksum != crc_value
             {
                 return Err(Box::new(ErrorKind::InvalidCrc((
                     Vec::from(remaining),
                     FitObject::Header(header),
-                    value,
+                    crc_value,
                     checksum,
                 ))));
             }
