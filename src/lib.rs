@@ -407,11 +407,36 @@ mod tests {
     }
 
     #[test]
+    fn parse_with_header_crc_set_to_zero() {
+        // Set header CRC to zero so that the CRC at the EOF includes all bytes
+        let mut data = include_bytes!("../tests/fixtures/garmin-fenix-5-bike.fit").to_vec();
+        let leng = data.len();
+        data[12] = 0x00;
+        data[13] = 0x00;
+        match de::from_bytes(&data) {
+            Ok(_) => assert!(
+                false,
+                "This test should fail without the data CRC value being recomputed to include the header."
+            ),
+            Err(e) => match *e {
+                ErrorKind::InvalidCrc(..) => {}
+                _ => assert!(false, "Incorrect error returned {:?}", e),
+            },
+        }
+
+        // update data CRC value so that it includes the header
+        data[leng - 2] = 0x58;
+        data[leng - 1] = 0x65;
+        let fit_data = de::from_bytes(&data).unwrap();
+        assert_eq!(fit_data.len(), 143);
+    }
+
+    #[test]
     fn parse_with_invalid_header_crc_with_options() {
-        // this test case includes a chained FIT file
+        // force header CRC to be an invalid, non-zero value
         let mut data = include_bytes!("../tests/fixtures/MonitoringFile.fit").to_vec();
-        data[12] = 0;
-        data[13] = 0;
+        data[12] = 0xFF;
+        data[13] = 0xFF;
         let mut options = HashSet::new();
         match de::from_bytes_with_options(&data, &options) {
             Ok(_) => assert!(
@@ -432,11 +457,11 @@ mod tests {
 
     #[test]
     fn parse_with_invalid_data_crc_with_options() {
-        // this test case includes a chained FIT file
+        // force data CRC to be an invalid value
         let mut data = include_bytes!("../tests/fixtures/MonitoringFile.fit").to_vec();
         let leng = data.len();
-        data[leng - 2] = 0;
-        data[leng - 1] = 0;
+        data[leng - 2] = 0xFF;
+        data[leng - 1] = 0xFF;
         let mut options = HashSet::new();
         match de::from_bytes_with_options(&data, &options) {
             Ok(_) => assert!(
