@@ -7,6 +7,7 @@
 * Add doc comments to field types and messages (by xehpuk)
 * Allow CRC validation to be skipped.
 * Properly handle FIT files where the header CRC is zero (credit ddboline)
+* Check that field size and base type are an even multiple of each other
 
 ## v0.4.2
 * Bump packaged FIT SDK version to 21.54.01
