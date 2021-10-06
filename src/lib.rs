@@ -150,7 +150,7 @@ pub enum Value {
     /// Timestamp field converted to the local timezone
     Timestamp(DateTime<Local>),
     /// Unsigned 8bit integer data
-    Byte(u8),
+    Byte(u8), // TODO: I think this should actually be a Vec<u8> type
     /// Unsigned 8bit integer that gets mapped to a FieldType enum
     Enum(u8),
     /// Signed 8bit integer data

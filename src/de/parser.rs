@@ -36,6 +36,8 @@ impl Value {
             Value::SInt64(val) => *val != 0x7FFF_FFFF_FFFF_FFFF,
             Value::UInt64(val) => *val != 0xFFFF_FFFF_FFFF_FFFF,
             Value::UInt64z(val) => *val != 0x0,
+            // TODO: I need to check this logic, since for Byte Arrays it's only invalid if
+            // all the values are invalid. Is that the case for all array fields or just "byte arrays"?
             Value::Array(vals) => !vals.is_empty() && vals.iter().all(|v| v.is_valid()),
         }
     }
@@ -254,6 +256,31 @@ enum BaseType {
     UInt64z = 0x90,
 }
 
+impl BaseType {
+    /// The size for fixed width numeric values, for variable Llength types it's the smallest chunk size.
+    fn size(&self) -> u8 {
+        match *self {
+            BaseType::Enum => 1,
+            BaseType::SInt8 => 1,
+            BaseType::UInt8 => 1,
+            BaseType::SInt16 => 2,
+            BaseType::UInt16 => 2,
+            BaseType::SInt32 => 4,
+            BaseType::UInt32 => 4,
+            BaseType::String => 1,
+            BaseType::Float32 => 4,
+            BaseType::Float64 => 8,
+            BaseType::UInt8z => 1,
+            BaseType::UInt16z => 2,
+            BaseType::UInt32z => 4,
+            BaseType::Byte => 1,
+            BaseType::SInt64 => 8,
+            BaseType::UInt64 => 8,
+            BaseType::UInt64z => 8,
+        }
+    }
+}
+
 impl From<u8> for BaseType {
     /// Check the value of the last 5 bits to determine the base type.
     ///
@@ -438,13 +465,26 @@ fn field_definition(input: &[u8]) -> IResult<&[u8], FieldDefinition> {
     let (input, field_definition_number) = le_u8(input)?;
     let (input, size) = le_u8(input)?;
     let (input, base_type_field) = le_u8(input)?;
+    let mut base_type = BaseType::from(base_type_field);
+    // check that the field size is a valid multiple of the base size, if not drop data into a
+    // byte array since the field value is undefined. This prevents a potential add-overflow
+    // panic in the `data_field_value` function.
+    if size % base_type.size() != 0 {
+        eprintln!(
+            "ERROR: field size: {} is not a multiple of the base type {:?} (size {}) parsing as a byte array",
+            size,
+            base_type,
+            base_type.size()
+        );
+        base_type = BaseType::Byte;
+    }
 
     Ok((
         input,
         FieldDefinition {
             field_definition_number,
             size,
-            base_type: BaseType::from(base_type_field),
+            base_type,
         },
     ))
 }
@@ -518,7 +558,11 @@ fn data_message_fields_impl<'a>(
     Ok((input, (fields, developer_fields)))
 }
 
-/// Parse a single raw data value
+/// Parse a single raw data value.
+///
+/// This can panic if the size is greater than `255 - base_type.size()` but that should only
+/// occur when the field size is not a multiple of the base_type size. Size agreement is checked
+/// when parsing field definitions preventing overflow during regular normal execution.
 fn data_field_value(
     input: &[u8],
     base_type: BaseType,
@@ -531,36 +575,14 @@ fn data_field_value(
 
     while bytes_consumed < size {
         let (i, value) = match base_type {
-            BaseType::Enum => {
-                bytes_consumed += 1;
-                le_u8(input).map(|(i, v)| (i, Value::Enum(v)))?
-            }
-            BaseType::SInt8 => {
-                bytes_consumed += 1;
-                le_i8(input).map(|(i, v)| (i, Value::SInt8(v)))?
-            }
-            BaseType::UInt8 => {
-                bytes_consumed += 1;
-                le_u8(input).map(|(i, v)| (i, Value::UInt8(v)))?
-            }
-            BaseType::SInt16 => {
-                bytes_consumed += 2;
-                i16(byte_order)(input).map(|(i, v)| (i, Value::SInt16(v)))?
-            }
-            BaseType::UInt16 => {
-                bytes_consumed += 2;
-                u16(byte_order)(input).map(|(i, v)| (i, Value::UInt16(v)))?
-            }
-            BaseType::SInt32 => {
-                bytes_consumed += 4;
-                i32(byte_order)(input).map(|(i, v)| (i, Value::SInt32(v)))?
-            }
-            BaseType::UInt32 => {
-                bytes_consumed += 4;
-                u32(byte_order)(input).map(|(i, v)| (i, Value::UInt32(v)))?
-            }
+            BaseType::Enum => le_u8(input).map(|(i, v)| (i, Value::Enum(v)))?,
+            BaseType::SInt8 => le_i8(input).map(|(i, v)| (i, Value::SInt8(v)))?,
+            BaseType::UInt8 => le_u8(input).map(|(i, v)| (i, Value::UInt8(v)))?,
+            BaseType::SInt16 => i16(byte_order)(input).map(|(i, v)| (i, Value::SInt16(v)))?,
+            BaseType::UInt16 => u16(byte_order)(input).map(|(i, v)| (i, Value::UInt16(v)))?,
+            BaseType::SInt32 => i32(byte_order)(input).map(|(i, v)| (i, Value::SInt32(v)))?,
+            BaseType::UInt32 => u32(byte_order)(input).map(|(i, v)| (i, Value::UInt32(v)))?,
             BaseType::String => {
-                bytes_consumed += size;
                 // consume the field as defined by its size and then locate the first NUL byte
                 // and ignore everything after it when converting to a string
                 let (input, field_value) = take(size as usize)(input)?;
@@ -572,48 +594,22 @@ fn data_field_value(
                     value.push(*char);
                 }
                 if let Ok(value) = String::from_utf8(value) {
-                    (input, Value::String(value))
+                    return Ok((input, Some(Value::String(value))));
                 } else {
                     return Ok((input, None));
                 }
             }
-            BaseType::Float32 => {
-                bytes_consumed += 4;
-                f32(byte_order)(input).map(|(i, v)| (i, Value::Float32(v)))?
-            }
-            BaseType::Float64 => {
-                bytes_consumed += 8;
-                f64(byte_order)(input).map(|(i, v)| (i, Value::Float64(v)))?
-            }
-            BaseType::UInt8z => {
-                bytes_consumed += 1;
-                le_u8(input).map(|(i, v)| (i, Value::UInt8z(v)))?
-            }
-            BaseType::UInt16z => {
-                bytes_consumed += 2;
-                u16(byte_order)(input).map(|(i, v)| (i, Value::UInt16z(v)))?
-            }
-            BaseType::UInt32z => {
-                bytes_consumed += 4;
-                u32(byte_order)(input).map(|(i, v)| (i, Value::UInt32z(v)))?
-            }
-            BaseType::Byte => {
-                bytes_consumed += 1;
-                le_u8(input).map(|(i, v)| (i, Value::UInt8(v)))?
-            }
-            BaseType::SInt64 => {
-                bytes_consumed += 8;
-                i64(byte_order)(input).map(|(i, v)| (i, Value::SInt64(v)))?
-            }
-            BaseType::UInt64 => {
-                bytes_consumed += 8;
-                u64(byte_order)(input).map(|(i, v)| (i, Value::UInt64(v)))?
-            }
-            BaseType::UInt64z => {
-                bytes_consumed += 8;
-                u64(byte_order)(input).map(|(i, v)| (i, Value::UInt64z(v)))?
-            }
+            BaseType::Float32 => f32(byte_order)(input).map(|(i, v)| (i, Value::Float32(v)))?,
+            BaseType::Float64 => f64(byte_order)(input).map(|(i, v)| (i, Value::Float64(v)))?,
+            BaseType::UInt8z => le_u8(input).map(|(i, v)| (i, Value::UInt8z(v)))?,
+            BaseType::UInt16z => u16(byte_order)(input).map(|(i, v)| (i, Value::UInt16z(v)))?,
+            BaseType::UInt32z => u32(byte_order)(input).map(|(i, v)| (i, Value::UInt32z(v)))?,
+            BaseType::Byte => le_u8(input).map(|(i, v)| (i, Value::UInt8(v)))?,
+            BaseType::SInt64 => i64(byte_order)(input).map(|(i, v)| (i, Value::SInt64(v)))?,
+            BaseType::UInt64 => u64(byte_order)(input).map(|(i, v)| (i, Value::UInt64(v)))?,
+            BaseType::UInt64z => u64(byte_order)(input).map(|(i, v)| (i, Value::UInt64z(v)))?,
         };
+        bytes_consumed += base_type.size();
         values.push(value);
         input = i;
     }
@@ -662,5 +658,121 @@ mod tests {
         assert_eq!(hdr.local_message_number, 0);
         assert_eq!(hdr.message_type, FitMessageType::Definition);
         assert_eq!(hdr.time_offset, None);
+    }
+
+    #[test]
+    fn data_field_value_test_single_value() {
+        let data = [0x01, 0xFF];
+
+        // parse off a valid byte
+        let (rem, val) = data_field_value(&data, BaseType::UInt8, Endianness::Native, 1).unwrap();
+        match val {
+            Some(v) => assert_eq!(v, Value::UInt8(0x01)),
+            None => assert!(false, "No value returned."),
+        }
+        assert_eq!(rem, &[0xFF]);
+
+        // parse off an invalid byte
+        let (rem, val) = data_field_value(rem, BaseType::UInt8, Endianness::Native, 1).unwrap();
+        match val {
+            Some(_) => assert!(false, "None should be returned for invalid bytes."),
+            None => {}
+        }
+        assert_eq!(rem, &[]);
+
+        // parse two byte values with defined endianess
+        let (rem, val) = data_field_value(&data, BaseType::UInt16, Endianness::Big, 2).unwrap();
+        match val {
+            Some(v) => assert_eq!(v, Value::UInt16(0x01FF)),
+            None => assert!(false, "No value returned."),
+        }
+        assert_eq!(rem, &[]);
+
+        let (rem, val) = data_field_value(&data, BaseType::UInt16, Endianness::Little, 2).unwrap();
+        match val {
+            Some(v) => assert_eq!(v, Value::UInt16(0xFF01)),
+            None => assert!(false, "No value returned."),
+        }
+        assert_eq!(rem, &[]);
+    }
+
+    #[test]
+    fn data_field_value_test_array_value() {
+        let data = [0x00, 0x01, 0x02, 0x03, 0xFF];
+
+        // parse off a valid byte
+        let (rem, val) = data_field_value(&data, BaseType::UInt8, Endianness::Native, 4).unwrap();
+        match val {
+            Some(v) => assert_eq!(
+                v,
+                Value::Array(vec![
+                    Value::UInt8(0x00),
+                    Value::UInt8(0x01),
+                    Value::UInt8(0x02),
+                    Value::UInt8(0x03)
+                ])
+            ),
+            None => assert!(false, "No value returned."),
+        }
+        assert_eq!(rem, &[0xFF]);
+
+        // parse off an invalid byte
+        let (rem, val) = data_field_value(&data, BaseType::UInt8, Endianness::Native, 5).unwrap();
+        match val {
+            Some(_) => assert!(false, "None should be returned for invalid bytes."),
+            None => {}
+        }
+        assert_eq!(rem, &[]);
+
+        match val {
+            Some(_) => assert!(
+                false,
+                "None should be returned for array with an invalid size."
+            ),
+            None => {}
+        }
+        assert_eq!(rem, &[]);
+    }
+
+    #[test]
+    fn data_field_value_test_string_value() {
+        let data = [71, 65, 82, 77, 73, 78, 0, 63, 255];
+
+        // parse off a valid byte
+        let (rem, val) = data_field_value(&data, BaseType::String, Endianness::Native, 8).unwrap();
+        match val {
+            Some(v) => assert_eq!(v, Value::String(String::from("GARMIN"))),
+            None => assert!(false, "No value returned."),
+        }
+        assert_eq!(rem, &[0xFF]);
+
+        // parse invalid UTF8 string
+        let data = [71, 195, 40, 77, 73, 78, 0, 63, 255];
+        let (rem, val) = data_field_value(&data, BaseType::String, Endianness::Native, 8).unwrap();
+        match val {
+            Some(_) => assert!(false, "None should be returned for invalid string."),
+            None => {}
+        }
+        assert_eq!(rem, &[0xFF]);
+
+        // parse string with NUL byte before invalid UTF8 sequence
+        let data = [71, 65, 82, 77, 0, 195, 40, 63, 255];
+        let (rem, val) = data_field_value(&data, BaseType::String, Endianness::Native, 8).unwrap();
+        match val {
+            Some(v) => assert_eq!(v, Value::String(String::from("GARM"))),
+            None => assert!(false, "No value returned."),
+        }
+        assert_eq!(rem, &[0xFF]);
+    }
+
+    #[test]
+    #[should_panic(expected = "attempt to add with overflow")]
+    fn data_field_value_test_size_mismatch_array_value() {
+        // try and parse an array with a size that isn't a multiple of the base type
+        let data: Vec<u8> = (0..=255).collect();
+        match data_field_value(&data, BaseType::UInt16, Endianness::Native, 255) {
+            Ok(..) => {}
+            Err(..) => {}
+        };
     }
 }
