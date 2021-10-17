@@ -164,14 +164,19 @@ impl FitDefinitionMessage {
         &self.developer_field_definitions
     }
 
-    /// Calculate and return the size of the data message described
-    pub fn data_message_size(&self) -> u8 {
+    /// Calculate and return the size of the data message described.
+    /// The max theoretical size of a data message is 1 + (255 * 255) + (255 * 255) = 130KB
+    /// which would be 255 regular and 255 developer fields each 255 bytes long plus
+    /// the header byte.
+    pub fn data_message_size(&self) -> usize {
         // start accumlator at one to account for the message header
-        self.field_definitions.iter().fold(1, |l, f| l + f.size)
+        self.field_definitions
+            .iter()
+            .fold(1, |l, f| l + f.size as usize)
             + self
                 .developer_field_definitions
                 .iter()
-                .fold(0, |l, f| l + f.size)
+                .fold(0, |l, f| l + f.size as usize)
     }
 }
 
