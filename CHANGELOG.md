@@ -1,6 +1,6 @@
 # Changelog
 
-## HEAD
+## v0.4.3
 * Upgrade nom parser to version 7.0
 * Bump packaged FIT SDK version to 21.67.00
 * Clippy/Typo cleanup (by danielalvsaaker, xehpuk)
