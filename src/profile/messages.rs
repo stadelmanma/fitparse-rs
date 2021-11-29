@@ -1,11 +1,11 @@
-//! Auto generated profile messages from FIT SDK Release: 21.60.00
+//! Auto generated profile messages from FIT SDK Release: 21.67.00
 #![allow(missing_docs)]
 #![allow(clippy::redundant_field_names)]
 #![allow(clippy::unreadable_literal)]
 use super::field_types::*;
 use super::{ComponentFieldInfo, FieldDataType, FieldInfo, MessageInfo};
 use std::collections::HashMap;
-pub const VERSION: &str = "21.60.00";
+pub const VERSION: &str = "21.67.00";
 /// Must be first message in file.
 pub fn file_id_message() -> MessageInfo {
     let mut fields = HashMap::new();
@@ -1046,7 +1046,7 @@ pub fn device_settings_message() -> MessageInfo {
         field_type: FieldDataType::TapSensitivity,
         def_number: 174,
         scale: 1.000000,
-        offset: 1.000000,
+        offset: 0.000000,
         units: "",
         accumulate: false,
         subfields: Vec::new(),
@@ -8923,28 +8923,6 @@ pub fn training_file_message() -> MessageInfo {
         fields,
     }
 }
-/// Heart rate variability
-pub fn hrv_message() -> MessageInfo {
-    let mut fields = HashMap::new();
-    // Time between beats
-    let field = FieldInfo {
-        name: "time",
-        field_type: FieldDataType::UInt16,
-        def_number: 0,
-        scale: 1000.000000,
-        offset: 0.000000,
-        units: "s",
-        accumulate: false,
-        subfields: Vec::new(),
-        components: Vec::new(),
-    };
-    fields.insert(0, field);
-    MessageInfo {
-        name: "hrv",
-        global_message_number: MesgNum::Hrv,
-        fields,
-    }
-}
 pub fn weather_conditions_message() -> MessageInfo {
     let mut fields = HashMap::new();
     // Current or forecast
@@ -11019,6 +10997,344 @@ pub fn jump_message() -> MessageInfo {
     MessageInfo {
         name: "jump",
         global_message_number: MesgNum::Jump,
+        fields,
+    }
+}
+pub fn climb_pro_message() -> MessageInfo {
+    let mut fields = HashMap::new();
+    let field = FieldInfo {
+        name: "position_lat",
+        field_type: FieldDataType::SInt32,
+        def_number: 0,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "semicircles",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    fields.insert(0, field);
+    let field = FieldInfo {
+        name: "position_long",
+        field_type: FieldDataType::SInt32,
+        def_number: 1,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "semicircles",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    fields.insert(1, field);
+    let field = FieldInfo {
+        name: "climb_pro_event",
+        field_type: FieldDataType::ClimbProEvent,
+        def_number: 2,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    fields.insert(2, field);
+    let field = FieldInfo {
+        name: "climb_number",
+        field_type: FieldDataType::UInt16,
+        def_number: 3,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    fields.insert(3, field);
+    let field = FieldInfo {
+        name: "climb_category",
+        field_type: FieldDataType::UInt8,
+        def_number: 4,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    fields.insert(4, field);
+    let field = FieldInfo {
+        name: "current_dist",
+        field_type: FieldDataType::Float32,
+        def_number: 5,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "m",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    fields.insert(5, field);
+    let field = FieldInfo {
+        name: "timestamp",
+        field_type: FieldDataType::DateTime,
+        def_number: 253,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "s",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    fields.insert(253, field);
+    MessageInfo {
+        name: "climb_pro",
+        global_message_number: MesgNum::ClimbPro,
+        fields,
+    }
+}
+/// Must be logged before developer field is used
+pub fn field_description_message() -> MessageInfo {
+    let mut fields = HashMap::new();
+    let field = FieldInfo {
+        name: "developer_data_index",
+        field_type: FieldDataType::UInt8,
+        def_number: 0,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    fields.insert(0, field);
+    let field = FieldInfo {
+        name: "field_definition_number",
+        field_type: FieldDataType::UInt8,
+        def_number: 1,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    fields.insert(1, field);
+    let field = FieldInfo {
+        name: "fit_base_type_id",
+        field_type: FieldDataType::FitBaseType,
+        def_number: 2,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    fields.insert(2, field);
+    let field = FieldInfo {
+        name: "field_name",
+        field_type: FieldDataType::String,
+        def_number: 3,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    fields.insert(3, field);
+    let field = FieldInfo {
+        name: "array",
+        field_type: FieldDataType::UInt8,
+        def_number: 4,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    fields.insert(4, field);
+    let field = FieldInfo {
+        name: "components",
+        field_type: FieldDataType::String,
+        def_number: 5,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    fields.insert(5, field);
+    let field = FieldInfo {
+        name: "scale",
+        field_type: FieldDataType::UInt8,
+        def_number: 6,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    fields.insert(6, field);
+    let field = FieldInfo {
+        name: "offset",
+        field_type: FieldDataType::SInt8,
+        def_number: 7,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    fields.insert(7, field);
+    let field = FieldInfo {
+        name: "units",
+        field_type: FieldDataType::String,
+        def_number: 8,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    fields.insert(8, field);
+    let field = FieldInfo {
+        name: "bits",
+        field_type: FieldDataType::String,
+        def_number: 9,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    fields.insert(9, field);
+    let field = FieldInfo {
+        name: "accumulate",
+        field_type: FieldDataType::String,
+        def_number: 10,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    fields.insert(10, field);
+    let field = FieldInfo {
+        name: "fit_base_unit_id",
+        field_type: FieldDataType::FitBaseUnit,
+        def_number: 13,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    fields.insert(13, field);
+    let field = FieldInfo {
+        name: "native_mesg_num",
+        field_type: FieldDataType::MesgNum,
+        def_number: 14,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    fields.insert(14, field);
+    let field = FieldInfo {
+        name: "native_field_num",
+        field_type: FieldDataType::UInt8,
+        def_number: 15,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    fields.insert(15, field);
+    MessageInfo {
+        name: "field_description",
+        global_message_number: MesgNum::FieldDescription,
+        fields,
+    }
+}
+/// Must be logged before field description
+pub fn developer_data_id_message() -> MessageInfo {
+    let mut fields = HashMap::new();
+    let field = FieldInfo {
+        name: "developer_id",
+        field_type: FieldDataType::Byte,
+        def_number: 0,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    fields.insert(0, field);
+    let field = FieldInfo {
+        name: "application_id",
+        field_type: FieldDataType::Byte,
+        def_number: 1,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    fields.insert(1, field);
+    let field = FieldInfo {
+        name: "manufacturer_id",
+        field_type: FieldDataType::Manufacturer,
+        def_number: 2,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    fields.insert(2, field);
+    let field = FieldInfo {
+        name: "developer_data_index",
+        field_type: FieldDataType::UInt8,
+        def_number: 3,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    fields.insert(3, field);
+    let field = FieldInfo {
+        name: "application_version",
+        field_type: FieldDataType::UInt32,
+        def_number: 4,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    fields.insert(4, field);
+    MessageInfo {
+        name: "developer_data_id",
+        global_message_number: MesgNum::DeveloperDataId,
         fields,
     }
 }
@@ -15794,252 +16110,6 @@ pub fn exd_data_concept_configuration_message() -> MessageInfo {
         fields,
     }
 }
-/// Must be logged before developer field is used
-pub fn field_description_message() -> MessageInfo {
-    let mut fields = HashMap::new();
-    let field = FieldInfo {
-        name: "developer_data_index",
-        field_type: FieldDataType::UInt8,
-        def_number: 0,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "",
-        accumulate: false,
-        subfields: Vec::new(),
-        components: Vec::new(),
-    };
-    fields.insert(0, field);
-    let field = FieldInfo {
-        name: "field_definition_number",
-        field_type: FieldDataType::UInt8,
-        def_number: 1,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "",
-        accumulate: false,
-        subfields: Vec::new(),
-        components: Vec::new(),
-    };
-    fields.insert(1, field);
-    let field = FieldInfo {
-        name: "fit_base_type_id",
-        field_type: FieldDataType::FitBaseType,
-        def_number: 2,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "",
-        accumulate: false,
-        subfields: Vec::new(),
-        components: Vec::new(),
-    };
-    fields.insert(2, field);
-    let field = FieldInfo {
-        name: "field_name",
-        field_type: FieldDataType::String,
-        def_number: 3,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "",
-        accumulate: false,
-        subfields: Vec::new(),
-        components: Vec::new(),
-    };
-    fields.insert(3, field);
-    let field = FieldInfo {
-        name: "array",
-        field_type: FieldDataType::UInt8,
-        def_number: 4,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "",
-        accumulate: false,
-        subfields: Vec::new(),
-        components: Vec::new(),
-    };
-    fields.insert(4, field);
-    let field = FieldInfo {
-        name: "components",
-        field_type: FieldDataType::String,
-        def_number: 5,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "",
-        accumulate: false,
-        subfields: Vec::new(),
-        components: Vec::new(),
-    };
-    fields.insert(5, field);
-    let field = FieldInfo {
-        name: "scale",
-        field_type: FieldDataType::UInt8,
-        def_number: 6,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "",
-        accumulate: false,
-        subfields: Vec::new(),
-        components: Vec::new(),
-    };
-    fields.insert(6, field);
-    let field = FieldInfo {
-        name: "offset",
-        field_type: FieldDataType::SInt8,
-        def_number: 7,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "",
-        accumulate: false,
-        subfields: Vec::new(),
-        components: Vec::new(),
-    };
-    fields.insert(7, field);
-    let field = FieldInfo {
-        name: "units",
-        field_type: FieldDataType::String,
-        def_number: 8,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "",
-        accumulate: false,
-        subfields: Vec::new(),
-        components: Vec::new(),
-    };
-    fields.insert(8, field);
-    let field = FieldInfo {
-        name: "bits",
-        field_type: FieldDataType::String,
-        def_number: 9,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "",
-        accumulate: false,
-        subfields: Vec::new(),
-        components: Vec::new(),
-    };
-    fields.insert(9, field);
-    let field = FieldInfo {
-        name: "accumulate",
-        field_type: FieldDataType::String,
-        def_number: 10,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "",
-        accumulate: false,
-        subfields: Vec::new(),
-        components: Vec::new(),
-    };
-    fields.insert(10, field);
-    let field = FieldInfo {
-        name: "fit_base_unit_id",
-        field_type: FieldDataType::FitBaseUnit,
-        def_number: 13,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "",
-        accumulate: false,
-        subfields: Vec::new(),
-        components: Vec::new(),
-    };
-    fields.insert(13, field);
-    let field = FieldInfo {
-        name: "native_mesg_num",
-        field_type: FieldDataType::MesgNum,
-        def_number: 14,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "",
-        accumulate: false,
-        subfields: Vec::new(),
-        components: Vec::new(),
-    };
-    fields.insert(14, field);
-    let field = FieldInfo {
-        name: "native_field_num",
-        field_type: FieldDataType::UInt8,
-        def_number: 15,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "",
-        accumulate: false,
-        subfields: Vec::new(),
-        components: Vec::new(),
-    };
-    fields.insert(15, field);
-    MessageInfo {
-        name: "field_description",
-        global_message_number: MesgNum::FieldDescription,
-        fields,
-    }
-}
-/// Must be logged before field description
-pub fn developer_data_id_message() -> MessageInfo {
-    let mut fields = HashMap::new();
-    let field = FieldInfo {
-        name: "developer_id",
-        field_type: FieldDataType::Byte,
-        def_number: 0,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "",
-        accumulate: false,
-        subfields: Vec::new(),
-        components: Vec::new(),
-    };
-    fields.insert(0, field);
-    let field = FieldInfo {
-        name: "application_id",
-        field_type: FieldDataType::Byte,
-        def_number: 1,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "",
-        accumulate: false,
-        subfields: Vec::new(),
-        components: Vec::new(),
-    };
-    fields.insert(1, field);
-    let field = FieldInfo {
-        name: "manufacturer_id",
-        field_type: FieldDataType::Manufacturer,
-        def_number: 2,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "",
-        accumulate: false,
-        subfields: Vec::new(),
-        components: Vec::new(),
-    };
-    fields.insert(2, field);
-    let field = FieldInfo {
-        name: "developer_data_index",
-        field_type: FieldDataType::UInt8,
-        def_number: 3,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "",
-        accumulate: false,
-        subfields: Vec::new(),
-        components: Vec::new(),
-    };
-    fields.insert(3, field);
-    let field = FieldInfo {
-        name: "application_version",
-        field_type: FieldDataType::UInt32,
-        def_number: 4,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "",
-        accumulate: false,
-        subfields: Vec::new(),
-        components: Vec::new(),
-    };
-    fields.insert(4, field);
-    MessageInfo {
-        name: "developer_data_id",
-        global_message_number: MesgNum::DeveloperDataId,
-        fields,
-    }
-}
 pub fn dive_summary_message() -> MessageInfo {
     let mut fields = HashMap::new();
     let field = FieldInfo {
@@ -16189,6 +16259,71 @@ pub fn dive_summary_message() -> MessageInfo {
         components: Vec::new(),
     };
     fields.insert(11, field);
+    // Average ascent rate, not including descents or stops
+    let field = FieldInfo {
+        name: "avg_ascent_rate",
+        field_type: FieldDataType::SInt32,
+        def_number: 17,
+        scale: 1000.000000,
+        offset: 0.000000,
+        units: "m/s",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    fields.insert(17, field);
+    // Average descent rate, not including ascents or stops
+    let field = FieldInfo {
+        name: "avg_descent_rate",
+        field_type: FieldDataType::UInt32,
+        def_number: 22,
+        scale: 1000.000000,
+        offset: 0.000000,
+        units: "m/s",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    fields.insert(22, field);
+    // Maximum ascent rate
+    let field = FieldInfo {
+        name: "max_ascent_rate",
+        field_type: FieldDataType::UInt32,
+        def_number: 23,
+        scale: 1000.000000,
+        offset: 0.000000,
+        units: "m/s",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    fields.insert(23, field);
+    // Maximum descent rate
+    let field = FieldInfo {
+        name: "max_descent_rate",
+        field_type: FieldDataType::UInt32,
+        def_number: 24,
+        scale: 1000.000000,
+        offset: 0.000000,
+        units: "m/s",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    fields.insert(24, field);
+    // Time spent neither ascending nor descending
+    let field = FieldInfo {
+        name: "hang_time",
+        field_type: FieldDataType::UInt32,
+        def_number: 25,
+        scale: 1000.000000,
+        offset: 0.000000,
+        units: "s",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    fields.insert(25, field);
     let field = FieldInfo {
         name: "timestamp",
         field_type: FieldDataType::DateTime,
@@ -16207,95 +16342,25 @@ pub fn dive_summary_message() -> MessageInfo {
         fields,
     }
 }
-pub fn climb_pro_message() -> MessageInfo {
+/// Heart rate variability
+pub fn hrv_message() -> MessageInfo {
     let mut fields = HashMap::new();
+    // Time between beats
     let field = FieldInfo {
-        name: "position_lat",
-        field_type: FieldDataType::SInt32,
-        def_number: 0,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "semicircles",
-        accumulate: false,
-        subfields: Vec::new(),
-        components: Vec::new(),
-    };
-    fields.insert(0, field);
-    let field = FieldInfo {
-        name: "position_long",
-        field_type: FieldDataType::SInt32,
-        def_number: 1,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "semicircles",
-        accumulate: false,
-        subfields: Vec::new(),
-        components: Vec::new(),
-    };
-    fields.insert(1, field);
-    let field = FieldInfo {
-        name: "climb_pro_event",
-        field_type: FieldDataType::ClimbProEvent,
-        def_number: 2,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "",
-        accumulate: false,
-        subfields: Vec::new(),
-        components: Vec::new(),
-    };
-    fields.insert(2, field);
-    let field = FieldInfo {
-        name: "climb_number",
+        name: "time",
         field_type: FieldDataType::UInt16,
-        def_number: 3,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "",
-        accumulate: false,
-        subfields: Vec::new(),
-        components: Vec::new(),
-    };
-    fields.insert(3, field);
-    let field = FieldInfo {
-        name: "climb_category",
-        field_type: FieldDataType::UInt8,
-        def_number: 4,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "",
-        accumulate: false,
-        subfields: Vec::new(),
-        components: Vec::new(),
-    };
-    fields.insert(4, field);
-    let field = FieldInfo {
-        name: "current_dist",
-        field_type: FieldDataType::Float32,
-        def_number: 5,
-        scale: 1.000000,
-        offset: 0.000000,
-        units: "m",
-        accumulate: false,
-        subfields: Vec::new(),
-        components: Vec::new(),
-    };
-    fields.insert(5, field);
-    let field = FieldInfo {
-        name: "timestamp",
-        field_type: FieldDataType::DateTime,
-        def_number: 253,
-        scale: 1.000000,
+        def_number: 0,
+        scale: 1000.000000,
         offset: 0.000000,
         units: "s",
         accumulate: false,
         subfields: Vec::new(),
         components: Vec::new(),
     };
-    fields.insert(253, field);
+    fields.insert(0, field);
     MessageInfo {
-        name: "climb_pro",
-        global_message_number: MesgNum::ClimbPro,
+        name: "hrv",
+        global_message_number: MesgNum::Hrv,
         fields,
     }
 }
@@ -16345,7 +16410,6 @@ impl MesgNum {
             MesgNum::Event => event_message(),
             MesgNum::DeviceInfo => device_info_message(),
             MesgNum::TrainingFile => training_file_message(),
-            MesgNum::Hrv => hrv_message(),
             MesgNum::WeatherConditions => weather_conditions_message(),
             MesgNum::WeatherAlert => weather_alert_message(),
             MesgNum::GpsMetadata => gps_metadata_message(),
@@ -16366,6 +16430,9 @@ impl MesgNum {
             MesgNum::VideoClip => video_clip_message(),
             MesgNum::Set => set_message(),
             MesgNum::Jump => jump_message(),
+            MesgNum::ClimbPro => climb_pro_message(),
+            MesgNum::FieldDescription => field_description_message(),
+            MesgNum::DeveloperDataId => developer_data_id_message(),
             MesgNum::Course => course_message(),
             MesgNum::CoursePoint => course_point_message(),
             MesgNum::SegmentId => segment_id_message(),
@@ -16392,10 +16459,8 @@ impl MesgNum {
             MesgNum::ExdScreenConfiguration => exd_screen_configuration_message(),
             MesgNum::ExdDataFieldConfiguration => exd_data_field_configuration_message(),
             MesgNum::ExdDataConceptConfiguration => exd_data_concept_configuration_message(),
-            MesgNum::FieldDescription => field_description_message(),
-            MesgNum::DeveloperDataId => developer_data_id_message(),
             MesgNum::DiveSummary => dive_summary_message(),
-            MesgNum::ClimbPro => climb_pro_message(),
+            MesgNum::Hrv => hrv_message(),
             _ => unknown_message(self),
         }
     }

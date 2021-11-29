@@ -2,7 +2,7 @@
 
 ## HEAD
 * Upgrade nom parser to version 7.0
-* Bump packaged FIT SDK version to 21.60.00 (by xehpuk)
+* Bump packaged FIT SDK version to 21.67.00
 * Clippy/Typo cleanup (by danielalvsaaker, xehpuk)
 * Add doc comments to field types and messages (by xehpuk)
 * Allow CRC validation to be skipped.
