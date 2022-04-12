@@ -5,7 +5,7 @@ use crate::FitDataRecord;
 use nom::number::complete::le_u16;
 use std::collections::{HashMap, HashSet};
 use std::io::Read;
-use std::rc::Rc;
+use std::sync::Arc;
 
 mod crc;
 use crc::{caculate_crc, update_crc};
@@ -33,7 +33,7 @@ pub enum FitObject {
     /// A raw data message
     DataMessage(FitDataMessage),
     /// A definition message used to define upcoming data messages
-    DefinitionMessage(Rc<FitDefinitionMessage>),
+    DefinitionMessage(Arc<FitDefinitionMessage>),
 }
 
 /// Manages the deserialization of a FIT data stream into Rust constructs.
@@ -42,7 +42,7 @@ struct Deserializer {
     options: HashSet<DecodeOption>,
     /// Track the current set of FIT message definitions, these are what allows the format to
     /// be self describing.
-    definitions: HashMap<u8, Rc<parser::FitDefinitionMessage>>,
+    definitions: HashMap<u8, Arc<FitDefinitionMessage>>,
     /// Stores the current position in the byte stream, this is needed for error generation and
     /// checking the state of the parser
     position: usize,
@@ -161,15 +161,15 @@ impl Deserializer {
                 Ok((remaining, FitObject::DataMessage(message)))
             }
             parser::FitMessage::Definition(message) => {
-                // Use an Rc to avoid an expensive clone of the DefinitionMessage itself
-                let msg_rc = Rc::new(message);
+                // Use an Arc to avoid an expensive clone of the DefinitionMessage itself
+                let msg_rc = Arc::new(message);
                 self.definitions
-                    .insert(msg_rc.local_message_number(), Rc::clone(&msg_rc));
+                    .insert(msg_rc.local_message_number(), Arc::clone(&msg_rc));
                 self.position += init_len - remaining.len();
                 Ok((remaining, FitObject::DefinitionMessage(msg_rc)))
             }
             parser::FitMessage::MissingDefinitionMessage(n) => {
-                Err(ErrorKind::MissingDefinitionMessage(n, self.position).into())
+                Err(Box::new(ErrorKind::MissingDefinitionMessage(n, self.position)))
             }
         }
     }
@@ -264,8 +264,8 @@ pub fn from_bytes_with_options(
 }
 
 /// Deserialize a FIT file stored as an array of bytes and return the decoded data messages.
-pub fn from_bytes(mut buffer: &[u8]) -> Result<Vec<FitDataRecord>> {
-    from_bytes_with_options(&mut buffer, &HashSet::new())
+pub fn from_bytes(buffer: &[u8]) -> Result<Vec<FitDataRecord>> {
+    from_bytes_with_options(buffer, &HashSet::new())
 }
 
 /// Deserialize a FIT file stored in a source that implements io::Read, with additional decode options
@@ -275,7 +275,7 @@ pub fn from_reader_with_options<T: Read>(
 ) -> Result<Vec<FitDataRecord>> {
     let mut buffer = Vec::new();
     source.read_to_end(&mut buffer)?;
-    from_bytes_with_options(&buffer, &options)
+    from_bytes_with_options(&buffer, options)
 }
 
 /// Deserialize a FIT file stored in a source that implements io::Read.
