@@ -169,7 +169,7 @@ impl Deserializer {
                 Ok((remaining, FitObject::DefinitionMessage(msg_rc)))
             }
             parser::FitMessage::MissingDefinitionMessage(n) => {
-                Err(Box::new(ErrorKind::MissingDefinitionMessage(n, self.position)))
+                Err(ErrorKind::MissingDefinitionMessage(n, self.position).into())
             }
         }
     }
