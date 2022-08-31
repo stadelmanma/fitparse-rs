@@ -1,8 +1,11 @@
 # Changelog
 
+## v0.5.1
+** Bump packaged FIT SDK version to 21.89.00
+
 ## v0.5.0
 * Use Arc instead of Rc to make FitObjects fully thread-safe (danielalvsaaker)
-* Bump packaged FIT SDK version to 21.78.00 
+* Bump packaged FIT SDK version to 21.78.00
 
 ## v0.4.3
 * Upgrade nom parser to version 7.0
