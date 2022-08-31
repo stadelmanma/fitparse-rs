@@ -1,11 +1,11 @@
-//! Auto generated profile messages from FIT SDK Release: 21.78.00
+//! Auto generated profile messages from FIT SDK Release: 21.89.00
 #![allow(missing_docs)]
 #![allow(clippy::redundant_field_names)]
 #![allow(clippy::unreadable_literal)]
 use super::field_types::*;
 use super::{ComponentFieldInfo, FieldDataType, FieldInfo, MessageInfo};
 use std::collections::HashMap;
-pub const VERSION: &str = "21.78.00";
+pub const VERSION: &str = "21.89.00";
 /// Must be first message in file.
 pub fn file_id_message() -> MessageInfo {
     let mut fields = HashMap::new();
@@ -848,7 +848,7 @@ pub fn device_settings_message() -> MessageInfo {
         components: Vec::new(),
     };
     fields.insert(39, field);
-    // Bitfield  to configure enabled screens for each supported loop
+    // Bitfield to configure enabled screens for each supported loop
     let field = FieldInfo {
         name: "pages_enabled",
         field_type: FieldDataType::UInt16,
@@ -2906,6 +2906,7 @@ pub fn dive_settings_message() -> MessageInfo {
 }
 pub fn dive_alarm_message() -> MessageInfo {
     let mut fields = HashMap::new();
+    // Depth setting (m) for depth type alarms
     let field = FieldInfo {
         name: "depth",
         field_type: FieldDataType::UInt32,
@@ -2918,6 +2919,7 @@ pub fn dive_alarm_message() -> MessageInfo {
         components: Vec::new(),
     };
     fields.insert(0, field);
+    // Time setting (s) for time type alarms
     let field = FieldInfo {
         name: "time",
         field_type: FieldDataType::SInt32,
@@ -2930,6 +2932,7 @@ pub fn dive_alarm_message() -> MessageInfo {
         components: Vec::new(),
     };
     fields.insert(1, field);
+    // Enablement flag
     let field = FieldInfo {
         name: "enabled",
         field_type: FieldDataType::Bool,
@@ -2942,6 +2945,7 @@ pub fn dive_alarm_message() -> MessageInfo {
         components: Vec::new(),
     };
     fields.insert(2, field);
+    // Alarm type setting
     let field = FieldInfo {
         name: "alarm_type",
         field_type: FieldDataType::DiveAlarmType,
@@ -2954,6 +2958,7 @@ pub fn dive_alarm_message() -> MessageInfo {
         components: Vec::new(),
     };
     fields.insert(3, field);
+    // Tone and Vibe setting for the alarm
     let field = FieldInfo {
         name: "sound",
         field_type: FieldDataType::Tone,
@@ -2966,6 +2971,7 @@ pub fn dive_alarm_message() -> MessageInfo {
         components: Vec::new(),
     };
     fields.insert(4, field);
+    // Dive types the alarm will trigger on
     let field = FieldInfo {
         name: "dive_types",
         field_type: FieldDataType::SubSport,
@@ -4706,7 +4712,7 @@ pub fn session_message() -> MessageInfo {
         components: Vec::new(),
     };
     fields.insert(118, field);
-    // Average right power phase peak angles data value indexes  defined by power_phase_type.
+    // Average right power phase peak angles data value indexes defined by power_phase_type.
     let field = FieldInfo {
         name: "avg_right_power_phase_peak",
         field_type: FieldDataType::UInt8,
@@ -4931,6 +4937,18 @@ pub fn session_message() -> MessageInfo {
         components: Vec::new(),
     };
     fields.insert(139, field);
+    let field = FieldInfo {
+        name: "training_load_peak",
+        field_type: FieldDataType::SInt32,
+        def_number: 168,
+        scale: 65536.000000,
+        offset: 0.000000,
+        units: "",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    fields.insert(168, field);
     // The grit score estimates how challenging a route could be for a cyclist in terms of time spent going over sharp turns or large grade slopes.
     let field = FieldInfo {
         name: "total_grit",
@@ -6283,7 +6301,7 @@ pub fn lap_message() -> MessageInfo {
         components: Vec::new(),
     };
     fields.insert(102, field);
-    // Average left power phase peak angles. Data value indexes  defined by power_phase_type.
+    // Average left power phase peak angles. Data value indexes defined by power_phase_type.
     let field = FieldInfo {
         name: "avg_left_power_phase_peak",
         field_type: FieldDataType::UInt8,
@@ -6309,7 +6327,7 @@ pub fn lap_message() -> MessageInfo {
         components: Vec::new(),
     };
     fields.insert(104, field);
-    // Average right power phase peak angles. Data value indexes  defined by power_phase_type.
+    // Average right power phase peak angles. Data value indexes defined by power_phase_type.
     let field = FieldInfo {
         name: "avg_right_power_phase_peak",
         field_type: FieldDataType::UInt8,
@@ -7047,8 +7065,7 @@ pub fn record_message() -> MessageInfo {
         def_number: 8,
         scale: 1.000000,
         offset: 0.000000,
-        units: "m/s,
-m",
+        units: "m/s,m",
         accumulate: false,
         subfields: Vec::new(),
         components: components,
@@ -7066,7 +7083,7 @@ m",
         components: Vec::new(),
     };
     fields.insert(9, field);
-    // Relative. 0 is none  254 is Max.
+    // Relative. 0 is none 254 is Max.
     let field = FieldInfo {
         name: "resistance",
         field_type: FieldDataType::UInt8,
@@ -7115,7 +7132,7 @@ m",
         components: Vec::new(),
     };
     fields.insert(13, field);
-    // Speed at 1s intervals.  Timestamp field indicates time of last array element.
+    // Speed at 1s intervals. Timestamp field indicates time of last array element.
     let field = FieldInfo {
         name: "speed_1s",
         field_type: FieldDataType::UInt8,
@@ -8377,7 +8394,7 @@ pub fn event_message() -> MessageInfo {
         components: Vec::new(),
     };
     fields.insert(8, field);
-    // Do not populate directly. Autogenerated by decoder for gear_change subfield components.  Front gear number. 1 is innermost.
+    // Do not populate directly. Autogenerated by decoder for gear_change subfield components. Front gear number. 1 is innermost.
     let field = FieldInfo {
         name: "front_gear_num",
         field_type: FieldDataType::UInt8z,
@@ -8390,7 +8407,7 @@ pub fn event_message() -> MessageInfo {
         components: Vec::new(),
     };
     fields.insert(9, field);
-    // Do not populate directly. Autogenerated by decoder for gear_change subfield components.  Number of front teeth.
+    // Do not populate directly. Autogenerated by decoder for gear_change subfield components. Number of front teeth.
     let field = FieldInfo {
         name: "front_gear",
         field_type: FieldDataType::UInt8z,
@@ -8403,7 +8420,7 @@ pub fn event_message() -> MessageInfo {
         components: Vec::new(),
     };
     fields.insert(10, field);
-    // Do not populate directly. Autogenerated by decoder for gear_change subfield components.  Rear gear number. 1 is innermost.
+    // Do not populate directly. Autogenerated by decoder for gear_change subfield components. Rear gear number. 1 is innermost.
     let field = FieldInfo {
         name: "rear_gear_num",
         field_type: FieldDataType::UInt8z,
@@ -8416,7 +8433,7 @@ pub fn event_message() -> MessageInfo {
         components: Vec::new(),
     };
     fields.insert(11, field);
-    // Do not populate directly. Autogenerated by decoder for gear_change subfield components.  Number of rear teeth.
+    // Do not populate directly. Autogenerated by decoder for gear_change subfield components. Number of rear teeth.
     let field = FieldInfo {
         name: "rear_gear",
         field_type: FieldDataType::UInt8z,
@@ -9124,7 +9141,7 @@ pub fn weather_conditions_message() -> MessageInfo {
         components: Vec::new(),
     };
     fields.insert(5, field);
-    // Heat Index if  GCS heatIdx above or equal to 90F or wind chill if GCS windChill below or equal to 32F
+    // Heat Index if GCS heatIdx above or equal to 90F or wind chill if GCS windChill below or equal to 32F
     let field = FieldInfo {
         name: "temperature_feels_like",
         field_type: FieldDataType::SInt8,
@@ -9413,7 +9430,7 @@ pub fn gps_metadata_message() -> MessageInfo {
         components: Vec::new(),
     };
     fields.insert(5, field);
-    // Used to correlate UTC to system time if the timestamp of the message is in system time.  This UTC time is derived from the GPS data.
+    // Used to correlate UTC to system time if the timestamp of the message is in system time. This UTC time is derived from the GPS data.
     let field = FieldInfo {
         name: "utc_timestamp",
         field_type: FieldDataType::DateTime,
@@ -9426,7 +9443,7 @@ pub fn gps_metadata_message() -> MessageInfo {
         components: Vec::new(),
     };
     fields.insert(6, field);
-    // velocity[0] is lon velocity.  Velocity[1] is lat velocity.  Velocity[2] is altitude velocity.
+    // velocity[0] is lon velocity. Velocity[1] is lat velocity. Velocity[2] is altitude velocity.
     let field = FieldInfo {
         name: "velocity",
         field_type: FieldDataType::SInt16,
@@ -10044,7 +10061,7 @@ pub fn three_d_sensor_calibration_message() -> MessageInfo {
         components: Vec::new(),
     };
     subfields.push((0, SensorType::Gyroscope.as_i64(), sub_fld));
-    // Calibration factor used to convert from raw ADC value to degrees, g,  etc.
+    // Calibration factor used to convert from raw ADC value to degrees, g, etc.
     let field = FieldInfo {
         name: "calibration_factor",
         field_type: FieldDataType::UInt32,
@@ -10157,7 +10174,7 @@ pub fn one_d_sensor_calibration_message() -> MessageInfo {
         components: Vec::new(),
     };
     subfields.push((0, SensorType::Barometer.as_i64(), sub_fld));
-    // Calibration factor used to convert from raw ADC value to degrees, g,  etc.
+    // Calibration factor used to convert from raw ADC value to degrees, g, etc.
     let field = FieldInfo {
         name: "calibration_factor",
         field_type: FieldDataType::UInt32,
@@ -10329,7 +10346,7 @@ pub fn obdii_data_message() -> MessageInfo {
         components: Vec::new(),
     };
     fields.insert(3, field);
-    // Optional, data size of PID[i].  If not specified refer to SAE J1979.
+    // Optional, data size of PID[i]. If not specified refer to SAE J1979.
     let field = FieldInfo {
         name: "pid_data_size",
         field_type: FieldDataType::UInt8,
@@ -10342,7 +10359,7 @@ pub fn obdii_data_message() -> MessageInfo {
         components: Vec::new(),
     };
     fields.insert(4, field);
-    // System time associated with sample expressed in ms, can be used instead of time_offset.  There will be a system_time value for each raw_data element.  For multibyte pids the system_time is repeated.
+    // System time associated with sample expressed in ms, can be used instead of time_offset. There will be a system_time value for each raw_data element. For multibyte pids the system_time is repeated.
     let field = FieldInfo {
         name: "system_time",
         field_type: FieldDataType::UInt32,
@@ -10355,7 +10372,7 @@ pub fn obdii_data_message() -> MessageInfo {
         components: Vec::new(),
     };
     fields.insert(5, field);
-    // Timestamp of first sample recorded in the message.  Used with time_offset to generate time of each sample
+    // Timestamp of first sample recorded in the message. Used with time_offset to generate time of each sample
     let field = FieldInfo {
         name: "start_timestamp",
         field_type: FieldDataType::DateTime,
@@ -10552,7 +10569,7 @@ pub fn aviation_attitude_message() -> MessageInfo {
         components: Vec::new(),
     };
     fields.insert(7, field);
-    // The percent complete of the current attitude stage.  Set to 0 for attitude stages 0, 1 and 2 and to 100 for attitude stage 3 by AHRS modules that do not support it.  Range - 100
+    // The percent complete of the current attitude stage. Set to 0 for attitude stages 0, 1 and 2 and to 100 for attitude stage 3 by AHRS modules that do not support it. Range - 100
     let field = FieldInfo {
         name: "attitude_stage_complete",
         field_type: FieldDataType::UInt8,
@@ -14066,6 +14083,217 @@ pub fn workout_step_message() -> MessageInfo {
     };
     fields.insert(13, field);
     let field = FieldInfo {
+        name: "secondary_target_type",
+        field_type: FieldDataType::WktStepTarget,
+        def_number: 19,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    fields.insert(19, field);
+    let mut subfields = Vec::new();
+    // speed zone (1-10);Custom =0;
+    let sub_fld = FieldInfo {
+        name: "secondary_target_speed_zone",
+        field_type: FieldDataType::UInt32,
+        def_number: 20,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    subfields.push((19, WktStepTarget::Speed.as_i64(), sub_fld));
+    // hr zone (1-5);Custom =0;
+    let sub_fld = FieldInfo {
+        name: "secondary_target_hr_zone",
+        field_type: FieldDataType::UInt32,
+        def_number: 20,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    subfields.push((19, WktStepTarget::HeartRate.as_i64(), sub_fld));
+    // Zone (1-?); Custom = 0;
+    let sub_fld = FieldInfo {
+        name: "secondary_target_cadence_zone",
+        field_type: FieldDataType::UInt32,
+        def_number: 20,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    subfields.push((19, WktStepTarget::Cadence.as_i64(), sub_fld));
+    // Power Zone ( 1-7); Custom = 0;
+    let sub_fld = FieldInfo {
+        name: "secondary_target_power_zone",
+        field_type: FieldDataType::UInt32,
+        def_number: 20,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    subfields.push((19, WktStepTarget::Power.as_i64(), sub_fld));
+    let sub_fld = FieldInfo {
+        name: "secondary_target_stroke_type",
+        field_type: FieldDataType::SwimStroke,
+        def_number: 20,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    subfields.push((19, WktStepTarget::SwimStroke.as_i64(), sub_fld));
+    let field = FieldInfo {
+        name: "secondary_target_value",
+        field_type: FieldDataType::UInt32,
+        def_number: 20,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        accumulate: false,
+        subfields: subfields,
+        components: Vec::new(),
+    };
+    fields.insert(20, field);
+    let mut subfields = Vec::new();
+    let sub_fld = FieldInfo {
+        name: "secondary_custom_target_speed_low",
+        field_type: FieldDataType::UInt32,
+        def_number: 21,
+        scale: 1000.000000,
+        offset: 0.000000,
+        units: "m/s",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    subfields.push((19, WktStepTarget::Speed.as_i64(), sub_fld));
+    let sub_fld = FieldInfo {
+        name: "secondary_custom_target_heart_rate_low",
+        field_type: FieldDataType::WorkoutHr,
+        def_number: 21,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "% or bpm",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    subfields.push((19, WktStepTarget::HeartRate.as_i64(), sub_fld));
+    let sub_fld = FieldInfo {
+        name: "secondary_custom_target_cadence_low",
+        field_type: FieldDataType::UInt32,
+        def_number: 21,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "rpm",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    subfields.push((19, WktStepTarget::Cadence.as_i64(), sub_fld));
+    let sub_fld = FieldInfo {
+        name: "secondary_custom_target_power_low",
+        field_type: FieldDataType::WorkoutPower,
+        def_number: 21,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "% or watts",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    subfields.push((19, WktStepTarget::Power.as_i64(), sub_fld));
+    let field = FieldInfo {
+        name: "secondary_custom_target_value_low",
+        field_type: FieldDataType::UInt32,
+        def_number: 21,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        accumulate: false,
+        subfields: subfields,
+        components: Vec::new(),
+    };
+    fields.insert(21, field);
+    let mut subfields = Vec::new();
+    let sub_fld = FieldInfo {
+        name: "secondary_custom_target_speed_high",
+        field_type: FieldDataType::UInt32,
+        def_number: 22,
+        scale: 1000.000000,
+        offset: 0.000000,
+        units: "m/s",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    subfields.push((19, WktStepTarget::Speed.as_i64(), sub_fld));
+    let sub_fld = FieldInfo {
+        name: "secondary_custom_target_heart_rate_high",
+        field_type: FieldDataType::WorkoutHr,
+        def_number: 22,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "% or bpm",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    subfields.push((19, WktStepTarget::HeartRate.as_i64(), sub_fld));
+    let sub_fld = FieldInfo {
+        name: "secondary_custom_target_cadence_high",
+        field_type: FieldDataType::UInt32,
+        def_number: 22,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "rpm",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    subfields.push((19, WktStepTarget::Cadence.as_i64(), sub_fld));
+    let sub_fld = FieldInfo {
+        name: "secondary_custom_target_power_high",
+        field_type: FieldDataType::WorkoutPower,
+        def_number: 22,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "% or watts",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    subfields.push((19, WktStepTarget::Power.as_i64(), sub_fld));
+    let field = FieldInfo {
+        name: "secondary_custom_target_value_high",
+        field_type: FieldDataType::UInt32,
+        def_number: 22,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        accumulate: false,
+        subfields: subfields,
+        components: Vec::new(),
+    };
+    fields.insert(22, field);
+    let field = FieldInfo {
         name: "message_index",
         field_type: FieldDataType::MessageIndex,
         def_number: 254,
@@ -14562,7 +14790,7 @@ pub fn weight_scale_message() -> MessageInfo {
         components: Vec::new(),
     };
     fields.insert(11, field);
-    // Associates this weight scale message to a user.  This corresponds to the index of the user profile message in the weight scale file.
+    // Associates this weight scale message to a user. This corresponds to the index of the user profile message in the weight scale file.
     let field = FieldInfo {
         name: "user_profile_index",
         field_type: FieldDataType::MessageIndex,
@@ -14703,7 +14931,7 @@ pub fn blood_pressure_message() -> MessageInfo {
         components: Vec::new(),
     };
     fields.insert(8, field);
-    // Associates this blood pressure message to a user.  This corresponds to the index of the user profile message in the blood pressure file.
+    // Associates this blood pressure message to a user. This corresponds to the index of the user profile message in the blood pressure file.
     let field = FieldInfo {
         name: "user_profile_index",
         field_type: FieldDataType::MessageIndex,
@@ -14819,7 +15047,7 @@ pub fn monitoring_info_message() -> MessageInfo {
 }
 pub fn monitoring_message() -> MessageInfo {
     let mut fields = HashMap::new();
-    // Associates this data to device_info message.  Not required for file with single device (sensor).
+    // Associates this data to device_info message. Not required for file with single device (sensor).
     let field = FieldInfo {
         name: "device_index",
         field_type: FieldDataType::DeviceIndex,
@@ -14832,7 +15060,7 @@ pub fn monitoring_message() -> MessageInfo {
         components: Vec::new(),
     };
     fields.insert(0, field);
-    // Accumulated total calories.  Maintained by MonitoringReader for each activity_type.  See SDK documentation
+    // Accumulated total calories. Maintained by MonitoringReader for each activity_type. See SDK documentation
     let field = FieldInfo {
         name: "calories",
         field_type: FieldDataType::UInt16,
@@ -14845,7 +15073,7 @@ pub fn monitoring_message() -> MessageInfo {
         components: Vec::new(),
     };
     fields.insert(1, field);
-    // Accumulated distance.  Maintained by MonitoringReader for each activity_type.  See SDK documentation.
+    // Accumulated distance. Maintained by MonitoringReader for each activity_type. See SDK documentation.
     let field = FieldInfo {
         name: "distance",
         field_type: FieldDataType::UInt32,
@@ -14907,7 +15135,7 @@ pub fn monitoring_message() -> MessageInfo {
         components: Vec::new(),
     };
     subfields.push((5, ActivityType::Swimming.as_i64(), sub_fld));
-    // Accumulated cycles.  Maintained by MonitoringReader for each activity_type.  See SDK documentation.
+    // Accumulated cycles. Maintained by MonitoringReader for each activity_type. See SDK documentation.
     let field = FieldInfo {
         name: "cycles",
         field_type: FieldDataType::UInt32,
@@ -15469,7 +15697,7 @@ pub fn stress_level_message() -> MessageInfo {
 }
 pub fn memo_glob_message() -> MessageInfo {
     let mut fields = HashMap::new();
-    // Block of utf8 bytes
+    // Deprecated. Use data field.
     let field = FieldInfo {
         name: "memo",
         field_type: FieldDataType::Byte,
@@ -15482,10 +15710,10 @@ pub fn memo_glob_message() -> MessageInfo {
         components: Vec::new(),
     };
     fields.insert(0, field);
-    // Allows relating glob to another mesg  If used only required for first part of each memo_glob
+    // Message Number of the parent message
     let field = FieldInfo {
-        name: "message_number",
-        field_type: FieldDataType::UInt16,
+        name: "mesg_num",
+        field_type: FieldDataType::MesgNum,
         def_number: 1,
         scale: 1.000000,
         offset: 0.000000,
@@ -15495,9 +15723,9 @@ pub fn memo_glob_message() -> MessageInfo {
         components: Vec::new(),
     };
     fields.insert(1, field);
-    // Index of external mesg
+    // Index of mesg that this glob is associated with.
     let field = FieldInfo {
-        name: "message_index",
+        name: "parent_index",
         field_type: FieldDataType::MessageIndex,
         def_number: 2,
         scale: 1.000000,
@@ -15508,6 +15736,32 @@ pub fn memo_glob_message() -> MessageInfo {
         components: Vec::new(),
     };
     fields.insert(2, field);
+    // Field within the parent that this glob is associated with
+    let field = FieldInfo {
+        name: "field_num",
+        field_type: FieldDataType::UInt8,
+        def_number: 3,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    fields.insert(3, field);
+    // Block of utf8 bytes. Note, mutltibyte characters may be split across adjoining memo_glob messages.
+    let field = FieldInfo {
+        name: "data",
+        field_type: FieldDataType::UInt8z,
+        def_number: 4,
+        scale: 1.000000,
+        offset: 0.000000,
+        units: "",
+        accumulate: false,
+        subfields: Vec::new(),
+        components: Vec::new(),
+    };
+    fields.insert(4, field);
     // Sequence number of memo blocks
     let field = FieldInfo {
         name: "part_index",

@@ -1,4 +1,4 @@
-//! Auto generated profile field types from FIT SDK Release: 21.78.00
+//! Auto generated profile field types from FIT SDK Release: 21.89.00
 //! Not all of these may be used by the defined set of FIT messages
 #![allow(missing_docs)]
 #![allow(dead_code)]
@@ -38,9 +38,9 @@ pub enum File {
     MonitoringDaily,
     /// Read only. Directory=Monitoring. File number=identifier
     MonitoringB,
-    /// Read/write/erase. Multiple Files.  Directory=Segments
+    /// Read/write/erase. Multiple Files. Directory=Segments
     Segment,
-    /// Read/write/erase. Single File.  Directory=Segments
+    /// Read/write/erase. Single File. Directory=Segments
     SegmentList,
     /// Read/write/erase. Single File. Directory=Settings
     ExdConfiguration,
@@ -558,7 +558,7 @@ impl Serialize for MesgNum {
 pub enum Checksum {
     /// Allows clear of checksum for flash memory where can only write 1 to 0 without erasing sector.
     Clear,
-    /// Set to mark checksum as valid if computes to invalid values 0 or 0xFF.  Checksum can also be set to ok to save encoding computation time.
+    /// Set to mark checksum as valid if computes to invalid values 0 or 0xFF. Checksum can also be set to ok to save encoding computation time.
     Ok,
     UnknownVariant(u8),
 }
@@ -911,7 +911,6 @@ impl Serialize for DeviceIndex {
 pub enum Gender {
     Female,
     Male,
-    Unspecified,
     UnknownVariant(u8),
 }
 impl Gender {
@@ -919,7 +918,6 @@ impl Gender {
         match self {
             Gender::Female => 0,
             Gender::Male => 1,
-            Gender::Unspecified => 2,
             Gender::UnknownVariant(value) => value,
         }
     }
@@ -932,7 +930,6 @@ impl fmt::Display for Gender {
         match &self {
             Gender::Female => write!(f, "female"),
             Gender::Male => write!(f, "male"),
-            Gender::Unspecified => write!(f, "unspecified"),
             Gender::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
@@ -942,7 +939,6 @@ impl convert::From<u8> for Gender {
         match value {
             0 => Gender::Female,
             1 => Gender::Male,
-            2 => Gender::Unspecified,
             _ => Gender::UnknownVariant(value),
         }
     }
@@ -4177,11 +4173,11 @@ impl Serialize for BacklightTimeout {
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum Event {
-    /// Group 0.  Start / stop_all
+    /// Group 0. Start / stop_all
     Timer,
     /// start / stop
     Workout,
-    /// Start at beginning of workout.  Stop at end of each step.
+    /// Start at beginning of workout. Stop at end of each step.
     WorkoutStep,
     /// stop_all group 0
     PowerDown,
@@ -4197,35 +4193,35 @@ pub enum Event {
     CoursePoint,
     /// marker
     Battery,
-    /// Group 1. Start at beginning of activity if VP enabled, when VP pace is changed during activity or VP enabled mid activity.  stop_disable when VP disabled.
+    /// Group 1. Start at beginning of activity if VP enabled, when VP pace is changed during activity or VP enabled mid activity. stop_disable when VP disabled.
     VirtualPartnerPace,
-    /// Group 0.  Start / stop when in alert condition.
+    /// Group 0. Start / stop when in alert condition.
     HrHighAlert,
-    /// Group 0.  Start / stop when in alert condition.
+    /// Group 0. Start / stop when in alert condition.
     HrLowAlert,
-    /// Group 0.  Start / stop when in alert condition.
+    /// Group 0. Start / stop when in alert condition.
     SpeedHighAlert,
-    /// Group 0.  Start / stop when in alert condition.
+    /// Group 0. Start / stop when in alert condition.
     SpeedLowAlert,
-    /// Group 0.  Start / stop when in alert condition.
+    /// Group 0. Start / stop when in alert condition.
     CadHighAlert,
-    /// Group 0.  Start / stop when in alert condition.
+    /// Group 0. Start / stop when in alert condition.
     CadLowAlert,
-    /// Group 0.  Start / stop when in alert condition.
+    /// Group 0. Start / stop when in alert condition.
     PowerHighAlert,
-    /// Group 0.  Start / stop when in alert condition.
+    /// Group 0. Start / stop when in alert condition.
     PowerLowAlert,
     /// marker
     RecoveryHr,
     /// marker
     BatteryLow,
-    /// Group 1.  Start if enabled mid activity (not required at start of activity). Stop when duration is reached.  stop_disable if disabled.
+    /// Group 1. Start if enabled mid activity (not required at start of activity). Stop when duration is reached. stop_disable if disabled.
     TimeDurationAlert,
-    /// Group 1.  Start if enabled mid activity (not required at start of activity). Stop when duration is reached.  stop_disable if disabled.
+    /// Group 1. Start if enabled mid activity (not required at start of activity). Stop when duration is reached. stop_disable if disabled.
     DistanceDurationAlert,
-    /// Group 1.  Start if enabled mid activity (not required at start of activity). Stop when duration is reached.  stop_disable if disabled.
+    /// Group 1. Start if enabled mid activity (not required at start of activity). Stop when duration is reached. stop_disable if disabled.
     CalorieDurationAlert,
-    /// Group 1..  Stop at end of activity.
+    /// Group 1.. Stop at end of activity.
     Activity,
     /// marker
     FitnessEquipment,
@@ -4243,9 +4239,9 @@ pub enum Event {
     RearGearChange,
     /// marker
     RiderPositionChange,
-    /// Group 0.  Start / stop when in alert condition.
+    /// Group 0. Start / stop when in alert condition.
     ElevHighAlert,
-    /// Group 0.  Start / stop when in alert condition.
+    /// Group 0. Start / stop when in alert condition.
     ElevLowAlert,
     /// marker
     CommTimeout,
@@ -5402,6 +5398,34 @@ pub enum CoursePoint {
     UTurn,
     SegmentStart,
     SegmentEnd,
+    Campsite,
+    AidStation,
+    RestArea,
+    /// Used with UpAhead
+    GeneralDistance,
+    Service,
+    EnergyGel,
+    SportsDrink,
+    MileMarker,
+    Checkpoint,
+    Shelter,
+    MeetingSpot,
+    Overlook,
+    Toilet,
+    Shower,
+    Gear,
+    SharpCurve,
+    SteepIncline,
+    Tunnel,
+    Bridge,
+    Obstacle,
+    Crossing,
+    Store,
+    Transition,
+    Navaid,
+    Transport,
+    Alert,
+    Info,
     UnknownVariant(u8),
 }
 impl CoursePoint {
@@ -5433,6 +5457,33 @@ impl CoursePoint {
             CoursePoint::UTurn => 23,
             CoursePoint::SegmentStart => 24,
             CoursePoint::SegmentEnd => 25,
+            CoursePoint::Campsite => 27,
+            CoursePoint::AidStation => 28,
+            CoursePoint::RestArea => 29,
+            CoursePoint::GeneralDistance => 30,
+            CoursePoint::Service => 31,
+            CoursePoint::EnergyGel => 32,
+            CoursePoint::SportsDrink => 33,
+            CoursePoint::MileMarker => 34,
+            CoursePoint::Checkpoint => 35,
+            CoursePoint::Shelter => 36,
+            CoursePoint::MeetingSpot => 37,
+            CoursePoint::Overlook => 38,
+            CoursePoint::Toilet => 39,
+            CoursePoint::Shower => 40,
+            CoursePoint::Gear => 41,
+            CoursePoint::SharpCurve => 42,
+            CoursePoint::SteepIncline => 43,
+            CoursePoint::Tunnel => 44,
+            CoursePoint::Bridge => 45,
+            CoursePoint::Obstacle => 46,
+            CoursePoint::Crossing => 47,
+            CoursePoint::Store => 48,
+            CoursePoint::Transition => 49,
+            CoursePoint::Navaid => 50,
+            CoursePoint::Transport => 51,
+            CoursePoint::Alert => 52,
+            CoursePoint::Info => 53,
             CoursePoint::UnknownVariant(value) => value,
         }
     }
@@ -5469,6 +5520,33 @@ impl fmt::Display for CoursePoint {
             CoursePoint::UTurn => write!(f, "u_turn"),
             CoursePoint::SegmentStart => write!(f, "segment_start"),
             CoursePoint::SegmentEnd => write!(f, "segment_end"),
+            CoursePoint::Campsite => write!(f, "campsite"),
+            CoursePoint::AidStation => write!(f, "aid_station"),
+            CoursePoint::RestArea => write!(f, "rest_area"),
+            CoursePoint::GeneralDistance => write!(f, "general_distance"),
+            CoursePoint::Service => write!(f, "service"),
+            CoursePoint::EnergyGel => write!(f, "energy_gel"),
+            CoursePoint::SportsDrink => write!(f, "sports_drink"),
+            CoursePoint::MileMarker => write!(f, "mile_marker"),
+            CoursePoint::Checkpoint => write!(f, "checkpoint"),
+            CoursePoint::Shelter => write!(f, "shelter"),
+            CoursePoint::MeetingSpot => write!(f, "meeting_spot"),
+            CoursePoint::Overlook => write!(f, "overlook"),
+            CoursePoint::Toilet => write!(f, "toilet"),
+            CoursePoint::Shower => write!(f, "shower"),
+            CoursePoint::Gear => write!(f, "gear"),
+            CoursePoint::SharpCurve => write!(f, "sharp_curve"),
+            CoursePoint::SteepIncline => write!(f, "steep_incline"),
+            CoursePoint::Tunnel => write!(f, "tunnel"),
+            CoursePoint::Bridge => write!(f, "bridge"),
+            CoursePoint::Obstacle => write!(f, "obstacle"),
+            CoursePoint::Crossing => write!(f, "crossing"),
+            CoursePoint::Store => write!(f, "store"),
+            CoursePoint::Transition => write!(f, "transition"),
+            CoursePoint::Navaid => write!(f, "navaid"),
+            CoursePoint::Transport => write!(f, "transport"),
+            CoursePoint::Alert => write!(f, "alert"),
+            CoursePoint::Info => write!(f, "info"),
             CoursePoint::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
@@ -5502,6 +5580,33 @@ impl convert::From<u8> for CoursePoint {
             23 => CoursePoint::UTurn,
             24 => CoursePoint::SegmentStart,
             25 => CoursePoint::SegmentEnd,
+            27 => CoursePoint::Campsite,
+            28 => CoursePoint::AidStation,
+            29 => CoursePoint::RestArea,
+            30 => CoursePoint::GeneralDistance,
+            31 => CoursePoint::Service,
+            32 => CoursePoint::EnergyGel,
+            33 => CoursePoint::SportsDrink,
+            34 => CoursePoint::MileMarker,
+            35 => CoursePoint::Checkpoint,
+            36 => CoursePoint::Shelter,
+            37 => CoursePoint::MeetingSpot,
+            38 => CoursePoint::Overlook,
+            39 => CoursePoint::Toilet,
+            40 => CoursePoint::Shower,
+            41 => CoursePoint::Gear,
+            42 => CoursePoint::SharpCurve,
+            43 => CoursePoint::SteepIncline,
+            44 => CoursePoint::Tunnel,
+            45 => CoursePoint::Bridge,
+            46 => CoursePoint::Obstacle,
+            47 => CoursePoint::Crossing,
+            48 => CoursePoint::Store,
+            49 => CoursePoint::Transition,
+            50 => CoursePoint::Navaid,
+            51 => CoursePoint::Transport,
+            52 => CoursePoint::Alert,
+            53 => CoursePoint::Info,
             _ => CoursePoint::UnknownVariant(value),
         }
     }
@@ -5522,7 +5627,7 @@ impl Serialize for CoursePoint {
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum Manufacturer {
     Garmin,
-    /// Do not use.  Used by FR405 for ANTFS man id.
+    /// Do not use. Used by FR405 for ANTFS man id.
     GarminFr405Antfs,
     Zephyr,
     Dayton,
@@ -5665,6 +5770,9 @@ pub enum Manufacturer {
     KineticSports,
     DecathlonByte,
     TqSystems,
+    TagHeuer,
+    KeiserFitness,
+    ZwiftByte,
     Development,
     Healthandlife,
     Lezyne,
@@ -5731,6 +5839,8 @@ pub enum Manufacturer {
     RGTCycling,
     Vasa,
     RaceRepublic,
+    Fazua,
+    OrekaTraining,
     Actigraphcorp,
     UnknownVariant(u16),
 }
@@ -5876,6 +5986,9 @@ impl Manufacturer {
             Manufacturer::KineticSports => 139,
             Manufacturer::DecathlonByte => 140,
             Manufacturer::TqSystems => 141,
+            Manufacturer::TagHeuer => 142,
+            Manufacturer::KeiserFitness => 143,
+            Manufacturer::ZwiftByte => 144,
             Manufacturer::Development => 255,
             Manufacturer::Healthandlife => 257,
             Manufacturer::Lezyne => 258,
@@ -5938,6 +6051,8 @@ impl Manufacturer {
             Manufacturer::RGTCycling => 315,
             Manufacturer::Vasa => 316,
             Manufacturer::RaceRepublic => 317,
+            Manufacturer::Fazua => 318,
+            Manufacturer::OrekaTraining => 319,
             Manufacturer::Actigraphcorp => 5759,
             Manufacturer::UnknownVariant(value) => value,
         }
@@ -6088,6 +6203,9 @@ impl fmt::Display for Manufacturer {
             Manufacturer::KineticSports => write!(f, "kinetic_sports"),
             Manufacturer::DecathlonByte => write!(f, "decathlon_byte"),
             Manufacturer::TqSystems => write!(f, "tq_systems"),
+            Manufacturer::TagHeuer => write!(f, "tag_heuer"),
+            Manufacturer::KeiserFitness => write!(f, "keiser_fitness"),
+            Manufacturer::ZwiftByte => write!(f, "zwift_byte"),
             Manufacturer::Development => write!(f, "development"),
             Manufacturer::Healthandlife => write!(f, "healthandlife"),
             Manufacturer::Lezyne => write!(f, "lezyne"),
@@ -6150,6 +6268,8 @@ impl fmt::Display for Manufacturer {
             Manufacturer::RGTCycling => write!(f, "RGT_cycling"),
             Manufacturer::Vasa => write!(f, "vasa"),
             Manufacturer::RaceRepublic => write!(f, "race_republic"),
+            Manufacturer::Fazua => write!(f, "fazua"),
+            Manufacturer::OrekaTraining => write!(f, "oreka_training"),
             Manufacturer::Actigraphcorp => write!(f, "actigraphcorp"),
             Manufacturer::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
@@ -6297,6 +6417,9 @@ impl convert::From<u16> for Manufacturer {
             139 => Manufacturer::KineticSports,
             140 => Manufacturer::DecathlonByte,
             141 => Manufacturer::TqSystems,
+            142 => Manufacturer::TagHeuer,
+            143 => Manufacturer::KeiserFitness,
+            144 => Manufacturer::ZwiftByte,
             255 => Manufacturer::Development,
             257 => Manufacturer::Healthandlife,
             258 => Manufacturer::Lezyne,
@@ -6359,6 +6482,8 @@ impl convert::From<u16> for Manufacturer {
             315 => Manufacturer::RGTCycling,
             316 => Manufacturer::Vasa,
             317 => Manufacturer::RaceRepublic,
+            318 => Manufacturer::Fazua,
+            319 => Manufacturer::OrekaTraining,
             5759 => Manufacturer::Actigraphcorp,
             _ => Manufacturer::UnknownVariant(value),
         }
@@ -6756,13 +6881,22 @@ pub enum GarminProduct {
     Venu2Asia,
     Fr945LteAsia,
     ApproachS12Asia,
+    Fr255Music,
+    Fr255SmallMusic,
+    Fr255,
+    Fr255Small,
     ApproachS42Asia,
     DescentG1,
     Venu2PlusAsia,
+    Fr955,
     Fr55Asia,
+    Vivosmart5,
     Instinct2Asia,
     D2AirX10,
+    HrmProPlus,
     DescentG1Asia,
+    Tactix7,
+    EdgeExplore2,
     /// Neo Smart, Tacx
     TacxNeoSmart,
     /// Neo 2 Smart, Tacx
@@ -7158,13 +7292,22 @@ impl GarminProduct {
             GarminProduct::Venu2Asia => 3950,
             GarminProduct::Fr945LteAsia => 3978,
             GarminProduct::ApproachS12Asia => 3986,
+            GarminProduct::Fr255Music => 3990,
+            GarminProduct::Fr255SmallMusic => 3991,
+            GarminProduct::Fr255 => 3992,
+            GarminProduct::Fr255Small => 3993,
             GarminProduct::ApproachS42Asia => 4002,
             GarminProduct::DescentG1 => 4005,
             GarminProduct::Venu2PlusAsia => 4017,
+            GarminProduct::Fr955 => 4024,
             GarminProduct::Fr55Asia => 4033,
+            GarminProduct::Vivosmart5 => 4063,
             GarminProduct::Instinct2Asia => 4071,
             GarminProduct::D2AirX10 => 4125,
+            GarminProduct::HrmProPlus => 4130,
             GarminProduct::DescentG1Asia => 4132,
+            GarminProduct::Tactix7 => 4135,
+            GarminProduct::EdgeExplore2 => 4169,
             GarminProduct::TacxNeoSmart => 4265,
             GarminProduct::TacxNeo2Smart => 4266,
             GarminProduct::TacxNeo2TSmart => 4267,
@@ -7557,13 +7700,22 @@ impl fmt::Display for GarminProduct {
             GarminProduct::Venu2Asia => write!(f, "venu2_asia"),
             GarminProduct::Fr945LteAsia => write!(f, "fr945_lte_asia"),
             GarminProduct::ApproachS12Asia => write!(f, "approach_S12_asia"),
+            GarminProduct::Fr255Music => write!(f, "fr255_music"),
+            GarminProduct::Fr255SmallMusic => write!(f, "fr255_small_music"),
+            GarminProduct::Fr255 => write!(f, "fr255"),
+            GarminProduct::Fr255Small => write!(f, "fr255_small"),
             GarminProduct::ApproachS42Asia => write!(f, "approach_s42_asia"),
             GarminProduct::DescentG1 => write!(f, "descent_g1"),
             GarminProduct::Venu2PlusAsia => write!(f, "venu2_plus_asia"),
+            GarminProduct::Fr955 => write!(f, "fr955"),
             GarminProduct::Fr55Asia => write!(f, "fr55_asia"),
+            GarminProduct::Vivosmart5 => write!(f, "vivosmart_5"),
             GarminProduct::Instinct2Asia => write!(f, "instinct_2_asia"),
             GarminProduct::D2AirX10 => write!(f, "d2_air_x10"),
+            GarminProduct::HrmProPlus => write!(f, "hrm_pro_plus"),
             GarminProduct::DescentG1Asia => write!(f, "descent_g1_asia"),
+            GarminProduct::Tactix7 => write!(f, "tactix7"),
+            GarminProduct::EdgeExplore2 => write!(f, "edge_explore2"),
             GarminProduct::TacxNeoSmart => write!(f, "tacx_neo_smart"),
             GarminProduct::TacxNeo2Smart => write!(f, "tacx_neo2_smart"),
             GarminProduct::TacxNeo2TSmart => write!(f, "tacx_neo2_t_smart"),
@@ -7949,13 +8101,22 @@ impl convert::From<u16> for GarminProduct {
             3950 => GarminProduct::Venu2Asia,
             3978 => GarminProduct::Fr945LteAsia,
             3986 => GarminProduct::ApproachS12Asia,
+            3990 => GarminProduct::Fr255Music,
+            3991 => GarminProduct::Fr255SmallMusic,
+            3992 => GarminProduct::Fr255,
+            3993 => GarminProduct::Fr255Small,
             4002 => GarminProduct::ApproachS42Asia,
             4005 => GarminProduct::DescentG1,
             4017 => GarminProduct::Venu2PlusAsia,
+            4024 => GarminProduct::Fr955,
             4033 => GarminProduct::Fr55Asia,
+            4063 => GarminProduct::Vivosmart5,
             4071 => GarminProduct::Instinct2Asia,
             4125 => GarminProduct::D2AirX10,
+            4130 => GarminProduct::HrmProPlus,
             4132 => GarminProduct::DescentG1Asia,
+            4135 => GarminProduct::Tactix7,
+            4169 => GarminProduct::EdgeExplore2,
             4265 => GarminProduct::TacxNeoSmart,
             4266 => GarminProduct::TacxNeo2Smart,
             4267 => GarminProduct::TacxNeo2TSmart,
@@ -8202,7 +8363,7 @@ pub enum WorkoutCapabilities {
     FitnessEquipment,
     Firstbeat,
     NewLeaf,
-    /// For backwards compatibility.  Watch should add missing id fields then clear flag.
+    /// For backwards compatibility. Watch should add missing id fields then clear flag.
     Tcx,
     /// Speed source required for workout step.
     Speed,
@@ -20991,7 +21152,9 @@ impl Serialize for DiveGasStatus {
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum DiveAlarmType {
+    /// Alarm when a certain depth is crossed
     Depth,
+    /// Alarm when a certain time has transpired
     Time,
     UnknownVariant(u8),
 }
