@@ -1,9 +1,24 @@
 use calamine::{open_workbook, DataType, Range, Reader, Xlsx};
 use std::collections::{BTreeMap, HashSet};
-use std::env;
 use std::fs::File;
 use std::io::prelude::*;
+use std::path::PathBuf;
 use std::process::Command;
+use structopt::StructOpt;
+
+/// Parse the Profile.xlsx included in the FIT SDK and update the related modules
+#[derive(Debug, StructOpt)]
+#[structopt(name = "update_profile")]
+struct Cli {
+    /// Path to Profile.xlsx file
+    #[structopt(name = "FILE", parse(from_os_str))]
+    profile_path: PathBuf,
+
+    /// Manually specify the SDK version, usually we can infer this from the path to the Profile.xlsx
+    /// file unless it's been moved
+    #[structopt(long)]
+    sdk_version: Option<String>,
+}
 
 // the fields in these structs are mostly duplicated from code in src/profile/parser.rs
 #[derive(Clone, Debug)]
@@ -671,7 +686,7 @@ fn process_messages(sheet: Range<DataType>) -> Vec<MessageDefinition> {
 }
 
 pub fn parse_profile(
-    profile_fname: &str,
+    profile_fname: &PathBuf,
     version: String,
 ) -> Result<FitProfile, Box<dyn std::error::Error>> {
     let mut excel: Xlsx<_> = open_workbook(&profile_fname)?;
@@ -805,29 +820,22 @@ fn write_messages_file(profile: &FitProfile) -> Result<(), std::io::Error> {
     Ok(())
 }
 
-fn main() -> Result<(), Box<dyn std::error::Error>> {
-    // FIT_PROFILE should be set to the profile.xlsx file path
-    println!("cargo:rerun-if-env-changed=FIT_PROFILE");
-    let profile_fname = match env::var("FIT_PROFILE") {
-        Ok(val) => {
-            eprintln!("Reading FIT profile at {}", &val);
-            val
-        }
-        Err(_) => {
-            println!("cargo:warning=Did not update FIT profile, could not read FIT_PROFILE environment variable");
-            return Ok(());
-        }
+fn run() -> Result<(), Box<dyn std::error::Error>> {
+    let opt = Cli::from_args();
+    let profile_fname = opt.profile_path;
+    let profile_vers = match opt.sdk_version {
+        Some(vers) => vers,
+        None => match profile_fname.parent().and_then(|p| p.file_name()) {
+            Some(dirname) => dirname.to_str().unwrap().replace("FitSDKRelease_", ""),
+            None => String::from("unknown"),
+        },
     };
-    let profile_vers = match env::var("FIT_PROFILE_VERSION") {
-        Ok(val) => {
-            eprintln!("Setting profile version to {}", &val);
-            val
-        }
-        Err(e) => {
-            println!("cargo:error=Did not update FIT profile, could not read FIT_PROFILE_VERSION environment variable");
-            return Err(e.into());
-        }
-    };
+    if !profile_vers.chars().all(|c| c.is_ascii_digit() || c == '.') {
+        panic!(
+            "Could not determine version from Profile.xslx path: '{:?}' - %{}%",
+            profile_fname, profile_vers
+        );
+    }
 
     // process excel file and output
     let profile = parse_profile(&profile_fname, profile_vers).unwrap();
@@ -835,4 +843,14 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     write_messages_file(&profile)?;
 
     Ok(())
+}
+
+fn main() {
+    std::process::exit(match run() {
+        Ok(_) => 0,
+        Err(err) => {
+            eprintln!("{}", err);
+            1
+        }
+    });
 }

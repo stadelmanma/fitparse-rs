@@ -11,13 +11,19 @@ documentation = "https://docs.rs/fitparser"
 keywords = ["ant", "fit", "garmin", "serde"]
 categories = ["encoding", "parser-implementations"]
 
+[[bin]]
+name = "update-profile"
+required-features = ["codegen"]
+
+[features]
+codegen = ["dep:calamine", "dep:structopt"]
+
 [dependencies]
+calamine = { version = "0.16.1", optional = true }
 chrono = { version = "0.4", features = ["serde"] }
 nom = "7"
 serde = { version = "1.0", features = ["derive"] }
-
-[build-dependencies]
-calamine = "0.16.1"
+structopt = { version = "0.3", optional = true }
 
 [dev-dependencies]
 structopt = "0.3"
