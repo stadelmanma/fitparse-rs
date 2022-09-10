@@ -56,7 +56,7 @@ the `streaming.rs` example file for basic usage and manual processing of
 ## Updating the FIT profile
 
 All FIT files are generated based on a customizable profile. The profile
-used here is pulled from ANT's offical SDK which can be accessed
+used here is pulled from ANT's official SDK which can be accessed
 [here](https://developer.garmin.com/fit/download/). The
 cargo build command expects the environment variable `FIT_PROFILE` to be set to the
 path of the desired Profile.xlsx file and the `FIT_PROFILE_VERSION` variable to
