@@ -1,30 +1,5 @@
-[package]
-name = "fitparser"
-version = "0.5.1"
-authors = ["Matthew Stadelman <stadelmanma@gmail.com>"]
-edition = "2018"
-description = "A utility to parse ANT .FIT files and allow their contents to be serialized with serde."
-license = "MIT"
-repository = "https://github.com/stadelmanma/fitparse-rs"
-readme = "README.md"
-documentation = "https://docs.rs/fitparser"
-keywords = ["ant", "fit", "garmin", "serde"]
-categories = ["encoding", "parser-implementations"]
-
-[[bin]]
-name = "update-profile"
-required-features = ["codegen"]
-
-[features]
-codegen = ["dep:calamine", "dep:structopt"]
-
-[dependencies]
-calamine = { version = "0.16.1", optional = true }
-chrono = { version = "0.4", features = ["serde"] }
-nom = "7"
-serde = { version = "1.0", features = ["derive"] }
-structopt = { version = "0.3", optional = true }
-
-[dev-dependencies]
-structopt = "0.3"
-serde_json = { version = "1.0" }
+[workspace]
+members = [
+    "fitparser",
+    "generate-fit-profile",
+]
