@@ -1,7 +1,10 @@
 # Changelog
 
+## HEAD
+* Reestructured project to drop the calamine dependency for end users
+
 ## v0.5.1
-** Bump packaged FIT SDK version to 21.89.00
+* Bump packaged FIT SDK version to 21.89.00
 
 ## v0.5.0
 * Use Arc instead of Rc to make FitObjects fully thread-safe (danielalvsaaker)
