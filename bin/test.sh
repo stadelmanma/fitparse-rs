@@ -1,2 +1,2 @@
 #!/bin/sh
-cargo test "$@"
+cargo test fitparser "$@"

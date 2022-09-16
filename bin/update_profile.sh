@@ -1,2 +1,2 @@
 #!/bin/sh
-exec cargo run --bin update-profile --features=codegen -- "$@"
+exec cargo run --bin generate-fit-profile -- "$@"
