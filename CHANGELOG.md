@@ -3,6 +3,7 @@
 ## HEAD
 * Restructured project to drop the calamine dependency for end users, profile
   generation is now done in a separate private crate
+* Update calamine dependency
 
 ## v0.5.1
 * Bump packaged FIT SDK version to 21.89.00
