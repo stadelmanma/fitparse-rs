@@ -10,5 +10,5 @@ readme = "README.md"
 keywords = ["ant", "fit", "garmin"]
 
 [dependencies]
-calamine = { git = "https://github.com/stadelmanma/calamine.git", branch = "fix-empty-formats-treated-as-date" }
+calamine = { git = "https://github.com/tafia/calamine.git", branch = "master" }
 structopt = "0.3"
