@@ -19,7 +19,12 @@ impl FieldTypeDefintion {
         for variant in self.variant_map().values() {
             variant.write_variant_line(out)?;
         }
-        writeln!(out, "UnknownVariant({}),", self.base_type())?;
+        writeln!(
+            out,
+            "{}({}),",
+            self.other_value_field_name(),
+            self.base_type()
+        )?;
         writeln!(out, "}}")?;
 
         self.generate_impl(out)
@@ -42,8 +47,9 @@ impl FieldTypeDefintion {
         }
         writeln!(
             out,
-            "{}::UnknownVariant(value) => value",
-            self.titlized_name()
+            "{}::{}(value) => value",
+            self.titlized_name(),
+            self.other_value_field_name(),
         )?;
         writeln!(out, "}}")?;
         writeln!(out, "}}")?;
@@ -69,11 +75,21 @@ impl FieldTypeDefintion {
                 variant.name()
             )?;
         }
-        writeln!(
-            out,
-            "{}::UnknownVariant(value) => write!(f, \"unknown_variant_{{}}\", *value)",
-            self.titlized_name()
-        )?;
+        if self.is_true_enum() {
+            writeln!(
+                out,
+                "{}::{}(value) => write!(f, \"unknown_variant_{{}}\", *value)",
+                self.titlized_name(),
+                self.other_value_field_name(),
+            )?;
+        } else {
+            writeln!(
+                out,
+                "{}::{}(value) => write!(f, \"{{}}\", value),",
+                self.titlized_name(),
+                self.other_value_field_name(),
+            )?;
+        }
         writeln!(out, "}}")?;
         writeln!(out, "}}")?;
         writeln!(out, "}}")?;
@@ -95,7 +111,12 @@ impl FieldTypeDefintion {
                 variant.titlized_name()
             )?;
         }
-        writeln!(out, " _ => {}::UnknownVariant(value)", self.titlized_name())?;
+        writeln!(
+            out,
+            " _ => {}::{}(value)",
+            self.titlized_name(),
+            self.other_value_field_name()
+        )?;
         writeln!(out, "}}")?;
         writeln!(out, "}}")?;
         writeln!(out, "}}")?;
