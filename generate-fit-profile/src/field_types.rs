@@ -144,7 +144,20 @@ impl FieldTypeDefintion {
         writeln!(out, "where")?;
         writeln!(out, "S: Serializer,")?;
         writeln!(out, "{{")?;
-        writeln!(out, "serializer.serialize_str(&self.to_string())")?;
+        if self.is_true_enum() {
+            writeln!(out, "serializer.serialize_str(&self.to_string())")?;
+        } else {
+            writeln!(out, "match &self {{")?;
+            writeln!(
+                out,
+                "{}::{}(value) => serializer.serialize_{}(*value),",
+                self.titlized_name(),
+                self.other_value_field_name(),
+                self.base_type(),
+            )?;
+            writeln!(out, "_ => serializer.serialize_str(&self.to_string())")?;
+            writeln!(out, "}}")?;
+        }
         writeln!(out, "}}")?;
         writeln!(out, "}}")?;
 

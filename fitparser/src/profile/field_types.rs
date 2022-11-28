@@ -551,7 +551,10 @@ impl Serialize for MesgNum {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            MesgNum::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -602,7 +605,10 @@ impl Serialize for Checksum {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            Checksum::Value(value) => serializer.serialize_u8(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -655,7 +661,10 @@ impl Serialize for FileFlags {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            FileFlags::Value(value) => serializer.serialize_u8(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -755,7 +764,10 @@ impl Serialize for DateTime {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            DateTime::Value(value) => serializer.serialize_u32(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 /// seconds since 00:00 Dec 31 1989 in local time zone
@@ -802,7 +814,10 @@ impl Serialize for LocalDateTime {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            LocalDateTime::Value(value) => serializer.serialize_u32(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -858,7 +873,10 @@ impl Serialize for MessageIndex {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            MessageIndex::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -904,7 +922,10 @@ impl Serialize for DeviceIndex {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            DeviceIndex::Value(value) => serializer.serialize_u8(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -1224,7 +1245,10 @@ impl Serialize for LanguageBits0 {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            LanguageBits0::Value(value) => serializer.serialize_u8(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -1297,7 +1321,10 @@ impl Serialize for LanguageBits1 {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            LanguageBits1::Value(value) => serializer.serialize_u8(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -1370,7 +1397,10 @@ impl Serialize for LanguageBits2 {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            LanguageBits2::Value(value) => serializer.serialize_u8(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -1443,7 +1473,10 @@ impl Serialize for LanguageBits3 {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            LanguageBits3::Value(value) => serializer.serialize_u8(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -1508,7 +1541,10 @@ impl Serialize for LanguageBits4 {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            LanguageBits4::Value(value) => serializer.serialize_u8(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -2754,7 +2790,10 @@ impl Serialize for SportBits0 {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            SportBits0::Value(value) => serializer.serialize_u8(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 /// Bit field corresponding to sport enum type (1 << (sport-8)).
@@ -2828,7 +2867,10 @@ impl Serialize for SportBits1 {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            SportBits1::Value(value) => serializer.serialize_u8(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 /// Bit field corresponding to sport enum type (1 << (sport-16)).
@@ -2902,7 +2944,10 @@ impl Serialize for SportBits2 {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            SportBits2::Value(value) => serializer.serialize_u8(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 /// Bit field corresponding to sport enum type (1 << (sport-24)).
@@ -2976,7 +3021,10 @@ impl Serialize for SportBits3 {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            SportBits3::Value(value) => serializer.serialize_u8(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 /// Bit field corresponding to sport enum type (1 << (sport-32)).
@@ -3050,7 +3098,10 @@ impl Serialize for SportBits4 {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            SportBits4::Value(value) => serializer.serialize_u8(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 /// Bit field corresponding to sport enum type (1 << (sport-40)).
@@ -3124,7 +3175,10 @@ impl Serialize for SportBits5 {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            SportBits5::Value(value) => serializer.serialize_u8(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 /// Bit field corresponding to sport enum type (1 << (sport-48)).
@@ -3170,7 +3224,10 @@ impl Serialize for SportBits6 {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            SportBits6::Value(value) => serializer.serialize_u8(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -4168,7 +4225,10 @@ impl Serialize for BacklightTimeout {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            BacklightTimeout::Value(value) => serializer.serialize_u8(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -6499,7 +6559,10 @@ impl Serialize for Manufacturer {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            Manufacturer::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -8155,7 +8218,10 @@ impl Serialize for GarminProduct {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            GarminProduct::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -8296,7 +8362,10 @@ impl Serialize for AntplusDeviceType {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            AntplusDeviceType::Value(value) => serializer.serialize_u8(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -8458,7 +8527,10 @@ impl Serialize for WorkoutCapabilities {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            WorkoutCapabilities::Value(value) => serializer.serialize_u32(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -8527,7 +8599,10 @@ impl Serialize for BatteryStatus {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            BatteryStatus::Value(value) => serializer.serialize_u8(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -8661,7 +8736,10 @@ impl Serialize for CourseCapabilities {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            CourseCapabilities::Value(value) => serializer.serialize_u32(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -8706,7 +8784,10 @@ impl Serialize for Weight {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            Weight::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 /// 0 - 100 indicates% of max hr; >100 indicates bpm (255 max) plus 100
@@ -8752,7 +8833,10 @@ impl Serialize for WorkoutHr {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            WorkoutHr::Value(value) => serializer.serialize_u32(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 /// 0 - 1000 indicates % of functional threshold power; >1000 indicates watts plus 1000.
@@ -8798,7 +8882,10 @@ impl Serialize for WorkoutPower {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            WorkoutPower::Value(value) => serializer.serialize_u32(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -8924,7 +9011,10 @@ impl Serialize for UserLocalId {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            UserLocalId::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -9365,7 +9455,10 @@ impl Serialize for LeftRightBalance {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            LeftRightBalance::Value(value) => serializer.serialize_u8(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -9416,7 +9509,10 @@ impl Serialize for LeftRightBalance100 {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            LeftRightBalance100::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -9726,7 +9822,10 @@ impl Serialize for ConnectivityCapabilities {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            ConnectivityCapabilities::Value(value) => serializer.serialize_u32(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -11614,7 +11713,10 @@ impl Serialize for CommTimeoutType {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            CommTimeoutType::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -11821,7 +11923,10 @@ impl Serialize for AttitudeValidity {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            AttitudeValidity::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -13016,7 +13121,10 @@ impl Serialize for AutoActivityDetect {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            AutoActivityDetect::Value(value) => serializer.serialize_u32(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -13097,7 +13205,10 @@ impl Serialize for SupportedExdScreenLayouts {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            SupportedExdScreenLayouts::Value(value) => serializer.serialize_u32(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -13206,7 +13317,10 @@ impl Serialize for FitBaseType {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            FitBaseType::Value(value) => serializer.serialize_u8(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -13448,7 +13562,10 @@ impl Serialize for BikeLightBeamAngleMode {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            BikeLightBeamAngleMode::Value(value) => serializer.serialize_u8(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -13501,7 +13618,10 @@ impl Serialize for FitBaseUnit {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            FitBaseUnit::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -13550,7 +13670,10 @@ impl Serialize for SetType {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            SetType::Value(value) => serializer.serialize_u8(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -13727,7 +13850,10 @@ impl Serialize for ExerciseCategory {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            ExerciseCategory::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -13916,7 +14042,10 @@ impl Serialize for BenchPressExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            BenchPressExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -14073,7 +14202,10 @@ impl Serialize for CalfRaiseExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            CalfRaiseExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -14206,7 +14338,10 @@ impl Serialize for CardioExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            CardioExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -14267,7 +14402,10 @@ impl Serialize for CarryExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            CarryExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -14418,7 +14556,10 @@ impl Serialize for ChopExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            ChopExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -14772,7 +14913,10 @@ impl Serialize for CoreExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            CoreExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -15213,7 +15357,10 @@ impl Serialize for CrunchExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            CrunchExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -15472,7 +15619,10 @@ impl Serialize for CurlExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            CurlExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -15607,7 +15757,10 @@ impl Serialize for DeadliftExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            DeadliftExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -15690,7 +15843,10 @@ impl Serialize for FlyeExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            FlyeExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -16002,7 +16158,10 @@ impl Serialize for HipRaiseExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            HipRaiseExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -16215,7 +16374,10 @@ impl Serialize for HipStabilityExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            HipStabilityExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -16270,7 +16432,10 @@ impl Serialize for HipSwingExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            HipSwingExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -16514,7 +16679,10 @@ impl Serialize for HyperextensionExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            HyperextensionExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -16707,7 +16875,10 @@ impl Serialize for LateralRaiseExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            LateralRaiseExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -16806,7 +16977,10 @@ impl Serialize for LegCurlExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            LegCurlExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -16955,7 +17129,10 @@ impl Serialize for LegRaiseExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            LegRaiseExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -17380,7 +17557,10 @@ impl Serialize for LungeExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            LungeExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -17513,7 +17693,10 @@ impl Serialize for OlympicLiftExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            OlympicLiftExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -18219,7 +18402,10 @@ impl Serialize for PlankExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            PlankExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -18410,7 +18596,10 @@ impl Serialize for PlyoExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            PlyoExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -18609,7 +18798,10 @@ impl Serialize for PullUpExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            PullUpExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -19022,7 +19214,10 @@ impl Serialize for PushUpExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            PushUpExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -19225,7 +19420,10 @@ impl Serialize for RowExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            RowExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -19396,7 +19594,10 @@ impl Serialize for ShoulderPressExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            ShoulderPressExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -19609,7 +19810,10 @@ impl Serialize for ShoulderStabilityExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            ShoulderStabilityExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -19722,7 +19926,10 @@ impl Serialize for ShrugExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            ShrugExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -19929,7 +20136,10 @@ impl Serialize for SitUpExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            SitUpExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -20376,7 +20586,10 @@ impl Serialize for SquatExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            SquatExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -20475,7 +20688,10 @@ impl Serialize for TotalBodyExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            TotalBodyExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -20734,7 +20950,10 @@ impl Serialize for TricepsExtensionExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            TricepsExtensionExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -20912,7 +21131,10 @@ impl Serialize for WarmUpExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            WarmUpExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -20969,7 +21191,10 @@ impl Serialize for RunExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            RunExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -21274,7 +21499,10 @@ impl Serialize for FaveroProduct {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            FaveroProduct::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
