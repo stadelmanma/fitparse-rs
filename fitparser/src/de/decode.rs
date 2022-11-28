@@ -1,12 +1,13 @@
 //! Helper functions and structures needed to decode a FIT file using the defined profile.
 use super::parser::FitDataMessage;
+use super::DecodeOption;
 use crate::error::{ErrorKind, Result};
 use crate::profile::{
     get_field_variant_as_string, ComponentFieldInfo, FieldDataType, FieldInfo, MesgNum, MessageInfo,
 };
 use crate::{FitDataField, FitDataRecord, Value};
 use chrono::{DateTime, Duration, Local, NaiveDate, TimeZone};
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 use std::convert::{From, TryInto};
 use std::f64::EPSILON;
 use std::iter::IntoIterator;
@@ -81,14 +82,41 @@ impl From<TimestampField> for Value {
 pub struct Decoder {
     base_timestamp: TimestampField,
     accumulate_fields: HashMap<u32, Value>,
+    return_numeric_enums: bool,
+}
+
+impl Default for Decoder {
+    fn default() -> Self {
+        Decoder::new(&HashSet::new())
+    }
 }
 
 impl Decoder {
     /// Create a new decoder
-    pub fn new() -> Self {
+    pub fn new(options: &HashSet<DecodeOption>) -> Self {
         Decoder {
             base_timestamp: TimestampField::Utc(0),
             accumulate_fields: HashMap::new(),
+            return_numeric_enums: options.contains(&DecodeOption::ReturnNumericEnumValues),
+        }
+    }
+
+    /// Sets a decode option if it applies
+    pub fn set_option(&mut self, option: DecodeOption) {
+        self.change_option_value(option, true)
+    }
+
+    /// Unsets a decode option if it applies
+    pub fn unset_option(&mut self, option: DecodeOption) {
+        self.change_option_value(option, false)
+    }
+
+    /// Private helper function to avoid duplicating match block code
+    fn change_option_value(&mut self, option: DecodeOption, value: bool) {
+        match option {
+            DecodeOption::SkipDataCrcValidation => {}
+            DecodeOption::SkipHeaderCrcValidation => {}
+            DecodeOption::ReturnNumericEnumValues => self.return_numeric_enums = value,
         }
     }
 
@@ -170,6 +198,7 @@ impl Decoder {
                     if field_info.accumulate() {
                         value = self.accumlate_value(msg_num, def_num, value)?;
                     }
+                    value = self.convert_value(&field_info, value)?;
                     data_fields.push(data_field_with_info(&field_info, value)?);
                 } else {
                     let (infos, values): (Vec<_>, Vec<_>) =
@@ -253,6 +282,52 @@ impl Decoder {
         }
     }
 
+    /// Applies any necessary value conversions based on the field specification
+    fn convert_value(&self, field_info: &FieldInfo, value: Value) -> Result<Value> {
+        // for array types return inner vector unmodified
+        if let Value::Array(vals) = value {
+            return Ok(Value::Array(vals));
+        }
+
+        // handle time types specially, if for some reason I can't convert to an integer we will
+        // just dump the reference timestamp by passing it a 0
+        match field_info.field_type() {
+            FieldDataType::DateTime => {
+                return Ok(Value::from(TimestampField::Utc(
+                    value.try_into().unwrap_or(0),
+                )));
+            }
+            FieldDataType::LocalDateTime => {
+                return Ok(Value::from(TimestampField::Local(
+                    value.try_into().unwrap_or(0),
+                )));
+            }
+            _ => (),
+        }
+
+        // convert enum or rescale integer value into floating point
+        if field_info.field_type().is_enum_type() {
+            let val: i64 = value.try_into()?;
+            if self.return_numeric_enums {
+                Ok(Value::SInt64(val))
+            } else {
+                Ok(Value::String(get_field_variant_as_string(
+                    field_info.field_type(),
+                    val,
+                )))
+            }
+        } else if ((field_info.scale() - 1.0).abs() > EPSILON)
+            || ((field_info.offset() - 0.0).abs() > EPSILON)
+        {
+            let val: f64 = value.try_into()?;
+            Ok(Value::Float64(
+                val / field_info.scale() - field_info.offset(),
+            ))
+        } else {
+            Ok(value)
+        }
+    }
+
     /// Update the timestamp with a new offset and return the value
     fn update_timestamp(&mut self, offset: u8) -> Value {
         let offset: i64 = offset as i64;
@@ -329,51 +404,8 @@ fn expand_components<'a>(
     components
 }
 
-/// Applies any necessary value conversions based on the field specification
-fn convert_value(field_info: &FieldInfo, value: Value) -> Result<Value> {
-    // for array types return inner vector unmodified
-    if let Value::Array(vals) = value {
-        return Ok(Value::Array(vals));
-    }
-
-    // handle time types specially, if for some reason I can't convert to an integer we will
-    // just dump the reference timestamp by passing it a 0
-    match field_info.field_type() {
-        FieldDataType::DateTime => {
-            return Ok(Value::from(TimestampField::Utc(
-                value.try_into().unwrap_or(0),
-            )));
-        }
-        FieldDataType::LocalDateTime => {
-            return Ok(Value::from(TimestampField::Local(
-                value.try_into().unwrap_or(0),
-            )));
-        }
-        _ => (),
-    }
-
-    // convert enum or rescale integer value into floating point
-    if field_info.field_type().is_enum_type() {
-        let val: i64 = value.try_into()?;
-        Ok(Value::String(get_field_variant_as_string(
-            field_info.field_type(),
-            val,
-        )))
-    } else if ((field_info.scale() - 1.0).abs() > EPSILON)
-        || ((field_info.offset() - 0.0).abs() > EPSILON)
-    {
-        let val: f64 = value.try_into()?;
-        Ok(Value::Float64(
-            val / field_info.scale() - field_info.offset(),
-        ))
-    } else {
-        Ok(value)
-    }
-}
-
 /// Build a data field using the provided FIT profile information
 fn data_field_with_info(field_info: &FieldInfo, value: Value) -> Result<FitDataField> {
-    let value = convert_value(field_info, value)?;
     Ok(FitDataField::new(
         field_info.name().to_string(),
         field_info.def_number(),

@@ -21,6 +21,8 @@ pub enum DecodeOption {
     SkipHeaderCrcValidation,
     /// Ignore data section checksum value
     SkipDataCrcValidation,
+    /// Return the numeric value instead of string name for all enums
+    ReturnNumericEnumValues,
 }
 
 /// Stores a FIT file object (header, message or CRC)
@@ -198,7 +200,7 @@ pub struct FitStreamProcessor {
 impl Default for FitStreamProcessor {
     fn default() -> Self {
         FitStreamProcessor {
-            decoder: Decoder::new(),
+            decoder: Decoder::default(),
             deserializer: Deserializer::new(),
         }
     }
@@ -213,11 +215,13 @@ impl FitStreamProcessor {
     /// Add a decoding option to the processor
     pub fn add_option(&mut self, opt: DecodeOption) {
         self.deserializer.options_mut().insert(opt);
+        self.decoder.set_option(opt);
     }
 
     /// Add a decoding option to the processor
     pub fn remove_option(&mut self, opt: DecodeOption) {
         self.deserializer.options_mut().remove(&opt);
+        self.decoder.unset_option(opt);
     }
 
     /// Reset the decoder state and definition messages in use, this should be called at the end of
