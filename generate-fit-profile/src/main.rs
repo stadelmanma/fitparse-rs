@@ -5,10 +5,10 @@ use std::path::PathBuf;
 use std::process::Command;
 use structopt::StructOpt;
 
+mod decode;
+use crate::decode::write_decode_file;
 mod field_types;
 use crate::field_types::write_types_file;
-mod messages;
-use crate::messages::write_messages_file;
 mod parse;
 use crate::parse::parse_profile;
 
@@ -61,11 +61,11 @@ fn run() -> Result<(), Box<dyn std::error::Error>> {
     write_types_file(&profile, &mut out)?;
     rustfmt(&types_fname);
 
-    let messages_fname = dest_dir.join("messages.rs");
-    eprintln!("Generating file: {:?}", &messages_fname);
-    let mut out = File::create(&messages_fname)?;
-    write_messages_file(&profile, &mut out)?;
-    rustfmt(&messages_fname);
+    let decode_fname = dest_dir.join("decode.rs");
+    eprintln!("Generating file: {:?}", &decode_fname);
+    let mut out = File::create(&decode_fname)?;
+    write_decode_file(&profile, &mut out)?;
+    rustfmt(&decode_fname);
 
     Ok(())
 }
