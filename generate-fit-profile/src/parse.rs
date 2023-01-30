@@ -111,7 +111,6 @@ impl FieldTypeVariant {
 #[derive(Clone, Debug)]
 pub struct MessageDefinition {
     name: String,
-    titlized_name: String,
     comment: Option<String>,
     field_map: BTreeMap<u8, MessageFieldDefinition>,
 }
@@ -120,7 +119,6 @@ impl MessageDefinition {
     fn new(name: &str, comment: Option<String>) -> Self {
         MessageDefinition {
             name: name.to_string(),
-            titlized_name: titlecase_string(name),
             comment,
             field_map: BTreeMap::new(),
         }
@@ -128,10 +126,6 @@ impl MessageDefinition {
 
     pub fn name(&self) -> &str {
         &self.name
-    }
-
-    pub fn titlized_name(&self) -> &str {
-        &self.titlized_name
     }
 
     pub fn field_map(&self) -> &BTreeMap<u8, MessageFieldDefinition> {
