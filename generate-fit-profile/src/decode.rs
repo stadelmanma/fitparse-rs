@@ -53,9 +53,13 @@ impl MessageDefinition {
                     //       handled correctly see
                     //       hr_message_event_timestamp_field
                     // TODO: components expanding into other components might
-                    //       also no behandled correctly, I think for that to
-                    //       work I would need todo component expansion in the
-                    //       field function and mmutate the data map there
+                    //       also no be handled correctly. I think for that to
+                    //       work I would need to do component expansion in the
+                    //       field function and mutate the data map there.
+                    // TODO: recursive subfield resolution won't work how I have
+                    //       it right now, but would if I do the same thing as above.
+                    //       However, the profile I'm using doesn't have recursive
+                    //       subfields
                     // --------------------------------------------------------
 
                     // insert back into datamap for subfield look ups
@@ -66,27 +70,42 @@ impl MessageDefinition {
                         comp.name()
                     )?;
 
-                    if field.components().len() > 1 {
-                        // according to some sample code in the FIT SDK when a component expands
-                        // to a composite field (i.e. one with 2 or more components) the scale and
-                        // offset are not applied but this seems inconsistent or maybe I'm
-                        // misunderstaning the code
-                        writeln!(out, "fields.push({}_{}_field(mesg_num, data_map, accumlators, {}, {3:.6}, {4:.6}, \"{5}\", value.clone())?);",
-                            self.function_name(),
-                            comp.name(),
-                            comp.accumulate(),
-                            comp.scale(),
-                            comp.offset(),
-                            comp.units()
-                        )?;
-                    }
+                    // according to some sample code in the FIT SDK when a component expands
+                    // to a composite field (i.e. one with 2 or more components) the scale and
+                    // offset are not applied but this seems inconsistent or maybe I'm
+                    // misunderstaning the code
+                    writeln!(out, "fields.push({}_{}_field(mesg_num, data_map, accumlators, {}, {3:.6}, {4:.6}, \"{5}\", value.clone())?);",
+                        self.function_name(),
+                        comp.name(),
+                        comp.accumulate(),
+                        comp.scale(),
+                        comp.offset(),
+                        comp.units()
+                    )?;
                     bit_offset += comp.bits();
                 }
             } else if !field.subfields().is_empty() {
-                // for this to work we'll probably need to drop into a separate subfield expansion
-                // function using an if/else block since subfields might look at different fields to
-                // do the resolution
-                writeln!(out, "panic!(\"subfields not supported yet!\")")?;
+                for (idx, (ref_name, val_str, sub_field_info)) in
+                    field.subfields().iter().enumerate()
+                {
+                    let ref_field = self.get_field_by_name(ref_name);
+                    if idx == 0 {
+                        writeln!(out, "if ({}::{}.as_i64() == data_map.get({}).map_or(-1i64, |v| v.as_i64())) {{", ref_field.field_type(), val_str, ref_field.def_number())?;
+                    } else if idx == field.subfields().len() - 1 {
+                        writeln!(out, "else {{")?;
+                    } else {
+                        writeln!(out, "else if ({}::{}.as_i64() == data_map.get({}).map_or(-1i64, |v| v.as_i64())) {{", ref_field.field_type(), val_str, ref_field.def_number())?;
+                    }
+                    writeln!(out, "fields.push({}_{}_field(mesg_num, data_map, accumlators, {}, {3:.6}, {4:.6}, \"{5}\", value.clone())?);",
+                        self.function_name(),
+                        sub_field_info.name(),
+                        sub_field_info.accumulate(),
+                        sub_field_info.scale(),
+                        sub_field_info.offset(),
+                        sub_field_info.units()
+                    )?;
+                    writeln!(out, "}}")?;
+                }
             } else {
                 writeln!(out, "fields.push({}_{}_field(mesg_num, data_map, accumlators, {}, {3:.6}, {4:.6}, \"{5}\", value.clone())?);",
                     self.function_name(),
@@ -111,6 +130,9 @@ impl MessageDefinition {
 
         for field in self.field_map().values() {
             self.write_create_field_fn_def(out, field)?;
+            for (_, _, sub_field_info) in field.subfields() {
+                self.write_create_field_fn_def(out, sub_field_info)?;
+            }
         }
 
         Ok(())
