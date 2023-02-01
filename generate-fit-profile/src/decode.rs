@@ -169,6 +169,47 @@ impl MessageDefinition {
     }
 }
 
+fn write_unknown_mesg_fn(out: &mut File) -> Result<(), std::io::Error> {
+    writeln!(
+        out,
+        "{}",
+        "
+        fn unknown_message(
+        mesg_num: MesgNum,
+        data_map: HashMap<u8, Option<Value>>,
+        accumlators: &mut HashMap<u32, Value>,
+    ) -> Result<Vec<FitDataField>> {
+        data_map.iter()
+            .filter_map(|(k, v)| v.as_ref().map(|v| unknown_field(k, v)))
+            .collect()
+    }
+    "
+    )
+}
+
+fn create_mesg_num_to_mesg_decode_fn(
+    messages: &[MessageDefinition],
+    out: &mut File,
+) -> Result<(), std::io::Error> {
+    writeln!(out, "impl MesgNum {{")?;
+    writeln!(out, "  pub fn decode_message(self, data_map: HashMap<u8, Option<Value>>, accumlators: &mut HashMap<u32, Value>) -> Result<Vec<FitDataField>> {{")?;
+    writeln!(out, "    match self {{")?;
+    for msg in messages {
+        writeln!(
+            out,
+            "MesgNum::{} => {}(self, data_map, accumlators),",
+            msg.titlized_name(),
+            msg.function_name()
+        )?;
+    }
+    writeln!(out, "_ => unknown_message(self, data_map, accumlators),")?;
+    writeln!(out, "    }}")?;
+    writeln!(out, "  }}")?;
+    writeln!(out, "}}")?;
+
+    Ok(())
+}
+
 pub fn write_decode_file(profile: &FitProfile, out: &mut File) -> Result<(), std::io::Error> {
     writeln!(
         out,
@@ -182,6 +223,9 @@ pub fn write_decode_file(profile: &FitProfile, out: &mut File) -> Result<(), std
     for msg in profile.messages() {
         msg.write_decode_function_def(out)?;
     }
+
+    write_unknown_mesg_fn(out)?;
+    create_mesg_num_to_mesg_decode_fn(profile.messages(), out)?;
 
     Ok(())
 }
