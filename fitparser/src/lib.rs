@@ -287,6 +287,42 @@ impl convert::TryInto<i64> for Value {
     }
 }
 
+impl convert::TryInto<i64> for &Value {
+    type Error = error::Error;
+
+    fn try_into(self) -> Result<i64> {
+        match self {
+            Value::Timestamp(val) => Ok(val.timestamp()),
+            Value::Byte(val) => Ok(*val as i64),
+            Value::Enum(val) => Ok(*val as i64),
+            Value::SInt8(val) => Ok(*val as i64),
+            Value::UInt8(val) => Ok(*val as i64),
+            Value::UInt8z(val) => Ok(*val as i64),
+            Value::SInt16(val) => Ok(*val as i64),
+            Value::UInt16(val) => Ok(*val as i64),
+            Value::UInt16z(val) => Ok(*val as i64),
+            Value::SInt32(val) => Ok(*val as i64),
+            Value::UInt32(val) => Ok(*val as i64),
+            Value::UInt32z(val) => Ok(*val as i64),
+            Value::SInt64(val) => Ok(*val),
+            Value::UInt64(val) => Ok(*val as i64),
+            Value::UInt64z(val) => Ok(*val as i64),
+            Value::Float32(_) => {
+                Err(ErrorKind::ValueError(format!("cannot convert {} into an i64", self)).into())
+            }
+            Value::Float64(_) => {
+                Err(ErrorKind::ValueError(format!("cannot convert {} into an i64", self)).into())
+            }
+            Value::String(_) => {
+                Err(ErrorKind::ValueError(format!("cannot convert {} into an i64", self)).into())
+            }
+            Value::Array(_) => {
+                Err(ErrorKind::ValueError(format!("cannot convert {} into an i64", self)).into())
+            }
+        }
+    }
+}
+
 /// Describes a field value along with its defined units (if any), this struct is useful for
 /// serializing data in a key-value store where the key is either the name or definition number
 /// since it can be created from a `FitDataField` with minimal data cloning.
