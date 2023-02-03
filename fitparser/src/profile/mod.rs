@@ -43,7 +43,9 @@ impl Value {
 /// Stores the timestamp offset from the FIT reference date in seconds
 #[derive(Debug, Copy, Clone)]
 pub enum TimestampField {
+    /// TimestampField generated from Value of type FieldDataType::LocalDateTime
     Local(i64),
+    /// TimestampField generated from Value of type FieldDataType::DateTime
     Utc(i64),
 }
 

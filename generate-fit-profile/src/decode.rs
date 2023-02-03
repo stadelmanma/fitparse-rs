@@ -58,10 +58,6 @@ impl MessageDefinition {
                     //       also no be handled correctly. I think for that to
                     //       work I would need to do component expansion in the
                     //       field function and mutate the data map there.
-                    // TODO: recursive subfield resolution won't work how I have
-                    //       it right now, but would if I do the same thing as above.
-                    //       However, the profile I'm using doesn't have recursive
-                    //       subfields
                     // --------------------------------------------------------
 
                     // insert back into datamap for subfield look ups
@@ -76,7 +72,7 @@ impl MessageDefinition {
                     // offset are not applied but this seems inconsistent or maybe I'm
                     // misunderstaning the code
 
-                    writeln!(out, "fields.push({0}_{1}_field(mesg_num, accumlators, {2}, {3:.6}, {4:.6}, \"{5}\", component_values[{6}].clone())?);",
+                    writeln!(out, "fields.push({0}_{1}_field(mesg_num, accumlators, data_map, {2}, {3:.6}, {4:.6}, \"{5}\", component_values[{6}].clone())?);",
                         self.function_name(),
                         comp.name(),
                         comp.accumulate(),
@@ -86,35 +82,10 @@ impl MessageDefinition {
                         idx
                     )?;
                 }
-            } else if !field.subfields().is_empty() {
-                for (idx, (ref_name, val_str, sub_field_info)) in
-                    field.subfields().iter().enumerate()
-                {
-                    let ref_field = self.get_field_by_name(ref_name);
-                    if idx == 0 {
-                        writeln!(out, "if")?;
-                    } else {
-                        writeln!(out, "else if")?;
-                    }
-                    writeln!(out, "{}::{}.as_i64() == data_map.get(&{}).map(|v| v.try_into().ok()).flatten().unwrap_or(-1i64) {{", ref_field.field_type(), val_str, ref_field.def_number())?;
-                    writeln!(
-                        out,
-                        "fields.push({});",
-                        sub_field_info.generate_create_fn_call(&self, "value")
-                    )?;
-                    writeln!(out, "}}")?;
-                }
-                writeln!(out, "else {{")?;
-                writeln!(
-                    out,
-                    "fields.push({});",
-                    field.generate_create_fn_call(&self, "value")
-                )?;
-                writeln!(out, "}}")?;
             } else {
                 writeln!(
                     out,
-                    "fields.push({});",
+                    "fields.push({}?);",
                     field.generate_create_fn_call(&self, "value")
                 )?;
             }
@@ -151,8 +122,28 @@ impl MessageFieldDefinition {
         mesg_def: &MessageDefinition,
     ) -> Result<(), std::io::Error> {
         writeln!(out,
-            "fn {}_{}_field(mesg_num: MesgNum, accumlators: &mut HashMap<u32, Value>, accumulate: bool, scale: f64, offset: f64, units: &'static str, value: Value) -> Result<FitDataField> {{",
+            "fn {}_{}_field(mesg_num: MesgNum, accumlators: &mut HashMap<u32, Value>, data_map: &HashMap<u8, Value>, accumulate: bool, scale: f64, offset: f64, units: &'static str, value: Value) -> Result<FitDataField> {{",
             mesg_def.function_name(), self.name())?;
+
+        // generate subfield deref code, we don't need
+        // an else cause since if none of the values match
+        // we'll just let it run the normal field creation part
+        for (idx, (ref_name, val_str, sub_field_info)) in self.subfields().iter().enumerate() {
+            let ref_field = mesg_def.get_field_by_name(ref_name);
+            if idx == 0 {
+                writeln!(out, "if")?;
+            } else {
+                writeln!(out, "else if")?;
+            }
+            writeln!(out, "{}::{}.as_i64() == data_map.get(&{}).map(|v| v.try_into().ok()).flatten().unwrap_or(-1i64) {{", ref_field.field_type(), val_str, ref_field.def_number())?;
+            writeln!(
+                out,
+                "return {};",
+                sub_field_info.generate_create_fn_call(mesg_def, "value")
+            )?;
+            writeln!(out, "}}")?;
+        }
+
         // generate acccumated field code
         writeln!(out, "let value = if accumulate {{")?;
         writeln!(
@@ -179,7 +170,7 @@ impl MessageFieldDefinition {
 
     fn generate_create_fn_call(&self, mesg_def: &MessageDefinition, val_str: &str) -> String {
         format!(
-            "{0}_{1}_field(mesg_num, accumlators, {2}, {3:.6}, {4:.6}, \"{5}\", {6})?",
+            "{0}_{1}_field(mesg_num, accumlators, data_map, {2}, {3:.6}, {4:.6}, \"{5}\", {6})",
             mesg_def.function_name(),
             self.name(),
             self.accumulate(),
@@ -213,6 +204,10 @@ fn create_mesg_num_to_mesg_decode_fn(
     out: &mut File,
 ) -> Result<(), std::io::Error> {
     writeln!(out, "impl MesgNum {{")?;
+    writeln!(
+        out,
+        "  /// Decode the raw values from a FitDataMessage based on the Global Message Number"
+    )?;
     writeln!(out, "  pub fn decode_message(self, data_map: &mut HashMap<u8, Value>, accumlators: &mut HashMap<u32, Value>) -> Result<Vec<FitDataField>> {{")?;
     writeln!(out, "    match self {{")?;
     for msg in messages {
@@ -237,7 +232,7 @@ pub fn write_decode_file(profile: &FitProfile, out: &mut File) -> Result<(), std
         "//! Auto generated profile messages from FIT SDK Release: {}",
         profile.version()
     )?;
-
+    writeln!(out, "#![allow(unused_variables)]")?;
     writeln!(out, "use std::collections::{{HashMap, VecDeque}};")?;
     writeln!(out, "use std::convert::TryInto;")?;
     writeln!(out, "use crate::{{FitDataField, Value}};")?;
@@ -247,6 +242,7 @@ pub fn write_decode_file(profile: &FitProfile, out: &mut File) -> Result<(), std
         "use super::{{calculate_cumulative_value, data_field_with_info, expand_components, unknown_field}};"
     )?;
     writeln!(out, "use super::field_types::*;")?;
+    writeln!(out, "/// FIT SDK version used to generate profile decoder")?;
     writeln!(out, "pub const VERSION: &str = \"{}\";", profile.version())?;
 
     // output all message functions
