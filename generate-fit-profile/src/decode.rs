@@ -75,6 +75,7 @@ impl MessageDefinition {
                     // to a composite field (i.e. one with 2 or more components) the scale and
                     // offset are not applied but this seems inconsistent or maybe I'm
                     // misunderstaning the code
+
                     writeln!(out, "fields.push({0}_{1}_field(mesg_num, accumlators, {2}, {3:.6}, {4:.6}, \"{5}\", component_values[{6}].clone())?);",
                         self.function_name(),
                         comp.name(),
@@ -91,38 +92,30 @@ impl MessageDefinition {
                 {
                     let ref_field = self.get_field_by_name(ref_name);
                     if idx == 0 {
-                        writeln!(out, "if {}::{}.as_i64() == data_map.get(&{}).map(|v| v.try_into().ok()).flatten().unwrap_or(-1i64) {{", ref_field.field_type(), val_str, ref_field.def_number())?;
+                        writeln!(out, "if")?;
                     } else {
-                        writeln!(out, "else if {}::{}.as_i64() == data_map.get(&{}).map(|v| v.try_into().ok()).flatten().unwrap_or(-1i64) {{", ref_field.field_type(), val_str, ref_field.def_number())?;
+                        writeln!(out, "else if")?;
                     }
-                    writeln!(out, "fields.push({}_{}_field(mesg_num, accumlators, {}, {3:.6}, {4:.6}, \"{5}\", value)?);",
-                        self.function_name(),
-                        sub_field_info.name(),
-                        sub_field_info.accumulate(),
-                        sub_field_info.scale(),
-                        sub_field_info.offset(),
-                        sub_field_info.units()
+                    writeln!(out, "{}::{}.as_i64() == data_map.get(&{}).map(|v| v.try_into().ok()).flatten().unwrap_or(-1i64) {{", ref_field.field_type(), val_str, ref_field.def_number())?;
+                    writeln!(
+                        out,
+                        "fields.push({});",
+                        sub_field_info.generate_create_fn_call(&self, "value")
                     )?;
                     writeln!(out, "}}")?;
                 }
                 writeln!(out, "else {{")?;
-                writeln!(out, "fields.push({}_{}_field(mesg_num, accumlators, {}, {3:.6}, {4:.6}, \"{5}\", value)?);",
-                        self.function_name(),
-                        field.name(),
-                        field.accumulate(),
-                        field.scale(),
-                        field.offset(),
-                        field.units()
-                    )?;
+                writeln!(
+                    out,
+                    "fields.push({});",
+                    field.generate_create_fn_call(&self, "value")
+                )?;
                 writeln!(out, "}}")?;
             } else {
-                writeln!(out, "fields.push({}_{}_field(mesg_num, accumlators, {}, {3:.6}, {4:.6}, \"{5}\", value)?);",
-                    self.function_name(),
-                    field.name(),
-                    field.accumulate(),
-                    field.scale(),
-                    field.offset(),
-                    field.units()
+                writeln!(
+                    out,
+                    "fields.push({});",
+                    field.generate_create_fn_call(&self, "value")
                 )?;
             }
             writeln!(out, "}}")?;
@@ -135,13 +128,13 @@ impl MessageDefinition {
         writeln!(out, "}}")?;
 
         for field in self.field_map().values() {
-            self.write_create_field_fn_def(out, field)?;
+            field.write_create_fn_def(out, &self)?;
             let mut created_subfield_fns = HashSet::new();
             for (_, _, sub_field_info) in field.subfields() {
                 if !created_subfield_fns.contains(sub_field_info.name()) {
                     // only create the function once, even if multiple values reference
                     // the subfield
-                    self.write_create_field_fn_def(out, sub_field_info)?;
+                    sub_field_info.write_create_fn_def(out, &self)?;
                 }
                 created_subfield_fns.insert(sub_field_info.name());
             }
@@ -149,19 +142,23 @@ impl MessageDefinition {
 
         Ok(())
     }
+}
 
-    fn write_create_field_fn_def(
+impl MessageFieldDefinition {
+    fn write_create_fn_def(
         &self,
         out: &mut File,
-        field: &MessageFieldDefinition,
+        mesg_def: &MessageDefinition,
     ) -> Result<(), std::io::Error> {
-        writeln!(out, "fn {}_{}_field(mesg_num: MesgNum, accumlators: &mut HashMap<u32, Value>, accumulate: bool, scale: f64, offset: f64, units: &'static str, value: Value) -> Result<FitDataField> {{", self.function_name(), field.name())?;
+        writeln!(out,
+            "fn {}_{}_field(mesg_num: MesgNum, accumlators: &mut HashMap<u32, Value>, accumulate: bool, scale: f64, offset: f64, units: &'static str, value: Value) -> Result<FitDataField> {{",
+            mesg_def.function_name(), self.name())?;
         // generate acccumated field code
         writeln!(out, "let value = if accumulate {{")?;
         writeln!(
             out,
             "  calculate_cumulative_value(accumlators, mesg_num.as_u16(), {0}, value)?",
-            field.def_number()
+            self.def_number()
         )?;
         writeln!(out, "}}")?;
         writeln!(out, "else {{")?;
@@ -171,13 +168,26 @@ impl MessageDefinition {
         writeln!(
             out,
             "data_field_with_info({0}, \"{1}\", FieldDataType::{2}, scale, offset, units, value)",
-            field.def_number(),
-            field.name(),
-            field.field_type()
+            self.def_number(),
+            self.name(),
+            self.field_type()
         )?;
         //
         writeln!(out, "}}")?;
         Ok(())
+    }
+
+    fn generate_create_fn_call(&self, mesg_def: &MessageDefinition, val_str: &str) -> String {
+        format!(
+            "{0}_{1}_field(mesg_num, accumlators, {2}, {3:.6}, {4:.6}, \"{5}\", {6})?",
+            mesg_def.function_name(),
+            self.name(),
+            self.accumulate(),
+            self.scale(),
+            self.offset(),
+            self.units(),
+            val_str,
+        )
     }
 }
 
