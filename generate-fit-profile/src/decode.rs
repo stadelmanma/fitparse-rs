@@ -1,5 +1,6 @@
 //! Functions to generate the message decoding functions from the fit profile.
 use crate::parse::{FitProfile, MessageDefinition, MessageFieldDefinition};
+use std::collections::HashSet;
 use std::fs::File;
 use std::io::prelude::*;
 
@@ -21,7 +22,7 @@ impl MessageDefinition {
         if let Some(v) = self.comment() {
             writeln!(out, "/// {}", v)?;
         }
-        writeln!(out, "fn {}(mesg_num: MesgNum, data_map: HashMap<u8, Option<Value>>, accumlators: &mut HashMap<u32, Value>) -> Result<Vec<FitDataField>> {{", self.function_name())?;
+        writeln!(out, "fn {}(mesg_num: MesgNum, data_map: &HashMap<u8, Option<Value>>, accumlators: &mut HashMap<u32, Value>) -> Result<Vec<FitDataField>> {{", self.function_name())?;
         writeln!(out, "let mut fields = Vec::new();")?;
         writeln!(out, "let mut entries: VecDeque<(&u8, &Value)> = data_map.iter().filter_map(|(k, v)| v.as_ref().map(|v| (k, v))).collect();")?;
 
@@ -36,17 +37,18 @@ impl MessageDefinition {
                 writeln!(out, "// {}", v)?;
             }
             if !field.components().is_empty() {
-                writeln!(out, "let mut bytes = value.to_ne_bytes().into_iter();")?;
-                let mut bit_offset = 0u8;
-                for comp in field.components() {
+                writeln!(
+                    out,
+                    "let component_values = expand_components(value, &[{}]);",
+                    field
+                        .components()
+                        .iter()
+                        .map(|c| c.bits().to_string())
+                        .collect::<Vec<String>>()
+                        .join(",")
+                )?;
+                for (idx, comp) in field.components().iter().enumerate() {
                     let dest_def_number = self.get_field_by_name(comp.name()).def_number();
-                    writeln!(
-                        out,
-                        "let {}_value = expand_components(bytes, {}, {});",
-                        comp.name(),
-                        bit_offset,
-                        bit_offset + comp.bits()
-                    )?;
 
                     // --------------------------------------------------------
                     // TODO: components expanding into array fields are not
@@ -65,24 +67,23 @@ impl MessageDefinition {
                     // insert back into datamap for subfield look ups
                     writeln!(
                         out,
-                        "data_map.insert({}, {}_value);",
-                        dest_def_number,
-                        comp.name()
+                        "data_map.insert({}, Some(component_values[{}]));",
+                        dest_def_number, idx
                     )?;
 
                     // according to some sample code in the FIT SDK when a component expands
                     // to a composite field (i.e. one with 2 or more components) the scale and
                     // offset are not applied but this seems inconsistent or maybe I'm
                     // misunderstaning the code
-                    writeln!(out, "fields.push({}_{}_field(mesg_num, data_map, accumlators, {}, {3:.6}, {4:.6}, \"{5}\", value.clone())?);",
+                    writeln!(out, "fields.push({0}_{1}_field(mesg_num, accumlators, {2}, {3:.6}, {4:.6}, \"{5}\", component_values[{6}].clone())?);",
                         self.function_name(),
                         comp.name(),
                         comp.accumulate(),
                         comp.scale(),
                         comp.offset(),
-                        comp.units()
+                        comp.units(),
+                        idx
                     )?;
-                    bit_offset += comp.bits();
                 }
             } else if !field.subfields().is_empty() {
                 for (idx, (ref_name, val_str, sub_field_info)) in
@@ -90,13 +91,13 @@ impl MessageDefinition {
                 {
                     let ref_field = self.get_field_by_name(ref_name);
                     if idx == 0 {
-                        writeln!(out, "if ({}::{}.as_i64() == data_map.get({}).map_or(-1i64, |v| v.as_i64())) {{", ref_field.field_type(), val_str, ref_field.def_number())?;
+                        writeln!(out, "if {}::{}.as_i64() == data_map.get(&{}).flatten().map_or(-1i64, |v| v.as_i64()) {{", ref_field.field_type(), val_str, ref_field.def_number())?;
                     } else if idx == field.subfields().len() - 1 {
                         writeln!(out, "else {{")?;
                     } else {
-                        writeln!(out, "else if ({}::{}.as_i64() == data_map.get({}).map_or(-1i64, |v| v.as_i64())) {{", ref_field.field_type(), val_str, ref_field.def_number())?;
+                        writeln!(out, "else if {}::{}.as_i64() == data_map.get(&{}).flatten().map_or(-1i64, |v| v.as_i64()) {{", ref_field.field_type(), val_str, ref_field.def_number())?;
                     }
-                    writeln!(out, "fields.push({}_{}_field(mesg_num, data_map, accumlators, {}, {3:.6}, {4:.6}, \"{5}\", value.clone())?);",
+                    writeln!(out, "fields.push({}_{}_field(mesg_num, accumlators, {}, {3:.6}, {4:.6}, \"{5}\", value.clone())?);",
                         self.function_name(),
                         sub_field_info.name(),
                         sub_field_info.accumulate(),
@@ -107,7 +108,7 @@ impl MessageDefinition {
                     writeln!(out, "}}")?;
                 }
             } else {
-                writeln!(out, "fields.push({}_{}_field(mesg_num, data_map, accumlators, {}, {3:.6}, {4:.6}, \"{5}\", value.clone())?);",
+                writeln!(out, "fields.push({}_{}_field(mesg_num, accumlators, {}, {3:.6}, {4:.6}, \"{5}\", value.clone())?);",
                     self.function_name(),
                     field.name(),
                     field.accumulate(),
@@ -130,8 +131,14 @@ impl MessageDefinition {
 
         for field in self.field_map().values() {
             self.write_create_field_fn_def(out, field)?;
+            let mut created_subfield_fns = HashSet::new();
             for (_, _, sub_field_info) in field.subfields() {
-                self.write_create_field_fn_def(out, sub_field_info)?;
+                if !created_subfield_fns.contains(sub_field_info.name()) {
+                    // only create the function once, even if multiple values reference
+                    // the subfield
+                    self.write_create_field_fn_def(out, sub_field_info)?;
+                }
+                created_subfield_fns.insert(sub_field_info.name());
             }
         }
 
@@ -143,12 +150,12 @@ impl MessageDefinition {
         out: &mut File,
         field: &MessageFieldDefinition,
     ) -> Result<(), std::io::Error> {
-        writeln!(out, "fn {}_{}_field(mesg_num: MesgNum, data_map: HashMap<u8, Option<Value>>, accumlators: &mut HashMap<u32, Value>, accumulate: bool, scale: f64, offset: f64, units: &'static str, value: Value) -> Result<FitDataField> {{", self.function_name(), field.name())?;
+        writeln!(out, "fn {}_{}_field(mesg_num: MesgNum, accumlators: &mut HashMap<u32, Value>, accumulate: bool, scale: f64, offset: f64, units: &'static str, value: Value) -> Result<FitDataField> {{", self.function_name(), field.name())?;
         // generate acccumated field code
         writeln!(out, "let value = if accumulate {{")?;
         writeln!(
             out,
-            "  calculate_cumulative_value(accumlators, mesg_num.as_u16(), {0}, value)?;",
+            "  calculate_cumulative_value(accumlators, mesg_num.as_u16(), {0}, value)?",
             field.def_number()
         )?;
         writeln!(out, "}}")?;
@@ -176,8 +183,7 @@ fn write_unknown_mesg_fn(out: &mut File) -> Result<(), std::io::Error> {
         "
         fn unknown_message(
         mesg_num: MesgNum,
-        data_map: HashMap<u8, Option<Value>>,
-        accumlators: &mut HashMap<u32, Value>,
+        data_map: &HashMap<u8, Option<Value>>
     ) -> Result<Vec<FitDataField>> {
         data_map.iter()
             .filter_map(|(k, v)| v.as_ref().map(|v| unknown_field(k, v)))
@@ -192,7 +198,7 @@ fn create_mesg_num_to_mesg_decode_fn(
     out: &mut File,
 ) -> Result<(), std::io::Error> {
     writeln!(out, "impl MesgNum {{")?;
-    writeln!(out, "  pub fn decode_message(self, data_map: HashMap<u8, Option<Value>>, accumlators: &mut HashMap<u32, Value>) -> Result<Vec<FitDataField>> {{")?;
+    writeln!(out, "  pub fn decode_message(self, data_map: &HashMap<u8, Option<Value>>, accumlators: &mut HashMap<u32, Value>) -> Result<Vec<FitDataField>> {{")?;
     writeln!(out, "    match self {{")?;
     for msg in messages {
         writeln!(
@@ -202,7 +208,7 @@ fn create_mesg_num_to_mesg_decode_fn(
             msg.function_name()
         )?;
     }
-    writeln!(out, "_ => unknown_message(self, data_map, accumlators),")?;
+    writeln!(out, "_ => unknown_message(self, data_map),")?;
     writeln!(out, "    }}")?;
     writeln!(out, "  }}")?;
     writeln!(out, "}}")?;
@@ -215,6 +221,14 @@ pub fn write_decode_file(profile: &FitProfile, out: &mut File) -> Result<(), std
         out,
         "//! Auto generated profile messages from FIT SDK Release: {}",
         profile.version()
+    )?;
+
+    writeln!(out, "use std::collections::{{HashMap, VecDeque}};")?;
+    writeln!(out, "use crate::{{FitDataField, Value}};")?;
+    writeln!(out, "use crate::error::{{Result}};")?;
+    writeln!(
+        out,
+        "use super::{{calculate_cumulative_value, data_field_with_info, expand_components, unknown_field}};"
     )?;
     writeln!(out, "use super::field_types::*;")?;
     writeln!(out, "pub const VERSION: &str = \"{}\";", profile.version())?;

@@ -78,7 +78,7 @@ impl From<TimestampField> for Value {
 
 /// Applies a bitmask to the value and uses the field info to derive additional fields based on the
 /// defined components
-fn expand_components(value: &Value, parts: [u8]) -> Vec<Value> {
+fn expand_components(value: &Value, parts: &[u8]) -> Vec<Value> {
     // extract out each field by masking specific bits, spanning 1 or more bytes
     let bit_mask = [1u8, 2u8, 4u8, 8u8, 16u8, 32u8, 64u8, 128u8];
     let mut bytes = value.to_ne_bytes().into_iter();
