@@ -1,10 +1,12 @@
 //! Auto generated profile messages from FIT SDK Release: 21.89.00
+#![allow(unused_variables)]
 use super::field_types::*;
 use super::{calculate_cumulative_value, data_field_with_info, expand_components, unknown_field};
 use crate::error::Result;
 use crate::{FitDataField, Value};
 use std::collections::{HashMap, VecDeque};
 use std::convert::TryInto;
+/// FIT SDK version used to generate profile decoder
 pub const VERSION: &str = "21.89.00";
 /// Must be first message in file.
 fn file_id_message(
@@ -21,6 +23,7 @@ fn file_id_message(
                 fields.push(file_id_message_type_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -32,6 +35,7 @@ fn file_id_message(
                 fields.push(file_id_message_manufacturer_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -40,102 +44,22 @@ fn file_id_message(
                 )?);
             }
             2 => {
-                if Manufacturer::FaveroElectronics.as_i64()
-                    == data_map
-                        .get(&1)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(file_id_message_favero_product_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else if Manufacturer::Garmin.as_i64()
-                    == data_map
-                        .get(&1)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(file_id_message_garmin_product_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else if Manufacturer::Dynastream.as_i64()
-                    == data_map
-                        .get(&1)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(file_id_message_garmin_product_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else if Manufacturer::DynastreamOem.as_i64()
-                    == data_map
-                        .get(&1)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(file_id_message_garmin_product_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else if Manufacturer::Tacx.as_i64()
-                    == data_map
-                        .get(&1)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(file_id_message_garmin_product_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else {
-                    fields.push(file_id_message_product_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                }
+                fields.push(file_id_message_product_field(
+                    mesg_num,
+                    accumlators,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "",
+                    value,
+                )?);
             }
             3 => {
                 fields.push(file_id_message_serial_number_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -148,6 +72,7 @@ fn file_id_message(
                 fields.push(file_id_message_time_created_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -160,6 +85,7 @@ fn file_id_message(
                 fields.push(file_id_message_number_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -172,6 +98,7 @@ fn file_id_message(
                 fields.push(file_id_message_product_name_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -187,6 +114,7 @@ fn file_id_message(
 fn file_id_message_type_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -203,6 +131,7 @@ fn file_id_message_type_field(
 fn file_id_message_manufacturer_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -227,12 +156,99 @@ fn file_id_message_manufacturer_field(
 fn file_id_message_product_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
     units: &'static str,
     value: Value,
 ) -> Result<FitDataField> {
+    if Manufacturer::FaveroElectronics.as_i64()
+        == data_map
+            .get(&1)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return file_id_message_favero_product_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    } else if Manufacturer::Garmin.as_i64()
+        == data_map
+            .get(&1)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return file_id_message_garmin_product_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    } else if Manufacturer::Dynastream.as_i64()
+        == data_map
+            .get(&1)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return file_id_message_garmin_product_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    } else if Manufacturer::DynastreamOem.as_i64()
+        == data_map
+            .get(&1)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return file_id_message_garmin_product_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    } else if Manufacturer::Tacx.as_i64()
+        == data_map
+            .get(&1)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return file_id_message_garmin_product_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    }
     let value = if accumulate {
         calculate_cumulative_value(accumlators, mesg_num.as_u16(), 2, value)?
     } else {
@@ -251,6 +267,7 @@ fn file_id_message_product_field(
 fn file_id_message_favero_product_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -275,6 +292,7 @@ fn file_id_message_favero_product_field(
 fn file_id_message_garmin_product_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -299,6 +317,7 @@ fn file_id_message_garmin_product_field(
 fn file_id_message_serial_number_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -323,6 +342,7 @@ fn file_id_message_serial_number_field(
 fn file_id_message_time_created_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -347,6 +367,7 @@ fn file_id_message_time_created_field(
 fn file_id_message_number_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -371,6 +392,7 @@ fn file_id_message_number_field(
 fn file_id_message_product_name_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -406,6 +428,7 @@ fn file_creator_message(
                 fields.push(file_creator_message_software_version_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -417,6 +440,7 @@ fn file_creator_message(
                 fields.push(file_creator_message_hardware_version_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -432,6 +456,7 @@ fn file_creator_message(
 fn file_creator_message_software_version_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -456,6 +481,7 @@ fn file_creator_message_software_version_field(
 fn file_creator_message_hardware_version_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -492,6 +518,7 @@ fn timestamp_correlation_message(
                 fields.push(timestamp_correlation_message_fractional_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     32768.000000,
                     0.000000,
@@ -504,6 +531,7 @@ fn timestamp_correlation_message(
                 fields.push(timestamp_correlation_message_system_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -517,6 +545,7 @@ fn timestamp_correlation_message(
                     timestamp_correlation_message_fractional_system_timestamp_field(
                         mesg_num,
                         accumlators,
+                        data_map,
                         false,
                         32768.000000,
                         0.000000,
@@ -530,6 +559,7 @@ fn timestamp_correlation_message(
                 fields.push(timestamp_correlation_message_local_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -542,6 +572,7 @@ fn timestamp_correlation_message(
                 fields.push(timestamp_correlation_message_timestamp_ms_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -554,6 +585,7 @@ fn timestamp_correlation_message(
                 fields.push(timestamp_correlation_message_system_timestamp_ms_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -566,6 +598,7 @@ fn timestamp_correlation_message(
                 fields.push(timestamp_correlation_message_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -581,6 +614,7 @@ fn timestamp_correlation_message(
 fn timestamp_correlation_message_fractional_timestamp_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -605,6 +639,7 @@ fn timestamp_correlation_message_fractional_timestamp_field(
 fn timestamp_correlation_message_system_timestamp_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -629,6 +664,7 @@ fn timestamp_correlation_message_system_timestamp_field(
 fn timestamp_correlation_message_fractional_system_timestamp_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -653,6 +689,7 @@ fn timestamp_correlation_message_fractional_system_timestamp_field(
 fn timestamp_correlation_message_local_timestamp_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -677,6 +714,7 @@ fn timestamp_correlation_message_local_timestamp_field(
 fn timestamp_correlation_message_timestamp_ms_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -701,6 +739,7 @@ fn timestamp_correlation_message_timestamp_ms_field(
 fn timestamp_correlation_message_system_timestamp_ms_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -725,6 +764,7 @@ fn timestamp_correlation_message_system_timestamp_ms_field(
 fn timestamp_correlation_message_timestamp_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -760,6 +800,7 @@ fn software_message(
                 fields.push(software_message_version_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -771,6 +812,7 @@ fn software_message(
                 fields.push(software_message_part_number_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -782,6 +824,7 @@ fn software_message(
                 fields.push(software_message_message_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -797,6 +840,7 @@ fn software_message(
 fn software_message_version_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -821,6 +865,7 @@ fn software_message_version_field(
 fn software_message_part_number_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -845,6 +890,7 @@ fn software_message_part_number_field(
 fn software_message_message_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -880,6 +926,7 @@ fn slave_device_message(
                 fields.push(slave_device_message_manufacturer_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -888,97 +935,16 @@ fn slave_device_message(
                 )?);
             }
             1 => {
-                if Manufacturer::FaveroElectronics.as_i64()
-                    == data_map
-                        .get(&0)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(slave_device_message_favero_product_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else if Manufacturer::Garmin.as_i64()
-                    == data_map
-                        .get(&0)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(slave_device_message_garmin_product_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else if Manufacturer::Dynastream.as_i64()
-                    == data_map
-                        .get(&0)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(slave_device_message_garmin_product_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else if Manufacturer::DynastreamOem.as_i64()
-                    == data_map
-                        .get(&0)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(slave_device_message_garmin_product_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else if Manufacturer::Tacx.as_i64()
-                    == data_map
-                        .get(&0)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(slave_device_message_garmin_product_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else {
-                    fields.push(slave_device_message_product_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                }
+                fields.push(slave_device_message_product_field(
+                    mesg_num,
+                    accumlators,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "",
+                    value,
+                )?);
             }
             _ => fields.push(unknown_field(def_num, value)),
         }
@@ -988,6 +954,7 @@ fn slave_device_message(
 fn slave_device_message_manufacturer_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -1012,12 +979,99 @@ fn slave_device_message_manufacturer_field(
 fn slave_device_message_product_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
     units: &'static str,
     value: Value,
 ) -> Result<FitDataField> {
+    if Manufacturer::FaveroElectronics.as_i64()
+        == data_map
+            .get(&0)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return slave_device_message_favero_product_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    } else if Manufacturer::Garmin.as_i64()
+        == data_map
+            .get(&0)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return slave_device_message_garmin_product_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    } else if Manufacturer::Dynastream.as_i64()
+        == data_map
+            .get(&0)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return slave_device_message_garmin_product_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    } else if Manufacturer::DynastreamOem.as_i64()
+        == data_map
+            .get(&0)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return slave_device_message_garmin_product_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    } else if Manufacturer::Tacx.as_i64()
+        == data_map
+            .get(&0)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return slave_device_message_garmin_product_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    }
     let value = if accumulate {
         calculate_cumulative_value(accumlators, mesg_num.as_u16(), 1, value)?
     } else {
@@ -1036,6 +1090,7 @@ fn slave_device_message_product_field(
 fn slave_device_message_favero_product_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -1060,6 +1115,7 @@ fn slave_device_message_favero_product_field(
 fn slave_device_message_garmin_product_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -1096,6 +1152,7 @@ fn capabilities_message(
                 fields.push(capabilities_message_languages_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -1108,6 +1165,7 @@ fn capabilities_message(
                 fields.push(capabilities_message_sports_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -1119,6 +1177,7 @@ fn capabilities_message(
                 fields.push(capabilities_message_workouts_supported_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -1130,6 +1189,7 @@ fn capabilities_message(
                 fields.push(capabilities_message_connectivity_supported_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -1145,6 +1205,7 @@ fn capabilities_message(
 fn capabilities_message_languages_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -1169,6 +1230,7 @@ fn capabilities_message_languages_field(
 fn capabilities_message_sports_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -1193,6 +1255,7 @@ fn capabilities_message_sports_field(
 fn capabilities_message_workouts_supported_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -1217,6 +1280,7 @@ fn capabilities_message_workouts_supported_field(
 fn capabilities_message_connectivity_supported_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -1252,6 +1316,7 @@ fn file_capabilities_message(
                 fields.push(file_capabilities_message_type_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -1263,6 +1328,7 @@ fn file_capabilities_message(
                 fields.push(file_capabilities_message_flags_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -1274,6 +1340,7 @@ fn file_capabilities_message(
                 fields.push(file_capabilities_message_directory_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -1285,6 +1352,7 @@ fn file_capabilities_message(
                 fields.push(file_capabilities_message_max_count_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -1296,6 +1364,7 @@ fn file_capabilities_message(
                 fields.push(file_capabilities_message_max_size_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -1307,6 +1376,7 @@ fn file_capabilities_message(
                 fields.push(file_capabilities_message_message_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -1322,6 +1392,7 @@ fn file_capabilities_message(
 fn file_capabilities_message_type_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -1338,6 +1409,7 @@ fn file_capabilities_message_type_field(
 fn file_capabilities_message_flags_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -1362,6 +1434,7 @@ fn file_capabilities_message_flags_field(
 fn file_capabilities_message_directory_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -1386,6 +1459,7 @@ fn file_capabilities_message_directory_field(
 fn file_capabilities_message_max_count_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -1410,6 +1484,7 @@ fn file_capabilities_message_max_count_field(
 fn file_capabilities_message_max_size_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -1434,6 +1509,7 @@ fn file_capabilities_message_max_size_field(
 fn file_capabilities_message_message_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -1469,6 +1545,7 @@ fn mesg_capabilities_message(
                 fields.push(mesg_capabilities_message_file_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -1480,6 +1557,7 @@ fn mesg_capabilities_message(
                 fields.push(mesg_capabilities_message_mesg_num_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -1491,6 +1569,7 @@ fn mesg_capabilities_message(
                 fields.push(mesg_capabilities_message_count_type_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -1499,70 +1578,22 @@ fn mesg_capabilities_message(
                 )?);
             }
             3 => {
-                if MesgCount::NumPerFile.as_i64()
-                    == data_map
-                        .get(&2)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(mesg_capabilities_message_num_per_file_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else if MesgCount::MaxPerFile.as_i64()
-                    == data_map
-                        .get(&2)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(mesg_capabilities_message_max_per_file_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else if MesgCount::MaxPerFileType.as_i64()
-                    == data_map
-                        .get(&2)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(mesg_capabilities_message_max_per_file_type_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else {
-                    fields.push(mesg_capabilities_message_count_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                }
+                fields.push(mesg_capabilities_message_count_field(
+                    mesg_num,
+                    accumlators,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "",
+                    value,
+                )?);
             }
             254 => {
                 fields.push(mesg_capabilities_message_message_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -1578,6 +1609,7 @@ fn mesg_capabilities_message(
 fn mesg_capabilities_message_file_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -1594,6 +1626,7 @@ fn mesg_capabilities_message_file_field(
 fn mesg_capabilities_message_mesg_num_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -1618,6 +1651,7 @@ fn mesg_capabilities_message_mesg_num_field(
 fn mesg_capabilities_message_count_type_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -1642,12 +1676,65 @@ fn mesg_capabilities_message_count_type_field(
 fn mesg_capabilities_message_count_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
     units: &'static str,
     value: Value,
 ) -> Result<FitDataField> {
+    if MesgCount::NumPerFile.as_i64()
+        == data_map
+            .get(&2)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return mesg_capabilities_message_num_per_file_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    } else if MesgCount::MaxPerFile.as_i64()
+        == data_map
+            .get(&2)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return mesg_capabilities_message_max_per_file_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    } else if MesgCount::MaxPerFileType.as_i64()
+        == data_map
+            .get(&2)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return mesg_capabilities_message_max_per_file_type_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    }
     let value = if accumulate {
         calculate_cumulative_value(accumlators, mesg_num.as_u16(), 3, value)?
     } else {
@@ -1666,6 +1753,7 @@ fn mesg_capabilities_message_count_field(
 fn mesg_capabilities_message_num_per_file_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -1690,6 +1778,7 @@ fn mesg_capabilities_message_num_per_file_field(
 fn mesg_capabilities_message_max_per_file_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -1714,6 +1803,7 @@ fn mesg_capabilities_message_max_per_file_field(
 fn mesg_capabilities_message_max_per_file_type_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -1738,6 +1828,7 @@ fn mesg_capabilities_message_max_per_file_type_field(
 fn mesg_capabilities_message_message_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -1773,6 +1864,7 @@ fn field_capabilities_message(
                 fields.push(field_capabilities_message_file_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -1784,6 +1876,7 @@ fn field_capabilities_message(
                 fields.push(field_capabilities_message_mesg_num_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -1795,6 +1888,7 @@ fn field_capabilities_message(
                 fields.push(field_capabilities_message_field_num_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -1806,6 +1900,7 @@ fn field_capabilities_message(
                 fields.push(field_capabilities_message_count_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -1817,6 +1912,7 @@ fn field_capabilities_message(
                 fields.push(field_capabilities_message_message_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -1832,6 +1928,7 @@ fn field_capabilities_message(
 fn field_capabilities_message_file_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -1848,6 +1945,7 @@ fn field_capabilities_message_file_field(
 fn field_capabilities_message_mesg_num_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -1872,6 +1970,7 @@ fn field_capabilities_message_mesg_num_field(
 fn field_capabilities_message_field_num_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -1896,6 +1995,7 @@ fn field_capabilities_message_field_num_field(
 fn field_capabilities_message_count_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -1920,6 +2020,7 @@ fn field_capabilities_message_count_field(
 fn field_capabilities_message_message_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -1956,6 +2057,7 @@ fn device_settings_message(
                 fields.push(device_settings_message_active_time_zone_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -1968,6 +2070,7 @@ fn device_settings_message(
                 fields.push(device_settings_message_utc_offset_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -1980,6 +2083,7 @@ fn device_settings_message(
                 fields.push(device_settings_message_time_offset_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -1992,6 +2096,7 @@ fn device_settings_message(
                 fields.push(device_settings_message_time_mode_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -2004,6 +2109,7 @@ fn device_settings_message(
                 fields.push(device_settings_message_time_zone_offset_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     4.000000,
                     0.000000,
@@ -2016,6 +2122,7 @@ fn device_settings_message(
                 fields.push(device_settings_message_backlight_mode_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -2028,6 +2135,7 @@ fn device_settings_message(
                 fields.push(device_settings_message_activity_tracker_enabled_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -2040,6 +2148,7 @@ fn device_settings_message(
                 fields.push(device_settings_message_clock_time_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -2052,6 +2161,7 @@ fn device_settings_message(
                 fields.push(device_settings_message_pages_enabled_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -2064,6 +2174,7 @@ fn device_settings_message(
                 fields.push(device_settings_message_move_alert_enabled_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -2076,6 +2187,7 @@ fn device_settings_message(
                 fields.push(device_settings_message_date_mode_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -2087,6 +2199,7 @@ fn device_settings_message(
                 fields.push(device_settings_message_display_orientation_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -2098,6 +2211,7 @@ fn device_settings_message(
                 fields.push(device_settings_message_mounting_side_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -2110,6 +2224,7 @@ fn device_settings_message(
                 fields.push(device_settings_message_default_page_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -2122,6 +2237,7 @@ fn device_settings_message(
                 fields.push(device_settings_message_autosync_min_steps_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -2134,6 +2250,7 @@ fn device_settings_message(
                 fields.push(device_settings_message_autosync_min_time_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -2147,6 +2264,7 @@ fn device_settings_message(
                     device_settings_message_lactate_threshold_autodetect_enabled_field(
                         mesg_num,
                         accumlators,
+                        data_map,
                         false,
                         1.000000,
                         0.000000,
@@ -2160,6 +2278,7 @@ fn device_settings_message(
                 fields.push(device_settings_message_ble_auto_upload_enabled_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -2172,6 +2291,7 @@ fn device_settings_message(
                 fields.push(device_settings_message_auto_sync_frequency_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -2184,6 +2304,7 @@ fn device_settings_message(
                 fields.push(device_settings_message_auto_activity_detect_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -2196,6 +2317,7 @@ fn device_settings_message(
                 fields.push(device_settings_message_number_of_screens_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -2209,6 +2331,7 @@ fn device_settings_message(
                     device_settings_message_smart_notification_display_orientation_field(
                         mesg_num,
                         accumlators,
+                        data_map,
                         false,
                         1.000000,
                         0.000000,
@@ -2221,6 +2344,7 @@ fn device_settings_message(
                 fields.push(device_settings_message_tap_interface_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -2233,6 +2357,7 @@ fn device_settings_message(
                 fields.push(device_settings_message_tap_sensitivity_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -2248,6 +2373,7 @@ fn device_settings_message(
 fn device_settings_message_active_time_zone_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -2272,6 +2398,7 @@ fn device_settings_message_active_time_zone_field(
 fn device_settings_message_utc_offset_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -2296,6 +2423,7 @@ fn device_settings_message_utc_offset_field(
 fn device_settings_message_time_offset_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -2320,6 +2448,7 @@ fn device_settings_message_time_offset_field(
 fn device_settings_message_time_mode_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -2344,6 +2473,7 @@ fn device_settings_message_time_mode_field(
 fn device_settings_message_time_zone_offset_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -2368,6 +2498,7 @@ fn device_settings_message_time_zone_offset_field(
 fn device_settings_message_backlight_mode_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -2392,6 +2523,7 @@ fn device_settings_message_backlight_mode_field(
 fn device_settings_message_activity_tracker_enabled_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -2416,6 +2548,7 @@ fn device_settings_message_activity_tracker_enabled_field(
 fn device_settings_message_clock_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -2440,6 +2573,7 @@ fn device_settings_message_clock_time_field(
 fn device_settings_message_pages_enabled_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -2464,6 +2598,7 @@ fn device_settings_message_pages_enabled_field(
 fn device_settings_message_move_alert_enabled_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -2488,6 +2623,7 @@ fn device_settings_message_move_alert_enabled_field(
 fn device_settings_message_date_mode_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -2512,6 +2648,7 @@ fn device_settings_message_date_mode_field(
 fn device_settings_message_display_orientation_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -2536,6 +2673,7 @@ fn device_settings_message_display_orientation_field(
 fn device_settings_message_mounting_side_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -2560,6 +2698,7 @@ fn device_settings_message_mounting_side_field(
 fn device_settings_message_default_page_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -2584,6 +2723,7 @@ fn device_settings_message_default_page_field(
 fn device_settings_message_autosync_min_steps_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -2608,6 +2748,7 @@ fn device_settings_message_autosync_min_steps_field(
 fn device_settings_message_autosync_min_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -2632,6 +2773,7 @@ fn device_settings_message_autosync_min_time_field(
 fn device_settings_message_lactate_threshold_autodetect_enabled_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -2656,6 +2798,7 @@ fn device_settings_message_lactate_threshold_autodetect_enabled_field(
 fn device_settings_message_ble_auto_upload_enabled_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -2680,6 +2823,7 @@ fn device_settings_message_ble_auto_upload_enabled_field(
 fn device_settings_message_auto_sync_frequency_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -2704,6 +2848,7 @@ fn device_settings_message_auto_sync_frequency_field(
 fn device_settings_message_auto_activity_detect_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -2728,6 +2873,7 @@ fn device_settings_message_auto_activity_detect_field(
 fn device_settings_message_number_of_screens_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -2752,6 +2898,7 @@ fn device_settings_message_number_of_screens_field(
 fn device_settings_message_smart_notification_display_orientation_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -2776,6 +2923,7 @@ fn device_settings_message_smart_notification_display_orientation_field(
 fn device_settings_message_tap_interface_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -2800,6 +2948,7 @@ fn device_settings_message_tap_interface_field(
 fn device_settings_message_tap_sensitivity_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -2835,6 +2984,7 @@ fn user_profile_message(
                 fields.push(user_profile_message_friendly_name_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -2846,6 +2996,7 @@ fn user_profile_message(
                 fields.push(user_profile_message_gender_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -2857,6 +3008,7 @@ fn user_profile_message(
                 fields.push(user_profile_message_age_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -2868,6 +3020,7 @@ fn user_profile_message(
                 fields.push(user_profile_message_height_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -2879,6 +3032,7 @@ fn user_profile_message(
                 fields.push(user_profile_message_weight_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     10.000000,
                     0.000000,
@@ -2890,6 +3044,7 @@ fn user_profile_message(
                 fields.push(user_profile_message_language_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -2901,6 +3056,7 @@ fn user_profile_message(
                 fields.push(user_profile_message_elev_setting_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -2912,6 +3068,7 @@ fn user_profile_message(
                 fields.push(user_profile_message_weight_setting_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -2923,6 +3080,7 @@ fn user_profile_message(
                 fields.push(user_profile_message_resting_heart_rate_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -2934,6 +3092,7 @@ fn user_profile_message(
                 fields.push(user_profile_message_default_max_running_heart_rate_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -2945,6 +3104,7 @@ fn user_profile_message(
                 fields.push(user_profile_message_default_max_biking_heart_rate_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -2956,6 +3116,7 @@ fn user_profile_message(
                 fields.push(user_profile_message_default_max_heart_rate_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -2967,6 +3128,7 @@ fn user_profile_message(
                 fields.push(user_profile_message_hr_setting_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -2978,6 +3140,7 @@ fn user_profile_message(
                 fields.push(user_profile_message_speed_setting_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -2989,6 +3152,7 @@ fn user_profile_message(
                 fields.push(user_profile_message_dist_setting_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -3000,6 +3164,7 @@ fn user_profile_message(
                 fields.push(user_profile_message_power_setting_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -3011,6 +3176,7 @@ fn user_profile_message(
                 fields.push(user_profile_message_activity_class_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -3022,6 +3188,7 @@ fn user_profile_message(
                 fields.push(user_profile_message_position_setting_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -3033,6 +3200,7 @@ fn user_profile_message(
                 fields.push(user_profile_message_temperature_setting_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -3044,6 +3212,7 @@ fn user_profile_message(
                 fields.push(user_profile_message_local_id_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -3055,6 +3224,7 @@ fn user_profile_message(
                 fields.push(user_profile_message_global_id_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -3067,6 +3237,7 @@ fn user_profile_message(
                 fields.push(user_profile_message_wake_time_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -3079,6 +3250,7 @@ fn user_profile_message(
                 fields.push(user_profile_message_sleep_time_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -3090,6 +3262,7 @@ fn user_profile_message(
                 fields.push(user_profile_message_height_setting_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -3102,6 +3275,7 @@ fn user_profile_message(
                 fields.push(user_profile_message_user_running_step_length_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -3114,6 +3288,7 @@ fn user_profile_message(
                 fields.push(user_profile_message_user_walking_step_length_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -3125,6 +3300,7 @@ fn user_profile_message(
                 fields.push(user_profile_message_depth_setting_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -3136,6 +3312,7 @@ fn user_profile_message(
                 fields.push(user_profile_message_dive_count_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -3147,6 +3324,7 @@ fn user_profile_message(
                 fields.push(user_profile_message_message_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -3162,6 +3340,7 @@ fn user_profile_message(
 fn user_profile_message_friendly_name_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -3186,6 +3365,7 @@ fn user_profile_message_friendly_name_field(
 fn user_profile_message_gender_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -3210,6 +3390,7 @@ fn user_profile_message_gender_field(
 fn user_profile_message_age_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -3226,6 +3407,7 @@ fn user_profile_message_age_field(
 fn user_profile_message_height_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -3250,6 +3432,7 @@ fn user_profile_message_height_field(
 fn user_profile_message_weight_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -3274,6 +3457,7 @@ fn user_profile_message_weight_field(
 fn user_profile_message_language_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -3298,6 +3482,7 @@ fn user_profile_message_language_field(
 fn user_profile_message_elev_setting_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -3322,6 +3507,7 @@ fn user_profile_message_elev_setting_field(
 fn user_profile_message_weight_setting_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -3346,6 +3532,7 @@ fn user_profile_message_weight_setting_field(
 fn user_profile_message_resting_heart_rate_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -3370,6 +3557,7 @@ fn user_profile_message_resting_heart_rate_field(
 fn user_profile_message_default_max_running_heart_rate_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -3394,6 +3582,7 @@ fn user_profile_message_default_max_running_heart_rate_field(
 fn user_profile_message_default_max_biking_heart_rate_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -3418,6 +3607,7 @@ fn user_profile_message_default_max_biking_heart_rate_field(
 fn user_profile_message_default_max_heart_rate_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -3442,6 +3632,7 @@ fn user_profile_message_default_max_heart_rate_field(
 fn user_profile_message_hr_setting_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -3466,6 +3657,7 @@ fn user_profile_message_hr_setting_field(
 fn user_profile_message_speed_setting_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -3490,6 +3682,7 @@ fn user_profile_message_speed_setting_field(
 fn user_profile_message_dist_setting_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -3514,6 +3707,7 @@ fn user_profile_message_dist_setting_field(
 fn user_profile_message_power_setting_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -3538,6 +3732,7 @@ fn user_profile_message_power_setting_field(
 fn user_profile_message_activity_class_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -3562,6 +3757,7 @@ fn user_profile_message_activity_class_field(
 fn user_profile_message_position_setting_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -3586,6 +3782,7 @@ fn user_profile_message_position_setting_field(
 fn user_profile_message_temperature_setting_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -3610,6 +3807,7 @@ fn user_profile_message_temperature_setting_field(
 fn user_profile_message_local_id_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -3634,6 +3832,7 @@ fn user_profile_message_local_id_field(
 fn user_profile_message_global_id_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -3658,6 +3857,7 @@ fn user_profile_message_global_id_field(
 fn user_profile_message_wake_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -3682,6 +3882,7 @@ fn user_profile_message_wake_time_field(
 fn user_profile_message_sleep_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -3706,6 +3907,7 @@ fn user_profile_message_sleep_time_field(
 fn user_profile_message_height_setting_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -3730,6 +3932,7 @@ fn user_profile_message_height_setting_field(
 fn user_profile_message_user_running_step_length_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -3754,6 +3957,7 @@ fn user_profile_message_user_running_step_length_field(
 fn user_profile_message_user_walking_step_length_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -3778,6 +3982,7 @@ fn user_profile_message_user_walking_step_length_field(
 fn user_profile_message_depth_setting_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -3802,6 +4007,7 @@ fn user_profile_message_depth_setting_field(
 fn user_profile_message_dive_count_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -3826,6 +4032,7 @@ fn user_profile_message_dive_count_field(
 fn user_profile_message_message_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -3861,6 +4068,7 @@ fn hrm_profile_message(
                 fields.push(hrm_profile_message_enabled_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -3872,6 +4080,7 @@ fn hrm_profile_message(
                 fields.push(hrm_profile_message_hrm_ant_id_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -3883,6 +4092,7 @@ fn hrm_profile_message(
                 fields.push(hrm_profile_message_log_hrv_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -3894,6 +4104,7 @@ fn hrm_profile_message(
                 fields.push(hrm_profile_message_hrm_ant_id_trans_type_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -3905,6 +4116,7 @@ fn hrm_profile_message(
                 fields.push(hrm_profile_message_message_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -3920,6 +4132,7 @@ fn hrm_profile_message(
 fn hrm_profile_message_enabled_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -3944,6 +4157,7 @@ fn hrm_profile_message_enabled_field(
 fn hrm_profile_message_hrm_ant_id_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -3968,6 +4182,7 @@ fn hrm_profile_message_hrm_ant_id_field(
 fn hrm_profile_message_log_hrv_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -3992,6 +4207,7 @@ fn hrm_profile_message_log_hrv_field(
 fn hrm_profile_message_hrm_ant_id_trans_type_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -4016,6 +4232,7 @@ fn hrm_profile_message_hrm_ant_id_trans_type_field(
 fn hrm_profile_message_message_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -4051,6 +4268,7 @@ fn sdm_profile_message(
                 fields.push(sdm_profile_message_enabled_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -4062,6 +4280,7 @@ fn sdm_profile_message(
                 fields.push(sdm_profile_message_sdm_ant_id_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -4073,6 +4292,7 @@ fn sdm_profile_message(
                 fields.push(sdm_profile_message_sdm_cal_factor_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     10.000000,
                     0.000000,
@@ -4084,6 +4304,7 @@ fn sdm_profile_message(
                 fields.push(sdm_profile_message_odometer_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -4096,6 +4317,7 @@ fn sdm_profile_message(
                 fields.push(sdm_profile_message_speed_source_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -4107,6 +4329,7 @@ fn sdm_profile_message(
                 fields.push(sdm_profile_message_sdm_ant_id_trans_type_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -4119,6 +4342,7 @@ fn sdm_profile_message(
                 fields.push(sdm_profile_message_odometer_rollover_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -4130,6 +4354,7 @@ fn sdm_profile_message(
                 fields.push(sdm_profile_message_message_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -4145,6 +4370,7 @@ fn sdm_profile_message(
 fn sdm_profile_message_enabled_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -4169,6 +4395,7 @@ fn sdm_profile_message_enabled_field(
 fn sdm_profile_message_sdm_ant_id_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -4193,6 +4420,7 @@ fn sdm_profile_message_sdm_ant_id_field(
 fn sdm_profile_message_sdm_cal_factor_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -4217,6 +4445,7 @@ fn sdm_profile_message_sdm_cal_factor_field(
 fn sdm_profile_message_odometer_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -4241,6 +4470,7 @@ fn sdm_profile_message_odometer_field(
 fn sdm_profile_message_speed_source_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -4265,6 +4495,7 @@ fn sdm_profile_message_speed_source_field(
 fn sdm_profile_message_sdm_ant_id_trans_type_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -4289,6 +4520,7 @@ fn sdm_profile_message_sdm_ant_id_trans_type_field(
 fn sdm_profile_message_odometer_rollover_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -4313,6 +4545,7 @@ fn sdm_profile_message_odometer_rollover_field(
 fn sdm_profile_message_message_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -4348,6 +4581,7 @@ fn bike_profile_message(
                 fields.push(bike_profile_message_name_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -4359,6 +4593,7 @@ fn bike_profile_message(
                 fields.push(bike_profile_message_sport_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -4370,6 +4605,7 @@ fn bike_profile_message(
                 fields.push(bike_profile_message_sub_sport_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -4381,6 +4617,7 @@ fn bike_profile_message(
                 fields.push(bike_profile_message_odometer_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -4392,6 +4629,7 @@ fn bike_profile_message(
                 fields.push(bike_profile_message_bike_spd_ant_id_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -4403,6 +4641,7 @@ fn bike_profile_message(
                 fields.push(bike_profile_message_bike_cad_ant_id_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -4414,6 +4653,7 @@ fn bike_profile_message(
                 fields.push(bike_profile_message_bike_spdcad_ant_id_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -4425,6 +4665,7 @@ fn bike_profile_message(
                 fields.push(bike_profile_message_bike_power_ant_id_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -4436,6 +4677,7 @@ fn bike_profile_message(
                 fields.push(bike_profile_message_custom_wheelsize_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -4447,6 +4689,7 @@ fn bike_profile_message(
                 fields.push(bike_profile_message_auto_wheelsize_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -4458,6 +4701,7 @@ fn bike_profile_message(
                 fields.push(bike_profile_message_bike_weight_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     10.000000,
                     0.000000,
@@ -4469,6 +4713,7 @@ fn bike_profile_message(
                 fields.push(bike_profile_message_power_cal_factor_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     10.000000,
                     0.000000,
@@ -4480,6 +4725,7 @@ fn bike_profile_message(
                 fields.push(bike_profile_message_auto_wheel_cal_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -4491,6 +4737,7 @@ fn bike_profile_message(
                 fields.push(bike_profile_message_auto_power_zero_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -4502,6 +4749,7 @@ fn bike_profile_message(
                 fields.push(bike_profile_message_id_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -4513,6 +4761,7 @@ fn bike_profile_message(
                 fields.push(bike_profile_message_spd_enabled_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -4524,6 +4773,7 @@ fn bike_profile_message(
                 fields.push(bike_profile_message_cad_enabled_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -4535,6 +4785,7 @@ fn bike_profile_message(
                 fields.push(bike_profile_message_spdcad_enabled_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -4546,6 +4797,7 @@ fn bike_profile_message(
                 fields.push(bike_profile_message_power_enabled_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -4557,6 +4809,7 @@ fn bike_profile_message(
                 fields.push(bike_profile_message_crank_length_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     2.000000,
                     0.000000,
@@ -4568,6 +4821,7 @@ fn bike_profile_message(
                 fields.push(bike_profile_message_enabled_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -4579,6 +4833,7 @@ fn bike_profile_message(
                 fields.push(bike_profile_message_bike_spd_ant_id_trans_type_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -4590,6 +4845,7 @@ fn bike_profile_message(
                 fields.push(bike_profile_message_bike_cad_ant_id_trans_type_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -4601,6 +4857,7 @@ fn bike_profile_message(
                 fields.push(bike_profile_message_bike_spdcad_ant_id_trans_type_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -4612,6 +4869,7 @@ fn bike_profile_message(
                 fields.push(bike_profile_message_bike_power_ant_id_trans_type_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -4624,6 +4882,7 @@ fn bike_profile_message(
                 fields.push(bike_profile_message_odometer_rollover_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -4636,6 +4895,7 @@ fn bike_profile_message(
                 fields.push(bike_profile_message_front_gear_num_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -4648,6 +4908,7 @@ fn bike_profile_message(
                 fields.push(bike_profile_message_front_gear_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -4660,6 +4921,7 @@ fn bike_profile_message(
                 fields.push(bike_profile_message_rear_gear_num_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -4672,6 +4934,7 @@ fn bike_profile_message(
                 fields.push(bike_profile_message_rear_gear_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -4683,6 +4946,7 @@ fn bike_profile_message(
                 fields.push(bike_profile_message_shimano_di2_enabled_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -4694,6 +4958,7 @@ fn bike_profile_message(
                 fields.push(bike_profile_message_message_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -4709,6 +4974,7 @@ fn bike_profile_message(
 fn bike_profile_message_name_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -4733,6 +4999,7 @@ fn bike_profile_message_name_field(
 fn bike_profile_message_sport_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -4757,6 +5024,7 @@ fn bike_profile_message_sport_field(
 fn bike_profile_message_sub_sport_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -4781,6 +5049,7 @@ fn bike_profile_message_sub_sport_field(
 fn bike_profile_message_odometer_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -4805,6 +5074,7 @@ fn bike_profile_message_odometer_field(
 fn bike_profile_message_bike_spd_ant_id_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -4829,6 +5099,7 @@ fn bike_profile_message_bike_spd_ant_id_field(
 fn bike_profile_message_bike_cad_ant_id_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -4853,6 +5124,7 @@ fn bike_profile_message_bike_cad_ant_id_field(
 fn bike_profile_message_bike_spdcad_ant_id_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -4877,6 +5149,7 @@ fn bike_profile_message_bike_spdcad_ant_id_field(
 fn bike_profile_message_bike_power_ant_id_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -4901,6 +5174,7 @@ fn bike_profile_message_bike_power_ant_id_field(
 fn bike_profile_message_custom_wheelsize_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -4925,6 +5199,7 @@ fn bike_profile_message_custom_wheelsize_field(
 fn bike_profile_message_auto_wheelsize_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -4949,6 +5224,7 @@ fn bike_profile_message_auto_wheelsize_field(
 fn bike_profile_message_bike_weight_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -4973,6 +5249,7 @@ fn bike_profile_message_bike_weight_field(
 fn bike_profile_message_power_cal_factor_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -4997,6 +5274,7 @@ fn bike_profile_message_power_cal_factor_field(
 fn bike_profile_message_auto_wheel_cal_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -5021,6 +5299,7 @@ fn bike_profile_message_auto_wheel_cal_field(
 fn bike_profile_message_auto_power_zero_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -5045,6 +5324,7 @@ fn bike_profile_message_auto_power_zero_field(
 fn bike_profile_message_id_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -5061,6 +5341,7 @@ fn bike_profile_message_id_field(
 fn bike_profile_message_spd_enabled_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -5085,6 +5366,7 @@ fn bike_profile_message_spd_enabled_field(
 fn bike_profile_message_cad_enabled_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -5109,6 +5391,7 @@ fn bike_profile_message_cad_enabled_field(
 fn bike_profile_message_spdcad_enabled_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -5133,6 +5416,7 @@ fn bike_profile_message_spdcad_enabled_field(
 fn bike_profile_message_power_enabled_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -5157,6 +5441,7 @@ fn bike_profile_message_power_enabled_field(
 fn bike_profile_message_crank_length_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -5181,6 +5466,7 @@ fn bike_profile_message_crank_length_field(
 fn bike_profile_message_enabled_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -5205,6 +5491,7 @@ fn bike_profile_message_enabled_field(
 fn bike_profile_message_bike_spd_ant_id_trans_type_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -5229,6 +5516,7 @@ fn bike_profile_message_bike_spd_ant_id_trans_type_field(
 fn bike_profile_message_bike_cad_ant_id_trans_type_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -5253,6 +5541,7 @@ fn bike_profile_message_bike_cad_ant_id_trans_type_field(
 fn bike_profile_message_bike_spdcad_ant_id_trans_type_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -5277,6 +5566,7 @@ fn bike_profile_message_bike_spdcad_ant_id_trans_type_field(
 fn bike_profile_message_bike_power_ant_id_trans_type_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -5301,6 +5591,7 @@ fn bike_profile_message_bike_power_ant_id_trans_type_field(
 fn bike_profile_message_odometer_rollover_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -5325,6 +5616,7 @@ fn bike_profile_message_odometer_rollover_field(
 fn bike_profile_message_front_gear_num_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -5349,6 +5641,7 @@ fn bike_profile_message_front_gear_num_field(
 fn bike_profile_message_front_gear_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -5373,6 +5666,7 @@ fn bike_profile_message_front_gear_field(
 fn bike_profile_message_rear_gear_num_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -5397,6 +5691,7 @@ fn bike_profile_message_rear_gear_num_field(
 fn bike_profile_message_rear_gear_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -5421,6 +5716,7 @@ fn bike_profile_message_rear_gear_field(
 fn bike_profile_message_shimano_di2_enabled_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -5445,6 +5741,7 @@ fn bike_profile_message_shimano_di2_enabled_field(
 fn bike_profile_message_message_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -5481,6 +5778,7 @@ fn connectivity_message(
                 fields.push(connectivity_message_bluetooth_enabled_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -5493,6 +5791,7 @@ fn connectivity_message(
                 fields.push(connectivity_message_bluetooth_le_enabled_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -5505,6 +5804,7 @@ fn connectivity_message(
                 fields.push(connectivity_message_ant_enabled_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -5516,6 +5816,7 @@ fn connectivity_message(
                 fields.push(connectivity_message_name_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -5527,6 +5828,7 @@ fn connectivity_message(
                 fields.push(connectivity_message_live_tracking_enabled_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -5538,6 +5840,7 @@ fn connectivity_message(
                 fields.push(connectivity_message_weather_conditions_enabled_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -5549,6 +5852,7 @@ fn connectivity_message(
                 fields.push(connectivity_message_weather_alerts_enabled_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -5560,6 +5864,7 @@ fn connectivity_message(
                 fields.push(connectivity_message_auto_activity_upload_enabled_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -5571,6 +5876,7 @@ fn connectivity_message(
                 fields.push(connectivity_message_course_download_enabled_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -5582,6 +5888,7 @@ fn connectivity_message(
                 fields.push(connectivity_message_workout_download_enabled_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -5593,6 +5900,7 @@ fn connectivity_message(
                 fields.push(connectivity_message_gps_ephemeris_download_enabled_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -5604,6 +5912,7 @@ fn connectivity_message(
                 fields.push(connectivity_message_incident_detection_enabled_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -5615,6 +5924,7 @@ fn connectivity_message(
                 fields.push(connectivity_message_grouptrack_enabled_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -5630,6 +5940,7 @@ fn connectivity_message(
 fn connectivity_message_bluetooth_enabled_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -5654,6 +5965,7 @@ fn connectivity_message_bluetooth_enabled_field(
 fn connectivity_message_bluetooth_le_enabled_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -5678,6 +5990,7 @@ fn connectivity_message_bluetooth_le_enabled_field(
 fn connectivity_message_ant_enabled_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -5702,6 +6015,7 @@ fn connectivity_message_ant_enabled_field(
 fn connectivity_message_name_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -5726,6 +6040,7 @@ fn connectivity_message_name_field(
 fn connectivity_message_live_tracking_enabled_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -5750,6 +6065,7 @@ fn connectivity_message_live_tracking_enabled_field(
 fn connectivity_message_weather_conditions_enabled_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -5774,6 +6090,7 @@ fn connectivity_message_weather_conditions_enabled_field(
 fn connectivity_message_weather_alerts_enabled_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -5798,6 +6115,7 @@ fn connectivity_message_weather_alerts_enabled_field(
 fn connectivity_message_auto_activity_upload_enabled_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -5822,6 +6140,7 @@ fn connectivity_message_auto_activity_upload_enabled_field(
 fn connectivity_message_course_download_enabled_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -5846,6 +6165,7 @@ fn connectivity_message_course_download_enabled_field(
 fn connectivity_message_workout_download_enabled_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -5870,6 +6190,7 @@ fn connectivity_message_workout_download_enabled_field(
 fn connectivity_message_gps_ephemeris_download_enabled_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -5894,6 +6215,7 @@ fn connectivity_message_gps_ephemeris_download_enabled_field(
 fn connectivity_message_incident_detection_enabled_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -5918,6 +6240,7 @@ fn connectivity_message_incident_detection_enabled_field(
 fn connectivity_message_grouptrack_enabled_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -5953,6 +6276,7 @@ fn watchface_settings_message(
                 fields.push(watchface_settings_message_mode_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -5961,54 +6285,22 @@ fn watchface_settings_message(
                 )?);
             }
             1 => {
-                if WatchfaceMode::Digital.as_i64()
-                    == data_map
-                        .get(&0)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(watchface_settings_message_digital_layout_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else if WatchfaceMode::Analog.as_i64()
-                    == data_map
-                        .get(&0)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(watchface_settings_message_analog_layout_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else {
-                    fields.push(watchface_settings_message_layout_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                }
+                fields.push(watchface_settings_message_layout_field(
+                    mesg_num,
+                    accumlators,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "",
+                    value,
+                )?);
             }
             254 => {
                 fields.push(watchface_settings_message_message_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -6024,6 +6316,7 @@ fn watchface_settings_message(
 fn watchface_settings_message_mode_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -6048,12 +6341,48 @@ fn watchface_settings_message_mode_field(
 fn watchface_settings_message_layout_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
     units: &'static str,
     value: Value,
 ) -> Result<FitDataField> {
+    if WatchfaceMode::Digital.as_i64()
+        == data_map
+            .get(&0)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return watchface_settings_message_digital_layout_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    } else if WatchfaceMode::Analog.as_i64()
+        == data_map
+            .get(&0)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return watchface_settings_message_analog_layout_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    }
     let value = if accumulate {
         calculate_cumulative_value(accumlators, mesg_num.as_u16(), 1, value)?
     } else {
@@ -6072,6 +6401,7 @@ fn watchface_settings_message_layout_field(
 fn watchface_settings_message_digital_layout_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -6096,6 +6426,7 @@ fn watchface_settings_message_digital_layout_field(
 fn watchface_settings_message_analog_layout_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -6120,6 +6451,7 @@ fn watchface_settings_message_analog_layout_field(
 fn watchface_settings_message_message_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -6155,6 +6487,7 @@ fn ohr_settings_message(
                 fields.push(ohr_settings_message_enabled_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -6166,6 +6499,7 @@ fn ohr_settings_message(
                 fields.push(ohr_settings_message_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -6181,6 +6515,7 @@ fn ohr_settings_message(
 fn ohr_settings_message_enabled_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -6205,6 +6540,7 @@ fn ohr_settings_message_enabled_field(
 fn ohr_settings_message_timestamp_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -6240,6 +6576,7 @@ fn zones_target_message(
                 fields.push(zones_target_message_max_heart_rate_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -6251,6 +6588,7 @@ fn zones_target_message(
                 fields.push(zones_target_message_threshold_heart_rate_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -6262,6 +6600,7 @@ fn zones_target_message(
                 fields.push(zones_target_message_functional_threshold_power_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -6273,6 +6612,7 @@ fn zones_target_message(
                 fields.push(zones_target_message_hr_calc_type_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -6284,6 +6624,7 @@ fn zones_target_message(
                 fields.push(zones_target_message_pwr_calc_type_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -6299,6 +6640,7 @@ fn zones_target_message(
 fn zones_target_message_max_heart_rate_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -6323,6 +6665,7 @@ fn zones_target_message_max_heart_rate_field(
 fn zones_target_message_threshold_heart_rate_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -6347,6 +6690,7 @@ fn zones_target_message_threshold_heart_rate_field(
 fn zones_target_message_functional_threshold_power_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -6371,6 +6715,7 @@ fn zones_target_message_functional_threshold_power_field(
 fn zones_target_message_hr_calc_type_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -6395,6 +6740,7 @@ fn zones_target_message_hr_calc_type_field(
 fn zones_target_message_pwr_calc_type_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -6430,6 +6776,7 @@ fn sport_message(
                 fields.push(sport_message_sport_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -6441,6 +6788,7 @@ fn sport_message(
                 fields.push(sport_message_sub_sport_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -6452,6 +6800,7 @@ fn sport_message(
                 fields.push(sport_message_name_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -6467,6 +6816,7 @@ fn sport_message(
 fn sport_message_sport_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -6491,6 +6841,7 @@ fn sport_message_sport_field(
 fn sport_message_sub_sport_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -6515,6 +6866,7 @@ fn sport_message_sub_sport_field(
 fn sport_message_name_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -6550,6 +6902,7 @@ fn hr_zone_message(
                 fields.push(hr_zone_message_high_bpm_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -6561,6 +6914,7 @@ fn hr_zone_message(
                 fields.push(hr_zone_message_name_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -6572,6 +6926,7 @@ fn hr_zone_message(
                 fields.push(hr_zone_message_message_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -6587,6 +6942,7 @@ fn hr_zone_message(
 fn hr_zone_message_high_bpm_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -6611,6 +6967,7 @@ fn hr_zone_message_high_bpm_field(
 fn hr_zone_message_name_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -6635,6 +6992,7 @@ fn hr_zone_message_name_field(
 fn hr_zone_message_message_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -6670,6 +7028,7 @@ fn speed_zone_message(
                 fields.push(speed_zone_message_high_value_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -6681,6 +7040,7 @@ fn speed_zone_message(
                 fields.push(speed_zone_message_name_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -6692,6 +7052,7 @@ fn speed_zone_message(
                 fields.push(speed_zone_message_message_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -6707,6 +7068,7 @@ fn speed_zone_message(
 fn speed_zone_message_high_value_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -6731,6 +7093,7 @@ fn speed_zone_message_high_value_field(
 fn speed_zone_message_name_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -6755,6 +7118,7 @@ fn speed_zone_message_name_field(
 fn speed_zone_message_message_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -6790,6 +7154,7 @@ fn cadence_zone_message(
                 fields.push(cadence_zone_message_high_value_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -6801,6 +7166,7 @@ fn cadence_zone_message(
                 fields.push(cadence_zone_message_name_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -6812,6 +7178,7 @@ fn cadence_zone_message(
                 fields.push(cadence_zone_message_message_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -6827,6 +7194,7 @@ fn cadence_zone_message(
 fn cadence_zone_message_high_value_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -6851,6 +7219,7 @@ fn cadence_zone_message_high_value_field(
 fn cadence_zone_message_name_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -6875,6 +7244,7 @@ fn cadence_zone_message_name_field(
 fn cadence_zone_message_message_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -6910,6 +7280,7 @@ fn power_zone_message(
                 fields.push(power_zone_message_high_value_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -6921,6 +7292,7 @@ fn power_zone_message(
                 fields.push(power_zone_message_name_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -6932,6 +7304,7 @@ fn power_zone_message(
                 fields.push(power_zone_message_message_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -6947,6 +7320,7 @@ fn power_zone_message(
 fn power_zone_message_high_value_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -6971,6 +7345,7 @@ fn power_zone_message_high_value_field(
 fn power_zone_message_name_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -6995,6 +7370,7 @@ fn power_zone_message_name_field(
 fn power_zone_message_message_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -7030,6 +7406,7 @@ fn met_zone_message(
                 fields.push(met_zone_message_high_bpm_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -7041,6 +7418,7 @@ fn met_zone_message(
                 fields.push(met_zone_message_calories_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     10.000000,
                     0.000000,
@@ -7052,6 +7430,7 @@ fn met_zone_message(
                 fields.push(met_zone_message_fat_calories_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     10.000000,
                     0.000000,
@@ -7063,6 +7442,7 @@ fn met_zone_message(
                 fields.push(met_zone_message_message_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -7078,6 +7458,7 @@ fn met_zone_message(
 fn met_zone_message_high_bpm_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -7102,6 +7483,7 @@ fn met_zone_message_high_bpm_field(
 fn met_zone_message_calories_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -7126,6 +7508,7 @@ fn met_zone_message_calories_field(
 fn met_zone_message_fat_calories_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -7150,6 +7533,7 @@ fn met_zone_message_fat_calories_field(
 fn met_zone_message_message_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -7185,6 +7569,7 @@ fn dive_settings_message(
                 fields.push(dive_settings_message_name_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -7196,6 +7581,7 @@ fn dive_settings_message(
                 fields.push(dive_settings_message_model_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -7207,6 +7593,7 @@ fn dive_settings_message(
                 fields.push(dive_settings_message_gf_low_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -7218,6 +7605,7 @@ fn dive_settings_message(
                 fields.push(dive_settings_message_gf_high_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -7229,6 +7617,7 @@ fn dive_settings_message(
                 fields.push(dive_settings_message_water_type_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -7241,6 +7630,7 @@ fn dive_settings_message(
                 fields.push(dive_settings_message_water_density_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -7253,6 +7643,7 @@ fn dive_settings_message(
                 fields.push(dive_settings_message_po2_warn_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -7265,6 +7656,7 @@ fn dive_settings_message(
                 fields.push(dive_settings_message_po2_critical_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -7276,6 +7668,7 @@ fn dive_settings_message(
                 fields.push(dive_settings_message_po2_deco_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -7287,6 +7680,7 @@ fn dive_settings_message(
                 fields.push(dive_settings_message_safety_stop_enabled_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -7298,6 +7692,7 @@ fn dive_settings_message(
                 fields.push(dive_settings_message_bottom_depth_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -7309,6 +7704,7 @@ fn dive_settings_message(
                 fields.push(dive_settings_message_bottom_time_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -7320,6 +7716,7 @@ fn dive_settings_message(
                 fields.push(dive_settings_message_apnea_countdown_enabled_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -7331,6 +7728,7 @@ fn dive_settings_message(
                 fields.push(dive_settings_message_apnea_countdown_time_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -7342,6 +7740,7 @@ fn dive_settings_message(
                 fields.push(dive_settings_message_backlight_mode_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -7353,6 +7752,7 @@ fn dive_settings_message(
                 fields.push(dive_settings_message_backlight_brightness_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -7364,6 +7764,7 @@ fn dive_settings_message(
                 fields.push(dive_settings_message_backlight_timeout_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -7376,6 +7777,7 @@ fn dive_settings_message(
                 fields.push(dive_settings_message_repeat_dive_interval_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -7388,6 +7790,7 @@ fn dive_settings_message(
                 fields.push(dive_settings_message_safety_stop_time_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -7399,6 +7802,7 @@ fn dive_settings_message(
                 fields.push(dive_settings_message_heart_rate_source_type_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -7407,54 +7811,22 @@ fn dive_settings_message(
                 )?);
             }
             20 => {
-                if SourceType::Antplus.as_i64()
-                    == data_map
-                        .get(&19)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(dive_settings_message_heart_rate_antplus_device_type_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else if SourceType::Local.as_i64()
-                    == data_map
-                        .get(&19)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(dive_settings_message_heart_rate_local_device_type_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else {
-                    fields.push(dive_settings_message_heart_rate_source_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                }
+                fields.push(dive_settings_message_heart_rate_source_field(
+                    mesg_num,
+                    accumlators,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "",
+                    value,
+                )?);
             }
             254 => {
                 fields.push(dive_settings_message_message_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -7470,6 +7842,7 @@ fn dive_settings_message(
 fn dive_settings_message_name_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -7494,6 +7867,7 @@ fn dive_settings_message_name_field(
 fn dive_settings_message_model_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -7518,6 +7892,7 @@ fn dive_settings_message_model_field(
 fn dive_settings_message_gf_low_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -7542,6 +7917,7 @@ fn dive_settings_message_gf_low_field(
 fn dive_settings_message_gf_high_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -7566,6 +7942,7 @@ fn dive_settings_message_gf_high_field(
 fn dive_settings_message_water_type_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -7590,6 +7967,7 @@ fn dive_settings_message_water_type_field(
 fn dive_settings_message_water_density_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -7614,6 +7992,7 @@ fn dive_settings_message_water_density_field(
 fn dive_settings_message_po2_warn_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -7638,6 +8017,7 @@ fn dive_settings_message_po2_warn_field(
 fn dive_settings_message_po2_critical_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -7662,6 +8042,7 @@ fn dive_settings_message_po2_critical_field(
 fn dive_settings_message_po2_deco_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -7686,6 +8067,7 @@ fn dive_settings_message_po2_deco_field(
 fn dive_settings_message_safety_stop_enabled_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -7710,6 +8092,7 @@ fn dive_settings_message_safety_stop_enabled_field(
 fn dive_settings_message_bottom_depth_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -7734,6 +8117,7 @@ fn dive_settings_message_bottom_depth_field(
 fn dive_settings_message_bottom_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -7758,6 +8142,7 @@ fn dive_settings_message_bottom_time_field(
 fn dive_settings_message_apnea_countdown_enabled_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -7782,6 +8167,7 @@ fn dive_settings_message_apnea_countdown_enabled_field(
 fn dive_settings_message_apnea_countdown_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -7806,6 +8192,7 @@ fn dive_settings_message_apnea_countdown_time_field(
 fn dive_settings_message_backlight_mode_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -7830,6 +8217,7 @@ fn dive_settings_message_backlight_mode_field(
 fn dive_settings_message_backlight_brightness_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -7854,6 +8242,7 @@ fn dive_settings_message_backlight_brightness_field(
 fn dive_settings_message_backlight_timeout_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -7878,6 +8267,7 @@ fn dive_settings_message_backlight_timeout_field(
 fn dive_settings_message_repeat_dive_interval_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -7902,6 +8292,7 @@ fn dive_settings_message_repeat_dive_interval_field(
 fn dive_settings_message_safety_stop_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -7926,6 +8317,7 @@ fn dive_settings_message_safety_stop_time_field(
 fn dive_settings_message_heart_rate_source_type_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -7950,12 +8342,48 @@ fn dive_settings_message_heart_rate_source_type_field(
 fn dive_settings_message_heart_rate_source_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
     units: &'static str,
     value: Value,
 ) -> Result<FitDataField> {
+    if SourceType::Antplus.as_i64()
+        == data_map
+            .get(&19)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return dive_settings_message_heart_rate_antplus_device_type_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    } else if SourceType::Local.as_i64()
+        == data_map
+            .get(&19)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return dive_settings_message_heart_rate_local_device_type_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    }
     let value = if accumulate {
         calculate_cumulative_value(accumlators, mesg_num.as_u16(), 20, value)?
     } else {
@@ -7974,6 +8402,7 @@ fn dive_settings_message_heart_rate_source_field(
 fn dive_settings_message_heart_rate_antplus_device_type_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -7998,6 +8427,7 @@ fn dive_settings_message_heart_rate_antplus_device_type_field(
 fn dive_settings_message_heart_rate_local_device_type_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -8022,6 +8452,7 @@ fn dive_settings_message_heart_rate_local_device_type_field(
 fn dive_settings_message_message_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -8058,6 +8489,7 @@ fn dive_alarm_message(
                 fields.push(dive_alarm_message_depth_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -8070,6 +8502,7 @@ fn dive_alarm_message(
                 fields.push(dive_alarm_message_time_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -8082,6 +8515,7 @@ fn dive_alarm_message(
                 fields.push(dive_alarm_message_enabled_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -8094,6 +8528,7 @@ fn dive_alarm_message(
                 fields.push(dive_alarm_message_alarm_type_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -8106,6 +8541,7 @@ fn dive_alarm_message(
                 fields.push(dive_alarm_message_sound_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -8118,6 +8554,7 @@ fn dive_alarm_message(
                 fields.push(dive_alarm_message_dive_types_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -8130,6 +8567,7 @@ fn dive_alarm_message(
                 fields.push(dive_alarm_message_message_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -8145,6 +8583,7 @@ fn dive_alarm_message(
 fn dive_alarm_message_depth_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -8169,6 +8608,7 @@ fn dive_alarm_message_depth_field(
 fn dive_alarm_message_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -8193,6 +8633,7 @@ fn dive_alarm_message_time_field(
 fn dive_alarm_message_enabled_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -8217,6 +8658,7 @@ fn dive_alarm_message_enabled_field(
 fn dive_alarm_message_alarm_type_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -8241,6 +8683,7 @@ fn dive_alarm_message_alarm_type_field(
 fn dive_alarm_message_sound_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -8257,6 +8700,7 @@ fn dive_alarm_message_sound_field(
 fn dive_alarm_message_dive_types_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -8281,6 +8725,7 @@ fn dive_alarm_message_dive_types_field(
 fn dive_alarm_message_message_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -8316,6 +8761,7 @@ fn dive_gas_message(
                 fields.push(dive_gas_message_helium_content_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -8327,6 +8773,7 @@ fn dive_gas_message(
                 fields.push(dive_gas_message_oxygen_content_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -8338,6 +8785,7 @@ fn dive_gas_message(
                 fields.push(dive_gas_message_status_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -8349,6 +8797,7 @@ fn dive_gas_message(
                 fields.push(dive_gas_message_message_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -8364,6 +8813,7 @@ fn dive_gas_message(
 fn dive_gas_message_helium_content_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -8388,6 +8838,7 @@ fn dive_gas_message_helium_content_field(
 fn dive_gas_message_oxygen_content_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -8412,6 +8863,7 @@ fn dive_gas_message_oxygen_content_field(
 fn dive_gas_message_status_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -8436,6 +8888,7 @@ fn dive_gas_message_status_field(
 fn dive_gas_message_message_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -8471,6 +8924,7 @@ fn goal_message(
                 fields.push(goal_message_sport_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -8482,6 +8936,7 @@ fn goal_message(
                 fields.push(goal_message_sub_sport_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -8493,6 +8948,7 @@ fn goal_message(
                 fields.push(goal_message_start_date_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -8504,6 +8960,7 @@ fn goal_message(
                 fields.push(goal_message_end_date_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -8515,6 +8972,7 @@ fn goal_message(
                 fields.push(goal_message_type_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -8526,6 +8984,7 @@ fn goal_message(
                 fields.push(goal_message_value_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -8537,6 +8996,7 @@ fn goal_message(
                 fields.push(goal_message_repeat_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -8548,6 +9008,7 @@ fn goal_message(
                 fields.push(goal_message_target_value_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -8559,6 +9020,7 @@ fn goal_message(
                 fields.push(goal_message_recurrence_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -8570,6 +9032,7 @@ fn goal_message(
                 fields.push(goal_message_recurrence_value_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -8581,6 +9044,7 @@ fn goal_message(
                 fields.push(goal_message_enabled_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -8592,6 +9056,7 @@ fn goal_message(
                 fields.push(goal_message_source_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -8603,6 +9068,7 @@ fn goal_message(
                 fields.push(goal_message_message_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -8618,6 +9084,7 @@ fn goal_message(
 fn goal_message_sport_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -8642,6 +9109,7 @@ fn goal_message_sport_field(
 fn goal_message_sub_sport_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -8666,6 +9134,7 @@ fn goal_message_sub_sport_field(
 fn goal_message_start_date_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -8690,6 +9159,7 @@ fn goal_message_start_date_field(
 fn goal_message_end_date_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -8714,6 +9184,7 @@ fn goal_message_end_date_field(
 fn goal_message_type_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -8730,6 +9201,7 @@ fn goal_message_type_field(
 fn goal_message_value_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -8754,6 +9226,7 @@ fn goal_message_value_field(
 fn goal_message_repeat_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -8778,6 +9251,7 @@ fn goal_message_repeat_field(
 fn goal_message_target_value_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -8802,6 +9276,7 @@ fn goal_message_target_value_field(
 fn goal_message_recurrence_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -8826,6 +9301,7 @@ fn goal_message_recurrence_field(
 fn goal_message_recurrence_value_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -8850,6 +9326,7 @@ fn goal_message_recurrence_value_field(
 fn goal_message_enabled_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -8874,6 +9351,7 @@ fn goal_message_enabled_field(
 fn goal_message_source_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -8898,6 +9376,7 @@ fn goal_message_source_field(
 fn goal_message_message_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -8934,6 +9413,7 @@ fn activity_message(
                 fields.push(activity_message_total_timer_time_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -8945,6 +9425,7 @@ fn activity_message(
                 fields.push(activity_message_num_sessions_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -8956,6 +9437,7 @@ fn activity_message(
                 fields.push(activity_message_type_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -8967,6 +9449,7 @@ fn activity_message(
                 fields.push(activity_message_event_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -8978,6 +9461,7 @@ fn activity_message(
                 fields.push(activity_message_event_type_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -8990,6 +9474,7 @@ fn activity_message(
                 fields.push(activity_message_local_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -9001,6 +9486,7 @@ fn activity_message(
                 fields.push(activity_message_event_group_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -9012,6 +9498,7 @@ fn activity_message(
                 fields.push(activity_message_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -9027,6 +9514,7 @@ fn activity_message(
 fn activity_message_total_timer_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -9051,6 +9539,7 @@ fn activity_message_total_timer_time_field(
 fn activity_message_num_sessions_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -9075,6 +9564,7 @@ fn activity_message_num_sessions_field(
 fn activity_message_type_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -9099,6 +9589,7 @@ fn activity_message_type_field(
 fn activity_message_event_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -9123,6 +9614,7 @@ fn activity_message_event_field(
 fn activity_message_event_type_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -9147,6 +9639,7 @@ fn activity_message_event_type_field(
 fn activity_message_local_timestamp_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -9171,6 +9664,7 @@ fn activity_message_local_timestamp_field(
 fn activity_message_event_group_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -9195,6 +9689,7 @@ fn activity_message_event_group_field(
 fn activity_message_timestamp_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -9231,6 +9726,7 @@ fn session_message(
                 fields.push(session_message_event_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -9243,6 +9739,7 @@ fn session_message(
                 fields.push(session_message_event_type_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -9254,6 +9751,7 @@ fn session_message(
                 fields.push(session_message_start_time_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -9265,6 +9763,7 @@ fn session_message(
                 fields.push(session_message_start_position_lat_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -9276,6 +9775,7 @@ fn session_message(
                 fields.push(session_message_start_position_long_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -9287,6 +9787,7 @@ fn session_message(
                 fields.push(session_message_sport_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -9298,6 +9799,7 @@ fn session_message(
                 fields.push(session_message_sub_sport_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -9310,6 +9812,7 @@ fn session_message(
                 fields.push(session_message_total_elapsed_time_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -9322,6 +9825,7 @@ fn session_message(
                 fields.push(session_message_total_timer_time_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -9333,6 +9837,7 @@ fn session_message(
                 fields.push(session_message_total_distance_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -9341,118 +9846,22 @@ fn session_message(
                 )?);
             }
             10 => {
-                if Sport::Running.as_i64()
-                    == data_map
-                        .get(&5)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(session_message_total_strides_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "strides",
-                        value,
-                    )?);
-                } else if Sport::Walking.as_i64()
-                    == data_map
-                        .get(&5)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(session_message_total_strides_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "strides",
-                        value,
-                    )?);
-                } else if Sport::Cycling.as_i64()
-                    == data_map
-                        .get(&5)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(session_message_total_strokes_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "strokes",
-                        value,
-                    )?);
-                } else if Sport::Swimming.as_i64()
-                    == data_map
-                        .get(&5)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(session_message_total_strokes_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "strokes",
-                        value,
-                    )?);
-                } else if Sport::Rowing.as_i64()
-                    == data_map
-                        .get(&5)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(session_message_total_strokes_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "strokes",
-                        value,
-                    )?);
-                } else if Sport::StandUpPaddleboarding.as_i64()
-                    == data_map
-                        .get(&5)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(session_message_total_strokes_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "strokes",
-                        value,
-                    )?);
-                } else {
-                    fields.push(session_message_total_cycles_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "cycles",
-                        value,
-                    )?);
-                }
+                fields.push(session_message_total_cycles_field(
+                    mesg_num,
+                    accumlators,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "cycles",
+                    value,
+                )?);
             }
             11 => {
                 fields.push(session_message_total_calories_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -9464,6 +9873,7 @@ fn session_message(
                 fields.push(session_message_total_fat_calories_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -9478,6 +9888,7 @@ fn session_message(
                 fields.push(session_message_enhanced_avg_speed_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -9491,6 +9902,7 @@ fn session_message(
                 fields.push(session_message_enhanced_max_speed_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -9503,6 +9915,7 @@ fn session_message(
                 fields.push(session_message_avg_heart_rate_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -9514,6 +9927,7 @@ fn session_message(
                 fields.push(session_message_max_heart_rate_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -9523,68 +9937,35 @@ fn session_message(
             }
             18 => {
                 // total_cycles / total_timer_time if non_zero_avg_cadence otherwise total_cycles / total_elapsed_time
-                if Sport::Running.as_i64()
-                    == data_map
-                        .get(&5)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(session_message_avg_running_cadence_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "strides/min",
-                        value,
-                    )?);
-                } else {
-                    fields.push(session_message_avg_cadence_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "rpm",
-                        value,
-                    )?);
-                }
+                fields.push(session_message_avg_cadence_field(
+                    mesg_num,
+                    accumlators,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "rpm",
+                    value,
+                )?);
             }
             19 => {
-                if Sport::Running.as_i64()
-                    == data_map
-                        .get(&5)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(session_message_max_running_cadence_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "strides/min",
-                        value,
-                    )?);
-                } else {
-                    fields.push(session_message_max_cadence_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "rpm",
-                        value,
-                    )?);
-                }
+                fields.push(session_message_max_cadence_field(
+                    mesg_num,
+                    accumlators,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "rpm",
+                    value,
+                )?);
             }
             20 => {
                 // total_power / total_timer_time if non_zero_avg_power otherwise total_power / total_elapsed_time
                 fields.push(session_message_avg_power_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -9596,6 +9977,7 @@ fn session_message(
                 fields.push(session_message_max_power_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -9607,6 +9989,7 @@ fn session_message(
                 fields.push(session_message_total_ascent_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -9618,6 +10001,7 @@ fn session_message(
                 fields.push(session_message_total_descent_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -9629,6 +10013,7 @@ fn session_message(
                 fields.push(session_message_total_training_effect_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     10.000000,
                     0.000000,
@@ -9640,6 +10025,7 @@ fn session_message(
                 fields.push(session_message_first_lap_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -9651,6 +10037,7 @@ fn session_message(
                 fields.push(session_message_num_laps_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -9662,6 +10049,7 @@ fn session_message(
                 fields.push(session_message_event_group_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -9673,6 +10061,7 @@ fn session_message(
                 fields.push(session_message_trigger_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -9685,6 +10074,7 @@ fn session_message(
                 fields.push(session_message_nec_lat_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -9697,6 +10087,7 @@ fn session_message(
                 fields.push(session_message_nec_long_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -9709,6 +10100,7 @@ fn session_message(
                 fields.push(session_message_swc_lat_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -9721,6 +10113,7 @@ fn session_message(
                 fields.push(session_message_swc_long_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -9733,6 +10126,7 @@ fn session_message(
                 fields.push(session_message_num_lengths_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -9744,6 +10138,7 @@ fn session_message(
                 fields.push(session_message_normalized_power_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -9755,6 +10150,7 @@ fn session_message(
                 fields.push(session_message_training_stress_score_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     10.000000,
                     0.000000,
@@ -9766,6 +10162,7 @@ fn session_message(
                 fields.push(session_message_intensity_factor_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -9777,6 +10174,7 @@ fn session_message(
                 fields.push(session_message_left_right_balance_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -9788,6 +10186,7 @@ fn session_message(
                 fields.push(session_message_avg_stroke_count_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     10.000000,
                     0.000000,
@@ -9799,6 +10198,7 @@ fn session_message(
                 fields.push(session_message_avg_stroke_distance_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -9810,6 +10210,7 @@ fn session_message(
                 fields.push(session_message_swim_stroke_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -9821,6 +10222,7 @@ fn session_message(
                 fields.push(session_message_pool_length_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -9832,6 +10234,7 @@ fn session_message(
                 fields.push(session_message_threshold_power_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -9843,6 +10246,7 @@ fn session_message(
                 fields.push(session_message_pool_length_unit_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -9855,6 +10259,7 @@ fn session_message(
                 fields.push(session_message_num_active_lengths_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -9866,6 +10271,7 @@ fn session_message(
                 fields.push(session_message_total_work_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -9879,6 +10285,7 @@ fn session_message(
                 fields.push(session_message_enhanced_avg_altitude_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     5.000000,
                     500.000000,
@@ -9892,6 +10299,7 @@ fn session_message(
                 fields.push(session_message_enhanced_max_altitude_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     5.000000,
                     500.000000,
@@ -9903,6 +10311,7 @@ fn session_message(
                 fields.push(session_message_gps_accuracy_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -9914,6 +10323,7 @@ fn session_message(
                 fields.push(session_message_avg_grade_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -9925,6 +10335,7 @@ fn session_message(
                 fields.push(session_message_avg_pos_grade_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -9936,6 +10347,7 @@ fn session_message(
                 fields.push(session_message_avg_neg_grade_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -9947,6 +10359,7 @@ fn session_message(
                 fields.push(session_message_max_pos_grade_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -9958,6 +10371,7 @@ fn session_message(
                 fields.push(session_message_max_neg_grade_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -9969,6 +10383,7 @@ fn session_message(
                 fields.push(session_message_avg_temperature_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -9980,6 +10395,7 @@ fn session_message(
                 fields.push(session_message_max_temperature_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -9991,6 +10407,7 @@ fn session_message(
                 fields.push(session_message_total_moving_time_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -10002,6 +10419,7 @@ fn session_message(
                 fields.push(session_message_avg_pos_vertical_speed_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -10013,6 +10431,7 @@ fn session_message(
                 fields.push(session_message_avg_neg_vertical_speed_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -10024,6 +10443,7 @@ fn session_message(
                 fields.push(session_message_max_pos_vertical_speed_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -10035,6 +10455,7 @@ fn session_message(
                 fields.push(session_message_max_neg_vertical_speed_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -10046,6 +10467,7 @@ fn session_message(
                 fields.push(session_message_min_heart_rate_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -10057,6 +10479,7 @@ fn session_message(
                 fields.push(session_message_time_in_hr_zone_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -10068,6 +10491,7 @@ fn session_message(
                 fields.push(session_message_time_in_speed_zone_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -10079,6 +10503,7 @@ fn session_message(
                 fields.push(session_message_time_in_cadence_zone_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -10090,6 +10515,7 @@ fn session_message(
                 fields.push(session_message_time_in_power_zone_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -10101,6 +10527,7 @@ fn session_message(
                 fields.push(session_message_avg_lap_time_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -10112,6 +10539,7 @@ fn session_message(
                 fields.push(session_message_best_lap_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -10125,6 +10553,7 @@ fn session_message(
                 fields.push(session_message_enhanced_min_altitude_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     5.000000,
                     500.000000,
@@ -10136,6 +10565,7 @@ fn session_message(
                 fields.push(session_message_player_score_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -10147,6 +10577,7 @@ fn session_message(
                 fields.push(session_message_opponent_score_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -10158,6 +10589,7 @@ fn session_message(
                 fields.push(session_message_opponent_name_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -10170,6 +10602,7 @@ fn session_message(
                 fields.push(session_message_stroke_count_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -10182,6 +10615,7 @@ fn session_message(
                 fields.push(session_message_zone_count_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -10193,6 +10627,7 @@ fn session_message(
                 fields.push(session_message_max_ball_speed_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -10204,6 +10639,7 @@ fn session_message(
                 fields.push(session_message_avg_ball_speed_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -10215,6 +10651,7 @@ fn session_message(
                 fields.push(session_message_avg_vertical_oscillation_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     10.000000,
                     0.000000,
@@ -10226,6 +10663,7 @@ fn session_message(
                 fields.push(session_message_avg_stance_time_percent_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -10237,6 +10675,7 @@ fn session_message(
                 fields.push(session_message_avg_stance_time_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     10.000000,
                     0.000000,
@@ -10249,6 +10688,7 @@ fn session_message(
                 fields.push(session_message_avg_fractional_cadence_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     128.000000,
                     0.000000,
@@ -10261,6 +10701,7 @@ fn session_message(
                 fields.push(session_message_max_fractional_cadence_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     128.000000,
                     0.000000,
@@ -10273,6 +10714,7 @@ fn session_message(
                 fields.push(session_message_total_fractional_cycles_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     128.000000,
                     0.000000,
@@ -10285,6 +10727,7 @@ fn session_message(
                 fields.push(session_message_avg_total_hemoglobin_conc_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -10297,6 +10740,7 @@ fn session_message(
                 fields.push(session_message_min_total_hemoglobin_conc_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -10309,6 +10753,7 @@ fn session_message(
                 fields.push(session_message_max_total_hemoglobin_conc_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -10321,6 +10766,7 @@ fn session_message(
                 fields.push(session_message_avg_saturated_hemoglobin_percent_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     10.000000,
                     0.000000,
@@ -10333,6 +10779,7 @@ fn session_message(
                 fields.push(session_message_min_saturated_hemoglobin_percent_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     10.000000,
                     0.000000,
@@ -10345,6 +10792,7 @@ fn session_message(
                 fields.push(session_message_max_saturated_hemoglobin_percent_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     10.000000,
                     0.000000,
@@ -10356,6 +10804,7 @@ fn session_message(
                 fields.push(session_message_avg_left_torque_effectiveness_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     2.000000,
                     0.000000,
@@ -10367,6 +10816,7 @@ fn session_message(
                 fields.push(session_message_avg_right_torque_effectiveness_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     2.000000,
                     0.000000,
@@ -10378,6 +10828,7 @@ fn session_message(
                 fields.push(session_message_avg_left_pedal_smoothness_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     2.000000,
                     0.000000,
@@ -10389,6 +10840,7 @@ fn session_message(
                 fields.push(session_message_avg_right_pedal_smoothness_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     2.000000,
                     0.000000,
@@ -10400,6 +10852,7 @@ fn session_message(
                 fields.push(session_message_avg_combined_pedal_smoothness_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     2.000000,
                     0.000000,
@@ -10411,6 +10864,7 @@ fn session_message(
                 fields.push(session_message_sport_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -10423,6 +10877,7 @@ fn session_message(
                 fields.push(session_message_time_standing_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -10435,6 +10890,7 @@ fn session_message(
                 fields.push(session_message_stand_count_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -10447,6 +10903,7 @@ fn session_message(
                 fields.push(session_message_avg_left_pco_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -10459,6 +10916,7 @@ fn session_message(
                 fields.push(session_message_avg_right_pco_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -10471,6 +10929,7 @@ fn session_message(
                 fields.push(session_message_avg_left_power_phase_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     0.711111,
                     0.000000,
@@ -10483,6 +10942,7 @@ fn session_message(
                 fields.push(session_message_avg_left_power_phase_peak_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     0.711111,
                     0.000000,
@@ -10495,6 +10955,7 @@ fn session_message(
                 fields.push(session_message_avg_right_power_phase_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     0.711111,
                     0.000000,
@@ -10507,6 +10968,7 @@ fn session_message(
                 fields.push(session_message_avg_right_power_phase_peak_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     0.711111,
                     0.000000,
@@ -10519,6 +10981,7 @@ fn session_message(
                 fields.push(session_message_avg_power_position_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -10531,6 +10994,7 @@ fn session_message(
                 fields.push(session_message_max_power_position_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -10543,6 +11007,7 @@ fn session_message(
                 fields.push(session_message_avg_cadence_position_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -10555,6 +11020,7 @@ fn session_message(
                 fields.push(session_message_max_cadence_position_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -10567,6 +11033,7 @@ fn session_message(
                 fields.push(session_message_enhanced_avg_speed_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -10578,6 +11045,7 @@ fn session_message(
                 fields.push(session_message_enhanced_max_speed_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -10589,6 +11057,7 @@ fn session_message(
                 fields.push(session_message_enhanced_avg_altitude_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     5.000000,
                     500.000000,
@@ -10600,6 +11069,7 @@ fn session_message(
                 fields.push(session_message_enhanced_min_altitude_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     5.000000,
                     500.000000,
@@ -10611,6 +11081,7 @@ fn session_message(
                 fields.push(session_message_enhanced_max_altitude_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     5.000000,
                     500.000000,
@@ -10623,6 +11094,7 @@ fn session_message(
                 fields.push(session_message_avg_lev_motor_power_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -10635,6 +11107,7 @@ fn session_message(
                 fields.push(session_message_max_lev_motor_power_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -10647,6 +11120,7 @@ fn session_message(
                 fields.push(session_message_lev_battery_consumption_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     2.000000,
                     0.000000,
@@ -10658,6 +11132,7 @@ fn session_message(
                 fields.push(session_message_avg_vertical_ratio_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -10669,6 +11144,7 @@ fn session_message(
                 fields.push(session_message_avg_stance_time_balance_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -10680,6 +11156,7 @@ fn session_message(
                 fields.push(session_message_avg_step_length_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     10.000000,
                     0.000000,
@@ -10691,6 +11168,7 @@ fn session_message(
                 fields.push(session_message_total_anaerobic_training_effect_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     10.000000,
                     0.000000,
@@ -10702,6 +11180,7 @@ fn session_message(
                 fields.push(session_message_avg_vam_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -10713,6 +11192,7 @@ fn session_message(
                 fields.push(session_message_training_load_peak_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     65536.000000,
                     0.000000,
@@ -10725,6 +11205,7 @@ fn session_message(
                 fields.push(session_message_total_grit_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -10737,6 +11218,7 @@ fn session_message(
                 fields.push(session_message_total_flow_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -10748,6 +11230,7 @@ fn session_message(
                 fields.push(session_message_jump_count_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -10760,6 +11243,7 @@ fn session_message(
                 fields.push(session_message_avg_grit_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -10772,6 +11256,7 @@ fn session_message(
                 fields.push(session_message_avg_flow_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -10784,6 +11269,7 @@ fn session_message(
                 fields.push(session_message_total_fractional_ascent_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -10796,6 +11282,7 @@ fn session_message(
                 fields.push(session_message_total_fractional_descent_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -10807,6 +11294,7 @@ fn session_message(
                 fields.push(session_message_avg_core_temperature_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -10818,6 +11306,7 @@ fn session_message(
                 fields.push(session_message_min_core_temperature_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -10829,6 +11318,7 @@ fn session_message(
                 fields.push(session_message_max_core_temperature_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -10841,6 +11331,7 @@ fn session_message(
                 fields.push(session_message_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -10853,6 +11344,7 @@ fn session_message(
                 fields.push(session_message_message_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -10868,6 +11360,7 @@ fn session_message(
 fn session_message_event_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -10892,6 +11385,7 @@ fn session_message_event_field(
 fn session_message_event_type_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -10916,6 +11410,7 @@ fn session_message_event_type_field(
 fn session_message_start_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -10940,6 +11435,7 @@ fn session_message_start_time_field(
 fn session_message_start_position_lat_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -10964,6 +11460,7 @@ fn session_message_start_position_lat_field(
 fn session_message_start_position_long_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -10988,6 +11485,7 @@ fn session_message_start_position_long_field(
 fn session_message_sport_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -11012,6 +11510,7 @@ fn session_message_sport_field(
 fn session_message_sub_sport_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -11036,6 +11535,7 @@ fn session_message_sub_sport_field(
 fn session_message_total_elapsed_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -11060,6 +11560,7 @@ fn session_message_total_elapsed_time_field(
 fn session_message_total_timer_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -11084,6 +11585,7 @@ fn session_message_total_timer_time_field(
 fn session_message_total_distance_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -11108,12 +11610,116 @@ fn session_message_total_distance_field(
 fn session_message_total_cycles_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
     units: &'static str,
     value: Value,
 ) -> Result<FitDataField> {
+    if Sport::Running.as_i64()
+        == data_map
+            .get(&5)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return session_message_total_strides_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "strides",
+            value,
+        );
+    } else if Sport::Walking.as_i64()
+        == data_map
+            .get(&5)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return session_message_total_strides_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "strides",
+            value,
+        );
+    } else if Sport::Cycling.as_i64()
+        == data_map
+            .get(&5)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return session_message_total_strokes_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "strokes",
+            value,
+        );
+    } else if Sport::Swimming.as_i64()
+        == data_map
+            .get(&5)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return session_message_total_strokes_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "strokes",
+            value,
+        );
+    } else if Sport::Rowing.as_i64()
+        == data_map
+            .get(&5)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return session_message_total_strokes_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "strokes",
+            value,
+        );
+    } else if Sport::StandUpPaddleboarding.as_i64()
+        == data_map
+            .get(&5)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return session_message_total_strokes_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "strokes",
+            value,
+        );
+    }
     let value = if accumulate {
         calculate_cumulative_value(accumlators, mesg_num.as_u16(), 10, value)?
     } else {
@@ -11132,6 +11738,7 @@ fn session_message_total_cycles_field(
 fn session_message_total_strides_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -11156,6 +11763,7 @@ fn session_message_total_strides_field(
 fn session_message_total_strokes_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -11180,6 +11788,7 @@ fn session_message_total_strokes_field(
 fn session_message_total_calories_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -11204,6 +11813,7 @@ fn session_message_total_calories_field(
 fn session_message_total_fat_calories_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -11228,6 +11838,7 @@ fn session_message_total_fat_calories_field(
 fn session_message_avg_speed_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -11252,6 +11863,7 @@ fn session_message_avg_speed_field(
 fn session_message_max_speed_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -11276,6 +11888,7 @@ fn session_message_max_speed_field(
 fn session_message_avg_heart_rate_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -11300,6 +11913,7 @@ fn session_message_avg_heart_rate_field(
 fn session_message_max_heart_rate_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -11324,12 +11938,31 @@ fn session_message_max_heart_rate_field(
 fn session_message_avg_cadence_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
     units: &'static str,
     value: Value,
 ) -> Result<FitDataField> {
+    if Sport::Running.as_i64()
+        == data_map
+            .get(&5)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return session_message_avg_running_cadence_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "strides/min",
+            value,
+        );
+    }
     let value = if accumulate {
         calculate_cumulative_value(accumlators, mesg_num.as_u16(), 18, value)?
     } else {
@@ -11348,6 +11981,7 @@ fn session_message_avg_cadence_field(
 fn session_message_avg_running_cadence_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -11372,12 +12006,31 @@ fn session_message_avg_running_cadence_field(
 fn session_message_max_cadence_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
     units: &'static str,
     value: Value,
 ) -> Result<FitDataField> {
+    if Sport::Running.as_i64()
+        == data_map
+            .get(&5)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return session_message_max_running_cadence_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "strides/min",
+            value,
+        );
+    }
     let value = if accumulate {
         calculate_cumulative_value(accumlators, mesg_num.as_u16(), 19, value)?
     } else {
@@ -11396,6 +12049,7 @@ fn session_message_max_cadence_field(
 fn session_message_max_running_cadence_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -11420,6 +12074,7 @@ fn session_message_max_running_cadence_field(
 fn session_message_avg_power_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -11444,6 +12099,7 @@ fn session_message_avg_power_field(
 fn session_message_max_power_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -11468,6 +12124,7 @@ fn session_message_max_power_field(
 fn session_message_total_ascent_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -11492,6 +12149,7 @@ fn session_message_total_ascent_field(
 fn session_message_total_descent_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -11516,6 +12174,7 @@ fn session_message_total_descent_field(
 fn session_message_total_training_effect_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -11540,6 +12199,7 @@ fn session_message_total_training_effect_field(
 fn session_message_first_lap_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -11564,6 +12224,7 @@ fn session_message_first_lap_index_field(
 fn session_message_num_laps_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -11588,6 +12249,7 @@ fn session_message_num_laps_field(
 fn session_message_event_group_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -11612,6 +12274,7 @@ fn session_message_event_group_field(
 fn session_message_trigger_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -11636,6 +12299,7 @@ fn session_message_trigger_field(
 fn session_message_nec_lat_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -11660,6 +12324,7 @@ fn session_message_nec_lat_field(
 fn session_message_nec_long_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -11684,6 +12349,7 @@ fn session_message_nec_long_field(
 fn session_message_swc_lat_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -11708,6 +12374,7 @@ fn session_message_swc_lat_field(
 fn session_message_swc_long_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -11732,6 +12399,7 @@ fn session_message_swc_long_field(
 fn session_message_num_lengths_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -11756,6 +12424,7 @@ fn session_message_num_lengths_field(
 fn session_message_normalized_power_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -11780,6 +12449,7 @@ fn session_message_normalized_power_field(
 fn session_message_training_stress_score_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -11804,6 +12474,7 @@ fn session_message_training_stress_score_field(
 fn session_message_intensity_factor_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -11828,6 +12499,7 @@ fn session_message_intensity_factor_field(
 fn session_message_left_right_balance_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -11852,6 +12524,7 @@ fn session_message_left_right_balance_field(
 fn session_message_avg_stroke_count_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -11876,6 +12549,7 @@ fn session_message_avg_stroke_count_field(
 fn session_message_avg_stroke_distance_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -11900,6 +12574,7 @@ fn session_message_avg_stroke_distance_field(
 fn session_message_swim_stroke_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -11924,6 +12599,7 @@ fn session_message_swim_stroke_field(
 fn session_message_pool_length_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -11948,6 +12624,7 @@ fn session_message_pool_length_field(
 fn session_message_threshold_power_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -11972,6 +12649,7 @@ fn session_message_threshold_power_field(
 fn session_message_pool_length_unit_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -11996,6 +12674,7 @@ fn session_message_pool_length_unit_field(
 fn session_message_num_active_lengths_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -12020,6 +12699,7 @@ fn session_message_num_active_lengths_field(
 fn session_message_total_work_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -12044,6 +12724,7 @@ fn session_message_total_work_field(
 fn session_message_avg_altitude_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -12068,6 +12749,7 @@ fn session_message_avg_altitude_field(
 fn session_message_max_altitude_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -12092,6 +12774,7 @@ fn session_message_max_altitude_field(
 fn session_message_gps_accuracy_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -12116,6 +12799,7 @@ fn session_message_gps_accuracy_field(
 fn session_message_avg_grade_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -12140,6 +12824,7 @@ fn session_message_avg_grade_field(
 fn session_message_avg_pos_grade_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -12164,6 +12849,7 @@ fn session_message_avg_pos_grade_field(
 fn session_message_avg_neg_grade_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -12188,6 +12874,7 @@ fn session_message_avg_neg_grade_field(
 fn session_message_max_pos_grade_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -12212,6 +12899,7 @@ fn session_message_max_pos_grade_field(
 fn session_message_max_neg_grade_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -12236,6 +12924,7 @@ fn session_message_max_neg_grade_field(
 fn session_message_avg_temperature_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -12260,6 +12949,7 @@ fn session_message_avg_temperature_field(
 fn session_message_max_temperature_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -12284,6 +12974,7 @@ fn session_message_max_temperature_field(
 fn session_message_total_moving_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -12308,6 +12999,7 @@ fn session_message_total_moving_time_field(
 fn session_message_avg_pos_vertical_speed_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -12332,6 +13024,7 @@ fn session_message_avg_pos_vertical_speed_field(
 fn session_message_avg_neg_vertical_speed_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -12356,6 +13049,7 @@ fn session_message_avg_neg_vertical_speed_field(
 fn session_message_max_pos_vertical_speed_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -12380,6 +13074,7 @@ fn session_message_max_pos_vertical_speed_field(
 fn session_message_max_neg_vertical_speed_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -12404,6 +13099,7 @@ fn session_message_max_neg_vertical_speed_field(
 fn session_message_min_heart_rate_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -12428,6 +13124,7 @@ fn session_message_min_heart_rate_field(
 fn session_message_time_in_hr_zone_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -12452,6 +13149,7 @@ fn session_message_time_in_hr_zone_field(
 fn session_message_time_in_speed_zone_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -12476,6 +13174,7 @@ fn session_message_time_in_speed_zone_field(
 fn session_message_time_in_cadence_zone_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -12500,6 +13199,7 @@ fn session_message_time_in_cadence_zone_field(
 fn session_message_time_in_power_zone_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -12524,6 +13224,7 @@ fn session_message_time_in_power_zone_field(
 fn session_message_avg_lap_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -12548,6 +13249,7 @@ fn session_message_avg_lap_time_field(
 fn session_message_best_lap_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -12572,6 +13274,7 @@ fn session_message_best_lap_index_field(
 fn session_message_min_altitude_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -12596,6 +13299,7 @@ fn session_message_min_altitude_field(
 fn session_message_player_score_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -12620,6 +13324,7 @@ fn session_message_player_score_field(
 fn session_message_opponent_score_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -12644,6 +13349,7 @@ fn session_message_opponent_score_field(
 fn session_message_opponent_name_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -12668,6 +13374,7 @@ fn session_message_opponent_name_field(
 fn session_message_stroke_count_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -12692,6 +13399,7 @@ fn session_message_stroke_count_field(
 fn session_message_zone_count_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -12716,6 +13424,7 @@ fn session_message_zone_count_field(
 fn session_message_max_ball_speed_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -12740,6 +13449,7 @@ fn session_message_max_ball_speed_field(
 fn session_message_avg_ball_speed_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -12764,6 +13474,7 @@ fn session_message_avg_ball_speed_field(
 fn session_message_avg_vertical_oscillation_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -12788,6 +13499,7 @@ fn session_message_avg_vertical_oscillation_field(
 fn session_message_avg_stance_time_percent_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -12812,6 +13524,7 @@ fn session_message_avg_stance_time_percent_field(
 fn session_message_avg_stance_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -12836,6 +13549,7 @@ fn session_message_avg_stance_time_field(
 fn session_message_avg_fractional_cadence_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -12860,6 +13574,7 @@ fn session_message_avg_fractional_cadence_field(
 fn session_message_max_fractional_cadence_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -12884,6 +13599,7 @@ fn session_message_max_fractional_cadence_field(
 fn session_message_total_fractional_cycles_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -12908,6 +13624,7 @@ fn session_message_total_fractional_cycles_field(
 fn session_message_avg_total_hemoglobin_conc_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -12932,6 +13649,7 @@ fn session_message_avg_total_hemoglobin_conc_field(
 fn session_message_min_total_hemoglobin_conc_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -12956,6 +13674,7 @@ fn session_message_min_total_hemoglobin_conc_field(
 fn session_message_max_total_hemoglobin_conc_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -12980,6 +13699,7 @@ fn session_message_max_total_hemoglobin_conc_field(
 fn session_message_avg_saturated_hemoglobin_percent_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -13004,6 +13724,7 @@ fn session_message_avg_saturated_hemoglobin_percent_field(
 fn session_message_min_saturated_hemoglobin_percent_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -13028,6 +13749,7 @@ fn session_message_min_saturated_hemoglobin_percent_field(
 fn session_message_max_saturated_hemoglobin_percent_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -13052,6 +13774,7 @@ fn session_message_max_saturated_hemoglobin_percent_field(
 fn session_message_avg_left_torque_effectiveness_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -13076,6 +13799,7 @@ fn session_message_avg_left_torque_effectiveness_field(
 fn session_message_avg_right_torque_effectiveness_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -13100,6 +13824,7 @@ fn session_message_avg_right_torque_effectiveness_field(
 fn session_message_avg_left_pedal_smoothness_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -13124,6 +13849,7 @@ fn session_message_avg_left_pedal_smoothness_field(
 fn session_message_avg_right_pedal_smoothness_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -13148,6 +13874,7 @@ fn session_message_avg_right_pedal_smoothness_field(
 fn session_message_avg_combined_pedal_smoothness_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -13172,6 +13899,7 @@ fn session_message_avg_combined_pedal_smoothness_field(
 fn session_message_sport_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -13196,6 +13924,7 @@ fn session_message_sport_index_field(
 fn session_message_time_standing_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -13220,6 +13949,7 @@ fn session_message_time_standing_field(
 fn session_message_stand_count_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -13244,6 +13974,7 @@ fn session_message_stand_count_field(
 fn session_message_avg_left_pco_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -13268,6 +13999,7 @@ fn session_message_avg_left_pco_field(
 fn session_message_avg_right_pco_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -13292,6 +14024,7 @@ fn session_message_avg_right_pco_field(
 fn session_message_avg_left_power_phase_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -13316,6 +14049,7 @@ fn session_message_avg_left_power_phase_field(
 fn session_message_avg_left_power_phase_peak_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -13340,6 +14074,7 @@ fn session_message_avg_left_power_phase_peak_field(
 fn session_message_avg_right_power_phase_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -13364,6 +14099,7 @@ fn session_message_avg_right_power_phase_field(
 fn session_message_avg_right_power_phase_peak_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -13388,6 +14124,7 @@ fn session_message_avg_right_power_phase_peak_field(
 fn session_message_avg_power_position_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -13412,6 +14149,7 @@ fn session_message_avg_power_position_field(
 fn session_message_max_power_position_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -13436,6 +14174,7 @@ fn session_message_max_power_position_field(
 fn session_message_avg_cadence_position_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -13460,6 +14199,7 @@ fn session_message_avg_cadence_position_field(
 fn session_message_max_cadence_position_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -13484,6 +14224,7 @@ fn session_message_max_cadence_position_field(
 fn session_message_enhanced_avg_speed_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -13508,6 +14249,7 @@ fn session_message_enhanced_avg_speed_field(
 fn session_message_enhanced_max_speed_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -13532,6 +14274,7 @@ fn session_message_enhanced_max_speed_field(
 fn session_message_enhanced_avg_altitude_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -13556,6 +14299,7 @@ fn session_message_enhanced_avg_altitude_field(
 fn session_message_enhanced_min_altitude_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -13580,6 +14324,7 @@ fn session_message_enhanced_min_altitude_field(
 fn session_message_enhanced_max_altitude_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -13604,6 +14349,7 @@ fn session_message_enhanced_max_altitude_field(
 fn session_message_avg_lev_motor_power_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -13628,6 +14374,7 @@ fn session_message_avg_lev_motor_power_field(
 fn session_message_max_lev_motor_power_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -13652,6 +14399,7 @@ fn session_message_max_lev_motor_power_field(
 fn session_message_lev_battery_consumption_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -13676,6 +14424,7 @@ fn session_message_lev_battery_consumption_field(
 fn session_message_avg_vertical_ratio_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -13700,6 +14449,7 @@ fn session_message_avg_vertical_ratio_field(
 fn session_message_avg_stance_time_balance_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -13724,6 +14474,7 @@ fn session_message_avg_stance_time_balance_field(
 fn session_message_avg_step_length_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -13748,6 +14499,7 @@ fn session_message_avg_step_length_field(
 fn session_message_total_anaerobic_training_effect_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -13772,6 +14524,7 @@ fn session_message_total_anaerobic_training_effect_field(
 fn session_message_avg_vam_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -13796,6 +14549,7 @@ fn session_message_avg_vam_field(
 fn session_message_training_load_peak_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -13820,6 +14574,7 @@ fn session_message_training_load_peak_field(
 fn session_message_total_grit_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -13844,6 +14599,7 @@ fn session_message_total_grit_field(
 fn session_message_total_flow_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -13868,6 +14624,7 @@ fn session_message_total_flow_field(
 fn session_message_jump_count_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -13892,6 +14649,7 @@ fn session_message_jump_count_field(
 fn session_message_avg_grit_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -13916,6 +14674,7 @@ fn session_message_avg_grit_field(
 fn session_message_avg_flow_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -13940,6 +14699,7 @@ fn session_message_avg_flow_field(
 fn session_message_total_fractional_ascent_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -13964,6 +14724,7 @@ fn session_message_total_fractional_ascent_field(
 fn session_message_total_fractional_descent_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -13988,6 +14749,7 @@ fn session_message_total_fractional_descent_field(
 fn session_message_avg_core_temperature_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -14012,6 +14774,7 @@ fn session_message_avg_core_temperature_field(
 fn session_message_min_core_temperature_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -14036,6 +14799,7 @@ fn session_message_min_core_temperature_field(
 fn session_message_max_core_temperature_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -14060,6 +14824,7 @@ fn session_message_max_core_temperature_field(
 fn session_message_timestamp_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -14084,6 +14849,7 @@ fn session_message_timestamp_field(
 fn session_message_message_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -14119,6 +14885,7 @@ fn lap_message(
                 fields.push(lap_message_event_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -14130,6 +14897,7 @@ fn lap_message(
                 fields.push(lap_message_event_type_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -14141,6 +14909,7 @@ fn lap_message(
                 fields.push(lap_message_start_time_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -14152,6 +14921,7 @@ fn lap_message(
                 fields.push(lap_message_start_position_lat_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -14163,6 +14933,7 @@ fn lap_message(
                 fields.push(lap_message_start_position_long_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -14174,6 +14945,7 @@ fn lap_message(
                 fields.push(lap_message_end_position_lat_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -14185,6 +14957,7 @@ fn lap_message(
                 fields.push(lap_message_end_position_long_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -14197,6 +14970,7 @@ fn lap_message(
                 fields.push(lap_message_total_elapsed_time_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -14209,6 +14983,7 @@ fn lap_message(
                 fields.push(lap_message_total_timer_time_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -14220,6 +14995,7 @@ fn lap_message(
                 fields.push(lap_message_total_distance_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -14228,118 +15004,22 @@ fn lap_message(
                 )?);
             }
             10 => {
-                if Sport::Running.as_i64()
-                    == data_map
-                        .get(&25)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(lap_message_total_strides_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "strides",
-                        value,
-                    )?);
-                } else if Sport::Walking.as_i64()
-                    == data_map
-                        .get(&25)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(lap_message_total_strides_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "strides",
-                        value,
-                    )?);
-                } else if Sport::Cycling.as_i64()
-                    == data_map
-                        .get(&25)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(lap_message_total_strokes_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "strokes",
-                        value,
-                    )?);
-                } else if Sport::Swimming.as_i64()
-                    == data_map
-                        .get(&25)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(lap_message_total_strokes_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "strokes",
-                        value,
-                    )?);
-                } else if Sport::Rowing.as_i64()
-                    == data_map
-                        .get(&25)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(lap_message_total_strokes_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "strokes",
-                        value,
-                    )?);
-                } else if Sport::StandUpPaddleboarding.as_i64()
-                    == data_map
-                        .get(&25)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(lap_message_total_strokes_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "strokes",
-                        value,
-                    )?);
-                } else {
-                    fields.push(lap_message_total_cycles_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "cycles",
-                        value,
-                    )?);
-                }
+                fields.push(lap_message_total_cycles_field(
+                    mesg_num,
+                    accumlators,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "cycles",
+                    value,
+                )?);
             }
             11 => {
                 fields.push(lap_message_total_calories_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -14352,6 +15032,7 @@ fn lap_message(
                 fields.push(lap_message_total_fat_calories_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -14365,6 +15046,7 @@ fn lap_message(
                 fields.push(lap_message_enhanced_avg_speed_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -14378,6 +15060,7 @@ fn lap_message(
                 fields.push(lap_message_enhanced_max_speed_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -14389,6 +15072,7 @@ fn lap_message(
                 fields.push(lap_message_avg_heart_rate_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -14400,6 +15084,7 @@ fn lap_message(
                 fields.push(lap_message_max_heart_rate_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -14409,68 +15094,35 @@ fn lap_message(
             }
             17 => {
                 // total_cycles / total_timer_time if non_zero_avg_cadence otherwise total_cycles / total_elapsed_time
-                if Sport::Running.as_i64()
-                    == data_map
-                        .get(&25)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(lap_message_avg_running_cadence_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "strides/min",
-                        value,
-                    )?);
-                } else {
-                    fields.push(lap_message_avg_cadence_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "rpm",
-                        value,
-                    )?);
-                }
+                fields.push(lap_message_avg_cadence_field(
+                    mesg_num,
+                    accumlators,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "rpm",
+                    value,
+                )?);
             }
             18 => {
-                if Sport::Running.as_i64()
-                    == data_map
-                        .get(&25)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(lap_message_max_running_cadence_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "strides/min",
-                        value,
-                    )?);
-                } else {
-                    fields.push(lap_message_max_cadence_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "rpm",
-                        value,
-                    )?);
-                }
+                fields.push(lap_message_max_cadence_field(
+                    mesg_num,
+                    accumlators,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "rpm",
+                    value,
+                )?);
             }
             19 => {
                 // total_power / total_timer_time if non_zero_avg_power otherwise total_power / total_elapsed_time
                 fields.push(lap_message_avg_power_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -14482,6 +15134,7 @@ fn lap_message(
                 fields.push(lap_message_max_power_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -14493,6 +15146,7 @@ fn lap_message(
                 fields.push(lap_message_total_ascent_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -14504,6 +15158,7 @@ fn lap_message(
                 fields.push(lap_message_total_descent_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -14515,6 +15170,7 @@ fn lap_message(
                 fields.push(lap_message_intensity_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -14526,6 +15182,7 @@ fn lap_message(
                 fields.push(lap_message_lap_trigger_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -14537,6 +15194,7 @@ fn lap_message(
                 fields.push(lap_message_sport_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -14548,6 +15206,7 @@ fn lap_message(
                 fields.push(lap_message_event_group_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -14560,6 +15219,7 @@ fn lap_message(
                 fields.push(lap_message_num_lengths_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -14571,6 +15231,7 @@ fn lap_message(
                 fields.push(lap_message_normalized_power_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -14582,6 +15243,7 @@ fn lap_message(
                 fields.push(lap_message_left_right_balance_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -14593,6 +15255,7 @@ fn lap_message(
                 fields.push(lap_message_first_length_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -14604,6 +15267,7 @@ fn lap_message(
                 fields.push(lap_message_avg_stroke_distance_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -14615,6 +15279,7 @@ fn lap_message(
                 fields.push(lap_message_swim_stroke_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -14626,6 +15291,7 @@ fn lap_message(
                 fields.push(lap_message_sub_sport_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -14638,6 +15304,7 @@ fn lap_message(
                 fields.push(lap_message_num_active_lengths_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -14649,6 +15316,7 @@ fn lap_message(
                 fields.push(lap_message_total_work_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -14662,6 +15330,7 @@ fn lap_message(
                 fields.push(lap_message_enhanced_avg_altitude_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     5.000000,
                     500.000000,
@@ -14675,6 +15344,7 @@ fn lap_message(
                 fields.push(lap_message_enhanced_max_altitude_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     5.000000,
                     500.000000,
@@ -14686,6 +15356,7 @@ fn lap_message(
                 fields.push(lap_message_gps_accuracy_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -14697,6 +15368,7 @@ fn lap_message(
                 fields.push(lap_message_avg_grade_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -14708,6 +15380,7 @@ fn lap_message(
                 fields.push(lap_message_avg_pos_grade_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -14719,6 +15392,7 @@ fn lap_message(
                 fields.push(lap_message_avg_neg_grade_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -14730,6 +15404,7 @@ fn lap_message(
                 fields.push(lap_message_max_pos_grade_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -14741,6 +15416,7 @@ fn lap_message(
                 fields.push(lap_message_max_neg_grade_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -14752,6 +15428,7 @@ fn lap_message(
                 fields.push(lap_message_avg_temperature_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -14763,6 +15440,7 @@ fn lap_message(
                 fields.push(lap_message_max_temperature_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -14774,6 +15452,7 @@ fn lap_message(
                 fields.push(lap_message_total_moving_time_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -14785,6 +15464,7 @@ fn lap_message(
                 fields.push(lap_message_avg_pos_vertical_speed_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -14796,6 +15476,7 @@ fn lap_message(
                 fields.push(lap_message_avg_neg_vertical_speed_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -14807,6 +15488,7 @@ fn lap_message(
                 fields.push(lap_message_max_pos_vertical_speed_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -14818,6 +15500,7 @@ fn lap_message(
                 fields.push(lap_message_max_neg_vertical_speed_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -14829,6 +15512,7 @@ fn lap_message(
                 fields.push(lap_message_time_in_hr_zone_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -14840,6 +15524,7 @@ fn lap_message(
                 fields.push(lap_message_time_in_speed_zone_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -14851,6 +15536,7 @@ fn lap_message(
                 fields.push(lap_message_time_in_cadence_zone_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -14862,6 +15548,7 @@ fn lap_message(
                 fields.push(lap_message_time_in_power_zone_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -14873,6 +15560,7 @@ fn lap_message(
                 fields.push(lap_message_repetition_num_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -14886,6 +15574,7 @@ fn lap_message(
                 fields.push(lap_message_enhanced_min_altitude_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     5.000000,
                     500.000000,
@@ -14897,6 +15586,7 @@ fn lap_message(
                 fields.push(lap_message_min_heart_rate_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -14908,6 +15598,7 @@ fn lap_message(
                 fields.push(lap_message_wkt_step_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -14919,6 +15610,7 @@ fn lap_message(
                 fields.push(lap_message_opponent_score_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -14931,6 +15623,7 @@ fn lap_message(
                 fields.push(lap_message_stroke_count_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -14943,6 +15636,7 @@ fn lap_message(
                 fields.push(lap_message_zone_count_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -14954,6 +15648,7 @@ fn lap_message(
                 fields.push(lap_message_avg_vertical_oscillation_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     10.000000,
                     0.000000,
@@ -14965,6 +15660,7 @@ fn lap_message(
                 fields.push(lap_message_avg_stance_time_percent_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -14976,6 +15672,7 @@ fn lap_message(
                 fields.push(lap_message_avg_stance_time_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     10.000000,
                     0.000000,
@@ -14988,6 +15685,7 @@ fn lap_message(
                 fields.push(lap_message_avg_fractional_cadence_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     128.000000,
                     0.000000,
@@ -15000,6 +15698,7 @@ fn lap_message(
                 fields.push(lap_message_max_fractional_cadence_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     128.000000,
                     0.000000,
@@ -15012,6 +15711,7 @@ fn lap_message(
                 fields.push(lap_message_total_fractional_cycles_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     128.000000,
                     0.000000,
@@ -15023,6 +15723,7 @@ fn lap_message(
                 fields.push(lap_message_player_score_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -15035,6 +15736,7 @@ fn lap_message(
                 fields.push(lap_message_avg_total_hemoglobin_conc_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -15047,6 +15749,7 @@ fn lap_message(
                 fields.push(lap_message_min_total_hemoglobin_conc_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -15059,6 +15762,7 @@ fn lap_message(
                 fields.push(lap_message_max_total_hemoglobin_conc_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -15071,6 +15775,7 @@ fn lap_message(
                 fields.push(lap_message_avg_saturated_hemoglobin_percent_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     10.000000,
                     0.000000,
@@ -15083,6 +15788,7 @@ fn lap_message(
                 fields.push(lap_message_min_saturated_hemoglobin_percent_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     10.000000,
                     0.000000,
@@ -15095,6 +15801,7 @@ fn lap_message(
                 fields.push(lap_message_max_saturated_hemoglobin_percent_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     10.000000,
                     0.000000,
@@ -15106,6 +15813,7 @@ fn lap_message(
                 fields.push(lap_message_avg_left_torque_effectiveness_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     2.000000,
                     0.000000,
@@ -15117,6 +15825,7 @@ fn lap_message(
                 fields.push(lap_message_avg_right_torque_effectiveness_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     2.000000,
                     0.000000,
@@ -15128,6 +15837,7 @@ fn lap_message(
                 fields.push(lap_message_avg_left_pedal_smoothness_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     2.000000,
                     0.000000,
@@ -15139,6 +15849,7 @@ fn lap_message(
                 fields.push(lap_message_avg_right_pedal_smoothness_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     2.000000,
                     0.000000,
@@ -15150,6 +15861,7 @@ fn lap_message(
                 fields.push(lap_message_avg_combined_pedal_smoothness_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     2.000000,
                     0.000000,
@@ -15162,6 +15874,7 @@ fn lap_message(
                 fields.push(lap_message_time_standing_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -15174,6 +15887,7 @@ fn lap_message(
                 fields.push(lap_message_stand_count_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -15186,6 +15900,7 @@ fn lap_message(
                 fields.push(lap_message_avg_left_pco_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -15198,6 +15913,7 @@ fn lap_message(
                 fields.push(lap_message_avg_right_pco_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -15210,6 +15926,7 @@ fn lap_message(
                 fields.push(lap_message_avg_left_power_phase_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     0.711111,
                     0.000000,
@@ -15222,6 +15939,7 @@ fn lap_message(
                 fields.push(lap_message_avg_left_power_phase_peak_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     0.711111,
                     0.000000,
@@ -15234,6 +15952,7 @@ fn lap_message(
                 fields.push(lap_message_avg_right_power_phase_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     0.711111,
                     0.000000,
@@ -15246,6 +15965,7 @@ fn lap_message(
                 fields.push(lap_message_avg_right_power_phase_peak_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     0.711111,
                     0.000000,
@@ -15258,6 +15978,7 @@ fn lap_message(
                 fields.push(lap_message_avg_power_position_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -15270,6 +15991,7 @@ fn lap_message(
                 fields.push(lap_message_max_power_position_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -15282,6 +16004,7 @@ fn lap_message(
                 fields.push(lap_message_avg_cadence_position_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -15294,6 +16017,7 @@ fn lap_message(
                 fields.push(lap_message_max_cadence_position_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -15305,6 +16029,7 @@ fn lap_message(
                 fields.push(lap_message_enhanced_avg_speed_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -15316,6 +16041,7 @@ fn lap_message(
                 fields.push(lap_message_enhanced_max_speed_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -15327,6 +16053,7 @@ fn lap_message(
                 fields.push(lap_message_enhanced_avg_altitude_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     5.000000,
                     500.000000,
@@ -15338,6 +16065,7 @@ fn lap_message(
                 fields.push(lap_message_enhanced_min_altitude_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     5.000000,
                     500.000000,
@@ -15349,6 +16077,7 @@ fn lap_message(
                 fields.push(lap_message_enhanced_max_altitude_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     5.000000,
                     500.000000,
@@ -15361,6 +16090,7 @@ fn lap_message(
                 fields.push(lap_message_avg_lev_motor_power_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -15373,6 +16103,7 @@ fn lap_message(
                 fields.push(lap_message_max_lev_motor_power_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -15385,6 +16116,7 @@ fn lap_message(
                 fields.push(lap_message_lev_battery_consumption_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     2.000000,
                     0.000000,
@@ -15396,6 +16128,7 @@ fn lap_message(
                 fields.push(lap_message_avg_vertical_ratio_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -15407,6 +16140,7 @@ fn lap_message(
                 fields.push(lap_message_avg_stance_time_balance_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -15418,6 +16152,7 @@ fn lap_message(
                 fields.push(lap_message_avg_step_length_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     10.000000,
                     0.000000,
@@ -15429,6 +16164,7 @@ fn lap_message(
                 fields.push(lap_message_avg_vam_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -15441,6 +16177,7 @@ fn lap_message(
                 fields.push(lap_message_total_grit_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -15453,6 +16190,7 @@ fn lap_message(
                 fields.push(lap_message_total_flow_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -15464,6 +16202,7 @@ fn lap_message(
                 fields.push(lap_message_jump_count_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -15476,6 +16215,7 @@ fn lap_message(
                 fields.push(lap_message_avg_grit_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -15488,6 +16228,7 @@ fn lap_message(
                 fields.push(lap_message_avg_flow_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -15500,6 +16241,7 @@ fn lap_message(
                 fields.push(lap_message_total_fractional_ascent_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -15512,6 +16254,7 @@ fn lap_message(
                 fields.push(lap_message_total_fractional_descent_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -15523,6 +16266,7 @@ fn lap_message(
                 fields.push(lap_message_avg_core_temperature_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -15534,6 +16278,7 @@ fn lap_message(
                 fields.push(lap_message_min_core_temperature_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -15545,6 +16290,7 @@ fn lap_message(
                 fields.push(lap_message_max_core_temperature_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -15557,6 +16303,7 @@ fn lap_message(
                 fields.push(lap_message_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -15568,6 +16315,7 @@ fn lap_message(
                 fields.push(lap_message_message_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -15583,6 +16331,7 @@ fn lap_message(
 fn lap_message_event_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -15607,6 +16356,7 @@ fn lap_message_event_field(
 fn lap_message_event_type_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -15631,6 +16381,7 @@ fn lap_message_event_type_field(
 fn lap_message_start_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -15655,6 +16406,7 @@ fn lap_message_start_time_field(
 fn lap_message_start_position_lat_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -15679,6 +16431,7 @@ fn lap_message_start_position_lat_field(
 fn lap_message_start_position_long_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -15703,6 +16456,7 @@ fn lap_message_start_position_long_field(
 fn lap_message_end_position_lat_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -15727,6 +16481,7 @@ fn lap_message_end_position_lat_field(
 fn lap_message_end_position_long_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -15751,6 +16506,7 @@ fn lap_message_end_position_long_field(
 fn lap_message_total_elapsed_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -15775,6 +16531,7 @@ fn lap_message_total_elapsed_time_field(
 fn lap_message_total_timer_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -15799,6 +16556,7 @@ fn lap_message_total_timer_time_field(
 fn lap_message_total_distance_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -15823,12 +16581,116 @@ fn lap_message_total_distance_field(
 fn lap_message_total_cycles_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
     units: &'static str,
     value: Value,
 ) -> Result<FitDataField> {
+    if Sport::Running.as_i64()
+        == data_map
+            .get(&25)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return lap_message_total_strides_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "strides",
+            value,
+        );
+    } else if Sport::Walking.as_i64()
+        == data_map
+            .get(&25)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return lap_message_total_strides_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "strides",
+            value,
+        );
+    } else if Sport::Cycling.as_i64()
+        == data_map
+            .get(&25)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return lap_message_total_strokes_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "strokes",
+            value,
+        );
+    } else if Sport::Swimming.as_i64()
+        == data_map
+            .get(&25)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return lap_message_total_strokes_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "strokes",
+            value,
+        );
+    } else if Sport::Rowing.as_i64()
+        == data_map
+            .get(&25)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return lap_message_total_strokes_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "strokes",
+            value,
+        );
+    } else if Sport::StandUpPaddleboarding.as_i64()
+        == data_map
+            .get(&25)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return lap_message_total_strokes_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "strokes",
+            value,
+        );
+    }
     let value = if accumulate {
         calculate_cumulative_value(accumlators, mesg_num.as_u16(), 10, value)?
     } else {
@@ -15847,6 +16709,7 @@ fn lap_message_total_cycles_field(
 fn lap_message_total_strides_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -15871,6 +16734,7 @@ fn lap_message_total_strides_field(
 fn lap_message_total_strokes_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -15895,6 +16759,7 @@ fn lap_message_total_strokes_field(
 fn lap_message_total_calories_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -15919,6 +16784,7 @@ fn lap_message_total_calories_field(
 fn lap_message_total_fat_calories_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -15943,6 +16809,7 @@ fn lap_message_total_fat_calories_field(
 fn lap_message_avg_speed_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -15967,6 +16834,7 @@ fn lap_message_avg_speed_field(
 fn lap_message_max_speed_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -15991,6 +16859,7 @@ fn lap_message_max_speed_field(
 fn lap_message_avg_heart_rate_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -16015,6 +16884,7 @@ fn lap_message_avg_heart_rate_field(
 fn lap_message_max_heart_rate_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -16039,12 +16909,31 @@ fn lap_message_max_heart_rate_field(
 fn lap_message_avg_cadence_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
     units: &'static str,
     value: Value,
 ) -> Result<FitDataField> {
+    if Sport::Running.as_i64()
+        == data_map
+            .get(&25)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return lap_message_avg_running_cadence_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "strides/min",
+            value,
+        );
+    }
     let value = if accumulate {
         calculate_cumulative_value(accumlators, mesg_num.as_u16(), 17, value)?
     } else {
@@ -16063,6 +16952,7 @@ fn lap_message_avg_cadence_field(
 fn lap_message_avg_running_cadence_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -16087,12 +16977,31 @@ fn lap_message_avg_running_cadence_field(
 fn lap_message_max_cadence_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
     units: &'static str,
     value: Value,
 ) -> Result<FitDataField> {
+    if Sport::Running.as_i64()
+        == data_map
+            .get(&25)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return lap_message_max_running_cadence_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "strides/min",
+            value,
+        );
+    }
     let value = if accumulate {
         calculate_cumulative_value(accumlators, mesg_num.as_u16(), 18, value)?
     } else {
@@ -16111,6 +17020,7 @@ fn lap_message_max_cadence_field(
 fn lap_message_max_running_cadence_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -16135,6 +17045,7 @@ fn lap_message_max_running_cadence_field(
 fn lap_message_avg_power_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -16159,6 +17070,7 @@ fn lap_message_avg_power_field(
 fn lap_message_max_power_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -16183,6 +17095,7 @@ fn lap_message_max_power_field(
 fn lap_message_total_ascent_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -16207,6 +17120,7 @@ fn lap_message_total_ascent_field(
 fn lap_message_total_descent_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -16231,6 +17145,7 @@ fn lap_message_total_descent_field(
 fn lap_message_intensity_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -16255,6 +17170,7 @@ fn lap_message_intensity_field(
 fn lap_message_lap_trigger_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -16279,6 +17195,7 @@ fn lap_message_lap_trigger_field(
 fn lap_message_sport_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -16303,6 +17220,7 @@ fn lap_message_sport_field(
 fn lap_message_event_group_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -16327,6 +17245,7 @@ fn lap_message_event_group_field(
 fn lap_message_num_lengths_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -16351,6 +17270,7 @@ fn lap_message_num_lengths_field(
 fn lap_message_normalized_power_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -16375,6 +17295,7 @@ fn lap_message_normalized_power_field(
 fn lap_message_left_right_balance_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -16399,6 +17320,7 @@ fn lap_message_left_right_balance_field(
 fn lap_message_first_length_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -16423,6 +17345,7 @@ fn lap_message_first_length_index_field(
 fn lap_message_avg_stroke_distance_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -16447,6 +17370,7 @@ fn lap_message_avg_stroke_distance_field(
 fn lap_message_swim_stroke_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -16471,6 +17395,7 @@ fn lap_message_swim_stroke_field(
 fn lap_message_sub_sport_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -16495,6 +17420,7 @@ fn lap_message_sub_sport_field(
 fn lap_message_num_active_lengths_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -16519,6 +17445,7 @@ fn lap_message_num_active_lengths_field(
 fn lap_message_total_work_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -16543,6 +17470,7 @@ fn lap_message_total_work_field(
 fn lap_message_avg_altitude_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -16567,6 +17495,7 @@ fn lap_message_avg_altitude_field(
 fn lap_message_max_altitude_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -16591,6 +17520,7 @@ fn lap_message_max_altitude_field(
 fn lap_message_gps_accuracy_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -16615,6 +17545,7 @@ fn lap_message_gps_accuracy_field(
 fn lap_message_avg_grade_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -16639,6 +17570,7 @@ fn lap_message_avg_grade_field(
 fn lap_message_avg_pos_grade_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -16663,6 +17595,7 @@ fn lap_message_avg_pos_grade_field(
 fn lap_message_avg_neg_grade_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -16687,6 +17620,7 @@ fn lap_message_avg_neg_grade_field(
 fn lap_message_max_pos_grade_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -16711,6 +17645,7 @@ fn lap_message_max_pos_grade_field(
 fn lap_message_max_neg_grade_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -16735,6 +17670,7 @@ fn lap_message_max_neg_grade_field(
 fn lap_message_avg_temperature_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -16759,6 +17695,7 @@ fn lap_message_avg_temperature_field(
 fn lap_message_max_temperature_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -16783,6 +17720,7 @@ fn lap_message_max_temperature_field(
 fn lap_message_total_moving_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -16807,6 +17745,7 @@ fn lap_message_total_moving_time_field(
 fn lap_message_avg_pos_vertical_speed_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -16831,6 +17770,7 @@ fn lap_message_avg_pos_vertical_speed_field(
 fn lap_message_avg_neg_vertical_speed_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -16855,6 +17795,7 @@ fn lap_message_avg_neg_vertical_speed_field(
 fn lap_message_max_pos_vertical_speed_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -16879,6 +17820,7 @@ fn lap_message_max_pos_vertical_speed_field(
 fn lap_message_max_neg_vertical_speed_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -16903,6 +17845,7 @@ fn lap_message_max_neg_vertical_speed_field(
 fn lap_message_time_in_hr_zone_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -16927,6 +17870,7 @@ fn lap_message_time_in_hr_zone_field(
 fn lap_message_time_in_speed_zone_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -16951,6 +17895,7 @@ fn lap_message_time_in_speed_zone_field(
 fn lap_message_time_in_cadence_zone_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -16975,6 +17920,7 @@ fn lap_message_time_in_cadence_zone_field(
 fn lap_message_time_in_power_zone_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -16999,6 +17945,7 @@ fn lap_message_time_in_power_zone_field(
 fn lap_message_repetition_num_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -17023,6 +17970,7 @@ fn lap_message_repetition_num_field(
 fn lap_message_min_altitude_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -17047,6 +17995,7 @@ fn lap_message_min_altitude_field(
 fn lap_message_min_heart_rate_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -17071,6 +18020,7 @@ fn lap_message_min_heart_rate_field(
 fn lap_message_wkt_step_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -17095,6 +18045,7 @@ fn lap_message_wkt_step_index_field(
 fn lap_message_opponent_score_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -17119,6 +18070,7 @@ fn lap_message_opponent_score_field(
 fn lap_message_stroke_count_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -17143,6 +18095,7 @@ fn lap_message_stroke_count_field(
 fn lap_message_zone_count_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -17167,6 +18120,7 @@ fn lap_message_zone_count_field(
 fn lap_message_avg_vertical_oscillation_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -17191,6 +18145,7 @@ fn lap_message_avg_vertical_oscillation_field(
 fn lap_message_avg_stance_time_percent_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -17215,6 +18170,7 @@ fn lap_message_avg_stance_time_percent_field(
 fn lap_message_avg_stance_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -17239,6 +18195,7 @@ fn lap_message_avg_stance_time_field(
 fn lap_message_avg_fractional_cadence_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -17263,6 +18220,7 @@ fn lap_message_avg_fractional_cadence_field(
 fn lap_message_max_fractional_cadence_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -17287,6 +18245,7 @@ fn lap_message_max_fractional_cadence_field(
 fn lap_message_total_fractional_cycles_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -17311,6 +18270,7 @@ fn lap_message_total_fractional_cycles_field(
 fn lap_message_player_score_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -17335,6 +18295,7 @@ fn lap_message_player_score_field(
 fn lap_message_avg_total_hemoglobin_conc_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -17359,6 +18320,7 @@ fn lap_message_avg_total_hemoglobin_conc_field(
 fn lap_message_min_total_hemoglobin_conc_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -17383,6 +18345,7 @@ fn lap_message_min_total_hemoglobin_conc_field(
 fn lap_message_max_total_hemoglobin_conc_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -17407,6 +18370,7 @@ fn lap_message_max_total_hemoglobin_conc_field(
 fn lap_message_avg_saturated_hemoglobin_percent_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -17431,6 +18395,7 @@ fn lap_message_avg_saturated_hemoglobin_percent_field(
 fn lap_message_min_saturated_hemoglobin_percent_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -17455,6 +18420,7 @@ fn lap_message_min_saturated_hemoglobin_percent_field(
 fn lap_message_max_saturated_hemoglobin_percent_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -17479,6 +18445,7 @@ fn lap_message_max_saturated_hemoglobin_percent_field(
 fn lap_message_avg_left_torque_effectiveness_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -17503,6 +18470,7 @@ fn lap_message_avg_left_torque_effectiveness_field(
 fn lap_message_avg_right_torque_effectiveness_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -17527,6 +18495,7 @@ fn lap_message_avg_right_torque_effectiveness_field(
 fn lap_message_avg_left_pedal_smoothness_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -17551,6 +18520,7 @@ fn lap_message_avg_left_pedal_smoothness_field(
 fn lap_message_avg_right_pedal_smoothness_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -17575,6 +18545,7 @@ fn lap_message_avg_right_pedal_smoothness_field(
 fn lap_message_avg_combined_pedal_smoothness_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -17599,6 +18570,7 @@ fn lap_message_avg_combined_pedal_smoothness_field(
 fn lap_message_time_standing_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -17623,6 +18595,7 @@ fn lap_message_time_standing_field(
 fn lap_message_stand_count_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -17647,6 +18620,7 @@ fn lap_message_stand_count_field(
 fn lap_message_avg_left_pco_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -17671,6 +18645,7 @@ fn lap_message_avg_left_pco_field(
 fn lap_message_avg_right_pco_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -17695,6 +18670,7 @@ fn lap_message_avg_right_pco_field(
 fn lap_message_avg_left_power_phase_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -17719,6 +18695,7 @@ fn lap_message_avg_left_power_phase_field(
 fn lap_message_avg_left_power_phase_peak_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -17743,6 +18720,7 @@ fn lap_message_avg_left_power_phase_peak_field(
 fn lap_message_avg_right_power_phase_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -17767,6 +18745,7 @@ fn lap_message_avg_right_power_phase_field(
 fn lap_message_avg_right_power_phase_peak_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -17791,6 +18770,7 @@ fn lap_message_avg_right_power_phase_peak_field(
 fn lap_message_avg_power_position_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -17815,6 +18795,7 @@ fn lap_message_avg_power_position_field(
 fn lap_message_max_power_position_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -17839,6 +18820,7 @@ fn lap_message_max_power_position_field(
 fn lap_message_avg_cadence_position_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -17863,6 +18845,7 @@ fn lap_message_avg_cadence_position_field(
 fn lap_message_max_cadence_position_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -17887,6 +18870,7 @@ fn lap_message_max_cadence_position_field(
 fn lap_message_enhanced_avg_speed_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -17911,6 +18895,7 @@ fn lap_message_enhanced_avg_speed_field(
 fn lap_message_enhanced_max_speed_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -17935,6 +18920,7 @@ fn lap_message_enhanced_max_speed_field(
 fn lap_message_enhanced_avg_altitude_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -17959,6 +18945,7 @@ fn lap_message_enhanced_avg_altitude_field(
 fn lap_message_enhanced_min_altitude_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -17983,6 +18970,7 @@ fn lap_message_enhanced_min_altitude_field(
 fn lap_message_enhanced_max_altitude_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -18007,6 +18995,7 @@ fn lap_message_enhanced_max_altitude_field(
 fn lap_message_avg_lev_motor_power_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -18031,6 +19020,7 @@ fn lap_message_avg_lev_motor_power_field(
 fn lap_message_max_lev_motor_power_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -18055,6 +19045,7 @@ fn lap_message_max_lev_motor_power_field(
 fn lap_message_lev_battery_consumption_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -18079,6 +19070,7 @@ fn lap_message_lev_battery_consumption_field(
 fn lap_message_avg_vertical_ratio_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -18103,6 +19095,7 @@ fn lap_message_avg_vertical_ratio_field(
 fn lap_message_avg_stance_time_balance_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -18127,6 +19120,7 @@ fn lap_message_avg_stance_time_balance_field(
 fn lap_message_avg_step_length_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -18151,6 +19145,7 @@ fn lap_message_avg_step_length_field(
 fn lap_message_avg_vam_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -18175,6 +19170,7 @@ fn lap_message_avg_vam_field(
 fn lap_message_total_grit_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -18199,6 +19195,7 @@ fn lap_message_total_grit_field(
 fn lap_message_total_flow_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -18223,6 +19220,7 @@ fn lap_message_total_flow_field(
 fn lap_message_jump_count_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -18247,6 +19245,7 @@ fn lap_message_jump_count_field(
 fn lap_message_avg_grit_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -18271,6 +19270,7 @@ fn lap_message_avg_grit_field(
 fn lap_message_avg_flow_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -18295,6 +19295,7 @@ fn lap_message_avg_flow_field(
 fn lap_message_total_fractional_ascent_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -18319,6 +19320,7 @@ fn lap_message_total_fractional_ascent_field(
 fn lap_message_total_fractional_descent_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -18343,6 +19345,7 @@ fn lap_message_total_fractional_descent_field(
 fn lap_message_avg_core_temperature_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -18367,6 +19370,7 @@ fn lap_message_avg_core_temperature_field(
 fn lap_message_min_core_temperature_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -18391,6 +19395,7 @@ fn lap_message_min_core_temperature_field(
 fn lap_message_max_core_temperature_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -18415,6 +19420,7 @@ fn lap_message_max_core_temperature_field(
 fn lap_message_timestamp_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -18439,6 +19445,7 @@ fn lap_message_timestamp_field(
 fn lap_message_message_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -18474,6 +19481,7 @@ fn length_message(
                 fields.push(length_message_event_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -18485,6 +19493,7 @@ fn length_message(
                 fields.push(length_message_event_type_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -18496,6 +19505,7 @@ fn length_message(
                 fields.push(length_message_start_time_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -18507,6 +19517,7 @@ fn length_message(
                 fields.push(length_message_total_elapsed_time_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -18518,6 +19529,7 @@ fn length_message(
                 fields.push(length_message_total_timer_time_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -18529,6 +19541,7 @@ fn length_message(
                 fields.push(length_message_total_strokes_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -18540,6 +19553,7 @@ fn length_message(
                 fields.push(length_message_avg_speed_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -18551,6 +19565,7 @@ fn length_message(
                 fields.push(length_message_swim_stroke_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -18562,6 +19577,7 @@ fn length_message(
                 fields.push(length_message_avg_swimming_cadence_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -18573,6 +19589,7 @@ fn length_message(
                 fields.push(length_message_event_group_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -18584,6 +19601,7 @@ fn length_message(
                 fields.push(length_message_total_calories_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -18595,6 +19613,7 @@ fn length_message(
                 fields.push(length_message_length_type_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -18606,6 +19625,7 @@ fn length_message(
                 fields.push(length_message_player_score_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -18617,6 +19637,7 @@ fn length_message(
                 fields.push(length_message_opponent_score_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -18629,6 +19650,7 @@ fn length_message(
                 fields.push(length_message_stroke_count_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -18641,6 +19663,7 @@ fn length_message(
                 fields.push(length_message_zone_count_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -18652,6 +19675,7 @@ fn length_message(
                 fields.push(length_message_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -18663,6 +19687,7 @@ fn length_message(
                 fields.push(length_message_message_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -18678,6 +19703,7 @@ fn length_message(
 fn length_message_event_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -18702,6 +19728,7 @@ fn length_message_event_field(
 fn length_message_event_type_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -18726,6 +19753,7 @@ fn length_message_event_type_field(
 fn length_message_start_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -18750,6 +19778,7 @@ fn length_message_start_time_field(
 fn length_message_total_elapsed_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -18774,6 +19803,7 @@ fn length_message_total_elapsed_time_field(
 fn length_message_total_timer_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -18798,6 +19828,7 @@ fn length_message_total_timer_time_field(
 fn length_message_total_strokes_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -18822,6 +19853,7 @@ fn length_message_total_strokes_field(
 fn length_message_avg_speed_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -18846,6 +19878,7 @@ fn length_message_avg_speed_field(
 fn length_message_swim_stroke_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -18870,6 +19903,7 @@ fn length_message_swim_stroke_field(
 fn length_message_avg_swimming_cadence_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -18894,6 +19928,7 @@ fn length_message_avg_swimming_cadence_field(
 fn length_message_event_group_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -18918,6 +19953,7 @@ fn length_message_event_group_field(
 fn length_message_total_calories_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -18942,6 +19978,7 @@ fn length_message_total_calories_field(
 fn length_message_length_type_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -18966,6 +20003,7 @@ fn length_message_length_type_field(
 fn length_message_player_score_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -18990,6 +20028,7 @@ fn length_message_player_score_field(
 fn length_message_opponent_score_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -19014,6 +20053,7 @@ fn length_message_opponent_score_field(
 fn length_message_stroke_count_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -19038,6 +20078,7 @@ fn length_message_stroke_count_field(
 fn length_message_zone_count_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -19062,6 +20103,7 @@ fn length_message_zone_count_field(
 fn length_message_timestamp_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -19086,6 +20128,7 @@ fn length_message_timestamp_field(
 fn length_message_message_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -19121,6 +20164,7 @@ fn record_message(
                 fields.push(record_message_position_lat_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -19132,6 +20176,7 @@ fn record_message(
                 fields.push(record_message_position_long_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -19145,6 +20190,7 @@ fn record_message(
                 fields.push(record_message_enhanced_altitude_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     5.000000,
                     500.000000,
@@ -19156,6 +20202,7 @@ fn record_message(
                 fields.push(record_message_heart_rate_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -19167,6 +20214,7 @@ fn record_message(
                 fields.push(record_message_cadence_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -19178,6 +20226,7 @@ fn record_message(
                 fields.push(record_message_distance_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -19191,6 +20240,7 @@ fn record_message(
                 fields.push(record_message_enhanced_speed_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -19202,6 +20252,7 @@ fn record_message(
                 fields.push(record_message_power_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -19215,6 +20266,7 @@ fn record_message(
                 fields.push(record_message_speed_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -19225,6 +20277,7 @@ fn record_message(
                 fields.push(record_message_distance_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     true,
                     16.000000,
                     0.000000,
@@ -19236,6 +20289,7 @@ fn record_message(
                 fields.push(record_message_grade_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -19248,6 +20302,7 @@ fn record_message(
                 fields.push(record_message_resistance_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -19259,6 +20314,7 @@ fn record_message(
                 fields.push(record_message_time_from_course_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -19270,6 +20326,7 @@ fn record_message(
                 fields.push(record_message_cycle_length_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -19281,6 +20338,7 @@ fn record_message(
                 fields.push(record_message_temperature_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -19293,6 +20351,7 @@ fn record_message(
                 fields.push(record_message_speed_1s_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     16.000000,
                     0.000000,
@@ -19306,6 +20365,7 @@ fn record_message(
                 fields.push(record_message_total_cycles_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     true,
                     1.000000,
                     0.000000,
@@ -19317,6 +20377,7 @@ fn record_message(
                 fields.push(record_message_total_cycles_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -19330,6 +20391,7 @@ fn record_message(
                 fields.push(record_message_accumulated_power_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     true,
                     1.000000,
                     0.000000,
@@ -19341,6 +20403,7 @@ fn record_message(
                 fields.push(record_message_accumulated_power_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -19352,6 +20415,7 @@ fn record_message(
                 fields.push(record_message_left_right_balance_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -19363,6 +20427,7 @@ fn record_message(
                 fields.push(record_message_gps_accuracy_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -19374,6 +20439,7 @@ fn record_message(
                 fields.push(record_message_vertical_speed_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -19385,6 +20451,7 @@ fn record_message(
                 fields.push(record_message_calories_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -19396,6 +20463,7 @@ fn record_message(
                 fields.push(record_message_vertical_oscillation_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     10.000000,
                     0.000000,
@@ -19407,6 +20475,7 @@ fn record_message(
                 fields.push(record_message_stance_time_percent_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -19418,6 +20487,7 @@ fn record_message(
                 fields.push(record_message_stance_time_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     10.000000,
                     0.000000,
@@ -19429,6 +20499,7 @@ fn record_message(
                 fields.push(record_message_activity_type_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -19440,6 +20511,7 @@ fn record_message(
                 fields.push(record_message_left_torque_effectiveness_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     2.000000,
                     0.000000,
@@ -19451,6 +20523,7 @@ fn record_message(
                 fields.push(record_message_right_torque_effectiveness_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     2.000000,
                     0.000000,
@@ -19462,6 +20535,7 @@ fn record_message(
                 fields.push(record_message_left_pedal_smoothness_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     2.000000,
                     0.000000,
@@ -19473,6 +20547,7 @@ fn record_message(
                 fields.push(record_message_right_pedal_smoothness_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     2.000000,
                     0.000000,
@@ -19484,6 +20559,7 @@ fn record_message(
                 fields.push(record_message_combined_pedal_smoothness_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     2.000000,
                     0.000000,
@@ -19495,6 +20571,7 @@ fn record_message(
                 fields.push(record_message_time128_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     128.000000,
                     0.000000,
@@ -19506,6 +20583,7 @@ fn record_message(
                 fields.push(record_message_stroke_type_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -19517,6 +20595,7 @@ fn record_message(
                 fields.push(record_message_zone_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -19528,6 +20607,7 @@ fn record_message(
                 fields.push(record_message_ball_speed_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -19540,6 +20620,7 @@ fn record_message(
                 fields.push(record_message_cadence256_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     256.000000,
                     0.000000,
@@ -19551,6 +20632,7 @@ fn record_message(
                 fields.push(record_message_fractional_cadence_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     128.000000,
                     0.000000,
@@ -19563,6 +20645,7 @@ fn record_message(
                 fields.push(record_message_total_hemoglobin_conc_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -19575,6 +20658,7 @@ fn record_message(
                 fields.push(record_message_total_hemoglobin_conc_min_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -19587,6 +20671,7 @@ fn record_message(
                 fields.push(record_message_total_hemoglobin_conc_max_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -19599,6 +20684,7 @@ fn record_message(
                 fields.push(record_message_saturated_hemoglobin_percent_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     10.000000,
                     0.000000,
@@ -19611,6 +20697,7 @@ fn record_message(
                 fields.push(record_message_saturated_hemoglobin_percent_min_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     10.000000,
                     0.000000,
@@ -19623,6 +20710,7 @@ fn record_message(
                 fields.push(record_message_saturated_hemoglobin_percent_max_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     10.000000,
                     0.000000,
@@ -19634,6 +20722,7 @@ fn record_message(
                 fields.push(record_message_device_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -19646,6 +20735,7 @@ fn record_message(
                 fields.push(record_message_left_pco_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -19658,6 +20748,7 @@ fn record_message(
                 fields.push(record_message_right_pco_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -19670,6 +20761,7 @@ fn record_message(
                 fields.push(record_message_left_power_phase_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     0.711111,
                     0.000000,
@@ -19682,6 +20774,7 @@ fn record_message(
                 fields.push(record_message_left_power_phase_peak_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     0.711111,
                     0.000000,
@@ -19694,6 +20787,7 @@ fn record_message(
                 fields.push(record_message_right_power_phase_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     0.711111,
                     0.000000,
@@ -19706,6 +20800,7 @@ fn record_message(
                 fields.push(record_message_right_power_phase_peak_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     0.711111,
                     0.000000,
@@ -19717,6 +20812,7 @@ fn record_message(
                 fields.push(record_message_enhanced_speed_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -19728,6 +20824,7 @@ fn record_message(
                 fields.push(record_message_enhanced_altitude_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     5.000000,
                     500.000000,
@@ -19740,6 +20837,7 @@ fn record_message(
                 fields.push(record_message_battery_soc_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     2.000000,
                     0.000000,
@@ -19752,6 +20850,7 @@ fn record_message(
                 fields.push(record_message_motor_power_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -19763,6 +20862,7 @@ fn record_message(
                 fields.push(record_message_vertical_ratio_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -19774,6 +20874,7 @@ fn record_message(
                 fields.push(record_message_stance_time_balance_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -19785,6 +20886,7 @@ fn record_message(
                 fields.push(record_message_step_length_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     10.000000,
                     0.000000,
@@ -19797,6 +20899,7 @@ fn record_message(
                 fields.push(record_message_absolute_pressure_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -19809,6 +20912,7 @@ fn record_message(
                 fields.push(record_message_depth_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -19821,6 +20925,7 @@ fn record_message(
                 fields.push(record_message_next_stop_depth_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -19832,6 +20937,7 @@ fn record_message(
                 fields.push(record_message_next_stop_time_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -19843,6 +20949,7 @@ fn record_message(
                 fields.push(record_message_time_to_surface_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -19854,6 +20961,7 @@ fn record_message(
                 fields.push(record_message_ndl_time_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -19865,6 +20973,7 @@ fn record_message(
                 fields.push(record_message_cns_load_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -19876,6 +20985,7 @@ fn record_message(
                 fields.push(record_message_n2_load_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -19888,6 +20998,7 @@ fn record_message(
                 fields.push(record_message_grit_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -19900,6 +21011,7 @@ fn record_message(
                 fields.push(record_message_flow_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -19911,6 +21023,7 @@ fn record_message(
                 fields.push(record_message_ebike_travel_range_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -19922,6 +21035,7 @@ fn record_message(
                 fields.push(record_message_ebike_battery_level_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -19933,6 +21047,7 @@ fn record_message(
                 fields.push(record_message_ebike_assist_mode_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -19944,6 +21059,7 @@ fn record_message(
                 fields.push(record_message_ebike_assist_level_percent_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -19955,6 +21071,7 @@ fn record_message(
                 fields.push(record_message_core_temperature_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -19966,6 +21083,7 @@ fn record_message(
                 fields.push(record_message_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -19981,6 +21099,7 @@ fn record_message(
 fn record_message_position_lat_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -20005,6 +21124,7 @@ fn record_message_position_lat_field(
 fn record_message_position_long_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -20029,6 +21149,7 @@ fn record_message_position_long_field(
 fn record_message_altitude_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -20053,6 +21174,7 @@ fn record_message_altitude_field(
 fn record_message_heart_rate_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -20077,6 +21199,7 @@ fn record_message_heart_rate_field(
 fn record_message_cadence_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -20101,6 +21224,7 @@ fn record_message_cadence_field(
 fn record_message_distance_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -20125,6 +21249,7 @@ fn record_message_distance_field(
 fn record_message_speed_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -20149,6 +21274,7 @@ fn record_message_speed_field(
 fn record_message_power_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -20173,6 +21299,7 @@ fn record_message_power_field(
 fn record_message_compressed_speed_distance_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -20197,6 +21324,7 @@ fn record_message_compressed_speed_distance_field(
 fn record_message_grade_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -20221,6 +21349,7 @@ fn record_message_grade_field(
 fn record_message_resistance_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -20245,6 +21374,7 @@ fn record_message_resistance_field(
 fn record_message_time_from_course_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -20269,6 +21399,7 @@ fn record_message_time_from_course_field(
 fn record_message_cycle_length_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -20293,6 +21424,7 @@ fn record_message_cycle_length_field(
 fn record_message_temperature_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -20317,6 +21449,7 @@ fn record_message_temperature_field(
 fn record_message_speed_1s_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -20341,6 +21474,7 @@ fn record_message_speed_1s_field(
 fn record_message_cycles_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -20365,6 +21499,7 @@ fn record_message_cycles_field(
 fn record_message_total_cycles_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -20389,6 +21524,7 @@ fn record_message_total_cycles_field(
 fn record_message_compressed_accumulated_power_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -20413,6 +21549,7 @@ fn record_message_compressed_accumulated_power_field(
 fn record_message_accumulated_power_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -20437,6 +21574,7 @@ fn record_message_accumulated_power_field(
 fn record_message_left_right_balance_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -20461,6 +21599,7 @@ fn record_message_left_right_balance_field(
 fn record_message_gps_accuracy_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -20485,6 +21624,7 @@ fn record_message_gps_accuracy_field(
 fn record_message_vertical_speed_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -20509,6 +21649,7 @@ fn record_message_vertical_speed_field(
 fn record_message_calories_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -20533,6 +21674,7 @@ fn record_message_calories_field(
 fn record_message_vertical_oscillation_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -20557,6 +21699,7 @@ fn record_message_vertical_oscillation_field(
 fn record_message_stance_time_percent_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -20581,6 +21724,7 @@ fn record_message_stance_time_percent_field(
 fn record_message_stance_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -20605,6 +21749,7 @@ fn record_message_stance_time_field(
 fn record_message_activity_type_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -20629,6 +21774,7 @@ fn record_message_activity_type_field(
 fn record_message_left_torque_effectiveness_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -20653,6 +21799,7 @@ fn record_message_left_torque_effectiveness_field(
 fn record_message_right_torque_effectiveness_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -20677,6 +21824,7 @@ fn record_message_right_torque_effectiveness_field(
 fn record_message_left_pedal_smoothness_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -20701,6 +21849,7 @@ fn record_message_left_pedal_smoothness_field(
 fn record_message_right_pedal_smoothness_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -20725,6 +21874,7 @@ fn record_message_right_pedal_smoothness_field(
 fn record_message_combined_pedal_smoothness_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -20749,6 +21899,7 @@ fn record_message_combined_pedal_smoothness_field(
 fn record_message_time128_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -20773,6 +21924,7 @@ fn record_message_time128_field(
 fn record_message_stroke_type_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -20797,6 +21949,7 @@ fn record_message_stroke_type_field(
 fn record_message_zone_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -20821,6 +21974,7 @@ fn record_message_zone_field(
 fn record_message_ball_speed_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -20845,6 +21999,7 @@ fn record_message_ball_speed_field(
 fn record_message_cadence256_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -20869,6 +22024,7 @@ fn record_message_cadence256_field(
 fn record_message_fractional_cadence_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -20893,6 +22049,7 @@ fn record_message_fractional_cadence_field(
 fn record_message_total_hemoglobin_conc_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -20917,6 +22074,7 @@ fn record_message_total_hemoglobin_conc_field(
 fn record_message_total_hemoglobin_conc_min_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -20941,6 +22099,7 @@ fn record_message_total_hemoglobin_conc_min_field(
 fn record_message_total_hemoglobin_conc_max_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -20965,6 +22124,7 @@ fn record_message_total_hemoglobin_conc_max_field(
 fn record_message_saturated_hemoglobin_percent_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -20989,6 +22149,7 @@ fn record_message_saturated_hemoglobin_percent_field(
 fn record_message_saturated_hemoglobin_percent_min_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -21013,6 +22174,7 @@ fn record_message_saturated_hemoglobin_percent_min_field(
 fn record_message_saturated_hemoglobin_percent_max_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -21037,6 +22199,7 @@ fn record_message_saturated_hemoglobin_percent_max_field(
 fn record_message_device_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -21061,6 +22224,7 @@ fn record_message_device_index_field(
 fn record_message_left_pco_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -21085,6 +22249,7 @@ fn record_message_left_pco_field(
 fn record_message_right_pco_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -21109,6 +22274,7 @@ fn record_message_right_pco_field(
 fn record_message_left_power_phase_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -21133,6 +22299,7 @@ fn record_message_left_power_phase_field(
 fn record_message_left_power_phase_peak_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -21157,6 +22324,7 @@ fn record_message_left_power_phase_peak_field(
 fn record_message_right_power_phase_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -21181,6 +22349,7 @@ fn record_message_right_power_phase_field(
 fn record_message_right_power_phase_peak_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -21205,6 +22374,7 @@ fn record_message_right_power_phase_peak_field(
 fn record_message_enhanced_speed_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -21229,6 +22399,7 @@ fn record_message_enhanced_speed_field(
 fn record_message_enhanced_altitude_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -21253,6 +22424,7 @@ fn record_message_enhanced_altitude_field(
 fn record_message_battery_soc_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -21277,6 +22449,7 @@ fn record_message_battery_soc_field(
 fn record_message_motor_power_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -21301,6 +22474,7 @@ fn record_message_motor_power_field(
 fn record_message_vertical_ratio_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -21325,6 +22499,7 @@ fn record_message_vertical_ratio_field(
 fn record_message_stance_time_balance_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -21349,6 +22524,7 @@ fn record_message_stance_time_balance_field(
 fn record_message_step_length_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -21373,6 +22549,7 @@ fn record_message_step_length_field(
 fn record_message_absolute_pressure_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -21397,6 +22574,7 @@ fn record_message_absolute_pressure_field(
 fn record_message_depth_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -21421,6 +22599,7 @@ fn record_message_depth_field(
 fn record_message_next_stop_depth_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -21445,6 +22624,7 @@ fn record_message_next_stop_depth_field(
 fn record_message_next_stop_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -21469,6 +22649,7 @@ fn record_message_next_stop_time_field(
 fn record_message_time_to_surface_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -21493,6 +22674,7 @@ fn record_message_time_to_surface_field(
 fn record_message_ndl_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -21517,6 +22699,7 @@ fn record_message_ndl_time_field(
 fn record_message_cns_load_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -21541,6 +22724,7 @@ fn record_message_cns_load_field(
 fn record_message_n2_load_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -21565,6 +22749,7 @@ fn record_message_n2_load_field(
 fn record_message_grit_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -21589,6 +22774,7 @@ fn record_message_grit_field(
 fn record_message_flow_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -21613,6 +22799,7 @@ fn record_message_flow_field(
 fn record_message_ebike_travel_range_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -21637,6 +22824,7 @@ fn record_message_ebike_travel_range_field(
 fn record_message_ebike_battery_level_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -21661,6 +22849,7 @@ fn record_message_ebike_battery_level_field(
 fn record_message_ebike_assist_mode_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -21685,6 +22874,7 @@ fn record_message_ebike_assist_mode_field(
 fn record_message_ebike_assist_level_percent_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -21709,6 +22899,7 @@ fn record_message_ebike_assist_level_percent_field(
 fn record_message_core_temperature_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -21733,6 +22924,7 @@ fn record_message_core_temperature_field(
 fn record_message_timestamp_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -21768,6 +22960,7 @@ fn event_message(
                 fields.push(event_message_event_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -21779,6 +22972,7 @@ fn event_message(
                 fields.push(event_message_event_type_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -21792,6 +22986,7 @@ fn event_message(
                 fields.push(event_message_data_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -21800,374 +22995,22 @@ fn event_message(
                 )?);
             }
             3 => {
-                if Event::Timer.as_i64()
-                    == data_map
-                        .get(&0)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(event_message_timer_trigger_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else if Event::CoursePoint.as_i64()
-                    == data_map
-                        .get(&0)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(event_message_course_point_index_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else if Event::Battery.as_i64()
-                    == data_map
-                        .get(&0)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(event_message_battery_level_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1000.000000,
-                        0.000000,
-                        "V",
-                        value,
-                    )?);
-                } else if Event::VirtualPartnerPace.as_i64()
-                    == data_map
-                        .get(&0)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(event_message_virtual_partner_speed_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1000.000000,
-                        0.000000,
-                        "m/s",
-                        value,
-                    )?);
-                } else if Event::HrHighAlert.as_i64()
-                    == data_map
-                        .get(&0)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(event_message_hr_high_alert_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "bpm",
-                        value,
-                    )?);
-                } else if Event::HrLowAlert.as_i64()
-                    == data_map
-                        .get(&0)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(event_message_hr_low_alert_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "bpm",
-                        value,
-                    )?);
-                } else if Event::SpeedHighAlert.as_i64()
-                    == data_map
-                        .get(&0)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(event_message_speed_high_alert_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1000.000000,
-                        0.000000,
-                        "m/s",
-                        value,
-                    )?);
-                } else if Event::SpeedLowAlert.as_i64()
-                    == data_map
-                        .get(&0)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(event_message_speed_low_alert_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1000.000000,
-                        0.000000,
-                        "m/s",
-                        value,
-                    )?);
-                } else if Event::CadHighAlert.as_i64()
-                    == data_map
-                        .get(&0)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(event_message_cad_high_alert_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "rpm",
-                        value,
-                    )?);
-                } else if Event::CadLowAlert.as_i64()
-                    == data_map
-                        .get(&0)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(event_message_cad_low_alert_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "rpm",
-                        value,
-                    )?);
-                } else if Event::PowerHighAlert.as_i64()
-                    == data_map
-                        .get(&0)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(event_message_power_high_alert_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "watts",
-                        value,
-                    )?);
-                } else if Event::PowerLowAlert.as_i64()
-                    == data_map
-                        .get(&0)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(event_message_power_low_alert_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "watts",
-                        value,
-                    )?);
-                } else if Event::TimeDurationAlert.as_i64()
-                    == data_map
-                        .get(&0)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(event_message_time_duration_alert_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1000.000000,
-                        0.000000,
-                        "s",
-                        value,
-                    )?);
-                } else if Event::DistanceDurationAlert.as_i64()
-                    == data_map
-                        .get(&0)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(event_message_distance_duration_alert_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        100.000000,
-                        0.000000,
-                        "m",
-                        value,
-                    )?);
-                } else if Event::CalorieDurationAlert.as_i64()
-                    == data_map
-                        .get(&0)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(event_message_calorie_duration_alert_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "calories",
-                        value,
-                    )?);
-                } else if Event::FitnessEquipment.as_i64()
-                    == data_map
-                        .get(&0)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(event_message_fitness_equipment_state_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else if Event::SportPoint.as_i64()
-                    == data_map
-                        .get(&0)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(event_message_sport_point_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else if Event::FrontGearChange.as_i64()
-                    == data_map
-                        .get(&0)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(event_message_gear_change_data_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else if Event::RearGearChange.as_i64()
-                    == data_map
-                        .get(&0)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(event_message_gear_change_data_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else if Event::RiderPositionChange.as_i64()
-                    == data_map
-                        .get(&0)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(event_message_rider_position_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else if Event::CommTimeout.as_i64()
-                    == data_map
-                        .get(&0)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(event_message_comm_timeout_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else if Event::RadarThreatAlert.as_i64()
-                    == data_map
-                        .get(&0)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(event_message_radar_threat_alert_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else {
-                    fields.push(event_message_data_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                }
+                fields.push(event_message_data_field(
+                    mesg_num,
+                    accumlators,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "",
+                    value,
+                )?);
             }
             4 => {
                 fields.push(event_message_event_group_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -22180,6 +23023,7 @@ fn event_message(
                 fields.push(event_message_score_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -22192,6 +23036,7 @@ fn event_message(
                 fields.push(event_message_opponent_score_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -22204,6 +23049,7 @@ fn event_message(
                 fields.push(event_message_front_gear_num_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -22216,6 +23062,7 @@ fn event_message(
                 fields.push(event_message_front_gear_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -22228,6 +23075,7 @@ fn event_message(
                 fields.push(event_message_rear_gear_num_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -22240,6 +23088,7 @@ fn event_message(
                 fields.push(event_message_rear_gear_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -22251,6 +23100,7 @@ fn event_message(
                 fields.push(event_message_device_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -22263,6 +23113,7 @@ fn event_message(
                 fields.push(event_message_radar_threat_level_max_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -22275,6 +23126,7 @@ fn event_message(
                 fields.push(event_message_radar_threat_count_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -22287,6 +23139,7 @@ fn event_message(
                 fields.push(event_message_radar_threat_avg_approach_speed_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     10.000000,
                     0.000000,
@@ -22299,6 +23152,7 @@ fn event_message(
                 fields.push(event_message_radar_threat_max_approach_speed_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     10.000000,
                     0.000000,
@@ -22310,6 +23164,7 @@ fn event_message(
                 fields.push(event_message_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -22325,6 +23180,7 @@ fn event_message(
 fn event_message_event_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -22349,6 +23205,7 @@ fn event_message_event_field(
 fn event_message_event_type_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -22373,6 +23230,7 @@ fn event_message_event_type_field(
 fn event_message_data16_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -22397,12 +23255,388 @@ fn event_message_data16_field(
 fn event_message_data_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
     units: &'static str,
     value: Value,
 ) -> Result<FitDataField> {
+    if Event::Timer.as_i64()
+        == data_map
+            .get(&0)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return event_message_timer_trigger_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    } else if Event::CoursePoint.as_i64()
+        == data_map
+            .get(&0)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return event_message_course_point_index_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    } else if Event::Battery.as_i64()
+        == data_map
+            .get(&0)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return event_message_battery_level_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1000.000000,
+            0.000000,
+            "V",
+            value,
+        );
+    } else if Event::VirtualPartnerPace.as_i64()
+        == data_map
+            .get(&0)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return event_message_virtual_partner_speed_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1000.000000,
+            0.000000,
+            "m/s",
+            value,
+        );
+    } else if Event::HrHighAlert.as_i64()
+        == data_map
+            .get(&0)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return event_message_hr_high_alert_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "bpm",
+            value,
+        );
+    } else if Event::HrLowAlert.as_i64()
+        == data_map
+            .get(&0)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return event_message_hr_low_alert_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "bpm",
+            value,
+        );
+    } else if Event::SpeedHighAlert.as_i64()
+        == data_map
+            .get(&0)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return event_message_speed_high_alert_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1000.000000,
+            0.000000,
+            "m/s",
+            value,
+        );
+    } else if Event::SpeedLowAlert.as_i64()
+        == data_map
+            .get(&0)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return event_message_speed_low_alert_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1000.000000,
+            0.000000,
+            "m/s",
+            value,
+        );
+    } else if Event::CadHighAlert.as_i64()
+        == data_map
+            .get(&0)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return event_message_cad_high_alert_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "rpm",
+            value,
+        );
+    } else if Event::CadLowAlert.as_i64()
+        == data_map
+            .get(&0)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return event_message_cad_low_alert_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "rpm",
+            value,
+        );
+    } else if Event::PowerHighAlert.as_i64()
+        == data_map
+            .get(&0)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return event_message_power_high_alert_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "watts",
+            value,
+        );
+    } else if Event::PowerLowAlert.as_i64()
+        == data_map
+            .get(&0)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return event_message_power_low_alert_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "watts",
+            value,
+        );
+    } else if Event::TimeDurationAlert.as_i64()
+        == data_map
+            .get(&0)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return event_message_time_duration_alert_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1000.000000,
+            0.000000,
+            "s",
+            value,
+        );
+    } else if Event::DistanceDurationAlert.as_i64()
+        == data_map
+            .get(&0)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return event_message_distance_duration_alert_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            100.000000,
+            0.000000,
+            "m",
+            value,
+        );
+    } else if Event::CalorieDurationAlert.as_i64()
+        == data_map
+            .get(&0)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return event_message_calorie_duration_alert_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "calories",
+            value,
+        );
+    } else if Event::FitnessEquipment.as_i64()
+        == data_map
+            .get(&0)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return event_message_fitness_equipment_state_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    } else if Event::SportPoint.as_i64()
+        == data_map
+            .get(&0)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return event_message_sport_point_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    } else if Event::FrontGearChange.as_i64()
+        == data_map
+            .get(&0)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return event_message_gear_change_data_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    } else if Event::RearGearChange.as_i64()
+        == data_map
+            .get(&0)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return event_message_gear_change_data_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    } else if Event::RiderPositionChange.as_i64()
+        == data_map
+            .get(&0)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return event_message_rider_position_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    } else if Event::CommTimeout.as_i64()
+        == data_map
+            .get(&0)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return event_message_comm_timeout_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    } else if Event::RadarThreatAlert.as_i64()
+        == data_map
+            .get(&0)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return event_message_radar_threat_alert_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    }
     let value = if accumulate {
         calculate_cumulative_value(accumlators, mesg_num.as_u16(), 3, value)?
     } else {
@@ -22421,6 +23655,7 @@ fn event_message_data_field(
 fn event_message_timer_trigger_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -22445,6 +23680,7 @@ fn event_message_timer_trigger_field(
 fn event_message_course_point_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -22469,6 +23705,7 @@ fn event_message_course_point_index_field(
 fn event_message_battery_level_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -22493,6 +23730,7 @@ fn event_message_battery_level_field(
 fn event_message_virtual_partner_speed_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -22517,6 +23755,7 @@ fn event_message_virtual_partner_speed_field(
 fn event_message_hr_high_alert_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -22541,6 +23780,7 @@ fn event_message_hr_high_alert_field(
 fn event_message_hr_low_alert_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -22565,6 +23805,7 @@ fn event_message_hr_low_alert_field(
 fn event_message_speed_high_alert_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -22589,6 +23830,7 @@ fn event_message_speed_high_alert_field(
 fn event_message_speed_low_alert_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -22613,6 +23855,7 @@ fn event_message_speed_low_alert_field(
 fn event_message_cad_high_alert_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -22637,6 +23880,7 @@ fn event_message_cad_high_alert_field(
 fn event_message_cad_low_alert_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -22661,6 +23905,7 @@ fn event_message_cad_low_alert_field(
 fn event_message_power_high_alert_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -22685,6 +23930,7 @@ fn event_message_power_high_alert_field(
 fn event_message_power_low_alert_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -22709,6 +23955,7 @@ fn event_message_power_low_alert_field(
 fn event_message_time_duration_alert_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -22733,6 +23980,7 @@ fn event_message_time_duration_alert_field(
 fn event_message_distance_duration_alert_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -22757,6 +24005,7 @@ fn event_message_distance_duration_alert_field(
 fn event_message_calorie_duration_alert_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -22781,6 +24030,7 @@ fn event_message_calorie_duration_alert_field(
 fn event_message_fitness_equipment_state_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -22805,6 +24055,7 @@ fn event_message_fitness_equipment_state_field(
 fn event_message_sport_point_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -22829,6 +24080,7 @@ fn event_message_sport_point_field(
 fn event_message_gear_change_data_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -22853,6 +24105,7 @@ fn event_message_gear_change_data_field(
 fn event_message_rider_position_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -22877,6 +24130,7 @@ fn event_message_rider_position_field(
 fn event_message_comm_timeout_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -22901,6 +24155,7 @@ fn event_message_comm_timeout_field(
 fn event_message_radar_threat_alert_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -22925,6 +24180,7 @@ fn event_message_radar_threat_alert_field(
 fn event_message_event_group_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -22949,6 +24205,7 @@ fn event_message_event_group_field(
 fn event_message_score_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -22973,6 +24230,7 @@ fn event_message_score_field(
 fn event_message_opponent_score_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -22997,6 +24255,7 @@ fn event_message_opponent_score_field(
 fn event_message_front_gear_num_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -23021,6 +24280,7 @@ fn event_message_front_gear_num_field(
 fn event_message_front_gear_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -23045,6 +24305,7 @@ fn event_message_front_gear_field(
 fn event_message_rear_gear_num_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -23069,6 +24330,7 @@ fn event_message_rear_gear_num_field(
 fn event_message_rear_gear_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -23093,6 +24355,7 @@ fn event_message_rear_gear_field(
 fn event_message_device_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -23117,6 +24380,7 @@ fn event_message_device_index_field(
 fn event_message_radar_threat_level_max_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -23141,6 +24405,7 @@ fn event_message_radar_threat_level_max_field(
 fn event_message_radar_threat_count_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -23165,6 +24430,7 @@ fn event_message_radar_threat_count_field(
 fn event_message_radar_threat_avg_approach_speed_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -23189,6 +24455,7 @@ fn event_message_radar_threat_avg_approach_speed_field(
 fn event_message_radar_threat_max_approach_speed_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -23213,6 +24480,7 @@ fn event_message_radar_threat_max_approach_speed_field(
 fn event_message_timestamp_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -23248,6 +24516,7 @@ fn device_info_message(
                 fields.push(device_info_message_device_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -23256,54 +24525,22 @@ fn device_info_message(
                 )?);
             }
             1 => {
-                if SourceType::Antplus.as_i64()
-                    == data_map
-                        .get(&25)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(device_info_message_antplus_device_type_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else if SourceType::Ant.as_i64()
-                    == data_map
-                        .get(&25)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(device_info_message_ant_device_type_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else {
-                    fields.push(device_info_message_device_type_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                }
+                fields.push(device_info_message_device_type_field(
+                    mesg_num,
+                    accumlators,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "",
+                    value,
+                )?);
             }
             2 => {
                 fields.push(device_info_message_manufacturer_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -23315,6 +24552,7 @@ fn device_info_message(
                 fields.push(device_info_message_serial_number_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -23323,102 +24561,22 @@ fn device_info_message(
                 )?);
             }
             4 => {
-                if Manufacturer::FaveroElectronics.as_i64()
-                    == data_map
-                        .get(&2)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(device_info_message_favero_product_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else if Manufacturer::Garmin.as_i64()
-                    == data_map
-                        .get(&2)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(device_info_message_garmin_product_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else if Manufacturer::Dynastream.as_i64()
-                    == data_map
-                        .get(&2)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(device_info_message_garmin_product_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else if Manufacturer::DynastreamOem.as_i64()
-                    == data_map
-                        .get(&2)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(device_info_message_garmin_product_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else if Manufacturer::Tacx.as_i64()
-                    == data_map
-                        .get(&2)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(device_info_message_garmin_product_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else {
-                    fields.push(device_info_message_product_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                }
+                fields.push(device_info_message_product_field(
+                    mesg_num,
+                    accumlators,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "",
+                    value,
+                )?);
             }
             5 => {
                 fields.push(device_info_message_software_version_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -23430,6 +24588,7 @@ fn device_info_message(
                 fields.push(device_info_message_hardware_version_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -23442,6 +24601,7 @@ fn device_info_message(
                 fields.push(device_info_message_cum_operating_time_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -23453,6 +24613,7 @@ fn device_info_message(
                 fields.push(device_info_message_battery_voltage_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     256.000000,
                     0.000000,
@@ -23464,6 +24625,7 @@ fn device_info_message(
                 fields.push(device_info_message_battery_status_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -23476,6 +24638,7 @@ fn device_info_message(
                 fields.push(device_info_message_sensor_position_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -23488,6 +24651,7 @@ fn device_info_message(
                 fields.push(device_info_message_descriptor_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -23499,6 +24663,7 @@ fn device_info_message(
                 fields.push(device_info_message_ant_transmission_type_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -23510,6 +24675,7 @@ fn device_info_message(
                 fields.push(device_info_message_ant_device_number_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -23521,6 +24687,7 @@ fn device_info_message(
                 fields.push(device_info_message_ant_network_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -23532,6 +24699,7 @@ fn device_info_message(
                 fields.push(device_info_message_source_type_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -23544,6 +24712,7 @@ fn device_info_message(
                 fields.push(device_info_message_product_name_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -23555,6 +24724,7 @@ fn device_info_message(
                 fields.push(device_info_message_battery_level_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -23566,6 +24736,7 @@ fn device_info_message(
                 fields.push(device_info_message_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -23581,6 +24752,7 @@ fn device_info_message(
 fn device_info_message_device_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -23605,12 +24777,48 @@ fn device_info_message_device_index_field(
 fn device_info_message_device_type_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
     units: &'static str,
     value: Value,
 ) -> Result<FitDataField> {
+    if SourceType::Antplus.as_i64()
+        == data_map
+            .get(&25)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return device_info_message_antplus_device_type_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    } else if SourceType::Ant.as_i64()
+        == data_map
+            .get(&25)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return device_info_message_ant_device_type_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    }
     let value = if accumulate {
         calculate_cumulative_value(accumlators, mesg_num.as_u16(), 1, value)?
     } else {
@@ -23629,6 +24837,7 @@ fn device_info_message_device_type_field(
 fn device_info_message_antplus_device_type_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -23653,6 +24862,7 @@ fn device_info_message_antplus_device_type_field(
 fn device_info_message_ant_device_type_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -23677,6 +24887,7 @@ fn device_info_message_ant_device_type_field(
 fn device_info_message_manufacturer_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -23701,6 +24912,7 @@ fn device_info_message_manufacturer_field(
 fn device_info_message_serial_number_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -23725,12 +24937,99 @@ fn device_info_message_serial_number_field(
 fn device_info_message_product_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
     units: &'static str,
     value: Value,
 ) -> Result<FitDataField> {
+    if Manufacturer::FaveroElectronics.as_i64()
+        == data_map
+            .get(&2)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return device_info_message_favero_product_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    } else if Manufacturer::Garmin.as_i64()
+        == data_map
+            .get(&2)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return device_info_message_garmin_product_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    } else if Manufacturer::Dynastream.as_i64()
+        == data_map
+            .get(&2)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return device_info_message_garmin_product_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    } else if Manufacturer::DynastreamOem.as_i64()
+        == data_map
+            .get(&2)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return device_info_message_garmin_product_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    } else if Manufacturer::Tacx.as_i64()
+        == data_map
+            .get(&2)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return device_info_message_garmin_product_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    }
     let value = if accumulate {
         calculate_cumulative_value(accumlators, mesg_num.as_u16(), 4, value)?
     } else {
@@ -23749,6 +25048,7 @@ fn device_info_message_product_field(
 fn device_info_message_favero_product_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -23773,6 +25073,7 @@ fn device_info_message_favero_product_field(
 fn device_info_message_garmin_product_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -23797,6 +25098,7 @@ fn device_info_message_garmin_product_field(
 fn device_info_message_software_version_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -23821,6 +25123,7 @@ fn device_info_message_software_version_field(
 fn device_info_message_hardware_version_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -23845,6 +25148,7 @@ fn device_info_message_hardware_version_field(
 fn device_info_message_cum_operating_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -23869,6 +25173,7 @@ fn device_info_message_cum_operating_time_field(
 fn device_info_message_battery_voltage_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -23893,6 +25198,7 @@ fn device_info_message_battery_voltage_field(
 fn device_info_message_battery_status_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -23917,6 +25223,7 @@ fn device_info_message_battery_status_field(
 fn device_info_message_sensor_position_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -23941,6 +25248,7 @@ fn device_info_message_sensor_position_field(
 fn device_info_message_descriptor_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -23965,6 +25273,7 @@ fn device_info_message_descriptor_field(
 fn device_info_message_ant_transmission_type_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -23989,6 +25298,7 @@ fn device_info_message_ant_transmission_type_field(
 fn device_info_message_ant_device_number_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -24013,6 +25323,7 @@ fn device_info_message_ant_device_number_field(
 fn device_info_message_ant_network_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -24037,6 +25348,7 @@ fn device_info_message_ant_network_field(
 fn device_info_message_source_type_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -24061,6 +25373,7 @@ fn device_info_message_source_type_field(
 fn device_info_message_product_name_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -24085,6 +25398,7 @@ fn device_info_message_product_name_field(
 fn device_info_message_battery_level_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -24109,6 +25423,7 @@ fn device_info_message_battery_level_field(
 fn device_info_message_timestamp_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -24144,6 +25459,7 @@ fn device_aux_battery_info_message(
                 fields.push(device_aux_battery_info_message_device_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -24155,6 +25471,7 @@ fn device_aux_battery_info_message(
                 fields.push(device_aux_battery_info_message_battery_voltage_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     256.000000,
                     0.000000,
@@ -24166,6 +25483,7 @@ fn device_aux_battery_info_message(
                 fields.push(device_aux_battery_info_message_battery_status_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -24177,6 +25495,7 @@ fn device_aux_battery_info_message(
                 fields.push(device_aux_battery_info_message_battery_identifier_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -24188,6 +25507,7 @@ fn device_aux_battery_info_message(
                 fields.push(device_aux_battery_info_message_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -24203,6 +25523,7 @@ fn device_aux_battery_info_message(
 fn device_aux_battery_info_message_device_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -24227,6 +25548,7 @@ fn device_aux_battery_info_message_device_index_field(
 fn device_aux_battery_info_message_battery_voltage_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -24251,6 +25573,7 @@ fn device_aux_battery_info_message_battery_voltage_field(
 fn device_aux_battery_info_message_battery_status_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -24275,6 +25598,7 @@ fn device_aux_battery_info_message_battery_status_field(
 fn device_aux_battery_info_message_battery_identifier_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -24299,6 +25623,7 @@ fn device_aux_battery_info_message_battery_identifier_field(
 fn device_aux_battery_info_message_timestamp_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -24335,6 +25660,7 @@ fn training_file_message(
                 fields.push(training_file_message_type_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -24346,6 +25672,7 @@ fn training_file_message(
                 fields.push(training_file_message_manufacturer_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -24354,102 +25681,22 @@ fn training_file_message(
                 )?);
             }
             2 => {
-                if Manufacturer::FaveroElectronics.as_i64()
-                    == data_map
-                        .get(&1)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(training_file_message_favero_product_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else if Manufacturer::Garmin.as_i64()
-                    == data_map
-                        .get(&1)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(training_file_message_garmin_product_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else if Manufacturer::Dynastream.as_i64()
-                    == data_map
-                        .get(&1)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(training_file_message_garmin_product_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else if Manufacturer::DynastreamOem.as_i64()
-                    == data_map
-                        .get(&1)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(training_file_message_garmin_product_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else if Manufacturer::Tacx.as_i64()
-                    == data_map
-                        .get(&1)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(training_file_message_garmin_product_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else {
-                    fields.push(training_file_message_product_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                }
+                fields.push(training_file_message_product_field(
+                    mesg_num,
+                    accumlators,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "",
+                    value,
+                )?);
             }
             3 => {
                 fields.push(training_file_message_serial_number_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -24461,6 +25708,7 @@ fn training_file_message(
                 fields.push(training_file_message_time_created_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -24472,6 +25720,7 @@ fn training_file_message(
                 fields.push(training_file_message_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -24487,6 +25736,7 @@ fn training_file_message(
 fn training_file_message_type_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -24503,6 +25753,7 @@ fn training_file_message_type_field(
 fn training_file_message_manufacturer_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -24527,12 +25778,99 @@ fn training_file_message_manufacturer_field(
 fn training_file_message_product_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
     units: &'static str,
     value: Value,
 ) -> Result<FitDataField> {
+    if Manufacturer::FaveroElectronics.as_i64()
+        == data_map
+            .get(&1)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return training_file_message_favero_product_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    } else if Manufacturer::Garmin.as_i64()
+        == data_map
+            .get(&1)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return training_file_message_garmin_product_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    } else if Manufacturer::Dynastream.as_i64()
+        == data_map
+            .get(&1)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return training_file_message_garmin_product_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    } else if Manufacturer::DynastreamOem.as_i64()
+        == data_map
+            .get(&1)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return training_file_message_garmin_product_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    } else if Manufacturer::Tacx.as_i64()
+        == data_map
+            .get(&1)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return training_file_message_garmin_product_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    }
     let value = if accumulate {
         calculate_cumulative_value(accumlators, mesg_num.as_u16(), 2, value)?
     } else {
@@ -24551,6 +25889,7 @@ fn training_file_message_product_field(
 fn training_file_message_favero_product_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -24575,6 +25914,7 @@ fn training_file_message_favero_product_field(
 fn training_file_message_garmin_product_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -24599,6 +25939,7 @@ fn training_file_message_garmin_product_field(
 fn training_file_message_serial_number_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -24623,6 +25964,7 @@ fn training_file_message_serial_number_field(
 fn training_file_message_time_created_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -24647,6 +25989,7 @@ fn training_file_message_time_created_field(
 fn training_file_message_timestamp_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -24683,6 +26026,7 @@ fn weather_conditions_message(
                 fields.push(weather_conditions_message_weather_report_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -24694,6 +26038,7 @@ fn weather_conditions_message(
                 fields.push(weather_conditions_message_temperature_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -24706,6 +26051,7 @@ fn weather_conditions_message(
                 fields.push(weather_conditions_message_condition_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -24717,6 +26063,7 @@ fn weather_conditions_message(
                 fields.push(weather_conditions_message_wind_direction_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -24728,6 +26075,7 @@ fn weather_conditions_message(
                 fields.push(weather_conditions_message_wind_speed_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -24740,6 +26088,7 @@ fn weather_conditions_message(
                 fields.push(weather_conditions_message_precipitation_probability_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -24752,6 +26101,7 @@ fn weather_conditions_message(
                 fields.push(weather_conditions_message_temperature_feels_like_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -24763,6 +26113,7 @@ fn weather_conditions_message(
                 fields.push(weather_conditions_message_relative_humidity_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -24775,6 +26126,7 @@ fn weather_conditions_message(
                 fields.push(weather_conditions_message_location_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -24786,6 +26138,7 @@ fn weather_conditions_message(
                 fields.push(weather_conditions_message_observed_at_time_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -24797,6 +26150,7 @@ fn weather_conditions_message(
                 fields.push(weather_conditions_message_observed_location_lat_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -24808,6 +26162,7 @@ fn weather_conditions_message(
                 fields.push(weather_conditions_message_observed_location_long_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -24819,6 +26174,7 @@ fn weather_conditions_message(
                 fields.push(weather_conditions_message_day_of_week_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -24830,6 +26186,7 @@ fn weather_conditions_message(
                 fields.push(weather_conditions_message_high_temperature_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -24841,6 +26198,7 @@ fn weather_conditions_message(
                 fields.push(weather_conditions_message_low_temperature_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -24853,6 +26211,7 @@ fn weather_conditions_message(
                 fields.push(weather_conditions_message_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -24868,6 +26227,7 @@ fn weather_conditions_message(
 fn weather_conditions_message_weather_report_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -24892,6 +26252,7 @@ fn weather_conditions_message_weather_report_field(
 fn weather_conditions_message_temperature_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -24916,6 +26277,7 @@ fn weather_conditions_message_temperature_field(
 fn weather_conditions_message_condition_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -24940,6 +26302,7 @@ fn weather_conditions_message_condition_field(
 fn weather_conditions_message_wind_direction_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -24964,6 +26327,7 @@ fn weather_conditions_message_wind_direction_field(
 fn weather_conditions_message_wind_speed_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -24988,6 +26352,7 @@ fn weather_conditions_message_wind_speed_field(
 fn weather_conditions_message_precipitation_probability_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -25012,6 +26377,7 @@ fn weather_conditions_message_precipitation_probability_field(
 fn weather_conditions_message_temperature_feels_like_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -25036,6 +26402,7 @@ fn weather_conditions_message_temperature_feels_like_field(
 fn weather_conditions_message_relative_humidity_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -25060,6 +26427,7 @@ fn weather_conditions_message_relative_humidity_field(
 fn weather_conditions_message_location_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -25084,6 +26452,7 @@ fn weather_conditions_message_location_field(
 fn weather_conditions_message_observed_at_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -25108,6 +26477,7 @@ fn weather_conditions_message_observed_at_time_field(
 fn weather_conditions_message_observed_location_lat_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -25132,6 +26502,7 @@ fn weather_conditions_message_observed_location_lat_field(
 fn weather_conditions_message_observed_location_long_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -25156,6 +26527,7 @@ fn weather_conditions_message_observed_location_long_field(
 fn weather_conditions_message_day_of_week_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -25180,6 +26552,7 @@ fn weather_conditions_message_day_of_week_field(
 fn weather_conditions_message_high_temperature_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -25204,6 +26577,7 @@ fn weather_conditions_message_high_temperature_field(
 fn weather_conditions_message_low_temperature_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -25228,6 +26602,7 @@ fn weather_conditions_message_low_temperature_field(
 fn weather_conditions_message_timestamp_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -25264,6 +26639,7 @@ fn weather_alert_message(
                 fields.push(weather_alert_message_report_id_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -25276,6 +26652,7 @@ fn weather_alert_message(
                 fields.push(weather_alert_message_issue_time_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -25288,6 +26665,7 @@ fn weather_alert_message(
                 fields.push(weather_alert_message_expire_time_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -25300,6 +26678,7 @@ fn weather_alert_message(
                 fields.push(weather_alert_message_severity_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -25312,6 +26691,7 @@ fn weather_alert_message(
                 fields.push(weather_alert_message_type_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -25323,6 +26703,7 @@ fn weather_alert_message(
                 fields.push(weather_alert_message_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -25338,6 +26719,7 @@ fn weather_alert_message(
 fn weather_alert_message_report_id_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -25362,6 +26744,7 @@ fn weather_alert_message_report_id_field(
 fn weather_alert_message_issue_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -25386,6 +26769,7 @@ fn weather_alert_message_issue_time_field(
 fn weather_alert_message_expire_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -25410,6 +26794,7 @@ fn weather_alert_message_expire_time_field(
 fn weather_alert_message_severity_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -25434,6 +26819,7 @@ fn weather_alert_message_severity_field(
 fn weather_alert_message_type_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -25458,6 +26844,7 @@ fn weather_alert_message_type_field(
 fn weather_alert_message_timestamp_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -25494,6 +26881,7 @@ fn gps_metadata_message(
                 fields.push(gps_metadata_message_timestamp_ms_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -25505,6 +26893,7 @@ fn gps_metadata_message(
                 fields.push(gps_metadata_message_position_lat_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -25516,6 +26905,7 @@ fn gps_metadata_message(
                 fields.push(gps_metadata_message_position_long_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -25527,6 +26917,7 @@ fn gps_metadata_message(
                 fields.push(gps_metadata_message_enhanced_altitude_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     5.000000,
                     500.000000,
@@ -25538,6 +26929,7 @@ fn gps_metadata_message(
                 fields.push(gps_metadata_message_enhanced_speed_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -25549,6 +26941,7 @@ fn gps_metadata_message(
                 fields.push(gps_metadata_message_heading_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -25561,6 +26954,7 @@ fn gps_metadata_message(
                 fields.push(gps_metadata_message_utc_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -25573,6 +26967,7 @@ fn gps_metadata_message(
                 fields.push(gps_metadata_message_velocity_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -25585,6 +26980,7 @@ fn gps_metadata_message(
                 fields.push(gps_metadata_message_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -25600,6 +26996,7 @@ fn gps_metadata_message(
 fn gps_metadata_message_timestamp_ms_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -25624,6 +27021,7 @@ fn gps_metadata_message_timestamp_ms_field(
 fn gps_metadata_message_position_lat_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -25648,6 +27046,7 @@ fn gps_metadata_message_position_lat_field(
 fn gps_metadata_message_position_long_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -25672,6 +27071,7 @@ fn gps_metadata_message_position_long_field(
 fn gps_metadata_message_enhanced_altitude_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -25696,6 +27096,7 @@ fn gps_metadata_message_enhanced_altitude_field(
 fn gps_metadata_message_enhanced_speed_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -25720,6 +27121,7 @@ fn gps_metadata_message_enhanced_speed_field(
 fn gps_metadata_message_heading_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -25744,6 +27146,7 @@ fn gps_metadata_message_heading_field(
 fn gps_metadata_message_utc_timestamp_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -25768,6 +27171,7 @@ fn gps_metadata_message_utc_timestamp_field(
 fn gps_metadata_message_velocity_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -25792,6 +27196,7 @@ fn gps_metadata_message_velocity_field(
 fn gps_metadata_message_timestamp_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -25828,6 +27233,7 @@ fn camera_event_message(
                 fields.push(camera_event_message_timestamp_ms_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -25839,6 +27245,7 @@ fn camera_event_message(
                 fields.push(camera_event_message_camera_event_type_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -25850,6 +27257,7 @@ fn camera_event_message(
                 fields.push(camera_event_message_camera_file_uuid_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -25861,6 +27269,7 @@ fn camera_event_message(
                 fields.push(camera_event_message_camera_orientation_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -25873,6 +27282,7 @@ fn camera_event_message(
                 fields.push(camera_event_message_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -25888,6 +27298,7 @@ fn camera_event_message(
 fn camera_event_message_timestamp_ms_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -25912,6 +27323,7 @@ fn camera_event_message_timestamp_ms_field(
 fn camera_event_message_camera_event_type_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -25936,6 +27348,7 @@ fn camera_event_message_camera_event_type_field(
 fn camera_event_message_camera_file_uuid_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -25960,6 +27373,7 @@ fn camera_event_message_camera_file_uuid_field(
 fn camera_event_message_camera_orientation_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -25984,6 +27398,7 @@ fn camera_event_message_camera_orientation_field(
 fn camera_event_message_timestamp_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -26020,6 +27435,7 @@ fn gyroscope_data_message(
                 fields.push(gyroscope_data_message_timestamp_ms_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -26032,6 +27448,7 @@ fn gyroscope_data_message(
                 fields.push(gyroscope_data_message_sample_time_offset_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -26044,6 +27461,7 @@ fn gyroscope_data_message(
                 fields.push(gyroscope_data_message_gyro_x_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -26056,6 +27474,7 @@ fn gyroscope_data_message(
                 fields.push(gyroscope_data_message_gyro_y_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -26068,6 +27487,7 @@ fn gyroscope_data_message(
                 fields.push(gyroscope_data_message_gyro_z_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -26080,6 +27500,7 @@ fn gyroscope_data_message(
                 fields.push(gyroscope_data_message_calibrated_gyro_x_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -26092,6 +27513,7 @@ fn gyroscope_data_message(
                 fields.push(gyroscope_data_message_calibrated_gyro_y_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -26104,6 +27526,7 @@ fn gyroscope_data_message(
                 fields.push(gyroscope_data_message_calibrated_gyro_z_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -26116,6 +27539,7 @@ fn gyroscope_data_message(
                 fields.push(gyroscope_data_message_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -26131,6 +27555,7 @@ fn gyroscope_data_message(
 fn gyroscope_data_message_timestamp_ms_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -26155,6 +27580,7 @@ fn gyroscope_data_message_timestamp_ms_field(
 fn gyroscope_data_message_sample_time_offset_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -26179,6 +27605,7 @@ fn gyroscope_data_message_sample_time_offset_field(
 fn gyroscope_data_message_gyro_x_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -26203,6 +27630,7 @@ fn gyroscope_data_message_gyro_x_field(
 fn gyroscope_data_message_gyro_y_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -26227,6 +27655,7 @@ fn gyroscope_data_message_gyro_y_field(
 fn gyroscope_data_message_gyro_z_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -26251,6 +27680,7 @@ fn gyroscope_data_message_gyro_z_field(
 fn gyroscope_data_message_calibrated_gyro_x_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -26275,6 +27705,7 @@ fn gyroscope_data_message_calibrated_gyro_x_field(
 fn gyroscope_data_message_calibrated_gyro_y_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -26299,6 +27730,7 @@ fn gyroscope_data_message_calibrated_gyro_y_field(
 fn gyroscope_data_message_calibrated_gyro_z_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -26323,6 +27755,7 @@ fn gyroscope_data_message_calibrated_gyro_z_field(
 fn gyroscope_data_message_timestamp_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -26359,6 +27792,7 @@ fn accelerometer_data_message(
                 fields.push(accelerometer_data_message_timestamp_ms_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -26371,6 +27805,7 @@ fn accelerometer_data_message(
                 fields.push(accelerometer_data_message_sample_time_offset_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -26383,6 +27818,7 @@ fn accelerometer_data_message(
                 fields.push(accelerometer_data_message_accel_x_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -26395,6 +27831,7 @@ fn accelerometer_data_message(
                 fields.push(accelerometer_data_message_accel_y_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -26407,6 +27844,7 @@ fn accelerometer_data_message(
                 fields.push(accelerometer_data_message_accel_z_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -26419,6 +27857,7 @@ fn accelerometer_data_message(
                 fields.push(accelerometer_data_message_calibrated_accel_x_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -26431,6 +27870,7 @@ fn accelerometer_data_message(
                 fields.push(accelerometer_data_message_calibrated_accel_y_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -26443,6 +27883,7 @@ fn accelerometer_data_message(
                 fields.push(accelerometer_data_message_calibrated_accel_z_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -26456,6 +27897,7 @@ fn accelerometer_data_message(
                     accelerometer_data_message_compressed_calibrated_accel_x_field(
                         mesg_num,
                         accumlators,
+                        data_map,
                         false,
                         1.000000,
                         0.000000,
@@ -26470,6 +27912,7 @@ fn accelerometer_data_message(
                     accelerometer_data_message_compressed_calibrated_accel_y_field(
                         mesg_num,
                         accumlators,
+                        data_map,
                         false,
                         1.000000,
                         0.000000,
@@ -26484,6 +27927,7 @@ fn accelerometer_data_message(
                     accelerometer_data_message_compressed_calibrated_accel_z_field(
                         mesg_num,
                         accumlators,
+                        data_map,
                         false,
                         1.000000,
                         0.000000,
@@ -26497,6 +27941,7 @@ fn accelerometer_data_message(
                 fields.push(accelerometer_data_message_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -26512,6 +27957,7 @@ fn accelerometer_data_message(
 fn accelerometer_data_message_timestamp_ms_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -26536,6 +27982,7 @@ fn accelerometer_data_message_timestamp_ms_field(
 fn accelerometer_data_message_sample_time_offset_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -26560,6 +28007,7 @@ fn accelerometer_data_message_sample_time_offset_field(
 fn accelerometer_data_message_accel_x_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -26584,6 +28032,7 @@ fn accelerometer_data_message_accel_x_field(
 fn accelerometer_data_message_accel_y_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -26608,6 +28057,7 @@ fn accelerometer_data_message_accel_y_field(
 fn accelerometer_data_message_accel_z_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -26632,6 +28082,7 @@ fn accelerometer_data_message_accel_z_field(
 fn accelerometer_data_message_calibrated_accel_x_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -26656,6 +28107,7 @@ fn accelerometer_data_message_calibrated_accel_x_field(
 fn accelerometer_data_message_calibrated_accel_y_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -26680,6 +28132,7 @@ fn accelerometer_data_message_calibrated_accel_y_field(
 fn accelerometer_data_message_calibrated_accel_z_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -26704,6 +28157,7 @@ fn accelerometer_data_message_calibrated_accel_z_field(
 fn accelerometer_data_message_compressed_calibrated_accel_x_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -26728,6 +28182,7 @@ fn accelerometer_data_message_compressed_calibrated_accel_x_field(
 fn accelerometer_data_message_compressed_calibrated_accel_y_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -26752,6 +28207,7 @@ fn accelerometer_data_message_compressed_calibrated_accel_y_field(
 fn accelerometer_data_message_compressed_calibrated_accel_z_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -26776,6 +28232,7 @@ fn accelerometer_data_message_compressed_calibrated_accel_z_field(
 fn accelerometer_data_message_timestamp_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -26812,6 +28269,7 @@ fn magnetometer_data_message(
                 fields.push(magnetometer_data_message_timestamp_ms_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -26824,6 +28282,7 @@ fn magnetometer_data_message(
                 fields.push(magnetometer_data_message_sample_time_offset_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -26836,6 +28295,7 @@ fn magnetometer_data_message(
                 fields.push(magnetometer_data_message_mag_x_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -26848,6 +28308,7 @@ fn magnetometer_data_message(
                 fields.push(magnetometer_data_message_mag_y_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -26860,6 +28321,7 @@ fn magnetometer_data_message(
                 fields.push(magnetometer_data_message_mag_z_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -26872,6 +28334,7 @@ fn magnetometer_data_message(
                 fields.push(magnetometer_data_message_calibrated_mag_x_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -26884,6 +28347,7 @@ fn magnetometer_data_message(
                 fields.push(magnetometer_data_message_calibrated_mag_y_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -26896,6 +28360,7 @@ fn magnetometer_data_message(
                 fields.push(magnetometer_data_message_calibrated_mag_z_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -26908,6 +28373,7 @@ fn magnetometer_data_message(
                 fields.push(magnetometer_data_message_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -26923,6 +28389,7 @@ fn magnetometer_data_message(
 fn magnetometer_data_message_timestamp_ms_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -26947,6 +28414,7 @@ fn magnetometer_data_message_timestamp_ms_field(
 fn magnetometer_data_message_sample_time_offset_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -26971,6 +28439,7 @@ fn magnetometer_data_message_sample_time_offset_field(
 fn magnetometer_data_message_mag_x_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -26995,6 +28464,7 @@ fn magnetometer_data_message_mag_x_field(
 fn magnetometer_data_message_mag_y_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -27019,6 +28489,7 @@ fn magnetometer_data_message_mag_y_field(
 fn magnetometer_data_message_mag_z_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -27043,6 +28514,7 @@ fn magnetometer_data_message_mag_z_field(
 fn magnetometer_data_message_calibrated_mag_x_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -27067,6 +28539,7 @@ fn magnetometer_data_message_calibrated_mag_x_field(
 fn magnetometer_data_message_calibrated_mag_y_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -27091,6 +28564,7 @@ fn magnetometer_data_message_calibrated_mag_y_field(
 fn magnetometer_data_message_calibrated_mag_z_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -27115,6 +28589,7 @@ fn magnetometer_data_message_calibrated_mag_z_field(
 fn magnetometer_data_message_timestamp_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -27151,6 +28626,7 @@ fn barometer_data_message(
                 fields.push(barometer_data_message_timestamp_ms_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -27163,6 +28639,7 @@ fn barometer_data_message(
                 fields.push(barometer_data_message_sample_time_offset_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -27175,6 +28652,7 @@ fn barometer_data_message(
                 fields.push(barometer_data_message_baro_pres_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -27187,6 +28665,7 @@ fn barometer_data_message(
                 fields.push(barometer_data_message_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -27202,6 +28681,7 @@ fn barometer_data_message(
 fn barometer_data_message_timestamp_ms_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -27226,6 +28706,7 @@ fn barometer_data_message_timestamp_ms_field(
 fn barometer_data_message_sample_time_offset_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -27250,6 +28731,7 @@ fn barometer_data_message_sample_time_offset_field(
 fn barometer_data_message_baro_pres_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -27274,6 +28756,7 @@ fn barometer_data_message_baro_pres_field(
 fn barometer_data_message_timestamp_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -27310,6 +28793,7 @@ fn three_d_sensor_calibration_message(
                 fields.push(three_d_sensor_calibration_message_sensor_type_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -27319,49 +28803,16 @@ fn three_d_sensor_calibration_message(
             }
             1 => {
                 // Calibration factor used to convert from raw ADC value to degrees, g, etc.
-                if SensorType::Accelerometer.as_i64()
-                    == data_map
-                        .get(&0)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(three_d_sensor_calibration_message_accel_cal_factor_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "g",
-                        value,
-                    )?);
-                } else if SensorType::Gyroscope.as_i64()
-                    == data_map
-                        .get(&0)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(three_d_sensor_calibration_message_gyro_cal_factor_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "deg/s",
-                        value,
-                    )?);
-                } else {
-                    fields.push(three_d_sensor_calibration_message_calibration_factor_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                }
+                fields.push(three_d_sensor_calibration_message_calibration_factor_field(
+                    mesg_num,
+                    accumlators,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "",
+                    value,
+                )?);
             }
             2 => {
                 // Calibration factor divisor
@@ -27369,6 +28820,7 @@ fn three_d_sensor_calibration_message(
                     three_d_sensor_calibration_message_calibration_divisor_field(
                         mesg_num,
                         accumlators,
+                        data_map,
                         false,
                         1.000000,
                         0.000000,
@@ -27382,6 +28834,7 @@ fn three_d_sensor_calibration_message(
                 fields.push(three_d_sensor_calibration_message_level_shift_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -27394,6 +28847,7 @@ fn three_d_sensor_calibration_message(
                 fields.push(three_d_sensor_calibration_message_offset_cal_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -27406,6 +28860,7 @@ fn three_d_sensor_calibration_message(
                 fields.push(three_d_sensor_calibration_message_orientation_matrix_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     65535.000000,
                     0.000000,
@@ -27418,6 +28873,7 @@ fn three_d_sensor_calibration_message(
                 fields.push(three_d_sensor_calibration_message_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -27433,6 +28889,7 @@ fn three_d_sensor_calibration_message(
 fn three_d_sensor_calibration_message_sensor_type_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -27457,12 +28914,48 @@ fn three_d_sensor_calibration_message_sensor_type_field(
 fn three_d_sensor_calibration_message_calibration_factor_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
     units: &'static str,
     value: Value,
 ) -> Result<FitDataField> {
+    if SensorType::Accelerometer.as_i64()
+        == data_map
+            .get(&0)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return three_d_sensor_calibration_message_accel_cal_factor_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "g",
+            value,
+        );
+    } else if SensorType::Gyroscope.as_i64()
+        == data_map
+            .get(&0)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return three_d_sensor_calibration_message_gyro_cal_factor_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "deg/s",
+            value,
+        );
+    }
     let value = if accumulate {
         calculate_cumulative_value(accumlators, mesg_num.as_u16(), 1, value)?
     } else {
@@ -27481,6 +28974,7 @@ fn three_d_sensor_calibration_message_calibration_factor_field(
 fn three_d_sensor_calibration_message_accel_cal_factor_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -27505,6 +28999,7 @@ fn three_d_sensor_calibration_message_accel_cal_factor_field(
 fn three_d_sensor_calibration_message_gyro_cal_factor_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -27529,6 +29024,7 @@ fn three_d_sensor_calibration_message_gyro_cal_factor_field(
 fn three_d_sensor_calibration_message_calibration_divisor_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -27553,6 +29049,7 @@ fn three_d_sensor_calibration_message_calibration_divisor_field(
 fn three_d_sensor_calibration_message_level_shift_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -27577,6 +29074,7 @@ fn three_d_sensor_calibration_message_level_shift_field(
 fn three_d_sensor_calibration_message_offset_cal_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -27601,6 +29099,7 @@ fn three_d_sensor_calibration_message_offset_cal_field(
 fn three_d_sensor_calibration_message_orientation_matrix_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -27625,6 +29124,7 @@ fn three_d_sensor_calibration_message_orientation_matrix_field(
 fn three_d_sensor_calibration_message_timestamp_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -27661,6 +29161,7 @@ fn one_d_sensor_calibration_message(
                 fields.push(one_d_sensor_calibration_message_sensor_type_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -27670,39 +29171,23 @@ fn one_d_sensor_calibration_message(
             }
             1 => {
                 // Calibration factor used to convert from raw ADC value to degrees, g, etc.
-                if SensorType::Barometer.as_i64()
-                    == data_map
-                        .get(&0)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(one_d_sensor_calibration_message_baro_cal_factor_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "Pa",
-                        value,
-                    )?);
-                } else {
-                    fields.push(one_d_sensor_calibration_message_calibration_factor_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                }
+                fields.push(one_d_sensor_calibration_message_calibration_factor_field(
+                    mesg_num,
+                    accumlators,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "",
+                    value,
+                )?);
             }
             2 => {
                 // Calibration factor divisor
                 fields.push(one_d_sensor_calibration_message_calibration_divisor_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -27715,6 +29200,7 @@ fn one_d_sensor_calibration_message(
                 fields.push(one_d_sensor_calibration_message_level_shift_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -27727,6 +29213,7 @@ fn one_d_sensor_calibration_message(
                 fields.push(one_d_sensor_calibration_message_offset_cal_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -27739,6 +29226,7 @@ fn one_d_sensor_calibration_message(
                 fields.push(one_d_sensor_calibration_message_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -27754,6 +29242,7 @@ fn one_d_sensor_calibration_message(
 fn one_d_sensor_calibration_message_sensor_type_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -27778,12 +29267,31 @@ fn one_d_sensor_calibration_message_sensor_type_field(
 fn one_d_sensor_calibration_message_calibration_factor_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
     units: &'static str,
     value: Value,
 ) -> Result<FitDataField> {
+    if SensorType::Barometer.as_i64()
+        == data_map
+            .get(&0)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return one_d_sensor_calibration_message_baro_cal_factor_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "Pa",
+            value,
+        );
+    }
     let value = if accumulate {
         calculate_cumulative_value(accumlators, mesg_num.as_u16(), 1, value)?
     } else {
@@ -27802,6 +29310,7 @@ fn one_d_sensor_calibration_message_calibration_factor_field(
 fn one_d_sensor_calibration_message_baro_cal_factor_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -27826,6 +29335,7 @@ fn one_d_sensor_calibration_message_baro_cal_factor_field(
 fn one_d_sensor_calibration_message_calibration_divisor_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -27850,6 +29360,7 @@ fn one_d_sensor_calibration_message_calibration_divisor_field(
 fn one_d_sensor_calibration_message_level_shift_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -27874,6 +29385,7 @@ fn one_d_sensor_calibration_message_level_shift_field(
 fn one_d_sensor_calibration_message_offset_cal_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -27898,6 +29410,7 @@ fn one_d_sensor_calibration_message_offset_cal_field(
 fn one_d_sensor_calibration_message_timestamp_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -27934,6 +29447,7 @@ fn video_frame_message(
                 fields.push(video_frame_message_timestamp_ms_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -27946,6 +29460,7 @@ fn video_frame_message(
                 fields.push(video_frame_message_frame_number_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -27958,6 +29473,7 @@ fn video_frame_message(
                 fields.push(video_frame_message_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -27973,6 +29489,7 @@ fn video_frame_message(
 fn video_frame_message_timestamp_ms_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -27997,6 +29514,7 @@ fn video_frame_message_timestamp_ms_field(
 fn video_frame_message_frame_number_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -28021,6 +29539,7 @@ fn video_frame_message_frame_number_field(
 fn video_frame_message_timestamp_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -28057,6 +29576,7 @@ fn obdii_data_message(
                 fields.push(obdii_data_message_timestamp_ms_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -28069,6 +29589,7 @@ fn obdii_data_message(
                 fields.push(obdii_data_message_time_offset_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -28081,6 +29602,7 @@ fn obdii_data_message(
                 fields.push(obdii_data_message_pid_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -28093,6 +29615,7 @@ fn obdii_data_message(
                 fields.push(obdii_data_message_raw_data_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -28105,6 +29628,7 @@ fn obdii_data_message(
                 fields.push(obdii_data_message_pid_data_size_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -28117,6 +29641,7 @@ fn obdii_data_message(
                 fields.push(obdii_data_message_system_time_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -28129,6 +29654,7 @@ fn obdii_data_message(
                 fields.push(obdii_data_message_start_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -28141,6 +29667,7 @@ fn obdii_data_message(
                 fields.push(obdii_data_message_start_timestamp_ms_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -28153,6 +29680,7 @@ fn obdii_data_message(
                 fields.push(obdii_data_message_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -28168,6 +29696,7 @@ fn obdii_data_message(
 fn obdii_data_message_timestamp_ms_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -28192,6 +29721,7 @@ fn obdii_data_message_timestamp_ms_field(
 fn obdii_data_message_time_offset_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -28216,6 +29746,7 @@ fn obdii_data_message_time_offset_field(
 fn obdii_data_message_pid_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -28232,6 +29763,7 @@ fn obdii_data_message_pid_field(
 fn obdii_data_message_raw_data_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -28256,6 +29788,7 @@ fn obdii_data_message_raw_data_field(
 fn obdii_data_message_pid_data_size_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -28280,6 +29813,7 @@ fn obdii_data_message_pid_data_size_field(
 fn obdii_data_message_system_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -28304,6 +29838,7 @@ fn obdii_data_message_system_time_field(
 fn obdii_data_message_start_timestamp_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -28328,6 +29863,7 @@ fn obdii_data_message_start_timestamp_field(
 fn obdii_data_message_start_timestamp_ms_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -28352,6 +29888,7 @@ fn obdii_data_message_start_timestamp_ms_field(
 fn obdii_data_message_timestamp_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -28388,6 +29925,7 @@ fn nmea_sentence_message(
                 fields.push(nmea_sentence_message_timestamp_ms_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -28400,6 +29938,7 @@ fn nmea_sentence_message(
                 fields.push(nmea_sentence_message_sentence_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -28412,6 +29951,7 @@ fn nmea_sentence_message(
                 fields.push(nmea_sentence_message_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -28427,6 +29967,7 @@ fn nmea_sentence_message(
 fn nmea_sentence_message_timestamp_ms_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -28451,6 +29992,7 @@ fn nmea_sentence_message_timestamp_ms_field(
 fn nmea_sentence_message_sentence_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -28475,6 +30017,7 @@ fn nmea_sentence_message_sentence_field(
 fn nmea_sentence_message_timestamp_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -28511,6 +30054,7 @@ fn aviation_attitude_message(
                 fields.push(aviation_attitude_message_timestamp_ms_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -28523,6 +30067,7 @@ fn aviation_attitude_message(
                 fields.push(aviation_attitude_message_system_time_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -28535,6 +30080,7 @@ fn aviation_attitude_message(
                 fields.push(aviation_attitude_message_pitch_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     10430.380000,
                     0.000000,
@@ -28547,6 +30093,7 @@ fn aviation_attitude_message(
                 fields.push(aviation_attitude_message_roll_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     10430.380000,
                     0.000000,
@@ -28559,6 +30106,7 @@ fn aviation_attitude_message(
                 fields.push(aviation_attitude_message_accel_lateral_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -28571,6 +30119,7 @@ fn aviation_attitude_message(
                 fields.push(aviation_attitude_message_accel_normal_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -28583,6 +30132,7 @@ fn aviation_attitude_message(
                 fields.push(aviation_attitude_message_turn_rate_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1024.000000,
                     0.000000,
@@ -28594,6 +30144,7 @@ fn aviation_attitude_message(
                 fields.push(aviation_attitude_message_stage_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -28606,6 +30157,7 @@ fn aviation_attitude_message(
                 fields.push(aviation_attitude_message_attitude_stage_complete_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -28618,6 +30170,7 @@ fn aviation_attitude_message(
                 fields.push(aviation_attitude_message_track_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     10430.380000,
                     0.000000,
@@ -28629,6 +30182,7 @@ fn aviation_attitude_message(
                 fields.push(aviation_attitude_message_validity_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -28641,6 +30195,7 @@ fn aviation_attitude_message(
                 fields.push(aviation_attitude_message_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -28656,6 +30211,7 @@ fn aviation_attitude_message(
 fn aviation_attitude_message_timestamp_ms_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -28680,6 +30236,7 @@ fn aviation_attitude_message_timestamp_ms_field(
 fn aviation_attitude_message_system_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -28704,6 +30261,7 @@ fn aviation_attitude_message_system_time_field(
 fn aviation_attitude_message_pitch_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -28728,6 +30286,7 @@ fn aviation_attitude_message_pitch_field(
 fn aviation_attitude_message_roll_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -28752,6 +30311,7 @@ fn aviation_attitude_message_roll_field(
 fn aviation_attitude_message_accel_lateral_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -28776,6 +30336,7 @@ fn aviation_attitude_message_accel_lateral_field(
 fn aviation_attitude_message_accel_normal_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -28800,6 +30361,7 @@ fn aviation_attitude_message_accel_normal_field(
 fn aviation_attitude_message_turn_rate_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -28824,6 +30386,7 @@ fn aviation_attitude_message_turn_rate_field(
 fn aviation_attitude_message_stage_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -28848,6 +30411,7 @@ fn aviation_attitude_message_stage_field(
 fn aviation_attitude_message_attitude_stage_complete_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -28872,6 +30436,7 @@ fn aviation_attitude_message_attitude_stage_complete_field(
 fn aviation_attitude_message_track_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -28896,6 +30461,7 @@ fn aviation_attitude_message_track_field(
 fn aviation_attitude_message_validity_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -28920,6 +30486,7 @@ fn aviation_attitude_message_validity_field(
 fn aviation_attitude_message_timestamp_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -28955,6 +30522,7 @@ fn video_message(
                 fields.push(video_message_url_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -28966,6 +30534,7 @@ fn video_message(
                 fields.push(video_message_hosting_provider_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -28978,6 +30547,7 @@ fn video_message(
                 fields.push(video_message_duration_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -28993,6 +30563,7 @@ fn video_message(
 fn video_message_url_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -29009,6 +30580,7 @@ fn video_message_url_field(
 fn video_message_hosting_provider_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -29033,6 +30605,7 @@ fn video_message_hosting_provider_field(
 fn video_message_duration_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -29069,6 +30642,7 @@ fn video_title_message(
                 fields.push(video_title_message_message_count_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -29080,6 +30654,7 @@ fn video_title_message(
                 fields.push(video_title_message_text_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -29092,6 +30667,7 @@ fn video_title_message(
                 fields.push(video_title_message_message_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -29107,6 +30683,7 @@ fn video_title_message(
 fn video_title_message_message_count_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -29131,6 +30708,7 @@ fn video_title_message_message_count_field(
 fn video_title_message_text_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -29155,6 +30733,7 @@ fn video_title_message_text_field(
 fn video_title_message_message_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -29191,6 +30770,7 @@ fn video_description_message(
                 fields.push(video_description_message_message_count_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -29202,6 +30782,7 @@ fn video_description_message(
                 fields.push(video_description_message_text_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -29214,6 +30795,7 @@ fn video_description_message(
                 fields.push(video_description_message_message_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -29229,6 +30811,7 @@ fn video_description_message(
 fn video_description_message_message_count_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -29253,6 +30836,7 @@ fn video_description_message_message_count_field(
 fn video_description_message_text_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -29277,6 +30861,7 @@ fn video_description_message_text_field(
 fn video_description_message_message_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -29312,6 +30897,7 @@ fn video_clip_message(
                 fields.push(video_clip_message_clip_number_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -29323,6 +30909,7 @@ fn video_clip_message(
                 fields.push(video_clip_message_start_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -29334,6 +30921,7 @@ fn video_clip_message(
                 fields.push(video_clip_message_start_timestamp_ms_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -29345,6 +30933,7 @@ fn video_clip_message(
                 fields.push(video_clip_message_end_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -29356,6 +30945,7 @@ fn video_clip_message(
                 fields.push(video_clip_message_end_timestamp_ms_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -29368,6 +30958,7 @@ fn video_clip_message(
                 fields.push(video_clip_message_clip_start_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -29380,6 +30971,7 @@ fn video_clip_message(
                 fields.push(video_clip_message_clip_end_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -29395,6 +30987,7 @@ fn video_clip_message(
 fn video_clip_message_clip_number_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -29419,6 +31012,7 @@ fn video_clip_message_clip_number_field(
 fn video_clip_message_start_timestamp_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -29443,6 +31037,7 @@ fn video_clip_message_start_timestamp_field(
 fn video_clip_message_start_timestamp_ms_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -29467,6 +31062,7 @@ fn video_clip_message_start_timestamp_ms_field(
 fn video_clip_message_end_timestamp_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -29491,6 +31087,7 @@ fn video_clip_message_end_timestamp_field(
 fn video_clip_message_end_timestamp_ms_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -29515,6 +31112,7 @@ fn video_clip_message_end_timestamp_ms_field(
 fn video_clip_message_clip_start_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -29539,6 +31137,7 @@ fn video_clip_message_clip_start_field(
 fn video_clip_message_clip_end_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -29574,6 +31173,7 @@ fn set_message(
                 fields.push(set_message_duration_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -29586,6 +31186,7 @@ fn set_message(
                 fields.push(set_message_repetitions_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -29598,6 +31199,7 @@ fn set_message(
                 fields.push(set_message_weight_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     16.000000,
                     0.000000,
@@ -29609,6 +31211,7 @@ fn set_message(
                 fields.push(set_message_set_type_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -29621,6 +31224,7 @@ fn set_message(
                 fields.push(set_message_start_time_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -29632,6 +31236,7 @@ fn set_message(
                 fields.push(set_message_category_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -29644,6 +31249,7 @@ fn set_message(
                 fields.push(set_message_category_subtype_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -29655,6 +31261,7 @@ fn set_message(
                 fields.push(set_message_weight_display_unit_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -29666,6 +31273,7 @@ fn set_message(
                 fields.push(set_message_message_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -29677,6 +31285,7 @@ fn set_message(
                 fields.push(set_message_wkt_step_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -29689,6 +31298,7 @@ fn set_message(
                 fields.push(set_message_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -29704,6 +31314,7 @@ fn set_message(
 fn set_message_duration_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -29728,6 +31339,7 @@ fn set_message_duration_field(
 fn set_message_repetitions_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -29752,6 +31364,7 @@ fn set_message_repetitions_field(
 fn set_message_weight_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -29776,6 +31389,7 @@ fn set_message_weight_field(
 fn set_message_set_type_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -29800,6 +31414,7 @@ fn set_message_set_type_field(
 fn set_message_start_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -29824,6 +31439,7 @@ fn set_message_start_time_field(
 fn set_message_category_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -29848,6 +31464,7 @@ fn set_message_category_field(
 fn set_message_category_subtype_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -29872,6 +31489,7 @@ fn set_message_category_subtype_field(
 fn set_message_weight_display_unit_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -29896,6 +31514,7 @@ fn set_message_weight_display_unit_field(
 fn set_message_message_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -29920,6 +31539,7 @@ fn set_message_message_index_field(
 fn set_message_wkt_step_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -29944,6 +31564,7 @@ fn set_message_wkt_step_index_field(
 fn set_message_timestamp_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -29979,6 +31600,7 @@ fn jump_message(
                 fields.push(jump_message_distance_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -29990,6 +31612,7 @@ fn jump_message(
                 fields.push(jump_message_height_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -30001,6 +31624,7 @@ fn jump_message(
                 fields.push(jump_message_rotations_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -30012,6 +31636,7 @@ fn jump_message(
                 fields.push(jump_message_hang_time_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -30024,6 +31649,7 @@ fn jump_message(
                 fields.push(jump_message_score_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -30035,6 +31661,7 @@ fn jump_message(
                 fields.push(jump_message_position_lat_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -30046,6 +31673,7 @@ fn jump_message(
                 fields.push(jump_message_position_long_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -30059,6 +31687,7 @@ fn jump_message(
                 fields.push(jump_message_enhanced_speed_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -30070,6 +31699,7 @@ fn jump_message(
                 fields.push(jump_message_enhanced_speed_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -30081,6 +31711,7 @@ fn jump_message(
                 fields.push(jump_message_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -30096,6 +31727,7 @@ fn jump_message(
 fn jump_message_distance_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -30120,6 +31752,7 @@ fn jump_message_distance_field(
 fn jump_message_height_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -30144,6 +31777,7 @@ fn jump_message_height_field(
 fn jump_message_rotations_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -30168,6 +31802,7 @@ fn jump_message_rotations_field(
 fn jump_message_hang_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -30192,6 +31827,7 @@ fn jump_message_hang_time_field(
 fn jump_message_score_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -30216,6 +31852,7 @@ fn jump_message_score_field(
 fn jump_message_position_lat_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -30240,6 +31877,7 @@ fn jump_message_position_lat_field(
 fn jump_message_position_long_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -30264,6 +31902,7 @@ fn jump_message_position_long_field(
 fn jump_message_speed_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -30288,6 +31927,7 @@ fn jump_message_speed_field(
 fn jump_message_enhanced_speed_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -30312,6 +31952,7 @@ fn jump_message_enhanced_speed_field(
 fn jump_message_timestamp_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -30347,6 +31988,7 @@ fn climb_pro_message(
                 fields.push(climb_pro_message_position_lat_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -30358,6 +32000,7 @@ fn climb_pro_message(
                 fields.push(climb_pro_message_position_long_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -30369,6 +32012,7 @@ fn climb_pro_message(
                 fields.push(climb_pro_message_climb_pro_event_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -30380,6 +32024,7 @@ fn climb_pro_message(
                 fields.push(climb_pro_message_climb_number_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -30391,6 +32036,7 @@ fn climb_pro_message(
                 fields.push(climb_pro_message_climb_category_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -30402,6 +32048,7 @@ fn climb_pro_message(
                 fields.push(climb_pro_message_current_dist_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -30413,6 +32060,7 @@ fn climb_pro_message(
                 fields.push(climb_pro_message_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -30428,6 +32076,7 @@ fn climb_pro_message(
 fn climb_pro_message_position_lat_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -30452,6 +32101,7 @@ fn climb_pro_message_position_lat_field(
 fn climb_pro_message_position_long_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -30476,6 +32126,7 @@ fn climb_pro_message_position_long_field(
 fn climb_pro_message_climb_pro_event_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -30500,6 +32151,7 @@ fn climb_pro_message_climb_pro_event_field(
 fn climb_pro_message_climb_number_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -30524,6 +32176,7 @@ fn climb_pro_message_climb_number_field(
 fn climb_pro_message_climb_category_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -30548,6 +32201,7 @@ fn climb_pro_message_climb_category_field(
 fn climb_pro_message_current_dist_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -30572,6 +32226,7 @@ fn climb_pro_message_current_dist_field(
 fn climb_pro_message_timestamp_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -30608,6 +32263,7 @@ fn field_description_message(
                 fields.push(field_description_message_developer_data_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -30619,6 +32275,7 @@ fn field_description_message(
                 fields.push(field_description_message_field_definition_number_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -30630,6 +32287,7 @@ fn field_description_message(
                 fields.push(field_description_message_fit_base_type_id_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -30641,6 +32299,7 @@ fn field_description_message(
                 fields.push(field_description_message_field_name_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -30652,6 +32311,7 @@ fn field_description_message(
                 fields.push(field_description_message_array_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -30663,6 +32323,7 @@ fn field_description_message(
                 fields.push(field_description_message_components_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -30674,6 +32335,7 @@ fn field_description_message(
                 fields.push(field_description_message_scale_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -30685,6 +32347,7 @@ fn field_description_message(
                 fields.push(field_description_message_offset_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -30696,6 +32359,7 @@ fn field_description_message(
                 fields.push(field_description_message_units_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -30707,6 +32371,7 @@ fn field_description_message(
                 fields.push(field_description_message_bits_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -30718,6 +32383,7 @@ fn field_description_message(
                 fields.push(field_description_message_accumulate_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -30729,6 +32395,7 @@ fn field_description_message(
                 fields.push(field_description_message_fit_base_unit_id_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -30740,6 +32407,7 @@ fn field_description_message(
                 fields.push(field_description_message_native_mesg_num_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -30751,6 +32419,7 @@ fn field_description_message(
                 fields.push(field_description_message_native_field_num_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -30766,6 +32435,7 @@ fn field_description_message(
 fn field_description_message_developer_data_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -30790,6 +32460,7 @@ fn field_description_message_developer_data_index_field(
 fn field_description_message_field_definition_number_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -30814,6 +32485,7 @@ fn field_description_message_field_definition_number_field(
 fn field_description_message_fit_base_type_id_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -30838,6 +32510,7 @@ fn field_description_message_fit_base_type_id_field(
 fn field_description_message_field_name_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -30862,6 +32535,7 @@ fn field_description_message_field_name_field(
 fn field_description_message_array_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -30886,6 +32560,7 @@ fn field_description_message_array_field(
 fn field_description_message_components_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -30910,6 +32585,7 @@ fn field_description_message_components_field(
 fn field_description_message_scale_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -30934,6 +32610,7 @@ fn field_description_message_scale_field(
 fn field_description_message_offset_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -30958,6 +32635,7 @@ fn field_description_message_offset_field(
 fn field_description_message_units_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -30982,6 +32660,7 @@ fn field_description_message_units_field(
 fn field_description_message_bits_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -31006,6 +32685,7 @@ fn field_description_message_bits_field(
 fn field_description_message_accumulate_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -31030,6 +32710,7 @@ fn field_description_message_accumulate_field(
 fn field_description_message_fit_base_unit_id_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -31054,6 +32735,7 @@ fn field_description_message_fit_base_unit_id_field(
 fn field_description_message_native_mesg_num_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -31078,6 +32760,7 @@ fn field_description_message_native_mesg_num_field(
 fn field_description_message_native_field_num_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -31114,6 +32797,7 @@ fn developer_data_id_message(
                 fields.push(developer_data_id_message_developer_id_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -31125,6 +32809,7 @@ fn developer_data_id_message(
                 fields.push(developer_data_id_message_application_id_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -31136,6 +32821,7 @@ fn developer_data_id_message(
                 fields.push(developer_data_id_message_manufacturer_id_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -31147,6 +32833,7 @@ fn developer_data_id_message(
                 fields.push(developer_data_id_message_developer_data_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -31158,6 +32845,7 @@ fn developer_data_id_message(
                 fields.push(developer_data_id_message_application_version_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -31173,6 +32861,7 @@ fn developer_data_id_message(
 fn developer_data_id_message_developer_id_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -31197,6 +32886,7 @@ fn developer_data_id_message_developer_id_field(
 fn developer_data_id_message_application_id_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -31221,6 +32911,7 @@ fn developer_data_id_message_application_id_field(
 fn developer_data_id_message_manufacturer_id_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -31245,6 +32936,7 @@ fn developer_data_id_message_manufacturer_id_field(
 fn developer_data_id_message_developer_data_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -31269,6 +32961,7 @@ fn developer_data_id_message_developer_data_index_field(
 fn developer_data_id_message_application_version_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -31304,6 +32997,7 @@ fn course_message(
                 fields.push(course_message_sport_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -31315,6 +33009,7 @@ fn course_message(
                 fields.push(course_message_name_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -31326,6 +33021,7 @@ fn course_message(
                 fields.push(course_message_capabilities_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -31337,6 +33033,7 @@ fn course_message(
                 fields.push(course_message_sub_sport_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -31352,6 +33049,7 @@ fn course_message(
 fn course_message_sport_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -31376,6 +33074,7 @@ fn course_message_sport_field(
 fn course_message_name_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -31400,6 +33099,7 @@ fn course_message_name_field(
 fn course_message_capabilities_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -31424,6 +33124,7 @@ fn course_message_capabilities_field(
 fn course_message_sub_sport_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -31459,6 +33160,7 @@ fn course_point_message(
                 fields.push(course_point_message_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -31470,6 +33172,7 @@ fn course_point_message(
                 fields.push(course_point_message_position_lat_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -31481,6 +33184,7 @@ fn course_point_message(
                 fields.push(course_point_message_position_long_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -31492,6 +33196,7 @@ fn course_point_message(
                 fields.push(course_point_message_distance_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -31503,6 +33208,7 @@ fn course_point_message(
                 fields.push(course_point_message_type_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -31514,6 +33220,7 @@ fn course_point_message(
                 fields.push(course_point_message_name_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -31525,6 +33232,7 @@ fn course_point_message(
                 fields.push(course_point_message_favorite_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -31536,6 +33244,7 @@ fn course_point_message(
                 fields.push(course_point_message_message_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -31551,6 +33260,7 @@ fn course_point_message(
 fn course_point_message_timestamp_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -31575,6 +33285,7 @@ fn course_point_message_timestamp_field(
 fn course_point_message_position_lat_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -31599,6 +33310,7 @@ fn course_point_message_position_lat_field(
 fn course_point_message_position_long_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -31623,6 +33335,7 @@ fn course_point_message_position_long_field(
 fn course_point_message_distance_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -31647,6 +33360,7 @@ fn course_point_message_distance_field(
 fn course_point_message_type_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -31671,6 +33385,7 @@ fn course_point_message_type_field(
 fn course_point_message_name_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -31695,6 +33410,7 @@ fn course_point_message_name_field(
 fn course_point_message_favorite_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -31719,6 +33435,7 @@ fn course_point_message_favorite_field(
 fn course_point_message_message_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -31756,6 +33473,7 @@ fn segment_id_message(
                 fields.push(segment_id_message_name_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -31768,6 +33486,7 @@ fn segment_id_message(
                 fields.push(segment_id_message_uuid_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -31780,6 +33499,7 @@ fn segment_id_message(
                 fields.push(segment_id_message_sport_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -31792,6 +33512,7 @@ fn segment_id_message(
                 fields.push(segment_id_message_enabled_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -31804,6 +33525,7 @@ fn segment_id_message(
                 fields.push(segment_id_message_user_profile_primary_key_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -31816,6 +33538,7 @@ fn segment_id_message(
                 fields.push(segment_id_message_device_id_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -31828,6 +33551,7 @@ fn segment_id_message(
                 fields.push(segment_id_message_default_race_leader_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -31840,6 +33564,7 @@ fn segment_id_message(
                 fields.push(segment_id_message_delete_status_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -31852,6 +33577,7 @@ fn segment_id_message(
                 fields.push(segment_id_message_selection_type_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -31867,6 +33593,7 @@ fn segment_id_message(
 fn segment_id_message_name_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -31891,6 +33618,7 @@ fn segment_id_message_name_field(
 fn segment_id_message_uuid_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -31915,6 +33643,7 @@ fn segment_id_message_uuid_field(
 fn segment_id_message_sport_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -31939,6 +33668,7 @@ fn segment_id_message_sport_field(
 fn segment_id_message_enabled_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -31963,6 +33693,7 @@ fn segment_id_message_enabled_field(
 fn segment_id_message_user_profile_primary_key_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -31987,6 +33718,7 @@ fn segment_id_message_user_profile_primary_key_field(
 fn segment_id_message_device_id_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -32011,6 +33743,7 @@ fn segment_id_message_device_id_field(
 fn segment_id_message_default_race_leader_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -32035,6 +33768,7 @@ fn segment_id_message_default_race_leader_field(
 fn segment_id_message_delete_status_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -32059,6 +33793,7 @@ fn segment_id_message_delete_status_field(
 fn segment_id_message_selection_type_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -32096,6 +33831,7 @@ fn segment_leaderboard_entry_message(
                 fields.push(segment_leaderboard_entry_message_name_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -32108,6 +33844,7 @@ fn segment_leaderboard_entry_message(
                 fields.push(segment_leaderboard_entry_message_type_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -32120,6 +33857,7 @@ fn segment_leaderboard_entry_message(
                 fields.push(segment_leaderboard_entry_message_group_primary_key_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -32132,6 +33870,7 @@ fn segment_leaderboard_entry_message(
                 fields.push(segment_leaderboard_entry_message_activity_id_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -32144,6 +33883,7 @@ fn segment_leaderboard_entry_message(
                 fields.push(segment_leaderboard_entry_message_segment_time_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -32156,6 +33896,7 @@ fn segment_leaderboard_entry_message(
                 fields.push(segment_leaderboard_entry_message_activity_id_string_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -32167,6 +33908,7 @@ fn segment_leaderboard_entry_message(
                 fields.push(segment_leaderboard_entry_message_message_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -32182,6 +33924,7 @@ fn segment_leaderboard_entry_message(
 fn segment_leaderboard_entry_message_name_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -32206,6 +33949,7 @@ fn segment_leaderboard_entry_message_name_field(
 fn segment_leaderboard_entry_message_type_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -32230,6 +33974,7 @@ fn segment_leaderboard_entry_message_type_field(
 fn segment_leaderboard_entry_message_group_primary_key_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -32254,6 +33999,7 @@ fn segment_leaderboard_entry_message_group_primary_key_field(
 fn segment_leaderboard_entry_message_activity_id_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -32278,6 +34024,7 @@ fn segment_leaderboard_entry_message_activity_id_field(
 fn segment_leaderboard_entry_message_segment_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -32302,6 +34049,7 @@ fn segment_leaderboard_entry_message_segment_time_field(
 fn segment_leaderboard_entry_message_activity_id_string_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -32326,6 +34074,7 @@ fn segment_leaderboard_entry_message_activity_id_string_field(
 fn segment_leaderboard_entry_message_message_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -32362,6 +34111,7 @@ fn segment_point_message(
                 fields.push(segment_point_message_position_lat_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -32373,6 +34123,7 @@ fn segment_point_message(
                 fields.push(segment_point_message_position_long_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -32385,6 +34136,7 @@ fn segment_point_message(
                 fields.push(segment_point_message_distance_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -32397,6 +34149,7 @@ fn segment_point_message(
                 fields.push(segment_point_message_altitude_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     5.000000,
                     500.000000,
@@ -32409,6 +34162,7 @@ fn segment_point_message(
                 fields.push(segment_point_message_leader_time_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -32420,6 +34174,7 @@ fn segment_point_message(
                 fields.push(segment_point_message_message_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -32435,6 +34190,7 @@ fn segment_point_message(
 fn segment_point_message_position_lat_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -32459,6 +34215,7 @@ fn segment_point_message_position_lat_field(
 fn segment_point_message_position_long_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -32483,6 +34240,7 @@ fn segment_point_message_position_long_field(
 fn segment_point_message_distance_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -32507,6 +34265,7 @@ fn segment_point_message_distance_field(
 fn segment_point_message_altitude_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -32531,6 +34290,7 @@ fn segment_point_message_altitude_field(
 fn segment_point_message_leader_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -32555,6 +34315,7 @@ fn segment_point_message_leader_time_field(
 fn segment_point_message_message_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -32590,6 +34351,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_event_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -32601,6 +34363,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_event_type_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -32612,6 +34375,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_start_time_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -32623,6 +34387,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_start_position_lat_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -32634,6 +34399,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_start_position_long_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -32645,6 +34411,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_end_position_lat_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -32656,6 +34423,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_end_position_long_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -32668,6 +34436,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_total_elapsed_time_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -32680,6 +34449,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_total_timer_time_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -32691,6 +34461,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_total_distance_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -32699,38 +34470,22 @@ fn segment_lap_message(
                 )?);
             }
             10 => {
-                if Sport::Cycling.as_i64()
-                    == data_map
-                        .get(&23)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(segment_lap_message_total_strokes_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "strokes",
-                        value,
-                    )?);
-                } else {
-                    fields.push(segment_lap_message_total_cycles_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "cycles",
-                        value,
-                    )?);
-                }
+                fields.push(segment_lap_message_total_cycles_field(
+                    mesg_num,
+                    accumlators,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "cycles",
+                    value,
+                )?);
             }
             11 => {
                 fields.push(segment_lap_message_total_calories_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -32743,6 +34498,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_total_fat_calories_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -32754,6 +34510,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_avg_speed_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -32765,6 +34522,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_max_speed_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -32776,6 +34534,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_avg_heart_rate_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -32787,6 +34546,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_max_heart_rate_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -32799,6 +34559,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_avg_cadence_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -32810,6 +34571,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_max_cadence_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -32822,6 +34584,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_avg_power_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -32833,6 +34596,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_max_power_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -32844,6 +34608,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_total_ascent_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -32855,6 +34620,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_total_descent_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -32866,6 +34632,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_sport_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -32877,6 +34644,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_event_group_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -32889,6 +34657,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_nec_lat_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -32901,6 +34670,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_nec_long_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -32913,6 +34683,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_swc_lat_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -32925,6 +34696,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_swc_long_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -32936,6 +34708,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_name_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -32947,6 +34720,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_normalized_power_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -32958,6 +34732,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_left_right_balance_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -32969,6 +34744,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_sub_sport_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -32980,6 +34756,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_total_work_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -32991,6 +34768,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_avg_altitude_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     5.000000,
                     500.000000,
@@ -33002,6 +34780,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_max_altitude_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     5.000000,
                     500.000000,
@@ -33013,6 +34792,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_gps_accuracy_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -33024,6 +34804,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_avg_grade_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -33035,6 +34816,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_avg_pos_grade_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -33046,6 +34828,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_avg_neg_grade_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -33057,6 +34840,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_max_pos_grade_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -33068,6 +34852,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_max_neg_grade_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -33079,6 +34864,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_avg_temperature_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -33090,6 +34876,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_max_temperature_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -33101,6 +34888,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_total_moving_time_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -33112,6 +34900,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_avg_pos_vertical_speed_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -33123,6 +34912,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_avg_neg_vertical_speed_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -33134,6 +34924,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_max_pos_vertical_speed_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -33145,6 +34936,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_max_neg_vertical_speed_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -33156,6 +34948,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_time_in_hr_zone_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -33167,6 +34960,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_time_in_speed_zone_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -33178,6 +34972,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_time_in_cadence_zone_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -33189,6 +34984,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_time_in_power_zone_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -33200,6 +34996,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_repetition_num_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -33211,6 +35008,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_min_altitude_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     5.000000,
                     500.000000,
@@ -33222,6 +35020,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_min_heart_rate_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -33233,6 +35032,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_active_time_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -33244,6 +35044,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_wkt_step_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -33255,6 +35056,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_sport_event_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -33266,6 +35068,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_avg_left_torque_effectiveness_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     2.000000,
                     0.000000,
@@ -33277,6 +35080,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_avg_right_torque_effectiveness_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     2.000000,
                     0.000000,
@@ -33288,6 +35092,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_avg_left_pedal_smoothness_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     2.000000,
                     0.000000,
@@ -33299,6 +35104,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_avg_right_pedal_smoothness_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     2.000000,
                     0.000000,
@@ -33310,6 +35116,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_avg_combined_pedal_smoothness_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     2.000000,
                     0.000000,
@@ -33321,6 +35128,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_status_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -33332,6 +35140,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_uuid_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -33344,6 +35153,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_avg_fractional_cadence_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     128.000000,
                     0.000000,
@@ -33356,6 +35166,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_max_fractional_cadence_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     128.000000,
                     0.000000,
@@ -33368,6 +35179,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_total_fractional_cycles_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     128.000000,
                     0.000000,
@@ -33379,6 +35191,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_front_gear_shift_count_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -33390,6 +35203,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_rear_gear_shift_count_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -33402,6 +35216,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_time_standing_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -33414,6 +35229,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_stand_count_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -33426,6 +35242,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_avg_left_pco_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -33438,6 +35255,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_avg_right_pco_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -33450,6 +35268,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_avg_left_power_phase_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     0.711111,
                     0.000000,
@@ -33462,6 +35281,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_avg_left_power_phase_peak_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     0.711111,
                     0.000000,
@@ -33474,6 +35294,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_avg_right_power_phase_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     0.711111,
                     0.000000,
@@ -33486,6 +35307,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_avg_right_power_phase_peak_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     0.711111,
                     0.000000,
@@ -33498,6 +35320,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_avg_power_position_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -33510,6 +35333,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_max_power_position_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -33522,6 +35346,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_avg_cadence_position_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -33534,6 +35359,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_max_cadence_position_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -33546,6 +35372,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_manufacturer_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -33558,6 +35385,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_total_grit_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -33570,6 +35398,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_total_flow_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -33582,6 +35411,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_avg_grit_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -33594,6 +35424,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_avg_flow_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -33606,6 +35437,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_total_fractional_ascent_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -33618,6 +35450,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_total_fractional_descent_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -33630,6 +35463,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -33641,6 +35475,7 @@ fn segment_lap_message(
                 fields.push(segment_lap_message_message_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -33656,6 +35491,7 @@ fn segment_lap_message(
 fn segment_lap_message_event_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -33680,6 +35516,7 @@ fn segment_lap_message_event_field(
 fn segment_lap_message_event_type_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -33704,6 +35541,7 @@ fn segment_lap_message_event_type_field(
 fn segment_lap_message_start_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -33728,6 +35566,7 @@ fn segment_lap_message_start_time_field(
 fn segment_lap_message_start_position_lat_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -33752,6 +35591,7 @@ fn segment_lap_message_start_position_lat_field(
 fn segment_lap_message_start_position_long_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -33776,6 +35616,7 @@ fn segment_lap_message_start_position_long_field(
 fn segment_lap_message_end_position_lat_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -33800,6 +35641,7 @@ fn segment_lap_message_end_position_lat_field(
 fn segment_lap_message_end_position_long_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -33824,6 +35666,7 @@ fn segment_lap_message_end_position_long_field(
 fn segment_lap_message_total_elapsed_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -33848,6 +35691,7 @@ fn segment_lap_message_total_elapsed_time_field(
 fn segment_lap_message_total_timer_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -33872,6 +35716,7 @@ fn segment_lap_message_total_timer_time_field(
 fn segment_lap_message_total_distance_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -33896,12 +35741,31 @@ fn segment_lap_message_total_distance_field(
 fn segment_lap_message_total_cycles_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
     units: &'static str,
     value: Value,
 ) -> Result<FitDataField> {
+    if Sport::Cycling.as_i64()
+        == data_map
+            .get(&23)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return segment_lap_message_total_strokes_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "strokes",
+            value,
+        );
+    }
     let value = if accumulate {
         calculate_cumulative_value(accumlators, mesg_num.as_u16(), 10, value)?
     } else {
@@ -33920,6 +35784,7 @@ fn segment_lap_message_total_cycles_field(
 fn segment_lap_message_total_strokes_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -33944,6 +35809,7 @@ fn segment_lap_message_total_strokes_field(
 fn segment_lap_message_total_calories_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -33968,6 +35834,7 @@ fn segment_lap_message_total_calories_field(
 fn segment_lap_message_total_fat_calories_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -33992,6 +35859,7 @@ fn segment_lap_message_total_fat_calories_field(
 fn segment_lap_message_avg_speed_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -34016,6 +35884,7 @@ fn segment_lap_message_avg_speed_field(
 fn segment_lap_message_max_speed_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -34040,6 +35909,7 @@ fn segment_lap_message_max_speed_field(
 fn segment_lap_message_avg_heart_rate_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -34064,6 +35934,7 @@ fn segment_lap_message_avg_heart_rate_field(
 fn segment_lap_message_max_heart_rate_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -34088,6 +35959,7 @@ fn segment_lap_message_max_heart_rate_field(
 fn segment_lap_message_avg_cadence_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -34112,6 +35984,7 @@ fn segment_lap_message_avg_cadence_field(
 fn segment_lap_message_max_cadence_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -34136,6 +36009,7 @@ fn segment_lap_message_max_cadence_field(
 fn segment_lap_message_avg_power_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -34160,6 +36034,7 @@ fn segment_lap_message_avg_power_field(
 fn segment_lap_message_max_power_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -34184,6 +36059,7 @@ fn segment_lap_message_max_power_field(
 fn segment_lap_message_total_ascent_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -34208,6 +36084,7 @@ fn segment_lap_message_total_ascent_field(
 fn segment_lap_message_total_descent_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -34232,6 +36109,7 @@ fn segment_lap_message_total_descent_field(
 fn segment_lap_message_sport_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -34256,6 +36134,7 @@ fn segment_lap_message_sport_field(
 fn segment_lap_message_event_group_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -34280,6 +36159,7 @@ fn segment_lap_message_event_group_field(
 fn segment_lap_message_nec_lat_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -34304,6 +36184,7 @@ fn segment_lap_message_nec_lat_field(
 fn segment_lap_message_nec_long_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -34328,6 +36209,7 @@ fn segment_lap_message_nec_long_field(
 fn segment_lap_message_swc_lat_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -34352,6 +36234,7 @@ fn segment_lap_message_swc_lat_field(
 fn segment_lap_message_swc_long_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -34376,6 +36259,7 @@ fn segment_lap_message_swc_long_field(
 fn segment_lap_message_name_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -34400,6 +36284,7 @@ fn segment_lap_message_name_field(
 fn segment_lap_message_normalized_power_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -34424,6 +36309,7 @@ fn segment_lap_message_normalized_power_field(
 fn segment_lap_message_left_right_balance_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -34448,6 +36334,7 @@ fn segment_lap_message_left_right_balance_field(
 fn segment_lap_message_sub_sport_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -34472,6 +36359,7 @@ fn segment_lap_message_sub_sport_field(
 fn segment_lap_message_total_work_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -34496,6 +36384,7 @@ fn segment_lap_message_total_work_field(
 fn segment_lap_message_avg_altitude_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -34520,6 +36409,7 @@ fn segment_lap_message_avg_altitude_field(
 fn segment_lap_message_max_altitude_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -34544,6 +36434,7 @@ fn segment_lap_message_max_altitude_field(
 fn segment_lap_message_gps_accuracy_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -34568,6 +36459,7 @@ fn segment_lap_message_gps_accuracy_field(
 fn segment_lap_message_avg_grade_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -34592,6 +36484,7 @@ fn segment_lap_message_avg_grade_field(
 fn segment_lap_message_avg_pos_grade_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -34616,6 +36509,7 @@ fn segment_lap_message_avg_pos_grade_field(
 fn segment_lap_message_avg_neg_grade_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -34640,6 +36534,7 @@ fn segment_lap_message_avg_neg_grade_field(
 fn segment_lap_message_max_pos_grade_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -34664,6 +36559,7 @@ fn segment_lap_message_max_pos_grade_field(
 fn segment_lap_message_max_neg_grade_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -34688,6 +36584,7 @@ fn segment_lap_message_max_neg_grade_field(
 fn segment_lap_message_avg_temperature_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -34712,6 +36609,7 @@ fn segment_lap_message_avg_temperature_field(
 fn segment_lap_message_max_temperature_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -34736,6 +36634,7 @@ fn segment_lap_message_max_temperature_field(
 fn segment_lap_message_total_moving_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -34760,6 +36659,7 @@ fn segment_lap_message_total_moving_time_field(
 fn segment_lap_message_avg_pos_vertical_speed_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -34784,6 +36684,7 @@ fn segment_lap_message_avg_pos_vertical_speed_field(
 fn segment_lap_message_avg_neg_vertical_speed_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -34808,6 +36709,7 @@ fn segment_lap_message_avg_neg_vertical_speed_field(
 fn segment_lap_message_max_pos_vertical_speed_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -34832,6 +36734,7 @@ fn segment_lap_message_max_pos_vertical_speed_field(
 fn segment_lap_message_max_neg_vertical_speed_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -34856,6 +36759,7 @@ fn segment_lap_message_max_neg_vertical_speed_field(
 fn segment_lap_message_time_in_hr_zone_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -34880,6 +36784,7 @@ fn segment_lap_message_time_in_hr_zone_field(
 fn segment_lap_message_time_in_speed_zone_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -34904,6 +36809,7 @@ fn segment_lap_message_time_in_speed_zone_field(
 fn segment_lap_message_time_in_cadence_zone_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -34928,6 +36834,7 @@ fn segment_lap_message_time_in_cadence_zone_field(
 fn segment_lap_message_time_in_power_zone_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -34952,6 +36859,7 @@ fn segment_lap_message_time_in_power_zone_field(
 fn segment_lap_message_repetition_num_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -34976,6 +36884,7 @@ fn segment_lap_message_repetition_num_field(
 fn segment_lap_message_min_altitude_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -35000,6 +36909,7 @@ fn segment_lap_message_min_altitude_field(
 fn segment_lap_message_min_heart_rate_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -35024,6 +36934,7 @@ fn segment_lap_message_min_heart_rate_field(
 fn segment_lap_message_active_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -35048,6 +36959,7 @@ fn segment_lap_message_active_time_field(
 fn segment_lap_message_wkt_step_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -35072,6 +36984,7 @@ fn segment_lap_message_wkt_step_index_field(
 fn segment_lap_message_sport_event_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -35096,6 +37009,7 @@ fn segment_lap_message_sport_event_field(
 fn segment_lap_message_avg_left_torque_effectiveness_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -35120,6 +37034,7 @@ fn segment_lap_message_avg_left_torque_effectiveness_field(
 fn segment_lap_message_avg_right_torque_effectiveness_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -35144,6 +37059,7 @@ fn segment_lap_message_avg_right_torque_effectiveness_field(
 fn segment_lap_message_avg_left_pedal_smoothness_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -35168,6 +37084,7 @@ fn segment_lap_message_avg_left_pedal_smoothness_field(
 fn segment_lap_message_avg_right_pedal_smoothness_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -35192,6 +37109,7 @@ fn segment_lap_message_avg_right_pedal_smoothness_field(
 fn segment_lap_message_avg_combined_pedal_smoothness_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -35216,6 +37134,7 @@ fn segment_lap_message_avg_combined_pedal_smoothness_field(
 fn segment_lap_message_status_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -35240,6 +37159,7 @@ fn segment_lap_message_status_field(
 fn segment_lap_message_uuid_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -35264,6 +37184,7 @@ fn segment_lap_message_uuid_field(
 fn segment_lap_message_avg_fractional_cadence_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -35288,6 +37209,7 @@ fn segment_lap_message_avg_fractional_cadence_field(
 fn segment_lap_message_max_fractional_cadence_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -35312,6 +37234,7 @@ fn segment_lap_message_max_fractional_cadence_field(
 fn segment_lap_message_total_fractional_cycles_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -35336,6 +37259,7 @@ fn segment_lap_message_total_fractional_cycles_field(
 fn segment_lap_message_front_gear_shift_count_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -35360,6 +37284,7 @@ fn segment_lap_message_front_gear_shift_count_field(
 fn segment_lap_message_rear_gear_shift_count_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -35384,6 +37309,7 @@ fn segment_lap_message_rear_gear_shift_count_field(
 fn segment_lap_message_time_standing_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -35408,6 +37334,7 @@ fn segment_lap_message_time_standing_field(
 fn segment_lap_message_stand_count_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -35432,6 +37359,7 @@ fn segment_lap_message_stand_count_field(
 fn segment_lap_message_avg_left_pco_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -35456,6 +37384,7 @@ fn segment_lap_message_avg_left_pco_field(
 fn segment_lap_message_avg_right_pco_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -35480,6 +37409,7 @@ fn segment_lap_message_avg_right_pco_field(
 fn segment_lap_message_avg_left_power_phase_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -35504,6 +37434,7 @@ fn segment_lap_message_avg_left_power_phase_field(
 fn segment_lap_message_avg_left_power_phase_peak_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -35528,6 +37459,7 @@ fn segment_lap_message_avg_left_power_phase_peak_field(
 fn segment_lap_message_avg_right_power_phase_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -35552,6 +37484,7 @@ fn segment_lap_message_avg_right_power_phase_field(
 fn segment_lap_message_avg_right_power_phase_peak_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -35576,6 +37509,7 @@ fn segment_lap_message_avg_right_power_phase_peak_field(
 fn segment_lap_message_avg_power_position_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -35600,6 +37534,7 @@ fn segment_lap_message_avg_power_position_field(
 fn segment_lap_message_max_power_position_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -35624,6 +37559,7 @@ fn segment_lap_message_max_power_position_field(
 fn segment_lap_message_avg_cadence_position_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -35648,6 +37584,7 @@ fn segment_lap_message_avg_cadence_position_field(
 fn segment_lap_message_max_cadence_position_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -35672,6 +37609,7 @@ fn segment_lap_message_max_cadence_position_field(
 fn segment_lap_message_manufacturer_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -35696,6 +37634,7 @@ fn segment_lap_message_manufacturer_field(
 fn segment_lap_message_total_grit_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -35720,6 +37659,7 @@ fn segment_lap_message_total_grit_field(
 fn segment_lap_message_total_flow_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -35744,6 +37684,7 @@ fn segment_lap_message_total_flow_field(
 fn segment_lap_message_avg_grit_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -35768,6 +37709,7 @@ fn segment_lap_message_avg_grit_field(
 fn segment_lap_message_avg_flow_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -35792,6 +37734,7 @@ fn segment_lap_message_avg_flow_field(
 fn segment_lap_message_total_fractional_ascent_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -35816,6 +37759,7 @@ fn segment_lap_message_total_fractional_ascent_field(
 fn segment_lap_message_total_fractional_descent_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -35840,6 +37784,7 @@ fn segment_lap_message_total_fractional_descent_field(
 fn segment_lap_message_timestamp_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -35864,6 +37809,7 @@ fn segment_lap_message_timestamp_field(
 fn segment_lap_message_message_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -35901,6 +37847,7 @@ fn segment_file_message(
                 fields.push(segment_file_message_file_uuid_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -35913,6 +37860,7 @@ fn segment_file_message(
                 fields.push(segment_file_message_enabled_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -35925,6 +37873,7 @@ fn segment_file_message(
                 fields.push(segment_file_message_user_profile_primary_key_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -35937,6 +37886,7 @@ fn segment_file_message(
                 fields.push(segment_file_message_leader_type_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -35949,6 +37899,7 @@ fn segment_file_message(
                 fields.push(segment_file_message_leader_group_primary_key_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -35961,6 +37912,7 @@ fn segment_file_message(
                 fields.push(segment_file_message_leader_activity_id_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -35973,6 +37925,7 @@ fn segment_file_message(
                 fields.push(segment_file_message_leader_activity_id_string_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -35985,6 +37938,7 @@ fn segment_file_message(
                 fields.push(segment_file_message_default_race_leader_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -35996,6 +37950,7 @@ fn segment_file_message(
                 fields.push(segment_file_message_message_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -36011,6 +37966,7 @@ fn segment_file_message(
 fn segment_file_message_file_uuid_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -36035,6 +37991,7 @@ fn segment_file_message_file_uuid_field(
 fn segment_file_message_enabled_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -36059,6 +38016,7 @@ fn segment_file_message_enabled_field(
 fn segment_file_message_user_profile_primary_key_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -36083,6 +38041,7 @@ fn segment_file_message_user_profile_primary_key_field(
 fn segment_file_message_leader_type_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -36107,6 +38066,7 @@ fn segment_file_message_leader_type_field(
 fn segment_file_message_leader_group_primary_key_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -36131,6 +38091,7 @@ fn segment_file_message_leader_group_primary_key_field(
 fn segment_file_message_leader_activity_id_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -36155,6 +38116,7 @@ fn segment_file_message_leader_activity_id_field(
 fn segment_file_message_leader_activity_id_string_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -36179,6 +38141,7 @@ fn segment_file_message_leader_activity_id_string_field(
 fn segment_file_message_default_race_leader_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -36203,6 +38166,7 @@ fn segment_file_message_default_race_leader_field(
 fn segment_file_message_message_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -36238,6 +38202,7 @@ fn workout_message(
                 fields.push(workout_message_sport_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -36249,6 +38214,7 @@ fn workout_message(
                 fields.push(workout_message_capabilities_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -36261,6 +38227,7 @@ fn workout_message(
                 fields.push(workout_message_num_valid_steps_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -36272,6 +38239,7 @@ fn workout_message(
                 fields.push(workout_message_wkt_name_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -36283,6 +38251,7 @@ fn workout_message(
                 fields.push(workout_message_sub_sport_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -36294,6 +38263,7 @@ fn workout_message(
                 fields.push(workout_message_pool_length_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -36305,6 +38275,7 @@ fn workout_message(
                 fields.push(workout_message_pool_length_unit_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -36320,6 +38291,7 @@ fn workout_message(
 fn workout_message_sport_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -36344,6 +38316,7 @@ fn workout_message_sport_field(
 fn workout_message_capabilities_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -36368,6 +38341,7 @@ fn workout_message_capabilities_field(
 fn workout_message_num_valid_steps_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -36392,6 +38366,7 @@ fn workout_message_num_valid_steps_field(
 fn workout_message_wkt_name_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -36416,6 +38391,7 @@ fn workout_message_wkt_name_field(
 fn workout_message_sub_sport_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -36440,6 +38416,7 @@ fn workout_message_sub_sport_field(
 fn workout_message_pool_length_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -36464,6 +38441,7 @@ fn workout_message_pool_length_field(
 fn workout_message_pool_length_unit_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -36499,6 +38477,7 @@ fn workout_session_message(
                 fields.push(workout_session_message_sport_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -36510,6 +38489,7 @@ fn workout_session_message(
                 fields.push(workout_session_message_sub_sport_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -36521,6 +38501,7 @@ fn workout_session_message(
                 fields.push(workout_session_message_num_valid_steps_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -36532,6 +38513,7 @@ fn workout_session_message(
                 fields.push(workout_session_message_first_step_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -36543,6 +38525,7 @@ fn workout_session_message(
                 fields.push(workout_session_message_pool_length_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -36554,6 +38537,7 @@ fn workout_session_message(
                 fields.push(workout_session_message_pool_length_unit_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -36565,6 +38549,7 @@ fn workout_session_message(
                 fields.push(workout_session_message_message_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -36580,6 +38565,7 @@ fn workout_session_message(
 fn workout_session_message_sport_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -36604,6 +38590,7 @@ fn workout_session_message_sport_field(
 fn workout_session_message_sub_sport_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -36628,6 +38615,7 @@ fn workout_session_message_sub_sport_field(
 fn workout_session_message_num_valid_steps_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -36652,6 +38640,7 @@ fn workout_session_message_num_valid_steps_field(
 fn workout_session_message_first_step_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -36676,6 +38665,7 @@ fn workout_session_message_first_step_index_field(
 fn workout_session_message_pool_length_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -36700,6 +38690,7 @@ fn workout_session_message_pool_length_field(
 fn workout_session_message_pool_length_unit_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -36724,6 +38715,7 @@ fn workout_session_message_pool_length_unit_field(
 fn workout_session_message_message_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -36759,6 +38751,7 @@ fn workout_step_message(
                 fields.push(workout_step_message_wkt_step_name_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -36770,6 +38763,7 @@ fn workout_step_message(
                 fields.push(workout_step_message_duration_type_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -36778,294 +38772,22 @@ fn workout_step_message(
                 )?);
             }
             2 => {
-                if WktStepDuration::Time.as_i64()
-                    == data_map
-                        .get(&1)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(workout_step_message_duration_time_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1000.000000,
-                        0.000000,
-                        "s",
-                        value,
-                    )?);
-                } else if WktStepDuration::RepetitionTime.as_i64()
-                    == data_map
-                        .get(&1)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(workout_step_message_duration_time_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1000.000000,
-                        0.000000,
-                        "s",
-                        value,
-                    )?);
-                } else if WktStepDuration::Distance.as_i64()
-                    == data_map
-                        .get(&1)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(workout_step_message_duration_distance_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        100.000000,
-                        0.000000,
-                        "m",
-                        value,
-                    )?);
-                } else if WktStepDuration::HrLessThan.as_i64()
-                    == data_map
-                        .get(&1)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(workout_step_message_duration_hr_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "% or bpm",
-                        value,
-                    )?);
-                } else if WktStepDuration::HrGreaterThan.as_i64()
-                    == data_map
-                        .get(&1)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(workout_step_message_duration_hr_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "% or bpm",
-                        value,
-                    )?);
-                } else if WktStepDuration::Calories.as_i64()
-                    == data_map
-                        .get(&1)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(workout_step_message_duration_calories_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "calories",
-                        value,
-                    )?);
-                } else if WktStepDuration::RepeatUntilStepsCmplt.as_i64()
-                    == data_map
-                        .get(&1)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(workout_step_message_duration_step_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else if WktStepDuration::RepeatUntilTime.as_i64()
-                    == data_map
-                        .get(&1)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(workout_step_message_duration_step_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else if WktStepDuration::RepeatUntilDistance.as_i64()
-                    == data_map
-                        .get(&1)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(workout_step_message_duration_step_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else if WktStepDuration::RepeatUntilCalories.as_i64()
-                    == data_map
-                        .get(&1)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(workout_step_message_duration_step_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else if WktStepDuration::RepeatUntilHrLessThan.as_i64()
-                    == data_map
-                        .get(&1)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(workout_step_message_duration_step_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else if WktStepDuration::RepeatUntilHrGreaterThan.as_i64()
-                    == data_map
-                        .get(&1)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(workout_step_message_duration_step_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else if WktStepDuration::RepeatUntilPowerLessThan.as_i64()
-                    == data_map
-                        .get(&1)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(workout_step_message_duration_step_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else if WktStepDuration::RepeatUntilPowerGreaterThan.as_i64()
-                    == data_map
-                        .get(&1)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(workout_step_message_duration_step_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else if WktStepDuration::PowerLessThan.as_i64()
-                    == data_map
-                        .get(&1)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(workout_step_message_duration_power_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "% or watts",
-                        value,
-                    )?);
-                } else if WktStepDuration::PowerGreaterThan.as_i64()
-                    == data_map
-                        .get(&1)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(workout_step_message_duration_power_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "% or watts",
-                        value,
-                    )?);
-                } else if WktStepDuration::Reps.as_i64()
-                    == data_map
-                        .get(&1)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(workout_step_message_duration_reps_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else {
-                    fields.push(workout_step_message_duration_value_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                }
+                fields.push(workout_step_message_duration_value_field(
+                    mesg_num,
+                    accumlators,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "",
+                    value,
+                )?);
             }
             3 => {
                 fields.push(workout_step_message_target_type_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -37074,384 +38796,46 @@ fn workout_step_message(
                 )?);
             }
             4 => {
-                if WktStepTarget::Speed.as_i64()
-                    == data_map
-                        .get(&3)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(workout_step_message_target_speed_zone_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else if WktStepTarget::HeartRate.as_i64()
-                    == data_map
-                        .get(&3)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(workout_step_message_target_hr_zone_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else if WktStepTarget::Cadence.as_i64()
-                    == data_map
-                        .get(&3)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(workout_step_message_target_cadence_zone_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else if WktStepTarget::Power.as_i64()
-                    == data_map
-                        .get(&3)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(workout_step_message_target_power_zone_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else if WktStepDuration::RepeatUntilStepsCmplt.as_i64()
-                    == data_map
-                        .get(&1)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(workout_step_message_repeat_steps_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else if WktStepDuration::RepeatUntilTime.as_i64()
-                    == data_map
-                        .get(&1)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(workout_step_message_repeat_time_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1000.000000,
-                        0.000000,
-                        "s",
-                        value,
-                    )?);
-                } else if WktStepDuration::RepeatUntilDistance.as_i64()
-                    == data_map
-                        .get(&1)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(workout_step_message_repeat_distance_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        100.000000,
-                        0.000000,
-                        "m",
-                        value,
-                    )?);
-                } else if WktStepDuration::RepeatUntilCalories.as_i64()
-                    == data_map
-                        .get(&1)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(workout_step_message_repeat_calories_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "calories",
-                        value,
-                    )?);
-                } else if WktStepDuration::RepeatUntilHrLessThan.as_i64()
-                    == data_map
-                        .get(&1)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(workout_step_message_repeat_hr_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "% or bpm",
-                        value,
-                    )?);
-                } else if WktStepDuration::RepeatUntilHrGreaterThan.as_i64()
-                    == data_map
-                        .get(&1)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(workout_step_message_repeat_hr_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "% or bpm",
-                        value,
-                    )?);
-                } else if WktStepDuration::RepeatUntilPowerLessThan.as_i64()
-                    == data_map
-                        .get(&1)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(workout_step_message_repeat_power_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "% or watts",
-                        value,
-                    )?);
-                } else if WktStepDuration::RepeatUntilPowerGreaterThan.as_i64()
-                    == data_map
-                        .get(&1)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(workout_step_message_repeat_power_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "% or watts",
-                        value,
-                    )?);
-                } else if WktStepTarget::SwimStroke.as_i64()
-                    == data_map
-                        .get(&3)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(workout_step_message_target_stroke_type_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else {
-                    fields.push(workout_step_message_target_value_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                }
+                fields.push(workout_step_message_target_value_field(
+                    mesg_num,
+                    accumlators,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "",
+                    value,
+                )?);
             }
             5 => {
-                if WktStepTarget::Speed.as_i64()
-                    == data_map
-                        .get(&3)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(workout_step_message_custom_target_speed_low_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1000.000000,
-                        0.000000,
-                        "m/s",
-                        value,
-                    )?);
-                } else if WktStepTarget::HeartRate.as_i64()
-                    == data_map
-                        .get(&3)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(workout_step_message_custom_target_heart_rate_low_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "% or bpm",
-                        value,
-                    )?);
-                } else if WktStepTarget::Cadence.as_i64()
-                    == data_map
-                        .get(&3)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(workout_step_message_custom_target_cadence_low_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "rpm",
-                        value,
-                    )?);
-                } else if WktStepTarget::Power.as_i64()
-                    == data_map
-                        .get(&3)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(workout_step_message_custom_target_power_low_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "% or watts",
-                        value,
-                    )?);
-                } else {
-                    fields.push(workout_step_message_custom_target_value_low_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                }
+                fields.push(workout_step_message_custom_target_value_low_field(
+                    mesg_num,
+                    accumlators,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "",
+                    value,
+                )?);
             }
             6 => {
-                if WktStepTarget::Speed.as_i64()
-                    == data_map
-                        .get(&3)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(workout_step_message_custom_target_speed_high_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1000.000000,
-                        0.000000,
-                        "m/s",
-                        value,
-                    )?);
-                } else if WktStepTarget::HeartRate.as_i64()
-                    == data_map
-                        .get(&3)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(workout_step_message_custom_target_heart_rate_high_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "% or bpm",
-                        value,
-                    )?);
-                } else if WktStepTarget::Cadence.as_i64()
-                    == data_map
-                        .get(&3)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(workout_step_message_custom_target_cadence_high_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "rpm",
-                        value,
-                    )?);
-                } else if WktStepTarget::Power.as_i64()
-                    == data_map
-                        .get(&3)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(workout_step_message_custom_target_power_high_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "% or watts",
-                        value,
-                    )?);
-                } else {
-                    fields.push(workout_step_message_custom_target_value_high_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                }
+                fields.push(workout_step_message_custom_target_value_high_field(
+                    mesg_num,
+                    accumlators,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "",
+                    value,
+                )?);
             }
             7 => {
                 fields.push(workout_step_message_intensity_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -37463,6 +38847,7 @@ fn workout_step_message(
                 fields.push(workout_step_message_notes_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -37474,6 +38859,7 @@ fn workout_step_message(
                 fields.push(workout_step_message_equipment_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -37485,6 +38871,7 @@ fn workout_step_message(
                 fields.push(workout_step_message_exercise_category_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -37496,6 +38883,7 @@ fn workout_step_message(
                 fields.push(workout_step_message_exercise_name_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -37507,6 +38895,7 @@ fn workout_step_message(
                 fields.push(workout_step_message_exercise_weight_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -37518,6 +38907,7 @@ fn workout_step_message(
                 fields.push(workout_step_message_weight_display_unit_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -37529,6 +38919,7 @@ fn workout_step_message(
                 fields.push(workout_step_message_secondary_target_type_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -37537,276 +38928,50 @@ fn workout_step_message(
                 )?);
             }
             20 => {
-                if WktStepTarget::Speed.as_i64()
-                    == data_map
-                        .get(&19)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(workout_step_message_secondary_target_speed_zone_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else if WktStepTarget::HeartRate.as_i64()
-                    == data_map
-                        .get(&19)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(workout_step_message_secondary_target_hr_zone_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else if WktStepTarget::Cadence.as_i64()
-                    == data_map
-                        .get(&19)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(workout_step_message_secondary_target_cadence_zone_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else if WktStepTarget::Power.as_i64()
-                    == data_map
-                        .get(&19)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(workout_step_message_secondary_target_power_zone_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else if WktStepTarget::SwimStroke.as_i64()
-                    == data_map
-                        .get(&19)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(workout_step_message_secondary_target_stroke_type_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else {
-                    fields.push(workout_step_message_secondary_target_value_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                }
+                fields.push(workout_step_message_secondary_target_value_field(
+                    mesg_num,
+                    accumlators,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "",
+                    value,
+                )?);
             }
             21 => {
-                if WktStepTarget::Speed.as_i64()
-                    == data_map
-                        .get(&19)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(
-                        workout_step_message_secondary_custom_target_speed_low_field(
-                            mesg_num,
-                            accumlators,
-                            false,
-                            1000.000000,
-                            0.000000,
-                            "m/s",
-                            value,
-                        )?,
-                    );
-                } else if WktStepTarget::HeartRate.as_i64()
-                    == data_map
-                        .get(&19)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(
-                        workout_step_message_secondary_custom_target_heart_rate_low_field(
-                            mesg_num,
-                            accumlators,
-                            false,
-                            1.000000,
-                            0.000000,
-                            "% or bpm",
-                            value,
-                        )?,
-                    );
-                } else if WktStepTarget::Cadence.as_i64()
-                    == data_map
-                        .get(&19)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(
-                        workout_step_message_secondary_custom_target_cadence_low_field(
-                            mesg_num,
-                            accumlators,
-                            false,
-                            1.000000,
-                            0.000000,
-                            "rpm",
-                            value,
-                        )?,
-                    );
-                } else if WktStepTarget::Power.as_i64()
-                    == data_map
-                        .get(&19)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(
-                        workout_step_message_secondary_custom_target_power_low_field(
-                            mesg_num,
-                            accumlators,
-                            false,
-                            1.000000,
-                            0.000000,
-                            "% or watts",
-                            value,
-                        )?,
-                    );
-                } else {
-                    fields.push(
-                        workout_step_message_secondary_custom_target_value_low_field(
-                            mesg_num,
-                            accumlators,
-                            false,
-                            1.000000,
-                            0.000000,
-                            "",
-                            value,
-                        )?,
-                    );
-                }
+                fields.push(
+                    workout_step_message_secondary_custom_target_value_low_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?,
+                );
             }
             22 => {
-                if WktStepTarget::Speed.as_i64()
-                    == data_map
-                        .get(&19)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(
-                        workout_step_message_secondary_custom_target_speed_high_field(
-                            mesg_num,
-                            accumlators,
-                            false,
-                            1000.000000,
-                            0.000000,
-                            "m/s",
-                            value,
-                        )?,
-                    );
-                } else if WktStepTarget::HeartRate.as_i64()
-                    == data_map
-                        .get(&19)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(
-                        workout_step_message_secondary_custom_target_heart_rate_high_field(
-                            mesg_num,
-                            accumlators,
-                            false,
-                            1.000000,
-                            0.000000,
-                            "% or bpm",
-                            value,
-                        )?,
-                    );
-                } else if WktStepTarget::Cadence.as_i64()
-                    == data_map
-                        .get(&19)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(
-                        workout_step_message_secondary_custom_target_cadence_high_field(
-                            mesg_num,
-                            accumlators,
-                            false,
-                            1.000000,
-                            0.000000,
-                            "rpm",
-                            value,
-                        )?,
-                    );
-                } else if WktStepTarget::Power.as_i64()
-                    == data_map
-                        .get(&19)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(
-                        workout_step_message_secondary_custom_target_power_high_field(
-                            mesg_num,
-                            accumlators,
-                            false,
-                            1.000000,
-                            0.000000,
-                            "% or watts",
-                            value,
-                        )?,
-                    );
-                } else {
-                    fields.push(
-                        workout_step_message_secondary_custom_target_value_high_field(
-                            mesg_num,
-                            accumlators,
-                            false,
-                            1.000000,
-                            0.000000,
-                            "",
-                            value,
-                        )?,
-                    );
-                }
+                fields.push(
+                    workout_step_message_secondary_custom_target_value_high_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?,
+                );
             }
             254 => {
                 fields.push(workout_step_message_message_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -37822,6 +38987,7 @@ fn workout_step_message(
 fn workout_step_message_wkt_step_name_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -37846,6 +39012,7 @@ fn workout_step_message_wkt_step_name_field(
 fn workout_step_message_duration_type_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -37870,12 +39037,303 @@ fn workout_step_message_duration_type_field(
 fn workout_step_message_duration_value_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
     units: &'static str,
     value: Value,
 ) -> Result<FitDataField> {
+    if WktStepDuration::Time.as_i64()
+        == data_map
+            .get(&1)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return workout_step_message_duration_time_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1000.000000,
+            0.000000,
+            "s",
+            value,
+        );
+    } else if WktStepDuration::RepetitionTime.as_i64()
+        == data_map
+            .get(&1)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return workout_step_message_duration_time_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1000.000000,
+            0.000000,
+            "s",
+            value,
+        );
+    } else if WktStepDuration::Distance.as_i64()
+        == data_map
+            .get(&1)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return workout_step_message_duration_distance_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            100.000000,
+            0.000000,
+            "m",
+            value,
+        );
+    } else if WktStepDuration::HrLessThan.as_i64()
+        == data_map
+            .get(&1)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return workout_step_message_duration_hr_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "% or bpm",
+            value,
+        );
+    } else if WktStepDuration::HrGreaterThan.as_i64()
+        == data_map
+            .get(&1)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return workout_step_message_duration_hr_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "% or bpm",
+            value,
+        );
+    } else if WktStepDuration::Calories.as_i64()
+        == data_map
+            .get(&1)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return workout_step_message_duration_calories_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "calories",
+            value,
+        );
+    } else if WktStepDuration::RepeatUntilStepsCmplt.as_i64()
+        == data_map
+            .get(&1)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return workout_step_message_duration_step_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    } else if WktStepDuration::RepeatUntilTime.as_i64()
+        == data_map
+            .get(&1)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return workout_step_message_duration_step_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    } else if WktStepDuration::RepeatUntilDistance.as_i64()
+        == data_map
+            .get(&1)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return workout_step_message_duration_step_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    } else if WktStepDuration::RepeatUntilCalories.as_i64()
+        == data_map
+            .get(&1)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return workout_step_message_duration_step_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    } else if WktStepDuration::RepeatUntilHrLessThan.as_i64()
+        == data_map
+            .get(&1)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return workout_step_message_duration_step_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    } else if WktStepDuration::RepeatUntilHrGreaterThan.as_i64()
+        == data_map
+            .get(&1)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return workout_step_message_duration_step_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    } else if WktStepDuration::RepeatUntilPowerLessThan.as_i64()
+        == data_map
+            .get(&1)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return workout_step_message_duration_step_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    } else if WktStepDuration::RepeatUntilPowerGreaterThan.as_i64()
+        == data_map
+            .get(&1)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return workout_step_message_duration_step_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    } else if WktStepDuration::PowerLessThan.as_i64()
+        == data_map
+            .get(&1)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return workout_step_message_duration_power_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "% or watts",
+            value,
+        );
+    } else if WktStepDuration::PowerGreaterThan.as_i64()
+        == data_map
+            .get(&1)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return workout_step_message_duration_power_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "% or watts",
+            value,
+        );
+    } else if WktStepDuration::Reps.as_i64()
+        == data_map
+            .get(&1)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return workout_step_message_duration_reps_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    }
     let value = if accumulate {
         calculate_cumulative_value(accumlators, mesg_num.as_u16(), 2, value)?
     } else {
@@ -37894,6 +39352,7 @@ fn workout_step_message_duration_value_field(
 fn workout_step_message_duration_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -37918,6 +39377,7 @@ fn workout_step_message_duration_time_field(
 fn workout_step_message_duration_distance_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -37942,6 +39402,7 @@ fn workout_step_message_duration_distance_field(
 fn workout_step_message_duration_hr_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -37966,6 +39427,7 @@ fn workout_step_message_duration_hr_field(
 fn workout_step_message_duration_calories_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -37990,6 +39452,7 @@ fn workout_step_message_duration_calories_field(
 fn workout_step_message_duration_step_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -38014,6 +39477,7 @@ fn workout_step_message_duration_step_field(
 fn workout_step_message_duration_power_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -38038,6 +39502,7 @@ fn workout_step_message_duration_power_field(
 fn workout_step_message_duration_reps_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -38062,6 +39527,7 @@ fn workout_step_message_duration_reps_field(
 fn workout_step_message_target_type_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -38086,12 +39552,235 @@ fn workout_step_message_target_type_field(
 fn workout_step_message_target_value_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
     units: &'static str,
     value: Value,
 ) -> Result<FitDataField> {
+    if WktStepTarget::Speed.as_i64()
+        == data_map
+            .get(&3)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return workout_step_message_target_speed_zone_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    } else if WktStepTarget::HeartRate.as_i64()
+        == data_map
+            .get(&3)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return workout_step_message_target_hr_zone_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    } else if WktStepTarget::Cadence.as_i64()
+        == data_map
+            .get(&3)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return workout_step_message_target_cadence_zone_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    } else if WktStepTarget::Power.as_i64()
+        == data_map
+            .get(&3)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return workout_step_message_target_power_zone_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    } else if WktStepDuration::RepeatUntilStepsCmplt.as_i64()
+        == data_map
+            .get(&1)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return workout_step_message_repeat_steps_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    } else if WktStepDuration::RepeatUntilTime.as_i64()
+        == data_map
+            .get(&1)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return workout_step_message_repeat_time_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1000.000000,
+            0.000000,
+            "s",
+            value,
+        );
+    } else if WktStepDuration::RepeatUntilDistance.as_i64()
+        == data_map
+            .get(&1)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return workout_step_message_repeat_distance_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            100.000000,
+            0.000000,
+            "m",
+            value,
+        );
+    } else if WktStepDuration::RepeatUntilCalories.as_i64()
+        == data_map
+            .get(&1)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return workout_step_message_repeat_calories_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "calories",
+            value,
+        );
+    } else if WktStepDuration::RepeatUntilHrLessThan.as_i64()
+        == data_map
+            .get(&1)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return workout_step_message_repeat_hr_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "% or bpm",
+            value,
+        );
+    } else if WktStepDuration::RepeatUntilHrGreaterThan.as_i64()
+        == data_map
+            .get(&1)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return workout_step_message_repeat_hr_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "% or bpm",
+            value,
+        );
+    } else if WktStepDuration::RepeatUntilPowerLessThan.as_i64()
+        == data_map
+            .get(&1)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return workout_step_message_repeat_power_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "% or watts",
+            value,
+        );
+    } else if WktStepDuration::RepeatUntilPowerGreaterThan.as_i64()
+        == data_map
+            .get(&1)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return workout_step_message_repeat_power_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "% or watts",
+            value,
+        );
+    } else if WktStepTarget::SwimStroke.as_i64()
+        == data_map
+            .get(&3)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return workout_step_message_target_stroke_type_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    }
     let value = if accumulate {
         calculate_cumulative_value(accumlators, mesg_num.as_u16(), 4, value)?
     } else {
@@ -38110,6 +39799,7 @@ fn workout_step_message_target_value_field(
 fn workout_step_message_target_speed_zone_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -38134,6 +39824,7 @@ fn workout_step_message_target_speed_zone_field(
 fn workout_step_message_target_hr_zone_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -38158,6 +39849,7 @@ fn workout_step_message_target_hr_zone_field(
 fn workout_step_message_target_cadence_zone_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -38182,6 +39874,7 @@ fn workout_step_message_target_cadence_zone_field(
 fn workout_step_message_target_power_zone_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -38206,6 +39899,7 @@ fn workout_step_message_target_power_zone_field(
 fn workout_step_message_repeat_steps_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -38230,6 +39924,7 @@ fn workout_step_message_repeat_steps_field(
 fn workout_step_message_repeat_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -38254,6 +39949,7 @@ fn workout_step_message_repeat_time_field(
 fn workout_step_message_repeat_distance_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -38278,6 +39974,7 @@ fn workout_step_message_repeat_distance_field(
 fn workout_step_message_repeat_calories_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -38302,6 +39999,7 @@ fn workout_step_message_repeat_calories_field(
 fn workout_step_message_repeat_hr_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -38326,6 +40024,7 @@ fn workout_step_message_repeat_hr_field(
 fn workout_step_message_repeat_power_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -38350,6 +40049,7 @@ fn workout_step_message_repeat_power_field(
 fn workout_step_message_target_stroke_type_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -38374,12 +40074,82 @@ fn workout_step_message_target_stroke_type_field(
 fn workout_step_message_custom_target_value_low_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
     units: &'static str,
     value: Value,
 ) -> Result<FitDataField> {
+    if WktStepTarget::Speed.as_i64()
+        == data_map
+            .get(&3)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return workout_step_message_custom_target_speed_low_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1000.000000,
+            0.000000,
+            "m/s",
+            value,
+        );
+    } else if WktStepTarget::HeartRate.as_i64()
+        == data_map
+            .get(&3)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return workout_step_message_custom_target_heart_rate_low_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "% or bpm",
+            value,
+        );
+    } else if WktStepTarget::Cadence.as_i64()
+        == data_map
+            .get(&3)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return workout_step_message_custom_target_cadence_low_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "rpm",
+            value,
+        );
+    } else if WktStepTarget::Power.as_i64()
+        == data_map
+            .get(&3)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return workout_step_message_custom_target_power_low_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "% or watts",
+            value,
+        );
+    }
     let value = if accumulate {
         calculate_cumulative_value(accumlators, mesg_num.as_u16(), 5, value)?
     } else {
@@ -38398,6 +40168,7 @@ fn workout_step_message_custom_target_value_low_field(
 fn workout_step_message_custom_target_speed_low_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -38422,6 +40193,7 @@ fn workout_step_message_custom_target_speed_low_field(
 fn workout_step_message_custom_target_heart_rate_low_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -38446,6 +40218,7 @@ fn workout_step_message_custom_target_heart_rate_low_field(
 fn workout_step_message_custom_target_cadence_low_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -38470,6 +40243,7 @@ fn workout_step_message_custom_target_cadence_low_field(
 fn workout_step_message_custom_target_power_low_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -38494,12 +40268,82 @@ fn workout_step_message_custom_target_power_low_field(
 fn workout_step_message_custom_target_value_high_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
     units: &'static str,
     value: Value,
 ) -> Result<FitDataField> {
+    if WktStepTarget::Speed.as_i64()
+        == data_map
+            .get(&3)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return workout_step_message_custom_target_speed_high_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1000.000000,
+            0.000000,
+            "m/s",
+            value,
+        );
+    } else if WktStepTarget::HeartRate.as_i64()
+        == data_map
+            .get(&3)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return workout_step_message_custom_target_heart_rate_high_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "% or bpm",
+            value,
+        );
+    } else if WktStepTarget::Cadence.as_i64()
+        == data_map
+            .get(&3)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return workout_step_message_custom_target_cadence_high_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "rpm",
+            value,
+        );
+    } else if WktStepTarget::Power.as_i64()
+        == data_map
+            .get(&3)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return workout_step_message_custom_target_power_high_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "% or watts",
+            value,
+        );
+    }
     let value = if accumulate {
         calculate_cumulative_value(accumlators, mesg_num.as_u16(), 6, value)?
     } else {
@@ -38518,6 +40362,7 @@ fn workout_step_message_custom_target_value_high_field(
 fn workout_step_message_custom_target_speed_high_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -38542,6 +40387,7 @@ fn workout_step_message_custom_target_speed_high_field(
 fn workout_step_message_custom_target_heart_rate_high_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -38566,6 +40412,7 @@ fn workout_step_message_custom_target_heart_rate_high_field(
 fn workout_step_message_custom_target_cadence_high_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -38590,6 +40437,7 @@ fn workout_step_message_custom_target_cadence_high_field(
 fn workout_step_message_custom_target_power_high_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -38614,6 +40462,7 @@ fn workout_step_message_custom_target_power_high_field(
 fn workout_step_message_intensity_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -38638,6 +40487,7 @@ fn workout_step_message_intensity_field(
 fn workout_step_message_notes_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -38662,6 +40512,7 @@ fn workout_step_message_notes_field(
 fn workout_step_message_equipment_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -38686,6 +40537,7 @@ fn workout_step_message_equipment_field(
 fn workout_step_message_exercise_category_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -38710,6 +40562,7 @@ fn workout_step_message_exercise_category_field(
 fn workout_step_message_exercise_name_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -38734,6 +40587,7 @@ fn workout_step_message_exercise_name_field(
 fn workout_step_message_exercise_weight_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -38758,6 +40612,7 @@ fn workout_step_message_exercise_weight_field(
 fn workout_step_message_weight_display_unit_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -38782,6 +40637,7 @@ fn workout_step_message_weight_display_unit_field(
 fn workout_step_message_secondary_target_type_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -38806,12 +40662,99 @@ fn workout_step_message_secondary_target_type_field(
 fn workout_step_message_secondary_target_value_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
     units: &'static str,
     value: Value,
 ) -> Result<FitDataField> {
+    if WktStepTarget::Speed.as_i64()
+        == data_map
+            .get(&19)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return workout_step_message_secondary_target_speed_zone_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    } else if WktStepTarget::HeartRate.as_i64()
+        == data_map
+            .get(&19)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return workout_step_message_secondary_target_hr_zone_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    } else if WktStepTarget::Cadence.as_i64()
+        == data_map
+            .get(&19)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return workout_step_message_secondary_target_cadence_zone_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    } else if WktStepTarget::Power.as_i64()
+        == data_map
+            .get(&19)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return workout_step_message_secondary_target_power_zone_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    } else if WktStepTarget::SwimStroke.as_i64()
+        == data_map
+            .get(&19)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return workout_step_message_secondary_target_stroke_type_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    }
     let value = if accumulate {
         calculate_cumulative_value(accumlators, mesg_num.as_u16(), 20, value)?
     } else {
@@ -38830,6 +40773,7 @@ fn workout_step_message_secondary_target_value_field(
 fn workout_step_message_secondary_target_speed_zone_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -38854,6 +40798,7 @@ fn workout_step_message_secondary_target_speed_zone_field(
 fn workout_step_message_secondary_target_hr_zone_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -38878,6 +40823,7 @@ fn workout_step_message_secondary_target_hr_zone_field(
 fn workout_step_message_secondary_target_cadence_zone_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -38902,6 +40848,7 @@ fn workout_step_message_secondary_target_cadence_zone_field(
 fn workout_step_message_secondary_target_power_zone_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -38926,6 +40873,7 @@ fn workout_step_message_secondary_target_power_zone_field(
 fn workout_step_message_secondary_target_stroke_type_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -38950,12 +40898,82 @@ fn workout_step_message_secondary_target_stroke_type_field(
 fn workout_step_message_secondary_custom_target_value_low_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
     units: &'static str,
     value: Value,
 ) -> Result<FitDataField> {
+    if WktStepTarget::Speed.as_i64()
+        == data_map
+            .get(&19)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return workout_step_message_secondary_custom_target_speed_low_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1000.000000,
+            0.000000,
+            "m/s",
+            value,
+        );
+    } else if WktStepTarget::HeartRate.as_i64()
+        == data_map
+            .get(&19)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return workout_step_message_secondary_custom_target_heart_rate_low_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "% or bpm",
+            value,
+        );
+    } else if WktStepTarget::Cadence.as_i64()
+        == data_map
+            .get(&19)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return workout_step_message_secondary_custom_target_cadence_low_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "rpm",
+            value,
+        );
+    } else if WktStepTarget::Power.as_i64()
+        == data_map
+            .get(&19)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return workout_step_message_secondary_custom_target_power_low_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "% or watts",
+            value,
+        );
+    }
     let value = if accumulate {
         calculate_cumulative_value(accumlators, mesg_num.as_u16(), 21, value)?
     } else {
@@ -38974,6 +40992,7 @@ fn workout_step_message_secondary_custom_target_value_low_field(
 fn workout_step_message_secondary_custom_target_speed_low_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -38998,6 +41017,7 @@ fn workout_step_message_secondary_custom_target_speed_low_field(
 fn workout_step_message_secondary_custom_target_heart_rate_low_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -39022,6 +41042,7 @@ fn workout_step_message_secondary_custom_target_heart_rate_low_field(
 fn workout_step_message_secondary_custom_target_cadence_low_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -39046,6 +41067,7 @@ fn workout_step_message_secondary_custom_target_cadence_low_field(
 fn workout_step_message_secondary_custom_target_power_low_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -39070,12 +41092,82 @@ fn workout_step_message_secondary_custom_target_power_low_field(
 fn workout_step_message_secondary_custom_target_value_high_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
     units: &'static str,
     value: Value,
 ) -> Result<FitDataField> {
+    if WktStepTarget::Speed.as_i64()
+        == data_map
+            .get(&19)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return workout_step_message_secondary_custom_target_speed_high_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1000.000000,
+            0.000000,
+            "m/s",
+            value,
+        );
+    } else if WktStepTarget::HeartRate.as_i64()
+        == data_map
+            .get(&19)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return workout_step_message_secondary_custom_target_heart_rate_high_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "% or bpm",
+            value,
+        );
+    } else if WktStepTarget::Cadence.as_i64()
+        == data_map
+            .get(&19)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return workout_step_message_secondary_custom_target_cadence_high_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "rpm",
+            value,
+        );
+    } else if WktStepTarget::Power.as_i64()
+        == data_map
+            .get(&19)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return workout_step_message_secondary_custom_target_power_high_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "% or watts",
+            value,
+        );
+    }
     let value = if accumulate {
         calculate_cumulative_value(accumlators, mesg_num.as_u16(), 22, value)?
     } else {
@@ -39094,6 +41186,7 @@ fn workout_step_message_secondary_custom_target_value_high_field(
 fn workout_step_message_secondary_custom_target_speed_high_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -39118,6 +41211,7 @@ fn workout_step_message_secondary_custom_target_speed_high_field(
 fn workout_step_message_secondary_custom_target_heart_rate_high_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -39142,6 +41236,7 @@ fn workout_step_message_secondary_custom_target_heart_rate_high_field(
 fn workout_step_message_secondary_custom_target_cadence_high_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -39166,6 +41261,7 @@ fn workout_step_message_secondary_custom_target_cadence_high_field(
 fn workout_step_message_secondary_custom_target_power_high_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -39190,6 +41286,7 @@ fn workout_step_message_secondary_custom_target_power_high_field(
 fn workout_step_message_message_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -39225,6 +41322,7 @@ fn exercise_title_message(
                 fields.push(exercise_title_message_exercise_category_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -39236,6 +41334,7 @@ fn exercise_title_message(
                 fields.push(exercise_title_message_exercise_name_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -39247,6 +41346,7 @@ fn exercise_title_message(
                 fields.push(exercise_title_message_wkt_step_name_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -39258,6 +41358,7 @@ fn exercise_title_message(
                 fields.push(exercise_title_message_message_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -39273,6 +41374,7 @@ fn exercise_title_message(
 fn exercise_title_message_exercise_category_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -39297,6 +41399,7 @@ fn exercise_title_message_exercise_category_field(
 fn exercise_title_message_exercise_name_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -39321,6 +41424,7 @@ fn exercise_title_message_exercise_name_field(
 fn exercise_title_message_wkt_step_name_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -39345,6 +41449,7 @@ fn exercise_title_message_wkt_step_name_field(
 fn exercise_title_message_message_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -39381,6 +41486,7 @@ fn schedule_message(
                 fields.push(schedule_message_manufacturer_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -39390,103 +41496,23 @@ fn schedule_message(
             }
             1 => {
                 // Corresponds to file_id of scheduled workout / course.
-                if Manufacturer::FaveroElectronics.as_i64()
-                    == data_map
-                        .get(&0)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(schedule_message_favero_product_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else if Manufacturer::Garmin.as_i64()
-                    == data_map
-                        .get(&0)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(schedule_message_garmin_product_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else if Manufacturer::Dynastream.as_i64()
-                    == data_map
-                        .get(&0)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(schedule_message_garmin_product_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else if Manufacturer::DynastreamOem.as_i64()
-                    == data_map
-                        .get(&0)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(schedule_message_garmin_product_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else if Manufacturer::Tacx.as_i64()
-                    == data_map
-                        .get(&0)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(schedule_message_garmin_product_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                } else {
-                    fields.push(schedule_message_product_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?);
-                }
+                fields.push(schedule_message_product_field(
+                    mesg_num,
+                    accumlators,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "",
+                    value,
+                )?);
             }
             2 => {
                 // Corresponds to file_id of scheduled workout / course.
                 fields.push(schedule_message_serial_number_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -39499,6 +41525,7 @@ fn schedule_message(
                 fields.push(schedule_message_time_created_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -39511,6 +41538,7 @@ fn schedule_message(
                 fields.push(schedule_message_completed_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -39522,6 +41550,7 @@ fn schedule_message(
                 fields.push(schedule_message_type_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -39533,6 +41562,7 @@ fn schedule_message(
                 fields.push(schedule_message_scheduled_time_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -39548,6 +41578,7 @@ fn schedule_message(
 fn schedule_message_manufacturer_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -39572,12 +41603,99 @@ fn schedule_message_manufacturer_field(
 fn schedule_message_product_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
     units: &'static str,
     value: Value,
 ) -> Result<FitDataField> {
+    if Manufacturer::FaveroElectronics.as_i64()
+        == data_map
+            .get(&0)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return schedule_message_favero_product_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    } else if Manufacturer::Garmin.as_i64()
+        == data_map
+            .get(&0)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return schedule_message_garmin_product_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    } else if Manufacturer::Dynastream.as_i64()
+        == data_map
+            .get(&0)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return schedule_message_garmin_product_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    } else if Manufacturer::DynastreamOem.as_i64()
+        == data_map
+            .get(&0)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return schedule_message_garmin_product_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    } else if Manufacturer::Tacx.as_i64()
+        == data_map
+            .get(&0)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return schedule_message_garmin_product_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "",
+            value,
+        );
+    }
     let value = if accumulate {
         calculate_cumulative_value(accumlators, mesg_num.as_u16(), 1, value)?
     } else {
@@ -39596,6 +41714,7 @@ fn schedule_message_product_field(
 fn schedule_message_favero_product_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -39620,6 +41739,7 @@ fn schedule_message_favero_product_field(
 fn schedule_message_garmin_product_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -39644,6 +41764,7 @@ fn schedule_message_garmin_product_field(
 fn schedule_message_serial_number_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -39668,6 +41789,7 @@ fn schedule_message_serial_number_field(
 fn schedule_message_time_created_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -39692,6 +41814,7 @@ fn schedule_message_time_created_field(
 fn schedule_message_completed_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -39716,6 +41839,7 @@ fn schedule_message_completed_field(
 fn schedule_message_type_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -39740,6 +41864,7 @@ fn schedule_message_type_field(
 fn schedule_message_scheduled_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -39776,6 +41901,7 @@ fn totals_message(
                 fields.push(totals_message_timer_time_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -39787,6 +41913,7 @@ fn totals_message(
                 fields.push(totals_message_distance_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -39798,6 +41925,7 @@ fn totals_message(
                 fields.push(totals_message_calories_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -39809,6 +41937,7 @@ fn totals_message(
                 fields.push(totals_message_sport_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -39821,6 +41950,7 @@ fn totals_message(
                 fields.push(totals_message_elapsed_time_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -39832,6 +41962,7 @@ fn totals_message(
                 fields.push(totals_message_sessions_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -39843,6 +41974,7 @@ fn totals_message(
                 fields.push(totals_message_active_time_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -39854,6 +41986,7 @@ fn totals_message(
                 fields.push(totals_message_sport_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -39865,6 +41998,7 @@ fn totals_message(
                 fields.push(totals_message_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -39876,6 +42010,7 @@ fn totals_message(
                 fields.push(totals_message_message_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -39891,6 +42026,7 @@ fn totals_message(
 fn totals_message_timer_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -39915,6 +42051,7 @@ fn totals_message_timer_time_field(
 fn totals_message_distance_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -39939,6 +42076,7 @@ fn totals_message_distance_field(
 fn totals_message_calories_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -39963,6 +42101,7 @@ fn totals_message_calories_field(
 fn totals_message_sport_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -39987,6 +42126,7 @@ fn totals_message_sport_field(
 fn totals_message_elapsed_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -40011,6 +42151,7 @@ fn totals_message_elapsed_time_field(
 fn totals_message_sessions_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -40035,6 +42176,7 @@ fn totals_message_sessions_field(
 fn totals_message_active_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -40059,6 +42201,7 @@ fn totals_message_active_time_field(
 fn totals_message_sport_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -40083,6 +42226,7 @@ fn totals_message_sport_index_field(
 fn totals_message_timestamp_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -40107,6 +42251,7 @@ fn totals_message_timestamp_field(
 fn totals_message_message_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -40142,6 +42287,7 @@ fn weight_scale_message(
                 fields.push(weight_scale_message_weight_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -40153,6 +42299,7 @@ fn weight_scale_message(
                 fields.push(weight_scale_message_percent_fat_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -40164,6 +42311,7 @@ fn weight_scale_message(
                 fields.push(weight_scale_message_percent_hydration_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -40175,6 +42323,7 @@ fn weight_scale_message(
                 fields.push(weight_scale_message_visceral_fat_mass_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -40186,6 +42335,7 @@ fn weight_scale_message(
                 fields.push(weight_scale_message_bone_mass_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -40197,6 +42347,7 @@ fn weight_scale_message(
                 fields.push(weight_scale_message_muscle_mass_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -40208,6 +42359,7 @@ fn weight_scale_message(
                 fields.push(weight_scale_message_basal_met_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     4.000000,
                     0.000000,
@@ -40219,6 +42371,7 @@ fn weight_scale_message(
                 fields.push(weight_scale_message_physique_rating_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -40231,6 +42384,7 @@ fn weight_scale_message(
                 fields.push(weight_scale_message_active_met_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     4.000000,
                     0.000000,
@@ -40242,6 +42396,7 @@ fn weight_scale_message(
                 fields.push(weight_scale_message_metabolic_age_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -40253,6 +42408,7 @@ fn weight_scale_message(
                 fields.push(weight_scale_message_visceral_fat_rating_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -40265,6 +42421,7 @@ fn weight_scale_message(
                 fields.push(weight_scale_message_user_profile_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -40276,6 +42433,7 @@ fn weight_scale_message(
                 fields.push(weight_scale_message_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -40291,6 +42449,7 @@ fn weight_scale_message(
 fn weight_scale_message_weight_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -40315,6 +42474,7 @@ fn weight_scale_message_weight_field(
 fn weight_scale_message_percent_fat_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -40339,6 +42499,7 @@ fn weight_scale_message_percent_fat_field(
 fn weight_scale_message_percent_hydration_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -40363,6 +42524,7 @@ fn weight_scale_message_percent_hydration_field(
 fn weight_scale_message_visceral_fat_mass_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -40387,6 +42549,7 @@ fn weight_scale_message_visceral_fat_mass_field(
 fn weight_scale_message_bone_mass_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -40411,6 +42574,7 @@ fn weight_scale_message_bone_mass_field(
 fn weight_scale_message_muscle_mass_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -40435,6 +42599,7 @@ fn weight_scale_message_muscle_mass_field(
 fn weight_scale_message_basal_met_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -40459,6 +42624,7 @@ fn weight_scale_message_basal_met_field(
 fn weight_scale_message_physique_rating_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -40483,6 +42649,7 @@ fn weight_scale_message_physique_rating_field(
 fn weight_scale_message_active_met_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -40507,6 +42674,7 @@ fn weight_scale_message_active_met_field(
 fn weight_scale_message_metabolic_age_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -40531,6 +42699,7 @@ fn weight_scale_message_metabolic_age_field(
 fn weight_scale_message_visceral_fat_rating_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -40555,6 +42724,7 @@ fn weight_scale_message_visceral_fat_rating_field(
 fn weight_scale_message_user_profile_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -40579,6 +42749,7 @@ fn weight_scale_message_user_profile_index_field(
 fn weight_scale_message_timestamp_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -40614,6 +42785,7 @@ fn blood_pressure_message(
                 fields.push(blood_pressure_message_systolic_pressure_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -40625,6 +42797,7 @@ fn blood_pressure_message(
                 fields.push(blood_pressure_message_diastolic_pressure_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -40636,6 +42809,7 @@ fn blood_pressure_message(
                 fields.push(blood_pressure_message_mean_arterial_pressure_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -40647,6 +42821,7 @@ fn blood_pressure_message(
                 fields.push(blood_pressure_message_map_3_sample_mean_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -40658,6 +42833,7 @@ fn blood_pressure_message(
                 fields.push(blood_pressure_message_map_morning_values_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -40669,6 +42845,7 @@ fn blood_pressure_message(
                 fields.push(blood_pressure_message_map_evening_values_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -40680,6 +42857,7 @@ fn blood_pressure_message(
                 fields.push(blood_pressure_message_heart_rate_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -40691,6 +42869,7 @@ fn blood_pressure_message(
                 fields.push(blood_pressure_message_heart_rate_type_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -40702,6 +42881,7 @@ fn blood_pressure_message(
                 fields.push(blood_pressure_message_status_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -40714,6 +42894,7 @@ fn blood_pressure_message(
                 fields.push(blood_pressure_message_user_profile_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -40725,6 +42906,7 @@ fn blood_pressure_message(
                 fields.push(blood_pressure_message_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -40740,6 +42922,7 @@ fn blood_pressure_message(
 fn blood_pressure_message_systolic_pressure_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -40764,6 +42947,7 @@ fn blood_pressure_message_systolic_pressure_field(
 fn blood_pressure_message_diastolic_pressure_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -40788,6 +42972,7 @@ fn blood_pressure_message_diastolic_pressure_field(
 fn blood_pressure_message_mean_arterial_pressure_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -40812,6 +42997,7 @@ fn blood_pressure_message_mean_arterial_pressure_field(
 fn blood_pressure_message_map_3_sample_mean_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -40836,6 +43022,7 @@ fn blood_pressure_message_map_3_sample_mean_field(
 fn blood_pressure_message_map_morning_values_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -40860,6 +43047,7 @@ fn blood_pressure_message_map_morning_values_field(
 fn blood_pressure_message_map_evening_values_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -40884,6 +43072,7 @@ fn blood_pressure_message_map_evening_values_field(
 fn blood_pressure_message_heart_rate_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -40908,6 +43097,7 @@ fn blood_pressure_message_heart_rate_field(
 fn blood_pressure_message_heart_rate_type_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -40932,6 +43122,7 @@ fn blood_pressure_message_heart_rate_type_field(
 fn blood_pressure_message_status_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -40956,6 +43147,7 @@ fn blood_pressure_message_status_field(
 fn blood_pressure_message_user_profile_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -40980,6 +43172,7 @@ fn blood_pressure_message_user_profile_index_field(
 fn blood_pressure_message_timestamp_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -41016,6 +43209,7 @@ fn monitoring_info_message(
                 fields.push(monitoring_info_message_local_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -41027,6 +43221,7 @@ fn monitoring_info_message(
                 fields.push(monitoring_info_message_activity_type_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -41039,6 +43234,7 @@ fn monitoring_info_message(
                 fields.push(monitoring_info_message_cycles_to_distance_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     5000.000000,
                     0.000000,
@@ -41051,6 +43247,7 @@ fn monitoring_info_message(
                 fields.push(monitoring_info_message_cycles_to_calories_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     5000.000000,
                     0.000000,
@@ -41062,6 +43259,7 @@ fn monitoring_info_message(
                 fields.push(monitoring_info_message_resting_metabolic_rate_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -41073,6 +43271,7 @@ fn monitoring_info_message(
                 fields.push(monitoring_info_message_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -41088,6 +43287,7 @@ fn monitoring_info_message(
 fn monitoring_info_message_local_timestamp_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -41112,6 +43312,7 @@ fn monitoring_info_message_local_timestamp_field(
 fn monitoring_info_message_activity_type_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -41136,6 +43337,7 @@ fn monitoring_info_message_activity_type_field(
 fn monitoring_info_message_cycles_to_distance_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -41160,6 +43362,7 @@ fn monitoring_info_message_cycles_to_distance_field(
 fn monitoring_info_message_cycles_to_calories_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -41184,6 +43387,7 @@ fn monitoring_info_message_cycles_to_calories_field(
 fn monitoring_info_message_resting_metabolic_rate_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -41208,6 +43412,7 @@ fn monitoring_info_message_resting_metabolic_rate_field(
 fn monitoring_info_message_timestamp_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -41244,6 +43449,7 @@ fn monitoring_message(
                 fields.push(monitoring_message_device_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -41256,6 +43462,7 @@ fn monitoring_message(
                 fields.push(monitoring_message_calories_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -41268,6 +43475,7 @@ fn monitoring_message(
                 fields.push(monitoring_message_distance_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -41277,86 +43485,22 @@ fn monitoring_message(
             }
             3 => {
                 // Accumulated cycles. Maintained by MonitoringReader for each activity_type. See SDK documentation.
-                if ActivityType::Walking.as_i64()
-                    == data_map
-                        .get(&5)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(monitoring_message_steps_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "steps",
-                        value,
-                    )?);
-                } else if ActivityType::Running.as_i64()
-                    == data_map
-                        .get(&5)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(monitoring_message_steps_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "steps",
-                        value,
-                    )?);
-                } else if ActivityType::Cycling.as_i64()
-                    == data_map
-                        .get(&5)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(monitoring_message_strokes_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        2.000000,
-                        0.000000,
-                        "strokes",
-                        value,
-                    )?);
-                } else if ActivityType::Swimming.as_i64()
-                    == data_map
-                        .get(&5)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
-                        .unwrap_or(-1i64)
-                {
-                    fields.push(monitoring_message_strokes_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        2.000000,
-                        0.000000,
-                        "strokes",
-                        value,
-                    )?);
-                } else {
-                    fields.push(monitoring_message_cycles_field(
-                        mesg_num,
-                        accumlators,
-                        false,
-                        2.000000,
-                        0.000000,
-                        "cycles",
-                        value,
-                    )?);
-                }
+                fields.push(monitoring_message_cycles_field(
+                    mesg_num,
+                    accumlators,
+                    data_map,
+                    false,
+                    2.000000,
+                    0.000000,
+                    "cycles",
+                    value,
+                )?);
             }
             4 => {
                 fields.push(monitoring_message_active_time_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -41368,6 +43512,7 @@ fn monitoring_message(
                 fields.push(monitoring_message_activity_type_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -41379,6 +43524,7 @@ fn monitoring_message(
                 fields.push(monitoring_message_activity_subtype_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -41390,6 +43536,7 @@ fn monitoring_message(
                 fields.push(monitoring_message_activity_level_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -41401,6 +43548,7 @@ fn monitoring_message(
                 fields.push(monitoring_message_distance_16_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -41412,6 +43560,7 @@ fn monitoring_message(
                 fields.push(monitoring_message_cycles_16_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -41423,6 +43572,7 @@ fn monitoring_message(
                 fields.push(monitoring_message_active_time_16_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -41435,6 +43585,7 @@ fn monitoring_message(
                 fields.push(monitoring_message_local_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -41447,6 +43598,7 @@ fn monitoring_message(
                 fields.push(monitoring_message_temperature_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -41459,6 +43611,7 @@ fn monitoring_message(
                 fields.push(monitoring_message_temperature_min_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -41471,6 +43624,7 @@ fn monitoring_message(
                 fields.push(monitoring_message_temperature_max_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     100.000000,
                     0.000000,
@@ -41483,6 +43637,7 @@ fn monitoring_message(
                 fields.push(monitoring_message_activity_time_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -41494,6 +43649,7 @@ fn monitoring_message(
                 fields.push(monitoring_message_active_calories_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -41508,6 +43664,7 @@ fn monitoring_message(
                 fields.push(monitoring_message_activity_type_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -41518,6 +43675,7 @@ fn monitoring_message(
                 fields.push(monitoring_message_intensity_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -41529,6 +43687,7 @@ fn monitoring_message(
                 fields.push(monitoring_message_timestamp_min_8_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -41540,6 +43699,7 @@ fn monitoring_message(
                 fields.push(monitoring_message_timestamp_16_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -41551,6 +43711,7 @@ fn monitoring_message(
                 fields.push(monitoring_message_heart_rate_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -41562,6 +43723,7 @@ fn monitoring_message(
                 fields.push(monitoring_message_intensity_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     10.000000,
                     0.000000,
@@ -41573,6 +43735,7 @@ fn monitoring_message(
                 fields.push(monitoring_message_duration_min_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -41584,6 +43747,7 @@ fn monitoring_message(
                 fields.push(monitoring_message_duration_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -41595,6 +43759,7 @@ fn monitoring_message(
                 fields.push(monitoring_message_ascent_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -41606,6 +43771,7 @@ fn monitoring_message(
                 fields.push(monitoring_message_descent_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -41617,6 +43783,7 @@ fn monitoring_message(
                 fields.push(monitoring_message_moderate_activity_minutes_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -41628,6 +43795,7 @@ fn monitoring_message(
                 fields.push(monitoring_message_vigorous_activity_minutes_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -41640,6 +43808,7 @@ fn monitoring_message(
                 fields.push(monitoring_message_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -41655,6 +43824,7 @@ fn monitoring_message(
 fn monitoring_message_device_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -41679,6 +43849,7 @@ fn monitoring_message_device_index_field(
 fn monitoring_message_calories_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -41703,6 +43874,7 @@ fn monitoring_message_calories_field(
 fn monitoring_message_distance_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -41727,12 +43899,82 @@ fn monitoring_message_distance_field(
 fn monitoring_message_cycles_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
     units: &'static str,
     value: Value,
 ) -> Result<FitDataField> {
+    if ActivityType::Walking.as_i64()
+        == data_map
+            .get(&5)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return monitoring_message_steps_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "steps",
+            value,
+        );
+    } else if ActivityType::Running.as_i64()
+        == data_map
+            .get(&5)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return monitoring_message_steps_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            1.000000,
+            0.000000,
+            "steps",
+            value,
+        );
+    } else if ActivityType::Cycling.as_i64()
+        == data_map
+            .get(&5)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return monitoring_message_strokes_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            2.000000,
+            0.000000,
+            "strokes",
+            value,
+        );
+    } else if ActivityType::Swimming.as_i64()
+        == data_map
+            .get(&5)
+            .map(|v| v.try_into().ok())
+            .flatten()
+            .unwrap_or(-1i64)
+    {
+        return monitoring_message_strokes_field(
+            mesg_num,
+            accumlators,
+            data_map,
+            false,
+            2.000000,
+            0.000000,
+            "strokes",
+            value,
+        );
+    }
     let value = if accumulate {
         calculate_cumulative_value(accumlators, mesg_num.as_u16(), 3, value)?
     } else {
@@ -41751,6 +43993,7 @@ fn monitoring_message_cycles_field(
 fn monitoring_message_steps_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -41775,6 +44018,7 @@ fn monitoring_message_steps_field(
 fn monitoring_message_strokes_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -41799,6 +44043,7 @@ fn monitoring_message_strokes_field(
 fn monitoring_message_active_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -41823,6 +44068,7 @@ fn monitoring_message_active_time_field(
 fn monitoring_message_activity_type_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -41847,6 +44093,7 @@ fn monitoring_message_activity_type_field(
 fn monitoring_message_activity_subtype_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -41871,6 +44118,7 @@ fn monitoring_message_activity_subtype_field(
 fn monitoring_message_activity_level_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -41895,6 +44143,7 @@ fn monitoring_message_activity_level_field(
 fn monitoring_message_distance_16_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -41919,6 +44168,7 @@ fn monitoring_message_distance_16_field(
 fn monitoring_message_cycles_16_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -41943,6 +44193,7 @@ fn monitoring_message_cycles_16_field(
 fn monitoring_message_active_time_16_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -41967,6 +44218,7 @@ fn monitoring_message_active_time_16_field(
 fn monitoring_message_local_timestamp_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -41991,6 +44243,7 @@ fn monitoring_message_local_timestamp_field(
 fn monitoring_message_temperature_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -42015,6 +44268,7 @@ fn monitoring_message_temperature_field(
 fn monitoring_message_temperature_min_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -42039,6 +44293,7 @@ fn monitoring_message_temperature_min_field(
 fn monitoring_message_temperature_max_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -42063,6 +44318,7 @@ fn monitoring_message_temperature_max_field(
 fn monitoring_message_activity_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -42087,6 +44343,7 @@ fn monitoring_message_activity_time_field(
 fn monitoring_message_active_calories_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -42111,6 +44368,7 @@ fn monitoring_message_active_calories_field(
 fn monitoring_message_current_activity_type_intensity_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -42135,6 +44393,7 @@ fn monitoring_message_current_activity_type_intensity_field(
 fn monitoring_message_timestamp_min_8_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -42159,6 +44418,7 @@ fn monitoring_message_timestamp_min_8_field(
 fn monitoring_message_timestamp_16_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -42183,6 +44443,7 @@ fn monitoring_message_timestamp_16_field(
 fn monitoring_message_heart_rate_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -42207,6 +44468,7 @@ fn monitoring_message_heart_rate_field(
 fn monitoring_message_intensity_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -42231,6 +44493,7 @@ fn monitoring_message_intensity_field(
 fn monitoring_message_duration_min_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -42255,6 +44518,7 @@ fn monitoring_message_duration_min_field(
 fn monitoring_message_duration_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -42279,6 +44543,7 @@ fn monitoring_message_duration_field(
 fn monitoring_message_ascent_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -42303,6 +44568,7 @@ fn monitoring_message_ascent_field(
 fn monitoring_message_descent_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -42327,6 +44593,7 @@ fn monitoring_message_descent_field(
 fn monitoring_message_moderate_activity_minutes_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -42351,6 +44618,7 @@ fn monitoring_message_moderate_activity_minutes_field(
 fn monitoring_message_vigorous_activity_minutes_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -42375,6 +44643,7 @@ fn monitoring_message_vigorous_activity_minutes_field(
 fn monitoring_message_timestamp_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -42410,6 +44679,7 @@ fn hr_message(
                 fields.push(hr_message_fractional_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     32768.000000,
                     0.000000,
@@ -42423,6 +44693,7 @@ fn hr_message(
                 fields.push(hr_message_fractional_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     256.000000,
                     0.000000,
@@ -42434,6 +44705,7 @@ fn hr_message(
                 fields.push(hr_message_filtered_bpm_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -42445,6 +44717,7 @@ fn hr_message(
                 fields.push(hr_message_event_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1024.000000,
                     0.000000,
@@ -42459,6 +44732,7 @@ fn hr_message(
                 fields.push(hr_message_event_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     true,
                     1024.000000,
                     0.000000,
@@ -42469,6 +44743,7 @@ fn hr_message(
                 fields.push(hr_message_event_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     true,
                     1024.000000,
                     0.000000,
@@ -42479,6 +44754,7 @@ fn hr_message(
                 fields.push(hr_message_event_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     true,
                     1024.000000,
                     0.000000,
@@ -42489,6 +44765,7 @@ fn hr_message(
                 fields.push(hr_message_event_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     true,
                     1024.000000,
                     0.000000,
@@ -42499,6 +44776,7 @@ fn hr_message(
                 fields.push(hr_message_event_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     true,
                     1024.000000,
                     0.000000,
@@ -42509,6 +44787,7 @@ fn hr_message(
                 fields.push(hr_message_event_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     true,
                     1024.000000,
                     0.000000,
@@ -42519,6 +44798,7 @@ fn hr_message(
                 fields.push(hr_message_event_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     true,
                     1024.000000,
                     0.000000,
@@ -42529,6 +44809,7 @@ fn hr_message(
                 fields.push(hr_message_event_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     true,
                     1024.000000,
                     0.000000,
@@ -42539,6 +44820,7 @@ fn hr_message(
                 fields.push(hr_message_event_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     true,
                     1024.000000,
                     0.000000,
@@ -42549,6 +44831,7 @@ fn hr_message(
                 fields.push(hr_message_event_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     true,
                     1024.000000,
                     0.000000,
@@ -42560,6 +44843,7 @@ fn hr_message(
                 fields.push(hr_message_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -42575,6 +44859,7 @@ fn hr_message(
 fn hr_message_fractional_timestamp_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -42599,6 +44884,7 @@ fn hr_message_fractional_timestamp_field(
 fn hr_message_time256_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -42623,6 +44909,7 @@ fn hr_message_time256_field(
 fn hr_message_filtered_bpm_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -42647,6 +44934,7 @@ fn hr_message_filtered_bpm_field(
 fn hr_message_event_timestamp_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -42671,6 +44959,7 @@ fn hr_message_event_timestamp_field(
 fn hr_message_event_timestamp_12_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -42695,6 +44984,7 @@ fn hr_message_event_timestamp_12_field(
 fn hr_message_timestamp_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -42731,6 +45021,7 @@ fn stress_level_message(
                 fields.push(stress_level_message_stress_level_value_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -42743,6 +45034,7 @@ fn stress_level_message(
                 fields.push(stress_level_message_stress_level_time_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -42758,6 +45050,7 @@ fn stress_level_message(
 fn stress_level_message_stress_level_value_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -42782,6 +45075,7 @@ fn stress_level_message_stress_level_value_field(
 fn stress_level_message_stress_level_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -42818,6 +45112,7 @@ fn memo_glob_message(
                 fields.push(memo_glob_message_memo_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -42830,6 +45125,7 @@ fn memo_glob_message(
                 fields.push(memo_glob_message_mesg_num_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -42842,6 +45138,7 @@ fn memo_glob_message(
                 fields.push(memo_glob_message_parent_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -42854,6 +45151,7 @@ fn memo_glob_message(
                 fields.push(memo_glob_message_field_num_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -42866,6 +45164,7 @@ fn memo_glob_message(
                 fields.push(memo_glob_message_data_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -42878,6 +45177,7 @@ fn memo_glob_message(
                 fields.push(memo_glob_message_part_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -42893,6 +45193,7 @@ fn memo_glob_message(
 fn memo_glob_message_memo_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -42909,6 +45210,7 @@ fn memo_glob_message_memo_field(
 fn memo_glob_message_mesg_num_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -42933,6 +45235,7 @@ fn memo_glob_message_mesg_num_field(
 fn memo_glob_message_parent_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -42957,6 +45260,7 @@ fn memo_glob_message_parent_index_field(
 fn memo_glob_message_field_num_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -42981,6 +45285,7 @@ fn memo_glob_message_field_num_field(
 fn memo_glob_message_data_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -43005,6 +45310,7 @@ fn memo_glob_message_data_field(
 fn memo_glob_message_part_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -43040,6 +45346,7 @@ fn ant_channel_id_message(
                 fields.push(ant_channel_id_message_channel_number_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -43051,6 +45358,7 @@ fn ant_channel_id_message(
                 fields.push(ant_channel_id_message_device_type_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -43062,6 +45370,7 @@ fn ant_channel_id_message(
                 fields.push(ant_channel_id_message_device_number_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -43073,6 +45382,7 @@ fn ant_channel_id_message(
                 fields.push(ant_channel_id_message_transmission_type_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -43084,6 +45394,7 @@ fn ant_channel_id_message(
                 fields.push(ant_channel_id_message_device_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -43099,6 +45410,7 @@ fn ant_channel_id_message(
 fn ant_channel_id_message_channel_number_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -43123,6 +45435,7 @@ fn ant_channel_id_message_channel_number_field(
 fn ant_channel_id_message_device_type_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -43147,6 +45460,7 @@ fn ant_channel_id_message_device_type_field(
 fn ant_channel_id_message_device_number_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -43171,6 +45485,7 @@ fn ant_channel_id_message_device_number_field(
 fn ant_channel_id_message_transmission_type_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -43195,6 +45510,7 @@ fn ant_channel_id_message_transmission_type_field(
 fn ant_channel_id_message_device_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -43230,6 +45546,7 @@ fn ant_rx_message(
                 fields.push(ant_rx_message_fractional_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     32768.000000,
                     0.000000,
@@ -43241,6 +45558,7 @@ fn ant_rx_message(
                 fields.push(ant_rx_message_mesg_id_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -43254,6 +45572,7 @@ fn ant_rx_message(
                 fields.push(ant_rx_message_channel_number_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -43264,6 +45583,7 @@ fn ant_rx_message(
                 fields.push(ant_rx_message_data_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -43274,6 +45594,7 @@ fn ant_rx_message(
                 fields.push(ant_rx_message_data_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -43284,6 +45605,7 @@ fn ant_rx_message(
                 fields.push(ant_rx_message_data_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -43294,6 +45616,7 @@ fn ant_rx_message(
                 fields.push(ant_rx_message_data_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -43304,6 +45627,7 @@ fn ant_rx_message(
                 fields.push(ant_rx_message_data_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -43314,6 +45638,7 @@ fn ant_rx_message(
                 fields.push(ant_rx_message_data_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -43324,6 +45649,7 @@ fn ant_rx_message(
                 fields.push(ant_rx_message_data_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -43334,6 +45660,7 @@ fn ant_rx_message(
                 fields.push(ant_rx_message_data_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -43345,6 +45672,7 @@ fn ant_rx_message(
                 fields.push(ant_rx_message_channel_number_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -43356,6 +45684,7 @@ fn ant_rx_message(
                 fields.push(ant_rx_message_data_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -43367,6 +45696,7 @@ fn ant_rx_message(
                 fields.push(ant_rx_message_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -43382,6 +45712,7 @@ fn ant_rx_message(
 fn ant_rx_message_fractional_timestamp_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -43406,6 +45737,7 @@ fn ant_rx_message_fractional_timestamp_field(
 fn ant_rx_message_mesg_id_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -43430,6 +45762,7 @@ fn ant_rx_message_mesg_id_field(
 fn ant_rx_message_mesg_data_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -43454,6 +45787,7 @@ fn ant_rx_message_mesg_data_field(
 fn ant_rx_message_channel_number_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -43478,6 +45812,7 @@ fn ant_rx_message_channel_number_field(
 fn ant_rx_message_data_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -43494,6 +45829,7 @@ fn ant_rx_message_data_field(
 fn ant_rx_message_timestamp_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -43529,6 +45865,7 @@ fn ant_tx_message(
                 fields.push(ant_tx_message_fractional_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     32768.000000,
                     0.000000,
@@ -43540,6 +45877,7 @@ fn ant_tx_message(
                 fields.push(ant_tx_message_mesg_id_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -43553,6 +45891,7 @@ fn ant_tx_message(
                 fields.push(ant_tx_message_channel_number_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -43563,6 +45902,7 @@ fn ant_tx_message(
                 fields.push(ant_tx_message_data_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -43573,6 +45913,7 @@ fn ant_tx_message(
                 fields.push(ant_tx_message_data_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -43583,6 +45924,7 @@ fn ant_tx_message(
                 fields.push(ant_tx_message_data_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -43593,6 +45935,7 @@ fn ant_tx_message(
                 fields.push(ant_tx_message_data_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -43603,6 +45946,7 @@ fn ant_tx_message(
                 fields.push(ant_tx_message_data_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -43613,6 +45957,7 @@ fn ant_tx_message(
                 fields.push(ant_tx_message_data_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -43623,6 +45968,7 @@ fn ant_tx_message(
                 fields.push(ant_tx_message_data_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -43633,6 +45979,7 @@ fn ant_tx_message(
                 fields.push(ant_tx_message_data_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -43644,6 +45991,7 @@ fn ant_tx_message(
                 fields.push(ant_tx_message_channel_number_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -43655,6 +46003,7 @@ fn ant_tx_message(
                 fields.push(ant_tx_message_data_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -43666,6 +46015,7 @@ fn ant_tx_message(
                 fields.push(ant_tx_message_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -43681,6 +46031,7 @@ fn ant_tx_message(
 fn ant_tx_message_fractional_timestamp_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -43705,6 +46056,7 @@ fn ant_tx_message_fractional_timestamp_field(
 fn ant_tx_message_mesg_id_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -43729,6 +46081,7 @@ fn ant_tx_message_mesg_id_field(
 fn ant_tx_message_mesg_data_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -43753,6 +46106,7 @@ fn ant_tx_message_mesg_data_field(
 fn ant_tx_message_channel_number_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -43777,6 +46131,7 @@ fn ant_tx_message_channel_number_field(
 fn ant_tx_message_data_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -43793,6 +46148,7 @@ fn ant_tx_message_data_field(
 fn ant_tx_message_timestamp_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -43828,6 +46184,7 @@ fn exd_screen_configuration_message(
                 fields.push(exd_screen_configuration_message_screen_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -43840,6 +46197,7 @@ fn exd_screen_configuration_message(
                 fields.push(exd_screen_configuration_message_field_count_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -43851,6 +46209,7 @@ fn exd_screen_configuration_message(
                 fields.push(exd_screen_configuration_message_layout_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -43862,6 +46221,7 @@ fn exd_screen_configuration_message(
                 fields.push(exd_screen_configuration_message_screen_enabled_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -43877,6 +46237,7 @@ fn exd_screen_configuration_message(
 fn exd_screen_configuration_message_screen_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -43901,6 +46262,7 @@ fn exd_screen_configuration_message_screen_index_field(
 fn exd_screen_configuration_message_field_count_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -43925,6 +46287,7 @@ fn exd_screen_configuration_message_field_count_field(
 fn exd_screen_configuration_message_layout_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -43949,6 +46312,7 @@ fn exd_screen_configuration_message_layout_field(
 fn exd_screen_configuration_message_screen_enabled_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -43984,6 +46348,7 @@ fn exd_data_field_configuration_message(
                 fields.push(exd_data_field_configuration_message_screen_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -43997,6 +46362,7 @@ fn exd_data_field_configuration_message(
                 fields.push(exd_data_field_configuration_message_field_id_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -44007,6 +46373,7 @@ fn exd_data_field_configuration_message(
                 fields.push(exd_data_field_configuration_message_concept_count_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -44018,6 +46385,7 @@ fn exd_data_field_configuration_message(
                 fields.push(exd_data_field_configuration_message_field_id_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -44029,6 +46397,7 @@ fn exd_data_field_configuration_message(
                 fields.push(exd_data_field_configuration_message_concept_count_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -44040,6 +46409,7 @@ fn exd_data_field_configuration_message(
                 fields.push(exd_data_field_configuration_message_display_type_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -44051,6 +46421,7 @@ fn exd_data_field_configuration_message(
                 fields.push(exd_data_field_configuration_message_title_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -44066,6 +46437,7 @@ fn exd_data_field_configuration_message(
 fn exd_data_field_configuration_message_screen_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -44090,6 +46462,7 @@ fn exd_data_field_configuration_message_screen_index_field(
 fn exd_data_field_configuration_message_concept_field_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -44114,6 +46487,7 @@ fn exd_data_field_configuration_message_concept_field_field(
 fn exd_data_field_configuration_message_field_id_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -44138,6 +46512,7 @@ fn exd_data_field_configuration_message_field_id_field(
 fn exd_data_field_configuration_message_concept_count_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -44162,6 +46537,7 @@ fn exd_data_field_configuration_message_concept_count_field(
 fn exd_data_field_configuration_message_display_type_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -44186,6 +46562,7 @@ fn exd_data_field_configuration_message_display_type_field(
 fn exd_data_field_configuration_message_title_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -44221,6 +46598,7 @@ fn exd_data_concept_configuration_message(
                 fields.push(exd_data_concept_configuration_message_screen_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -44234,6 +46612,7 @@ fn exd_data_concept_configuration_message(
                 fields.push(exd_data_concept_configuration_message_field_id_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -44244,6 +46623,7 @@ fn exd_data_concept_configuration_message(
                 fields.push(exd_data_concept_configuration_message_concept_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -44255,6 +46635,7 @@ fn exd_data_concept_configuration_message(
                 fields.push(exd_data_concept_configuration_message_field_id_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -44266,6 +46647,7 @@ fn exd_data_concept_configuration_message(
                 fields.push(exd_data_concept_configuration_message_concept_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -44277,6 +46659,7 @@ fn exd_data_concept_configuration_message(
                 fields.push(exd_data_concept_configuration_message_data_page_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -44288,6 +46671,7 @@ fn exd_data_concept_configuration_message(
                 fields.push(exd_data_concept_configuration_message_concept_key_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -44299,6 +46683,7 @@ fn exd_data_concept_configuration_message(
                 fields.push(exd_data_concept_configuration_message_scaling_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -44310,6 +46695,7 @@ fn exd_data_concept_configuration_message(
                 fields.push(exd_data_concept_configuration_message_data_units_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -44321,6 +46707,7 @@ fn exd_data_concept_configuration_message(
                 fields.push(exd_data_concept_configuration_message_qualifier_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -44332,6 +46719,7 @@ fn exd_data_concept_configuration_message(
                 fields.push(exd_data_concept_configuration_message_descriptor_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -44343,6 +46731,7 @@ fn exd_data_concept_configuration_message(
                 fields.push(exd_data_concept_configuration_message_is_signed_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -44358,6 +46747,7 @@ fn exd_data_concept_configuration_message(
 fn exd_data_concept_configuration_message_screen_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -44382,6 +46772,7 @@ fn exd_data_concept_configuration_message_screen_index_field(
 fn exd_data_concept_configuration_message_concept_field_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -44406,6 +46797,7 @@ fn exd_data_concept_configuration_message_concept_field_field(
 fn exd_data_concept_configuration_message_field_id_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -44430,6 +46822,7 @@ fn exd_data_concept_configuration_message_field_id_field(
 fn exd_data_concept_configuration_message_concept_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -44454,6 +46847,7 @@ fn exd_data_concept_configuration_message_concept_index_field(
 fn exd_data_concept_configuration_message_data_page_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -44478,6 +46872,7 @@ fn exd_data_concept_configuration_message_data_page_field(
 fn exd_data_concept_configuration_message_concept_key_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -44502,6 +46897,7 @@ fn exd_data_concept_configuration_message_concept_key_field(
 fn exd_data_concept_configuration_message_scaling_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -44526,6 +46922,7 @@ fn exd_data_concept_configuration_message_scaling_field(
 fn exd_data_concept_configuration_message_data_units_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -44550,6 +46947,7 @@ fn exd_data_concept_configuration_message_data_units_field(
 fn exd_data_concept_configuration_message_qualifier_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -44574,6 +46972,7 @@ fn exd_data_concept_configuration_message_qualifier_field(
 fn exd_data_concept_configuration_message_descriptor_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -44598,6 +46997,7 @@ fn exd_data_concept_configuration_message_descriptor_field(
 fn exd_data_concept_configuration_message_is_signed_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -44633,6 +47033,7 @@ fn dive_summary_message(
                 fields.push(dive_summary_message_reference_mesg_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -44644,6 +47045,7 @@ fn dive_summary_message(
                 fields.push(dive_summary_message_reference_index_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -44656,6 +47058,7 @@ fn dive_summary_message(
                 fields.push(dive_summary_message_avg_depth_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -44668,6 +47071,7 @@ fn dive_summary_message(
                 fields.push(dive_summary_message_max_depth_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -44680,6 +47084,7 @@ fn dive_summary_message(
                 fields.push(dive_summary_message_surface_interval_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -44691,6 +47096,7 @@ fn dive_summary_message(
                 fields.push(dive_summary_message_start_cns_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -44702,6 +47108,7 @@ fn dive_summary_message(
                 fields.push(dive_summary_message_end_cns_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -44713,6 +47120,7 @@ fn dive_summary_message(
                 fields.push(dive_summary_message_start_n2_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -44724,6 +47132,7 @@ fn dive_summary_message(
                 fields.push(dive_summary_message_end_n2_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -44735,6 +47144,7 @@ fn dive_summary_message(
                 fields.push(dive_summary_message_o2_toxicity_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -44746,6 +47156,7 @@ fn dive_summary_message(
                 fields.push(dive_summary_message_dive_number_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -44757,6 +47168,7 @@ fn dive_summary_message(
                 fields.push(dive_summary_message_bottom_time_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -44769,6 +47181,7 @@ fn dive_summary_message(
                 fields.push(dive_summary_message_avg_ascent_rate_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -44781,6 +47194,7 @@ fn dive_summary_message(
                 fields.push(dive_summary_message_avg_descent_rate_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -44793,6 +47207,7 @@ fn dive_summary_message(
                 fields.push(dive_summary_message_max_ascent_rate_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -44805,6 +47220,7 @@ fn dive_summary_message(
                 fields.push(dive_summary_message_max_descent_rate_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -44817,6 +47233,7 @@ fn dive_summary_message(
                 fields.push(dive_summary_message_hang_time_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -44828,6 +47245,7 @@ fn dive_summary_message(
                 fields.push(dive_summary_message_timestamp_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1.000000,
                     0.000000,
@@ -44843,6 +47261,7 @@ fn dive_summary_message(
 fn dive_summary_message_reference_mesg_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -44867,6 +47286,7 @@ fn dive_summary_message_reference_mesg_field(
 fn dive_summary_message_reference_index_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -44891,6 +47311,7 @@ fn dive_summary_message_reference_index_field(
 fn dive_summary_message_avg_depth_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -44915,6 +47336,7 @@ fn dive_summary_message_avg_depth_field(
 fn dive_summary_message_max_depth_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -44939,6 +47361,7 @@ fn dive_summary_message_max_depth_field(
 fn dive_summary_message_surface_interval_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -44963,6 +47386,7 @@ fn dive_summary_message_surface_interval_field(
 fn dive_summary_message_start_cns_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -44987,6 +47411,7 @@ fn dive_summary_message_start_cns_field(
 fn dive_summary_message_end_cns_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -45011,6 +47436,7 @@ fn dive_summary_message_end_cns_field(
 fn dive_summary_message_start_n2_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -45035,6 +47461,7 @@ fn dive_summary_message_start_n2_field(
 fn dive_summary_message_end_n2_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -45059,6 +47486,7 @@ fn dive_summary_message_end_n2_field(
 fn dive_summary_message_o2_toxicity_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -45083,6 +47511,7 @@ fn dive_summary_message_o2_toxicity_field(
 fn dive_summary_message_dive_number_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -45107,6 +47536,7 @@ fn dive_summary_message_dive_number_field(
 fn dive_summary_message_bottom_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -45131,6 +47561,7 @@ fn dive_summary_message_bottom_time_field(
 fn dive_summary_message_avg_ascent_rate_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -45155,6 +47586,7 @@ fn dive_summary_message_avg_ascent_rate_field(
 fn dive_summary_message_avg_descent_rate_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -45179,6 +47611,7 @@ fn dive_summary_message_avg_descent_rate_field(
 fn dive_summary_message_max_ascent_rate_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -45203,6 +47636,7 @@ fn dive_summary_message_max_ascent_rate_field(
 fn dive_summary_message_max_descent_rate_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -45227,6 +47661,7 @@ fn dive_summary_message_max_descent_rate_field(
 fn dive_summary_message_hang_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -45251,6 +47686,7 @@ fn dive_summary_message_hang_time_field(
 fn dive_summary_message_timestamp_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -45288,6 +47724,7 @@ fn hrv_message(
                 fields.push(hrv_message_time_field(
                     mesg_num,
                     accumlators,
+                    data_map,
                     false,
                     1000.000000,
                     0.000000,
@@ -45303,6 +47740,7 @@ fn hrv_message(
 fn hrv_message_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
+    data_map: &HashMap<u8, Value>,
     accumulate: bool,
     scale: f64,
     offset: f64,
@@ -45334,6 +47772,7 @@ fn unknown_message(data_map: &HashMap<u8, Value>) -> Result<Vec<FitDataField>> {
 }
 
 impl MesgNum {
+    /// Decode the raw values from a FitDataMessage based on the Global Message Number
     pub fn decode_message(
         self,
         data_map: &mut HashMap<u8, Value>,
