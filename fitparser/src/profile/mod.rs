@@ -1,155 +1,233 @@
 //! Defines the FIT profile used to convert raw parser output into final values that can be
 //! interpreted without using the FIT profile.
+use crate::error::{ErrorKind, Result};
+use crate::{FitDataField, Value};
+use chrono::{DateTime, Duration, Local, NaiveDate, TimeZone};
 use std::collections::HashMap;
+use std::f64::EPSILON;
 
 pub mod field_types;
 pub use field_types::{get_field_variant_as_string, FieldDataType, MesgNum};
 
-pub mod messages;
-pub use messages::VERSION;
+pub mod decode;
+pub use decode::VERSION;
 
-/// Describes a single message pulled from the FIT profile.
-#[derive(Clone, Debug)]
-pub struct MessageInfo {
-    name: &'static str,
-    global_message_number: MesgNum,
-    fields: HashMap<u8, FieldInfo>,
-}
-
-impl MessageInfo {
-    /// Return message name as defined in FIT profile
-    pub fn name(&self) -> &'static str {
-        self.name
-    }
-
-    /// Return global message number as defined in FIT profile
-    pub fn global_message_number(&self) -> MesgNum {
-        self.global_message_number
-    }
-
-    /// Return reference to defined set of fields
-    pub fn fields(&self) -> &HashMap<u8, FieldInfo> {
-        &self.fields
-    }
-}
-
-/// Describes a single field within a message pulled from the FIT profile
-#[derive(Clone, Debug)]
-pub struct FieldInfo {
-    name: &'static str,
-    field_type: FieldDataType,
-    def_number: u8,
-    scale: f64,
-    offset: f64,
-    units: &'static str,
-    accumulate: bool,
-    subfields: Vec<(u8, i64, FieldInfo)>,
-    components: Vec<ComponentFieldInfo>,
-}
-
-impl FieldInfo {
-    /// Get units of field
-    pub fn name(&self) -> &'static str {
-        self.name
-    }
-
-    /// Get field type
-    pub fn field_type(&self) -> FieldDataType {
-        self.field_type
-    }
-
-    /// Get definition number as defined in the FIT profile
-    pub fn def_number(&self) -> u8 {
-        self.def_number
-    }
-
-    /// Get scale used to convert field value into a float
-    pub fn scale(&self) -> f64 {
-        self.scale
-    }
-
-    /// Get offset to shift field value by
-    pub fn offset(&self) -> f64 {
-        self.offset
-    }
-
-    /// Get units of field
-    pub fn units(&self) -> &'static str {
-        self.units
-    }
-
-    /// Check whether or not this field is accumlated across multiple messages
-    pub fn accumulate(&self) -> bool {
-        self.accumulate
-    }
-
-    /// Get components of field if any
-    pub fn components(&self) -> &[ComponentFieldInfo] {
-        &self.components
-    }
-
-    /// Get subfields of field if any, these are stored as a tuple of values
-    /// (referenced field defition num, expected referenced field value, subfield field info)
-    pub fn subfields(&self) -> &[(u8, i64, FieldInfo)] {
-        &self.subfields
+impl Value {
+    /// Convert the value into a vector of bytes
+    fn to_ne_bytes(&self) -> Vec<u8> {
+        match self {
+            Value::Byte(val) => vec![*val as u8],
+            Value::Enum(val) => vec![*val as u8],
+            Value::SInt8(val) => vec![*val as u8],
+            Value::UInt8(val) => vec![*val as u8],
+            Value::SInt16(val) => val.to_ne_bytes().to_vec(),
+            Value::UInt16(val) => val.to_ne_bytes().to_vec(),
+            Value::SInt32(val) => val.to_ne_bytes().to_vec(),
+            Value::UInt32(val) => val.to_ne_bytes().to_vec(),
+            Value::String(val) => val.as_bytes().to_vec(),
+            Value::Timestamp(val) => val.timestamp().to_ne_bytes().to_vec(),
+            Value::Float32(val) => val.to_ne_bytes().to_vec(),
+            Value::Float64(val) => val.to_ne_bytes().to_vec(),
+            Value::UInt8z(val) => vec![*val as u8],
+            Value::UInt16z(val) => val.to_ne_bytes().to_vec(),
+            Value::UInt32z(val) => val.to_ne_bytes().to_vec(),
+            Value::SInt64(val) => val.to_ne_bytes().to_vec(),
+            Value::UInt64(val) => val.to_ne_bytes().to_vec(),
+            Value::UInt64z(val) => val.to_ne_bytes().to_vec(),
+            Value::Array(vals) => vals.iter().flat_map(|v| v.to_ne_bytes()).collect(),
+        }
     }
 }
 
-/// Describes a componet field within a larger field pulled from the FIT profile
-#[derive(Clone, Debug)]
-pub struct ComponentFieldInfo {
-    dest_def_number: u8,
-    scale: f64,
-    offset: f64,
-    units: &'static str,
-    bits: u8,
-    accumulate: bool,
+/// Stores the timestamp offset from the FIT reference date in seconds
+#[derive(Debug, Copy, Clone)]
+pub enum TimestampField {
+    Local(i64),
+    Utc(i64),
 }
 
-impl ComponentFieldInfo {
-    /// Expand the component info into a full FieldInfo struct
-    pub fn to_field_info(&self, info: &FieldInfo) -> FieldInfo {
-        FieldInfo {
-            name: info.name(),
-            field_type: info.field_type(),
-            def_number: info.def_number(),
-            scale: self.scale(),
-            offset: self.offset(),
-            units: self.units(),
-            accumulate: self.accumulate(),
-            subfields: info.subfields().to_vec(),
-            // double component expansion breaks scale/offset adjustment
-            components: Vec::new(), // info.components.clone(),
+impl TimestampField {
+    /// Return the timestamp as an i64
+    pub fn as_i64(&self) -> i64 {
+        match self {
+            Self::Local(value) => *value,
+            Self::Utc(value) => *value,
         }
     }
 
-    /// Destination definition number to use once the component is expanded
-    pub fn dest_def_number(&self) -> u8 {
-        self.dest_def_number
+    /// converts offset value into a proper timestamp
+    fn to_date_time(self) -> DateTime<Local> {
+        // reference date defined in FIT profile, it's either in UTC or local TZ
+        let ref_date = NaiveDate::from_ymd(1989, 12, 31).and_hms(0, 0, 0);
+        match self {
+            Self::Local(value) => {
+                TimeZone::from_local_datetime(&Local, &ref_date).unwrap() + Duration::seconds(value)
+            }
+            Self::Utc(value) => {
+                TimeZone::from_utc_datetime(&Local, &ref_date) + Duration::seconds(value)
+            }
+        }
+    }
+}
+
+impl From<TimestampField> for Value {
+    fn from(timestamp: TimestampField) -> Value {
+        Value::Timestamp(timestamp.to_date_time())
+    }
+}
+
+/// Applies a bitmask to the value and uses the field info to derive additional fields based on the
+/// defined components
+fn expand_components(value: &Value, parts: [u8]) -> Vec<Value> {
+    // extract out each field by masking specific bits, spanning 1 or more bytes
+    let bit_mask = [1u8, 2u8, 4u8, 8u8, 16u8, 32u8, 64u8, 128u8];
+    let mut bytes = value.to_ne_bytes().into_iter();
+    let mut components = Vec::new();
+    let mut byte = bytes.next().unwrap_or(0);
+    let mut bit_pos = 0;
+    for nbits in parts {
+        let mut tmp: u64 = 0;
+        for pos in 0..nbits {
+            tmp |= (((byte & bit_mask[bit_pos]) >> bit_pos) as u64) << pos;
+            if bit_pos == 7 {
+                byte = bytes.next().unwrap_or(0);
+                bit_pos = 0;
+            } else {
+                bit_pos += 1;
+            }
+        }
+        components.push(Value::UInt64(tmp));
     }
 
-    /// Get scale used to convert field value into a float
-    pub fn scale(&self) -> f64 {
-        self.scale
+    components
+}
+
+/// Increment the stored field value
+pub fn calculate_cumulative_value(
+    accumulate_fields: &mut HashMap<u32, Value>,
+    msg_num: u16,
+    def_num: u8,
+    value: Value,
+) -> Result<Value> {
+    // use macro to duplicate same type only addition logic
+    macro_rules! only_add_like_values {
+        ($key:ident, $val:ident, $stored_value:ident, $variant:ident) => {
+            if let Value::$variant(other) = value {
+                let value = Value::$variant($val + other);
+                accumulate_fields.insert($key, value.clone());
+                Ok(value)
+            } else {
+                Err(ErrorKind::ValueError(format!(
+                    "Mixed type addition {} and {} cannot be combined",
+                    $stored_value, value
+                ))
+                .into())
+            }
+        };
     }
 
-    /// Get offset to shift field value by
-    pub fn offset(&self) -> f64 {
-        self.offset
+    let key = (msg_num as u32) << 8 | def_num as u32;
+    if let Some(stored_value) = accumulate_fields.get(&key) {
+        match stored_value {
+            Value::Timestamp(_) => {
+                Err(ErrorKind::ValueError("Cannot accumlate timestamp fields".to_string()).into())
+            }
+            Value::Byte(val) => only_add_like_values!(key, val, stored_value, Byte),
+            Value::Enum(_) => {
+                Err(ErrorKind::ValueError("Cannot accumlate enum fields".to_string()).into())
+            }
+            Value::SInt8(val) => only_add_like_values!(key, val, stored_value, SInt8),
+            Value::UInt8(val) => only_add_like_values!(key, val, stored_value, UInt8),
+            Value::UInt8z(val) => only_add_like_values!(key, val, stored_value, UInt8z),
+            Value::SInt16(val) => only_add_like_values!(key, val, stored_value, SInt16),
+            Value::UInt16(val) => only_add_like_values!(key, val, stored_value, UInt16),
+            Value::UInt16z(val) => only_add_like_values!(key, val, stored_value, UInt16z),
+            Value::SInt32(val) => only_add_like_values!(key, val, stored_value, SInt32),
+            Value::UInt32(val) => only_add_like_values!(key, val, stored_value, UInt32),
+            Value::UInt32z(val) => only_add_like_values!(key, val, stored_value, UInt32z),
+            Value::SInt64(val) => only_add_like_values!(key, val, stored_value, SInt64),
+            Value::UInt64(val) => only_add_like_values!(key, val, stored_value, UInt64),
+            Value::UInt64z(val) => only_add_like_values!(key, val, stored_value, UInt64z),
+            Value::Float32(val) => only_add_like_values!(key, val, stored_value, Float32),
+            Value::Float64(val) => only_add_like_values!(key, val, stored_value, Float64),
+            Value::String(_) => {
+                Err(ErrorKind::ValueError("Cannot accumlate string fields".to_string()).into())
+            }
+            Value::Array(_) => {
+                Err(ErrorKind::ValueError("Cannot accumlate array fields".to_string()).into())
+            }
+        }
+    } else {
+        accumulate_fields.insert(key, value.clone());
+        Ok(value)
+    }
+}
+
+/// Build a data field using the provided FIT profile information
+pub fn data_field_with_info(
+    def_number: u8,
+    name: &str,
+    data_type: FieldDataType,
+    scale: f64,
+    offset: f64,
+    units: &str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = convert_value(data_type, scale, offset, value)?;
+    Ok(FitDataField::new(
+        name.to_string(),
+        def_number,
+        value,
+        units.to_string(),
+    ))
+}
+
+/// Create an "unknown" field as a placeholder if we don't have any field information
+pub fn unknown_field(field_def_num: u8, value: Value) -> FitDataField {
+    FitDataField::new(
+        format!("unknown_field_{}", field_def_num),
+        field_def_num,
+        value,
+        String::new(),
+    )
+}
+
+/// Applies any necessary value conversions based on the field specification
+fn convert_value(
+    field_type: FieldDataType,
+    scale: f64,
+    offset: f64,
+    value: Value,
+) -> Result<Value> {
+    // for array types return inner vector unmodified
+    if let Value::Array(vals) = value {
+        return Ok(Value::Array(vals));
     }
 
-    /// Get units of field
-    pub fn units(&self) -> &'static str {
-        self.units
+    // handle time types specially, if for some reason I can't convert to an integer we will
+    // just dump the reference timestamp by passing it a 0
+    match field_type {
+        FieldDataType::DateTime => {
+            return Ok(Value::from(TimestampField::Utc(
+                value.try_into().unwrap_or(0),
+            )));
+        }
+        FieldDataType::LocalDateTime => {
+            return Ok(Value::from(TimestampField::Local(
+                value.try_into().unwrap_or(0),
+            )));
+        }
+        _ => (),
     }
 
-    /// Get bitmask needed for this field during expansion
-    pub fn bits(&self) -> u8 {
-        self.bits
-    }
-
-    /// Check whether or not this field is accumlated across multiple messages
-    pub fn accumulate(&self) -> bool {
-        self.accumulate
+    // convert enum or rescale integer value into floating point
+    if field_type.is_enum_type() {
+        let val: i64 = value.try_into()?;
+        Ok(Value::String(get_field_variant_as_string(field_type, val)))
+    } else if ((scale - 1.0).abs() > EPSILON) || ((offset - 0.0).abs() > EPSILON) {
+        let val: f64 = value.try_into()?;
+        Ok(Value::Float64(val / scale - offset))
+    } else {
+        Ok(value)
     }
 }

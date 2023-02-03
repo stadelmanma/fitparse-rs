@@ -81,6 +81,11 @@ impl FitDataRecord {
         self.fields.push(field)
     }
 
+    /// Add multiple fields to the record
+    pub fn extend(&mut self, fields: Vec<FitDataField>) {
+        self.fields.extend(fields)
+    }
+
     /// Consume the record and return the field vector for further processing
     pub fn into_vec(self) -> Vec<FitDataField> {
         self.fields
