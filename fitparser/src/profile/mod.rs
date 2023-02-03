@@ -4,6 +4,7 @@ use crate::error::{ErrorKind, Result};
 use crate::{FitDataField, Value};
 use chrono::{DateTime, Duration, Local, NaiveDate, TimeZone};
 use std::collections::HashMap;
+use std::convert::TryInto;
 use std::f64::EPSILON;
 
 pub mod field_types;
@@ -78,7 +79,7 @@ impl From<TimestampField> for Value {
 
 /// Applies a bitmask to the value and uses the field info to derive additional fields based on the
 /// defined components
-fn expand_components(value: &Value, parts: &[u8]) -> Vec<Value> {
+fn expand_components(value: Value, parts: &[u8]) -> Vec<Value> {
     // extract out each field by masking specific bits, spanning 1 or more bytes
     let bit_mask = [1u8, 2u8, 4u8, 8u8, 16u8, 32u8, 64u8, 128u8];
     let mut bytes = value.to_ne_bytes().into_iter();
@@ -87,7 +88,7 @@ fn expand_components(value: &Value, parts: &[u8]) -> Vec<Value> {
     let mut bit_pos = 0;
     for nbits in parts {
         let mut tmp: u64 = 0;
-        for pos in 0..nbits {
+        for pos in 0..*nbits {
             tmp |= (((byte & bit_mask[bit_pos]) >> bit_pos) as u64) << pos;
             if bit_pos == 7 {
                 byte = bytes.next().unwrap_or(0);

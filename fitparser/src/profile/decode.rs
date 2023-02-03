@@ -4,18 +4,17 @@ use super::{calculate_cumulative_value, data_field_with_info, expand_components,
 use crate::error::Result;
 use crate::{FitDataField, Value};
 use std::collections::{HashMap, VecDeque};
+use std::convert::TryInto;
 pub const VERSION: &str = "21.89.00";
 /// Must be first message in file.
 fn file_id_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -26,7 +25,7 @@ fn file_id_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -37,12 +36,16 @@ fn file_id_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
                 if Manufacturer::FaveroElectronics.as_i64()
-                    == data_map.get(&1).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(file_id_message_favero_product_field(
                         mesg_num,
@@ -51,10 +54,14 @@ fn file_id_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
                     )?);
                 } else if Manufacturer::Garmin.as_i64()
-                    == data_map.get(&1).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(file_id_message_garmin_product_field(
                         mesg_num,
@@ -63,10 +70,14 @@ fn file_id_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
                     )?);
                 } else if Manufacturer::Dynastream.as_i64()
-                    == data_map.get(&1).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(file_id_message_garmin_product_field(
                         mesg_num,
@@ -75,10 +86,14 @@ fn file_id_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
                     )?);
                 } else if Manufacturer::DynastreamOem.as_i64()
-                    == data_map.get(&1).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(file_id_message_garmin_product_field(
                         mesg_num,
@@ -87,9 +102,15 @@ fn file_id_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
                     )?);
-                } else {
+                } else if Manufacturer::Tacx.as_i64()
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
                     fields.push(file_id_message_garmin_product_field(
                         mesg_num,
                         accumlators,
@@ -97,7 +118,17 @@ fn file_id_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
+                    )?);
+                } else {
+                    fields.push(file_id_message_product_field(
+                        mesg_num,
+                        accumlators,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
                     )?);
                 }
             }
@@ -109,7 +140,7 @@ fn file_id_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             4 => {
@@ -121,7 +152,7 @@ fn file_id_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             5 => {
@@ -133,7 +164,7 @@ fn file_id_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             8 => {
@@ -145,10 +176,10 @@ fn file_id_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -363,14 +394,12 @@ fn file_id_message_product_name_field(
 }
 fn file_creator_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -381,7 +410,7 @@ fn file_creator_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -392,10 +421,10 @@ fn file_creator_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -450,14 +479,12 @@ fn file_creator_message_hardware_version_field(
 }
 fn timestamp_correlation_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -469,7 +496,7 @@ fn timestamp_correlation_message(
                     32768.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -481,7 +508,7 @@ fn timestamp_correlation_message(
                     1.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
@@ -494,7 +521,7 @@ fn timestamp_correlation_message(
                         32768.000000,
                         0.000000,
                         "s",
-                        value.clone(),
+                        value,
                     )?,
                 );
             }
@@ -507,7 +534,7 @@ fn timestamp_correlation_message(
                     1.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             4 => {
@@ -519,7 +546,7 @@ fn timestamp_correlation_message(
                     1.000000,
                     0.000000,
                     "ms",
-                    value.clone(),
+                    value,
                 )?);
             }
             5 => {
@@ -531,7 +558,7 @@ fn timestamp_correlation_message(
                     1.000000,
                     0.000000,
                     "ms",
-                    value.clone(),
+                    value,
                 )?);
             }
             253 => {
@@ -543,10 +570,10 @@ fn timestamp_correlation_message(
                     1.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -721,14 +748,12 @@ fn timestamp_correlation_message_timestamp_field(
 }
 fn software_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             3 => {
@@ -739,7 +764,7 @@ fn software_message(
                     100.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             5 => {
@@ -750,7 +775,7 @@ fn software_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             254 => {
@@ -761,10 +786,10 @@ fn software_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -843,14 +868,12 @@ fn software_message_message_index_field(
 }
 fn slave_device_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -861,12 +884,16 @@ fn slave_device_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
                 if Manufacturer::FaveroElectronics.as_i64()
-                    == data_map.get(&0).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(slave_device_message_favero_product_field(
                         mesg_num,
@@ -875,10 +902,14 @@ fn slave_device_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
                     )?);
                 } else if Manufacturer::Garmin.as_i64()
-                    == data_map.get(&0).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(slave_device_message_garmin_product_field(
                         mesg_num,
@@ -887,10 +918,14 @@ fn slave_device_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
                     )?);
                 } else if Manufacturer::Dynastream.as_i64()
-                    == data_map.get(&0).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(slave_device_message_garmin_product_field(
                         mesg_num,
@@ -899,10 +934,14 @@ fn slave_device_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
                     )?);
                 } else if Manufacturer::DynastreamOem.as_i64()
-                    == data_map.get(&0).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(slave_device_message_garmin_product_field(
                         mesg_num,
@@ -911,9 +950,15 @@ fn slave_device_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
                     )?);
-                } else {
+                } else if Manufacturer::Tacx.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
                     fields.push(slave_device_message_garmin_product_field(
                         mesg_num,
                         accumlators,
@@ -921,11 +966,21 @@ fn slave_device_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
+                    )?);
+                } else {
+                    fields.push(slave_device_message_product_field(
+                        mesg_num,
+                        accumlators,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
                     )?);
                 }
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -1028,14 +1083,12 @@ fn slave_device_message_garmin_product_field(
 }
 fn capabilities_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -1047,7 +1100,7 @@ fn capabilities_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -1059,7 +1112,7 @@ fn capabilities_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             21 => {
@@ -1070,7 +1123,7 @@ fn capabilities_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             23 => {
@@ -1081,10 +1134,10 @@ fn capabilities_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -1187,14 +1240,12 @@ fn capabilities_message_connectivity_supported_field(
 }
 fn file_capabilities_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -1205,7 +1256,7 @@ fn file_capabilities_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -1216,7 +1267,7 @@ fn file_capabilities_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
@@ -1227,7 +1278,7 @@ fn file_capabilities_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             3 => {
@@ -1238,7 +1289,7 @@ fn file_capabilities_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             4 => {
@@ -1249,7 +1300,7 @@ fn file_capabilities_message(
                     1.000000,
                     0.000000,
                     "bytes",
-                    value.clone(),
+                    value,
                 )?);
             }
             254 => {
@@ -1260,10 +1311,10 @@ fn file_capabilities_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -1406,14 +1457,12 @@ fn file_capabilities_message_message_index_field(
 }
 fn mesg_capabilities_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -1424,7 +1473,7 @@ fn mesg_capabilities_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -1435,7 +1484,7 @@ fn mesg_capabilities_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
@@ -1446,12 +1495,16 @@ fn mesg_capabilities_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             3 => {
                 if MesgCount::NumPerFile.as_i64()
-                    == data_map.get(&2).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&2)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(mesg_capabilities_message_num_per_file_field(
                         mesg_num,
@@ -1460,10 +1513,14 @@ fn mesg_capabilities_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
                     )?);
                 } else if MesgCount::MaxPerFile.as_i64()
-                    == data_map.get(&2).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&2)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(mesg_capabilities_message_max_per_file_field(
                         mesg_num,
@@ -1472,9 +1529,15 @@ fn mesg_capabilities_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
                     )?);
-                } else {
+                } else if MesgCount::MaxPerFileType.as_i64()
+                    == data_map
+                        .get(&2)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
                     fields.push(mesg_capabilities_message_max_per_file_type_field(
                         mesg_num,
                         accumlators,
@@ -1482,7 +1545,17 @@ fn mesg_capabilities_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
+                    )?);
+                } else {
+                    fields.push(mesg_capabilities_message_count_field(
+                        mesg_num,
+                        accumlators,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
                     )?);
                 }
             }
@@ -1494,10 +1567,10 @@ fn mesg_capabilities_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -1688,14 +1761,12 @@ fn mesg_capabilities_message_message_index_field(
 }
 fn field_capabilities_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -1706,7 +1777,7 @@ fn field_capabilities_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -1717,7 +1788,7 @@ fn field_capabilities_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
@@ -1728,7 +1799,7 @@ fn field_capabilities_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             3 => {
@@ -1739,7 +1810,7 @@ fn field_capabilities_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             254 => {
@@ -1750,10 +1821,10 @@ fn field_capabilities_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -1872,14 +1943,12 @@ fn field_capabilities_message_message_index_field(
 }
 fn device_settings_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -1891,7 +1960,7 @@ fn device_settings_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -1903,7 +1972,7 @@ fn device_settings_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
@@ -1915,7 +1984,7 @@ fn device_settings_message(
                     1.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             4 => {
@@ -1927,7 +1996,7 @@ fn device_settings_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             5 => {
@@ -1939,7 +2008,7 @@ fn device_settings_message(
                     4.000000,
                     0.000000,
                     "hr",
-                    value.clone(),
+                    value,
                 )?);
             }
             12 => {
@@ -1951,7 +2020,7 @@ fn device_settings_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             36 => {
@@ -1963,7 +2032,7 @@ fn device_settings_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             39 => {
@@ -1975,7 +2044,7 @@ fn device_settings_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             40 => {
@@ -1987,7 +2056,7 @@ fn device_settings_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             46 => {
@@ -1999,7 +2068,7 @@ fn device_settings_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             47 => {
@@ -2011,7 +2080,7 @@ fn device_settings_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             55 => {
@@ -2022,7 +2091,7 @@ fn device_settings_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             56 => {
@@ -2033,7 +2102,7 @@ fn device_settings_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             57 => {
@@ -2045,7 +2114,7 @@ fn device_settings_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             58 => {
@@ -2057,7 +2126,7 @@ fn device_settings_message(
                     1.000000,
                     0.000000,
                     "steps",
-                    value.clone(),
+                    value,
                 )?);
             }
             59 => {
@@ -2069,7 +2138,7 @@ fn device_settings_message(
                     1.000000,
                     0.000000,
                     "minutes",
-                    value.clone(),
+                    value,
                 )?);
             }
             80 => {
@@ -2082,7 +2151,7 @@ fn device_settings_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
                     )?,
                 );
             }
@@ -2095,7 +2164,7 @@ fn device_settings_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             89 => {
@@ -2107,7 +2176,7 @@ fn device_settings_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             90 => {
@@ -2119,7 +2188,7 @@ fn device_settings_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             94 => {
@@ -2131,7 +2200,7 @@ fn device_settings_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             95 => {
@@ -2144,7 +2213,7 @@ fn device_settings_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
                     )?,
                 );
             }
@@ -2156,7 +2225,7 @@ fn device_settings_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             174 => {
@@ -2168,10 +2237,10 @@ fn device_settings_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -2754,14 +2823,12 @@ fn device_settings_message_tap_sensitivity_field(
 }
 fn user_profile_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -2772,7 +2839,7 @@ fn user_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -2783,7 +2850,7 @@ fn user_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
@@ -2794,7 +2861,7 @@ fn user_profile_message(
                     1.000000,
                     0.000000,
                     "years",
-                    value.clone(),
+                    value,
                 )?);
             }
             3 => {
@@ -2805,7 +2872,7 @@ fn user_profile_message(
                     100.000000,
                     0.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             4 => {
@@ -2816,7 +2883,7 @@ fn user_profile_message(
                     10.000000,
                     0.000000,
                     "kg",
-                    value.clone(),
+                    value,
                 )?);
             }
             5 => {
@@ -2827,7 +2894,7 @@ fn user_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             6 => {
@@ -2838,7 +2905,7 @@ fn user_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             7 => {
@@ -2849,7 +2916,7 @@ fn user_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             8 => {
@@ -2860,7 +2927,7 @@ fn user_profile_message(
                     1.000000,
                     0.000000,
                     "bpm",
-                    value.clone(),
+                    value,
                 )?);
             }
             9 => {
@@ -2871,7 +2938,7 @@ fn user_profile_message(
                     1.000000,
                     0.000000,
                     "bpm",
-                    value.clone(),
+                    value,
                 )?);
             }
             10 => {
@@ -2882,7 +2949,7 @@ fn user_profile_message(
                     1.000000,
                     0.000000,
                     "bpm",
-                    value.clone(),
+                    value,
                 )?);
             }
             11 => {
@@ -2893,7 +2960,7 @@ fn user_profile_message(
                     1.000000,
                     0.000000,
                     "bpm",
-                    value.clone(),
+                    value,
                 )?);
             }
             12 => {
@@ -2904,7 +2971,7 @@ fn user_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             13 => {
@@ -2915,7 +2982,7 @@ fn user_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             14 => {
@@ -2926,7 +2993,7 @@ fn user_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             16 => {
@@ -2937,7 +3004,7 @@ fn user_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             17 => {
@@ -2948,7 +3015,7 @@ fn user_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             18 => {
@@ -2959,7 +3026,7 @@ fn user_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             21 => {
@@ -2970,7 +3037,7 @@ fn user_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             22 => {
@@ -2981,7 +3048,7 @@ fn user_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             23 => {
@@ -2992,7 +3059,7 @@ fn user_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             28 => {
@@ -3004,7 +3071,7 @@ fn user_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             29 => {
@@ -3016,7 +3083,7 @@ fn user_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             30 => {
@@ -3027,7 +3094,7 @@ fn user_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             31 => {
@@ -3039,7 +3106,7 @@ fn user_profile_message(
                     1000.000000,
                     0.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             32 => {
@@ -3051,7 +3118,7 @@ fn user_profile_message(
                     1000.000000,
                     0.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             47 => {
@@ -3062,7 +3129,7 @@ fn user_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             49 => {
@@ -3073,7 +3140,7 @@ fn user_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             254 => {
@@ -3084,10 +3151,10 @@ fn user_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -3782,14 +3849,12 @@ fn user_profile_message_message_index_field(
 }
 fn hrm_profile_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -3800,7 +3865,7 @@ fn hrm_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -3811,7 +3876,7 @@ fn hrm_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
@@ -3822,7 +3887,7 @@ fn hrm_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             3 => {
@@ -3833,7 +3898,7 @@ fn hrm_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             254 => {
@@ -3844,10 +3909,10 @@ fn hrm_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -3974,14 +4039,12 @@ fn hrm_profile_message_message_index_field(
 }
 fn sdm_profile_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -3992,7 +4055,7 @@ fn sdm_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -4003,7 +4066,7 @@ fn sdm_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
@@ -4014,7 +4077,7 @@ fn sdm_profile_message(
                     10.000000,
                     0.000000,
                     "%",
-                    value.clone(),
+                    value,
                 )?);
             }
             3 => {
@@ -4025,7 +4088,7 @@ fn sdm_profile_message(
                     100.000000,
                     0.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             4 => {
@@ -4037,7 +4100,7 @@ fn sdm_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             5 => {
@@ -4048,7 +4111,7 @@ fn sdm_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             7 => {
@@ -4060,7 +4123,7 @@ fn sdm_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             254 => {
@@ -4071,10 +4134,10 @@ fn sdm_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -4273,14 +4336,12 @@ fn sdm_profile_message_message_index_field(
 }
 fn bike_profile_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -4291,7 +4352,7 @@ fn bike_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -4302,7 +4363,7 @@ fn bike_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
@@ -4313,7 +4374,7 @@ fn bike_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             3 => {
@@ -4324,7 +4385,7 @@ fn bike_profile_message(
                     100.000000,
                     0.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             4 => {
@@ -4335,7 +4396,7 @@ fn bike_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             5 => {
@@ -4346,7 +4407,7 @@ fn bike_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             6 => {
@@ -4357,7 +4418,7 @@ fn bike_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             7 => {
@@ -4368,7 +4429,7 @@ fn bike_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             8 => {
@@ -4379,7 +4440,7 @@ fn bike_profile_message(
                     1000.000000,
                     0.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             9 => {
@@ -4390,7 +4451,7 @@ fn bike_profile_message(
                     1000.000000,
                     0.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             10 => {
@@ -4401,7 +4462,7 @@ fn bike_profile_message(
                     10.000000,
                     0.000000,
                     "kg",
-                    value.clone(),
+                    value,
                 )?);
             }
             11 => {
@@ -4412,7 +4473,7 @@ fn bike_profile_message(
                     10.000000,
                     0.000000,
                     "%",
-                    value.clone(),
+                    value,
                 )?);
             }
             12 => {
@@ -4423,7 +4484,7 @@ fn bike_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             13 => {
@@ -4434,7 +4495,7 @@ fn bike_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             14 => {
@@ -4445,7 +4506,7 @@ fn bike_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             15 => {
@@ -4456,7 +4517,7 @@ fn bike_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             16 => {
@@ -4467,7 +4528,7 @@ fn bike_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             17 => {
@@ -4478,7 +4539,7 @@ fn bike_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             18 => {
@@ -4489,7 +4550,7 @@ fn bike_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             19 => {
@@ -4500,7 +4561,7 @@ fn bike_profile_message(
                     2.000000,
                     0.000000,
                     "mm",
-                    value.clone(),
+                    value,
                 )?);
             }
             20 => {
@@ -4511,7 +4572,7 @@ fn bike_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             21 => {
@@ -4522,7 +4583,7 @@ fn bike_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             22 => {
@@ -4533,7 +4594,7 @@ fn bike_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             23 => {
@@ -4544,7 +4605,7 @@ fn bike_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             24 => {
@@ -4555,7 +4616,7 @@ fn bike_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             37 => {
@@ -4567,7 +4628,7 @@ fn bike_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             38 => {
@@ -4579,7 +4640,7 @@ fn bike_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             39 => {
@@ -4591,7 +4652,7 @@ fn bike_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             40 => {
@@ -4603,7 +4664,7 @@ fn bike_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             41 => {
@@ -4615,7 +4676,7 @@ fn bike_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             44 => {
@@ -4626,7 +4687,7 @@ fn bike_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             254 => {
@@ -4637,10 +4698,10 @@ fn bike_profile_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -5407,14 +5468,12 @@ fn bike_profile_message_message_index_field(
 }
 fn connectivity_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -5426,7 +5485,7 @@ fn connectivity_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -5438,7 +5497,7 @@ fn connectivity_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
@@ -5450,7 +5509,7 @@ fn connectivity_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             3 => {
@@ -5461,7 +5520,7 @@ fn connectivity_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             4 => {
@@ -5472,7 +5531,7 @@ fn connectivity_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             5 => {
@@ -5483,7 +5542,7 @@ fn connectivity_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             6 => {
@@ -5494,7 +5553,7 @@ fn connectivity_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             7 => {
@@ -5505,7 +5564,7 @@ fn connectivity_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             8 => {
@@ -5516,7 +5575,7 @@ fn connectivity_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             9 => {
@@ -5527,7 +5586,7 @@ fn connectivity_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             10 => {
@@ -5538,7 +5597,7 @@ fn connectivity_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             11 => {
@@ -5549,7 +5608,7 @@ fn connectivity_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             12 => {
@@ -5560,10 +5619,10 @@ fn connectivity_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -5882,14 +5941,12 @@ fn connectivity_message_grouptrack_enabled_field(
 }
 fn watchface_settings_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -5900,12 +5957,16 @@ fn watchface_settings_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
                 if WatchfaceMode::Digital.as_i64()
-                    == data_map.get(&0).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(watchface_settings_message_digital_layout_field(
                         mesg_num,
@@ -5914,9 +5975,15 @@ fn watchface_settings_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
                     )?);
-                } else {
+                } else if WatchfaceMode::Analog.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
                     fields.push(watchface_settings_message_analog_layout_field(
                         mesg_num,
                         accumlators,
@@ -5924,7 +5991,17 @@ fn watchface_settings_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
+                    )?);
+                } else {
+                    fields.push(watchface_settings_message_layout_field(
+                        mesg_num,
+                        accumlators,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
                     )?);
                 }
             }
@@ -5936,10 +6013,10 @@ fn watchface_settings_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -6066,14 +6143,12 @@ fn watchface_settings_message_message_index_field(
 }
 fn ohr_settings_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -6084,7 +6159,7 @@ fn ohr_settings_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             253 => {
@@ -6095,10 +6170,10 @@ fn ohr_settings_message(
                     1.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -6153,14 +6228,12 @@ fn ohr_settings_message_timestamp_field(
 }
 fn zones_target_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             1 => {
@@ -6171,7 +6244,7 @@ fn zones_target_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
@@ -6182,7 +6255,7 @@ fn zones_target_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             3 => {
@@ -6193,7 +6266,7 @@ fn zones_target_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             5 => {
@@ -6204,7 +6277,7 @@ fn zones_target_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             7 => {
@@ -6215,10 +6288,10 @@ fn zones_target_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -6345,14 +6418,12 @@ fn zones_target_message_pwr_calc_type_field(
 }
 fn sport_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -6363,7 +6434,7 @@ fn sport_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -6374,7 +6445,7 @@ fn sport_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             3 => {
@@ -6385,10 +6456,10 @@ fn sport_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -6467,14 +6538,12 @@ fn sport_message_name_field(
 }
 fn hr_zone_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             1 => {
@@ -6485,7 +6554,7 @@ fn hr_zone_message(
                     1.000000,
                     0.000000,
                     "bpm",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
@@ -6496,7 +6565,7 @@ fn hr_zone_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             254 => {
@@ -6507,10 +6576,10 @@ fn hr_zone_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -6589,14 +6658,12 @@ fn hr_zone_message_message_index_field(
 }
 fn speed_zone_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -6607,7 +6674,7 @@ fn speed_zone_message(
                     1000.000000,
                     0.000000,
                     "m/s",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -6618,7 +6685,7 @@ fn speed_zone_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             254 => {
@@ -6629,10 +6696,10 @@ fn speed_zone_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -6711,14 +6778,12 @@ fn speed_zone_message_message_index_field(
 }
 fn cadence_zone_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -6729,7 +6794,7 @@ fn cadence_zone_message(
                     1.000000,
                     0.000000,
                     "rpm",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -6740,7 +6805,7 @@ fn cadence_zone_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             254 => {
@@ -6751,10 +6816,10 @@ fn cadence_zone_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -6833,14 +6898,12 @@ fn cadence_zone_message_message_index_field(
 }
 fn power_zone_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             1 => {
@@ -6851,7 +6914,7 @@ fn power_zone_message(
                     1.000000,
                     0.000000,
                     "watts",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
@@ -6862,7 +6925,7 @@ fn power_zone_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             254 => {
@@ -6873,10 +6936,10 @@ fn power_zone_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -6955,14 +7018,12 @@ fn power_zone_message_message_index_field(
 }
 fn met_zone_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             1 => {
@@ -6973,7 +7034,7 @@ fn met_zone_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
@@ -6984,7 +7045,7 @@ fn met_zone_message(
                     10.000000,
                     0.000000,
                     "kcal / min",
-                    value.clone(),
+                    value,
                 )?);
             }
             3 => {
@@ -6995,7 +7056,7 @@ fn met_zone_message(
                     10.000000,
                     0.000000,
                     "kcal / min",
-                    value.clone(),
+                    value,
                 )?);
             }
             254 => {
@@ -7006,10 +7067,10 @@ fn met_zone_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -7112,14 +7173,12 @@ fn met_zone_message_message_index_field(
 }
 fn dive_settings_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -7130,7 +7189,7 @@ fn dive_settings_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -7141,7 +7200,7 @@ fn dive_settings_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
@@ -7152,7 +7211,7 @@ fn dive_settings_message(
                     1.000000,
                     0.000000,
                     "percent",
-                    value.clone(),
+                    value,
                 )?);
             }
             3 => {
@@ -7163,7 +7222,7 @@ fn dive_settings_message(
                     1.000000,
                     0.000000,
                     "percent",
-                    value.clone(),
+                    value,
                 )?);
             }
             4 => {
@@ -7174,7 +7233,7 @@ fn dive_settings_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             5 => {
@@ -7186,7 +7245,7 @@ fn dive_settings_message(
                     1.000000,
                     0.000000,
                     "kg/m^3",
-                    value.clone(),
+                    value,
                 )?);
             }
             6 => {
@@ -7198,7 +7257,7 @@ fn dive_settings_message(
                     100.000000,
                     0.000000,
                     "percent",
-                    value.clone(),
+                    value,
                 )?);
             }
             7 => {
@@ -7210,7 +7269,7 @@ fn dive_settings_message(
                     100.000000,
                     0.000000,
                     "percent",
-                    value.clone(),
+                    value,
                 )?);
             }
             8 => {
@@ -7221,7 +7280,7 @@ fn dive_settings_message(
                     100.000000,
                     0.000000,
                     "percent",
-                    value.clone(),
+                    value,
                 )?);
             }
             9 => {
@@ -7232,7 +7291,7 @@ fn dive_settings_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             10 => {
@@ -7243,7 +7302,7 @@ fn dive_settings_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             11 => {
@@ -7254,7 +7313,7 @@ fn dive_settings_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             12 => {
@@ -7265,7 +7324,7 @@ fn dive_settings_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             13 => {
@@ -7276,7 +7335,7 @@ fn dive_settings_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             14 => {
@@ -7287,7 +7346,7 @@ fn dive_settings_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             15 => {
@@ -7298,7 +7357,7 @@ fn dive_settings_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             16 => {
@@ -7309,7 +7368,7 @@ fn dive_settings_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             17 => {
@@ -7321,7 +7380,7 @@ fn dive_settings_message(
                     1.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             18 => {
@@ -7333,7 +7392,7 @@ fn dive_settings_message(
                     1.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             19 => {
@@ -7344,12 +7403,16 @@ fn dive_settings_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             20 => {
                 if SourceType::Antplus.as_i64()
-                    == data_map.get(&19).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&19)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(dive_settings_message_heart_rate_antplus_device_type_field(
                         mesg_num,
@@ -7358,9 +7421,15 @@ fn dive_settings_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
                     )?);
-                } else {
+                } else if SourceType::Local.as_i64()
+                    == data_map
+                        .get(&19)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
                     fields.push(dive_settings_message_heart_rate_local_device_type_field(
                         mesg_num,
                         accumlators,
@@ -7368,7 +7437,17 @@ fn dive_settings_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
+                    )?);
+                } else {
+                    fields.push(dive_settings_message_heart_rate_source_field(
+                        mesg_num,
+                        accumlators,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
                     )?);
                 }
             }
@@ -7380,10 +7459,10 @@ fn dive_settings_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -7966,14 +8045,12 @@ fn dive_settings_message_message_index_field(
 }
 fn dive_alarm_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -7985,7 +8062,7 @@ fn dive_alarm_message(
                     1000.000000,
                     0.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -7997,7 +8074,7 @@ fn dive_alarm_message(
                     1.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
@@ -8009,7 +8086,7 @@ fn dive_alarm_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             3 => {
@@ -8021,7 +8098,7 @@ fn dive_alarm_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             4 => {
@@ -8033,7 +8110,7 @@ fn dive_alarm_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             5 => {
@@ -8045,7 +8122,7 @@ fn dive_alarm_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             254 => {
@@ -8057,10 +8134,10 @@ fn dive_alarm_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -8227,14 +8304,12 @@ fn dive_alarm_message_message_index_field(
 }
 fn dive_gas_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -8245,7 +8320,7 @@ fn dive_gas_message(
                     1.000000,
                     0.000000,
                     "percent",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -8256,7 +8331,7 @@ fn dive_gas_message(
                     1.000000,
                     0.000000,
                     "percent",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
@@ -8267,7 +8342,7 @@ fn dive_gas_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             254 => {
@@ -8278,10 +8353,10 @@ fn dive_gas_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -8384,14 +8459,12 @@ fn dive_gas_message_message_index_field(
 }
 fn goal_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -8402,7 +8475,7 @@ fn goal_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -8413,7 +8486,7 @@ fn goal_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
@@ -8424,7 +8497,7 @@ fn goal_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             3 => {
@@ -8435,7 +8508,7 @@ fn goal_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             4 => {
@@ -8446,7 +8519,7 @@ fn goal_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             5 => {
@@ -8457,7 +8530,7 @@ fn goal_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             6 => {
@@ -8468,7 +8541,7 @@ fn goal_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             7 => {
@@ -8479,7 +8552,7 @@ fn goal_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             8 => {
@@ -8490,7 +8563,7 @@ fn goal_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             9 => {
@@ -8501,7 +8574,7 @@ fn goal_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             10 => {
@@ -8512,7 +8585,7 @@ fn goal_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             11 => {
@@ -8523,7 +8596,7 @@ fn goal_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             254 => {
@@ -8534,10 +8607,10 @@ fn goal_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -8848,14 +8921,12 @@ fn goal_message_message_index_field(
 }
 fn activity_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -8867,7 +8938,7 @@ fn activity_message(
                     1000.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -8878,7 +8949,7 @@ fn activity_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
@@ -8889,7 +8960,7 @@ fn activity_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             3 => {
@@ -8900,7 +8971,7 @@ fn activity_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             4 => {
@@ -8911,7 +8982,7 @@ fn activity_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             5 => {
@@ -8923,7 +8994,7 @@ fn activity_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             6 => {
@@ -8934,7 +9005,7 @@ fn activity_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             253 => {
@@ -8945,10 +9016,10 @@ fn activity_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -9147,14 +9218,12 @@ fn activity_message_timestamp_field(
 }
 fn session_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -9166,7 +9235,7 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -9178,7 +9247,7 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
@@ -9189,7 +9258,7 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             3 => {
@@ -9200,7 +9269,7 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "semicircles",
-                    value.clone(),
+                    value,
                 )?);
             }
             4 => {
@@ -9211,7 +9280,7 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "semicircles",
-                    value.clone(),
+                    value,
                 )?);
             }
             5 => {
@@ -9222,7 +9291,7 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             6 => {
@@ -9233,7 +9302,7 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             7 => {
@@ -9245,7 +9314,7 @@ fn session_message(
                     1000.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             8 => {
@@ -9257,7 +9326,7 @@ fn session_message(
                     1000.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             9 => {
@@ -9268,12 +9337,16 @@ fn session_message(
                     100.000000,
                     0.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             10 => {
                 if Sport::Running.as_i64()
-                    == data_map.get(&5).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&5)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(session_message_total_strides_field(
                         mesg_num,
@@ -9282,10 +9355,14 @@ fn session_message(
                         1.000000,
                         0.000000,
                         "strides",
-                        value.clone(),
+                        value,
                     )?);
                 } else if Sport::Walking.as_i64()
-                    == data_map.get(&5).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&5)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(session_message_total_strides_field(
                         mesg_num,
@@ -9294,10 +9371,14 @@ fn session_message(
                         1.000000,
                         0.000000,
                         "strides",
-                        value.clone(),
+                        value,
                     )?);
                 } else if Sport::Cycling.as_i64()
-                    == data_map.get(&5).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&5)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(session_message_total_strokes_field(
                         mesg_num,
@@ -9306,10 +9387,14 @@ fn session_message(
                         1.000000,
                         0.000000,
                         "strokes",
-                        value.clone(),
+                        value,
                     )?);
                 } else if Sport::Swimming.as_i64()
-                    == data_map.get(&5).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&5)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(session_message_total_strokes_field(
                         mesg_num,
@@ -9318,10 +9403,14 @@ fn session_message(
                         1.000000,
                         0.000000,
                         "strokes",
-                        value.clone(),
+                        value,
                     )?);
                 } else if Sport::Rowing.as_i64()
-                    == data_map.get(&5).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&5)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(session_message_total_strokes_field(
                         mesg_num,
@@ -9330,9 +9419,15 @@ fn session_message(
                         1.000000,
                         0.000000,
                         "strokes",
-                        value.clone(),
+                        value,
                     )?);
-                } else {
+                } else if Sport::StandUpPaddleboarding.as_i64()
+                    == data_map
+                        .get(&5)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
                     fields.push(session_message_total_strokes_field(
                         mesg_num,
                         accumlators,
@@ -9340,7 +9435,17 @@ fn session_message(
                         1.000000,
                         0.000000,
                         "strokes",
-                        value.clone(),
+                        value,
+                    )?);
+                } else {
+                    fields.push(session_message_total_cycles_field(
+                        mesg_num,
+                        accumlators,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "cycles",
+                        value,
                     )?);
                 }
             }
@@ -9352,7 +9457,7 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "kcal",
-                    value.clone(),
+                    value,
                 )?);
             }
             13 => {
@@ -9363,13 +9468,13 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "kcal",
-                    value.clone(),
+                    value,
                 )?);
             }
             14 => {
                 // total_distance / total_timer_time
                 let component_values = expand_components(value, &[16]);
-                data_map.insert(124, Some(component_values[0]));
+                data_map.insert(124, component_values[0].clone());
                 fields.push(session_message_enhanced_avg_speed_field(
                     mesg_num,
                     accumlators,
@@ -9382,7 +9487,7 @@ fn session_message(
             }
             15 => {
                 let component_values = expand_components(value, &[16]);
-                data_map.insert(125, Some(component_values[0]));
+                data_map.insert(125, component_values[0].clone());
                 fields.push(session_message_enhanced_max_speed_field(
                     mesg_num,
                     accumlators,
@@ -9402,7 +9507,7 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "bpm",
-                    value.clone(),
+                    value,
                 )?);
             }
             17 => {
@@ -9413,13 +9518,17 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "bpm",
-                    value.clone(),
+                    value,
                 )?);
             }
             18 => {
                 // total_cycles / total_timer_time if non_zero_avg_cadence otherwise total_cycles / total_elapsed_time
                 if Sport::Running.as_i64()
-                    == data_map.get(&5).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&5)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(session_message_avg_running_cadence_field(
                         mesg_num,
@@ -9428,13 +9537,27 @@ fn session_message(
                         1.000000,
                         0.000000,
                         "strides/min",
-                        value.clone(),
+                        value,
+                    )?);
+                } else {
+                    fields.push(session_message_avg_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "rpm",
+                        value,
                     )?);
                 }
             }
             19 => {
                 if Sport::Running.as_i64()
-                    == data_map.get(&5).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&5)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(session_message_max_running_cadence_field(
                         mesg_num,
@@ -9443,7 +9566,17 @@ fn session_message(
                         1.000000,
                         0.000000,
                         "strides/min",
-                        value.clone(),
+                        value,
+                    )?);
+                } else {
+                    fields.push(session_message_max_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "rpm",
+                        value,
                     )?);
                 }
             }
@@ -9456,7 +9589,7 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "watts",
-                    value.clone(),
+                    value,
                 )?);
             }
             21 => {
@@ -9467,7 +9600,7 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "watts",
-                    value.clone(),
+                    value,
                 )?);
             }
             22 => {
@@ -9478,7 +9611,7 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             23 => {
@@ -9489,7 +9622,7 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             24 => {
@@ -9500,7 +9633,7 @@ fn session_message(
                     10.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             25 => {
@@ -9511,7 +9644,7 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             26 => {
@@ -9522,7 +9655,7 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             27 => {
@@ -9533,7 +9666,7 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             28 => {
@@ -9544,7 +9677,7 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             29 => {
@@ -9556,7 +9689,7 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "semicircles",
-                    value.clone(),
+                    value,
                 )?);
             }
             30 => {
@@ -9568,7 +9701,7 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "semicircles",
-                    value.clone(),
+                    value,
                 )?);
             }
             31 => {
@@ -9580,7 +9713,7 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "semicircles",
-                    value.clone(),
+                    value,
                 )?);
             }
             32 => {
@@ -9592,7 +9725,7 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "semicircles",
-                    value.clone(),
+                    value,
                 )?);
             }
             33 => {
@@ -9604,7 +9737,7 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "lengths",
-                    value.clone(),
+                    value,
                 )?);
             }
             34 => {
@@ -9615,7 +9748,7 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "watts",
-                    value.clone(),
+                    value,
                 )?);
             }
             35 => {
@@ -9626,7 +9759,7 @@ fn session_message(
                     10.000000,
                     0.000000,
                     "tss",
-                    value.clone(),
+                    value,
                 )?);
             }
             36 => {
@@ -9637,7 +9770,7 @@ fn session_message(
                     1000.000000,
                     0.000000,
                     "if",
-                    value.clone(),
+                    value,
                 )?);
             }
             37 => {
@@ -9648,7 +9781,7 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             41 => {
@@ -9659,7 +9792,7 @@ fn session_message(
                     10.000000,
                     0.000000,
                     "strokes/lap",
-                    value.clone(),
+                    value,
                 )?);
             }
             42 => {
@@ -9670,7 +9803,7 @@ fn session_message(
                     100.000000,
                     0.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             43 => {
@@ -9681,7 +9814,7 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "swim_stroke",
-                    value.clone(),
+                    value,
                 )?);
             }
             44 => {
@@ -9692,7 +9825,7 @@ fn session_message(
                     100.000000,
                     0.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             45 => {
@@ -9703,7 +9836,7 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "watts",
-                    value.clone(),
+                    value,
                 )?);
             }
             46 => {
@@ -9714,7 +9847,7 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             47 => {
@@ -9726,7 +9859,7 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "lengths",
-                    value.clone(),
+                    value,
                 )?);
             }
             48 => {
@@ -9737,12 +9870,12 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "J",
-                    value.clone(),
+                    value,
                 )?);
             }
             49 => {
                 let component_values = expand_components(value, &[16]);
-                data_map.insert(126, Some(component_values[0]));
+                data_map.insert(126, component_values[0].clone());
                 fields.push(session_message_enhanced_avg_altitude_field(
                     mesg_num,
                     accumlators,
@@ -9755,7 +9888,7 @@ fn session_message(
             }
             50 => {
                 let component_values = expand_components(value, &[16]);
-                data_map.insert(128, Some(component_values[0]));
+                data_map.insert(128, component_values[0].clone());
                 fields.push(session_message_enhanced_max_altitude_field(
                     mesg_num,
                     accumlators,
@@ -9774,7 +9907,7 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             52 => {
@@ -9785,7 +9918,7 @@ fn session_message(
                     100.000000,
                     0.000000,
                     "%",
-                    value.clone(),
+                    value,
                 )?);
             }
             53 => {
@@ -9796,7 +9929,7 @@ fn session_message(
                     100.000000,
                     0.000000,
                     "%",
-                    value.clone(),
+                    value,
                 )?);
             }
             54 => {
@@ -9807,7 +9940,7 @@ fn session_message(
                     100.000000,
                     0.000000,
                     "%",
-                    value.clone(),
+                    value,
                 )?);
             }
             55 => {
@@ -9818,7 +9951,7 @@ fn session_message(
                     100.000000,
                     0.000000,
                     "%",
-                    value.clone(),
+                    value,
                 )?);
             }
             56 => {
@@ -9829,7 +9962,7 @@ fn session_message(
                     100.000000,
                     0.000000,
                     "%",
-                    value.clone(),
+                    value,
                 )?);
             }
             57 => {
@@ -9840,7 +9973,7 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "C",
-                    value.clone(),
+                    value,
                 )?);
             }
             58 => {
@@ -9851,7 +9984,7 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "C",
-                    value.clone(),
+                    value,
                 )?);
             }
             59 => {
@@ -9862,7 +9995,7 @@ fn session_message(
                     1000.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             60 => {
@@ -9873,7 +10006,7 @@ fn session_message(
                     1000.000000,
                     0.000000,
                     "m/s",
-                    value.clone(),
+                    value,
                 )?);
             }
             61 => {
@@ -9884,7 +10017,7 @@ fn session_message(
                     1000.000000,
                     0.000000,
                     "m/s",
-                    value.clone(),
+                    value,
                 )?);
             }
             62 => {
@@ -9895,7 +10028,7 @@ fn session_message(
                     1000.000000,
                     0.000000,
                     "m/s",
-                    value.clone(),
+                    value,
                 )?);
             }
             63 => {
@@ -9906,7 +10039,7 @@ fn session_message(
                     1000.000000,
                     0.000000,
                     "m/s",
-                    value.clone(),
+                    value,
                 )?);
             }
             64 => {
@@ -9917,7 +10050,7 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "bpm",
-                    value.clone(),
+                    value,
                 )?);
             }
             65 => {
@@ -9928,7 +10061,7 @@ fn session_message(
                     1000.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             66 => {
@@ -9939,7 +10072,7 @@ fn session_message(
                     1000.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             67 => {
@@ -9950,7 +10083,7 @@ fn session_message(
                     1000.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             68 => {
@@ -9961,7 +10094,7 @@ fn session_message(
                     1000.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             69 => {
@@ -9972,7 +10105,7 @@ fn session_message(
                     1000.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             70 => {
@@ -9983,12 +10116,12 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             71 => {
                 let component_values = expand_components(value, &[16]);
-                data_map.insert(127, Some(component_values[0]));
+                data_map.insert(127, component_values[0].clone());
                 fields.push(session_message_enhanced_min_altitude_field(
                     mesg_num,
                     accumlators,
@@ -10007,7 +10140,7 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             83 => {
@@ -10018,7 +10151,7 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             84 => {
@@ -10029,7 +10162,7 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             85 => {
@@ -10041,7 +10174,7 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "counts",
-                    value.clone(),
+                    value,
                 )?);
             }
             86 => {
@@ -10053,7 +10186,7 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "counts",
-                    value.clone(),
+                    value,
                 )?);
             }
             87 => {
@@ -10064,7 +10197,7 @@ fn session_message(
                     100.000000,
                     0.000000,
                     "m/s",
-                    value.clone(),
+                    value,
                 )?);
             }
             88 => {
@@ -10075,7 +10208,7 @@ fn session_message(
                     100.000000,
                     0.000000,
                     "m/s",
-                    value.clone(),
+                    value,
                 )?);
             }
             89 => {
@@ -10086,7 +10219,7 @@ fn session_message(
                     10.000000,
                     0.000000,
                     "mm",
-                    value.clone(),
+                    value,
                 )?);
             }
             90 => {
@@ -10097,7 +10230,7 @@ fn session_message(
                     100.000000,
                     0.000000,
                     "percent",
-                    value.clone(),
+                    value,
                 )?);
             }
             91 => {
@@ -10108,7 +10241,7 @@ fn session_message(
                     10.000000,
                     0.000000,
                     "ms",
-                    value.clone(),
+                    value,
                 )?);
             }
             92 => {
@@ -10120,7 +10253,7 @@ fn session_message(
                     128.000000,
                     0.000000,
                     "rpm",
-                    value.clone(),
+                    value,
                 )?);
             }
             93 => {
@@ -10132,7 +10265,7 @@ fn session_message(
                     128.000000,
                     0.000000,
                     "rpm",
-                    value.clone(),
+                    value,
                 )?);
             }
             94 => {
@@ -10144,7 +10277,7 @@ fn session_message(
                     128.000000,
                     0.000000,
                     "cycles",
-                    value.clone(),
+                    value,
                 )?);
             }
             95 => {
@@ -10156,7 +10289,7 @@ fn session_message(
                     100.000000,
                     0.000000,
                     "g/dL",
-                    value.clone(),
+                    value,
                 )?);
             }
             96 => {
@@ -10168,7 +10301,7 @@ fn session_message(
                     100.000000,
                     0.000000,
                     "g/dL",
-                    value.clone(),
+                    value,
                 )?);
             }
             97 => {
@@ -10180,7 +10313,7 @@ fn session_message(
                     100.000000,
                     0.000000,
                     "g/dL",
-                    value.clone(),
+                    value,
                 )?);
             }
             98 => {
@@ -10192,7 +10325,7 @@ fn session_message(
                     10.000000,
                     0.000000,
                     "%",
-                    value.clone(),
+                    value,
                 )?);
             }
             99 => {
@@ -10204,7 +10337,7 @@ fn session_message(
                     10.000000,
                     0.000000,
                     "%",
-                    value.clone(),
+                    value,
                 )?);
             }
             100 => {
@@ -10216,7 +10349,7 @@ fn session_message(
                     10.000000,
                     0.000000,
                     "%",
-                    value.clone(),
+                    value,
                 )?);
             }
             101 => {
@@ -10227,7 +10360,7 @@ fn session_message(
                     2.000000,
                     0.000000,
                     "percent",
-                    value.clone(),
+                    value,
                 )?);
             }
             102 => {
@@ -10238,7 +10371,7 @@ fn session_message(
                     2.000000,
                     0.000000,
                     "percent",
-                    value.clone(),
+                    value,
                 )?);
             }
             103 => {
@@ -10249,7 +10382,7 @@ fn session_message(
                     2.000000,
                     0.000000,
                     "percent",
-                    value.clone(),
+                    value,
                 )?);
             }
             104 => {
@@ -10260,7 +10393,7 @@ fn session_message(
                     2.000000,
                     0.000000,
                     "percent",
-                    value.clone(),
+                    value,
                 )?);
             }
             105 => {
@@ -10271,7 +10404,7 @@ fn session_message(
                     2.000000,
                     0.000000,
                     "percent",
-                    value.clone(),
+                    value,
                 )?);
             }
             111 => {
@@ -10282,7 +10415,7 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             112 => {
@@ -10294,7 +10427,7 @@ fn session_message(
                     1000.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             113 => {
@@ -10306,7 +10439,7 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             114 => {
@@ -10318,7 +10451,7 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "mm",
-                    value.clone(),
+                    value,
                 )?);
             }
             115 => {
@@ -10330,7 +10463,7 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "mm",
-                    value.clone(),
+                    value,
                 )?);
             }
             116 => {
@@ -10342,7 +10475,7 @@ fn session_message(
                     0.711111,
                     0.000000,
                     "degrees",
-                    value.clone(),
+                    value,
                 )?);
             }
             117 => {
@@ -10354,7 +10487,7 @@ fn session_message(
                     0.711111,
                     0.000000,
                     "degrees",
-                    value.clone(),
+                    value,
                 )?);
             }
             118 => {
@@ -10366,7 +10499,7 @@ fn session_message(
                     0.711111,
                     0.000000,
                     "degrees",
-                    value.clone(),
+                    value,
                 )?);
             }
             119 => {
@@ -10378,7 +10511,7 @@ fn session_message(
                     0.711111,
                     0.000000,
                     "degrees",
-                    value.clone(),
+                    value,
                 )?);
             }
             120 => {
@@ -10390,7 +10523,7 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "watts",
-                    value.clone(),
+                    value,
                 )?);
             }
             121 => {
@@ -10402,7 +10535,7 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "watts",
-                    value.clone(),
+                    value,
                 )?);
             }
             122 => {
@@ -10414,7 +10547,7 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "rpm",
-                    value.clone(),
+                    value,
                 )?);
             }
             123 => {
@@ -10426,7 +10559,7 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "rpm",
-                    value.clone(),
+                    value,
                 )?);
             }
             124 => {
@@ -10438,7 +10571,7 @@ fn session_message(
                     1000.000000,
                     0.000000,
                     "m/s",
-                    value.clone(),
+                    value,
                 )?);
             }
             125 => {
@@ -10449,7 +10582,7 @@ fn session_message(
                     1000.000000,
                     0.000000,
                     "m/s",
-                    value.clone(),
+                    value,
                 )?);
             }
             126 => {
@@ -10460,7 +10593,7 @@ fn session_message(
                     5.000000,
                     500.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             127 => {
@@ -10471,7 +10604,7 @@ fn session_message(
                     5.000000,
                     500.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             128 => {
@@ -10482,7 +10615,7 @@ fn session_message(
                     5.000000,
                     500.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             129 => {
@@ -10494,7 +10627,7 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "watts",
-                    value.clone(),
+                    value,
                 )?);
             }
             130 => {
@@ -10506,7 +10639,7 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "watts",
-                    value.clone(),
+                    value,
                 )?);
             }
             131 => {
@@ -10518,7 +10651,7 @@ fn session_message(
                     2.000000,
                     0.000000,
                     "percent",
-                    value.clone(),
+                    value,
                 )?);
             }
             132 => {
@@ -10529,7 +10662,7 @@ fn session_message(
                     100.000000,
                     0.000000,
                     "percent",
-                    value.clone(),
+                    value,
                 )?);
             }
             133 => {
@@ -10540,7 +10673,7 @@ fn session_message(
                     100.000000,
                     0.000000,
                     "percent",
-                    value.clone(),
+                    value,
                 )?);
             }
             134 => {
@@ -10551,7 +10684,7 @@ fn session_message(
                     10.000000,
                     0.000000,
                     "mm",
-                    value.clone(),
+                    value,
                 )?);
             }
             137 => {
@@ -10562,7 +10695,7 @@ fn session_message(
                     10.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             139 => {
@@ -10573,7 +10706,7 @@ fn session_message(
                     1000.000000,
                     0.000000,
                     "m/s",
-                    value.clone(),
+                    value,
                 )?);
             }
             168 => {
@@ -10584,7 +10717,7 @@ fn session_message(
                     65536.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             181 => {
@@ -10596,7 +10729,7 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "kGrit",
-                    value.clone(),
+                    value,
                 )?);
             }
             182 => {
@@ -10608,7 +10741,7 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "Flow",
-                    value.clone(),
+                    value,
                 )?);
             }
             183 => {
@@ -10619,7 +10752,7 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             186 => {
@@ -10631,7 +10764,7 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "kGrit",
-                    value.clone(),
+                    value,
                 )?);
             }
             187 => {
@@ -10643,7 +10776,7 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "Flow",
-                    value.clone(),
+                    value,
                 )?);
             }
             199 => {
@@ -10655,7 +10788,7 @@ fn session_message(
                     100.000000,
                     0.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             200 => {
@@ -10667,7 +10800,7 @@ fn session_message(
                     100.000000,
                     0.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             208 => {
@@ -10678,7 +10811,7 @@ fn session_message(
                     100.000000,
                     0.000000,
                     "C",
-                    value.clone(),
+                    value,
                 )?);
             }
             209 => {
@@ -10689,7 +10822,7 @@ fn session_message(
                     100.000000,
                     0.000000,
                     "C",
-                    value.clone(),
+                    value,
                 )?);
             }
             210 => {
@@ -10700,7 +10833,7 @@ fn session_message(
                     100.000000,
                     0.000000,
                     "C",
-                    value.clone(),
+                    value,
                 )?);
             }
             253 => {
@@ -10712,7 +10845,7 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             254 => {
@@ -10724,10 +10857,10 @@ fn session_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -13974,14 +14107,12 @@ fn session_message_message_index_field(
 }
 fn lap_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -13992,7 +14123,7 @@ fn lap_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -14003,7 +14134,7 @@ fn lap_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
@@ -14014,7 +14145,7 @@ fn lap_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             3 => {
@@ -14025,7 +14156,7 @@ fn lap_message(
                     1.000000,
                     0.000000,
                     "semicircles",
-                    value.clone(),
+                    value,
                 )?);
             }
             4 => {
@@ -14036,7 +14167,7 @@ fn lap_message(
                     1.000000,
                     0.000000,
                     "semicircles",
-                    value.clone(),
+                    value,
                 )?);
             }
             5 => {
@@ -14047,7 +14178,7 @@ fn lap_message(
                     1.000000,
                     0.000000,
                     "semicircles",
-                    value.clone(),
+                    value,
                 )?);
             }
             6 => {
@@ -14058,7 +14189,7 @@ fn lap_message(
                     1.000000,
                     0.000000,
                     "semicircles",
-                    value.clone(),
+                    value,
                 )?);
             }
             7 => {
@@ -14070,7 +14201,7 @@ fn lap_message(
                     1000.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             8 => {
@@ -14082,7 +14213,7 @@ fn lap_message(
                     1000.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             9 => {
@@ -14093,12 +14224,16 @@ fn lap_message(
                     100.000000,
                     0.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             10 => {
                 if Sport::Running.as_i64()
-                    == data_map.get(&25).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&25)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(lap_message_total_strides_field(
                         mesg_num,
@@ -14107,10 +14242,14 @@ fn lap_message(
                         1.000000,
                         0.000000,
                         "strides",
-                        value.clone(),
+                        value,
                     )?);
                 } else if Sport::Walking.as_i64()
-                    == data_map.get(&25).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&25)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(lap_message_total_strides_field(
                         mesg_num,
@@ -14119,10 +14258,14 @@ fn lap_message(
                         1.000000,
                         0.000000,
                         "strides",
-                        value.clone(),
+                        value,
                     )?);
                 } else if Sport::Cycling.as_i64()
-                    == data_map.get(&25).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&25)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(lap_message_total_strokes_field(
                         mesg_num,
@@ -14131,10 +14274,14 @@ fn lap_message(
                         1.000000,
                         0.000000,
                         "strokes",
-                        value.clone(),
+                        value,
                     )?);
                 } else if Sport::Swimming.as_i64()
-                    == data_map.get(&25).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&25)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(lap_message_total_strokes_field(
                         mesg_num,
@@ -14143,10 +14290,14 @@ fn lap_message(
                         1.000000,
                         0.000000,
                         "strokes",
-                        value.clone(),
+                        value,
                     )?);
                 } else if Sport::Rowing.as_i64()
-                    == data_map.get(&25).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&25)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(lap_message_total_strokes_field(
                         mesg_num,
@@ -14155,9 +14306,15 @@ fn lap_message(
                         1.000000,
                         0.000000,
                         "strokes",
-                        value.clone(),
+                        value,
                     )?);
-                } else {
+                } else if Sport::StandUpPaddleboarding.as_i64()
+                    == data_map
+                        .get(&25)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
                     fields.push(lap_message_total_strokes_field(
                         mesg_num,
                         accumlators,
@@ -14165,7 +14322,17 @@ fn lap_message(
                         1.000000,
                         0.000000,
                         "strokes",
-                        value.clone(),
+                        value,
+                    )?);
+                } else {
+                    fields.push(lap_message_total_cycles_field(
+                        mesg_num,
+                        accumlators,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "cycles",
+                        value,
                     )?);
                 }
             }
@@ -14177,7 +14344,7 @@ fn lap_message(
                     1.000000,
                     0.000000,
                     "kcal",
-                    value.clone(),
+                    value,
                 )?);
             }
             12 => {
@@ -14189,12 +14356,12 @@ fn lap_message(
                     1.000000,
                     0.000000,
                     "kcal",
-                    value.clone(),
+                    value,
                 )?);
             }
             13 => {
                 let component_values = expand_components(value, &[16]);
-                data_map.insert(110, Some(component_values[0]));
+                data_map.insert(110, component_values[0].clone());
                 fields.push(lap_message_enhanced_avg_speed_field(
                     mesg_num,
                     accumlators,
@@ -14207,7 +14374,7 @@ fn lap_message(
             }
             14 => {
                 let component_values = expand_components(value, &[16]);
-                data_map.insert(111, Some(component_values[0]));
+                data_map.insert(111, component_values[0].clone());
                 fields.push(lap_message_enhanced_max_speed_field(
                     mesg_num,
                     accumlators,
@@ -14226,7 +14393,7 @@ fn lap_message(
                     1.000000,
                     0.000000,
                     "bpm",
-                    value.clone(),
+                    value,
                 )?);
             }
             16 => {
@@ -14237,13 +14404,17 @@ fn lap_message(
                     1.000000,
                     0.000000,
                     "bpm",
-                    value.clone(),
+                    value,
                 )?);
             }
             17 => {
                 // total_cycles / total_timer_time if non_zero_avg_cadence otherwise total_cycles / total_elapsed_time
                 if Sport::Running.as_i64()
-                    == data_map.get(&25).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&25)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(lap_message_avg_running_cadence_field(
                         mesg_num,
@@ -14252,13 +14423,27 @@ fn lap_message(
                         1.000000,
                         0.000000,
                         "strides/min",
-                        value.clone(),
+                        value,
+                    )?);
+                } else {
+                    fields.push(lap_message_avg_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "rpm",
+                        value,
                     )?);
                 }
             }
             18 => {
                 if Sport::Running.as_i64()
-                    == data_map.get(&25).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&25)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(lap_message_max_running_cadence_field(
                         mesg_num,
@@ -14267,7 +14452,17 @@ fn lap_message(
                         1.000000,
                         0.000000,
                         "strides/min",
-                        value.clone(),
+                        value,
+                    )?);
+                } else {
+                    fields.push(lap_message_max_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "rpm",
+                        value,
                     )?);
                 }
             }
@@ -14280,7 +14475,7 @@ fn lap_message(
                     1.000000,
                     0.000000,
                     "watts",
-                    value.clone(),
+                    value,
                 )?);
             }
             20 => {
@@ -14291,7 +14486,7 @@ fn lap_message(
                     1.000000,
                     0.000000,
                     "watts",
-                    value.clone(),
+                    value,
                 )?);
             }
             21 => {
@@ -14302,7 +14497,7 @@ fn lap_message(
                     1.000000,
                     0.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             22 => {
@@ -14313,7 +14508,7 @@ fn lap_message(
                     1.000000,
                     0.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             23 => {
@@ -14324,7 +14519,7 @@ fn lap_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             24 => {
@@ -14335,7 +14530,7 @@ fn lap_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             25 => {
@@ -14346,7 +14541,7 @@ fn lap_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             26 => {
@@ -14357,7 +14552,7 @@ fn lap_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             32 => {
@@ -14369,7 +14564,7 @@ fn lap_message(
                     1.000000,
                     0.000000,
                     "lengths",
-                    value.clone(),
+                    value,
                 )?);
             }
             33 => {
@@ -14380,7 +14575,7 @@ fn lap_message(
                     1.000000,
                     0.000000,
                     "watts",
-                    value.clone(),
+                    value,
                 )?);
             }
             34 => {
@@ -14391,7 +14586,7 @@ fn lap_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             35 => {
@@ -14402,7 +14597,7 @@ fn lap_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             37 => {
@@ -14413,7 +14608,7 @@ fn lap_message(
                     100.000000,
                     0.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             38 => {
@@ -14424,7 +14619,7 @@ fn lap_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             39 => {
@@ -14435,7 +14630,7 @@ fn lap_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             40 => {
@@ -14447,7 +14642,7 @@ fn lap_message(
                     1.000000,
                     0.000000,
                     "lengths",
-                    value.clone(),
+                    value,
                 )?);
             }
             41 => {
@@ -14458,12 +14653,12 @@ fn lap_message(
                     1.000000,
                     0.000000,
                     "J",
-                    value.clone(),
+                    value,
                 )?);
             }
             42 => {
                 let component_values = expand_components(value, &[16]);
-                data_map.insert(112, Some(component_values[0]));
+                data_map.insert(112, component_values[0].clone());
                 fields.push(lap_message_enhanced_avg_altitude_field(
                     mesg_num,
                     accumlators,
@@ -14476,7 +14671,7 @@ fn lap_message(
             }
             43 => {
                 let component_values = expand_components(value, &[16]);
-                data_map.insert(114, Some(component_values[0]));
+                data_map.insert(114, component_values[0].clone());
                 fields.push(lap_message_enhanced_max_altitude_field(
                     mesg_num,
                     accumlators,
@@ -14495,7 +14690,7 @@ fn lap_message(
                     1.000000,
                     0.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             45 => {
@@ -14506,7 +14701,7 @@ fn lap_message(
                     100.000000,
                     0.000000,
                     "%",
-                    value.clone(),
+                    value,
                 )?);
             }
             46 => {
@@ -14517,7 +14712,7 @@ fn lap_message(
                     100.000000,
                     0.000000,
                     "%",
-                    value.clone(),
+                    value,
                 )?);
             }
             47 => {
@@ -14528,7 +14723,7 @@ fn lap_message(
                     100.000000,
                     0.000000,
                     "%",
-                    value.clone(),
+                    value,
                 )?);
             }
             48 => {
@@ -14539,7 +14734,7 @@ fn lap_message(
                     100.000000,
                     0.000000,
                     "%",
-                    value.clone(),
+                    value,
                 )?);
             }
             49 => {
@@ -14550,7 +14745,7 @@ fn lap_message(
                     100.000000,
                     0.000000,
                     "%",
-                    value.clone(),
+                    value,
                 )?);
             }
             50 => {
@@ -14561,7 +14756,7 @@ fn lap_message(
                     1.000000,
                     0.000000,
                     "C",
-                    value.clone(),
+                    value,
                 )?);
             }
             51 => {
@@ -14572,7 +14767,7 @@ fn lap_message(
                     1.000000,
                     0.000000,
                     "C",
-                    value.clone(),
+                    value,
                 )?);
             }
             52 => {
@@ -14583,7 +14778,7 @@ fn lap_message(
                     1000.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             53 => {
@@ -14594,7 +14789,7 @@ fn lap_message(
                     1000.000000,
                     0.000000,
                     "m/s",
-                    value.clone(),
+                    value,
                 )?);
             }
             54 => {
@@ -14605,7 +14800,7 @@ fn lap_message(
                     1000.000000,
                     0.000000,
                     "m/s",
-                    value.clone(),
+                    value,
                 )?);
             }
             55 => {
@@ -14616,7 +14811,7 @@ fn lap_message(
                     1000.000000,
                     0.000000,
                     "m/s",
-                    value.clone(),
+                    value,
                 )?);
             }
             56 => {
@@ -14627,7 +14822,7 @@ fn lap_message(
                     1000.000000,
                     0.000000,
                     "m/s",
-                    value.clone(),
+                    value,
                 )?);
             }
             57 => {
@@ -14638,7 +14833,7 @@ fn lap_message(
                     1000.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             58 => {
@@ -14649,7 +14844,7 @@ fn lap_message(
                     1000.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             59 => {
@@ -14660,7 +14855,7 @@ fn lap_message(
                     1000.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             60 => {
@@ -14671,7 +14866,7 @@ fn lap_message(
                     1000.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             61 => {
@@ -14682,12 +14877,12 @@ fn lap_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             62 => {
                 let component_values = expand_components(value, &[16]);
-                data_map.insert(113, Some(component_values[0]));
+                data_map.insert(113, component_values[0].clone());
                 fields.push(lap_message_enhanced_min_altitude_field(
                     mesg_num,
                     accumlators,
@@ -14706,7 +14901,7 @@ fn lap_message(
                     1.000000,
                     0.000000,
                     "bpm",
-                    value.clone(),
+                    value,
                 )?);
             }
             71 => {
@@ -14717,7 +14912,7 @@ fn lap_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             74 => {
@@ -14728,7 +14923,7 @@ fn lap_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             75 => {
@@ -14740,7 +14935,7 @@ fn lap_message(
                     1.000000,
                     0.000000,
                     "counts",
-                    value.clone(),
+                    value,
                 )?);
             }
             76 => {
@@ -14752,7 +14947,7 @@ fn lap_message(
                     1.000000,
                     0.000000,
                     "counts",
-                    value.clone(),
+                    value,
                 )?);
             }
             77 => {
@@ -14763,7 +14958,7 @@ fn lap_message(
                     10.000000,
                     0.000000,
                     "mm",
-                    value.clone(),
+                    value,
                 )?);
             }
             78 => {
@@ -14774,7 +14969,7 @@ fn lap_message(
                     100.000000,
                     0.000000,
                     "percent",
-                    value.clone(),
+                    value,
                 )?);
             }
             79 => {
@@ -14785,7 +14980,7 @@ fn lap_message(
                     10.000000,
                     0.000000,
                     "ms",
-                    value.clone(),
+                    value,
                 )?);
             }
             80 => {
@@ -14797,7 +14992,7 @@ fn lap_message(
                     128.000000,
                     0.000000,
                     "rpm",
-                    value.clone(),
+                    value,
                 )?);
             }
             81 => {
@@ -14809,7 +15004,7 @@ fn lap_message(
                     128.000000,
                     0.000000,
                     "rpm",
-                    value.clone(),
+                    value,
                 )?);
             }
             82 => {
@@ -14821,7 +15016,7 @@ fn lap_message(
                     128.000000,
                     0.000000,
                     "cycles",
-                    value.clone(),
+                    value,
                 )?);
             }
             83 => {
@@ -14832,7 +15027,7 @@ fn lap_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             84 => {
@@ -14844,7 +15039,7 @@ fn lap_message(
                     100.000000,
                     0.000000,
                     "g/dL",
-                    value.clone(),
+                    value,
                 )?);
             }
             85 => {
@@ -14856,7 +15051,7 @@ fn lap_message(
                     100.000000,
                     0.000000,
                     "g/dL",
-                    value.clone(),
+                    value,
                 )?);
             }
             86 => {
@@ -14868,7 +15063,7 @@ fn lap_message(
                     100.000000,
                     0.000000,
                     "g/dL",
-                    value.clone(),
+                    value,
                 )?);
             }
             87 => {
@@ -14880,7 +15075,7 @@ fn lap_message(
                     10.000000,
                     0.000000,
                     "%",
-                    value.clone(),
+                    value,
                 )?);
             }
             88 => {
@@ -14892,7 +15087,7 @@ fn lap_message(
                     10.000000,
                     0.000000,
                     "%",
-                    value.clone(),
+                    value,
                 )?);
             }
             89 => {
@@ -14904,7 +15099,7 @@ fn lap_message(
                     10.000000,
                     0.000000,
                     "%",
-                    value.clone(),
+                    value,
                 )?);
             }
             91 => {
@@ -14915,7 +15110,7 @@ fn lap_message(
                     2.000000,
                     0.000000,
                     "percent",
-                    value.clone(),
+                    value,
                 )?);
             }
             92 => {
@@ -14926,7 +15121,7 @@ fn lap_message(
                     2.000000,
                     0.000000,
                     "percent",
-                    value.clone(),
+                    value,
                 )?);
             }
             93 => {
@@ -14937,7 +15132,7 @@ fn lap_message(
                     2.000000,
                     0.000000,
                     "percent",
-                    value.clone(),
+                    value,
                 )?);
             }
             94 => {
@@ -14948,7 +15143,7 @@ fn lap_message(
                     2.000000,
                     0.000000,
                     "percent",
-                    value.clone(),
+                    value,
                 )?);
             }
             95 => {
@@ -14959,7 +15154,7 @@ fn lap_message(
                     2.000000,
                     0.000000,
                     "percent",
-                    value.clone(),
+                    value,
                 )?);
             }
             98 => {
@@ -14971,7 +15166,7 @@ fn lap_message(
                     1000.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             99 => {
@@ -14983,7 +15178,7 @@ fn lap_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             100 => {
@@ -14995,7 +15190,7 @@ fn lap_message(
                     1.000000,
                     0.000000,
                     "mm",
-                    value.clone(),
+                    value,
                 )?);
             }
             101 => {
@@ -15007,7 +15202,7 @@ fn lap_message(
                     1.000000,
                     0.000000,
                     "mm",
-                    value.clone(),
+                    value,
                 )?);
             }
             102 => {
@@ -15019,7 +15214,7 @@ fn lap_message(
                     0.711111,
                     0.000000,
                     "degrees",
-                    value.clone(),
+                    value,
                 )?);
             }
             103 => {
@@ -15031,7 +15226,7 @@ fn lap_message(
                     0.711111,
                     0.000000,
                     "degrees",
-                    value.clone(),
+                    value,
                 )?);
             }
             104 => {
@@ -15043,7 +15238,7 @@ fn lap_message(
                     0.711111,
                     0.000000,
                     "degrees",
-                    value.clone(),
+                    value,
                 )?);
             }
             105 => {
@@ -15055,7 +15250,7 @@ fn lap_message(
                     0.711111,
                     0.000000,
                     "degrees",
-                    value.clone(),
+                    value,
                 )?);
             }
             106 => {
@@ -15067,7 +15262,7 @@ fn lap_message(
                     1.000000,
                     0.000000,
                     "watts",
-                    value.clone(),
+                    value,
                 )?);
             }
             107 => {
@@ -15079,7 +15274,7 @@ fn lap_message(
                     1.000000,
                     0.000000,
                     "watts",
-                    value.clone(),
+                    value,
                 )?);
             }
             108 => {
@@ -15091,7 +15286,7 @@ fn lap_message(
                     1.000000,
                     0.000000,
                     "rpm",
-                    value.clone(),
+                    value,
                 )?);
             }
             109 => {
@@ -15103,7 +15298,7 @@ fn lap_message(
                     1.000000,
                     0.000000,
                     "rpm",
-                    value.clone(),
+                    value,
                 )?);
             }
             110 => {
@@ -15114,7 +15309,7 @@ fn lap_message(
                     1000.000000,
                     0.000000,
                     "m/s",
-                    value.clone(),
+                    value,
                 )?);
             }
             111 => {
@@ -15125,7 +15320,7 @@ fn lap_message(
                     1000.000000,
                     0.000000,
                     "m/s",
-                    value.clone(),
+                    value,
                 )?);
             }
             112 => {
@@ -15136,7 +15331,7 @@ fn lap_message(
                     5.000000,
                     500.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             113 => {
@@ -15147,7 +15342,7 @@ fn lap_message(
                     5.000000,
                     500.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             114 => {
@@ -15158,7 +15353,7 @@ fn lap_message(
                     5.000000,
                     500.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             115 => {
@@ -15170,7 +15365,7 @@ fn lap_message(
                     1.000000,
                     0.000000,
                     "watts",
-                    value.clone(),
+                    value,
                 )?);
             }
             116 => {
@@ -15182,7 +15377,7 @@ fn lap_message(
                     1.000000,
                     0.000000,
                     "watts",
-                    value.clone(),
+                    value,
                 )?);
             }
             117 => {
@@ -15194,7 +15389,7 @@ fn lap_message(
                     2.000000,
                     0.000000,
                     "percent",
-                    value.clone(),
+                    value,
                 )?);
             }
             118 => {
@@ -15205,7 +15400,7 @@ fn lap_message(
                     100.000000,
                     0.000000,
                     "percent",
-                    value.clone(),
+                    value,
                 )?);
             }
             119 => {
@@ -15216,7 +15411,7 @@ fn lap_message(
                     100.000000,
                     0.000000,
                     "percent",
-                    value.clone(),
+                    value,
                 )?);
             }
             120 => {
@@ -15227,7 +15422,7 @@ fn lap_message(
                     10.000000,
                     0.000000,
                     "mm",
-                    value.clone(),
+                    value,
                 )?);
             }
             121 => {
@@ -15238,7 +15433,7 @@ fn lap_message(
                     1000.000000,
                     0.000000,
                     "m/s",
-                    value.clone(),
+                    value,
                 )?);
             }
             149 => {
@@ -15250,7 +15445,7 @@ fn lap_message(
                     1.000000,
                     0.000000,
                     "kGrit",
-                    value.clone(),
+                    value,
                 )?);
             }
             150 => {
@@ -15262,7 +15457,7 @@ fn lap_message(
                     1.000000,
                     0.000000,
                     "Flow",
-                    value.clone(),
+                    value,
                 )?);
             }
             151 => {
@@ -15273,7 +15468,7 @@ fn lap_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             153 => {
@@ -15285,7 +15480,7 @@ fn lap_message(
                     1.000000,
                     0.000000,
                     "kGrit",
-                    value.clone(),
+                    value,
                 )?);
             }
             154 => {
@@ -15297,7 +15492,7 @@ fn lap_message(
                     1.000000,
                     0.000000,
                     "Flow",
-                    value.clone(),
+                    value,
                 )?);
             }
             156 => {
@@ -15309,7 +15504,7 @@ fn lap_message(
                     100.000000,
                     0.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             157 => {
@@ -15321,7 +15516,7 @@ fn lap_message(
                     100.000000,
                     0.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             158 => {
@@ -15332,7 +15527,7 @@ fn lap_message(
                     100.000000,
                     0.000000,
                     "C",
-                    value.clone(),
+                    value,
                 )?);
             }
             159 => {
@@ -15343,7 +15538,7 @@ fn lap_message(
                     100.000000,
                     0.000000,
                     "C",
-                    value.clone(),
+                    value,
                 )?);
             }
             160 => {
@@ -15354,7 +15549,7 @@ fn lap_message(
                     100.000000,
                     0.000000,
                     "C",
-                    value.clone(),
+                    value,
                 )?);
             }
             253 => {
@@ -15366,7 +15561,7 @@ fn lap_message(
                     1.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             254 => {
@@ -15377,10 +15572,10 @@ fn lap_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -18267,14 +18462,12 @@ fn lap_message_message_index_field(
 }
 fn length_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -18285,7 +18478,7 @@ fn length_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -18296,7 +18489,7 @@ fn length_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
@@ -18307,7 +18500,7 @@ fn length_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             3 => {
@@ -18318,7 +18511,7 @@ fn length_message(
                     1000.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             4 => {
@@ -18329,7 +18522,7 @@ fn length_message(
                     1000.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             5 => {
@@ -18340,7 +18533,7 @@ fn length_message(
                     1.000000,
                     0.000000,
                     "strokes",
-                    value.clone(),
+                    value,
                 )?);
             }
             6 => {
@@ -18351,7 +18544,7 @@ fn length_message(
                     1000.000000,
                     0.000000,
                     "m/s",
-                    value.clone(),
+                    value,
                 )?);
             }
             7 => {
@@ -18362,7 +18555,7 @@ fn length_message(
                     1.000000,
                     0.000000,
                     "swim_stroke",
-                    value.clone(),
+                    value,
                 )?);
             }
             9 => {
@@ -18373,7 +18566,7 @@ fn length_message(
                     1.000000,
                     0.000000,
                     "strokes/min",
-                    value.clone(),
+                    value,
                 )?);
             }
             10 => {
@@ -18384,7 +18577,7 @@ fn length_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             11 => {
@@ -18395,7 +18588,7 @@ fn length_message(
                     1.000000,
                     0.000000,
                     "kcal",
-                    value.clone(),
+                    value,
                 )?);
             }
             12 => {
@@ -18406,7 +18599,7 @@ fn length_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             18 => {
@@ -18417,7 +18610,7 @@ fn length_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             19 => {
@@ -18428,7 +18621,7 @@ fn length_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             20 => {
@@ -18440,7 +18633,7 @@ fn length_message(
                     1.000000,
                     0.000000,
                     "counts",
-                    value.clone(),
+                    value,
                 )?);
             }
             21 => {
@@ -18452,7 +18645,7 @@ fn length_message(
                     1.000000,
                     0.000000,
                     "counts",
-                    value.clone(),
+                    value,
                 )?);
             }
             253 => {
@@ -18463,7 +18656,7 @@ fn length_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             254 => {
@@ -18474,10 +18667,10 @@ fn length_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -18916,14 +19109,12 @@ fn length_message_message_index_field(
 }
 fn record_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -18934,7 +19125,7 @@ fn record_message(
                     1.000000,
                     0.000000,
                     "semicircles",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -18945,12 +19136,12 @@ fn record_message(
                     1.000000,
                     0.000000,
                     "semicircles",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
                 let component_values = expand_components(value, &[16]);
-                data_map.insert(78, Some(component_values[0]));
+                data_map.insert(78, component_values[0].clone());
                 fields.push(record_message_enhanced_altitude_field(
                     mesg_num,
                     accumlators,
@@ -18969,7 +19160,7 @@ fn record_message(
                     1.000000,
                     0.000000,
                     "bpm",
-                    value.clone(),
+                    value,
                 )?);
             }
             4 => {
@@ -18980,7 +19171,7 @@ fn record_message(
                     1.000000,
                     0.000000,
                     "rpm",
-                    value.clone(),
+                    value,
                 )?);
             }
             5 => {
@@ -18991,12 +19182,12 @@ fn record_message(
                     100.000000,
                     0.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             6 => {
                 let component_values = expand_components(value, &[16]);
-                data_map.insert(73, Some(component_values[0]));
+                data_map.insert(73, component_values[0].clone());
                 fields.push(record_message_enhanced_speed_field(
                     mesg_num,
                     accumlators,
@@ -19015,12 +19206,12 @@ fn record_message(
                     1.000000,
                     0.000000,
                     "watts",
-                    value.clone(),
+                    value,
                 )?);
             }
             8 => {
                 let component_values = expand_components(value, &[12, 12]);
-                data_map.insert(6, Some(component_values[0]));
+                data_map.insert(6, component_values[0].clone());
                 fields.push(record_message_speed_field(
                     mesg_num,
                     accumlators,
@@ -19030,7 +19221,7 @@ fn record_message(
                     "m/s",
                     component_values[0].clone(),
                 )?);
-                data_map.insert(5, Some(component_values[1]));
+                data_map.insert(5, component_values[1].clone());
                 fields.push(record_message_distance_field(
                     mesg_num,
                     accumlators,
@@ -19049,7 +19240,7 @@ fn record_message(
                     100.000000,
                     0.000000,
                     "%",
-                    value.clone(),
+                    value,
                 )?);
             }
             10 => {
@@ -19061,7 +19252,7 @@ fn record_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             11 => {
@@ -19072,7 +19263,7 @@ fn record_message(
                     1000.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             12 => {
@@ -19083,7 +19274,7 @@ fn record_message(
                     100.000000,
                     0.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             13 => {
@@ -19094,7 +19285,7 @@ fn record_message(
                     1.000000,
                     0.000000,
                     "C",
-                    value.clone(),
+                    value,
                 )?);
             }
             17 => {
@@ -19106,12 +19297,12 @@ fn record_message(
                     16.000000,
                     0.000000,
                     "m/s",
-                    value.clone(),
+                    value,
                 )?);
             }
             18 => {
                 let component_values = expand_components(value, &[8]);
-                data_map.insert(19, Some(component_values[0]));
+                data_map.insert(19, component_values[0].clone());
                 fields.push(record_message_total_cycles_field(
                     mesg_num,
                     accumlators,
@@ -19130,12 +19321,12 @@ fn record_message(
                     1.000000,
                     0.000000,
                     "cycles",
-                    value.clone(),
+                    value,
                 )?);
             }
             28 => {
                 let component_values = expand_components(value, &[16]);
-                data_map.insert(29, Some(component_values[0]));
+                data_map.insert(29, component_values[0].clone());
                 fields.push(record_message_accumulated_power_field(
                     mesg_num,
                     accumlators,
@@ -19154,7 +19345,7 @@ fn record_message(
                     1.000000,
                     0.000000,
                     "watts",
-                    value.clone(),
+                    value,
                 )?);
             }
             30 => {
@@ -19165,7 +19356,7 @@ fn record_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             31 => {
@@ -19176,7 +19367,7 @@ fn record_message(
                     1.000000,
                     0.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             32 => {
@@ -19187,7 +19378,7 @@ fn record_message(
                     1000.000000,
                     0.000000,
                     "m/s",
-                    value.clone(),
+                    value,
                 )?);
             }
             33 => {
@@ -19198,7 +19389,7 @@ fn record_message(
                     1.000000,
                     0.000000,
                     "kcal",
-                    value.clone(),
+                    value,
                 )?);
             }
             39 => {
@@ -19209,7 +19400,7 @@ fn record_message(
                     10.000000,
                     0.000000,
                     "mm",
-                    value.clone(),
+                    value,
                 )?);
             }
             40 => {
@@ -19220,7 +19411,7 @@ fn record_message(
                     100.000000,
                     0.000000,
                     "percent",
-                    value.clone(),
+                    value,
                 )?);
             }
             41 => {
@@ -19231,7 +19422,7 @@ fn record_message(
                     10.000000,
                     0.000000,
                     "ms",
-                    value.clone(),
+                    value,
                 )?);
             }
             42 => {
@@ -19242,7 +19433,7 @@ fn record_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             43 => {
@@ -19253,7 +19444,7 @@ fn record_message(
                     2.000000,
                     0.000000,
                     "percent",
-                    value.clone(),
+                    value,
                 )?);
             }
             44 => {
@@ -19264,7 +19455,7 @@ fn record_message(
                     2.000000,
                     0.000000,
                     "percent",
-                    value.clone(),
+                    value,
                 )?);
             }
             45 => {
@@ -19275,7 +19466,7 @@ fn record_message(
                     2.000000,
                     0.000000,
                     "percent",
-                    value.clone(),
+                    value,
                 )?);
             }
             46 => {
@@ -19286,7 +19477,7 @@ fn record_message(
                     2.000000,
                     0.000000,
                     "percent",
-                    value.clone(),
+                    value,
                 )?);
             }
             47 => {
@@ -19297,7 +19488,7 @@ fn record_message(
                     2.000000,
                     0.000000,
                     "percent",
-                    value.clone(),
+                    value,
                 )?);
             }
             48 => {
@@ -19308,7 +19499,7 @@ fn record_message(
                     128.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             49 => {
@@ -19319,7 +19510,7 @@ fn record_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             50 => {
@@ -19330,7 +19521,7 @@ fn record_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             51 => {
@@ -19341,7 +19532,7 @@ fn record_message(
                     100.000000,
                     0.000000,
                     "m/s",
-                    value.clone(),
+                    value,
                 )?);
             }
             52 => {
@@ -19353,7 +19544,7 @@ fn record_message(
                     256.000000,
                     0.000000,
                     "rpm",
-                    value.clone(),
+                    value,
                 )?);
             }
             53 => {
@@ -19364,7 +19555,7 @@ fn record_message(
                     128.000000,
                     0.000000,
                     "rpm",
-                    value.clone(),
+                    value,
                 )?);
             }
             54 => {
@@ -19376,7 +19567,7 @@ fn record_message(
                     100.000000,
                     0.000000,
                     "g/dL",
-                    value.clone(),
+                    value,
                 )?);
             }
             55 => {
@@ -19388,7 +19579,7 @@ fn record_message(
                     100.000000,
                     0.000000,
                     "g/dL",
-                    value.clone(),
+                    value,
                 )?);
             }
             56 => {
@@ -19400,7 +19591,7 @@ fn record_message(
                     100.000000,
                     0.000000,
                     "g/dL",
-                    value.clone(),
+                    value,
                 )?);
             }
             57 => {
@@ -19412,7 +19603,7 @@ fn record_message(
                     10.000000,
                     0.000000,
                     "%",
-                    value.clone(),
+                    value,
                 )?);
             }
             58 => {
@@ -19424,7 +19615,7 @@ fn record_message(
                     10.000000,
                     0.000000,
                     "%",
-                    value.clone(),
+                    value,
                 )?);
             }
             59 => {
@@ -19436,7 +19627,7 @@ fn record_message(
                     10.000000,
                     0.000000,
                     "%",
-                    value.clone(),
+                    value,
                 )?);
             }
             62 => {
@@ -19447,7 +19638,7 @@ fn record_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             67 => {
@@ -19459,7 +19650,7 @@ fn record_message(
                     1.000000,
                     0.000000,
                     "mm",
-                    value.clone(),
+                    value,
                 )?);
             }
             68 => {
@@ -19471,7 +19662,7 @@ fn record_message(
                     1.000000,
                     0.000000,
                     "mm",
-                    value.clone(),
+                    value,
                 )?);
             }
             69 => {
@@ -19483,7 +19674,7 @@ fn record_message(
                     0.711111,
                     0.000000,
                     "degrees",
-                    value.clone(),
+                    value,
                 )?);
             }
             70 => {
@@ -19495,7 +19686,7 @@ fn record_message(
                     0.711111,
                     0.000000,
                     "degrees",
-                    value.clone(),
+                    value,
                 )?);
             }
             71 => {
@@ -19507,7 +19698,7 @@ fn record_message(
                     0.711111,
                     0.000000,
                     "degrees",
-                    value.clone(),
+                    value,
                 )?);
             }
             72 => {
@@ -19519,7 +19710,7 @@ fn record_message(
                     0.711111,
                     0.000000,
                     "degrees",
-                    value.clone(),
+                    value,
                 )?);
             }
             73 => {
@@ -19530,7 +19721,7 @@ fn record_message(
                     1000.000000,
                     0.000000,
                     "m/s",
-                    value.clone(),
+                    value,
                 )?);
             }
             78 => {
@@ -19541,7 +19732,7 @@ fn record_message(
                     5.000000,
                     500.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             81 => {
@@ -19553,7 +19744,7 @@ fn record_message(
                     2.000000,
                     0.000000,
                     "percent",
-                    value.clone(),
+                    value,
                 )?);
             }
             82 => {
@@ -19565,7 +19756,7 @@ fn record_message(
                     1.000000,
                     0.000000,
                     "watts",
-                    value.clone(),
+                    value,
                 )?);
             }
             83 => {
@@ -19576,7 +19767,7 @@ fn record_message(
                     100.000000,
                     0.000000,
                     "percent",
-                    value.clone(),
+                    value,
                 )?);
             }
             84 => {
@@ -19587,7 +19778,7 @@ fn record_message(
                     100.000000,
                     0.000000,
                     "percent",
-                    value.clone(),
+                    value,
                 )?);
             }
             85 => {
@@ -19598,7 +19789,7 @@ fn record_message(
                     10.000000,
                     0.000000,
                     "mm",
-                    value.clone(),
+                    value,
                 )?);
             }
             91 => {
@@ -19610,7 +19801,7 @@ fn record_message(
                     1.000000,
                     0.000000,
                     "Pa",
-                    value.clone(),
+                    value,
                 )?);
             }
             92 => {
@@ -19622,7 +19813,7 @@ fn record_message(
                     1000.000000,
                     0.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             93 => {
@@ -19634,7 +19825,7 @@ fn record_message(
                     1000.000000,
                     0.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             94 => {
@@ -19645,7 +19836,7 @@ fn record_message(
                     1.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             95 => {
@@ -19656,7 +19847,7 @@ fn record_message(
                     1.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             96 => {
@@ -19667,7 +19858,7 @@ fn record_message(
                     1.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             97 => {
@@ -19678,7 +19869,7 @@ fn record_message(
                     1.000000,
                     0.000000,
                     "percent",
-                    value.clone(),
+                    value,
                 )?);
             }
             98 => {
@@ -19689,7 +19880,7 @@ fn record_message(
                     1.000000,
                     0.000000,
                     "percent",
-                    value.clone(),
+                    value,
                 )?);
             }
             114 => {
@@ -19701,7 +19892,7 @@ fn record_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             115 => {
@@ -19713,7 +19904,7 @@ fn record_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             117 => {
@@ -19724,7 +19915,7 @@ fn record_message(
                     1.000000,
                     0.000000,
                     "km",
-                    value.clone(),
+                    value,
                 )?);
             }
             118 => {
@@ -19735,7 +19926,7 @@ fn record_message(
                     1.000000,
                     0.000000,
                     "percent",
-                    value.clone(),
+                    value,
                 )?);
             }
             119 => {
@@ -19746,7 +19937,7 @@ fn record_message(
                     1.000000,
                     0.000000,
                     "depends on sensor",
-                    value.clone(),
+                    value,
                 )?);
             }
             120 => {
@@ -19757,7 +19948,7 @@ fn record_message(
                     1.000000,
                     0.000000,
                     "percent",
-                    value.clone(),
+                    value,
                 )?);
             }
             139 => {
@@ -19768,7 +19959,7 @@ fn record_message(
                     100.000000,
                     0.000000,
                     "C",
-                    value.clone(),
+                    value,
                 )?);
             }
             253 => {
@@ -19779,10 +19970,10 @@ fn record_message(
                     1.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -21565,14 +21756,12 @@ fn record_message_timestamp_field(
 }
 fn event_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -21583,7 +21772,7 @@ fn event_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -21594,12 +21783,12 @@ fn event_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
                 let component_values = expand_components(value, &[16]);
-                data_map.insert(3, Some(component_values[0]));
+                data_map.insert(3, component_values[0].clone());
                 fields.push(event_message_data_field(
                     mesg_num,
                     accumlators,
@@ -21611,7 +21800,12 @@ fn event_message(
                 )?);
             }
             3 => {
-                if Event::Timer.as_i64() == data_map.get(&0).flatten().map_or(-1i64, |v| v.as_i64())
+                if Event::Timer.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(event_message_timer_trigger_field(
                         mesg_num,
@@ -21620,10 +21814,14 @@ fn event_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
                     )?);
                 } else if Event::CoursePoint.as_i64()
-                    == data_map.get(&0).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(event_message_course_point_index_field(
                         mesg_num,
@@ -21632,10 +21830,14 @@ fn event_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
                     )?);
                 } else if Event::Battery.as_i64()
-                    == data_map.get(&0).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(event_message_battery_level_field(
                         mesg_num,
@@ -21644,10 +21846,14 @@ fn event_message(
                         1000.000000,
                         0.000000,
                         "V",
-                        value.clone(),
+                        value,
                     )?);
                 } else if Event::VirtualPartnerPace.as_i64()
-                    == data_map.get(&0).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(event_message_virtual_partner_speed_field(
                         mesg_num,
@@ -21656,10 +21862,14 @@ fn event_message(
                         1000.000000,
                         0.000000,
                         "m/s",
-                        value.clone(),
+                        value,
                     )?);
                 } else if Event::HrHighAlert.as_i64()
-                    == data_map.get(&0).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(event_message_hr_high_alert_field(
                         mesg_num,
@@ -21668,10 +21878,14 @@ fn event_message(
                         1.000000,
                         0.000000,
                         "bpm",
-                        value.clone(),
+                        value,
                     )?);
                 } else if Event::HrLowAlert.as_i64()
-                    == data_map.get(&0).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(event_message_hr_low_alert_field(
                         mesg_num,
@@ -21680,10 +21894,14 @@ fn event_message(
                         1.000000,
                         0.000000,
                         "bpm",
-                        value.clone(),
+                        value,
                     )?);
                 } else if Event::SpeedHighAlert.as_i64()
-                    == data_map.get(&0).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(event_message_speed_high_alert_field(
                         mesg_num,
@@ -21692,10 +21910,14 @@ fn event_message(
                         1000.000000,
                         0.000000,
                         "m/s",
-                        value.clone(),
+                        value,
                     )?);
                 } else if Event::SpeedLowAlert.as_i64()
-                    == data_map.get(&0).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(event_message_speed_low_alert_field(
                         mesg_num,
@@ -21704,10 +21926,14 @@ fn event_message(
                         1000.000000,
                         0.000000,
                         "m/s",
-                        value.clone(),
+                        value,
                     )?);
                 } else if Event::CadHighAlert.as_i64()
-                    == data_map.get(&0).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(event_message_cad_high_alert_field(
                         mesg_num,
@@ -21716,10 +21942,14 @@ fn event_message(
                         1.000000,
                         0.000000,
                         "rpm",
-                        value.clone(),
+                        value,
                     )?);
                 } else if Event::CadLowAlert.as_i64()
-                    == data_map.get(&0).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(event_message_cad_low_alert_field(
                         mesg_num,
@@ -21728,10 +21958,14 @@ fn event_message(
                         1.000000,
                         0.000000,
                         "rpm",
-                        value.clone(),
+                        value,
                     )?);
                 } else if Event::PowerHighAlert.as_i64()
-                    == data_map.get(&0).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(event_message_power_high_alert_field(
                         mesg_num,
@@ -21740,10 +21974,14 @@ fn event_message(
                         1.000000,
                         0.000000,
                         "watts",
-                        value.clone(),
+                        value,
                     )?);
                 } else if Event::PowerLowAlert.as_i64()
-                    == data_map.get(&0).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(event_message_power_low_alert_field(
                         mesg_num,
@@ -21752,10 +21990,14 @@ fn event_message(
                         1.000000,
                         0.000000,
                         "watts",
-                        value.clone(),
+                        value,
                     )?);
                 } else if Event::TimeDurationAlert.as_i64()
-                    == data_map.get(&0).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(event_message_time_duration_alert_field(
                         mesg_num,
@@ -21764,10 +22006,14 @@ fn event_message(
                         1000.000000,
                         0.000000,
                         "s",
-                        value.clone(),
+                        value,
                     )?);
                 } else if Event::DistanceDurationAlert.as_i64()
-                    == data_map.get(&0).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(event_message_distance_duration_alert_field(
                         mesg_num,
@@ -21776,10 +22022,14 @@ fn event_message(
                         100.000000,
                         0.000000,
                         "m",
-                        value.clone(),
+                        value,
                     )?);
                 } else if Event::CalorieDurationAlert.as_i64()
-                    == data_map.get(&0).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(event_message_calorie_duration_alert_field(
                         mesg_num,
@@ -21788,10 +22038,14 @@ fn event_message(
                         1.000000,
                         0.000000,
                         "calories",
-                        value.clone(),
+                        value,
                     )?);
                 } else if Event::FitnessEquipment.as_i64()
-                    == data_map.get(&0).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(event_message_fitness_equipment_state_field(
                         mesg_num,
@@ -21800,10 +22054,14 @@ fn event_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
                     )?);
                 } else if Event::SportPoint.as_i64()
-                    == data_map.get(&0).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(event_message_sport_point_field(
                         mesg_num,
@@ -21812,10 +22070,14 @@ fn event_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
                     )?);
                 } else if Event::FrontGearChange.as_i64()
-                    == data_map.get(&0).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(event_message_gear_change_data_field(
                         mesg_num,
@@ -21824,10 +22086,14 @@ fn event_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
                     )?);
                 } else if Event::RearGearChange.as_i64()
-                    == data_map.get(&0).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(event_message_gear_change_data_field(
                         mesg_num,
@@ -21836,10 +22102,14 @@ fn event_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
                     )?);
                 } else if Event::RiderPositionChange.as_i64()
-                    == data_map.get(&0).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(event_message_rider_position_field(
                         mesg_num,
@@ -21848,10 +22118,14 @@ fn event_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
                     )?);
                 } else if Event::CommTimeout.as_i64()
-                    == data_map.get(&0).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(event_message_comm_timeout_field(
                         mesg_num,
@@ -21860,9 +22134,15 @@ fn event_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
                     )?);
-                } else {
+                } else if Event::RadarThreatAlert.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
                     fields.push(event_message_radar_threat_alert_field(
                         mesg_num,
                         accumlators,
@@ -21870,7 +22150,17 @@ fn event_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
+                    )?);
+                } else {
+                    fields.push(event_message_data_field(
+                        mesg_num,
+                        accumlators,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
                     )?);
                 }
             }
@@ -21882,7 +22172,7 @@ fn event_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             7 => {
@@ -21894,7 +22184,7 @@ fn event_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             8 => {
@@ -21906,7 +22196,7 @@ fn event_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             9 => {
@@ -21918,7 +22208,7 @@ fn event_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             10 => {
@@ -21930,7 +22220,7 @@ fn event_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             11 => {
@@ -21942,7 +22232,7 @@ fn event_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             12 => {
@@ -21954,7 +22244,7 @@ fn event_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             13 => {
@@ -21965,7 +22255,7 @@ fn event_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             21 => {
@@ -21977,7 +22267,7 @@ fn event_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             22 => {
@@ -21989,7 +22279,7 @@ fn event_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             23 => {
@@ -22001,7 +22291,7 @@ fn event_message(
                     10.000000,
                     0.000000,
                     "m/s",
-                    value.clone(),
+                    value,
                 )?);
             }
             24 => {
@@ -22013,7 +22303,7 @@ fn event_message(
                     10.000000,
                     0.000000,
                     "m/s",
-                    value.clone(),
+                    value,
                 )?);
             }
             253 => {
@@ -22024,10 +22314,10 @@ fn event_message(
                     1.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -22946,14 +23236,12 @@ fn event_message_timestamp_field(
 }
 fn device_info_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -22964,12 +23252,16 @@ fn device_info_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
                 if SourceType::Antplus.as_i64()
-                    == data_map.get(&25).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&25)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(device_info_message_antplus_device_type_field(
                         mesg_num,
@@ -22978,9 +23270,15 @@ fn device_info_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
                     )?);
-                } else {
+                } else if SourceType::Ant.as_i64()
+                    == data_map
+                        .get(&25)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
                     fields.push(device_info_message_ant_device_type_field(
                         mesg_num,
                         accumlators,
@@ -22988,7 +23286,17 @@ fn device_info_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
+                    )?);
+                } else {
+                    fields.push(device_info_message_device_type_field(
+                        mesg_num,
+                        accumlators,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
                     )?);
                 }
             }
@@ -23000,7 +23308,7 @@ fn device_info_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             3 => {
@@ -23011,12 +23319,16 @@ fn device_info_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             4 => {
                 if Manufacturer::FaveroElectronics.as_i64()
-                    == data_map.get(&2).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&2)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(device_info_message_favero_product_field(
                         mesg_num,
@@ -23025,10 +23337,14 @@ fn device_info_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
                     )?);
                 } else if Manufacturer::Garmin.as_i64()
-                    == data_map.get(&2).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&2)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(device_info_message_garmin_product_field(
                         mesg_num,
@@ -23037,10 +23353,14 @@ fn device_info_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
                     )?);
                 } else if Manufacturer::Dynastream.as_i64()
-                    == data_map.get(&2).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&2)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(device_info_message_garmin_product_field(
                         mesg_num,
@@ -23049,10 +23369,14 @@ fn device_info_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
                     )?);
                 } else if Manufacturer::DynastreamOem.as_i64()
-                    == data_map.get(&2).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&2)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(device_info_message_garmin_product_field(
                         mesg_num,
@@ -23061,9 +23385,15 @@ fn device_info_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
                     )?);
-                } else {
+                } else if Manufacturer::Tacx.as_i64()
+                    == data_map
+                        .get(&2)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
                     fields.push(device_info_message_garmin_product_field(
                         mesg_num,
                         accumlators,
@@ -23071,7 +23401,17 @@ fn device_info_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
+                    )?);
+                } else {
+                    fields.push(device_info_message_product_field(
+                        mesg_num,
+                        accumlators,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
                     )?);
                 }
             }
@@ -23083,7 +23423,7 @@ fn device_info_message(
                     100.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             6 => {
@@ -23094,7 +23434,7 @@ fn device_info_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             7 => {
@@ -23106,7 +23446,7 @@ fn device_info_message(
                     1.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             10 => {
@@ -23117,7 +23457,7 @@ fn device_info_message(
                     256.000000,
                     0.000000,
                     "V",
-                    value.clone(),
+                    value,
                 )?);
             }
             11 => {
@@ -23128,7 +23468,7 @@ fn device_info_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             18 => {
@@ -23140,7 +23480,7 @@ fn device_info_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             19 => {
@@ -23152,7 +23492,7 @@ fn device_info_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             20 => {
@@ -23163,7 +23503,7 @@ fn device_info_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             21 => {
@@ -23174,7 +23514,7 @@ fn device_info_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             22 => {
@@ -23185,7 +23525,7 @@ fn device_info_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             25 => {
@@ -23196,7 +23536,7 @@ fn device_info_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             27 => {
@@ -23208,7 +23548,7 @@ fn device_info_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             32 => {
@@ -23219,7 +23559,7 @@ fn device_info_message(
                     1.000000,
                     0.000000,
                     "%",
-                    value.clone(),
+                    value,
                 )?);
             }
             253 => {
@@ -23230,10 +23570,10 @@ fn device_info_message(
                     1.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -23792,14 +24132,12 @@ fn device_info_message_timestamp_field(
 }
 fn device_aux_battery_info_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -23810,7 +24148,7 @@ fn device_aux_battery_info_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -23821,7 +24159,7 @@ fn device_aux_battery_info_message(
                     256.000000,
                     0.000000,
                     "V",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
@@ -23832,7 +24170,7 @@ fn device_aux_battery_info_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             3 => {
@@ -23843,7 +24181,7 @@ fn device_aux_battery_info_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             253 => {
@@ -23854,10 +24192,10 @@ fn device_aux_battery_info_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -23985,14 +24323,12 @@ fn device_aux_battery_info_message_timestamp_field(
 /// Corresponds to file_id of workout or course.
 fn training_file_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -24003,7 +24339,7 @@ fn training_file_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -24014,12 +24350,16 @@ fn training_file_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
                 if Manufacturer::FaveroElectronics.as_i64()
-                    == data_map.get(&1).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(training_file_message_favero_product_field(
                         mesg_num,
@@ -24028,10 +24368,14 @@ fn training_file_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
                     )?);
                 } else if Manufacturer::Garmin.as_i64()
-                    == data_map.get(&1).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(training_file_message_garmin_product_field(
                         mesg_num,
@@ -24040,10 +24384,14 @@ fn training_file_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
                     )?);
                 } else if Manufacturer::Dynastream.as_i64()
-                    == data_map.get(&1).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(training_file_message_garmin_product_field(
                         mesg_num,
@@ -24052,10 +24400,14 @@ fn training_file_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
                     )?);
                 } else if Manufacturer::DynastreamOem.as_i64()
-                    == data_map.get(&1).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(training_file_message_garmin_product_field(
                         mesg_num,
@@ -24064,9 +24416,15 @@ fn training_file_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
                     )?);
-                } else {
+                } else if Manufacturer::Tacx.as_i64()
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
                     fields.push(training_file_message_garmin_product_field(
                         mesg_num,
                         accumlators,
@@ -24074,7 +24432,17 @@ fn training_file_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
+                    )?);
+                } else {
+                    fields.push(training_file_message_product_field(
+                        mesg_num,
+                        accumlators,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
                     )?);
                 }
             }
@@ -24086,7 +24454,7 @@ fn training_file_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             4 => {
@@ -24097,7 +24465,7 @@ fn training_file_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             253 => {
@@ -24108,10 +24476,10 @@ fn training_file_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -24302,14 +24670,12 @@ fn training_file_message_timestamp_field(
 }
 fn weather_conditions_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -24321,7 +24687,7 @@ fn weather_conditions_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -24332,7 +24698,7 @@ fn weather_conditions_message(
                     1.000000,
                     0.000000,
                     "C",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
@@ -24344,7 +24710,7 @@ fn weather_conditions_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             3 => {
@@ -24355,7 +24721,7 @@ fn weather_conditions_message(
                     1.000000,
                     0.000000,
                     "degrees",
-                    value.clone(),
+                    value,
                 )?);
             }
             4 => {
@@ -24366,7 +24732,7 @@ fn weather_conditions_message(
                     1000.000000,
                     0.000000,
                     "m/s",
-                    value.clone(),
+                    value,
                 )?);
             }
             5 => {
@@ -24378,7 +24744,7 @@ fn weather_conditions_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             6 => {
@@ -24390,7 +24756,7 @@ fn weather_conditions_message(
                     1.000000,
                     0.000000,
                     "C",
-                    value.clone(),
+                    value,
                 )?);
             }
             7 => {
@@ -24401,7 +24767,7 @@ fn weather_conditions_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             8 => {
@@ -24413,7 +24779,7 @@ fn weather_conditions_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             9 => {
@@ -24424,7 +24790,7 @@ fn weather_conditions_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             10 => {
@@ -24435,7 +24801,7 @@ fn weather_conditions_message(
                     1.000000,
                     0.000000,
                     "semicircles",
-                    value.clone(),
+                    value,
                 )?);
             }
             11 => {
@@ -24446,7 +24812,7 @@ fn weather_conditions_message(
                     1.000000,
                     0.000000,
                     "semicircles",
-                    value.clone(),
+                    value,
                 )?);
             }
             12 => {
@@ -24457,7 +24823,7 @@ fn weather_conditions_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             13 => {
@@ -24468,7 +24834,7 @@ fn weather_conditions_message(
                     1.000000,
                     0.000000,
                     "C",
-                    value.clone(),
+                    value,
                 )?);
             }
             14 => {
@@ -24479,7 +24845,7 @@ fn weather_conditions_message(
                     1.000000,
                     0.000000,
                     "C",
-                    value.clone(),
+                    value,
                 )?);
             }
             253 => {
@@ -24491,10 +24857,10 @@ fn weather_conditions_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -24885,14 +25251,12 @@ fn weather_conditions_message_timestamp_field(
 }
 fn weather_alert_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -24904,7 +25268,7 @@ fn weather_alert_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -24916,7 +25280,7 @@ fn weather_alert_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
@@ -24928,7 +25292,7 @@ fn weather_alert_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             3 => {
@@ -24940,7 +25304,7 @@ fn weather_alert_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             4 => {
@@ -24952,7 +25316,7 @@ fn weather_alert_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             253 => {
@@ -24963,10 +25327,10 @@ fn weather_alert_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -25117,14 +25481,12 @@ fn weather_alert_message_timestamp_field(
 }
 fn gps_metadata_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -25136,7 +25498,7 @@ fn gps_metadata_message(
                     1.000000,
                     0.000000,
                     "ms",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -25147,7 +25509,7 @@ fn gps_metadata_message(
                     1.000000,
                     0.000000,
                     "semicircles",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
@@ -25158,7 +25520,7 @@ fn gps_metadata_message(
                     1.000000,
                     0.000000,
                     "semicircles",
-                    value.clone(),
+                    value,
                 )?);
             }
             3 => {
@@ -25169,7 +25531,7 @@ fn gps_metadata_message(
                     5.000000,
                     500.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             4 => {
@@ -25180,7 +25542,7 @@ fn gps_metadata_message(
                     1000.000000,
                     0.000000,
                     "m/s",
-                    value.clone(),
+                    value,
                 )?);
             }
             5 => {
@@ -25191,7 +25553,7 @@ fn gps_metadata_message(
                     100.000000,
                     0.000000,
                     "degrees",
-                    value.clone(),
+                    value,
                 )?);
             }
             6 => {
@@ -25203,7 +25565,7 @@ fn gps_metadata_message(
                     1.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             7 => {
@@ -25215,7 +25577,7 @@ fn gps_metadata_message(
                     100.000000,
                     0.000000,
                     "m/s",
-                    value.clone(),
+                    value,
                 )?);
             }
             253 => {
@@ -25227,10 +25589,10 @@ fn gps_metadata_message(
                     1.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -25453,14 +25815,12 @@ fn gps_metadata_message_timestamp_field(
 }
 fn camera_event_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -25472,7 +25832,7 @@ fn camera_event_message(
                     1.000000,
                     0.000000,
                     "ms",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -25483,7 +25843,7 @@ fn camera_event_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
@@ -25494,7 +25854,7 @@ fn camera_event_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             3 => {
@@ -25505,7 +25865,7 @@ fn camera_event_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             253 => {
@@ -25517,10 +25877,10 @@ fn camera_event_message(
                     1.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -25647,14 +26007,12 @@ fn camera_event_message_timestamp_field(
 }
 fn gyroscope_data_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -25666,7 +26024,7 @@ fn gyroscope_data_message(
                     1.000000,
                     0.000000,
                     "ms",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -25678,7 +26036,7 @@ fn gyroscope_data_message(
                     1.000000,
                     0.000000,
                     "ms",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
@@ -25690,7 +26048,7 @@ fn gyroscope_data_message(
                     1.000000,
                     0.000000,
                     "counts",
-                    value.clone(),
+                    value,
                 )?);
             }
             3 => {
@@ -25702,7 +26060,7 @@ fn gyroscope_data_message(
                     1.000000,
                     0.000000,
                     "counts",
-                    value.clone(),
+                    value,
                 )?);
             }
             4 => {
@@ -25714,7 +26072,7 @@ fn gyroscope_data_message(
                     1.000000,
                     0.000000,
                     "counts",
-                    value.clone(),
+                    value,
                 )?);
             }
             5 => {
@@ -25726,7 +26084,7 @@ fn gyroscope_data_message(
                     1.000000,
                     0.000000,
                     "deg/s",
-                    value.clone(),
+                    value,
                 )?);
             }
             6 => {
@@ -25738,7 +26096,7 @@ fn gyroscope_data_message(
                     1.000000,
                     0.000000,
                     "deg/s",
-                    value.clone(),
+                    value,
                 )?);
             }
             7 => {
@@ -25750,7 +26108,7 @@ fn gyroscope_data_message(
                     1.000000,
                     0.000000,
                     "deg/s",
-                    value.clone(),
+                    value,
                 )?);
             }
             253 => {
@@ -25762,10 +26120,10 @@ fn gyroscope_data_message(
                     1.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -25988,14 +26346,12 @@ fn gyroscope_data_message_timestamp_field(
 }
 fn accelerometer_data_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -26007,7 +26363,7 @@ fn accelerometer_data_message(
                     1.000000,
                     0.000000,
                     "ms",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -26019,7 +26375,7 @@ fn accelerometer_data_message(
                     1.000000,
                     0.000000,
                     "ms",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
@@ -26031,7 +26387,7 @@ fn accelerometer_data_message(
                     1.000000,
                     0.000000,
                     "counts",
-                    value.clone(),
+                    value,
                 )?);
             }
             3 => {
@@ -26043,7 +26399,7 @@ fn accelerometer_data_message(
                     1.000000,
                     0.000000,
                     "counts",
-                    value.clone(),
+                    value,
                 )?);
             }
             4 => {
@@ -26055,7 +26411,7 @@ fn accelerometer_data_message(
                     1.000000,
                     0.000000,
                     "counts",
-                    value.clone(),
+                    value,
                 )?);
             }
             5 => {
@@ -26067,7 +26423,7 @@ fn accelerometer_data_message(
                     1.000000,
                     0.000000,
                     "g",
-                    value.clone(),
+                    value,
                 )?);
             }
             6 => {
@@ -26079,7 +26435,7 @@ fn accelerometer_data_message(
                     1.000000,
                     0.000000,
                     "g",
-                    value.clone(),
+                    value,
                 )?);
             }
             7 => {
@@ -26091,7 +26447,7 @@ fn accelerometer_data_message(
                     1.000000,
                     0.000000,
                     "g",
-                    value.clone(),
+                    value,
                 )?);
             }
             8 => {
@@ -26104,7 +26460,7 @@ fn accelerometer_data_message(
                         1.000000,
                         0.000000,
                         "mG",
-                        value.clone(),
+                        value,
                     )?,
                 );
             }
@@ -26118,7 +26474,7 @@ fn accelerometer_data_message(
                         1.000000,
                         0.000000,
                         "mG",
-                        value.clone(),
+                        value,
                     )?,
                 );
             }
@@ -26132,7 +26488,7 @@ fn accelerometer_data_message(
                         1.000000,
                         0.000000,
                         "mG",
-                        value.clone(),
+                        value,
                     )?,
                 );
             }
@@ -26145,10 +26501,10 @@ fn accelerometer_data_message(
                     1.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -26443,14 +26799,12 @@ fn accelerometer_data_message_timestamp_field(
 }
 fn magnetometer_data_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -26462,7 +26816,7 @@ fn magnetometer_data_message(
                     1.000000,
                     0.000000,
                     "ms",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -26474,7 +26828,7 @@ fn magnetometer_data_message(
                     1.000000,
                     0.000000,
                     "ms",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
@@ -26486,7 +26840,7 @@ fn magnetometer_data_message(
                     1.000000,
                     0.000000,
                     "counts",
-                    value.clone(),
+                    value,
                 )?);
             }
             3 => {
@@ -26498,7 +26852,7 @@ fn magnetometer_data_message(
                     1.000000,
                     0.000000,
                     "counts",
-                    value.clone(),
+                    value,
                 )?);
             }
             4 => {
@@ -26510,7 +26864,7 @@ fn magnetometer_data_message(
                     1.000000,
                     0.000000,
                     "counts",
-                    value.clone(),
+                    value,
                 )?);
             }
             5 => {
@@ -26522,7 +26876,7 @@ fn magnetometer_data_message(
                     1.000000,
                     0.000000,
                     "G",
-                    value.clone(),
+                    value,
                 )?);
             }
             6 => {
@@ -26534,7 +26888,7 @@ fn magnetometer_data_message(
                     1.000000,
                     0.000000,
                     "G",
-                    value.clone(),
+                    value,
                 )?);
             }
             7 => {
@@ -26546,7 +26900,7 @@ fn magnetometer_data_message(
                     1.000000,
                     0.000000,
                     "G",
-                    value.clone(),
+                    value,
                 )?);
             }
             253 => {
@@ -26558,10 +26912,10 @@ fn magnetometer_data_message(
                     1.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -26784,14 +27138,12 @@ fn magnetometer_data_message_timestamp_field(
 }
 fn barometer_data_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -26803,7 +27155,7 @@ fn barometer_data_message(
                     1.000000,
                     0.000000,
                     "ms",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -26815,7 +27167,7 @@ fn barometer_data_message(
                     1.000000,
                     0.000000,
                     "ms",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
@@ -26827,7 +27179,7 @@ fn barometer_data_message(
                     1.000000,
                     0.000000,
                     "Pa",
-                    value.clone(),
+                    value,
                 )?);
             }
             253 => {
@@ -26839,10 +27191,10 @@ fn barometer_data_message(
                     1.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -26945,14 +27297,12 @@ fn barometer_data_message_timestamp_field(
 }
 fn three_d_sensor_calibration_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -26964,13 +27314,17 @@ fn three_d_sensor_calibration_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
                 // Calibration factor used to convert from raw ADC value to degrees, g, etc.
                 if SensorType::Accelerometer.as_i64()
-                    == data_map.get(&0).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(three_d_sensor_calibration_message_accel_cal_factor_field(
                         mesg_num,
@@ -26979,9 +27333,15 @@ fn three_d_sensor_calibration_message(
                         1.000000,
                         0.000000,
                         "g",
-                        value.clone(),
+                        value,
                     )?);
-                } else {
+                } else if SensorType::Gyroscope.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
                     fields.push(three_d_sensor_calibration_message_gyro_cal_factor_field(
                         mesg_num,
                         accumlators,
@@ -26989,7 +27349,17 @@ fn three_d_sensor_calibration_message(
                         1.000000,
                         0.000000,
                         "deg/s",
-                        value.clone(),
+                        value,
+                    )?);
+                } else {
+                    fields.push(three_d_sensor_calibration_message_calibration_factor_field(
+                        mesg_num,
+                        accumlators,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
                     )?);
                 }
             }
@@ -27003,7 +27373,7 @@ fn three_d_sensor_calibration_message(
                         1.000000,
                         0.000000,
                         "counts",
-                        value.clone(),
+                        value,
                     )?,
                 );
             }
@@ -27016,7 +27386,7 @@ fn three_d_sensor_calibration_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             4 => {
@@ -27028,7 +27398,7 @@ fn three_d_sensor_calibration_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             5 => {
@@ -27040,7 +27410,7 @@ fn three_d_sensor_calibration_message(
                     65535.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             253 => {
@@ -27052,10 +27422,10 @@ fn three_d_sensor_calibration_message(
                     1.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -27278,14 +27648,12 @@ fn three_d_sensor_calibration_message_timestamp_field(
 }
 fn one_d_sensor_calibration_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -27297,13 +27665,17 @@ fn one_d_sensor_calibration_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
                 // Calibration factor used to convert from raw ADC value to degrees, g, etc.
                 if SensorType::Barometer.as_i64()
-                    == data_map.get(&0).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(one_d_sensor_calibration_message_baro_cal_factor_field(
                         mesg_num,
@@ -27312,7 +27684,17 @@ fn one_d_sensor_calibration_message(
                         1.000000,
                         0.000000,
                         "Pa",
-                        value.clone(),
+                        value,
+                    )?);
+                } else {
+                    fields.push(one_d_sensor_calibration_message_calibration_factor_field(
+                        mesg_num,
+                        accumlators,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
                     )?);
                 }
             }
@@ -27325,7 +27707,7 @@ fn one_d_sensor_calibration_message(
                     1.000000,
                     0.000000,
                     "counts",
-                    value.clone(),
+                    value,
                 )?);
             }
             3 => {
@@ -27337,7 +27719,7 @@ fn one_d_sensor_calibration_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             4 => {
@@ -27349,7 +27731,7 @@ fn one_d_sensor_calibration_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             253 => {
@@ -27361,10 +27743,10 @@ fn one_d_sensor_calibration_message(
                     1.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -27539,14 +27921,12 @@ fn one_d_sensor_calibration_message_timestamp_field(
 }
 fn video_frame_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -27558,7 +27938,7 @@ fn video_frame_message(
                     1.000000,
                     0.000000,
                     "ms",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -27570,7 +27950,7 @@ fn video_frame_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             253 => {
@@ -27582,10 +27962,10 @@ fn video_frame_message(
                     1.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -27664,14 +28044,12 @@ fn video_frame_message_timestamp_field(
 }
 fn obdii_data_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -27683,7 +28061,7 @@ fn obdii_data_message(
                     1.000000,
                     0.000000,
                     "ms",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -27695,7 +28073,7 @@ fn obdii_data_message(
                     1.000000,
                     0.000000,
                     "ms",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
@@ -27707,7 +28085,7 @@ fn obdii_data_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             3 => {
@@ -27719,7 +28097,7 @@ fn obdii_data_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             4 => {
@@ -27731,7 +28109,7 @@ fn obdii_data_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             5 => {
@@ -27743,7 +28121,7 @@ fn obdii_data_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             6 => {
@@ -27755,7 +28133,7 @@ fn obdii_data_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             7 => {
@@ -27767,7 +28145,7 @@ fn obdii_data_message(
                     1.000000,
                     0.000000,
                     "ms",
-                    value.clone(),
+                    value,
                 )?);
             }
             253 => {
@@ -27779,10 +28157,10 @@ fn obdii_data_message(
                     1.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -27997,14 +28375,12 @@ fn obdii_data_message_timestamp_field(
 }
 fn nmea_sentence_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -28016,7 +28392,7 @@ fn nmea_sentence_message(
                     1.000000,
                     0.000000,
                     "ms",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -28028,7 +28404,7 @@ fn nmea_sentence_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             253 => {
@@ -28040,10 +28416,10 @@ fn nmea_sentence_message(
                     1.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -28122,14 +28498,12 @@ fn nmea_sentence_message_timestamp_field(
 }
 fn aviation_attitude_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -28141,7 +28515,7 @@ fn aviation_attitude_message(
                     1.000000,
                     0.000000,
                     "ms",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -28153,7 +28527,7 @@ fn aviation_attitude_message(
                     1.000000,
                     0.000000,
                     "ms",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
@@ -28165,7 +28539,7 @@ fn aviation_attitude_message(
                     10430.380000,
                     0.000000,
                     "radians",
-                    value.clone(),
+                    value,
                 )?);
             }
             3 => {
@@ -28177,7 +28551,7 @@ fn aviation_attitude_message(
                     10430.380000,
                     0.000000,
                     "radians",
-                    value.clone(),
+                    value,
                 )?);
             }
             4 => {
@@ -28189,7 +28563,7 @@ fn aviation_attitude_message(
                     100.000000,
                     0.000000,
                     "m/s^2",
-                    value.clone(),
+                    value,
                 )?);
             }
             5 => {
@@ -28201,7 +28575,7 @@ fn aviation_attitude_message(
                     100.000000,
                     0.000000,
                     "m/s^2",
-                    value.clone(),
+                    value,
                 )?);
             }
             6 => {
@@ -28213,7 +28587,7 @@ fn aviation_attitude_message(
                     1024.000000,
                     0.000000,
                     "radians/second",
-                    value.clone(),
+                    value,
                 )?);
             }
             7 => {
@@ -28224,7 +28598,7 @@ fn aviation_attitude_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             8 => {
@@ -28236,7 +28610,7 @@ fn aviation_attitude_message(
                     1.000000,
                     0.000000,
                     "%",
-                    value.clone(),
+                    value,
                 )?);
             }
             9 => {
@@ -28248,7 +28622,7 @@ fn aviation_attitude_message(
                     10430.380000,
                     0.000000,
                     "radians",
-                    value.clone(),
+                    value,
                 )?);
             }
             10 => {
@@ -28259,7 +28633,7 @@ fn aviation_attitude_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             253 => {
@@ -28271,10 +28645,10 @@ fn aviation_attitude_message(
                     1.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -28569,14 +28943,12 @@ fn aviation_attitude_message_timestamp_field(
 }
 fn video_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -28587,7 +28959,7 @@ fn video_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -28598,7 +28970,7 @@ fn video_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
@@ -28610,10 +28982,10 @@ fn video_message(
                     1.000000,
                     0.000000,
                     "ms",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -28684,14 +29056,12 @@ fn video_message_duration_field(
 }
 fn video_title_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -28703,7 +29073,7 @@ fn video_title_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -28714,7 +29084,7 @@ fn video_title_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             254 => {
@@ -28726,10 +29096,10 @@ fn video_title_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -28808,14 +29178,12 @@ fn video_title_message_message_index_field(
 }
 fn video_description_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -28827,7 +29195,7 @@ fn video_description_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -28838,7 +29206,7 @@ fn video_description_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             254 => {
@@ -28850,10 +29218,10 @@ fn video_description_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -28932,14 +29300,12 @@ fn video_description_message_message_index_field(
 }
 fn video_clip_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -28950,7 +29316,7 @@ fn video_clip_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -28961,7 +29327,7 @@ fn video_clip_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
@@ -28972,7 +29338,7 @@ fn video_clip_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             3 => {
@@ -28983,7 +29349,7 @@ fn video_clip_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             4 => {
@@ -28994,7 +29360,7 @@ fn video_clip_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             6 => {
@@ -29006,7 +29372,7 @@ fn video_clip_message(
                     1.000000,
                     0.000000,
                     "ms",
-                    value.clone(),
+                    value,
                 )?);
             }
             7 => {
@@ -29018,10 +29384,10 @@ fn video_clip_message(
                     1.000000,
                     0.000000,
                     "ms",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -29196,14 +29562,12 @@ fn video_clip_message_clip_end_field(
 }
 fn set_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -29214,7 +29578,7 @@ fn set_message(
                     1000.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             3 => {
@@ -29226,7 +29590,7 @@ fn set_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             4 => {
@@ -29238,7 +29602,7 @@ fn set_message(
                     16.000000,
                     0.000000,
                     "kg",
-                    value.clone(),
+                    value,
                 )?);
             }
             5 => {
@@ -29249,7 +29613,7 @@ fn set_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             6 => {
@@ -29261,7 +29625,7 @@ fn set_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             7 => {
@@ -29272,7 +29636,7 @@ fn set_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             8 => {
@@ -29284,7 +29648,7 @@ fn set_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             9 => {
@@ -29295,7 +29659,7 @@ fn set_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             10 => {
@@ -29306,7 +29670,7 @@ fn set_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             11 => {
@@ -29317,7 +29681,7 @@ fn set_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             254 => {
@@ -29329,10 +29693,10 @@ fn set_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -29603,14 +29967,12 @@ fn set_message_timestamp_field(
 }
 fn jump_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -29621,7 +29983,7 @@ fn jump_message(
                     1.000000,
                     0.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -29632,7 +29994,7 @@ fn jump_message(
                     1.000000,
                     0.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
@@ -29643,7 +30005,7 @@ fn jump_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             3 => {
@@ -29654,7 +30016,7 @@ fn jump_message(
                     1.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             4 => {
@@ -29666,7 +30028,7 @@ fn jump_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             5 => {
@@ -29677,7 +30039,7 @@ fn jump_message(
                     1.000000,
                     0.000000,
                     "semicircles",
-                    value.clone(),
+                    value,
                 )?);
             }
             6 => {
@@ -29688,12 +30050,12 @@ fn jump_message(
                     1.000000,
                     0.000000,
                     "semicircles",
-                    value.clone(),
+                    value,
                 )?);
             }
             7 => {
                 let component_values = expand_components(value, &[16]);
-                data_map.insert(8, Some(component_values[0]));
+                data_map.insert(8, component_values[0].clone());
                 fields.push(jump_message_enhanced_speed_field(
                     mesg_num,
                     accumlators,
@@ -29712,7 +30074,7 @@ fn jump_message(
                     1000.000000,
                     0.000000,
                     "m/s",
-                    value.clone(),
+                    value,
                 )?);
             }
             253 => {
@@ -29723,10 +30085,10 @@ fn jump_message(
                     1.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -29973,14 +30335,12 @@ fn jump_message_timestamp_field(
 }
 fn climb_pro_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -29991,7 +30351,7 @@ fn climb_pro_message(
                     1.000000,
                     0.000000,
                     "semicircles",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -30002,7 +30362,7 @@ fn climb_pro_message(
                     1.000000,
                     0.000000,
                     "semicircles",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
@@ -30013,7 +30373,7 @@ fn climb_pro_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             3 => {
@@ -30024,7 +30384,7 @@ fn climb_pro_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             4 => {
@@ -30035,7 +30395,7 @@ fn climb_pro_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             5 => {
@@ -30046,7 +30406,7 @@ fn climb_pro_message(
                     1.000000,
                     0.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             253 => {
@@ -30057,10 +30417,10 @@ fn climb_pro_message(
                     1.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -30236,14 +30596,12 @@ fn climb_pro_message_timestamp_field(
 /// Must be logged before developer field is used
 fn field_description_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -30254,7 +30612,7 @@ fn field_description_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -30265,7 +30623,7 @@ fn field_description_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
@@ -30276,7 +30634,7 @@ fn field_description_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             3 => {
@@ -30287,7 +30645,7 @@ fn field_description_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             4 => {
@@ -30298,7 +30656,7 @@ fn field_description_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             5 => {
@@ -30309,7 +30667,7 @@ fn field_description_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             6 => {
@@ -30320,7 +30678,7 @@ fn field_description_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             7 => {
@@ -30331,7 +30689,7 @@ fn field_description_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             8 => {
@@ -30342,7 +30700,7 @@ fn field_description_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             9 => {
@@ -30353,7 +30711,7 @@ fn field_description_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             10 => {
@@ -30364,7 +30722,7 @@ fn field_description_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             13 => {
@@ -30375,7 +30733,7 @@ fn field_description_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             14 => {
@@ -30386,7 +30744,7 @@ fn field_description_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             15 => {
@@ -30397,10 +30755,10 @@ fn field_description_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -30744,14 +31102,12 @@ fn field_description_message_native_field_num_field(
 /// Must be logged before field description
 fn developer_data_id_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -30762,7 +31118,7 @@ fn developer_data_id_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -30773,7 +31129,7 @@ fn developer_data_id_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
@@ -30784,7 +31140,7 @@ fn developer_data_id_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             3 => {
@@ -30795,7 +31151,7 @@ fn developer_data_id_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             4 => {
@@ -30806,10 +31162,10 @@ fn developer_data_id_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -30936,14 +31292,12 @@ fn developer_data_id_message_application_version_field(
 }
 fn course_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             4 => {
@@ -30954,7 +31308,7 @@ fn course_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             5 => {
@@ -30965,7 +31319,7 @@ fn course_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             6 => {
@@ -30976,7 +31330,7 @@ fn course_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             7 => {
@@ -30987,10 +31341,10 @@ fn course_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -31093,14 +31447,12 @@ fn course_message_sub_sport_field(
 }
 fn course_point_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             1 => {
@@ -31111,7 +31463,7 @@ fn course_point_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
@@ -31122,7 +31474,7 @@ fn course_point_message(
                     1.000000,
                     0.000000,
                     "semicircles",
-                    value.clone(),
+                    value,
                 )?);
             }
             3 => {
@@ -31133,7 +31485,7 @@ fn course_point_message(
                     1.000000,
                     0.000000,
                     "semicircles",
-                    value.clone(),
+                    value,
                 )?);
             }
             4 => {
@@ -31144,7 +31496,7 @@ fn course_point_message(
                     100.000000,
                     0.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             5 => {
@@ -31155,7 +31507,7 @@ fn course_point_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             6 => {
@@ -31166,7 +31518,7 @@ fn course_point_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             8 => {
@@ -31177,7 +31529,7 @@ fn course_point_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             254 => {
@@ -31188,10 +31540,10 @@ fn course_point_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -31391,14 +31743,12 @@ fn course_point_message_message_index_field(
 /// Unique Identification data for a segment file
 fn segment_id_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -31410,7 +31760,7 @@ fn segment_id_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -31422,7 +31772,7 @@ fn segment_id_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
@@ -31434,7 +31784,7 @@ fn segment_id_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             3 => {
@@ -31446,7 +31796,7 @@ fn segment_id_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             4 => {
@@ -31458,7 +31808,7 @@ fn segment_id_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             5 => {
@@ -31470,7 +31820,7 @@ fn segment_id_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             6 => {
@@ -31482,7 +31832,7 @@ fn segment_id_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             7 => {
@@ -31494,7 +31844,7 @@ fn segment_id_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             8 => {
@@ -31506,10 +31856,10 @@ fn segment_id_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -31733,14 +32083,12 @@ fn segment_id_message_selection_type_field(
 /// Unique Identification data for an individual segment leader within a segment file
 fn segment_leaderboard_entry_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -31752,7 +32100,7 @@ fn segment_leaderboard_entry_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -31764,7 +32112,7 @@ fn segment_leaderboard_entry_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
@@ -31776,7 +32124,7 @@ fn segment_leaderboard_entry_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             3 => {
@@ -31788,7 +32136,7 @@ fn segment_leaderboard_entry_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             4 => {
@@ -31800,7 +32148,7 @@ fn segment_leaderboard_entry_message(
                     1000.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             5 => {
@@ -31812,7 +32160,7 @@ fn segment_leaderboard_entry_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             254 => {
@@ -31823,10 +32171,10 @@ fn segment_leaderboard_entry_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -32002,14 +32350,12 @@ fn segment_leaderboard_entry_message_message_index_field(
 /// Navigation and race evaluation point for a segment decribing a point along the segment path and time it took each segment leader to reach that point
 fn segment_point_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             1 => {
@@ -32020,7 +32366,7 @@ fn segment_point_message(
                     1.000000,
                     0.000000,
                     "semicircles",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
@@ -32031,7 +32377,7 @@ fn segment_point_message(
                     1.000000,
                     0.000000,
                     "semicircles",
-                    value.clone(),
+                    value,
                 )?);
             }
             3 => {
@@ -32043,7 +32389,7 @@ fn segment_point_message(
                     100.000000,
                     0.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             4 => {
@@ -32055,7 +32401,7 @@ fn segment_point_message(
                     5.000000,
                     500.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             5 => {
@@ -32067,7 +32413,7 @@ fn segment_point_message(
                     1000.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             254 => {
@@ -32078,10 +32424,10 @@ fn segment_point_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -32232,14 +32578,12 @@ fn segment_point_message_message_index_field(
 }
 fn segment_lap_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -32250,7 +32594,7 @@ fn segment_lap_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -32261,7 +32605,7 @@ fn segment_lap_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
@@ -32272,7 +32616,7 @@ fn segment_lap_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             3 => {
@@ -32283,7 +32627,7 @@ fn segment_lap_message(
                     1.000000,
                     0.000000,
                     "semicircles",
-                    value.clone(),
+                    value,
                 )?);
             }
             4 => {
@@ -32294,7 +32638,7 @@ fn segment_lap_message(
                     1.000000,
                     0.000000,
                     "semicircles",
-                    value.clone(),
+                    value,
                 )?);
             }
             5 => {
@@ -32305,7 +32649,7 @@ fn segment_lap_message(
                     1.000000,
                     0.000000,
                     "semicircles",
-                    value.clone(),
+                    value,
                 )?);
             }
             6 => {
@@ -32316,7 +32660,7 @@ fn segment_lap_message(
                     1.000000,
                     0.000000,
                     "semicircles",
-                    value.clone(),
+                    value,
                 )?);
             }
             7 => {
@@ -32328,7 +32672,7 @@ fn segment_lap_message(
                     1000.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             8 => {
@@ -32340,7 +32684,7 @@ fn segment_lap_message(
                     1000.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             9 => {
@@ -32351,12 +32695,16 @@ fn segment_lap_message(
                     100.000000,
                     0.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             10 => {
                 if Sport::Cycling.as_i64()
-                    == data_map.get(&23).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&23)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(segment_lap_message_total_strokes_field(
                         mesg_num,
@@ -32365,7 +32713,17 @@ fn segment_lap_message(
                         1.000000,
                         0.000000,
                         "strokes",
-                        value.clone(),
+                        value,
+                    )?);
+                } else {
+                    fields.push(segment_lap_message_total_cycles_field(
+                        mesg_num,
+                        accumlators,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "cycles",
+                        value,
                     )?);
                 }
             }
@@ -32377,7 +32735,7 @@ fn segment_lap_message(
                     1.000000,
                     0.000000,
                     "kcal",
-                    value.clone(),
+                    value,
                 )?);
             }
             12 => {
@@ -32389,7 +32747,7 @@ fn segment_lap_message(
                     1.000000,
                     0.000000,
                     "kcal",
-                    value.clone(),
+                    value,
                 )?);
             }
             13 => {
@@ -32400,7 +32758,7 @@ fn segment_lap_message(
                     1000.000000,
                     0.000000,
                     "m/s",
-                    value.clone(),
+                    value,
                 )?);
             }
             14 => {
@@ -32411,7 +32769,7 @@ fn segment_lap_message(
                     1000.000000,
                     0.000000,
                     "m/s",
-                    value.clone(),
+                    value,
                 )?);
             }
             15 => {
@@ -32422,7 +32780,7 @@ fn segment_lap_message(
                     1.000000,
                     0.000000,
                     "bpm",
-                    value.clone(),
+                    value,
                 )?);
             }
             16 => {
@@ -32433,7 +32791,7 @@ fn segment_lap_message(
                     1.000000,
                     0.000000,
                     "bpm",
-                    value.clone(),
+                    value,
                 )?);
             }
             17 => {
@@ -32445,7 +32803,7 @@ fn segment_lap_message(
                     1.000000,
                     0.000000,
                     "rpm",
-                    value.clone(),
+                    value,
                 )?);
             }
             18 => {
@@ -32456,7 +32814,7 @@ fn segment_lap_message(
                     1.000000,
                     0.000000,
                     "rpm",
-                    value.clone(),
+                    value,
                 )?);
             }
             19 => {
@@ -32468,7 +32826,7 @@ fn segment_lap_message(
                     1.000000,
                     0.000000,
                     "watts",
-                    value.clone(),
+                    value,
                 )?);
             }
             20 => {
@@ -32479,7 +32837,7 @@ fn segment_lap_message(
                     1.000000,
                     0.000000,
                     "watts",
-                    value.clone(),
+                    value,
                 )?);
             }
             21 => {
@@ -32490,7 +32848,7 @@ fn segment_lap_message(
                     1.000000,
                     0.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             22 => {
@@ -32501,7 +32859,7 @@ fn segment_lap_message(
                     1.000000,
                     0.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             23 => {
@@ -32512,7 +32870,7 @@ fn segment_lap_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             24 => {
@@ -32523,7 +32881,7 @@ fn segment_lap_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             25 => {
@@ -32535,7 +32893,7 @@ fn segment_lap_message(
                     1.000000,
                     0.000000,
                     "semicircles",
-                    value.clone(),
+                    value,
                 )?);
             }
             26 => {
@@ -32547,7 +32905,7 @@ fn segment_lap_message(
                     1.000000,
                     0.000000,
                     "semicircles",
-                    value.clone(),
+                    value,
                 )?);
             }
             27 => {
@@ -32559,7 +32917,7 @@ fn segment_lap_message(
                     1.000000,
                     0.000000,
                     "semicircles",
-                    value.clone(),
+                    value,
                 )?);
             }
             28 => {
@@ -32571,7 +32929,7 @@ fn segment_lap_message(
                     1.000000,
                     0.000000,
                     "semicircles",
-                    value.clone(),
+                    value,
                 )?);
             }
             29 => {
@@ -32582,7 +32940,7 @@ fn segment_lap_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             30 => {
@@ -32593,7 +32951,7 @@ fn segment_lap_message(
                     1.000000,
                     0.000000,
                     "watts",
-                    value.clone(),
+                    value,
                 )?);
             }
             31 => {
@@ -32604,7 +32962,7 @@ fn segment_lap_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             32 => {
@@ -32615,7 +32973,7 @@ fn segment_lap_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             33 => {
@@ -32626,7 +32984,7 @@ fn segment_lap_message(
                     1.000000,
                     0.000000,
                     "J",
-                    value.clone(),
+                    value,
                 )?);
             }
             34 => {
@@ -32637,7 +32995,7 @@ fn segment_lap_message(
                     5.000000,
                     500.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             35 => {
@@ -32648,7 +33006,7 @@ fn segment_lap_message(
                     5.000000,
                     500.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             36 => {
@@ -32659,7 +33017,7 @@ fn segment_lap_message(
                     1.000000,
                     0.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             37 => {
@@ -32670,7 +33028,7 @@ fn segment_lap_message(
                     100.000000,
                     0.000000,
                     "%",
-                    value.clone(),
+                    value,
                 )?);
             }
             38 => {
@@ -32681,7 +33039,7 @@ fn segment_lap_message(
                     100.000000,
                     0.000000,
                     "%",
-                    value.clone(),
+                    value,
                 )?);
             }
             39 => {
@@ -32692,7 +33050,7 @@ fn segment_lap_message(
                     100.000000,
                     0.000000,
                     "%",
-                    value.clone(),
+                    value,
                 )?);
             }
             40 => {
@@ -32703,7 +33061,7 @@ fn segment_lap_message(
                     100.000000,
                     0.000000,
                     "%",
-                    value.clone(),
+                    value,
                 )?);
             }
             41 => {
@@ -32714,7 +33072,7 @@ fn segment_lap_message(
                     100.000000,
                     0.000000,
                     "%",
-                    value.clone(),
+                    value,
                 )?);
             }
             42 => {
@@ -32725,7 +33083,7 @@ fn segment_lap_message(
                     1.000000,
                     0.000000,
                     "C",
-                    value.clone(),
+                    value,
                 )?);
             }
             43 => {
@@ -32736,7 +33094,7 @@ fn segment_lap_message(
                     1.000000,
                     0.000000,
                     "C",
-                    value.clone(),
+                    value,
                 )?);
             }
             44 => {
@@ -32747,7 +33105,7 @@ fn segment_lap_message(
                     1000.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             45 => {
@@ -32758,7 +33116,7 @@ fn segment_lap_message(
                     1000.000000,
                     0.000000,
                     "m/s",
-                    value.clone(),
+                    value,
                 )?);
             }
             46 => {
@@ -32769,7 +33127,7 @@ fn segment_lap_message(
                     1000.000000,
                     0.000000,
                     "m/s",
-                    value.clone(),
+                    value,
                 )?);
             }
             47 => {
@@ -32780,7 +33138,7 @@ fn segment_lap_message(
                     1000.000000,
                     0.000000,
                     "m/s",
-                    value.clone(),
+                    value,
                 )?);
             }
             48 => {
@@ -32791,7 +33149,7 @@ fn segment_lap_message(
                     1000.000000,
                     0.000000,
                     "m/s",
-                    value.clone(),
+                    value,
                 )?);
             }
             49 => {
@@ -32802,7 +33160,7 @@ fn segment_lap_message(
                     1000.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             50 => {
@@ -32813,7 +33171,7 @@ fn segment_lap_message(
                     1000.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             51 => {
@@ -32824,7 +33182,7 @@ fn segment_lap_message(
                     1000.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             52 => {
@@ -32835,7 +33193,7 @@ fn segment_lap_message(
                     1000.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             53 => {
@@ -32846,7 +33204,7 @@ fn segment_lap_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             54 => {
@@ -32857,7 +33215,7 @@ fn segment_lap_message(
                     5.000000,
                     500.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             55 => {
@@ -32868,7 +33226,7 @@ fn segment_lap_message(
                     1.000000,
                     0.000000,
                     "bpm",
-                    value.clone(),
+                    value,
                 )?);
             }
             56 => {
@@ -32879,7 +33237,7 @@ fn segment_lap_message(
                     1000.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             57 => {
@@ -32890,7 +33248,7 @@ fn segment_lap_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             58 => {
@@ -32901,7 +33259,7 @@ fn segment_lap_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             59 => {
@@ -32912,7 +33270,7 @@ fn segment_lap_message(
                     2.000000,
                     0.000000,
                     "percent",
-                    value.clone(),
+                    value,
                 )?);
             }
             60 => {
@@ -32923,7 +33281,7 @@ fn segment_lap_message(
                     2.000000,
                     0.000000,
                     "percent",
-                    value.clone(),
+                    value,
                 )?);
             }
             61 => {
@@ -32934,7 +33292,7 @@ fn segment_lap_message(
                     2.000000,
                     0.000000,
                     "percent",
-                    value.clone(),
+                    value,
                 )?);
             }
             62 => {
@@ -32945,7 +33303,7 @@ fn segment_lap_message(
                     2.000000,
                     0.000000,
                     "percent",
-                    value.clone(),
+                    value,
                 )?);
             }
             63 => {
@@ -32956,7 +33314,7 @@ fn segment_lap_message(
                     2.000000,
                     0.000000,
                     "percent",
-                    value.clone(),
+                    value,
                 )?);
             }
             64 => {
@@ -32967,7 +33325,7 @@ fn segment_lap_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             65 => {
@@ -32978,7 +33336,7 @@ fn segment_lap_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             66 => {
@@ -32990,7 +33348,7 @@ fn segment_lap_message(
                     128.000000,
                     0.000000,
                     "rpm",
-                    value.clone(),
+                    value,
                 )?);
             }
             67 => {
@@ -33002,7 +33360,7 @@ fn segment_lap_message(
                     128.000000,
                     0.000000,
                     "rpm",
-                    value.clone(),
+                    value,
                 )?);
             }
             68 => {
@@ -33014,7 +33372,7 @@ fn segment_lap_message(
                     128.000000,
                     0.000000,
                     "cycles",
-                    value.clone(),
+                    value,
                 )?);
             }
             69 => {
@@ -33025,7 +33383,7 @@ fn segment_lap_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             70 => {
@@ -33036,7 +33394,7 @@ fn segment_lap_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             71 => {
@@ -33048,7 +33406,7 @@ fn segment_lap_message(
                     1000.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             72 => {
@@ -33060,7 +33418,7 @@ fn segment_lap_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             73 => {
@@ -33072,7 +33430,7 @@ fn segment_lap_message(
                     1.000000,
                     0.000000,
                     "mm",
-                    value.clone(),
+                    value,
                 )?);
             }
             74 => {
@@ -33084,7 +33442,7 @@ fn segment_lap_message(
                     1.000000,
                     0.000000,
                     "mm",
-                    value.clone(),
+                    value,
                 )?);
             }
             75 => {
@@ -33096,7 +33454,7 @@ fn segment_lap_message(
                     0.711111,
                     0.000000,
                     "degrees",
-                    value.clone(),
+                    value,
                 )?);
             }
             76 => {
@@ -33108,7 +33466,7 @@ fn segment_lap_message(
                     0.711111,
                     0.000000,
                     "degrees",
-                    value.clone(),
+                    value,
                 )?);
             }
             77 => {
@@ -33120,7 +33478,7 @@ fn segment_lap_message(
                     0.711111,
                     0.000000,
                     "degrees",
-                    value.clone(),
+                    value,
                 )?);
             }
             78 => {
@@ -33132,7 +33490,7 @@ fn segment_lap_message(
                     0.711111,
                     0.000000,
                     "degrees",
-                    value.clone(),
+                    value,
                 )?);
             }
             79 => {
@@ -33144,7 +33502,7 @@ fn segment_lap_message(
                     1.000000,
                     0.000000,
                     "watts",
-                    value.clone(),
+                    value,
                 )?);
             }
             80 => {
@@ -33156,7 +33514,7 @@ fn segment_lap_message(
                     1.000000,
                     0.000000,
                     "watts",
-                    value.clone(),
+                    value,
                 )?);
             }
             81 => {
@@ -33168,7 +33526,7 @@ fn segment_lap_message(
                     1.000000,
                     0.000000,
                     "rpm",
-                    value.clone(),
+                    value,
                 )?);
             }
             82 => {
@@ -33180,7 +33538,7 @@ fn segment_lap_message(
                     1.000000,
                     0.000000,
                     "rpm",
-                    value.clone(),
+                    value,
                 )?);
             }
             83 => {
@@ -33192,7 +33550,7 @@ fn segment_lap_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             84 => {
@@ -33204,7 +33562,7 @@ fn segment_lap_message(
                     1.000000,
                     0.000000,
                     "kGrit",
-                    value.clone(),
+                    value,
                 )?);
             }
             85 => {
@@ -33216,7 +33574,7 @@ fn segment_lap_message(
                     1.000000,
                     0.000000,
                     "Flow",
-                    value.clone(),
+                    value,
                 )?);
             }
             86 => {
@@ -33228,7 +33586,7 @@ fn segment_lap_message(
                     1.000000,
                     0.000000,
                     "kGrit",
-                    value.clone(),
+                    value,
                 )?);
             }
             87 => {
@@ -33240,7 +33598,7 @@ fn segment_lap_message(
                     1.000000,
                     0.000000,
                     "Flow",
-                    value.clone(),
+                    value,
                 )?);
             }
             89 => {
@@ -33252,7 +33610,7 @@ fn segment_lap_message(
                     100.000000,
                     0.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             90 => {
@@ -33264,7 +33622,7 @@ fn segment_lap_message(
                     100.000000,
                     0.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             253 => {
@@ -33276,7 +33634,7 @@ fn segment_lap_message(
                     1.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             254 => {
@@ -33287,10 +33645,10 @@ fn segment_lap_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -35530,14 +35888,12 @@ fn segment_lap_message_message_index_field(
 /// Summary of the unique segment and leaderboard information associated with a segment file. This message is used to compile a segment list file describing all segment files on a device. The segment list file is used when refreshing the contents of a segment file with the latest available leaderboard information.
 fn segment_file_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             1 => {
@@ -35549,7 +35905,7 @@ fn segment_file_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             3 => {
@@ -35561,7 +35917,7 @@ fn segment_file_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             4 => {
@@ -35573,7 +35929,7 @@ fn segment_file_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             7 => {
@@ -35585,7 +35941,7 @@ fn segment_file_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             8 => {
@@ -35597,7 +35953,7 @@ fn segment_file_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             9 => {
@@ -35609,7 +35965,7 @@ fn segment_file_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             10 => {
@@ -35621,7 +35977,7 @@ fn segment_file_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             11 => {
@@ -35633,7 +35989,7 @@ fn segment_file_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             254 => {
@@ -35644,10 +36000,10 @@ fn segment_file_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -35870,14 +36226,12 @@ fn segment_file_message_message_index_field(
 }
 fn workout_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             4 => {
@@ -35888,7 +36242,7 @@ fn workout_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             5 => {
@@ -35899,7 +36253,7 @@ fn workout_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             6 => {
@@ -35911,7 +36265,7 @@ fn workout_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             8 => {
@@ -35922,7 +36276,7 @@ fn workout_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             11 => {
@@ -35933,7 +36287,7 @@ fn workout_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             14 => {
@@ -35944,7 +36298,7 @@ fn workout_message(
                     100.000000,
                     0.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             15 => {
@@ -35955,10 +36309,10 @@ fn workout_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -36133,14 +36487,12 @@ fn workout_message_pool_length_unit_field(
 }
 fn workout_session_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -36151,7 +36503,7 @@ fn workout_session_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -36162,7 +36514,7 @@ fn workout_session_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
@@ -36173,7 +36525,7 @@ fn workout_session_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             3 => {
@@ -36184,7 +36536,7 @@ fn workout_session_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             4 => {
@@ -36195,7 +36547,7 @@ fn workout_session_message(
                     100.000000,
                     0.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             5 => {
@@ -36206,7 +36558,7 @@ fn workout_session_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             254 => {
@@ -36217,10 +36569,10 @@ fn workout_session_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -36395,14 +36747,12 @@ fn workout_session_message_message_index_field(
 }
 fn workout_step_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -36413,7 +36763,7 @@ fn workout_step_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -36424,12 +36774,16 @@ fn workout_step_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
                 if WktStepDuration::Time.as_i64()
-                    == data_map.get(&1).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_duration_time_field(
                         mesg_num,
@@ -36438,10 +36792,14 @@ fn workout_step_message(
                         1000.000000,
                         0.000000,
                         "s",
-                        value.clone(),
+                        value,
                     )?);
                 } else if WktStepDuration::RepetitionTime.as_i64()
-                    == data_map.get(&1).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_duration_time_field(
                         mesg_num,
@@ -36450,10 +36808,14 @@ fn workout_step_message(
                         1000.000000,
                         0.000000,
                         "s",
-                        value.clone(),
+                        value,
                     )?);
                 } else if WktStepDuration::Distance.as_i64()
-                    == data_map.get(&1).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_duration_distance_field(
                         mesg_num,
@@ -36462,10 +36824,14 @@ fn workout_step_message(
                         100.000000,
                         0.000000,
                         "m",
-                        value.clone(),
+                        value,
                     )?);
                 } else if WktStepDuration::HrLessThan.as_i64()
-                    == data_map.get(&1).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_duration_hr_field(
                         mesg_num,
@@ -36474,10 +36840,14 @@ fn workout_step_message(
                         1.000000,
                         0.000000,
                         "% or bpm",
-                        value.clone(),
+                        value,
                     )?);
                 } else if WktStepDuration::HrGreaterThan.as_i64()
-                    == data_map.get(&1).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_duration_hr_field(
                         mesg_num,
@@ -36486,10 +36856,14 @@ fn workout_step_message(
                         1.000000,
                         0.000000,
                         "% or bpm",
-                        value.clone(),
+                        value,
                     )?);
                 } else if WktStepDuration::Calories.as_i64()
-                    == data_map.get(&1).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_duration_calories_field(
                         mesg_num,
@@ -36498,10 +36872,14 @@ fn workout_step_message(
                         1.000000,
                         0.000000,
                         "calories",
-                        value.clone(),
+                        value,
                     )?);
                 } else if WktStepDuration::RepeatUntilStepsCmplt.as_i64()
-                    == data_map.get(&1).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_duration_step_field(
                         mesg_num,
@@ -36510,10 +36888,14 @@ fn workout_step_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
                     )?);
                 } else if WktStepDuration::RepeatUntilTime.as_i64()
-                    == data_map.get(&1).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_duration_step_field(
                         mesg_num,
@@ -36522,10 +36904,14 @@ fn workout_step_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
                     )?);
                 } else if WktStepDuration::RepeatUntilDistance.as_i64()
-                    == data_map.get(&1).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_duration_step_field(
                         mesg_num,
@@ -36534,10 +36920,14 @@ fn workout_step_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
                     )?);
                 } else if WktStepDuration::RepeatUntilCalories.as_i64()
-                    == data_map.get(&1).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_duration_step_field(
                         mesg_num,
@@ -36546,10 +36936,14 @@ fn workout_step_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
                     )?);
                 } else if WktStepDuration::RepeatUntilHrLessThan.as_i64()
-                    == data_map.get(&1).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_duration_step_field(
                         mesg_num,
@@ -36558,10 +36952,14 @@ fn workout_step_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
                     )?);
                 } else if WktStepDuration::RepeatUntilHrGreaterThan.as_i64()
-                    == data_map.get(&1).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_duration_step_field(
                         mesg_num,
@@ -36570,10 +36968,14 @@ fn workout_step_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
                     )?);
                 } else if WktStepDuration::RepeatUntilPowerLessThan.as_i64()
-                    == data_map.get(&1).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_duration_step_field(
                         mesg_num,
@@ -36582,10 +36984,14 @@ fn workout_step_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
                     )?);
                 } else if WktStepDuration::RepeatUntilPowerGreaterThan.as_i64()
-                    == data_map.get(&1).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_duration_step_field(
                         mesg_num,
@@ -36594,10 +37000,14 @@ fn workout_step_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
                     )?);
                 } else if WktStepDuration::PowerLessThan.as_i64()
-                    == data_map.get(&1).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_duration_power_field(
                         mesg_num,
@@ -36606,10 +37016,14 @@ fn workout_step_message(
                         1.000000,
                         0.000000,
                         "% or watts",
-                        value.clone(),
+                        value,
                     )?);
                 } else if WktStepDuration::PowerGreaterThan.as_i64()
-                    == data_map.get(&1).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_duration_power_field(
                         mesg_num,
@@ -36618,9 +37032,15 @@ fn workout_step_message(
                         1.000000,
                         0.000000,
                         "% or watts",
-                        value.clone(),
+                        value,
                     )?);
-                } else {
+                } else if WktStepDuration::Reps.as_i64()
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
                     fields.push(workout_step_message_duration_reps_field(
                         mesg_num,
                         accumlators,
@@ -36628,7 +37048,17 @@ fn workout_step_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
+                    )?);
+                } else {
+                    fields.push(workout_step_message_duration_value_field(
+                        mesg_num,
+                        accumlators,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
                     )?);
                 }
             }
@@ -36640,12 +37070,16 @@ fn workout_step_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             4 => {
                 if WktStepTarget::Speed.as_i64()
-                    == data_map.get(&3).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&3)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_target_speed_zone_field(
                         mesg_num,
@@ -36654,10 +37088,14 @@ fn workout_step_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
                     )?);
                 } else if WktStepTarget::HeartRate.as_i64()
-                    == data_map.get(&3).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&3)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_target_hr_zone_field(
                         mesg_num,
@@ -36666,10 +37104,14 @@ fn workout_step_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
                     )?);
                 } else if WktStepTarget::Cadence.as_i64()
-                    == data_map.get(&3).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&3)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_target_cadence_zone_field(
                         mesg_num,
@@ -36678,10 +37120,14 @@ fn workout_step_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
                     )?);
                 } else if WktStepTarget::Power.as_i64()
-                    == data_map.get(&3).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&3)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_target_power_zone_field(
                         mesg_num,
@@ -36690,10 +37136,14 @@ fn workout_step_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
                     )?);
                 } else if WktStepDuration::RepeatUntilStepsCmplt.as_i64()
-                    == data_map.get(&1).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_repeat_steps_field(
                         mesg_num,
@@ -36702,10 +37152,14 @@ fn workout_step_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
                     )?);
                 } else if WktStepDuration::RepeatUntilTime.as_i64()
-                    == data_map.get(&1).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_repeat_time_field(
                         mesg_num,
@@ -36714,10 +37168,14 @@ fn workout_step_message(
                         1000.000000,
                         0.000000,
                         "s",
-                        value.clone(),
+                        value,
                     )?);
                 } else if WktStepDuration::RepeatUntilDistance.as_i64()
-                    == data_map.get(&1).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_repeat_distance_field(
                         mesg_num,
@@ -36726,10 +37184,14 @@ fn workout_step_message(
                         100.000000,
                         0.000000,
                         "m",
-                        value.clone(),
+                        value,
                     )?);
                 } else if WktStepDuration::RepeatUntilCalories.as_i64()
-                    == data_map.get(&1).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_repeat_calories_field(
                         mesg_num,
@@ -36738,10 +37200,14 @@ fn workout_step_message(
                         1.000000,
                         0.000000,
                         "calories",
-                        value.clone(),
+                        value,
                     )?);
                 } else if WktStepDuration::RepeatUntilHrLessThan.as_i64()
-                    == data_map.get(&1).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_repeat_hr_field(
                         mesg_num,
@@ -36750,10 +37216,14 @@ fn workout_step_message(
                         1.000000,
                         0.000000,
                         "% or bpm",
-                        value.clone(),
+                        value,
                     )?);
                 } else if WktStepDuration::RepeatUntilHrGreaterThan.as_i64()
-                    == data_map.get(&1).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_repeat_hr_field(
                         mesg_num,
@@ -36762,10 +37232,14 @@ fn workout_step_message(
                         1.000000,
                         0.000000,
                         "% or bpm",
-                        value.clone(),
+                        value,
                     )?);
                 } else if WktStepDuration::RepeatUntilPowerLessThan.as_i64()
-                    == data_map.get(&1).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_repeat_power_field(
                         mesg_num,
@@ -36774,10 +37248,14 @@ fn workout_step_message(
                         1.000000,
                         0.000000,
                         "% or watts",
-                        value.clone(),
+                        value,
                     )?);
                 } else if WktStepDuration::RepeatUntilPowerGreaterThan.as_i64()
-                    == data_map.get(&1).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_repeat_power_field(
                         mesg_num,
@@ -36786,9 +37264,15 @@ fn workout_step_message(
                         1.000000,
                         0.000000,
                         "% or watts",
-                        value.clone(),
+                        value,
                     )?);
-                } else {
+                } else if WktStepTarget::SwimStroke.as_i64()
+                    == data_map
+                        .get(&3)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
                     fields.push(workout_step_message_target_stroke_type_field(
                         mesg_num,
                         accumlators,
@@ -36796,13 +37280,27 @@ fn workout_step_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
+                    )?);
+                } else {
+                    fields.push(workout_step_message_target_value_field(
+                        mesg_num,
+                        accumlators,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
                     )?);
                 }
             }
             5 => {
                 if WktStepTarget::Speed.as_i64()
-                    == data_map.get(&3).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&3)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_custom_target_speed_low_field(
                         mesg_num,
@@ -36811,10 +37309,14 @@ fn workout_step_message(
                         1000.000000,
                         0.000000,
                         "m/s",
-                        value.clone(),
+                        value,
                     )?);
                 } else if WktStepTarget::HeartRate.as_i64()
-                    == data_map.get(&3).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&3)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_custom_target_heart_rate_low_field(
                         mesg_num,
@@ -36823,10 +37325,14 @@ fn workout_step_message(
                         1.000000,
                         0.000000,
                         "% or bpm",
-                        value.clone(),
+                        value,
                     )?);
                 } else if WktStepTarget::Cadence.as_i64()
-                    == data_map.get(&3).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&3)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_custom_target_cadence_low_field(
                         mesg_num,
@@ -36835,9 +37341,15 @@ fn workout_step_message(
                         1.000000,
                         0.000000,
                         "rpm",
-                        value.clone(),
+                        value,
                     )?);
-                } else {
+                } else if WktStepTarget::Power.as_i64()
+                    == data_map
+                        .get(&3)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
                     fields.push(workout_step_message_custom_target_power_low_field(
                         mesg_num,
                         accumlators,
@@ -36845,13 +37357,27 @@ fn workout_step_message(
                         1.000000,
                         0.000000,
                         "% or watts",
-                        value.clone(),
+                        value,
+                    )?);
+                } else {
+                    fields.push(workout_step_message_custom_target_value_low_field(
+                        mesg_num,
+                        accumlators,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
                     )?);
                 }
             }
             6 => {
                 if WktStepTarget::Speed.as_i64()
-                    == data_map.get(&3).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&3)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_custom_target_speed_high_field(
                         mesg_num,
@@ -36860,10 +37386,14 @@ fn workout_step_message(
                         1000.000000,
                         0.000000,
                         "m/s",
-                        value.clone(),
+                        value,
                     )?);
                 } else if WktStepTarget::HeartRate.as_i64()
-                    == data_map.get(&3).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&3)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_custom_target_heart_rate_high_field(
                         mesg_num,
@@ -36872,10 +37402,14 @@ fn workout_step_message(
                         1.000000,
                         0.000000,
                         "% or bpm",
-                        value.clone(),
+                        value,
                     )?);
                 } else if WktStepTarget::Cadence.as_i64()
-                    == data_map.get(&3).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&3)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_custom_target_cadence_high_field(
                         mesg_num,
@@ -36884,9 +37418,15 @@ fn workout_step_message(
                         1.000000,
                         0.000000,
                         "rpm",
-                        value.clone(),
+                        value,
                     )?);
-                } else {
+                } else if WktStepTarget::Power.as_i64()
+                    == data_map
+                        .get(&3)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
                     fields.push(workout_step_message_custom_target_power_high_field(
                         mesg_num,
                         accumlators,
@@ -36894,7 +37434,17 @@ fn workout_step_message(
                         1.000000,
                         0.000000,
                         "% or watts",
-                        value.clone(),
+                        value,
+                    )?);
+                } else {
+                    fields.push(workout_step_message_custom_target_value_high_field(
+                        mesg_num,
+                        accumlators,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
                     )?);
                 }
             }
@@ -36906,7 +37456,7 @@ fn workout_step_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             8 => {
@@ -36917,7 +37467,7 @@ fn workout_step_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             9 => {
@@ -36928,7 +37478,7 @@ fn workout_step_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             10 => {
@@ -36939,7 +37489,7 @@ fn workout_step_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             11 => {
@@ -36950,7 +37500,7 @@ fn workout_step_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             12 => {
@@ -36961,7 +37511,7 @@ fn workout_step_message(
                     100.000000,
                     0.000000,
                     "kg",
-                    value.clone(),
+                    value,
                 )?);
             }
             13 => {
@@ -36972,7 +37522,7 @@ fn workout_step_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             19 => {
@@ -36983,12 +37533,16 @@ fn workout_step_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             20 => {
                 if WktStepTarget::Speed.as_i64()
-                    == data_map.get(&19).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&19)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_secondary_target_speed_zone_field(
                         mesg_num,
@@ -36997,10 +37551,14 @@ fn workout_step_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
                     )?);
                 } else if WktStepTarget::HeartRate.as_i64()
-                    == data_map.get(&19).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&19)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_secondary_target_hr_zone_field(
                         mesg_num,
@@ -37009,10 +37567,14 @@ fn workout_step_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
                     )?);
                 } else if WktStepTarget::Cadence.as_i64()
-                    == data_map.get(&19).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&19)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_secondary_target_cadence_zone_field(
                         mesg_num,
@@ -37021,10 +37583,14 @@ fn workout_step_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
                     )?);
                 } else if WktStepTarget::Power.as_i64()
-                    == data_map.get(&19).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&19)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_secondary_target_power_zone_field(
                         mesg_num,
@@ -37033,9 +37599,15 @@ fn workout_step_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
                     )?);
-                } else {
+                } else if WktStepTarget::SwimStroke.as_i64()
+                    == data_map
+                        .get(&19)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
                     fields.push(workout_step_message_secondary_target_stroke_type_field(
                         mesg_num,
                         accumlators,
@@ -37043,13 +37615,27 @@ fn workout_step_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
+                    )?);
+                } else {
+                    fields.push(workout_step_message_secondary_target_value_field(
+                        mesg_num,
+                        accumlators,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
                     )?);
                 }
             }
             21 => {
                 if WktStepTarget::Speed.as_i64()
-                    == data_map.get(&19).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&19)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(
                         workout_step_message_secondary_custom_target_speed_low_field(
@@ -37059,11 +37645,15 @@ fn workout_step_message(
                             1000.000000,
                             0.000000,
                             "m/s",
-                            value.clone(),
+                            value,
                         )?,
                     );
                 } else if WktStepTarget::HeartRate.as_i64()
-                    == data_map.get(&19).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&19)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(
                         workout_step_message_secondary_custom_target_heart_rate_low_field(
@@ -37073,11 +37663,15 @@ fn workout_step_message(
                             1.000000,
                             0.000000,
                             "% or bpm",
-                            value.clone(),
+                            value,
                         )?,
                     );
                 } else if WktStepTarget::Cadence.as_i64()
-                    == data_map.get(&19).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&19)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(
                         workout_step_message_secondary_custom_target_cadence_low_field(
@@ -37087,10 +37681,16 @@ fn workout_step_message(
                             1.000000,
                             0.000000,
                             "rpm",
-                            value.clone(),
+                            value,
                         )?,
                     );
-                } else {
+                } else if WktStepTarget::Power.as_i64()
+                    == data_map
+                        .get(&19)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
                     fields.push(
                         workout_step_message_secondary_custom_target_power_low_field(
                             mesg_num,
@@ -37099,14 +37699,30 @@ fn workout_step_message(
                             1.000000,
                             0.000000,
                             "% or watts",
-                            value.clone(),
+                            value,
+                        )?,
+                    );
+                } else {
+                    fields.push(
+                        workout_step_message_secondary_custom_target_value_low_field(
+                            mesg_num,
+                            accumlators,
+                            false,
+                            1.000000,
+                            0.000000,
+                            "",
+                            value,
                         )?,
                     );
                 }
             }
             22 => {
                 if WktStepTarget::Speed.as_i64()
-                    == data_map.get(&19).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&19)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(
                         workout_step_message_secondary_custom_target_speed_high_field(
@@ -37116,11 +37732,15 @@ fn workout_step_message(
                             1000.000000,
                             0.000000,
                             "m/s",
-                            value.clone(),
+                            value,
                         )?,
                     );
                 } else if WktStepTarget::HeartRate.as_i64()
-                    == data_map.get(&19).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&19)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(
                         workout_step_message_secondary_custom_target_heart_rate_high_field(
@@ -37130,11 +37750,15 @@ fn workout_step_message(
                             1.000000,
                             0.000000,
                             "% or bpm",
-                            value.clone(),
+                            value,
                         )?,
                     );
                 } else if WktStepTarget::Cadence.as_i64()
-                    == data_map.get(&19).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&19)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(
                         workout_step_message_secondary_custom_target_cadence_high_field(
@@ -37144,10 +37768,16 @@ fn workout_step_message(
                             1.000000,
                             0.000000,
                             "rpm",
-                            value.clone(),
+                            value,
                         )?,
                     );
-                } else {
+                } else if WktStepTarget::Power.as_i64()
+                    == data_map
+                        .get(&19)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
                     fields.push(
                         workout_step_message_secondary_custom_target_power_high_field(
                             mesg_num,
@@ -37156,7 +37786,19 @@ fn workout_step_message(
                             1.000000,
                             0.000000,
                             "% or watts",
-                            value.clone(),
+                            value,
+                        )?,
+                    );
+                } else {
+                    fields.push(
+                        workout_step_message_secondary_custom_target_value_high_field(
+                            mesg_num,
+                            accumlators,
+                            false,
+                            1.000000,
+                            0.000000,
+                            "",
+                            value,
                         )?,
                     );
                 }
@@ -37169,10 +37811,10 @@ fn workout_step_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -38571,14 +39213,12 @@ fn workout_step_message_message_index_field(
 }
 fn exercise_title_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -38589,7 +39229,7 @@ fn exercise_title_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -38600,7 +39240,7 @@ fn exercise_title_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
@@ -38611,7 +39251,7 @@ fn exercise_title_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             254 => {
@@ -38622,10 +39262,10 @@ fn exercise_title_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -38728,14 +39368,12 @@ fn exercise_title_message_message_index_field(
 }
 fn schedule_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -38747,13 +39385,17 @@ fn schedule_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
                 // Corresponds to file_id of scheduled workout / course.
                 if Manufacturer::FaveroElectronics.as_i64()
-                    == data_map.get(&0).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(schedule_message_favero_product_field(
                         mesg_num,
@@ -38762,10 +39404,14 @@ fn schedule_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
                     )?);
                 } else if Manufacturer::Garmin.as_i64()
-                    == data_map.get(&0).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(schedule_message_garmin_product_field(
                         mesg_num,
@@ -38774,10 +39420,14 @@ fn schedule_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
                     )?);
                 } else if Manufacturer::Dynastream.as_i64()
-                    == data_map.get(&0).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(schedule_message_garmin_product_field(
                         mesg_num,
@@ -38786,10 +39436,14 @@ fn schedule_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
                     )?);
                 } else if Manufacturer::DynastreamOem.as_i64()
-                    == data_map.get(&0).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(schedule_message_garmin_product_field(
                         mesg_num,
@@ -38798,9 +39452,15 @@ fn schedule_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
                     )?);
-                } else {
+                } else if Manufacturer::Tacx.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
                     fields.push(schedule_message_garmin_product_field(
                         mesg_num,
                         accumlators,
@@ -38808,7 +39468,17 @@ fn schedule_message(
                         1.000000,
                         0.000000,
                         "",
-                        value.clone(),
+                        value,
+                    )?);
+                } else {
+                    fields.push(schedule_message_product_field(
+                        mesg_num,
+                        accumlators,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
                     )?);
                 }
             }
@@ -38821,7 +39491,7 @@ fn schedule_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             3 => {
@@ -38833,7 +39503,7 @@ fn schedule_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             4 => {
@@ -38845,7 +39515,7 @@ fn schedule_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             5 => {
@@ -38856,7 +39526,7 @@ fn schedule_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             6 => {
@@ -38867,10 +39537,10 @@ fn schedule_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -39093,14 +39763,12 @@ fn schedule_message_scheduled_time_field(
 }
 fn totals_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -39112,7 +39780,7 @@ fn totals_message(
                     1.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -39123,7 +39791,7 @@ fn totals_message(
                     1.000000,
                     0.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
@@ -39134,7 +39802,7 @@ fn totals_message(
                     1.000000,
                     0.000000,
                     "kcal",
-                    value.clone(),
+                    value,
                 )?);
             }
             3 => {
@@ -39145,7 +39813,7 @@ fn totals_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             4 => {
@@ -39157,7 +39825,7 @@ fn totals_message(
                     1.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             5 => {
@@ -39168,7 +39836,7 @@ fn totals_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             6 => {
@@ -39179,7 +39847,7 @@ fn totals_message(
                     1.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             9 => {
@@ -39190,7 +39858,7 @@ fn totals_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             253 => {
@@ -39201,7 +39869,7 @@ fn totals_message(
                     1.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             254 => {
@@ -39212,10 +39880,10 @@ fn totals_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -39462,14 +40130,12 @@ fn totals_message_message_index_field(
 }
 fn weight_scale_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -39480,7 +40146,7 @@ fn weight_scale_message(
                     100.000000,
                     0.000000,
                     "kg",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -39491,7 +40157,7 @@ fn weight_scale_message(
                     100.000000,
                     0.000000,
                     "%",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
@@ -39502,7 +40168,7 @@ fn weight_scale_message(
                     100.000000,
                     0.000000,
                     "%",
-                    value.clone(),
+                    value,
                 )?);
             }
             3 => {
@@ -39513,7 +40179,7 @@ fn weight_scale_message(
                     100.000000,
                     0.000000,
                     "kg",
-                    value.clone(),
+                    value,
                 )?);
             }
             4 => {
@@ -39524,7 +40190,7 @@ fn weight_scale_message(
                     100.000000,
                     0.000000,
                     "kg",
-                    value.clone(),
+                    value,
                 )?);
             }
             5 => {
@@ -39535,7 +40201,7 @@ fn weight_scale_message(
                     100.000000,
                     0.000000,
                     "kg",
-                    value.clone(),
+                    value,
                 )?);
             }
             7 => {
@@ -39546,7 +40212,7 @@ fn weight_scale_message(
                     4.000000,
                     0.000000,
                     "kcal/day",
-                    value.clone(),
+                    value,
                 )?);
             }
             8 => {
@@ -39557,7 +40223,7 @@ fn weight_scale_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             9 => {
@@ -39569,7 +40235,7 @@ fn weight_scale_message(
                     4.000000,
                     0.000000,
                     "kcal/day",
-                    value.clone(),
+                    value,
                 )?);
             }
             10 => {
@@ -39580,7 +40246,7 @@ fn weight_scale_message(
                     1.000000,
                     0.000000,
                     "years",
-                    value.clone(),
+                    value,
                 )?);
             }
             11 => {
@@ -39591,7 +40257,7 @@ fn weight_scale_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             12 => {
@@ -39603,7 +40269,7 @@ fn weight_scale_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             253 => {
@@ -39614,10 +40280,10 @@ fn weight_scale_message(
                     1.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -39936,14 +40602,12 @@ fn weight_scale_message_timestamp_field(
 }
 fn blood_pressure_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -39954,7 +40618,7 @@ fn blood_pressure_message(
                     1.000000,
                     0.000000,
                     "mmHg",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -39965,7 +40629,7 @@ fn blood_pressure_message(
                     1.000000,
                     0.000000,
                     "mmHg",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
@@ -39976,7 +40640,7 @@ fn blood_pressure_message(
                     1.000000,
                     0.000000,
                     "mmHg",
-                    value.clone(),
+                    value,
                 )?);
             }
             3 => {
@@ -39987,7 +40651,7 @@ fn blood_pressure_message(
                     1.000000,
                     0.000000,
                     "mmHg",
-                    value.clone(),
+                    value,
                 )?);
             }
             4 => {
@@ -39998,7 +40662,7 @@ fn blood_pressure_message(
                     1.000000,
                     0.000000,
                     "mmHg",
-                    value.clone(),
+                    value,
                 )?);
             }
             5 => {
@@ -40009,7 +40673,7 @@ fn blood_pressure_message(
                     1.000000,
                     0.000000,
                     "mmHg",
-                    value.clone(),
+                    value,
                 )?);
             }
             6 => {
@@ -40020,7 +40684,7 @@ fn blood_pressure_message(
                     1.000000,
                     0.000000,
                     "bpm",
-                    value.clone(),
+                    value,
                 )?);
             }
             7 => {
@@ -40031,7 +40695,7 @@ fn blood_pressure_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             8 => {
@@ -40042,7 +40706,7 @@ fn blood_pressure_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             9 => {
@@ -40054,7 +40718,7 @@ fn blood_pressure_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             253 => {
@@ -40065,10 +40729,10 @@ fn blood_pressure_message(
                     1.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -40339,14 +41003,12 @@ fn blood_pressure_message_timestamp_field(
 }
 fn monitoring_info_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -40358,7 +41020,7 @@ fn monitoring_info_message(
                     1.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -40369,7 +41031,7 @@ fn monitoring_info_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             3 => {
@@ -40381,7 +41043,7 @@ fn monitoring_info_message(
                     5000.000000,
                     0.000000,
                     "m/cycle",
-                    value.clone(),
+                    value,
                 )?);
             }
             4 => {
@@ -40393,7 +41055,7 @@ fn monitoring_info_message(
                     5000.000000,
                     0.000000,
                     "kcal/cycle",
-                    value.clone(),
+                    value,
                 )?);
             }
             5 => {
@@ -40404,7 +41066,7 @@ fn monitoring_info_message(
                     1.000000,
                     0.000000,
                     "kcal / day",
-                    value.clone(),
+                    value,
                 )?);
             }
             253 => {
@@ -40415,10 +41077,10 @@ fn monitoring_info_message(
                     1.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -40569,14 +41231,12 @@ fn monitoring_info_message_timestamp_field(
 }
 fn monitoring_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -40588,7 +41248,7 @@ fn monitoring_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -40600,7 +41260,7 @@ fn monitoring_message(
                     1.000000,
                     0.000000,
                     "kcal",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
@@ -40612,13 +41272,17 @@ fn monitoring_message(
                     100.000000,
                     0.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             3 => {
                 // Accumulated cycles. Maintained by MonitoringReader for each activity_type. See SDK documentation.
                 if ActivityType::Walking.as_i64()
-                    == data_map.get(&5).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&5)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(monitoring_message_steps_field(
                         mesg_num,
@@ -40627,10 +41291,14 @@ fn monitoring_message(
                         1.000000,
                         0.000000,
                         "steps",
-                        value.clone(),
+                        value,
                     )?);
                 } else if ActivityType::Running.as_i64()
-                    == data_map.get(&5).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&5)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(monitoring_message_steps_field(
                         mesg_num,
@@ -40639,10 +41307,14 @@ fn monitoring_message(
                         1.000000,
                         0.000000,
                         "steps",
-                        value.clone(),
+                        value,
                     )?);
                 } else if ActivityType::Cycling.as_i64()
-                    == data_map.get(&5).flatten().map_or(-1i64, |v| v.as_i64())
+                    == data_map
+                        .get(&5)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
                 {
                     fields.push(monitoring_message_strokes_field(
                         mesg_num,
@@ -40651,9 +41323,15 @@ fn monitoring_message(
                         2.000000,
                         0.000000,
                         "strokes",
-                        value.clone(),
+                        value,
                     )?);
-                } else {
+                } else if ActivityType::Swimming.as_i64()
+                    == data_map
+                        .get(&5)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
                     fields.push(monitoring_message_strokes_field(
                         mesg_num,
                         accumlators,
@@ -40661,7 +41339,17 @@ fn monitoring_message(
                         2.000000,
                         0.000000,
                         "strokes",
-                        value.clone(),
+                        value,
+                    )?);
+                } else {
+                    fields.push(monitoring_message_cycles_field(
+                        mesg_num,
+                        accumlators,
+                        false,
+                        2.000000,
+                        0.000000,
+                        "cycles",
+                        value,
                     )?);
                 }
             }
@@ -40673,7 +41361,7 @@ fn monitoring_message(
                     1000.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             5 => {
@@ -40684,7 +41372,7 @@ fn monitoring_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             6 => {
@@ -40695,7 +41383,7 @@ fn monitoring_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             7 => {
@@ -40706,7 +41394,7 @@ fn monitoring_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             8 => {
@@ -40717,7 +41405,7 @@ fn monitoring_message(
                     1.000000,
                     0.000000,
                     "100 * m",
-                    value.clone(),
+                    value,
                 )?);
             }
             9 => {
@@ -40728,7 +41416,7 @@ fn monitoring_message(
                     1.000000,
                     0.000000,
                     "2 * cycles (steps)",
-                    value.clone(),
+                    value,
                 )?);
             }
             10 => {
@@ -40739,7 +41427,7 @@ fn monitoring_message(
                     1.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             11 => {
@@ -40751,7 +41439,7 @@ fn monitoring_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             12 => {
@@ -40763,7 +41451,7 @@ fn monitoring_message(
                     100.000000,
                     0.000000,
                     "C",
-                    value.clone(),
+                    value,
                 )?);
             }
             14 => {
@@ -40775,7 +41463,7 @@ fn monitoring_message(
                     100.000000,
                     0.000000,
                     "C",
-                    value.clone(),
+                    value,
                 )?);
             }
             15 => {
@@ -40787,7 +41475,7 @@ fn monitoring_message(
                     100.000000,
                     0.000000,
                     "C",
-                    value.clone(),
+                    value,
                 )?);
             }
             16 => {
@@ -40799,7 +41487,7 @@ fn monitoring_message(
                     1.000000,
                     0.000000,
                     "minutes",
-                    value.clone(),
+                    value,
                 )?);
             }
             19 => {
@@ -40810,13 +41498,13 @@ fn monitoring_message(
                     1.000000,
                     0.000000,
                     "kcal",
-                    value.clone(),
+                    value,
                 )?);
             }
             24 => {
                 // Indicates single type / intensity for duration since last monitoring message.
                 let component_values = expand_components(value, &[5, 3]);
-                data_map.insert(5, Some(component_values[0]));
+                data_map.insert(5, component_values[0].clone());
                 fields.push(monitoring_message_activity_type_field(
                     mesg_num,
                     accumlators,
@@ -40826,7 +41514,7 @@ fn monitoring_message(
                     "",
                     component_values[0].clone(),
                 )?);
-                data_map.insert(28, Some(component_values[1]));
+                data_map.insert(28, component_values[1].clone());
                 fields.push(monitoring_message_intensity_field(
                     mesg_num,
                     accumlators,
@@ -40845,7 +41533,7 @@ fn monitoring_message(
                     1.000000,
                     0.000000,
                     "min",
-                    value.clone(),
+                    value,
                 )?);
             }
             26 => {
@@ -40856,7 +41544,7 @@ fn monitoring_message(
                     1.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             27 => {
@@ -40867,7 +41555,7 @@ fn monitoring_message(
                     1.000000,
                     0.000000,
                     "bpm",
-                    value.clone(),
+                    value,
                 )?);
             }
             28 => {
@@ -40878,7 +41566,7 @@ fn monitoring_message(
                     10.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             29 => {
@@ -40889,7 +41577,7 @@ fn monitoring_message(
                     1.000000,
                     0.000000,
                     "min",
-                    value.clone(),
+                    value,
                 )?);
             }
             30 => {
@@ -40900,7 +41588,7 @@ fn monitoring_message(
                     1.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             31 => {
@@ -40911,7 +41599,7 @@ fn monitoring_message(
                     1000.000000,
                     0.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             32 => {
@@ -40922,7 +41610,7 @@ fn monitoring_message(
                     1000.000000,
                     0.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             33 => {
@@ -40933,7 +41621,7 @@ fn monitoring_message(
                     1.000000,
                     0.000000,
                     "minutes",
-                    value.clone(),
+                    value,
                 )?);
             }
             34 => {
@@ -40944,7 +41632,7 @@ fn monitoring_message(
                     1.000000,
                     0.000000,
                     "minutes",
-                    value.clone(),
+                    value,
                 )?);
             }
             253 => {
@@ -40956,10 +41644,10 @@ fn monitoring_message(
                     1.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -41710,14 +42398,12 @@ fn monitoring_message_timestamp_field(
 }
 fn hr_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -41728,12 +42414,12 @@ fn hr_message(
                     32768.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
                 let component_values = expand_components(value, &[8]);
-                data_map.insert(0, Some(component_values[0]));
+                data_map.insert(0, component_values[0].clone());
                 fields.push(hr_message_fractional_timestamp_field(
                     mesg_num,
                     accumlators,
@@ -41752,7 +42438,7 @@ fn hr_message(
                     1.000000,
                     0.000000,
                     "bpm",
-                    value.clone(),
+                    value,
                 )?);
             }
             9 => {
@@ -41763,13 +42449,13 @@ fn hr_message(
                     1024.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             10 => {
                 let component_values =
                     expand_components(value, &[12, 12, 12, 12, 12, 12, 12, 12, 12, 12]);
-                data_map.insert(9, Some(component_values[0]));
+                data_map.insert(9, component_values[0].clone());
                 fields.push(hr_message_event_timestamp_field(
                     mesg_num,
                     accumlators,
@@ -41779,7 +42465,7 @@ fn hr_message(
                     "s",
                     component_values[0].clone(),
                 )?);
-                data_map.insert(9, Some(component_values[1]));
+                data_map.insert(9, component_values[1].clone());
                 fields.push(hr_message_event_timestamp_field(
                     mesg_num,
                     accumlators,
@@ -41789,7 +42475,7 @@ fn hr_message(
                     "",
                     component_values[1].clone(),
                 )?);
-                data_map.insert(9, Some(component_values[2]));
+                data_map.insert(9, component_values[2].clone());
                 fields.push(hr_message_event_timestamp_field(
                     mesg_num,
                     accumlators,
@@ -41799,7 +42485,7 @@ fn hr_message(
                     "",
                     component_values[2].clone(),
                 )?);
-                data_map.insert(9, Some(component_values[3]));
+                data_map.insert(9, component_values[3].clone());
                 fields.push(hr_message_event_timestamp_field(
                     mesg_num,
                     accumlators,
@@ -41809,7 +42495,7 @@ fn hr_message(
                     "",
                     component_values[3].clone(),
                 )?);
-                data_map.insert(9, Some(component_values[4]));
+                data_map.insert(9, component_values[4].clone());
                 fields.push(hr_message_event_timestamp_field(
                     mesg_num,
                     accumlators,
@@ -41819,7 +42505,7 @@ fn hr_message(
                     "",
                     component_values[4].clone(),
                 )?);
-                data_map.insert(9, Some(component_values[5]));
+                data_map.insert(9, component_values[5].clone());
                 fields.push(hr_message_event_timestamp_field(
                     mesg_num,
                     accumlators,
@@ -41829,7 +42515,7 @@ fn hr_message(
                     "",
                     component_values[5].clone(),
                 )?);
-                data_map.insert(9, Some(component_values[6]));
+                data_map.insert(9, component_values[6].clone());
                 fields.push(hr_message_event_timestamp_field(
                     mesg_num,
                     accumlators,
@@ -41839,7 +42525,7 @@ fn hr_message(
                     "",
                     component_values[6].clone(),
                 )?);
-                data_map.insert(9, Some(component_values[7]));
+                data_map.insert(9, component_values[7].clone());
                 fields.push(hr_message_event_timestamp_field(
                     mesg_num,
                     accumlators,
@@ -41849,7 +42535,7 @@ fn hr_message(
                     "",
                     component_values[7].clone(),
                 )?);
-                data_map.insert(9, Some(component_values[8]));
+                data_map.insert(9, component_values[8].clone());
                 fields.push(hr_message_event_timestamp_field(
                     mesg_num,
                     accumlators,
@@ -41859,7 +42545,7 @@ fn hr_message(
                     "",
                     component_values[8].clone(),
                 )?);
-                data_map.insert(9, Some(component_values[9]));
+                data_map.insert(9, component_values[9].clone());
                 fields.push(hr_message_event_timestamp_field(
                     mesg_num,
                     accumlators,
@@ -41878,10 +42564,10 @@ fn hr_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -42033,14 +42719,12 @@ fn hr_message_timestamp_field(
 /// Value from 1 to 100 calculated by FirstBeat
 fn stress_level_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -42051,7 +42735,7 @@ fn stress_level_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -42063,10 +42747,10 @@ fn stress_level_message(
                     1.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -42121,14 +42805,12 @@ fn stress_level_message_stress_level_time_field(
 }
 fn memo_glob_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -42140,7 +42822,7 @@ fn memo_glob_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -42152,7 +42834,7 @@ fn memo_glob_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
@@ -42164,7 +42846,7 @@ fn memo_glob_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             3 => {
@@ -42176,7 +42858,7 @@ fn memo_glob_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             4 => {
@@ -42188,7 +42870,7 @@ fn memo_glob_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             250 => {
@@ -42200,10 +42882,10 @@ fn memo_glob_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -42346,14 +43028,12 @@ fn memo_glob_message_part_index_field(
 }
 fn ant_channel_id_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -42364,7 +43044,7 @@ fn ant_channel_id_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -42375,7 +43055,7 @@ fn ant_channel_id_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
@@ -42386,7 +43066,7 @@ fn ant_channel_id_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             3 => {
@@ -42397,7 +43077,7 @@ fn ant_channel_id_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             4 => {
@@ -42408,10 +43088,10 @@ fn ant_channel_id_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -42538,14 +43218,12 @@ fn ant_channel_id_message_device_index_field(
 }
 fn ant_rx_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -42556,7 +43234,7 @@ fn ant_rx_message(
                     32768.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -42567,12 +43245,12 @@ fn ant_rx_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
                 let component_values = expand_components(value, &[8, 8, 8, 8, 8, 8, 8, 8, 8]);
-                data_map.insert(3, Some(component_values[0]));
+                data_map.insert(3, component_values[0].clone());
                 fields.push(ant_rx_message_channel_number_field(
                     mesg_num,
                     accumlators,
@@ -42582,7 +43260,7 @@ fn ant_rx_message(
                     "",
                     component_values[0].clone(),
                 )?);
-                data_map.insert(4, Some(component_values[1]));
+                data_map.insert(4, component_values[1].clone());
                 fields.push(ant_rx_message_data_field(
                     mesg_num,
                     accumlators,
@@ -42592,7 +43270,7 @@ fn ant_rx_message(
                     "",
                     component_values[1].clone(),
                 )?);
-                data_map.insert(4, Some(component_values[2]));
+                data_map.insert(4, component_values[2].clone());
                 fields.push(ant_rx_message_data_field(
                     mesg_num,
                     accumlators,
@@ -42602,7 +43280,7 @@ fn ant_rx_message(
                     "",
                     component_values[2].clone(),
                 )?);
-                data_map.insert(4, Some(component_values[3]));
+                data_map.insert(4, component_values[3].clone());
                 fields.push(ant_rx_message_data_field(
                     mesg_num,
                     accumlators,
@@ -42612,7 +43290,7 @@ fn ant_rx_message(
                     "",
                     component_values[3].clone(),
                 )?);
-                data_map.insert(4, Some(component_values[4]));
+                data_map.insert(4, component_values[4].clone());
                 fields.push(ant_rx_message_data_field(
                     mesg_num,
                     accumlators,
@@ -42622,7 +43300,7 @@ fn ant_rx_message(
                     "",
                     component_values[4].clone(),
                 )?);
-                data_map.insert(4, Some(component_values[5]));
+                data_map.insert(4, component_values[5].clone());
                 fields.push(ant_rx_message_data_field(
                     mesg_num,
                     accumlators,
@@ -42632,7 +43310,7 @@ fn ant_rx_message(
                     "",
                     component_values[5].clone(),
                 )?);
-                data_map.insert(4, Some(component_values[6]));
+                data_map.insert(4, component_values[6].clone());
                 fields.push(ant_rx_message_data_field(
                     mesg_num,
                     accumlators,
@@ -42642,7 +43320,7 @@ fn ant_rx_message(
                     "",
                     component_values[6].clone(),
                 )?);
-                data_map.insert(4, Some(component_values[7]));
+                data_map.insert(4, component_values[7].clone());
                 fields.push(ant_rx_message_data_field(
                     mesg_num,
                     accumlators,
@@ -42652,7 +43330,7 @@ fn ant_rx_message(
                     "",
                     component_values[7].clone(),
                 )?);
-                data_map.insert(4, Some(component_values[8]));
+                data_map.insert(4, component_values[8].clone());
                 fields.push(ant_rx_message_data_field(
                     mesg_num,
                     accumlators,
@@ -42671,7 +43349,7 @@ fn ant_rx_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             4 => {
@@ -42682,7 +43360,7 @@ fn ant_rx_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             253 => {
@@ -42693,10 +43371,10 @@ fn ant_rx_message(
                     1.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -42839,14 +43517,12 @@ fn ant_rx_message_timestamp_field(
 }
 fn ant_tx_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -42857,7 +43533,7 @@ fn ant_tx_message(
                     32768.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -42868,12 +43544,12 @@ fn ant_tx_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
                 let component_values = expand_components(value, &[8, 8, 8, 8, 8, 8, 8, 8, 8]);
-                data_map.insert(3, Some(component_values[0]));
+                data_map.insert(3, component_values[0].clone());
                 fields.push(ant_tx_message_channel_number_field(
                     mesg_num,
                     accumlators,
@@ -42883,7 +43559,7 @@ fn ant_tx_message(
                     "",
                     component_values[0].clone(),
                 )?);
-                data_map.insert(4, Some(component_values[1]));
+                data_map.insert(4, component_values[1].clone());
                 fields.push(ant_tx_message_data_field(
                     mesg_num,
                     accumlators,
@@ -42893,7 +43569,7 @@ fn ant_tx_message(
                     "",
                     component_values[1].clone(),
                 )?);
-                data_map.insert(4, Some(component_values[2]));
+                data_map.insert(4, component_values[2].clone());
                 fields.push(ant_tx_message_data_field(
                     mesg_num,
                     accumlators,
@@ -42903,7 +43579,7 @@ fn ant_tx_message(
                     "",
                     component_values[2].clone(),
                 )?);
-                data_map.insert(4, Some(component_values[3]));
+                data_map.insert(4, component_values[3].clone());
                 fields.push(ant_tx_message_data_field(
                     mesg_num,
                     accumlators,
@@ -42913,7 +43589,7 @@ fn ant_tx_message(
                     "",
                     component_values[3].clone(),
                 )?);
-                data_map.insert(4, Some(component_values[4]));
+                data_map.insert(4, component_values[4].clone());
                 fields.push(ant_tx_message_data_field(
                     mesg_num,
                     accumlators,
@@ -42923,7 +43599,7 @@ fn ant_tx_message(
                     "",
                     component_values[4].clone(),
                 )?);
-                data_map.insert(4, Some(component_values[5]));
+                data_map.insert(4, component_values[5].clone());
                 fields.push(ant_tx_message_data_field(
                     mesg_num,
                     accumlators,
@@ -42933,7 +43609,7 @@ fn ant_tx_message(
                     "",
                     component_values[5].clone(),
                 )?);
-                data_map.insert(4, Some(component_values[6]));
+                data_map.insert(4, component_values[6].clone());
                 fields.push(ant_tx_message_data_field(
                     mesg_num,
                     accumlators,
@@ -42943,7 +43619,7 @@ fn ant_tx_message(
                     "",
                     component_values[6].clone(),
                 )?);
-                data_map.insert(4, Some(component_values[7]));
+                data_map.insert(4, component_values[7].clone());
                 fields.push(ant_tx_message_data_field(
                     mesg_num,
                     accumlators,
@@ -42953,7 +43629,7 @@ fn ant_tx_message(
                     "",
                     component_values[7].clone(),
                 )?);
-                data_map.insert(4, Some(component_values[8]));
+                data_map.insert(4, component_values[8].clone());
                 fields.push(ant_tx_message_data_field(
                     mesg_num,
                     accumlators,
@@ -42972,7 +43648,7 @@ fn ant_tx_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             4 => {
@@ -42983,7 +43659,7 @@ fn ant_tx_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             253 => {
@@ -42994,10 +43670,10 @@ fn ant_tx_message(
                     1.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -43140,14 +43816,12 @@ fn ant_tx_message_timestamp_field(
 }
 fn exd_screen_configuration_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -43158,7 +43832,7 @@ fn exd_screen_configuration_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -43170,7 +43844,7 @@ fn exd_screen_configuration_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
@@ -43181,7 +43855,7 @@ fn exd_screen_configuration_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             3 => {
@@ -43192,10 +43866,10 @@ fn exd_screen_configuration_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -43298,14 +43972,12 @@ fn exd_screen_configuration_message_screen_enabled_field(
 }
 fn exd_data_field_configuration_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -43316,12 +43988,12 @@ fn exd_data_field_configuration_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
                 let component_values = expand_components(value, &[4, 4]);
-                data_map.insert(2, Some(component_values[0]));
+                data_map.insert(2, component_values[0].clone());
                 fields.push(exd_data_field_configuration_message_field_id_field(
                     mesg_num,
                     accumlators,
@@ -43331,7 +44003,7 @@ fn exd_data_field_configuration_message(
                     "",
                     component_values[0].clone(),
                 )?);
-                data_map.insert(3, Some(component_values[1]));
+                data_map.insert(3, component_values[1].clone());
                 fields.push(exd_data_field_configuration_message_concept_count_field(
                     mesg_num,
                     accumlators,
@@ -43350,7 +44022,7 @@ fn exd_data_field_configuration_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             3 => {
@@ -43361,7 +44033,7 @@ fn exd_data_field_configuration_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             4 => {
@@ -43372,7 +44044,7 @@ fn exd_data_field_configuration_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             5 => {
@@ -43383,10 +44055,10 @@ fn exd_data_field_configuration_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -43537,14 +44209,12 @@ fn exd_data_field_configuration_message_title_field(
 }
 fn exd_data_concept_configuration_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -43555,12 +44225,12 @@ fn exd_data_concept_configuration_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
                 let component_values = expand_components(value, &[4, 4]);
-                data_map.insert(2, Some(component_values[0]));
+                data_map.insert(2, component_values[0].clone());
                 fields.push(exd_data_concept_configuration_message_field_id_field(
                     mesg_num,
                     accumlators,
@@ -43570,7 +44240,7 @@ fn exd_data_concept_configuration_message(
                     "",
                     component_values[0].clone(),
                 )?);
-                data_map.insert(3, Some(component_values[1]));
+                data_map.insert(3, component_values[1].clone());
                 fields.push(exd_data_concept_configuration_message_concept_index_field(
                     mesg_num,
                     accumlators,
@@ -43589,7 +44259,7 @@ fn exd_data_concept_configuration_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             3 => {
@@ -43600,7 +44270,7 @@ fn exd_data_concept_configuration_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             4 => {
@@ -43611,7 +44281,7 @@ fn exd_data_concept_configuration_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             5 => {
@@ -43622,7 +44292,7 @@ fn exd_data_concept_configuration_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             6 => {
@@ -43633,7 +44303,7 @@ fn exd_data_concept_configuration_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             8 => {
@@ -43644,7 +44314,7 @@ fn exd_data_concept_configuration_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             9 => {
@@ -43655,7 +44325,7 @@ fn exd_data_concept_configuration_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             10 => {
@@ -43666,7 +44336,7 @@ fn exd_data_concept_configuration_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             11 => {
@@ -43677,10 +44347,10 @@ fn exd_data_concept_configuration_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -43951,14 +44621,12 @@ fn exd_data_concept_configuration_message_is_signed_field(
 }
 fn dive_summary_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -43969,7 +44637,7 @@ fn dive_summary_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             1 => {
@@ -43980,7 +44648,7 @@ fn dive_summary_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             2 => {
@@ -43992,7 +44660,7 @@ fn dive_summary_message(
                     1000.000000,
                     0.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             3 => {
@@ -44004,7 +44672,7 @@ fn dive_summary_message(
                     1000.000000,
                     0.000000,
                     "m",
-                    value.clone(),
+                    value,
                 )?);
             }
             4 => {
@@ -44016,7 +44684,7 @@ fn dive_summary_message(
                     1.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             5 => {
@@ -44027,7 +44695,7 @@ fn dive_summary_message(
                     1.000000,
                     0.000000,
                     "percent",
-                    value.clone(),
+                    value,
                 )?);
             }
             6 => {
@@ -44038,7 +44706,7 @@ fn dive_summary_message(
                     1.000000,
                     0.000000,
                     "percent",
-                    value.clone(),
+                    value,
                 )?);
             }
             7 => {
@@ -44049,7 +44717,7 @@ fn dive_summary_message(
                     1.000000,
                     0.000000,
                     "percent",
-                    value.clone(),
+                    value,
                 )?);
             }
             8 => {
@@ -44060,7 +44728,7 @@ fn dive_summary_message(
                     1.000000,
                     0.000000,
                     "percent",
-                    value.clone(),
+                    value,
                 )?);
             }
             9 => {
@@ -44071,7 +44739,7 @@ fn dive_summary_message(
                     1.000000,
                     0.000000,
                     "OTUs",
-                    value.clone(),
+                    value,
                 )?);
             }
             10 => {
@@ -44082,7 +44750,7 @@ fn dive_summary_message(
                     1.000000,
                     0.000000,
                     "",
-                    value.clone(),
+                    value,
                 )?);
             }
             11 => {
@@ -44093,7 +44761,7 @@ fn dive_summary_message(
                     1000.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             17 => {
@@ -44105,7 +44773,7 @@ fn dive_summary_message(
                     1000.000000,
                     0.000000,
                     "m/s",
-                    value.clone(),
+                    value,
                 )?);
             }
             22 => {
@@ -44117,7 +44785,7 @@ fn dive_summary_message(
                     1000.000000,
                     0.000000,
                     "m/s",
-                    value.clone(),
+                    value,
                 )?);
             }
             23 => {
@@ -44129,7 +44797,7 @@ fn dive_summary_message(
                     1000.000000,
                     0.000000,
                     "m/s",
-                    value.clone(),
+                    value,
                 )?);
             }
             24 => {
@@ -44141,7 +44809,7 @@ fn dive_summary_message(
                     1000.000000,
                     0.000000,
                     "m/s",
-                    value.clone(),
+                    value,
                 )?);
             }
             25 => {
@@ -44153,7 +44821,7 @@ fn dive_summary_message(
                     1000.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
             253 => {
@@ -44164,10 +44832,10 @@ fn dive_summary_message(
                     1.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -44607,14 +45275,12 @@ fn dive_summary_message_timestamp_field(
 /// Heart rate variability
 fn hrv_message(
     mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
+    data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
-    let mut entries: VecDeque<(&u8, &Value)> = data_map
-        .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| (k, v)))
-        .collect();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
     while let Some((def_num, value)) = entries.pop_front() {
         match def_num {
             0 => {
@@ -44626,10 +45292,10 @@ fn hrv_message(
                     1000.000000,
                     0.000000,
                     "s",
-                    value.clone(),
+                    value,
                 )?);
             }
-            _ => fields.push(unknown_field(*def_num, value.clone())),
+            _ => fields.push(unknown_field(def_num, value)),
         }
     }
     Ok(fields)
@@ -44659,20 +45325,18 @@ fn hrv_message_time_field(
     )
 }
 
-fn unknown_message(
-    mesg_num: MesgNum,
-    data_map: &HashMap<u8, Option<Value>>,
-) -> Result<Vec<FitDataField>> {
-    data_map
+fn unknown_message(data_map: &HashMap<u8, Value>) -> Result<Vec<FitDataField>> {
+    let fields = data_map
         .iter()
-        .filter_map(|(k, v)| v.as_ref().map(|v| unknown_field(k, v)))
-        .collect()
+        .map(|(k, v)| unknown_field(*k, v.clone()))
+        .collect();
+    Ok(fields)
 }
 
 impl MesgNum {
     pub fn decode_message(
         self,
-        data_map: &HashMap<u8, Option<Value>>,
+        data_map: &mut HashMap<u8, Value>,
         accumlators: &mut HashMap<u32, Value>,
     ) -> Result<Vec<FitDataField>> {
         match self {
@@ -44780,7 +45444,7 @@ impl MesgNum {
             }
             MesgNum::DiveSummary => dive_summary_message(self, data_map, accumlators),
             MesgNum::Hrv => hrv_message(self, data_map, accumlators),
-            _ => unknown_message(self, data_map),
+            _ => unknown_message(data_map),
         }
     }
 }

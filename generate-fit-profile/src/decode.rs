@@ -22,9 +22,9 @@ impl MessageDefinition {
         if let Some(v) = self.comment() {
             writeln!(out, "/// {}", v)?;
         }
-        writeln!(out, "fn {}(mesg_num: MesgNum, data_map: &HashMap<u8, Option<Value>>, accumlators: &mut HashMap<u32, Value>) -> Result<Vec<FitDataField>> {{", self.function_name())?;
+        writeln!(out, "fn {}(mesg_num: MesgNum, data_map: &mut HashMap<u8, Value>, accumlators: &mut HashMap<u32, Value>) -> Result<Vec<FitDataField>> {{", self.function_name())?;
         writeln!(out, "let mut fields = Vec::new();")?;
-        writeln!(out, "let mut entries: VecDeque<(&u8, &Value)> = data_map.iter().filter_map(|(k, v)| v.as_ref().map(|v| (k, v))).collect();")?;
+        writeln!(out, "let mut entries: VecDeque<(u8, Value)> = data_map.iter().map(|(k, v)| (*k, v.clone())).collect();")?;
 
         writeln!(
             out,
@@ -67,7 +67,7 @@ impl MessageDefinition {
                     // insert back into datamap for subfield look ups
                     writeln!(
                         out,
-                        "data_map.insert({}, Some(component_values[{}]));",
+                        "data_map.insert({}, component_values[{}].clone());",
                         dest_def_number, idx
                     )?;
 
@@ -91,13 +91,11 @@ impl MessageDefinition {
                 {
                     let ref_field = self.get_field_by_name(ref_name);
                     if idx == 0 {
-                        writeln!(out, "if {}::{}.as_i64() == data_map.get(&{}).flatten().map_or(-1i64, |v| v.as_i64()) {{", ref_field.field_type(), val_str, ref_field.def_number())?;
-                    } else if idx == field.subfields().len() - 1 {
-                        writeln!(out, "else {{")?;
+                        writeln!(out, "if {}::{}.as_i64() == data_map.get(&{}).map(|v| v.try_into().ok()).flatten().unwrap_or(-1i64) {{", ref_field.field_type(), val_str, ref_field.def_number())?;
                     } else {
-                        writeln!(out, "else if {}::{}.as_i64() == data_map.get(&{}).flatten().map_or(-1i64, |v| v.as_i64()) {{", ref_field.field_type(), val_str, ref_field.def_number())?;
+                        writeln!(out, "else if {}::{}.as_i64() == data_map.get(&{}).map(|v| v.try_into().ok()).flatten().unwrap_or(-1i64) {{", ref_field.field_type(), val_str, ref_field.def_number())?;
                     }
-                    writeln!(out, "fields.push({}_{}_field(mesg_num, accumlators, {}, {3:.6}, {4:.6}, \"{5}\", value.clone())?);",
+                    writeln!(out, "fields.push({}_{}_field(mesg_num, accumlators, {}, {3:.6}, {4:.6}, \"{5}\", value)?);",
                         self.function_name(),
                         sub_field_info.name(),
                         sub_field_info.accumulate(),
@@ -107,8 +105,18 @@ impl MessageDefinition {
                     )?;
                     writeln!(out, "}}")?;
                 }
+                writeln!(out, "else {{")?;
+                writeln!(out, "fields.push({}_{}_field(mesg_num, accumlators, {}, {3:.6}, {4:.6}, \"{5}\", value)?);",
+                        self.function_name(),
+                        field.name(),
+                        field.accumulate(),
+                        field.scale(),
+                        field.offset(),
+                        field.units()
+                    )?;
+                writeln!(out, "}}")?;
             } else {
-                writeln!(out, "fields.push({}_{}_field(mesg_num, accumlators, {}, {3:.6}, {4:.6}, \"{5}\", value.clone())?);",
+                writeln!(out, "fields.push({}_{}_field(mesg_num, accumlators, {}, {3:.6}, {4:.6}, \"{5}\", value)?);",
                     self.function_name(),
                     field.name(),
                     field.accumulate(),
@@ -119,10 +127,7 @@ impl MessageDefinition {
             }
             writeln!(out, "}}")?;
         }
-        writeln!(
-            out,
-            "_ => fields.push(unknown_field(*def_num, value.clone()))"
-        )?;
+        writeln!(out, "_ => fields.push(unknown_field(def_num, value))")?;
         writeln!(out, "}}")?;
         writeln!(out, "}}")?;
 
@@ -182,12 +187,12 @@ fn write_unknown_mesg_fn(out: &mut File) -> Result<(), std::io::Error> {
         "{}",
         "
         fn unknown_message(
-        mesg_num: MesgNum,
-        data_map: &HashMap<u8, Option<Value>>
+        data_map: &HashMap<u8, Value>
     ) -> Result<Vec<FitDataField>> {
-        data_map.iter()
-            .filter_map(|(k, v)| v.as_ref().map(|v| unknown_field(k, v)))
-            .collect()
+        let fields = data_map.iter()
+            .map(|(k, v)| unknown_field(*k, v.clone()))
+            .collect();
+        Ok(fields)
     }
     "
     )
@@ -198,7 +203,7 @@ fn create_mesg_num_to_mesg_decode_fn(
     out: &mut File,
 ) -> Result<(), std::io::Error> {
     writeln!(out, "impl MesgNum {{")?;
-    writeln!(out, "  pub fn decode_message(self, data_map: &HashMap<u8, Option<Value>>, accumlators: &mut HashMap<u32, Value>) -> Result<Vec<FitDataField>> {{")?;
+    writeln!(out, "  pub fn decode_message(self, data_map: &mut HashMap<u8, Value>, accumlators: &mut HashMap<u32, Value>) -> Result<Vec<FitDataField>> {{")?;
     writeln!(out, "    match self {{")?;
     for msg in messages {
         writeln!(
@@ -208,7 +213,7 @@ fn create_mesg_num_to_mesg_decode_fn(
             msg.function_name()
         )?;
     }
-    writeln!(out, "_ => unknown_message(self, data_map),")?;
+    writeln!(out, "_ => unknown_message(data_map),")?;
     writeln!(out, "    }}")?;
     writeln!(out, "  }}")?;
     writeln!(out, "}}")?;
@@ -224,6 +229,7 @@ pub fn write_decode_file(profile: &FitProfile, out: &mut File) -> Result<(), std
     )?;
 
     writeln!(out, "use std::collections::{{HashMap, VecDeque}};")?;
+    writeln!(out, "use std::convert::TryInto;")?;
     writeln!(out, "use crate::{{FitDataField, Value}};")?;
     writeln!(out, "use crate::error::{{Result}};")?;
     writeln!(
