@@ -30,19 +30,20 @@ impl Decoder {
     }
 
     /// Decode a raw FIT data message by applying the defined profile
-    pub fn decode_message(&mut self, message: FitDataMessage) -> Result<FitDataRecord> {
+    pub fn decode_message(&mut self, mut message: FitDataMessage) -> Result<FitDataRecord> {
         let mesg_num = MesgNum::from(message.global_message_number());
         let mut record = FitDataRecord::new(mesg_num);
 
         // check if we have a real timestamp field to set the reference
         // field id 253 always appears to be a timestamp with the type
         // FieldDataType::DateTime
-        if let Some(Some(value)) = message.fields().get(&253) {
+        if let Some(value) = message.fields().get(&253) {
             self.base_timestamp = TimestampField::Utc(value.clone().try_into().unwrap_or(0));
         }
 
         // process raw data
-        let fields = mesg_num.decode_message(message.fields(), &mut self.accumulate_fields)?;
+        let mut fields =
+            mesg_num.decode_message(message.fields_mut(), &mut self.accumulate_fields)?;
         fields.sort_by_key(|f| f.number());
         record.extend(fields);
 

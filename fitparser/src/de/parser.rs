@@ -211,8 +211,8 @@ pub struct DeveloperFieldDefinition {
 pub struct FitDataMessage {
     global_message_number: u16,
     time_offset: Option<u8>,
-    fields: HashMap<u8, Option<Value>>,
-    developer_fields: Vec<Option<Value>>,
+    fields: HashMap<u8, Value>,
+    developer_fields: Vec<Value>,
 }
 
 impl FitDataMessage {
@@ -227,13 +227,18 @@ impl FitDataMessage {
     }
 
     /// Data field mapping of <field_number, Value>
-    pub fn fields(&self) -> &HashMap<u8, Option<Value>> {
+    pub fn fields(&self) -> &HashMap<u8, Value> {
         &self.fields
+    }
+
+    /// Mutable Data field mapping of <field_number, Value>
+    pub fn fields_mut(&mut self) -> &mut HashMap<u8, Value> {
+        &mut self.fields
     }
 
     #[allow(dead_code)]
     /// Developer field data
-    pub fn developer_fields(&self) -> &[Option<Value>] {
+    pub fn developer_fields(&self) -> &[Value] {
         &self.developer_fields
     }
 }
@@ -514,7 +519,7 @@ fn developer_field_definition(input: &[u8]) -> IResult<&[u8], DeveloperFieldDefi
 fn data_message_fields<'a>(
     input: &'a [u8],
     def_mesg: &FitDefinitionMessage,
-) -> IResult<&'a [u8], (HashMap<u8, Option<Value>>, Vec<Option<Value>>)> {
+) -> IResult<&'a [u8], (HashMap<u8, Value>, Vec<Value>)> {
     match data_message_fields_impl(input, def_mesg) {
         Ok(r) => Ok(r),
         Err(Err::Incomplete(_)) => {
@@ -533,7 +538,7 @@ fn data_message_fields<'a>(
 fn data_message_fields_impl<'a>(
     input: &'a [u8],
     def_mesg: &FitDefinitionMessage,
-) -> IResult<&'a [u8], (HashMap<u8, Option<Value>>, Vec<Option<Value>>)> {
+) -> IResult<&'a [u8], (HashMap<u8, Value>, Vec<Value>)> {
     let mut fields = HashMap::new();
     let mut input = input;
     for field_def in &def_mesg.field_definitions {
@@ -543,7 +548,9 @@ fn data_message_fields_impl<'a>(
             def_mesg.byte_order,
             field_def.size,
         )?;
-        fields.insert(field_def.field_definition_number, value);
+        if let Some(value) = value {
+            fields.insert(field_def.field_definition_number, value);
+        }
         input = i;
     }
     // store developer data as a byte array since we don't handle these fields in the final data
@@ -556,7 +563,9 @@ fn data_message_fields_impl<'a>(
             def_mesg.byte_order, // TODO: I don't know how to handle this since byte swapping
             field_def.size,      // the whole thing as needed might not be valid if the field isn't
         )?; // a single integer value.
-        developer_fields.push(value);
+        if let Some(value) = value {
+            developer_fields.push(value);
+        }
         input = i;
     }
 
