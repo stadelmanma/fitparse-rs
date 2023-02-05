@@ -44,16 +44,103 @@ fn file_id_message(
                 )?);
             }
             2 => {
-                fields.push(file_id_message_product_field(
-                    mesg_num,
-                    accumlators,
-                    data_map,
-                    false,
-                    1.000000,
-                    0.000000,
-                    "",
-                    value,
-                )?);
+                if Manufacturer::FaveroElectronics.as_i64()
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(file_id_message_favero_product_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else if Manufacturer::Garmin.as_i64()
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(file_id_message_garmin_product_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else if Manufacturer::Dynastream.as_i64()
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(file_id_message_garmin_product_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else if Manufacturer::DynastreamOem.as_i64()
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(file_id_message_garmin_product_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else if Manufacturer::Tacx.as_i64()
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(file_id_message_garmin_product_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else {
+                    fields.push(file_id_message_product_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                }
             }
             3 => {
                 fields.push(file_id_message_serial_number_field(
@@ -163,92 +250,6 @@ fn file_id_message_product_field(
     units: &'static str,
     value: Value,
 ) -> Result<FitDataField> {
-    if Manufacturer::FaveroElectronics.as_i64()
-        == data_map
-            .get(&1)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return file_id_message_favero_product_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    } else if Manufacturer::Garmin.as_i64()
-        == data_map
-            .get(&1)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return file_id_message_garmin_product_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    } else if Manufacturer::Dynastream.as_i64()
-        == data_map
-            .get(&1)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return file_id_message_garmin_product_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    } else if Manufacturer::DynastreamOem.as_i64()
-        == data_map
-            .get(&1)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return file_id_message_garmin_product_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    } else if Manufacturer::Tacx.as_i64()
-        == data_map
-            .get(&1)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return file_id_message_garmin_product_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    }
     let value = if accumulate {
         calculate_cumulative_value(accumlators, mesg_num.as_u16(), 2, value)?
     } else {
@@ -935,16 +936,103 @@ fn slave_device_message(
                 )?);
             }
             1 => {
-                fields.push(slave_device_message_product_field(
-                    mesg_num,
-                    accumlators,
-                    data_map,
-                    false,
-                    1.000000,
-                    0.000000,
-                    "",
-                    value,
-                )?);
+                if Manufacturer::FaveroElectronics.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(slave_device_message_favero_product_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else if Manufacturer::Garmin.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(slave_device_message_garmin_product_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else if Manufacturer::Dynastream.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(slave_device_message_garmin_product_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else if Manufacturer::DynastreamOem.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(slave_device_message_garmin_product_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else if Manufacturer::Tacx.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(slave_device_message_garmin_product_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else {
+                    fields.push(slave_device_message_product_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                }
             }
             _ => fields.push(unknown_field(def_num, value)),
         }
@@ -986,92 +1074,6 @@ fn slave_device_message_product_field(
     units: &'static str,
     value: Value,
 ) -> Result<FitDataField> {
-    if Manufacturer::FaveroElectronics.as_i64()
-        == data_map
-            .get(&0)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return slave_device_message_favero_product_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    } else if Manufacturer::Garmin.as_i64()
-        == data_map
-            .get(&0)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return slave_device_message_garmin_product_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    } else if Manufacturer::Dynastream.as_i64()
-        == data_map
-            .get(&0)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return slave_device_message_garmin_product_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    } else if Manufacturer::DynastreamOem.as_i64()
-        == data_map
-            .get(&0)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return slave_device_message_garmin_product_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    } else if Manufacturer::Tacx.as_i64()
-        == data_map
-            .get(&0)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return slave_device_message_garmin_product_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    }
     let value = if accumulate {
         calculate_cumulative_value(accumlators, mesg_num.as_u16(), 1, value)?
     } else {
@@ -1578,16 +1580,69 @@ fn mesg_capabilities_message(
                 )?);
             }
             3 => {
-                fields.push(mesg_capabilities_message_count_field(
-                    mesg_num,
-                    accumlators,
-                    data_map,
-                    false,
-                    1.000000,
-                    0.000000,
-                    "",
-                    value,
-                )?);
+                if MesgCount::NumPerFile.as_i64()
+                    == data_map
+                        .get(&2)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(mesg_capabilities_message_num_per_file_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else if MesgCount::MaxPerFile.as_i64()
+                    == data_map
+                        .get(&2)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(mesg_capabilities_message_max_per_file_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else if MesgCount::MaxPerFileType.as_i64()
+                    == data_map
+                        .get(&2)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(mesg_capabilities_message_max_per_file_type_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else {
+                    fields.push(mesg_capabilities_message_count_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                }
             }
             254 => {
                 fields.push(mesg_capabilities_message_message_index_field(
@@ -1683,58 +1738,6 @@ fn mesg_capabilities_message_count_field(
     units: &'static str,
     value: Value,
 ) -> Result<FitDataField> {
-    if MesgCount::NumPerFile.as_i64()
-        == data_map
-            .get(&2)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return mesg_capabilities_message_num_per_file_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    } else if MesgCount::MaxPerFile.as_i64()
-        == data_map
-            .get(&2)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return mesg_capabilities_message_max_per_file_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    } else if MesgCount::MaxPerFileType.as_i64()
-        == data_map
-            .get(&2)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return mesg_capabilities_message_max_per_file_type_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    }
     let value = if accumulate {
         calculate_cumulative_value(accumlators, mesg_num.as_u16(), 3, value)?
     } else {
@@ -6285,16 +6288,52 @@ fn watchface_settings_message(
                 )?);
             }
             1 => {
-                fields.push(watchface_settings_message_layout_field(
-                    mesg_num,
-                    accumlators,
-                    data_map,
-                    false,
-                    1.000000,
-                    0.000000,
-                    "",
-                    value,
-                )?);
+                if WatchfaceMode::Digital.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(watchface_settings_message_digital_layout_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else if WatchfaceMode::Analog.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(watchface_settings_message_analog_layout_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else {
+                    fields.push(watchface_settings_message_layout_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                }
             }
             254 => {
                 fields.push(watchface_settings_message_message_index_field(
@@ -6348,41 +6387,6 @@ fn watchface_settings_message_layout_field(
     units: &'static str,
     value: Value,
 ) -> Result<FitDataField> {
-    if WatchfaceMode::Digital.as_i64()
-        == data_map
-            .get(&0)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return watchface_settings_message_digital_layout_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    } else if WatchfaceMode::Analog.as_i64()
-        == data_map
-            .get(&0)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return watchface_settings_message_analog_layout_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    }
     let value = if accumulate {
         calculate_cumulative_value(accumlators, mesg_num.as_u16(), 1, value)?
     } else {
@@ -7811,16 +7815,52 @@ fn dive_settings_message(
                 )?);
             }
             20 => {
-                fields.push(dive_settings_message_heart_rate_source_field(
-                    mesg_num,
-                    accumlators,
-                    data_map,
-                    false,
-                    1.000000,
-                    0.000000,
-                    "",
-                    value,
-                )?);
+                if SourceType::Antplus.as_i64()
+                    == data_map
+                        .get(&19)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(dive_settings_message_heart_rate_antplus_device_type_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else if SourceType::Local.as_i64()
+                    == data_map
+                        .get(&19)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(dive_settings_message_heart_rate_local_device_type_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else {
+                    fields.push(dive_settings_message_heart_rate_source_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                }
             }
             254 => {
                 fields.push(dive_settings_message_message_index_field(
@@ -8349,41 +8389,6 @@ fn dive_settings_message_heart_rate_source_field(
     units: &'static str,
     value: Value,
 ) -> Result<FitDataField> {
-    if SourceType::Antplus.as_i64()
-        == data_map
-            .get(&19)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return dive_settings_message_heart_rate_antplus_device_type_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    } else if SourceType::Local.as_i64()
-        == data_map
-            .get(&19)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return dive_settings_message_heart_rate_local_device_type_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    }
     let value = if accumulate {
         calculate_cumulative_value(accumlators, mesg_num.as_u16(), 20, value)?
     } else {
@@ -9846,16 +9851,120 @@ fn session_message(
                 )?);
             }
             10 => {
-                fields.push(session_message_total_cycles_field(
-                    mesg_num,
-                    accumlators,
-                    data_map,
-                    false,
-                    1.000000,
-                    0.000000,
-                    "cycles",
-                    value,
-                )?);
+                if Sport::Running.as_i64()
+                    == data_map
+                        .get(&5)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(session_message_total_strides_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "strides",
+                        value,
+                    )?);
+                } else if Sport::Walking.as_i64()
+                    == data_map
+                        .get(&5)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(session_message_total_strides_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "strides",
+                        value,
+                    )?);
+                } else if Sport::Cycling.as_i64()
+                    == data_map
+                        .get(&5)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(session_message_total_strokes_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "strokes",
+                        value,
+                    )?);
+                } else if Sport::Swimming.as_i64()
+                    == data_map
+                        .get(&5)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(session_message_total_strokes_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "strokes",
+                        value,
+                    )?);
+                } else if Sport::Rowing.as_i64()
+                    == data_map
+                        .get(&5)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(session_message_total_strokes_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "strokes",
+                        value,
+                    )?);
+                } else if Sport::StandUpPaddleboarding.as_i64()
+                    == data_map
+                        .get(&5)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(session_message_total_strokes_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "strokes",
+                        value,
+                    )?);
+                } else {
+                    fields.push(session_message_total_cycles_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "cycles",
+                        value,
+                    )?);
+                }
             }
             11 => {
                 fields.push(session_message_total_calories_field(
@@ -9883,8 +9992,9 @@ fn session_message(
             }
             14 => {
                 // total_distance / total_timer_time
-                let component_values = expand_components(value, &[16]);
-                data_map.insert(124, component_values[0].clone());
+                let [enhanced_avg_speed] = expand_components(value, &[16])[..];
+                data_map.insert(124, enhanced_avg_speed.clone());
+                // total_distance / total_timer_time
                 fields.push(session_message_enhanced_avg_speed_field(
                     mesg_num,
                     accumlators,
@@ -9893,12 +10003,12 @@ fn session_message(
                     1000.000000,
                     0.000000,
                     "m/s",
-                    component_values[0].clone(),
+                    enhanced_avg_speed,
                 )?);
             }
             15 => {
-                let component_values = expand_components(value, &[16]);
-                data_map.insert(125, component_values[0].clone());
+                let [enhanced_max_speed] = expand_components(value, &[16])[..];
+                data_map.insert(125, enhanced_max_speed.clone());
                 fields.push(session_message_enhanced_max_speed_field(
                     mesg_num,
                     accumlators,
@@ -9907,7 +10017,7 @@ fn session_message(
                     1000.000000,
                     0.000000,
                     "m/s",
-                    component_values[0].clone(),
+                    enhanced_max_speed,
                 )?);
             }
             16 => {
@@ -9937,28 +10047,66 @@ fn session_message(
             }
             18 => {
                 // total_cycles / total_timer_time if non_zero_avg_cadence otherwise total_cycles / total_elapsed_time
-                fields.push(session_message_avg_cadence_field(
-                    mesg_num,
-                    accumlators,
-                    data_map,
-                    false,
-                    1.000000,
-                    0.000000,
-                    "rpm",
-                    value,
-                )?);
+                if Sport::Running.as_i64()
+                    == data_map
+                        .get(&5)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(session_message_avg_running_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "strides/min",
+                        value,
+                    )?);
+                } else {
+                    fields.push(session_message_avg_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "rpm",
+                        value,
+                    )?);
+                }
             }
             19 => {
-                fields.push(session_message_max_cadence_field(
-                    mesg_num,
-                    accumlators,
-                    data_map,
-                    false,
-                    1.000000,
-                    0.000000,
-                    "rpm",
-                    value,
-                )?);
+                if Sport::Running.as_i64()
+                    == data_map
+                        .get(&5)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(session_message_max_running_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "strides/min",
+                        value,
+                    )?);
+                } else {
+                    fields.push(session_message_max_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "rpm",
+                        value,
+                    )?);
+                }
             }
             20 => {
                 // total_power / total_timer_time if non_zero_avg_power otherwise total_power / total_elapsed_time
@@ -10280,8 +10428,8 @@ fn session_message(
                 )?);
             }
             49 => {
-                let component_values = expand_components(value, &[16]);
-                data_map.insert(126, component_values[0].clone());
+                let [enhanced_avg_altitude] = expand_components(value, &[16])[..];
+                data_map.insert(126, enhanced_avg_altitude.clone());
                 fields.push(session_message_enhanced_avg_altitude_field(
                     mesg_num,
                     accumlators,
@@ -10290,12 +10438,12 @@ fn session_message(
                     5.000000,
                     500.000000,
                     "m",
-                    component_values[0].clone(),
+                    enhanced_avg_altitude,
                 )?);
             }
             50 => {
-                let component_values = expand_components(value, &[16]);
-                data_map.insert(128, component_values[0].clone());
+                let [enhanced_max_altitude] = expand_components(value, &[16])[..];
+                data_map.insert(128, enhanced_max_altitude.clone());
                 fields.push(session_message_enhanced_max_altitude_field(
                     mesg_num,
                     accumlators,
@@ -10304,7 +10452,7 @@ fn session_message(
                     5.000000,
                     500.000000,
                     "m",
-                    component_values[0].clone(),
+                    enhanced_max_altitude,
                 )?);
             }
             51 => {
@@ -10548,8 +10696,8 @@ fn session_message(
                 )?);
             }
             71 => {
-                let component_values = expand_components(value, &[16]);
-                data_map.insert(127, component_values[0].clone());
+                let [enhanced_min_altitude] = expand_components(value, &[16])[..];
+                data_map.insert(127, enhanced_min_altitude.clone());
                 fields.push(session_message_enhanced_min_altitude_field(
                     mesg_num,
                     accumlators,
@@ -10558,7 +10706,7 @@ fn session_message(
                     5.000000,
                     500.000000,
                     "m",
-                    component_values[0].clone(),
+                    enhanced_min_altitude,
                 )?);
             }
             82 => {
@@ -11617,109 +11765,6 @@ fn session_message_total_cycles_field(
     units: &'static str,
     value: Value,
 ) -> Result<FitDataField> {
-    if Sport::Running.as_i64()
-        == data_map
-            .get(&5)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return session_message_total_strides_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "strides",
-            value,
-        );
-    } else if Sport::Walking.as_i64()
-        == data_map
-            .get(&5)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return session_message_total_strides_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "strides",
-            value,
-        );
-    } else if Sport::Cycling.as_i64()
-        == data_map
-            .get(&5)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return session_message_total_strokes_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "strokes",
-            value,
-        );
-    } else if Sport::Swimming.as_i64()
-        == data_map
-            .get(&5)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return session_message_total_strokes_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "strokes",
-            value,
-        );
-    } else if Sport::Rowing.as_i64()
-        == data_map
-            .get(&5)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return session_message_total_strokes_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "strokes",
-            value,
-        );
-    } else if Sport::StandUpPaddleboarding.as_i64()
-        == data_map
-            .get(&5)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return session_message_total_strokes_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "strokes",
-            value,
-        );
-    }
     let value = if accumulate {
         calculate_cumulative_value(accumlators, mesg_num.as_u16(), 10, value)?
     } else {
@@ -11835,56 +11880,6 @@ fn session_message_total_fat_calories_field(
         value,
     )
 }
-fn session_message_avg_speed_field(
-    mesg_num: MesgNum,
-    accumlators: &mut HashMap<u32, Value>,
-    data_map: &HashMap<u8, Value>,
-    accumulate: bool,
-    scale: f64,
-    offset: f64,
-    units: &'static str,
-    value: Value,
-) -> Result<FitDataField> {
-    let value = if accumulate {
-        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 14, value)?
-    } else {
-        value
-    };
-    data_field_with_info(
-        14,
-        "avg_speed",
-        FieldDataType::UInt16,
-        scale,
-        offset,
-        units,
-        value,
-    )
-}
-fn session_message_max_speed_field(
-    mesg_num: MesgNum,
-    accumlators: &mut HashMap<u32, Value>,
-    data_map: &HashMap<u8, Value>,
-    accumulate: bool,
-    scale: f64,
-    offset: f64,
-    units: &'static str,
-    value: Value,
-) -> Result<FitDataField> {
-    let value = if accumulate {
-        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 15, value)?
-    } else {
-        value
-    };
-    data_field_with_info(
-        15,
-        "max_speed",
-        FieldDataType::UInt16,
-        scale,
-        offset,
-        units,
-        value,
-    )
-}
 fn session_message_avg_heart_rate_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
@@ -11945,24 +11940,6 @@ fn session_message_avg_cadence_field(
     units: &'static str,
     value: Value,
 ) -> Result<FitDataField> {
-    if Sport::Running.as_i64()
-        == data_map
-            .get(&5)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return session_message_avg_running_cadence_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "strides/min",
-            value,
-        );
-    }
     let value = if accumulate {
         calculate_cumulative_value(accumlators, mesg_num.as_u16(), 18, value)?
     } else {
@@ -12013,24 +11990,6 @@ fn session_message_max_cadence_field(
     units: &'static str,
     value: Value,
 ) -> Result<FitDataField> {
-    if Sport::Running.as_i64()
-        == data_map
-            .get(&5)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return session_message_max_running_cadence_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "strides/min",
-            value,
-        );
-    }
     let value = if accumulate {
         calculate_cumulative_value(accumlators, mesg_num.as_u16(), 19, value)?
     } else {
@@ -12721,56 +12680,6 @@ fn session_message_total_work_field(
         value,
     )
 }
-fn session_message_avg_altitude_field(
-    mesg_num: MesgNum,
-    accumlators: &mut HashMap<u32, Value>,
-    data_map: &HashMap<u8, Value>,
-    accumulate: bool,
-    scale: f64,
-    offset: f64,
-    units: &'static str,
-    value: Value,
-) -> Result<FitDataField> {
-    let value = if accumulate {
-        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 49, value)?
-    } else {
-        value
-    };
-    data_field_with_info(
-        49,
-        "avg_altitude",
-        FieldDataType::UInt16,
-        scale,
-        offset,
-        units,
-        value,
-    )
-}
-fn session_message_max_altitude_field(
-    mesg_num: MesgNum,
-    accumlators: &mut HashMap<u32, Value>,
-    data_map: &HashMap<u8, Value>,
-    accumulate: bool,
-    scale: f64,
-    offset: f64,
-    units: &'static str,
-    value: Value,
-) -> Result<FitDataField> {
-    let value = if accumulate {
-        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 50, value)?
-    } else {
-        value
-    };
-    data_field_with_info(
-        50,
-        "max_altitude",
-        FieldDataType::UInt16,
-        scale,
-        offset,
-        units,
-        value,
-    )
-}
 fn session_message_gps_accuracy_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
@@ -13264,31 +13173,6 @@ fn session_message_best_lap_index_field(
     data_field_with_info(
         70,
         "best_lap_index",
-        FieldDataType::UInt16,
-        scale,
-        offset,
-        units,
-        value,
-    )
-}
-fn session_message_min_altitude_field(
-    mesg_num: MesgNum,
-    accumlators: &mut HashMap<u32, Value>,
-    data_map: &HashMap<u8, Value>,
-    accumulate: bool,
-    scale: f64,
-    offset: f64,
-    units: &'static str,
-    value: Value,
-) -> Result<FitDataField> {
-    let value = if accumulate {
-        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 71, value)?
-    } else {
-        value
-    };
-    data_field_with_info(
-        71,
-        "min_altitude",
         FieldDataType::UInt16,
         scale,
         offset,
@@ -15004,16 +14888,120 @@ fn lap_message(
                 )?);
             }
             10 => {
-                fields.push(lap_message_total_cycles_field(
-                    mesg_num,
-                    accumlators,
-                    data_map,
-                    false,
-                    1.000000,
-                    0.000000,
-                    "cycles",
-                    value,
-                )?);
+                if Sport::Running.as_i64()
+                    == data_map
+                        .get(&25)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(lap_message_total_strides_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "strides",
+                        value,
+                    )?);
+                } else if Sport::Walking.as_i64()
+                    == data_map
+                        .get(&25)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(lap_message_total_strides_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "strides",
+                        value,
+                    )?);
+                } else if Sport::Cycling.as_i64()
+                    == data_map
+                        .get(&25)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(lap_message_total_strokes_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "strokes",
+                        value,
+                    )?);
+                } else if Sport::Swimming.as_i64()
+                    == data_map
+                        .get(&25)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(lap_message_total_strokes_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "strokes",
+                        value,
+                    )?);
+                } else if Sport::Rowing.as_i64()
+                    == data_map
+                        .get(&25)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(lap_message_total_strokes_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "strokes",
+                        value,
+                    )?);
+                } else if Sport::StandUpPaddleboarding.as_i64()
+                    == data_map
+                        .get(&25)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(lap_message_total_strokes_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "strokes",
+                        value,
+                    )?);
+                } else {
+                    fields.push(lap_message_total_cycles_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "cycles",
+                        value,
+                    )?);
+                }
             }
             11 => {
                 fields.push(lap_message_total_calories_field(
@@ -15041,8 +15029,8 @@ fn lap_message(
                 )?);
             }
             13 => {
-                let component_values = expand_components(value, &[16]);
-                data_map.insert(110, component_values[0].clone());
+                let [enhanced_avg_speed] = expand_components(value, &[16])[..];
+                data_map.insert(110, enhanced_avg_speed.clone());
                 fields.push(lap_message_enhanced_avg_speed_field(
                     mesg_num,
                     accumlators,
@@ -15051,12 +15039,12 @@ fn lap_message(
                     1000.000000,
                     0.000000,
                     "m/s",
-                    component_values[0].clone(),
+                    enhanced_avg_speed,
                 )?);
             }
             14 => {
-                let component_values = expand_components(value, &[16]);
-                data_map.insert(111, component_values[0].clone());
+                let [enhanced_max_speed] = expand_components(value, &[16])[..];
+                data_map.insert(111, enhanced_max_speed.clone());
                 fields.push(lap_message_enhanced_max_speed_field(
                     mesg_num,
                     accumlators,
@@ -15065,7 +15053,7 @@ fn lap_message(
                     1000.000000,
                     0.000000,
                     "m/s",
-                    component_values[0].clone(),
+                    enhanced_max_speed,
                 )?);
             }
             15 => {
@@ -15094,28 +15082,66 @@ fn lap_message(
             }
             17 => {
                 // total_cycles / total_timer_time if non_zero_avg_cadence otherwise total_cycles / total_elapsed_time
-                fields.push(lap_message_avg_cadence_field(
-                    mesg_num,
-                    accumlators,
-                    data_map,
-                    false,
-                    1.000000,
-                    0.000000,
-                    "rpm",
-                    value,
-                )?);
+                if Sport::Running.as_i64()
+                    == data_map
+                        .get(&25)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(lap_message_avg_running_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "strides/min",
+                        value,
+                    )?);
+                } else {
+                    fields.push(lap_message_avg_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "rpm",
+                        value,
+                    )?);
+                }
             }
             18 => {
-                fields.push(lap_message_max_cadence_field(
-                    mesg_num,
-                    accumlators,
-                    data_map,
-                    false,
-                    1.000000,
-                    0.000000,
-                    "rpm",
-                    value,
-                )?);
+                if Sport::Running.as_i64()
+                    == data_map
+                        .get(&25)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(lap_message_max_running_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "strides/min",
+                        value,
+                    )?);
+                } else {
+                    fields.push(lap_message_max_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "rpm",
+                        value,
+                    )?);
+                }
             }
             19 => {
                 // total_power / total_timer_time if non_zero_avg_power otherwise total_power / total_elapsed_time
@@ -15325,8 +15351,8 @@ fn lap_message(
                 )?);
             }
             42 => {
-                let component_values = expand_components(value, &[16]);
-                data_map.insert(112, component_values[0].clone());
+                let [enhanced_avg_altitude] = expand_components(value, &[16])[..];
+                data_map.insert(112, enhanced_avg_altitude.clone());
                 fields.push(lap_message_enhanced_avg_altitude_field(
                     mesg_num,
                     accumlators,
@@ -15335,12 +15361,12 @@ fn lap_message(
                     5.000000,
                     500.000000,
                     "m",
-                    component_values[0].clone(),
+                    enhanced_avg_altitude,
                 )?);
             }
             43 => {
-                let component_values = expand_components(value, &[16]);
-                data_map.insert(114, component_values[0].clone());
+                let [enhanced_max_altitude] = expand_components(value, &[16])[..];
+                data_map.insert(114, enhanced_max_altitude.clone());
                 fields.push(lap_message_enhanced_max_altitude_field(
                     mesg_num,
                     accumlators,
@@ -15349,7 +15375,7 @@ fn lap_message(
                     5.000000,
                     500.000000,
                     "m",
-                    component_values[0].clone(),
+                    enhanced_max_altitude,
                 )?);
             }
             44 => {
@@ -15569,8 +15595,8 @@ fn lap_message(
                 )?);
             }
             62 => {
-                let component_values = expand_components(value, &[16]);
-                data_map.insert(113, component_values[0].clone());
+                let [enhanced_min_altitude] = expand_components(value, &[16])[..];
+                data_map.insert(113, enhanced_min_altitude.clone());
                 fields.push(lap_message_enhanced_min_altitude_field(
                     mesg_num,
                     accumlators,
@@ -15579,7 +15605,7 @@ fn lap_message(
                     5.000000,
                     500.000000,
                     "m",
-                    component_values[0].clone(),
+                    enhanced_min_altitude,
                 )?);
             }
             63 => {
@@ -16588,109 +16614,6 @@ fn lap_message_total_cycles_field(
     units: &'static str,
     value: Value,
 ) -> Result<FitDataField> {
-    if Sport::Running.as_i64()
-        == data_map
-            .get(&25)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return lap_message_total_strides_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "strides",
-            value,
-        );
-    } else if Sport::Walking.as_i64()
-        == data_map
-            .get(&25)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return lap_message_total_strides_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "strides",
-            value,
-        );
-    } else if Sport::Cycling.as_i64()
-        == data_map
-            .get(&25)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return lap_message_total_strokes_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "strokes",
-            value,
-        );
-    } else if Sport::Swimming.as_i64()
-        == data_map
-            .get(&25)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return lap_message_total_strokes_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "strokes",
-            value,
-        );
-    } else if Sport::Rowing.as_i64()
-        == data_map
-            .get(&25)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return lap_message_total_strokes_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "strokes",
-            value,
-        );
-    } else if Sport::StandUpPaddleboarding.as_i64()
-        == data_map
-            .get(&25)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return lap_message_total_strokes_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "strokes",
-            value,
-        );
-    }
     let value = if accumulate {
         calculate_cumulative_value(accumlators, mesg_num.as_u16(), 10, value)?
     } else {
@@ -16806,56 +16729,6 @@ fn lap_message_total_fat_calories_field(
         value,
     )
 }
-fn lap_message_avg_speed_field(
-    mesg_num: MesgNum,
-    accumlators: &mut HashMap<u32, Value>,
-    data_map: &HashMap<u8, Value>,
-    accumulate: bool,
-    scale: f64,
-    offset: f64,
-    units: &'static str,
-    value: Value,
-) -> Result<FitDataField> {
-    let value = if accumulate {
-        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 13, value)?
-    } else {
-        value
-    };
-    data_field_with_info(
-        13,
-        "avg_speed",
-        FieldDataType::UInt16,
-        scale,
-        offset,
-        units,
-        value,
-    )
-}
-fn lap_message_max_speed_field(
-    mesg_num: MesgNum,
-    accumlators: &mut HashMap<u32, Value>,
-    data_map: &HashMap<u8, Value>,
-    accumulate: bool,
-    scale: f64,
-    offset: f64,
-    units: &'static str,
-    value: Value,
-) -> Result<FitDataField> {
-    let value = if accumulate {
-        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 14, value)?
-    } else {
-        value
-    };
-    data_field_with_info(
-        14,
-        "max_speed",
-        FieldDataType::UInt16,
-        scale,
-        offset,
-        units,
-        value,
-    )
-}
 fn lap_message_avg_heart_rate_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
@@ -16916,24 +16789,6 @@ fn lap_message_avg_cadence_field(
     units: &'static str,
     value: Value,
 ) -> Result<FitDataField> {
-    if Sport::Running.as_i64()
-        == data_map
-            .get(&25)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return lap_message_avg_running_cadence_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "strides/min",
-            value,
-        );
-    }
     let value = if accumulate {
         calculate_cumulative_value(accumlators, mesg_num.as_u16(), 17, value)?
     } else {
@@ -16984,24 +16839,6 @@ fn lap_message_max_cadence_field(
     units: &'static str,
     value: Value,
 ) -> Result<FitDataField> {
-    if Sport::Running.as_i64()
-        == data_map
-            .get(&25)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return lap_message_max_running_cadence_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "strides/min",
-            value,
-        );
-    }
     let value = if accumulate {
         calculate_cumulative_value(accumlators, mesg_num.as_u16(), 18, value)?
     } else {
@@ -17467,56 +17304,6 @@ fn lap_message_total_work_field(
         value,
     )
 }
-fn lap_message_avg_altitude_field(
-    mesg_num: MesgNum,
-    accumlators: &mut HashMap<u32, Value>,
-    data_map: &HashMap<u8, Value>,
-    accumulate: bool,
-    scale: f64,
-    offset: f64,
-    units: &'static str,
-    value: Value,
-) -> Result<FitDataField> {
-    let value = if accumulate {
-        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 42, value)?
-    } else {
-        value
-    };
-    data_field_with_info(
-        42,
-        "avg_altitude",
-        FieldDataType::UInt16,
-        scale,
-        offset,
-        units,
-        value,
-    )
-}
-fn lap_message_max_altitude_field(
-    mesg_num: MesgNum,
-    accumlators: &mut HashMap<u32, Value>,
-    data_map: &HashMap<u8, Value>,
-    accumulate: bool,
-    scale: f64,
-    offset: f64,
-    units: &'static str,
-    value: Value,
-) -> Result<FitDataField> {
-    let value = if accumulate {
-        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 43, value)?
-    } else {
-        value
-    };
-    data_field_with_info(
-        43,
-        "max_altitude",
-        FieldDataType::UInt16,
-        scale,
-        offset,
-        units,
-        value,
-    )
-}
 fn lap_message_gps_accuracy_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
@@ -17960,31 +17747,6 @@ fn lap_message_repetition_num_field(
     data_field_with_info(
         61,
         "repetition_num",
-        FieldDataType::UInt16,
-        scale,
-        offset,
-        units,
-        value,
-    )
-}
-fn lap_message_min_altitude_field(
-    mesg_num: MesgNum,
-    accumlators: &mut HashMap<u32, Value>,
-    data_map: &HashMap<u8, Value>,
-    accumulate: bool,
-    scale: f64,
-    offset: f64,
-    units: &'static str,
-    value: Value,
-) -> Result<FitDataField> {
-    let value = if accumulate {
-        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 62, value)?
-    } else {
-        value
-    };
-    data_field_with_info(
-        62,
-        "min_altitude",
         FieldDataType::UInt16,
         scale,
         offset,
@@ -20185,8 +19947,8 @@ fn record_message(
                 )?);
             }
             2 => {
-                let component_values = expand_components(value, &[16]);
-                data_map.insert(78, component_values[0].clone());
+                let [enhanced_altitude] = expand_components(value, &[16])[..];
+                data_map.insert(78, enhanced_altitude.clone());
                 fields.push(record_message_enhanced_altitude_field(
                     mesg_num,
                     accumlators,
@@ -20195,7 +19957,7 @@ fn record_message(
                     5.000000,
                     500.000000,
                     "m",
-                    component_values[0].clone(),
+                    enhanced_altitude,
                 )?);
             }
             3 => {
@@ -20235,8 +19997,8 @@ fn record_message(
                 )?);
             }
             6 => {
-                let component_values = expand_components(value, &[16]);
-                data_map.insert(73, component_values[0].clone());
+                let [enhanced_speed] = expand_components(value, &[16])[..];
+                data_map.insert(73, enhanced_speed.clone());
                 fields.push(record_message_enhanced_speed_field(
                     mesg_num,
                     accumlators,
@@ -20245,7 +20007,7 @@ fn record_message(
                     1000.000000,
                     0.000000,
                     "m/s",
-                    component_values[0].clone(),
+                    enhanced_speed,
                 )?);
             }
             7 => {
@@ -20261,19 +20023,21 @@ fn record_message(
                 )?);
             }
             8 => {
-                let component_values = expand_components(value, &[12, 12]);
-                data_map.insert(6, component_values[0].clone());
-                fields.push(record_message_speed_field(
+                let [speed, distance] = expand_components(value, &[12, 12])[..];
+                data_map.insert(6, speed.clone());
+                let [enhanced_speed] = expand_components(speed, &[16])[..];
+                data_map.insert(73, enhanced_speed.clone());
+                fields.push(record_message_enhanced_speed_field(
                     mesg_num,
                     accumlators,
                     data_map,
                     false,
-                    100.000000,
+                    1000.000000,
                     0.000000,
                     "m/s",
-                    component_values[0].clone(),
+                    enhanced_speed,
                 )?);
-                data_map.insert(5, component_values[1].clone());
+                data_map.insert(5, distance.clone());
                 fields.push(record_message_distance_field(
                     mesg_num,
                     accumlators,
@@ -20282,7 +20046,7 @@ fn record_message(
                     16.000000,
                     0.000000,
                     "m",
-                    component_values[1].clone(),
+                    distance,
                 )?);
             }
             9 => {
@@ -20360,8 +20124,8 @@ fn record_message(
                 )?);
             }
             18 => {
-                let component_values = expand_components(value, &[8]);
-                data_map.insert(19, component_values[0].clone());
+                let [total_cycles] = expand_components(value, &[8])[..];
+                data_map.insert(19, total_cycles.clone());
                 fields.push(record_message_total_cycles_field(
                     mesg_num,
                     accumlators,
@@ -20370,7 +20134,7 @@ fn record_message(
                     1.000000,
                     0.000000,
                     "cycles",
-                    component_values[0].clone(),
+                    total_cycles,
                 )?);
             }
             19 => {
@@ -20386,8 +20150,8 @@ fn record_message(
                 )?);
             }
             28 => {
-                let component_values = expand_components(value, &[16]);
-                data_map.insert(29, component_values[0].clone());
+                let [accumulated_power] = expand_components(value, &[16])[..];
+                data_map.insert(29, accumulated_power.clone());
                 fields.push(record_message_accumulated_power_field(
                     mesg_num,
                     accumlators,
@@ -20396,7 +20160,7 @@ fn record_message(
                     1.000000,
                     0.000000,
                     "watts",
-                    component_values[0].clone(),
+                    accumulated_power,
                 )?);
             }
             29 => {
@@ -21146,31 +20910,6 @@ fn record_message_position_long_field(
         value,
     )
 }
-fn record_message_altitude_field(
-    mesg_num: MesgNum,
-    accumlators: &mut HashMap<u32, Value>,
-    data_map: &HashMap<u8, Value>,
-    accumulate: bool,
-    scale: f64,
-    offset: f64,
-    units: &'static str,
-    value: Value,
-) -> Result<FitDataField> {
-    let value = if accumulate {
-        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 2, value)?
-    } else {
-        value
-    };
-    data_field_with_info(
-        2,
-        "altitude",
-        FieldDataType::UInt16,
-        scale,
-        offset,
-        units,
-        value,
-    )
-}
 fn record_message_heart_rate_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
@@ -21246,31 +20985,6 @@ fn record_message_distance_field(
         value,
     )
 }
-fn record_message_speed_field(
-    mesg_num: MesgNum,
-    accumlators: &mut HashMap<u32, Value>,
-    data_map: &HashMap<u8, Value>,
-    accumulate: bool,
-    scale: f64,
-    offset: f64,
-    units: &'static str,
-    value: Value,
-) -> Result<FitDataField> {
-    let value = if accumulate {
-        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 6, value)?
-    } else {
-        value
-    };
-    data_field_with_info(
-        6,
-        "speed",
-        FieldDataType::UInt16,
-        scale,
-        offset,
-        units,
-        value,
-    )
-}
 fn record_message_power_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
@@ -21290,31 +21004,6 @@ fn record_message_power_field(
         7,
         "power",
         FieldDataType::UInt16,
-        scale,
-        offset,
-        units,
-        value,
-    )
-}
-fn record_message_compressed_speed_distance_field(
-    mesg_num: MesgNum,
-    accumlators: &mut HashMap<u32, Value>,
-    data_map: &HashMap<u8, Value>,
-    accumulate: bool,
-    scale: f64,
-    offset: f64,
-    units: &'static str,
-    value: Value,
-) -> Result<FitDataField> {
-    let value = if accumulate {
-        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 8, value)?
-    } else {
-        value
-    };
-    data_field_with_info(
-        8,
-        "compressed_speed_distance",
-        FieldDataType::Byte,
         scale,
         offset,
         units,
@@ -21471,31 +21160,6 @@ fn record_message_speed_1s_field(
         value,
     )
 }
-fn record_message_cycles_field(
-    mesg_num: MesgNum,
-    accumlators: &mut HashMap<u32, Value>,
-    data_map: &HashMap<u8, Value>,
-    accumulate: bool,
-    scale: f64,
-    offset: f64,
-    units: &'static str,
-    value: Value,
-) -> Result<FitDataField> {
-    let value = if accumulate {
-        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 18, value)?
-    } else {
-        value
-    };
-    data_field_with_info(
-        18,
-        "cycles",
-        FieldDataType::UInt8,
-        scale,
-        offset,
-        units,
-        value,
-    )
-}
 fn record_message_total_cycles_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
@@ -21515,31 +21179,6 @@ fn record_message_total_cycles_field(
         19,
         "total_cycles",
         FieldDataType::UInt32,
-        scale,
-        offset,
-        units,
-        value,
-    )
-}
-fn record_message_compressed_accumulated_power_field(
-    mesg_num: MesgNum,
-    accumlators: &mut HashMap<u32, Value>,
-    data_map: &HashMap<u8, Value>,
-    accumulate: bool,
-    scale: f64,
-    offset: f64,
-    units: &'static str,
-    value: Value,
-) -> Result<FitDataField> {
-    let value = if accumulate {
-        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 28, value)?
-    } else {
-        value
-    };
-    data_field_with_info(
-        28,
-        "compressed_accumulated_power",
-        FieldDataType::UInt16,
         scale,
         offset,
         units,
@@ -22981,30 +22620,782 @@ fn event_message(
                 )?);
             }
             2 => {
-                let component_values = expand_components(value, &[16]);
-                data_map.insert(3, component_values[0].clone());
-                fields.push(event_message_data_field(
-                    mesg_num,
-                    accumlators,
-                    data_map,
-                    false,
-                    1.000000,
-                    0.000000,
-                    "",
-                    component_values[0].clone(),
-                )?);
+                let [data] = expand_components(value, &[16])[..];
+                data_map.insert(3, data.clone());
+                if Event::Timer.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(event_message_timer_trigger_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        data,
+                    )?);
+                } else if Event::CoursePoint.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(event_message_course_point_index_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        data,
+                    )?);
+                } else if Event::Battery.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(event_message_battery_level_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1000.000000,
+                        0.000000,
+                        "V",
+                        data,
+                    )?);
+                } else if Event::VirtualPartnerPace.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(event_message_virtual_partner_speed_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1000.000000,
+                        0.000000,
+                        "m/s",
+                        data,
+                    )?);
+                } else if Event::HrHighAlert.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(event_message_hr_high_alert_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "bpm",
+                        data,
+                    )?);
+                } else if Event::HrLowAlert.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(event_message_hr_low_alert_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "bpm",
+                        data,
+                    )?);
+                } else if Event::SpeedHighAlert.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(event_message_speed_high_alert_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1000.000000,
+                        0.000000,
+                        "m/s",
+                        data,
+                    )?);
+                } else if Event::SpeedLowAlert.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(event_message_speed_low_alert_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1000.000000,
+                        0.000000,
+                        "m/s",
+                        data,
+                    )?);
+                } else if Event::CadHighAlert.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(event_message_cad_high_alert_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "rpm",
+                        data,
+                    )?);
+                } else if Event::CadLowAlert.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(event_message_cad_low_alert_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "rpm",
+                        data,
+                    )?);
+                } else if Event::PowerHighAlert.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(event_message_power_high_alert_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "watts",
+                        data,
+                    )?);
+                } else if Event::PowerLowAlert.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(event_message_power_low_alert_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "watts",
+                        data,
+                    )?);
+                } else if Event::TimeDurationAlert.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(event_message_time_duration_alert_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1000.000000,
+                        0.000000,
+                        "s",
+                        data,
+                    )?);
+                } else if Event::DistanceDurationAlert.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(event_message_distance_duration_alert_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        100.000000,
+                        0.000000,
+                        "m",
+                        data,
+                    )?);
+                } else if Event::CalorieDurationAlert.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(event_message_calorie_duration_alert_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "calories",
+                        data,
+                    )?);
+                } else if Event::FitnessEquipment.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(event_message_fitness_equipment_state_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        data,
+                    )?);
+                } else if Event::SportPoint.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(event_message_sport_point_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        data,
+                    )?);
+                } else if Event::FrontGearChange.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(event_message_gear_change_data_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        data,
+                    )?);
+                } else if Event::RearGearChange.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(event_message_gear_change_data_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        data,
+                    )?);
+                } else if Event::RiderPositionChange.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(event_message_rider_position_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        data,
+                    )?);
+                } else if Event::CommTimeout.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(event_message_comm_timeout_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        data,
+                    )?);
+                } else if Event::RadarThreatAlert.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(event_message_radar_threat_alert_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        data,
+                    )?);
+                } else {
+                    fields.push(event_message_data_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        data,
+                    )?);
+                }
             }
             3 => {
-                fields.push(event_message_data_field(
-                    mesg_num,
-                    accumlators,
-                    data_map,
-                    false,
-                    1.000000,
-                    0.000000,
-                    "",
-                    value,
-                )?);
+                if Event::Timer.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(event_message_timer_trigger_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else if Event::CoursePoint.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(event_message_course_point_index_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else if Event::Battery.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(event_message_battery_level_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1000.000000,
+                        0.000000,
+                        "V",
+                        value,
+                    )?);
+                } else if Event::VirtualPartnerPace.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(event_message_virtual_partner_speed_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1000.000000,
+                        0.000000,
+                        "m/s",
+                        value,
+                    )?);
+                } else if Event::HrHighAlert.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(event_message_hr_high_alert_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "bpm",
+                        value,
+                    )?);
+                } else if Event::HrLowAlert.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(event_message_hr_low_alert_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "bpm",
+                        value,
+                    )?);
+                } else if Event::SpeedHighAlert.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(event_message_speed_high_alert_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1000.000000,
+                        0.000000,
+                        "m/s",
+                        value,
+                    )?);
+                } else if Event::SpeedLowAlert.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(event_message_speed_low_alert_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1000.000000,
+                        0.000000,
+                        "m/s",
+                        value,
+                    )?);
+                } else if Event::CadHighAlert.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(event_message_cad_high_alert_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "rpm",
+                        value,
+                    )?);
+                } else if Event::CadLowAlert.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(event_message_cad_low_alert_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "rpm",
+                        value,
+                    )?);
+                } else if Event::PowerHighAlert.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(event_message_power_high_alert_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "watts",
+                        value,
+                    )?);
+                } else if Event::PowerLowAlert.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(event_message_power_low_alert_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "watts",
+                        value,
+                    )?);
+                } else if Event::TimeDurationAlert.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(event_message_time_duration_alert_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1000.000000,
+                        0.000000,
+                        "s",
+                        value,
+                    )?);
+                } else if Event::DistanceDurationAlert.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(event_message_distance_duration_alert_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        100.000000,
+                        0.000000,
+                        "m",
+                        value,
+                    )?);
+                } else if Event::CalorieDurationAlert.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(event_message_calorie_duration_alert_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "calories",
+                        value,
+                    )?);
+                } else if Event::FitnessEquipment.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(event_message_fitness_equipment_state_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else if Event::SportPoint.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(event_message_sport_point_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else if Event::FrontGearChange.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(event_message_gear_change_data_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else if Event::RearGearChange.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(event_message_gear_change_data_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else if Event::RiderPositionChange.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(event_message_rider_position_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else if Event::CommTimeout.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(event_message_comm_timeout_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else if Event::RadarThreatAlert.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(event_message_radar_threat_alert_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else {
+                    fields.push(event_message_data_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                }
             }
             4 => {
                 fields.push(event_message_event_group_field(
@@ -23227,31 +23618,6 @@ fn event_message_event_type_field(
         value,
     )
 }
-fn event_message_data16_field(
-    mesg_num: MesgNum,
-    accumlators: &mut HashMap<u32, Value>,
-    data_map: &HashMap<u8, Value>,
-    accumulate: bool,
-    scale: f64,
-    offset: f64,
-    units: &'static str,
-    value: Value,
-) -> Result<FitDataField> {
-    let value = if accumulate {
-        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 2, value)?
-    } else {
-        value
-    };
-    data_field_with_info(
-        2,
-        "data16",
-        FieldDataType::UInt16,
-        scale,
-        offset,
-        units,
-        value,
-    )
-}
 fn event_message_data_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
@@ -23262,381 +23628,6 @@ fn event_message_data_field(
     units: &'static str,
     value: Value,
 ) -> Result<FitDataField> {
-    if Event::Timer.as_i64()
-        == data_map
-            .get(&0)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return event_message_timer_trigger_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    } else if Event::CoursePoint.as_i64()
-        == data_map
-            .get(&0)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return event_message_course_point_index_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    } else if Event::Battery.as_i64()
-        == data_map
-            .get(&0)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return event_message_battery_level_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1000.000000,
-            0.000000,
-            "V",
-            value,
-        );
-    } else if Event::VirtualPartnerPace.as_i64()
-        == data_map
-            .get(&0)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return event_message_virtual_partner_speed_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1000.000000,
-            0.000000,
-            "m/s",
-            value,
-        );
-    } else if Event::HrHighAlert.as_i64()
-        == data_map
-            .get(&0)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return event_message_hr_high_alert_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "bpm",
-            value,
-        );
-    } else if Event::HrLowAlert.as_i64()
-        == data_map
-            .get(&0)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return event_message_hr_low_alert_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "bpm",
-            value,
-        );
-    } else if Event::SpeedHighAlert.as_i64()
-        == data_map
-            .get(&0)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return event_message_speed_high_alert_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1000.000000,
-            0.000000,
-            "m/s",
-            value,
-        );
-    } else if Event::SpeedLowAlert.as_i64()
-        == data_map
-            .get(&0)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return event_message_speed_low_alert_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1000.000000,
-            0.000000,
-            "m/s",
-            value,
-        );
-    } else if Event::CadHighAlert.as_i64()
-        == data_map
-            .get(&0)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return event_message_cad_high_alert_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "rpm",
-            value,
-        );
-    } else if Event::CadLowAlert.as_i64()
-        == data_map
-            .get(&0)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return event_message_cad_low_alert_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "rpm",
-            value,
-        );
-    } else if Event::PowerHighAlert.as_i64()
-        == data_map
-            .get(&0)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return event_message_power_high_alert_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "watts",
-            value,
-        );
-    } else if Event::PowerLowAlert.as_i64()
-        == data_map
-            .get(&0)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return event_message_power_low_alert_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "watts",
-            value,
-        );
-    } else if Event::TimeDurationAlert.as_i64()
-        == data_map
-            .get(&0)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return event_message_time_duration_alert_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1000.000000,
-            0.000000,
-            "s",
-            value,
-        );
-    } else if Event::DistanceDurationAlert.as_i64()
-        == data_map
-            .get(&0)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return event_message_distance_duration_alert_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            100.000000,
-            0.000000,
-            "m",
-            value,
-        );
-    } else if Event::CalorieDurationAlert.as_i64()
-        == data_map
-            .get(&0)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return event_message_calorie_duration_alert_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "calories",
-            value,
-        );
-    } else if Event::FitnessEquipment.as_i64()
-        == data_map
-            .get(&0)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return event_message_fitness_equipment_state_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    } else if Event::SportPoint.as_i64()
-        == data_map
-            .get(&0)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return event_message_sport_point_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    } else if Event::FrontGearChange.as_i64()
-        == data_map
-            .get(&0)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return event_message_gear_change_data_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    } else if Event::RearGearChange.as_i64()
-        == data_map
-            .get(&0)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return event_message_gear_change_data_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    } else if Event::RiderPositionChange.as_i64()
-        == data_map
-            .get(&0)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return event_message_rider_position_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    } else if Event::CommTimeout.as_i64()
-        == data_map
-            .get(&0)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return event_message_comm_timeout_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    } else if Event::RadarThreatAlert.as_i64()
-        == data_map
-            .get(&0)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return event_message_radar_threat_alert_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    }
     let value = if accumulate {
         calculate_cumulative_value(accumlators, mesg_num.as_u16(), 3, value)?
     } else {
@@ -24525,16 +24516,52 @@ fn device_info_message(
                 )?);
             }
             1 => {
-                fields.push(device_info_message_device_type_field(
-                    mesg_num,
-                    accumlators,
-                    data_map,
-                    false,
-                    1.000000,
-                    0.000000,
-                    "",
-                    value,
-                )?);
+                if SourceType::Antplus.as_i64()
+                    == data_map
+                        .get(&25)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(device_info_message_antplus_device_type_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else if SourceType::Ant.as_i64()
+                    == data_map
+                        .get(&25)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(device_info_message_ant_device_type_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else {
+                    fields.push(device_info_message_device_type_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                }
             }
             2 => {
                 fields.push(device_info_message_manufacturer_field(
@@ -24561,16 +24588,103 @@ fn device_info_message(
                 )?);
             }
             4 => {
-                fields.push(device_info_message_product_field(
-                    mesg_num,
-                    accumlators,
-                    data_map,
-                    false,
-                    1.000000,
-                    0.000000,
-                    "",
-                    value,
-                )?);
+                if Manufacturer::FaveroElectronics.as_i64()
+                    == data_map
+                        .get(&2)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(device_info_message_favero_product_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else if Manufacturer::Garmin.as_i64()
+                    == data_map
+                        .get(&2)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(device_info_message_garmin_product_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else if Manufacturer::Dynastream.as_i64()
+                    == data_map
+                        .get(&2)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(device_info_message_garmin_product_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else if Manufacturer::DynastreamOem.as_i64()
+                    == data_map
+                        .get(&2)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(device_info_message_garmin_product_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else if Manufacturer::Tacx.as_i64()
+                    == data_map
+                        .get(&2)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(device_info_message_garmin_product_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else {
+                    fields.push(device_info_message_product_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                }
             }
             5 => {
                 fields.push(device_info_message_software_version_field(
@@ -24784,41 +24898,6 @@ fn device_info_message_device_type_field(
     units: &'static str,
     value: Value,
 ) -> Result<FitDataField> {
-    if SourceType::Antplus.as_i64()
-        == data_map
-            .get(&25)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return device_info_message_antplus_device_type_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    } else if SourceType::Ant.as_i64()
-        == data_map
-            .get(&25)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return device_info_message_ant_device_type_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    }
     let value = if accumulate {
         calculate_cumulative_value(accumlators, mesg_num.as_u16(), 1, value)?
     } else {
@@ -24944,92 +25023,6 @@ fn device_info_message_product_field(
     units: &'static str,
     value: Value,
 ) -> Result<FitDataField> {
-    if Manufacturer::FaveroElectronics.as_i64()
-        == data_map
-            .get(&2)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return device_info_message_favero_product_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    } else if Manufacturer::Garmin.as_i64()
-        == data_map
-            .get(&2)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return device_info_message_garmin_product_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    } else if Manufacturer::Dynastream.as_i64()
-        == data_map
-            .get(&2)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return device_info_message_garmin_product_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    } else if Manufacturer::DynastreamOem.as_i64()
-        == data_map
-            .get(&2)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return device_info_message_garmin_product_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    } else if Manufacturer::Tacx.as_i64()
-        == data_map
-            .get(&2)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return device_info_message_garmin_product_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    }
     let value = if accumulate {
         calculate_cumulative_value(accumlators, mesg_num.as_u16(), 4, value)?
     } else {
@@ -25681,16 +25674,103 @@ fn training_file_message(
                 )?);
             }
             2 => {
-                fields.push(training_file_message_product_field(
-                    mesg_num,
-                    accumlators,
-                    data_map,
-                    false,
-                    1.000000,
-                    0.000000,
-                    "",
-                    value,
-                )?);
+                if Manufacturer::FaveroElectronics.as_i64()
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(training_file_message_favero_product_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else if Manufacturer::Garmin.as_i64()
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(training_file_message_garmin_product_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else if Manufacturer::Dynastream.as_i64()
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(training_file_message_garmin_product_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else if Manufacturer::DynastreamOem.as_i64()
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(training_file_message_garmin_product_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else if Manufacturer::Tacx.as_i64()
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(training_file_message_garmin_product_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else {
+                    fields.push(training_file_message_product_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                }
             }
             3 => {
                 fields.push(training_file_message_serial_number_field(
@@ -25785,92 +25865,6 @@ fn training_file_message_product_field(
     units: &'static str,
     value: Value,
 ) -> Result<FitDataField> {
-    if Manufacturer::FaveroElectronics.as_i64()
-        == data_map
-            .get(&1)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return training_file_message_favero_product_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    } else if Manufacturer::Garmin.as_i64()
-        == data_map
-            .get(&1)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return training_file_message_garmin_product_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    } else if Manufacturer::Dynastream.as_i64()
-        == data_map
-            .get(&1)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return training_file_message_garmin_product_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    } else if Manufacturer::DynastreamOem.as_i64()
-        == data_map
-            .get(&1)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return training_file_message_garmin_product_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    } else if Manufacturer::Tacx.as_i64()
-        == data_map
-            .get(&1)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return training_file_message_garmin_product_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    }
     let value = if accumulate {
         calculate_cumulative_value(accumlators, mesg_num.as_u16(), 2, value)?
     } else {
@@ -28803,16 +28797,52 @@ fn three_d_sensor_calibration_message(
             }
             1 => {
                 // Calibration factor used to convert from raw ADC value to degrees, g, etc.
-                fields.push(three_d_sensor_calibration_message_calibration_factor_field(
-                    mesg_num,
-                    accumlators,
-                    data_map,
-                    false,
-                    1.000000,
-                    0.000000,
-                    "",
-                    value,
-                )?);
+                if SensorType::Accelerometer.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(three_d_sensor_calibration_message_accel_cal_factor_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "g",
+                        value,
+                    )?);
+                } else if SensorType::Gyroscope.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(three_d_sensor_calibration_message_gyro_cal_factor_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "deg/s",
+                        value,
+                    )?);
+                } else {
+                    fields.push(three_d_sensor_calibration_message_calibration_factor_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                }
             }
             2 => {
                 // Calibration factor divisor
@@ -28921,41 +28951,6 @@ fn three_d_sensor_calibration_message_calibration_factor_field(
     units: &'static str,
     value: Value,
 ) -> Result<FitDataField> {
-    if SensorType::Accelerometer.as_i64()
-        == data_map
-            .get(&0)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return three_d_sensor_calibration_message_accel_cal_factor_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "g",
-            value,
-        );
-    } else if SensorType::Gyroscope.as_i64()
-        == data_map
-            .get(&0)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return three_d_sensor_calibration_message_gyro_cal_factor_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "deg/s",
-            value,
-        );
-    }
     let value = if accumulate {
         calculate_cumulative_value(accumlators, mesg_num.as_u16(), 1, value)?
     } else {
@@ -29171,16 +29166,35 @@ fn one_d_sensor_calibration_message(
             }
             1 => {
                 // Calibration factor used to convert from raw ADC value to degrees, g, etc.
-                fields.push(one_d_sensor_calibration_message_calibration_factor_field(
-                    mesg_num,
-                    accumlators,
-                    data_map,
-                    false,
-                    1.000000,
-                    0.000000,
-                    "",
-                    value,
-                )?);
+                if SensorType::Barometer.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(one_d_sensor_calibration_message_baro_cal_factor_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "Pa",
+                        value,
+                    )?);
+                } else {
+                    fields.push(one_d_sensor_calibration_message_calibration_factor_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                }
             }
             2 => {
                 // Calibration factor divisor
@@ -29274,24 +29288,6 @@ fn one_d_sensor_calibration_message_calibration_factor_field(
     units: &'static str,
     value: Value,
 ) -> Result<FitDataField> {
-    if SensorType::Barometer.as_i64()
-        == data_map
-            .get(&0)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return one_d_sensor_calibration_message_baro_cal_factor_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "Pa",
-            value,
-        );
-    }
     let value = if accumulate {
         calculate_cumulative_value(accumlators, mesg_num.as_u16(), 1, value)?
     } else {
@@ -31682,8 +31678,8 @@ fn jump_message(
                 )?);
             }
             7 => {
-                let component_values = expand_components(value, &[16]);
-                data_map.insert(8, component_values[0].clone());
+                let [enhanced_speed] = expand_components(value, &[16])[..];
+                data_map.insert(8, enhanced_speed.clone());
                 fields.push(jump_message_enhanced_speed_field(
                     mesg_num,
                     accumlators,
@@ -31692,7 +31688,7 @@ fn jump_message(
                     1000.000000,
                     0.000000,
                     "m/s",
-                    component_values[0].clone(),
+                    enhanced_speed,
                 )?);
             }
             8 => {
@@ -31893,31 +31889,6 @@ fn jump_message_position_long_field(
         6,
         "position_long",
         FieldDataType::SInt32,
-        scale,
-        offset,
-        units,
-        value,
-    )
-}
-fn jump_message_speed_field(
-    mesg_num: MesgNum,
-    accumlators: &mut HashMap<u32, Value>,
-    data_map: &HashMap<u8, Value>,
-    accumulate: bool,
-    scale: f64,
-    offset: f64,
-    units: &'static str,
-    value: Value,
-) -> Result<FitDataField> {
-    let value = if accumulate {
-        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 7, value)?
-    } else {
-        value
-    };
-    data_field_with_info(
-        7,
-        "speed",
-        FieldDataType::UInt16,
         scale,
         offset,
         units,
@@ -34470,16 +34441,35 @@ fn segment_lap_message(
                 )?);
             }
             10 => {
-                fields.push(segment_lap_message_total_cycles_field(
-                    mesg_num,
-                    accumlators,
-                    data_map,
-                    false,
-                    1.000000,
-                    0.000000,
-                    "cycles",
-                    value,
-                )?);
+                if Sport::Cycling.as_i64()
+                    == data_map
+                        .get(&23)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(segment_lap_message_total_strokes_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "strokes",
+                        value,
+                    )?);
+                } else {
+                    fields.push(segment_lap_message_total_cycles_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "cycles",
+                        value,
+                    )?);
+                }
             }
             11 => {
                 fields.push(segment_lap_message_total_calories_field(
@@ -35748,24 +35738,6 @@ fn segment_lap_message_total_cycles_field(
     units: &'static str,
     value: Value,
 ) -> Result<FitDataField> {
-    if Sport::Cycling.as_i64()
-        == data_map
-            .get(&23)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return segment_lap_message_total_strokes_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "strokes",
-            value,
-        );
-    }
     let value = if accumulate {
         calculate_cumulative_value(accumlators, mesg_num.as_u16(), 10, value)?
     } else {
@@ -38772,16 +38744,307 @@ fn workout_step_message(
                 )?);
             }
             2 => {
-                fields.push(workout_step_message_duration_value_field(
-                    mesg_num,
-                    accumlators,
-                    data_map,
-                    false,
-                    1.000000,
-                    0.000000,
-                    "",
-                    value,
-                )?);
+                if WktStepDuration::Time.as_i64()
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(workout_step_message_duration_time_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1000.000000,
+                        0.000000,
+                        "s",
+                        value,
+                    )?);
+                } else if WktStepDuration::RepetitionTime.as_i64()
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(workout_step_message_duration_time_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1000.000000,
+                        0.000000,
+                        "s",
+                        value,
+                    )?);
+                } else if WktStepDuration::Distance.as_i64()
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(workout_step_message_duration_distance_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        100.000000,
+                        0.000000,
+                        "m",
+                        value,
+                    )?);
+                } else if WktStepDuration::HrLessThan.as_i64()
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(workout_step_message_duration_hr_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "% or bpm",
+                        value,
+                    )?);
+                } else if WktStepDuration::HrGreaterThan.as_i64()
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(workout_step_message_duration_hr_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "% or bpm",
+                        value,
+                    )?);
+                } else if WktStepDuration::Calories.as_i64()
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(workout_step_message_duration_calories_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "calories",
+                        value,
+                    )?);
+                } else if WktStepDuration::RepeatUntilStepsCmplt.as_i64()
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(workout_step_message_duration_step_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else if WktStepDuration::RepeatUntilTime.as_i64()
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(workout_step_message_duration_step_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else if WktStepDuration::RepeatUntilDistance.as_i64()
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(workout_step_message_duration_step_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else if WktStepDuration::RepeatUntilCalories.as_i64()
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(workout_step_message_duration_step_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else if WktStepDuration::RepeatUntilHrLessThan.as_i64()
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(workout_step_message_duration_step_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else if WktStepDuration::RepeatUntilHrGreaterThan.as_i64()
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(workout_step_message_duration_step_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else if WktStepDuration::RepeatUntilPowerLessThan.as_i64()
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(workout_step_message_duration_step_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else if WktStepDuration::RepeatUntilPowerGreaterThan.as_i64()
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(workout_step_message_duration_step_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else if WktStepDuration::PowerLessThan.as_i64()
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(workout_step_message_duration_power_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "% or watts",
+                        value,
+                    )?);
+                } else if WktStepDuration::PowerGreaterThan.as_i64()
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(workout_step_message_duration_power_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "% or watts",
+                        value,
+                    )?);
+                } else if WktStepDuration::Reps.as_i64()
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(workout_step_message_duration_reps_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else {
+                    fields.push(workout_step_message_duration_value_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                }
             }
             3 => {
                 fields.push(workout_step_message_target_type_field(
@@ -38796,40 +39059,403 @@ fn workout_step_message(
                 )?);
             }
             4 => {
-                fields.push(workout_step_message_target_value_field(
-                    mesg_num,
-                    accumlators,
-                    data_map,
-                    false,
-                    1.000000,
-                    0.000000,
-                    "",
-                    value,
-                )?);
+                if WktStepTarget::Speed.as_i64()
+                    == data_map
+                        .get(&3)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(workout_step_message_target_speed_zone_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else if WktStepTarget::HeartRate.as_i64()
+                    == data_map
+                        .get(&3)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(workout_step_message_target_hr_zone_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else if WktStepTarget::Cadence.as_i64()
+                    == data_map
+                        .get(&3)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(workout_step_message_target_cadence_zone_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else if WktStepTarget::Power.as_i64()
+                    == data_map
+                        .get(&3)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(workout_step_message_target_power_zone_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else if WktStepDuration::RepeatUntilStepsCmplt.as_i64()
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(workout_step_message_repeat_steps_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else if WktStepDuration::RepeatUntilTime.as_i64()
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(workout_step_message_repeat_time_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1000.000000,
+                        0.000000,
+                        "s",
+                        value,
+                    )?);
+                } else if WktStepDuration::RepeatUntilDistance.as_i64()
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(workout_step_message_repeat_distance_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        100.000000,
+                        0.000000,
+                        "m",
+                        value,
+                    )?);
+                } else if WktStepDuration::RepeatUntilCalories.as_i64()
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(workout_step_message_repeat_calories_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "calories",
+                        value,
+                    )?);
+                } else if WktStepDuration::RepeatUntilHrLessThan.as_i64()
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(workout_step_message_repeat_hr_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "% or bpm",
+                        value,
+                    )?);
+                } else if WktStepDuration::RepeatUntilHrGreaterThan.as_i64()
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(workout_step_message_repeat_hr_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "% or bpm",
+                        value,
+                    )?);
+                } else if WktStepDuration::RepeatUntilPowerLessThan.as_i64()
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(workout_step_message_repeat_power_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "% or watts",
+                        value,
+                    )?);
+                } else if WktStepDuration::RepeatUntilPowerGreaterThan.as_i64()
+                    == data_map
+                        .get(&1)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(workout_step_message_repeat_power_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "% or watts",
+                        value,
+                    )?);
+                } else if WktStepTarget::SwimStroke.as_i64()
+                    == data_map
+                        .get(&3)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(workout_step_message_target_stroke_type_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else {
+                    fields.push(workout_step_message_target_value_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                }
             }
             5 => {
-                fields.push(workout_step_message_custom_target_value_low_field(
-                    mesg_num,
-                    accumlators,
-                    data_map,
-                    false,
-                    1.000000,
-                    0.000000,
-                    "",
-                    value,
-                )?);
+                if WktStepTarget::Speed.as_i64()
+                    == data_map
+                        .get(&3)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(workout_step_message_custom_target_speed_low_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1000.000000,
+                        0.000000,
+                        "m/s",
+                        value,
+                    )?);
+                } else if WktStepTarget::HeartRate.as_i64()
+                    == data_map
+                        .get(&3)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(workout_step_message_custom_target_heart_rate_low_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "% or bpm",
+                        value,
+                    )?);
+                } else if WktStepTarget::Cadence.as_i64()
+                    == data_map
+                        .get(&3)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(workout_step_message_custom_target_cadence_low_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "rpm",
+                        value,
+                    )?);
+                } else if WktStepTarget::Power.as_i64()
+                    == data_map
+                        .get(&3)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(workout_step_message_custom_target_power_low_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "% or watts",
+                        value,
+                    )?);
+                } else {
+                    fields.push(workout_step_message_custom_target_value_low_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                }
             }
             6 => {
-                fields.push(workout_step_message_custom_target_value_high_field(
-                    mesg_num,
-                    accumlators,
-                    data_map,
-                    false,
-                    1.000000,
-                    0.000000,
-                    "",
-                    value,
-                )?);
+                if WktStepTarget::Speed.as_i64()
+                    == data_map
+                        .get(&3)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(workout_step_message_custom_target_speed_high_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1000.000000,
+                        0.000000,
+                        "m/s",
+                        value,
+                    )?);
+                } else if WktStepTarget::HeartRate.as_i64()
+                    == data_map
+                        .get(&3)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(workout_step_message_custom_target_heart_rate_high_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "% or bpm",
+                        value,
+                    )?);
+                } else if WktStepTarget::Cadence.as_i64()
+                    == data_map
+                        .get(&3)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(workout_step_message_custom_target_cadence_high_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "rpm",
+                        value,
+                    )?);
+                } else if WktStepTarget::Power.as_i64()
+                    == data_map
+                        .get(&3)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(workout_step_message_custom_target_power_high_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "% or watts",
+                        value,
+                    )?);
+                } else {
+                    fields.push(workout_step_message_custom_target_value_high_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                }
             }
             7 => {
                 fields.push(workout_step_message_intensity_field(
@@ -38928,44 +39554,287 @@ fn workout_step_message(
                 )?);
             }
             20 => {
-                fields.push(workout_step_message_secondary_target_value_field(
-                    mesg_num,
-                    accumlators,
-                    data_map,
-                    false,
-                    1.000000,
-                    0.000000,
-                    "",
-                    value,
-                )?);
+                if WktStepTarget::Speed.as_i64()
+                    == data_map
+                        .get(&19)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(workout_step_message_secondary_target_speed_zone_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else if WktStepTarget::HeartRate.as_i64()
+                    == data_map
+                        .get(&19)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(workout_step_message_secondary_target_hr_zone_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else if WktStepTarget::Cadence.as_i64()
+                    == data_map
+                        .get(&19)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(workout_step_message_secondary_target_cadence_zone_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else if WktStepTarget::Power.as_i64()
+                    == data_map
+                        .get(&19)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(workout_step_message_secondary_target_power_zone_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else if WktStepTarget::SwimStroke.as_i64()
+                    == data_map
+                        .get(&19)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(workout_step_message_secondary_target_stroke_type_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else {
+                    fields.push(workout_step_message_secondary_target_value_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                }
             }
             21 => {
-                fields.push(
-                    workout_step_message_secondary_custom_target_value_low_field(
-                        mesg_num,
-                        accumlators,
-                        data_map,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?,
-                );
+                if WktStepTarget::Speed.as_i64()
+                    == data_map
+                        .get(&19)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(
+                        workout_step_message_secondary_custom_target_speed_low_field(
+                            mesg_num,
+                            accumlators,
+                            data_map,
+                            false,
+                            1000.000000,
+                            0.000000,
+                            "m/s",
+                            value,
+                        )?,
+                    );
+                } else if WktStepTarget::HeartRate.as_i64()
+                    == data_map
+                        .get(&19)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(
+                        workout_step_message_secondary_custom_target_heart_rate_low_field(
+                            mesg_num,
+                            accumlators,
+                            data_map,
+                            false,
+                            1.000000,
+                            0.000000,
+                            "% or bpm",
+                            value,
+                        )?,
+                    );
+                } else if WktStepTarget::Cadence.as_i64()
+                    == data_map
+                        .get(&19)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(
+                        workout_step_message_secondary_custom_target_cadence_low_field(
+                            mesg_num,
+                            accumlators,
+                            data_map,
+                            false,
+                            1.000000,
+                            0.000000,
+                            "rpm",
+                            value,
+                        )?,
+                    );
+                } else if WktStepTarget::Power.as_i64()
+                    == data_map
+                        .get(&19)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(
+                        workout_step_message_secondary_custom_target_power_low_field(
+                            mesg_num,
+                            accumlators,
+                            data_map,
+                            false,
+                            1.000000,
+                            0.000000,
+                            "% or watts",
+                            value,
+                        )?,
+                    );
+                } else {
+                    fields.push(
+                        workout_step_message_secondary_custom_target_value_low_field(
+                            mesg_num,
+                            accumlators,
+                            data_map,
+                            false,
+                            1.000000,
+                            0.000000,
+                            "",
+                            value,
+                        )?,
+                    );
+                }
             }
             22 => {
-                fields.push(
-                    workout_step_message_secondary_custom_target_value_high_field(
-                        mesg_num,
-                        accumlators,
-                        data_map,
-                        false,
-                        1.000000,
-                        0.000000,
-                        "",
-                        value,
-                    )?,
-                );
+                if WktStepTarget::Speed.as_i64()
+                    == data_map
+                        .get(&19)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(
+                        workout_step_message_secondary_custom_target_speed_high_field(
+                            mesg_num,
+                            accumlators,
+                            data_map,
+                            false,
+                            1000.000000,
+                            0.000000,
+                            "m/s",
+                            value,
+                        )?,
+                    );
+                } else if WktStepTarget::HeartRate.as_i64()
+                    == data_map
+                        .get(&19)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(
+                        workout_step_message_secondary_custom_target_heart_rate_high_field(
+                            mesg_num,
+                            accumlators,
+                            data_map,
+                            false,
+                            1.000000,
+                            0.000000,
+                            "% or bpm",
+                            value,
+                        )?,
+                    );
+                } else if WktStepTarget::Cadence.as_i64()
+                    == data_map
+                        .get(&19)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(
+                        workout_step_message_secondary_custom_target_cadence_high_field(
+                            mesg_num,
+                            accumlators,
+                            data_map,
+                            false,
+                            1.000000,
+                            0.000000,
+                            "rpm",
+                            value,
+                        )?,
+                    );
+                } else if WktStepTarget::Power.as_i64()
+                    == data_map
+                        .get(&19)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(
+                        workout_step_message_secondary_custom_target_power_high_field(
+                            mesg_num,
+                            accumlators,
+                            data_map,
+                            false,
+                            1.000000,
+                            0.000000,
+                            "% or watts",
+                            value,
+                        )?,
+                    );
+                } else {
+                    fields.push(
+                        workout_step_message_secondary_custom_target_value_high_field(
+                            mesg_num,
+                            accumlators,
+                            data_map,
+                            false,
+                            1.000000,
+                            0.000000,
+                            "",
+                            value,
+                        )?,
+                    );
+                }
             }
             254 => {
                 fields.push(workout_step_message_message_index_field(
@@ -39044,296 +39913,6 @@ fn workout_step_message_duration_value_field(
     units: &'static str,
     value: Value,
 ) -> Result<FitDataField> {
-    if WktStepDuration::Time.as_i64()
-        == data_map
-            .get(&1)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return workout_step_message_duration_time_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1000.000000,
-            0.000000,
-            "s",
-            value,
-        );
-    } else if WktStepDuration::RepetitionTime.as_i64()
-        == data_map
-            .get(&1)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return workout_step_message_duration_time_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1000.000000,
-            0.000000,
-            "s",
-            value,
-        );
-    } else if WktStepDuration::Distance.as_i64()
-        == data_map
-            .get(&1)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return workout_step_message_duration_distance_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            100.000000,
-            0.000000,
-            "m",
-            value,
-        );
-    } else if WktStepDuration::HrLessThan.as_i64()
-        == data_map
-            .get(&1)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return workout_step_message_duration_hr_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "% or bpm",
-            value,
-        );
-    } else if WktStepDuration::HrGreaterThan.as_i64()
-        == data_map
-            .get(&1)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return workout_step_message_duration_hr_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "% or bpm",
-            value,
-        );
-    } else if WktStepDuration::Calories.as_i64()
-        == data_map
-            .get(&1)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return workout_step_message_duration_calories_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "calories",
-            value,
-        );
-    } else if WktStepDuration::RepeatUntilStepsCmplt.as_i64()
-        == data_map
-            .get(&1)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return workout_step_message_duration_step_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    } else if WktStepDuration::RepeatUntilTime.as_i64()
-        == data_map
-            .get(&1)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return workout_step_message_duration_step_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    } else if WktStepDuration::RepeatUntilDistance.as_i64()
-        == data_map
-            .get(&1)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return workout_step_message_duration_step_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    } else if WktStepDuration::RepeatUntilCalories.as_i64()
-        == data_map
-            .get(&1)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return workout_step_message_duration_step_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    } else if WktStepDuration::RepeatUntilHrLessThan.as_i64()
-        == data_map
-            .get(&1)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return workout_step_message_duration_step_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    } else if WktStepDuration::RepeatUntilHrGreaterThan.as_i64()
-        == data_map
-            .get(&1)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return workout_step_message_duration_step_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    } else if WktStepDuration::RepeatUntilPowerLessThan.as_i64()
-        == data_map
-            .get(&1)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return workout_step_message_duration_step_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    } else if WktStepDuration::RepeatUntilPowerGreaterThan.as_i64()
-        == data_map
-            .get(&1)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return workout_step_message_duration_step_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    } else if WktStepDuration::PowerLessThan.as_i64()
-        == data_map
-            .get(&1)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return workout_step_message_duration_power_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "% or watts",
-            value,
-        );
-    } else if WktStepDuration::PowerGreaterThan.as_i64()
-        == data_map
-            .get(&1)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return workout_step_message_duration_power_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "% or watts",
-            value,
-        );
-    } else if WktStepDuration::Reps.as_i64()
-        == data_map
-            .get(&1)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return workout_step_message_duration_reps_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    }
     let value = if accumulate {
         calculate_cumulative_value(accumlators, mesg_num.as_u16(), 2, value)?
     } else {
@@ -39559,228 +40138,6 @@ fn workout_step_message_target_value_field(
     units: &'static str,
     value: Value,
 ) -> Result<FitDataField> {
-    if WktStepTarget::Speed.as_i64()
-        == data_map
-            .get(&3)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return workout_step_message_target_speed_zone_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    } else if WktStepTarget::HeartRate.as_i64()
-        == data_map
-            .get(&3)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return workout_step_message_target_hr_zone_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    } else if WktStepTarget::Cadence.as_i64()
-        == data_map
-            .get(&3)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return workout_step_message_target_cadence_zone_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    } else if WktStepTarget::Power.as_i64()
-        == data_map
-            .get(&3)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return workout_step_message_target_power_zone_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    } else if WktStepDuration::RepeatUntilStepsCmplt.as_i64()
-        == data_map
-            .get(&1)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return workout_step_message_repeat_steps_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    } else if WktStepDuration::RepeatUntilTime.as_i64()
-        == data_map
-            .get(&1)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return workout_step_message_repeat_time_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1000.000000,
-            0.000000,
-            "s",
-            value,
-        );
-    } else if WktStepDuration::RepeatUntilDistance.as_i64()
-        == data_map
-            .get(&1)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return workout_step_message_repeat_distance_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            100.000000,
-            0.000000,
-            "m",
-            value,
-        );
-    } else if WktStepDuration::RepeatUntilCalories.as_i64()
-        == data_map
-            .get(&1)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return workout_step_message_repeat_calories_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "calories",
-            value,
-        );
-    } else if WktStepDuration::RepeatUntilHrLessThan.as_i64()
-        == data_map
-            .get(&1)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return workout_step_message_repeat_hr_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "% or bpm",
-            value,
-        );
-    } else if WktStepDuration::RepeatUntilHrGreaterThan.as_i64()
-        == data_map
-            .get(&1)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return workout_step_message_repeat_hr_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "% or bpm",
-            value,
-        );
-    } else if WktStepDuration::RepeatUntilPowerLessThan.as_i64()
-        == data_map
-            .get(&1)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return workout_step_message_repeat_power_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "% or watts",
-            value,
-        );
-    } else if WktStepDuration::RepeatUntilPowerGreaterThan.as_i64()
-        == data_map
-            .get(&1)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return workout_step_message_repeat_power_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "% or watts",
-            value,
-        );
-    } else if WktStepTarget::SwimStroke.as_i64()
-        == data_map
-            .get(&3)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return workout_step_message_target_stroke_type_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    }
     let value = if accumulate {
         calculate_cumulative_value(accumlators, mesg_num.as_u16(), 4, value)?
     } else {
@@ -40081,75 +40438,6 @@ fn workout_step_message_custom_target_value_low_field(
     units: &'static str,
     value: Value,
 ) -> Result<FitDataField> {
-    if WktStepTarget::Speed.as_i64()
-        == data_map
-            .get(&3)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return workout_step_message_custom_target_speed_low_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1000.000000,
-            0.000000,
-            "m/s",
-            value,
-        );
-    } else if WktStepTarget::HeartRate.as_i64()
-        == data_map
-            .get(&3)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return workout_step_message_custom_target_heart_rate_low_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "% or bpm",
-            value,
-        );
-    } else if WktStepTarget::Cadence.as_i64()
-        == data_map
-            .get(&3)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return workout_step_message_custom_target_cadence_low_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "rpm",
-            value,
-        );
-    } else if WktStepTarget::Power.as_i64()
-        == data_map
-            .get(&3)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return workout_step_message_custom_target_power_low_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "% or watts",
-            value,
-        );
-    }
     let value = if accumulate {
         calculate_cumulative_value(accumlators, mesg_num.as_u16(), 5, value)?
     } else {
@@ -40275,75 +40563,6 @@ fn workout_step_message_custom_target_value_high_field(
     units: &'static str,
     value: Value,
 ) -> Result<FitDataField> {
-    if WktStepTarget::Speed.as_i64()
-        == data_map
-            .get(&3)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return workout_step_message_custom_target_speed_high_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1000.000000,
-            0.000000,
-            "m/s",
-            value,
-        );
-    } else if WktStepTarget::HeartRate.as_i64()
-        == data_map
-            .get(&3)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return workout_step_message_custom_target_heart_rate_high_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "% or bpm",
-            value,
-        );
-    } else if WktStepTarget::Cadence.as_i64()
-        == data_map
-            .get(&3)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return workout_step_message_custom_target_cadence_high_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "rpm",
-            value,
-        );
-    } else if WktStepTarget::Power.as_i64()
-        == data_map
-            .get(&3)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return workout_step_message_custom_target_power_high_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "% or watts",
-            value,
-        );
-    }
     let value = if accumulate {
         calculate_cumulative_value(accumlators, mesg_num.as_u16(), 6, value)?
     } else {
@@ -40669,92 +40888,6 @@ fn workout_step_message_secondary_target_value_field(
     units: &'static str,
     value: Value,
 ) -> Result<FitDataField> {
-    if WktStepTarget::Speed.as_i64()
-        == data_map
-            .get(&19)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return workout_step_message_secondary_target_speed_zone_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    } else if WktStepTarget::HeartRate.as_i64()
-        == data_map
-            .get(&19)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return workout_step_message_secondary_target_hr_zone_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    } else if WktStepTarget::Cadence.as_i64()
-        == data_map
-            .get(&19)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return workout_step_message_secondary_target_cadence_zone_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    } else if WktStepTarget::Power.as_i64()
-        == data_map
-            .get(&19)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return workout_step_message_secondary_target_power_zone_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    } else if WktStepTarget::SwimStroke.as_i64()
-        == data_map
-            .get(&19)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return workout_step_message_secondary_target_stroke_type_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    }
     let value = if accumulate {
         calculate_cumulative_value(accumlators, mesg_num.as_u16(), 20, value)?
     } else {
@@ -40905,75 +41038,6 @@ fn workout_step_message_secondary_custom_target_value_low_field(
     units: &'static str,
     value: Value,
 ) -> Result<FitDataField> {
-    if WktStepTarget::Speed.as_i64()
-        == data_map
-            .get(&19)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return workout_step_message_secondary_custom_target_speed_low_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1000.000000,
-            0.000000,
-            "m/s",
-            value,
-        );
-    } else if WktStepTarget::HeartRate.as_i64()
-        == data_map
-            .get(&19)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return workout_step_message_secondary_custom_target_heart_rate_low_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "% or bpm",
-            value,
-        );
-    } else if WktStepTarget::Cadence.as_i64()
-        == data_map
-            .get(&19)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return workout_step_message_secondary_custom_target_cadence_low_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "rpm",
-            value,
-        );
-    } else if WktStepTarget::Power.as_i64()
-        == data_map
-            .get(&19)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return workout_step_message_secondary_custom_target_power_low_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "% or watts",
-            value,
-        );
-    }
     let value = if accumulate {
         calculate_cumulative_value(accumlators, mesg_num.as_u16(), 21, value)?
     } else {
@@ -41099,75 +41163,6 @@ fn workout_step_message_secondary_custom_target_value_high_field(
     units: &'static str,
     value: Value,
 ) -> Result<FitDataField> {
-    if WktStepTarget::Speed.as_i64()
-        == data_map
-            .get(&19)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return workout_step_message_secondary_custom_target_speed_high_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1000.000000,
-            0.000000,
-            "m/s",
-            value,
-        );
-    } else if WktStepTarget::HeartRate.as_i64()
-        == data_map
-            .get(&19)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return workout_step_message_secondary_custom_target_heart_rate_high_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "% or bpm",
-            value,
-        );
-    } else if WktStepTarget::Cadence.as_i64()
-        == data_map
-            .get(&19)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return workout_step_message_secondary_custom_target_cadence_high_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "rpm",
-            value,
-        );
-    } else if WktStepTarget::Power.as_i64()
-        == data_map
-            .get(&19)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return workout_step_message_secondary_custom_target_power_high_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "% or watts",
-            value,
-        );
-    }
     let value = if accumulate {
         calculate_cumulative_value(accumlators, mesg_num.as_u16(), 22, value)?
     } else {
@@ -41496,16 +41491,103 @@ fn schedule_message(
             }
             1 => {
                 // Corresponds to file_id of scheduled workout / course.
-                fields.push(schedule_message_product_field(
-                    mesg_num,
-                    accumlators,
-                    data_map,
-                    false,
-                    1.000000,
-                    0.000000,
-                    "",
-                    value,
-                )?);
+                if Manufacturer::FaveroElectronics.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(schedule_message_favero_product_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else if Manufacturer::Garmin.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(schedule_message_garmin_product_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else if Manufacturer::Dynastream.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(schedule_message_garmin_product_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else if Manufacturer::DynastreamOem.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(schedule_message_garmin_product_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else if Manufacturer::Tacx.as_i64()
+                    == data_map
+                        .get(&0)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(schedule_message_garmin_product_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                } else {
+                    fields.push(schedule_message_product_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value,
+                    )?);
+                }
             }
             2 => {
                 // Corresponds to file_id of scheduled workout / course.
@@ -41610,92 +41692,6 @@ fn schedule_message_product_field(
     units: &'static str,
     value: Value,
 ) -> Result<FitDataField> {
-    if Manufacturer::FaveroElectronics.as_i64()
-        == data_map
-            .get(&0)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return schedule_message_favero_product_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    } else if Manufacturer::Garmin.as_i64()
-        == data_map
-            .get(&0)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return schedule_message_garmin_product_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    } else if Manufacturer::Dynastream.as_i64()
-        == data_map
-            .get(&0)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return schedule_message_garmin_product_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    } else if Manufacturer::DynastreamOem.as_i64()
-        == data_map
-            .get(&0)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return schedule_message_garmin_product_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    } else if Manufacturer::Tacx.as_i64()
-        == data_map
-            .get(&0)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return schedule_message_garmin_product_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "",
-            value,
-        );
-    }
     let value = if accumulate {
         calculate_cumulative_value(accumlators, mesg_num.as_u16(), 1, value)?
     } else {
@@ -43485,16 +43481,86 @@ fn monitoring_message(
             }
             3 => {
                 // Accumulated cycles. Maintained by MonitoringReader for each activity_type. See SDK documentation.
-                fields.push(monitoring_message_cycles_field(
-                    mesg_num,
-                    accumlators,
-                    data_map,
-                    false,
-                    2.000000,
-                    0.000000,
-                    "cycles",
-                    value,
-                )?);
+                if ActivityType::Walking.as_i64()
+                    == data_map
+                        .get(&5)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(monitoring_message_steps_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "steps",
+                        value,
+                    )?);
+                } else if ActivityType::Running.as_i64()
+                    == data_map
+                        .get(&5)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(monitoring_message_steps_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "steps",
+                        value,
+                    )?);
+                } else if ActivityType::Cycling.as_i64()
+                    == data_map
+                        .get(&5)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(monitoring_message_strokes_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        2.000000,
+                        0.000000,
+                        "strokes",
+                        value,
+                    )?);
+                } else if ActivityType::Swimming.as_i64()
+                    == data_map
+                        .get(&5)
+                        .map(|v| v.try_into().ok())
+                        .flatten()
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(monitoring_message_strokes_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        2.000000,
+                        0.000000,
+                        "strokes",
+                        value,
+                    )?);
+                } else {
+                    fields.push(monitoring_message_cycles_field(
+                        mesg_num,
+                        accumlators,
+                        data_map,
+                        false,
+                        2.000000,
+                        0.000000,
+                        "cycles",
+                        value,
+                    )?);
+                }
             }
             4 => {
                 fields.push(monitoring_message_active_time_field(
@@ -43659,8 +43725,8 @@ fn monitoring_message(
             }
             24 => {
                 // Indicates single type / intensity for duration since last monitoring message.
-                let component_values = expand_components(value, &[5, 3]);
-                data_map.insert(5, component_values[0].clone());
+                let [activity_type, intensity] = expand_components(value, &[5, 3])[..];
+                data_map.insert(5, activity_type.clone());
                 fields.push(monitoring_message_activity_type_field(
                     mesg_num,
                     accumlators,
@@ -43669,9 +43735,9 @@ fn monitoring_message(
                     1.000000,
                     0.000000,
                     "",
-                    component_values[0].clone(),
+                    activity_type,
                 )?);
-                data_map.insert(28, component_values[1].clone());
+                data_map.insert(28, intensity.clone());
                 fields.push(monitoring_message_intensity_field(
                     mesg_num,
                     accumlators,
@@ -43680,7 +43746,7 @@ fn monitoring_message(
                     1.000000,
                     0.000000,
                     "",
-                    component_values[1].clone(),
+                    intensity,
                 )?);
             }
             25 => {
@@ -43906,75 +43972,6 @@ fn monitoring_message_cycles_field(
     units: &'static str,
     value: Value,
 ) -> Result<FitDataField> {
-    if ActivityType::Walking.as_i64()
-        == data_map
-            .get(&5)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return monitoring_message_steps_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "steps",
-            value,
-        );
-    } else if ActivityType::Running.as_i64()
-        == data_map
-            .get(&5)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return monitoring_message_steps_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            1.000000,
-            0.000000,
-            "steps",
-            value,
-        );
-    } else if ActivityType::Cycling.as_i64()
-        == data_map
-            .get(&5)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return monitoring_message_strokes_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            2.000000,
-            0.000000,
-            "strokes",
-            value,
-        );
-    } else if ActivityType::Swimming.as_i64()
-        == data_map
-            .get(&5)
-            .map(|v| v.try_into().ok())
-            .flatten()
-            .unwrap_or(-1i64)
-    {
-        return monitoring_message_strokes_field(
-            mesg_num,
-            accumlators,
-            data_map,
-            false,
-            2.000000,
-            0.000000,
-            "strokes",
-            value,
-        );
-    }
     let value = if accumulate {
         calculate_cumulative_value(accumlators, mesg_num.as_u16(), 3, value)?
     } else {
@@ -44365,31 +44362,6 @@ fn monitoring_message_active_calories_field(
         value,
     )
 }
-fn monitoring_message_current_activity_type_intensity_field(
-    mesg_num: MesgNum,
-    accumlators: &mut HashMap<u32, Value>,
-    data_map: &HashMap<u8, Value>,
-    accumulate: bool,
-    scale: f64,
-    offset: f64,
-    units: &'static str,
-    value: Value,
-) -> Result<FitDataField> {
-    let value = if accumulate {
-        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 24, value)?
-    } else {
-        value
-    };
-    data_field_with_info(
-        24,
-        "current_activity_type_intensity",
-        FieldDataType::Byte,
-        scale,
-        offset,
-        units,
-        value,
-    )
-}
 fn monitoring_message_timestamp_min_8_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
@@ -44688,8 +44660,8 @@ fn hr_message(
                 )?);
             }
             1 => {
-                let component_values = expand_components(value, &[8]);
-                data_map.insert(0, component_values[0].clone());
+                let [fractional_timestamp] = expand_components(value, &[8])[..];
+                data_map.insert(0, fractional_timestamp.clone());
                 fields.push(hr_message_fractional_timestamp_field(
                     mesg_num,
                     accumlators,
@@ -44698,7 +44670,7 @@ fn hr_message(
                     256.000000,
                     0.000000,
                     "s",
-                    component_values[0].clone(),
+                    fractional_timestamp,
                 )?);
             }
             6 => {
@@ -44726,9 +44698,9 @@ fn hr_message(
                 )?);
             }
             10 => {
-                let component_values =
-                    expand_components(value, &[12, 12, 12, 12, 12, 12, 12, 12, 12, 12]);
-                data_map.insert(9, component_values[0].clone());
+                let [event_timestamp, event_timestamp, event_timestamp, event_timestamp, event_timestamp, event_timestamp, event_timestamp, event_timestamp, event_timestamp, event_timestamp] =
+                    expand_components(value, &[12, 12, 12, 12, 12, 12, 12, 12, 12, 12])[..];
+                data_map.insert(9, event_timestamp.clone());
                 fields.push(hr_message_event_timestamp_field(
                     mesg_num,
                     accumlators,
@@ -44737,9 +44709,9 @@ fn hr_message(
                     1024.000000,
                     0.000000,
                     "s",
-                    component_values[0].clone(),
+                    event_timestamp,
                 )?);
-                data_map.insert(9, component_values[1].clone());
+                data_map.insert(9, event_timestamp.clone());
                 fields.push(hr_message_event_timestamp_field(
                     mesg_num,
                     accumlators,
@@ -44748,9 +44720,9 @@ fn hr_message(
                     1024.000000,
                     0.000000,
                     "",
-                    component_values[1].clone(),
+                    event_timestamp,
                 )?);
-                data_map.insert(9, component_values[2].clone());
+                data_map.insert(9, event_timestamp.clone());
                 fields.push(hr_message_event_timestamp_field(
                     mesg_num,
                     accumlators,
@@ -44759,9 +44731,9 @@ fn hr_message(
                     1024.000000,
                     0.000000,
                     "",
-                    component_values[2].clone(),
+                    event_timestamp,
                 )?);
-                data_map.insert(9, component_values[3].clone());
+                data_map.insert(9, event_timestamp.clone());
                 fields.push(hr_message_event_timestamp_field(
                     mesg_num,
                     accumlators,
@@ -44770,9 +44742,9 @@ fn hr_message(
                     1024.000000,
                     0.000000,
                     "",
-                    component_values[3].clone(),
+                    event_timestamp,
                 )?);
-                data_map.insert(9, component_values[4].clone());
+                data_map.insert(9, event_timestamp.clone());
                 fields.push(hr_message_event_timestamp_field(
                     mesg_num,
                     accumlators,
@@ -44781,9 +44753,9 @@ fn hr_message(
                     1024.000000,
                     0.000000,
                     "",
-                    component_values[4].clone(),
+                    event_timestamp,
                 )?);
-                data_map.insert(9, component_values[5].clone());
+                data_map.insert(9, event_timestamp.clone());
                 fields.push(hr_message_event_timestamp_field(
                     mesg_num,
                     accumlators,
@@ -44792,9 +44764,9 @@ fn hr_message(
                     1024.000000,
                     0.000000,
                     "",
-                    component_values[5].clone(),
+                    event_timestamp,
                 )?);
-                data_map.insert(9, component_values[6].clone());
+                data_map.insert(9, event_timestamp.clone());
                 fields.push(hr_message_event_timestamp_field(
                     mesg_num,
                     accumlators,
@@ -44803,9 +44775,9 @@ fn hr_message(
                     1024.000000,
                     0.000000,
                     "",
-                    component_values[6].clone(),
+                    event_timestamp,
                 )?);
-                data_map.insert(9, component_values[7].clone());
+                data_map.insert(9, event_timestamp.clone());
                 fields.push(hr_message_event_timestamp_field(
                     mesg_num,
                     accumlators,
@@ -44814,9 +44786,9 @@ fn hr_message(
                     1024.000000,
                     0.000000,
                     "",
-                    component_values[7].clone(),
+                    event_timestamp,
                 )?);
-                data_map.insert(9, component_values[8].clone());
+                data_map.insert(9, event_timestamp.clone());
                 fields.push(hr_message_event_timestamp_field(
                     mesg_num,
                     accumlators,
@@ -44825,9 +44797,9 @@ fn hr_message(
                     1024.000000,
                     0.000000,
                     "",
-                    component_values[8].clone(),
+                    event_timestamp,
                 )?);
-                data_map.insert(9, component_values[9].clone());
+                data_map.insert(9, event_timestamp.clone());
                 fields.push(hr_message_event_timestamp_field(
                     mesg_num,
                     accumlators,
@@ -44836,7 +44808,7 @@ fn hr_message(
                     1024.000000,
                     0.000000,
                     "",
-                    component_values[9].clone(),
+                    event_timestamp,
                 )?);
             }
             253 => {
@@ -44875,31 +44847,6 @@ fn hr_message_fractional_timestamp_field(
         0,
         "fractional_timestamp",
         FieldDataType::UInt16,
-        scale,
-        offset,
-        units,
-        value,
-    )
-}
-fn hr_message_time256_field(
-    mesg_num: MesgNum,
-    accumlators: &mut HashMap<u32, Value>,
-    data_map: &HashMap<u8, Value>,
-    accumulate: bool,
-    scale: f64,
-    offset: f64,
-    units: &'static str,
-    value: Value,
-) -> Result<FitDataField> {
-    let value = if accumulate {
-        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 1, value)?
-    } else {
-        value
-    };
-    data_field_with_info(
-        1,
-        "time256",
-        FieldDataType::UInt8,
         scale,
         offset,
         units,
@@ -44950,31 +44897,6 @@ fn hr_message_event_timestamp_field(
         9,
         "event_timestamp",
         FieldDataType::UInt32,
-        scale,
-        offset,
-        units,
-        value,
-    )
-}
-fn hr_message_event_timestamp_12_field(
-    mesg_num: MesgNum,
-    accumlators: &mut HashMap<u32, Value>,
-    data_map: &HashMap<u8, Value>,
-    accumulate: bool,
-    scale: f64,
-    offset: f64,
-    units: &'static str,
-    value: Value,
-) -> Result<FitDataField> {
-    let value = if accumulate {
-        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 10, value)?
-    } else {
-        value
-    };
-    data_field_with_info(
-        10,
-        "event_timestamp_12",
-        FieldDataType::Byte,
         scale,
         offset,
         units,
@@ -45567,8 +45489,9 @@ fn ant_rx_message(
                 )?);
             }
             2 => {
-                let component_values = expand_components(value, &[8, 8, 8, 8, 8, 8, 8, 8, 8]);
-                data_map.insert(3, component_values[0].clone());
+                let [channel_number, data, data, data, data, data, data, data, data] =
+                    expand_components(value, &[8, 8, 8, 8, 8, 8, 8, 8, 8])[..];
+                data_map.insert(3, channel_number.clone());
                 fields.push(ant_rx_message_channel_number_field(
                     mesg_num,
                     accumlators,
@@ -45577,9 +45500,9 @@ fn ant_rx_message(
                     1.000000,
                     0.000000,
                     "",
-                    component_values[0].clone(),
+                    channel_number,
                 )?);
-                data_map.insert(4, component_values[1].clone());
+                data_map.insert(4, data.clone());
                 fields.push(ant_rx_message_data_field(
                     mesg_num,
                     accumlators,
@@ -45588,9 +45511,9 @@ fn ant_rx_message(
                     1.000000,
                     0.000000,
                     "",
-                    component_values[1].clone(),
+                    data,
                 )?);
-                data_map.insert(4, component_values[2].clone());
+                data_map.insert(4, data.clone());
                 fields.push(ant_rx_message_data_field(
                     mesg_num,
                     accumlators,
@@ -45599,9 +45522,9 @@ fn ant_rx_message(
                     1.000000,
                     0.000000,
                     "",
-                    component_values[2].clone(),
+                    data,
                 )?);
-                data_map.insert(4, component_values[3].clone());
+                data_map.insert(4, data.clone());
                 fields.push(ant_rx_message_data_field(
                     mesg_num,
                     accumlators,
@@ -45610,9 +45533,9 @@ fn ant_rx_message(
                     1.000000,
                     0.000000,
                     "",
-                    component_values[3].clone(),
+                    data,
                 )?);
-                data_map.insert(4, component_values[4].clone());
+                data_map.insert(4, data.clone());
                 fields.push(ant_rx_message_data_field(
                     mesg_num,
                     accumlators,
@@ -45621,9 +45544,9 @@ fn ant_rx_message(
                     1.000000,
                     0.000000,
                     "",
-                    component_values[4].clone(),
+                    data,
                 )?);
-                data_map.insert(4, component_values[5].clone());
+                data_map.insert(4, data.clone());
                 fields.push(ant_rx_message_data_field(
                     mesg_num,
                     accumlators,
@@ -45632,9 +45555,9 @@ fn ant_rx_message(
                     1.000000,
                     0.000000,
                     "",
-                    component_values[5].clone(),
+                    data,
                 )?);
-                data_map.insert(4, component_values[6].clone());
+                data_map.insert(4, data.clone());
                 fields.push(ant_rx_message_data_field(
                     mesg_num,
                     accumlators,
@@ -45643,9 +45566,9 @@ fn ant_rx_message(
                     1.000000,
                     0.000000,
                     "",
-                    component_values[6].clone(),
+                    data,
                 )?);
-                data_map.insert(4, component_values[7].clone());
+                data_map.insert(4, data.clone());
                 fields.push(ant_rx_message_data_field(
                     mesg_num,
                     accumlators,
@@ -45654,9 +45577,9 @@ fn ant_rx_message(
                     1.000000,
                     0.000000,
                     "",
-                    component_values[7].clone(),
+                    data,
                 )?);
-                data_map.insert(4, component_values[8].clone());
+                data_map.insert(4, data.clone());
                 fields.push(ant_rx_message_data_field(
                     mesg_num,
                     accumlators,
@@ -45665,7 +45588,7 @@ fn ant_rx_message(
                     1.000000,
                     0.000000,
                     "",
-                    component_values[8].clone(),
+                    data,
                 )?);
             }
             3 => {
@@ -45752,31 +45675,6 @@ fn ant_rx_message_mesg_id_field(
     data_field_with_info(
         1,
         "mesg_id",
-        FieldDataType::Byte,
-        scale,
-        offset,
-        units,
-        value,
-    )
-}
-fn ant_rx_message_mesg_data_field(
-    mesg_num: MesgNum,
-    accumlators: &mut HashMap<u32, Value>,
-    data_map: &HashMap<u8, Value>,
-    accumulate: bool,
-    scale: f64,
-    offset: f64,
-    units: &'static str,
-    value: Value,
-) -> Result<FitDataField> {
-    let value = if accumulate {
-        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 2, value)?
-    } else {
-        value
-    };
-    data_field_with_info(
-        2,
-        "mesg_data",
         FieldDataType::Byte,
         scale,
         offset,
@@ -45886,8 +45784,9 @@ fn ant_tx_message(
                 )?);
             }
             2 => {
-                let component_values = expand_components(value, &[8, 8, 8, 8, 8, 8, 8, 8, 8]);
-                data_map.insert(3, component_values[0].clone());
+                let [channel_number, data, data, data, data, data, data, data, data] =
+                    expand_components(value, &[8, 8, 8, 8, 8, 8, 8, 8, 8])[..];
+                data_map.insert(3, channel_number.clone());
                 fields.push(ant_tx_message_channel_number_field(
                     mesg_num,
                     accumlators,
@@ -45896,9 +45795,9 @@ fn ant_tx_message(
                     1.000000,
                     0.000000,
                     "",
-                    component_values[0].clone(),
+                    channel_number,
                 )?);
-                data_map.insert(4, component_values[1].clone());
+                data_map.insert(4, data.clone());
                 fields.push(ant_tx_message_data_field(
                     mesg_num,
                     accumlators,
@@ -45907,9 +45806,9 @@ fn ant_tx_message(
                     1.000000,
                     0.000000,
                     "",
-                    component_values[1].clone(),
+                    data,
                 )?);
-                data_map.insert(4, component_values[2].clone());
+                data_map.insert(4, data.clone());
                 fields.push(ant_tx_message_data_field(
                     mesg_num,
                     accumlators,
@@ -45918,9 +45817,9 @@ fn ant_tx_message(
                     1.000000,
                     0.000000,
                     "",
-                    component_values[2].clone(),
+                    data,
                 )?);
-                data_map.insert(4, component_values[3].clone());
+                data_map.insert(4, data.clone());
                 fields.push(ant_tx_message_data_field(
                     mesg_num,
                     accumlators,
@@ -45929,9 +45828,9 @@ fn ant_tx_message(
                     1.000000,
                     0.000000,
                     "",
-                    component_values[3].clone(),
+                    data,
                 )?);
-                data_map.insert(4, component_values[4].clone());
+                data_map.insert(4, data.clone());
                 fields.push(ant_tx_message_data_field(
                     mesg_num,
                     accumlators,
@@ -45940,9 +45839,9 @@ fn ant_tx_message(
                     1.000000,
                     0.000000,
                     "",
-                    component_values[4].clone(),
+                    data,
                 )?);
-                data_map.insert(4, component_values[5].clone());
+                data_map.insert(4, data.clone());
                 fields.push(ant_tx_message_data_field(
                     mesg_num,
                     accumlators,
@@ -45951,9 +45850,9 @@ fn ant_tx_message(
                     1.000000,
                     0.000000,
                     "",
-                    component_values[5].clone(),
+                    data,
                 )?);
-                data_map.insert(4, component_values[6].clone());
+                data_map.insert(4, data.clone());
                 fields.push(ant_tx_message_data_field(
                     mesg_num,
                     accumlators,
@@ -45962,9 +45861,9 @@ fn ant_tx_message(
                     1.000000,
                     0.000000,
                     "",
-                    component_values[6].clone(),
+                    data,
                 )?);
-                data_map.insert(4, component_values[7].clone());
+                data_map.insert(4, data.clone());
                 fields.push(ant_tx_message_data_field(
                     mesg_num,
                     accumlators,
@@ -45973,9 +45872,9 @@ fn ant_tx_message(
                     1.000000,
                     0.000000,
                     "",
-                    component_values[7].clone(),
+                    data,
                 )?);
-                data_map.insert(4, component_values[8].clone());
+                data_map.insert(4, data.clone());
                 fields.push(ant_tx_message_data_field(
                     mesg_num,
                     accumlators,
@@ -45984,7 +45883,7 @@ fn ant_tx_message(
                     1.000000,
                     0.000000,
                     "",
-                    component_values[8].clone(),
+                    data,
                 )?);
             }
             3 => {
@@ -46071,31 +45970,6 @@ fn ant_tx_message_mesg_id_field(
     data_field_with_info(
         1,
         "mesg_id",
-        FieldDataType::Byte,
-        scale,
-        offset,
-        units,
-        value,
-    )
-}
-fn ant_tx_message_mesg_data_field(
-    mesg_num: MesgNum,
-    accumlators: &mut HashMap<u32, Value>,
-    data_map: &HashMap<u8, Value>,
-    accumulate: bool,
-    scale: f64,
-    offset: f64,
-    units: &'static str,
-    value: Value,
-) -> Result<FitDataField> {
-    let value = if accumulate {
-        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 2, value)?
-    } else {
-        value
-    };
-    data_field_with_info(
-        2,
-        "mesg_data",
         FieldDataType::Byte,
         scale,
         offset,
@@ -46357,8 +46231,8 @@ fn exd_data_field_configuration_message(
                 )?);
             }
             1 => {
-                let component_values = expand_components(value, &[4, 4]);
-                data_map.insert(2, component_values[0].clone());
+                let [field_id, concept_count] = expand_components(value, &[4, 4])[..];
+                data_map.insert(2, field_id.clone());
                 fields.push(exd_data_field_configuration_message_field_id_field(
                     mesg_num,
                     accumlators,
@@ -46367,9 +46241,9 @@ fn exd_data_field_configuration_message(
                     1.000000,
                     0.000000,
                     "",
-                    component_values[0].clone(),
+                    field_id,
                 )?);
-                data_map.insert(3, component_values[1].clone());
+                data_map.insert(3, concept_count.clone());
                 fields.push(exd_data_field_configuration_message_concept_count_field(
                     mesg_num,
                     accumlators,
@@ -46378,7 +46252,7 @@ fn exd_data_field_configuration_message(
                     1.000000,
                     0.000000,
                     "",
-                    component_values[1].clone(),
+                    concept_count,
                 )?);
             }
             2 => {
@@ -46453,31 +46327,6 @@ fn exd_data_field_configuration_message_screen_index_field(
         0,
         "screen_index",
         FieldDataType::UInt8,
-        scale,
-        offset,
-        units,
-        value,
-    )
-}
-fn exd_data_field_configuration_message_concept_field_field(
-    mesg_num: MesgNum,
-    accumlators: &mut HashMap<u32, Value>,
-    data_map: &HashMap<u8, Value>,
-    accumulate: bool,
-    scale: f64,
-    offset: f64,
-    units: &'static str,
-    value: Value,
-) -> Result<FitDataField> {
-    let value = if accumulate {
-        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 1, value)?
-    } else {
-        value
-    };
-    data_field_with_info(
-        1,
-        "concept_field",
-        FieldDataType::Byte,
         scale,
         offset,
         units,
@@ -46607,8 +46456,8 @@ fn exd_data_concept_configuration_message(
                 )?);
             }
             1 => {
-                let component_values = expand_components(value, &[4, 4]);
-                data_map.insert(2, component_values[0].clone());
+                let [field_id, concept_index] = expand_components(value, &[4, 4])[..];
+                data_map.insert(2, field_id.clone());
                 fields.push(exd_data_concept_configuration_message_field_id_field(
                     mesg_num,
                     accumlators,
@@ -46617,9 +46466,9 @@ fn exd_data_concept_configuration_message(
                     1.000000,
                     0.000000,
                     "",
-                    component_values[0].clone(),
+                    field_id,
                 )?);
-                data_map.insert(3, component_values[1].clone());
+                data_map.insert(3, concept_index.clone());
                 fields.push(exd_data_concept_configuration_message_concept_index_field(
                     mesg_num,
                     accumlators,
@@ -46628,7 +46477,7 @@ fn exd_data_concept_configuration_message(
                     1.000000,
                     0.000000,
                     "",
-                    component_values[1].clone(),
+                    concept_index,
                 )?);
             }
             2 => {
@@ -46763,31 +46612,6 @@ fn exd_data_concept_configuration_message_screen_index_field(
         0,
         "screen_index",
         FieldDataType::UInt8,
-        scale,
-        offset,
-        units,
-        value,
-    )
-}
-fn exd_data_concept_configuration_message_concept_field_field(
-    mesg_num: MesgNum,
-    accumlators: &mut HashMap<u32, Value>,
-    data_map: &HashMap<u8, Value>,
-    accumulate: bool,
-    scale: f64,
-    offset: f64,
-    units: &'static str,
-    value: Value,
-) -> Result<FitDataField> {
-    let value = if accumulate {
-        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 1, value)?
-    } else {
-        value
-    };
-    data_field_with_info(
-        1,
-        "concept_field",
-        FieldDataType::Byte,
         scale,
         offset,
         units,

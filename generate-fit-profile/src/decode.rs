@@ -4,18 +4,13 @@ use std::collections::HashSet;
 use std::fs::File;
 use std::io::prelude::*;
 
+// TODO: make the larger "write" and "generate" functinos
+// not be part of the impl and just pass the field/message
+// in a parameter
+
 impl MessageDefinition {
     fn function_name(&self) -> String {
         format!("{}_message", self.name())
-    }
-
-    fn get_field_by_name(&self, name: &str) -> &MessageFieldDefinition {
-        for field in self.field_map().values() {
-            if field.name() == name {
-                return field;
-            }
-        }
-        panic!("No field with name: {:?}", name);
     }
 
     fn write_decode_function_def(&self, out: &mut File) -> Result<(), std::io::Error> {
@@ -33,62 +28,7 @@ impl MessageDefinition {
         writeln!(out, "match def_num {{")?;
         for field in self.field_map().values() {
             writeln!(out, "{0} => {{", field.def_number())?;
-            if let Some(v) = field.comment() {
-                writeln!(out, "// {}", v)?;
-            }
-            if !field.components().is_empty() {
-                writeln!(
-                    out,
-                    "let component_values = expand_components(value, &[{}]);",
-                    field
-                        .components()
-                        .iter()
-                        .map(|c| c.bits().to_string())
-                        .collect::<Vec<String>>()
-                        .join(",")
-                )?;
-                for (idx, comp) in field.components().iter().enumerate() {
-                    let dest_def_number = self.get_field_by_name(comp.name()).def_number();
-
-                    // --------------------------------------------------------
-                    // TODO: components expanding into array fields are not
-                    //       handled correctly see
-                    //       hr_message_event_timestamp_field
-                    // TODO: components expanding into other components might
-                    //       also no be handled correctly. I think for that to
-                    //       work I would need to do component expansion in the
-                    //       field function and mutate the data map there.
-                    // --------------------------------------------------------
-
-                    // insert back into datamap for subfield look ups
-                    writeln!(
-                        out,
-                        "data_map.insert({}, component_values[{}].clone());",
-                        dest_def_number, idx
-                    )?;
-
-                    // according to some sample code in the FIT SDK when a component expands
-                    // to a composite field (i.e. one with 2 or more components) the scale and
-                    // offset are not applied but this seems inconsistent or maybe I'm
-                    // misunderstaning the code
-
-                    writeln!(out, "fields.push({0}_{1}_field(mesg_num, accumlators, data_map, {2}, {3:.6}, {4:.6}, \"{5}\", component_values[{6}].clone())?);",
-                        self.function_name(),
-                        comp.name(),
-                        comp.accumulate(),
-                        comp.scale(),
-                        comp.offset(),
-                        comp.units(),
-                        idx
-                    )?;
-                }
-            } else {
-                writeln!(
-                    out,
-                    "fields.push({}?);",
-                    field.generate_create_fn_call(&self, "value")
-                )?;
-            }
+            field.write_field_decode_block(out, &self, "value")?;
             writeln!(out, "}}")?;
         }
         writeln!(out, "_ => fields.push(unknown_field(def_num, value))")?;
@@ -116,33 +56,137 @@ impl MessageDefinition {
 }
 
 impl MessageFieldDefinition {
-    fn write_create_fn_def(
+    fn write_field_decode_block(
         &self,
         out: &mut File,
         mesg_def: &MessageDefinition,
+        val_str: &str,
     ) -> Result<(), std::io::Error> {
-        writeln!(out,
-            "fn {}_{}_field(mesg_num: MesgNum, accumlators: &mut HashMap<u32, Value>, data_map: &HashMap<u8, Value>, accumulate: bool, scale: f64, offset: f64, units: &'static str, value: Value) -> Result<FitDataField> {{",
-            mesg_def.function_name(), self.name())?;
+        if let Some(v) = self.comment() {
+            writeln!(out, "// {}", v)?;
+        }
+        if !self.components().is_empty() {
+            self.write_component_exp(out, mesg_def, val_str)?;
+        } else if !self.subfields().is_empty() {
+            self.write_subfield_deref(out, mesg_def, val_str)?;
+        } else {
+            writeln!(
+                out,
+                "fields.push({}?);",
+                self.generate_create_fn_call(mesg_def, val_str)
+            )?;
+        }
 
-        // generate subfield deref code, we don't need
-        // an else cause since if none of the values match
-        // we'll just let it run the normal field creation part
-        for (idx, (ref_name, val_str, sub_field_info)) in self.subfields().iter().enumerate() {
+        Ok(())
+    }
+
+    fn write_component_exp(
+        &self,
+        out: &mut File,
+        mesg_def: &MessageDefinition,
+        val_str: &str,
+    ) -> Result<(), std::io::Error> {
+        // this can be recursive and might have multiple levels of
+        // component expansion and subfields derefs
+        // this could cause some variable naming collisions if
+        // im not careful. I can't push the fields back onto the
+        // vecdeq since then I'd need to track field info changes.
+        // it might be useful to append some kind prefix/suffix
+        // if it looks like I'll have name collisions
+        // it looks like we also have instances where components might
+        // expand into an array field. The signal for that might be
+        // multiple components with the same destiniation def_num
+        // and that destination being an array field, an example
+        // is the hr_message_event_timestamp_field
+
+        writeln!(
+            out,
+            "let [{}] = expand_components({}, &[{}])[..];",
+            self.components()
+                .iter()
+                .map(|(_, f)| f.name())
+                .collect::<Vec<&str>>()
+                .join(","),
+            val_str,
+            self.components()
+                .iter()
+                .map(|(n, _)| n.to_string())
+                .collect::<Vec<String>>()
+                .join(",")
+        )?;
+        for (_, comp) in self.components().iter() {
+            // insert back into datamap for subfield look ups
+            writeln!(
+                out,
+                "data_map.insert({}, {}.clone());",
+                comp.def_number(),
+                comp.name()
+            )?;
+
+            // to make this work, I'll do something similar to what I do
+            // in my old decoding logic. I'll take the component info and
+            // the destination field and create a new pseduo-field from it
+            // and use that to recursively handle generating stuff
+            // let comp_field = MessageFieldDefinition::new(dest_fld: &MessageFieldDefinition, comp_info: &MessageFieldComponent) -> MessageFieldDefinition;
+            comp.write_field_decode_block(out, mesg_def, comp.name())?;
+        }
+
+        Ok(())
+    }
+
+    fn write_subfield_deref(
+        &self,
+        out: &mut File,
+        mesg_def: &MessageDefinition,
+        val_str: &str,
+    ) -> Result<(), std::io::Error> {
+        for (idx, (ref_name, ref_val_str, sub_field_info)) in self.subfields().iter().enumerate() {
             let ref_field = mesg_def.get_field_by_name(ref_name);
             if idx == 0 {
                 writeln!(out, "if")?;
             } else {
                 writeln!(out, "else if")?;
             }
-            writeln!(out, "{}::{}.as_i64() == data_map.get(&{}).map(|v| v.try_into().ok()).flatten().unwrap_or(-1i64) {{", ref_field.field_type(), val_str, ref_field.def_number())?;
-            writeln!(
-                out,
-                "return {};",
-                sub_field_info.generate_create_fn_call(mesg_def, "value")
-            )?;
+            writeln!(out, "{}::{}.as_i64() == data_map.get(&{}).map(|v| v.try_into().ok()).flatten().unwrap_or(-1i64) {{", ref_field.field_type(), ref_val_str, ref_field.def_number())?;
+
+            // if the field is "terminal", i.e. has no components generate a create_fn call
+            if sub_field_info.components().is_empty() {
+                writeln!(
+                    out,
+                    "fields.push({}?);",
+                    sub_field_info.generate_create_fn_call(mesg_def, val_str)
+                )?;
+            } else {
+                // generate a nested component expansion
+                sub_field_info.write_component_exp(out, mesg_def, val_str)?;
+            }
             writeln!(out, "}}")?;
         }
+        writeln!(out, "else {{")?;
+        writeln!(
+            out,
+            "fields.push({}?);",
+            self.generate_create_fn_call(mesg_def, val_str)
+        )?;
+        writeln!(out, "}}")?;
+
+        Ok(())
+    }
+
+    fn write_create_fn_def(
+        &self,
+        out: &mut File,
+        mesg_def: &MessageDefinition,
+    ) -> Result<(), std::io::Error> {
+        if !self.components().is_empty() {
+            // fields with components are always expanded
+            // and never actually created
+            return Ok(());
+        }
+
+        writeln!(out,
+            "fn {}_{}_field(mesg_num: MesgNum, accumlators: &mut HashMap<u32, Value>, data_map: &HashMap<u8, Value>, accumulate: bool, scale: f64, offset: f64, units: &'static str, value: Value) -> Result<FitDataField> {{",
+            mesg_def.function_name(), self.name())?;
 
         // generate acccumated field code
         writeln!(out, "let value = if accumulate {{")?;
