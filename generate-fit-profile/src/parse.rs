@@ -1,6 +1,6 @@
 //! Code used to parse the Profile.xlsx file into useful data structures
 use calamine::{open_workbook, DataType, Range, Reader, Xlsx};
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, HashMap};
 use std::path::PathBuf;
 
 // the fields in these structs are mostly duplicated from code in src/profile/parser.rs
@@ -141,6 +141,13 @@ impl MessageDefinition {
     pub fn comment(&self) -> Option<&str> {
         self.comment.as_deref()
     }
+
+    pub fn get_field_by_name(&self, name: &str) -> &MessageFieldDefinition {
+        self.field_map()
+            .values()
+            .find(|f| f.name() == name)
+            .unwrap()
+    }
 }
 
 #[derive(Clone, Debug)]
@@ -153,7 +160,8 @@ pub struct MessageFieldDefinition {
     units: String,
     accumulate: bool,
     subfields: Vec<(String, String, MessageFieldDefinition)>,
-    components: Vec<MessageFieldComponent>,
+    components: Vec<(u8, MessageFieldDefinition)>,
+    raw_components: Vec<MessageFieldComponent>,
     comment: Option<String>,
 }
 
@@ -166,7 +174,7 @@ impl MessageFieldDefinition {
         offset: f64,
         units: &str,
         accumulate: bool,
-        components: Vec<MessageFieldComponent>,
+        raw_components: Vec<MessageFieldComponent>,
         comment: Option<String>,
     ) -> Self {
         MessageFieldDefinition {
@@ -178,7 +186,8 @@ impl MessageFieldDefinition {
             units: units.to_string(),
             accumulate,
             subfields: Vec::new(),
-            components,
+            components: Vec::new(),
+            raw_components,
             comment,
         }
     }
@@ -215,7 +224,11 @@ impl MessageFieldDefinition {
         &self.subfields
     }
 
-    pub fn components(&self) -> &[MessageFieldComponent] {
+    pub fn raw_components(&self) -> &[MessageFieldComponent] {
+        &self.raw_components
+    }
+
+    pub fn components(&self) -> &[(u8, MessageFieldDefinition)] {
         &self.components
     }
 
@@ -397,6 +410,66 @@ fn parse_message_field_components(row: &[DataType]) -> Vec<MessageFieldComponent
     components
 }
 
+fn post_process_message(msg: MessageDefinition) -> MessageDefinition {
+    // destructure and rebuild to fully resolve components, we do
+    // this to appease the mighty borrow checker and deal with
+    // recursive component expansion. A field with components gets it's own
+    // chain of field def copies since the values for certain members change
+    // depending on how we get to the field
+    let MessageDefinition {
+        name,
+        titlized_name,
+        comment,
+        field_map,
+    } = msg;
+    // we need this lookup to map components back to original field info without
+    // trying to do an immutable borrow against the mapping we're updating
+    let name_to_field: HashMap<String, MessageFieldDefinition> = field_map
+        .values()
+        .map(|v| (v.name().to_owned(), v.clone()))
+        .collect();
+
+    let mut updated_field_map = BTreeMap::new();
+    for (def_num, mut field_def) in field_map.into_iter() {
+        if !field_def.raw_components().is_empty() {
+            field_def.components = process_components(&field_def, &name_to_field);
+        }
+        updated_field_map.insert(def_num, field_def);
+    }
+
+    MessageDefinition {
+        name,
+        titlized_name,
+        comment,
+        field_map: updated_field_map,
+    }
+}
+
+fn process_components(
+    field: &MessageFieldDefinition,
+    field_lookup: &HashMap<String, MessageFieldDefinition>,
+) -> Vec<(u8, MessageFieldDefinition)> {
+    let mut components = Vec::new();
+    for comp_info in field.raw_components() {
+        let dest_field = field_lookup.get(comp_info.name()).unwrap();
+        let comp_fld = MessageFieldDefinition {
+            def_number: dest_field.def_number(),
+            name: dest_field.name().to_owned(),
+            field_type: dest_field.field_type().to_owned(),
+            scale: comp_info.scale(),
+            offset: comp_info.offset(),
+            units: comp_info.units().to_owned(),
+            accumulate: comp_info.accumulate(),
+            subfields: dest_field.subfields().to_vec(),
+            components: process_components(dest_field, field_lookup),
+            raw_components: Vec::new(),
+            comment: dest_field.comment().map(|s| s.to_owned()),
+        };
+        components.push((comp_info.bits(), comp_fld))
+    }
+    components
+}
+
 fn new_message_field_definition(row: &[DataType]) -> MessageFieldDefinition {
     let def_number = match row[1] {
         DataType::Float(v) => v as u8,
@@ -476,9 +549,14 @@ fn process_messages(sheet: Range<DataType>) -> Vec<MessageDefinition> {
             }
         }
     }
+    // push last message since the iter completes
     messages.push(msg);
-
+    // post process messages once we have "all" the
+    // information present
     messages
+        .into_iter()
+        .map(|m| post_process_message(m))
+        .collect()
 }
 
 pub fn parse_profile(
