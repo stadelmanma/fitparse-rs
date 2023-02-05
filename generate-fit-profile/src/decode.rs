@@ -1,6 +1,6 @@
 //! Functions to generate the message decoding functions from the fit profile.
 use crate::parse::{FitProfile, MessageDefinition, MessageFieldDefinition};
-use std::collections::HashSet;
+use std::collections::{HashMap, HashSet};
 use std::fs::File;
 use std::io::prelude::*;
 
@@ -86,27 +86,37 @@ impl MessageFieldDefinition {
         mesg_def: &MessageDefinition,
         val_str: &str,
     ) -> Result<(), std::io::Error> {
-        // this can be recursive and might have multiple levels of
-        // component expansion and subfields derefs
-        // this could cause some variable naming collisions if
-        // im not careful. I can't push the fields back onto the
-        // vecdeq since then I'd need to track field info changes.
-        // it might be useful to append some kind prefix/suffix
-        // if it looks like I'll have name collisions
-        // it looks like we also have instances where components might
-        // expand into an array field. The signal for that might be
-        // multiple components with the same destiniation def_num
-        // and that destination being an array field, an example
-        // is the hr_message_event_timestamp_field
+        // detect array fields so we can append a counter to variable name
+        let mut array_flds = HashMap::new();
+        for (_, fld) in self.components() {
+            *array_flds.entry(fld.def_number()).or_insert(0) += 1;
+        }
+        array_flds = array_flds
+            .into_iter()
+            .filter(|(_, v)| *v > 1)
+            .map(|(k, _)| (k, 0))
+            .collect();
 
+        // generate suffix'd var names for the vec -> variable expansion
+        let mut var_names = Vec::new();
+        for (_, fld) in self.components() {
+            if array_flds.contains_key(&fld.def_number()) {
+                array_flds.entry(fld.def_number()).and_modify(|v| *v += 1);
+                var_names.push(format!(
+                    "{}_{}",
+                    fld.name(),
+                    array_flds.get(&fld.def_number()).unwrap()
+                ));
+            } else {
+                var_names.push(fld.name().to_owned());
+            }
+        }
+
+        // expand them and then pop to individual values to avoid cloning twice
         writeln!(
             out,
-            "let [{}] = expand_components({}, &[{}])[..];",
-            self.components()
-                .iter()
-                .map(|(_, f)| f.name())
-                .collect::<Vec<&str>>()
-                .join(","),
+            "let mut {}_component_values = expand_components({}, &[{}]);",
+            self.name(),
             val_str,
             self.components()
                 .iter()
@@ -114,21 +124,47 @@ impl MessageFieldDefinition {
                 .collect::<Vec<String>>()
                 .join(",")
         )?;
+        for vn in var_names.iter().rev() {
+            writeln!(
+                out,
+                "let {} = {}_component_values.pop().unwrap();",
+                vn,
+                self.name()
+            )?;
+        }
+
+        let mut comps_decoded = HashSet::new();
         for (_, comp) in self.components().iter() {
-            // insert back into datamap for subfield look ups
+            // array components show up more than once, but we collect those
+            // into an array value above so we only want to decode it once
+            if comps_decoded.contains(&comp.def_number()) {
+                continue;
+            }
+
+            // generate a vec! macro to build the array field
+            if array_flds.contains_key(&comp.def_number()) {
+                writeln!(
+                    out,
+                    "let {} = Value::Array(vec![{}]);",
+                    comp.name(),
+                    (0..*array_flds.get(&comp.def_number()).unwrap())
+                        .into_iter()
+                        .map(|i| format!("{}_{}", comp.name(), i + 1))
+                        .collect::<Vec<String>>()
+                        .join(",")
+                )?;
+            }
+
+            // insert back into datamap for subfield look ups and then generate
+            // a decode block incase the component has subfields/nested comps
             writeln!(
                 out,
                 "data_map.insert({}, {}.clone());",
                 comp.def_number(),
                 comp.name()
             )?;
-
-            // to make this work, I'll do something similar to what I do
-            // in my old decoding logic. I'll take the component info and
-            // the destination field and create a new pseduo-field from it
-            // and use that to recursively handle generating stuff
-            // let comp_field = MessageFieldDefinition::new(dest_fld: &MessageFieldDefinition, comp_info: &MessageFieldComponent) -> MessageFieldDefinition;
             comp.write_field_decode_block(out, mesg_def, comp.name())?;
+            comps_decoded.insert(comp.def_number());
         }
 
         Ok(())

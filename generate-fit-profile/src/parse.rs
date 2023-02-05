@@ -155,6 +155,7 @@ pub struct MessageFieldDefinition {
     def_number: u8,
     name: String,
     field_type: String,
+    is_array: bool,
     scale: f64,
     offset: f64,
     units: String,
@@ -170,6 +171,7 @@ impl MessageFieldDefinition {
         def_number: u8,
         name: &str,
         field_type: &str,
+        is_array: bool,
         scale: f64,
         offset: f64,
         units: &str,
@@ -181,6 +183,7 @@ impl MessageFieldDefinition {
             def_number,
             name: name.to_string(),
             field_type: field_type_str_to_field_type(field_type),
+            is_array,
             scale,
             offset,
             units: units.to_string(),
@@ -202,6 +205,10 @@ impl MessageFieldDefinition {
 
     pub fn field_type(&self) -> &str {
         &self.field_type
+    }
+
+    pub fn is_array(&self) -> bool {
+        self.is_array
     }
 
     pub fn scale(&self) -> f64 {
@@ -456,6 +463,7 @@ fn process_components(
             def_number: dest_field.def_number(),
             name: dest_field.name().to_owned(),
             field_type: dest_field.field_type().to_owned(),
+            is_array: dest_field.is_array(),
             scale: comp_info.scale(),
             offset: comp_info.offset(),
             units: comp_info.units().to_owned(),
@@ -489,6 +497,7 @@ fn new_message_field_definition(row: &[DataType]) -> MessageFieldDefinition {
         def_number,
         name,
         ftype,
+        row[4].is_empty(),
         row[6].get_float().unwrap_or(1.0),
         row[7].get_float().unwrap_or(0.0),
         row[8].get_string().unwrap_or(""),
