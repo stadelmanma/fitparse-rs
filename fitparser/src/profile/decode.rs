@@ -9992,7 +9992,8 @@ fn session_message(
             }
             14 => {
                 // total_distance / total_timer_time
-                let [enhanced_avg_speed] = expand_components(value, &[16])[..];
+                let mut avg_speed_component_values = expand_components(value, &[16]);
+                let enhanced_avg_speed = avg_speed_component_values.pop().unwrap();
                 data_map.insert(124, enhanced_avg_speed.clone());
                 // total_distance / total_timer_time
                 fields.push(session_message_enhanced_avg_speed_field(
@@ -10007,7 +10008,8 @@ fn session_message(
                 )?);
             }
             15 => {
-                let [enhanced_max_speed] = expand_components(value, &[16])[..];
+                let mut max_speed_component_values = expand_components(value, &[16]);
+                let enhanced_max_speed = max_speed_component_values.pop().unwrap();
                 data_map.insert(125, enhanced_max_speed.clone());
                 fields.push(session_message_enhanced_max_speed_field(
                     mesg_num,
@@ -10428,7 +10430,8 @@ fn session_message(
                 )?);
             }
             49 => {
-                let [enhanced_avg_altitude] = expand_components(value, &[16])[..];
+                let mut avg_altitude_component_values = expand_components(value, &[16]);
+                let enhanced_avg_altitude = avg_altitude_component_values.pop().unwrap();
                 data_map.insert(126, enhanced_avg_altitude.clone());
                 fields.push(session_message_enhanced_avg_altitude_field(
                     mesg_num,
@@ -10442,7 +10445,8 @@ fn session_message(
                 )?);
             }
             50 => {
-                let [enhanced_max_altitude] = expand_components(value, &[16])[..];
+                let mut max_altitude_component_values = expand_components(value, &[16]);
+                let enhanced_max_altitude = max_altitude_component_values.pop().unwrap();
                 data_map.insert(128, enhanced_max_altitude.clone());
                 fields.push(session_message_enhanced_max_altitude_field(
                     mesg_num,
@@ -10696,7 +10700,8 @@ fn session_message(
                 )?);
             }
             71 => {
-                let [enhanced_min_altitude] = expand_components(value, &[16])[..];
+                let mut min_altitude_component_values = expand_components(value, &[16]);
+                let enhanced_min_altitude = min_altitude_component_values.pop().unwrap();
                 data_map.insert(127, enhanced_min_altitude.clone());
                 fields.push(session_message_enhanced_min_altitude_field(
                     mesg_num,
@@ -15029,7 +15034,8 @@ fn lap_message(
                 )?);
             }
             13 => {
-                let [enhanced_avg_speed] = expand_components(value, &[16])[..];
+                let mut avg_speed_component_values = expand_components(value, &[16]);
+                let enhanced_avg_speed = avg_speed_component_values.pop().unwrap();
                 data_map.insert(110, enhanced_avg_speed.clone());
                 fields.push(lap_message_enhanced_avg_speed_field(
                     mesg_num,
@@ -15043,7 +15049,8 @@ fn lap_message(
                 )?);
             }
             14 => {
-                let [enhanced_max_speed] = expand_components(value, &[16])[..];
+                let mut max_speed_component_values = expand_components(value, &[16]);
+                let enhanced_max_speed = max_speed_component_values.pop().unwrap();
                 data_map.insert(111, enhanced_max_speed.clone());
                 fields.push(lap_message_enhanced_max_speed_field(
                     mesg_num,
@@ -15351,7 +15358,8 @@ fn lap_message(
                 )?);
             }
             42 => {
-                let [enhanced_avg_altitude] = expand_components(value, &[16])[..];
+                let mut avg_altitude_component_values = expand_components(value, &[16]);
+                let enhanced_avg_altitude = avg_altitude_component_values.pop().unwrap();
                 data_map.insert(112, enhanced_avg_altitude.clone());
                 fields.push(lap_message_enhanced_avg_altitude_field(
                     mesg_num,
@@ -15365,7 +15373,8 @@ fn lap_message(
                 )?);
             }
             43 => {
-                let [enhanced_max_altitude] = expand_components(value, &[16])[..];
+                let mut max_altitude_component_values = expand_components(value, &[16]);
+                let enhanced_max_altitude = max_altitude_component_values.pop().unwrap();
                 data_map.insert(114, enhanced_max_altitude.clone());
                 fields.push(lap_message_enhanced_max_altitude_field(
                     mesg_num,
@@ -15595,7 +15604,8 @@ fn lap_message(
                 )?);
             }
             62 => {
-                let [enhanced_min_altitude] = expand_components(value, &[16])[..];
+                let mut min_altitude_component_values = expand_components(value, &[16]);
+                let enhanced_min_altitude = min_altitude_component_values.pop().unwrap();
                 data_map.insert(113, enhanced_min_altitude.clone());
                 fields.push(lap_message_enhanced_min_altitude_field(
                     mesg_num,
@@ -19947,7 +19957,8 @@ fn record_message(
                 )?);
             }
             2 => {
-                let [enhanced_altitude] = expand_components(value, &[16])[..];
+                let mut altitude_component_values = expand_components(value, &[16]);
+                let enhanced_altitude = altitude_component_values.pop().unwrap();
                 data_map.insert(78, enhanced_altitude.clone());
                 fields.push(record_message_enhanced_altitude_field(
                     mesg_num,
@@ -19997,7 +20008,8 @@ fn record_message(
                 )?);
             }
             6 => {
-                let [enhanced_speed] = expand_components(value, &[16])[..];
+                let mut speed_component_values = expand_components(value, &[16]);
+                let enhanced_speed = speed_component_values.pop().unwrap();
                 data_map.insert(73, enhanced_speed.clone());
                 fields.push(record_message_enhanced_speed_field(
                     mesg_num,
@@ -20023,9 +20035,13 @@ fn record_message(
                 )?);
             }
             8 => {
-                let [speed, distance] = expand_components(value, &[12, 12])[..];
+                let mut compressed_speed_distance_component_values =
+                    expand_components(value, &[12, 12]);
+                let distance = compressed_speed_distance_component_values.pop().unwrap();
+                let speed = compressed_speed_distance_component_values.pop().unwrap();
                 data_map.insert(6, speed.clone());
-                let [enhanced_speed] = expand_components(speed, &[16])[..];
+                let mut speed_component_values = expand_components(speed, &[16]);
+                let enhanced_speed = speed_component_values.pop().unwrap();
                 data_map.insert(73, enhanced_speed.clone());
                 fields.push(record_message_enhanced_speed_field(
                     mesg_num,
@@ -20124,7 +20140,8 @@ fn record_message(
                 )?);
             }
             18 => {
-                let [total_cycles] = expand_components(value, &[8])[..];
+                let mut cycles_component_values = expand_components(value, &[8]);
+                let total_cycles = cycles_component_values.pop().unwrap();
                 data_map.insert(19, total_cycles.clone());
                 fields.push(record_message_total_cycles_field(
                     mesg_num,
@@ -20150,7 +20167,10 @@ fn record_message(
                 )?);
             }
             28 => {
-                let [accumulated_power] = expand_components(value, &[16])[..];
+                let mut compressed_accumulated_power_component_values =
+                    expand_components(value, &[16]);
+                let accumulated_power =
+                    compressed_accumulated_power_component_values.pop().unwrap();
                 data_map.insert(29, accumulated_power.clone());
                 fields.push(record_message_accumulated_power_field(
                     mesg_num,
@@ -22620,7 +22640,8 @@ fn event_message(
                 )?);
             }
             2 => {
-                let [data] = expand_components(value, &[16])[..];
+                let mut data16_component_values = expand_components(value, &[16]);
+                let data = data16_component_values.pop().unwrap();
                 data_map.insert(3, data.clone());
                 if Event::Timer.as_i64()
                     == data_map
@@ -31678,7 +31699,8 @@ fn jump_message(
                 )?);
             }
             7 => {
-                let [enhanced_speed] = expand_components(value, &[16])[..];
+                let mut speed_component_values = expand_components(value, &[16]);
+                let enhanced_speed = speed_component_values.pop().unwrap();
                 data_map.insert(8, enhanced_speed.clone());
                 fields.push(jump_message_enhanced_speed_field(
                     mesg_num,
@@ -43725,7 +43747,14 @@ fn monitoring_message(
             }
             24 => {
                 // Indicates single type / intensity for duration since last monitoring message.
-                let [activity_type, intensity] = expand_components(value, &[5, 3])[..];
+                let mut current_activity_type_intensity_component_values =
+                    expand_components(value, &[5, 3]);
+                let intensity = current_activity_type_intensity_component_values
+                    .pop()
+                    .unwrap();
+                let activity_type = current_activity_type_intensity_component_values
+                    .pop()
+                    .unwrap();
                 data_map.insert(5, activity_type.clone());
                 fields.push(monitoring_message_activity_type_field(
                     mesg_num,
@@ -44660,7 +44689,8 @@ fn hr_message(
                 )?);
             }
             1 => {
-                let [fractional_timestamp] = expand_components(value, &[8])[..];
+                let mut time256_component_values = expand_components(value, &[8]);
+                let fractional_timestamp = time256_component_values.pop().unwrap();
                 data_map.insert(0, fractional_timestamp.clone());
                 fields.push(hr_message_fractional_timestamp_field(
                     mesg_num,
@@ -44698,8 +44728,30 @@ fn hr_message(
                 )?);
             }
             10 => {
-                let [event_timestamp, event_timestamp, event_timestamp, event_timestamp, event_timestamp, event_timestamp, event_timestamp, event_timestamp, event_timestamp, event_timestamp] =
-                    expand_components(value, &[12, 12, 12, 12, 12, 12, 12, 12, 12, 12])[..];
+                let mut event_timestamp_12_component_values =
+                    expand_components(value, &[12, 12, 12, 12, 12, 12, 12, 12, 12, 12]);
+                let event_timestamp_10 = event_timestamp_12_component_values.pop().unwrap();
+                let event_timestamp_9 = event_timestamp_12_component_values.pop().unwrap();
+                let event_timestamp_8 = event_timestamp_12_component_values.pop().unwrap();
+                let event_timestamp_7 = event_timestamp_12_component_values.pop().unwrap();
+                let event_timestamp_6 = event_timestamp_12_component_values.pop().unwrap();
+                let event_timestamp_5 = event_timestamp_12_component_values.pop().unwrap();
+                let event_timestamp_4 = event_timestamp_12_component_values.pop().unwrap();
+                let event_timestamp_3 = event_timestamp_12_component_values.pop().unwrap();
+                let event_timestamp_2 = event_timestamp_12_component_values.pop().unwrap();
+                let event_timestamp_1 = event_timestamp_12_component_values.pop().unwrap();
+                let event_timestamp = Value::Array(vec![
+                    event_timestamp_1,
+                    event_timestamp_2,
+                    event_timestamp_3,
+                    event_timestamp_4,
+                    event_timestamp_5,
+                    event_timestamp_6,
+                    event_timestamp_7,
+                    event_timestamp_8,
+                    event_timestamp_9,
+                    event_timestamp_10,
+                ]);
                 data_map.insert(9, event_timestamp.clone());
                 fields.push(hr_message_event_timestamp_field(
                     mesg_num,
@@ -44709,105 +44761,6 @@ fn hr_message(
                     1024.000000,
                     0.000000,
                     "s",
-                    event_timestamp,
-                )?);
-                data_map.insert(9, event_timestamp.clone());
-                fields.push(hr_message_event_timestamp_field(
-                    mesg_num,
-                    accumlators,
-                    data_map,
-                    true,
-                    1024.000000,
-                    0.000000,
-                    "",
-                    event_timestamp,
-                )?);
-                data_map.insert(9, event_timestamp.clone());
-                fields.push(hr_message_event_timestamp_field(
-                    mesg_num,
-                    accumlators,
-                    data_map,
-                    true,
-                    1024.000000,
-                    0.000000,
-                    "",
-                    event_timestamp,
-                )?);
-                data_map.insert(9, event_timestamp.clone());
-                fields.push(hr_message_event_timestamp_field(
-                    mesg_num,
-                    accumlators,
-                    data_map,
-                    true,
-                    1024.000000,
-                    0.000000,
-                    "",
-                    event_timestamp,
-                )?);
-                data_map.insert(9, event_timestamp.clone());
-                fields.push(hr_message_event_timestamp_field(
-                    mesg_num,
-                    accumlators,
-                    data_map,
-                    true,
-                    1024.000000,
-                    0.000000,
-                    "",
-                    event_timestamp,
-                )?);
-                data_map.insert(9, event_timestamp.clone());
-                fields.push(hr_message_event_timestamp_field(
-                    mesg_num,
-                    accumlators,
-                    data_map,
-                    true,
-                    1024.000000,
-                    0.000000,
-                    "",
-                    event_timestamp,
-                )?);
-                data_map.insert(9, event_timestamp.clone());
-                fields.push(hr_message_event_timestamp_field(
-                    mesg_num,
-                    accumlators,
-                    data_map,
-                    true,
-                    1024.000000,
-                    0.000000,
-                    "",
-                    event_timestamp,
-                )?);
-                data_map.insert(9, event_timestamp.clone());
-                fields.push(hr_message_event_timestamp_field(
-                    mesg_num,
-                    accumlators,
-                    data_map,
-                    true,
-                    1024.000000,
-                    0.000000,
-                    "",
-                    event_timestamp,
-                )?);
-                data_map.insert(9, event_timestamp.clone());
-                fields.push(hr_message_event_timestamp_field(
-                    mesg_num,
-                    accumlators,
-                    data_map,
-                    true,
-                    1024.000000,
-                    0.000000,
-                    "",
-                    event_timestamp,
-                )?);
-                data_map.insert(9, event_timestamp.clone());
-                fields.push(hr_message_event_timestamp_field(
-                    mesg_num,
-                    accumlators,
-                    data_map,
-                    true,
-                    1024.000000,
-                    0.000000,
-                    "",
                     event_timestamp,
                 )?);
             }
@@ -45489,8 +45442,17 @@ fn ant_rx_message(
                 )?);
             }
             2 => {
-                let [channel_number, data, data, data, data, data, data, data, data] =
-                    expand_components(value, &[8, 8, 8, 8, 8, 8, 8, 8, 8])[..];
+                let mut mesg_data_component_values =
+                    expand_components(value, &[8, 8, 8, 8, 8, 8, 8, 8, 8]);
+                let data_8 = mesg_data_component_values.pop().unwrap();
+                let data_7 = mesg_data_component_values.pop().unwrap();
+                let data_6 = mesg_data_component_values.pop().unwrap();
+                let data_5 = mesg_data_component_values.pop().unwrap();
+                let data_4 = mesg_data_component_values.pop().unwrap();
+                let data_3 = mesg_data_component_values.pop().unwrap();
+                let data_2 = mesg_data_component_values.pop().unwrap();
+                let data_1 = mesg_data_component_values.pop().unwrap();
+                let channel_number = mesg_data_component_values.pop().unwrap();
                 data_map.insert(3, channel_number.clone());
                 fields.push(ant_rx_message_channel_number_field(
                     mesg_num,
@@ -45502,83 +45464,9 @@ fn ant_rx_message(
                     "",
                     channel_number,
                 )?);
-                data_map.insert(4, data.clone());
-                fields.push(ant_rx_message_data_field(
-                    mesg_num,
-                    accumlators,
-                    data_map,
-                    false,
-                    1.000000,
-                    0.000000,
-                    "",
-                    data,
-                )?);
-                data_map.insert(4, data.clone());
-                fields.push(ant_rx_message_data_field(
-                    mesg_num,
-                    accumlators,
-                    data_map,
-                    false,
-                    1.000000,
-                    0.000000,
-                    "",
-                    data,
-                )?);
-                data_map.insert(4, data.clone());
-                fields.push(ant_rx_message_data_field(
-                    mesg_num,
-                    accumlators,
-                    data_map,
-                    false,
-                    1.000000,
-                    0.000000,
-                    "",
-                    data,
-                )?);
-                data_map.insert(4, data.clone());
-                fields.push(ant_rx_message_data_field(
-                    mesg_num,
-                    accumlators,
-                    data_map,
-                    false,
-                    1.000000,
-                    0.000000,
-                    "",
-                    data,
-                )?);
-                data_map.insert(4, data.clone());
-                fields.push(ant_rx_message_data_field(
-                    mesg_num,
-                    accumlators,
-                    data_map,
-                    false,
-                    1.000000,
-                    0.000000,
-                    "",
-                    data,
-                )?);
-                data_map.insert(4, data.clone());
-                fields.push(ant_rx_message_data_field(
-                    mesg_num,
-                    accumlators,
-                    data_map,
-                    false,
-                    1.000000,
-                    0.000000,
-                    "",
-                    data,
-                )?);
-                data_map.insert(4, data.clone());
-                fields.push(ant_rx_message_data_field(
-                    mesg_num,
-                    accumlators,
-                    data_map,
-                    false,
-                    1.000000,
-                    0.000000,
-                    "",
-                    data,
-                )?);
+                let data = Value::Array(vec![
+                    data_1, data_2, data_3, data_4, data_5, data_6, data_7, data_8,
+                ]);
                 data_map.insert(4, data.clone());
                 fields.push(ant_rx_message_data_field(
                     mesg_num,
@@ -45784,8 +45672,17 @@ fn ant_tx_message(
                 )?);
             }
             2 => {
-                let [channel_number, data, data, data, data, data, data, data, data] =
-                    expand_components(value, &[8, 8, 8, 8, 8, 8, 8, 8, 8])[..];
+                let mut mesg_data_component_values =
+                    expand_components(value, &[8, 8, 8, 8, 8, 8, 8, 8, 8]);
+                let data_8 = mesg_data_component_values.pop().unwrap();
+                let data_7 = mesg_data_component_values.pop().unwrap();
+                let data_6 = mesg_data_component_values.pop().unwrap();
+                let data_5 = mesg_data_component_values.pop().unwrap();
+                let data_4 = mesg_data_component_values.pop().unwrap();
+                let data_3 = mesg_data_component_values.pop().unwrap();
+                let data_2 = mesg_data_component_values.pop().unwrap();
+                let data_1 = mesg_data_component_values.pop().unwrap();
+                let channel_number = mesg_data_component_values.pop().unwrap();
                 data_map.insert(3, channel_number.clone());
                 fields.push(ant_tx_message_channel_number_field(
                     mesg_num,
@@ -45797,83 +45694,9 @@ fn ant_tx_message(
                     "",
                     channel_number,
                 )?);
-                data_map.insert(4, data.clone());
-                fields.push(ant_tx_message_data_field(
-                    mesg_num,
-                    accumlators,
-                    data_map,
-                    false,
-                    1.000000,
-                    0.000000,
-                    "",
-                    data,
-                )?);
-                data_map.insert(4, data.clone());
-                fields.push(ant_tx_message_data_field(
-                    mesg_num,
-                    accumlators,
-                    data_map,
-                    false,
-                    1.000000,
-                    0.000000,
-                    "",
-                    data,
-                )?);
-                data_map.insert(4, data.clone());
-                fields.push(ant_tx_message_data_field(
-                    mesg_num,
-                    accumlators,
-                    data_map,
-                    false,
-                    1.000000,
-                    0.000000,
-                    "",
-                    data,
-                )?);
-                data_map.insert(4, data.clone());
-                fields.push(ant_tx_message_data_field(
-                    mesg_num,
-                    accumlators,
-                    data_map,
-                    false,
-                    1.000000,
-                    0.000000,
-                    "",
-                    data,
-                )?);
-                data_map.insert(4, data.clone());
-                fields.push(ant_tx_message_data_field(
-                    mesg_num,
-                    accumlators,
-                    data_map,
-                    false,
-                    1.000000,
-                    0.000000,
-                    "",
-                    data,
-                )?);
-                data_map.insert(4, data.clone());
-                fields.push(ant_tx_message_data_field(
-                    mesg_num,
-                    accumlators,
-                    data_map,
-                    false,
-                    1.000000,
-                    0.000000,
-                    "",
-                    data,
-                )?);
-                data_map.insert(4, data.clone());
-                fields.push(ant_tx_message_data_field(
-                    mesg_num,
-                    accumlators,
-                    data_map,
-                    false,
-                    1.000000,
-                    0.000000,
-                    "",
-                    data,
-                )?);
+                let data = Value::Array(vec![
+                    data_1, data_2, data_3, data_4, data_5, data_6, data_7, data_8,
+                ]);
                 data_map.insert(4, data.clone());
                 fields.push(ant_tx_message_data_field(
                     mesg_num,
@@ -46231,7 +46054,9 @@ fn exd_data_field_configuration_message(
                 )?);
             }
             1 => {
-                let [field_id, concept_count] = expand_components(value, &[4, 4])[..];
+                let mut concept_field_component_values = expand_components(value, &[4, 4]);
+                let concept_count = concept_field_component_values.pop().unwrap();
+                let field_id = concept_field_component_values.pop().unwrap();
                 data_map.insert(2, field_id.clone());
                 fields.push(exd_data_field_configuration_message_field_id_field(
                     mesg_num,
@@ -46456,7 +46281,9 @@ fn exd_data_concept_configuration_message(
                 )?);
             }
             1 => {
-                let [field_id, concept_index] = expand_components(value, &[4, 4])[..];
+                let mut concept_field_component_values = expand_components(value, &[4, 4]);
+                let concept_index = concept_field_component_values.pop().unwrap();
+                let field_id = concept_field_component_values.pop().unwrap();
                 data_map.insert(2, field_id.clone());
                 fields.push(exd_data_concept_configuration_message_field_id_field(
                     mesg_num,
