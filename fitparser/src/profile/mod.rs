@@ -133,6 +133,8 @@ pub fn calculate_cumulative_value(
     if let Some(stored_value) = accumulate_fields.get(&key) {
         match stored_value {
             Value::Timestamp(_) => {
+                // TODO: fix this, probably done as u32 math but I probably need to keep timestamps
+                // as u32 values until the "11th hour" so to speak to deal with them more easily.
                 Err(ErrorKind::ValueError("Cannot accumlate timestamp fields".to_string()).into())
             }
             Value::Byte(val) => only_add_like_values!(key, val, stored_value, Byte),
@@ -156,8 +158,37 @@ pub fn calculate_cumulative_value(
             Value::String(_) => {
                 Err(ErrorKind::ValueError("Cannot accumlate string fields".to_string()).into())
             }
-            Value::Array(_) => {
-                Err(ErrorKind::ValueError("Cannot accumlate array fields".to_string()).into())
+            // add arrays by value if they are equal in length, we'll have to find FIT files
+            // to validate this behavior against the SDK. The Java SDK also always does this
+            // with longs, which makes sense I supppose since floats are large enough to store
+            // the explicit value so were always going to be working with integers for accumlated
+            // fields.
+            Value::Array(vals) => {
+                if let Value::Array(other_vals) = value {
+                    if vals.len() == other_vals.len() {
+                        let mut new_vals = Vec::with_capacity(vals.len());
+                        for (v1, v2) in vals.iter().zip(other_vals.iter()) {
+                            let v1_i64: i64 = v1.try_into()?;
+                            let v2_i64: i64 = v2.try_into()?;
+                            new_vals.push(Value::SInt64(v1_i64 + v2_i64));
+                        }
+                        accumulate_fields.insert(key, Value::Array(new_vals.clone()));
+                        Ok(Value::Array(new_vals))
+                    } else {
+                        Err(ErrorKind::ValueError(format!(
+                            "Array lengths differ, {} != {}",
+                            vals.len(),
+                            other_vals.len()
+                        ))
+                        .into())
+                    }
+                } else {
+                    Err(ErrorKind::ValueError(format!(
+                        "Mixed type addition {} and {} cannot be combined",
+                        stored_value, value
+                    ))
+                    .into())
+                }
             }
         }
     } else {
@@ -204,7 +235,11 @@ fn convert_value(
 ) -> Result<Value> {
     // for array types return inner vector unmodified
     if let Value::Array(vals) = value {
-        return Ok(Value::Array(vals));
+        let vals: Result<Vec<Value>> = vals
+            .into_iter()
+            .map(|v| apply_scale_and_offset(v, scale, offset))
+            .collect();
+        return vals.map(|v| Value::Array(v));
     }
 
     // handle time types specially, if for some reason I can't convert to an integer we will
@@ -227,7 +262,13 @@ fn convert_value(
     if field_type.is_enum_type() {
         let val: i64 = value.try_into()?;
         Ok(Value::String(get_field_variant_as_string(field_type, val)))
-    } else if ((scale - 1.0).abs() > EPSILON) || ((offset - 0.0).abs() > EPSILON) {
+    } else {
+        apply_scale_and_offset(value, scale, offset)
+    }
+}
+
+fn apply_scale_and_offset(value: Value, scale: f64, offset: f64) -> Result<Value> {
+    if ((scale - 1.0).abs() > EPSILON) || ((offset - 0.0).abs() > EPSILON) {
         let val: f64 = value.try_into()?;
         Ok(Value::Float64(val / scale - offset))
     } else {
