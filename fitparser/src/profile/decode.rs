@@ -20048,7 +20048,7 @@ fn record_message(
                     accumlators,
                     data_map,
                     false,
-                    1000.000000,
+                    100.000000,
                     0.000000,
                     "m/s",
                     enhanced_speed,

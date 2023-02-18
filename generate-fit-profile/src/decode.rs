@@ -28,7 +28,7 @@ impl MessageDefinition {
         writeln!(out, "match def_num {{")?;
         for field in self.field_map().values() {
             writeln!(out, "{0} => {{", field.def_number())?;
-            field.write_field_decode_block(out, &self, "value")?;
+            field.write_field_decode_block(out, &self, "value", None, None)?;
             writeln!(out, "}}")?;
         }
         writeln!(out, "_ => fields.push(unknown_field(def_num, value))")?;
@@ -61,19 +61,21 @@ impl MessageFieldDefinition {
         out: &mut File,
         mesg_def: &MessageDefinition,
         val_str: &str,
+        alt_scale: Option<f64>,
+        alt_offset: Option<f64>,
     ) -> Result<(), std::io::Error> {
         if let Some(v) = self.comment() {
             writeln!(out, "// {}", v)?;
         }
         if !self.components().is_empty() {
-            self.write_component_exp(out, mesg_def, val_str)?;
+            self.write_component_exp(out, mesg_def, val_str, alt_scale, alt_offset)?;
         } else if !self.subfields().is_empty() {
             self.write_subfield_deref(out, mesg_def, val_str)?;
         } else {
             writeln!(
                 out,
                 "fields.push({}?);",
-                self.generate_create_fn_call(mesg_def, val_str)
+                self.generate_create_fn_call(mesg_def, val_str, alt_scale, alt_offset)
             )?;
         }
 
@@ -85,6 +87,8 @@ impl MessageFieldDefinition {
         out: &mut File,
         mesg_def: &MessageDefinition,
         val_str: &str,
+        alt_scale: Option<f64>,
+        alt_offset: Option<f64>,
     ) -> Result<(), std::io::Error> {
         // detect array fields so we can append a counter to variable name
         let mut array_flds = HashMap::new();
@@ -163,7 +167,30 @@ impl MessageFieldDefinition {
                 comp.def_number(),
                 comp.name()
             )?;
-            comp.write_field_decode_block(out, mesg_def, comp.name())?;
+
+            // When we are expanding to a field that has a single component
+            // use the scale and offset defined here instead of what that
+            // component defines, example case is:
+            // compressed_speed_distance => speed => enhanced_speed.
+            // We want to apply the same the same scale for going from CSD to speed
+            // (100) when expanding the value for enchanced_speed instead of
+            // using the speed to enchanced_speed scale of 1000.
+            let alt_scale = if alt_scale.is_some() {
+                alt_scale
+            } else if comp.components().len() == 1 {
+                Some(comp.scale())
+            } else {
+                None
+            };
+            let alt_offset = if alt_scale.is_some() {
+                alt_offset
+            } else if comp.components().len() == 1 {
+                Some(comp.offset())
+            } else {
+                None
+            };
+
+            comp.write_field_decode_block(out, mesg_def, comp.name(), alt_scale, alt_offset)?;
             comps_decoded.insert(comp.def_number());
         }
 
@@ -190,11 +217,11 @@ impl MessageFieldDefinition {
                 writeln!(
                     out,
                     "fields.push({}?);",
-                    sub_field_info.generate_create_fn_call(mesg_def, val_str)
+                    sub_field_info.generate_create_fn_call(mesg_def, val_str, None, None)
                 )?;
             } else {
                 // generate a nested component expansion
-                sub_field_info.write_component_exp(out, mesg_def, val_str)?;
+                sub_field_info.write_component_exp(out, mesg_def, val_str, None, None)?;
             }
             writeln!(out, "}}")?;
         }
@@ -202,7 +229,7 @@ impl MessageFieldDefinition {
         writeln!(
             out,
             "fields.push({}?);",
-            self.generate_create_fn_call(mesg_def, val_str)
+            self.generate_create_fn_call(mesg_def, val_str, None, None)
         )?;
         writeln!(out, "}}")?;
 
@@ -248,14 +275,20 @@ impl MessageFieldDefinition {
         Ok(())
     }
 
-    fn generate_create_fn_call(&self, mesg_def: &MessageDefinition, val_str: &str) -> String {
+    fn generate_create_fn_call(
+        &self,
+        mesg_def: &MessageDefinition,
+        val_str: &str,
+        alt_scale: Option<f64>,
+        alt_offset: Option<f64>,
+    ) -> String {
         format!(
             "{0}_{1}_field(mesg_num, accumlators, data_map, {2}, {3:.6}, {4:.6}, \"{5}\", {6})",
             mesg_def.function_name(),
             self.name(),
             self.accumulate(),
-            self.scale(),
-            self.offset(),
+            alt_scale.unwrap_or(self.scale()),
+            alt_offset.unwrap_or(self.offset()),
             self.units(),
             val_str,
         )
