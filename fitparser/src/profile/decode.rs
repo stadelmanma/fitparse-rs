@@ -4,7 +4,7 @@ use super::field_types::*;
 use super::{calculate_cumulative_value, data_field_with_info, expand_components, unknown_field};
 use crate::error::Result;
 use crate::{FitDataField, Value};
-use std::collections::{HashMap, VecDeque};
+use std::collections::{HashMap, HashSet, VecDeque};
 use std::convert::TryInto;
 /// FIT SDK version used to generate profile decoder
 pub const VERSION: &str = "21.89.00";
@@ -14,6 +14,7 @@ fn file_id_message(
     data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
+    let mut retry: HashSet<u8> = HashSet::new();
     let mut fields = Vec::new();
     let mut entries: VecDeque<(u8, Value)> =
         data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
@@ -129,6 +130,9 @@ fn file_id_message(
                         "",
                         value,
                     )?);
+                } else if !retry.contains(&def_num) {
+                    retry.insert(2);
+                    entries.push_back((2, value));
                 } else {
                     fields.push(file_id_message_product_field(
                         mesg_num,
@@ -918,6 +922,7 @@ fn slave_device_message(
     data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
+    let mut retry: HashSet<u8> = HashSet::new();
     let mut fields = Vec::new();
     let mut entries: VecDeque<(u8, Value)> =
         data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
@@ -1021,6 +1026,9 @@ fn slave_device_message(
                         "",
                         value,
                     )?);
+                } else if !retry.contains(&def_num) {
+                    retry.insert(1);
+                    entries.push_back((1, value));
                 } else {
                     fields.push(slave_device_message_product_field(
                         mesg_num,
@@ -1538,6 +1546,7 @@ fn mesg_capabilities_message(
     data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
+    let mut retry: HashSet<u8> = HashSet::new();
     let mut fields = Vec::new();
     let mut entries: VecDeque<(u8, Value)> =
         data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
@@ -1631,6 +1640,9 @@ fn mesg_capabilities_message(
                         "",
                         value,
                     )?);
+                } else if !retry.contains(&def_num) {
+                    retry.insert(3);
+                    entries.push_back((3, value));
                 } else {
                     fields.push(mesg_capabilities_message_count_field(
                         mesg_num,
@@ -6270,6 +6282,7 @@ fn watchface_settings_message(
     data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
+    let mut retry: HashSet<u8> = HashSet::new();
     let mut fields = Vec::new();
     let mut entries: VecDeque<(u8, Value)> =
         data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
@@ -6322,6 +6335,9 @@ fn watchface_settings_message(
                         "",
                         value,
                     )?);
+                } else if !retry.contains(&def_num) {
+                    retry.insert(1);
+                    entries.push_back((1, value));
                 } else {
                     fields.push(watchface_settings_message_layout_field(
                         mesg_num,
@@ -7564,6 +7580,7 @@ fn dive_settings_message(
     data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
+    let mut retry: HashSet<u8> = HashSet::new();
     let mut fields = Vec::new();
     let mut entries: VecDeque<(u8, Value)> =
         data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
@@ -7849,6 +7866,9 @@ fn dive_settings_message(
                         "",
                         value,
                     )?);
+                } else if !retry.contains(&def_num) {
+                    retry.insert(20);
+                    entries.push_back((20, value));
                 } else {
                     fields.push(dive_settings_message_heart_rate_source_field(
                         mesg_num,
@@ -9721,6 +9741,7 @@ fn session_message(
     data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
+    let mut retry: HashSet<u8> = HashSet::new();
     let mut fields = Vec::new();
     let mut entries: VecDeque<(u8, Value)> =
         data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
@@ -9953,6 +9974,9 @@ fn session_message(
                         "strokes",
                         value,
                     )?);
+                } else if !retry.contains(&def_num) {
+                    retry.insert(10);
+                    entries.push_back((10, value));
                 } else {
                     fields.push(session_message_total_cycles_field(
                         mesg_num,
@@ -10066,6 +10090,9 @@ fn session_message(
                         "strides/min",
                         value,
                     )?);
+                } else if !retry.contains(&def_num) {
+                    retry.insert(18);
+                    entries.push_back((18, value));
                 } else {
                     fields.push(session_message_avg_cadence_field(
                         mesg_num,
@@ -10097,6 +10124,9 @@ fn session_message(
                         "strides/min",
                         value,
                     )?);
+                } else if !retry.contains(&def_num) {
+                    retry.insert(19);
+                    entries.push_back((19, value));
                 } else {
                     fields.push(session_message_max_cadence_field(
                         mesg_num,
@@ -14765,6 +14795,7 @@ fn lap_message(
     data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
+    let mut retry: HashSet<u8> = HashSet::new();
     let mut fields = Vec::new();
     let mut entries: VecDeque<(u8, Value)> =
         data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
@@ -14995,6 +15026,9 @@ fn lap_message(
                         "strokes",
                         value,
                     )?);
+                } else if !retry.contains(&def_num) {
+                    retry.insert(10);
+                    entries.push_back((10, value));
                 } else {
                     fields.push(lap_message_total_cycles_field(
                         mesg_num,
@@ -15106,6 +15140,9 @@ fn lap_message(
                         "strides/min",
                         value,
                     )?);
+                } else if !retry.contains(&def_num) {
+                    retry.insert(17);
+                    entries.push_back((17, value));
                 } else {
                     fields.push(lap_message_avg_cadence_field(
                         mesg_num,
@@ -15137,6 +15174,9 @@ fn lap_message(
                         "strides/min",
                         value,
                     )?);
+                } else if !retry.contains(&def_num) {
+                    retry.insert(18);
+                    entries.push_back((18, value));
                 } else {
                     fields.push(lap_message_max_cadence_field(
                         mesg_num,
@@ -22610,6 +22650,7 @@ fn event_message(
     data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
+    let mut retry: HashSet<u8> = HashSet::new();
     let mut fields = Vec::new();
     let mut entries: VecDeque<(u8, Value)> =
         data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
@@ -23017,6 +23058,9 @@ fn event_message(
                         "",
                         data,
                     )?);
+                } else if !retry.contains(&def_num) {
+                    retry.insert(3);
+                    entries.push_back((3, data));
                 } else {
                     fields.push(event_message_data_field(
                         mesg_num,
@@ -23405,6 +23449,9 @@ fn event_message(
                         "",
                         value,
                     )?);
+                } else if !retry.contains(&def_num) {
+                    retry.insert(3);
+                    entries.push_back((3, value));
                 } else {
                     fields.push(event_message_data_field(
                         mesg_num,
@@ -24519,6 +24566,7 @@ fn device_info_message(
     data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
+    let mut retry: HashSet<u8> = HashSet::new();
     let mut fields = Vec::new();
     let mut entries: VecDeque<(u8, Value)> =
         data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
@@ -24571,6 +24619,9 @@ fn device_info_message(
                         "",
                         value,
                     )?);
+                } else if !retry.contains(&def_num) {
+                    retry.insert(1);
+                    entries.push_back((1, value));
                 } else {
                     fields.push(device_info_message_device_type_field(
                         mesg_num,
@@ -24694,6 +24745,9 @@ fn device_info_message(
                         "",
                         value,
                     )?);
+                } else if !retry.contains(&def_num) {
+                    retry.insert(4);
+                    entries.push_back((4, value));
                 } else {
                     fields.push(device_info_message_product_field(
                         mesg_num,
@@ -25665,6 +25719,7 @@ fn training_file_message(
     data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
+    let mut retry: HashSet<u8> = HashSet::new();
     let mut fields = Vec::new();
     let mut entries: VecDeque<(u8, Value)> =
         data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
@@ -25780,6 +25835,9 @@ fn training_file_message(
                         "",
                         value,
                     )?);
+                } else if !retry.contains(&def_num) {
+                    retry.insert(2);
+                    entries.push_back((2, value));
                 } else {
                     fields.push(training_file_message_product_field(
                         mesg_num,
@@ -28798,6 +28856,7 @@ fn three_d_sensor_calibration_message(
     data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
+    let mut retry: HashSet<u8> = HashSet::new();
     let mut fields = Vec::new();
     let mut entries: VecDeque<(u8, Value)> =
         data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
@@ -28852,6 +28911,9 @@ fn three_d_sensor_calibration_message(
                         "deg/s",
                         value,
                     )?);
+                } else if !retry.contains(&def_num) {
+                    retry.insert(1);
+                    entries.push_back((1, value));
                 } else {
                     fields.push(three_d_sensor_calibration_message_calibration_factor_field(
                         mesg_num,
@@ -29167,6 +29229,7 @@ fn one_d_sensor_calibration_message(
     data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
+    let mut retry: HashSet<u8> = HashSet::new();
     let mut fields = Vec::new();
     let mut entries: VecDeque<(u8, Value)> =
         data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
@@ -29204,6 +29267,9 @@ fn one_d_sensor_calibration_message(
                         "Pa",
                         value,
                     )?);
+                } else if !retry.contains(&def_num) {
+                    retry.insert(1);
+                    entries.push_back((1, value));
                 } else {
                     fields.push(one_d_sensor_calibration_message_calibration_factor_field(
                         mesg_num,
@@ -34335,6 +34401,7 @@ fn segment_lap_message(
     data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
+    let mut retry: HashSet<u8> = HashSet::new();
     let mut fields = Vec::new();
     let mut entries: VecDeque<(u8, Value)> =
         data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
@@ -34480,6 +34547,9 @@ fn segment_lap_message(
                         "strokes",
                         value,
                     )?);
+                } else if !retry.contains(&def_num) {
+                    retry.insert(10);
+                    entries.push_back((10, value));
                 } else {
                     fields.push(segment_lap_message_total_cycles_field(
                         mesg_num,
@@ -38736,6 +38806,7 @@ fn workout_step_message(
     data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
+    let mut retry: HashSet<u8> = HashSet::new();
     let mut fields = Vec::new();
     let mut entries: VecDeque<(u8, Value)> =
         data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
@@ -39055,6 +39126,9 @@ fn workout_step_message(
                         "",
                         value,
                     )?);
+                } else if !retry.contains(&def_num) {
+                    retry.insert(2);
+                    entries.push_back((2, value));
                 } else {
                     fields.push(workout_step_message_duration_value_field(
                         mesg_num,
@@ -39302,6 +39376,9 @@ fn workout_step_message(
                         "",
                         value,
                     )?);
+                } else if !retry.contains(&def_num) {
+                    retry.insert(4);
+                    entries.push_back((4, value));
                 } else {
                     fields.push(workout_step_message_target_value_field(
                         mesg_num,
@@ -39384,6 +39461,9 @@ fn workout_step_message(
                         "% or watts",
                         value,
                     )?);
+                } else if !retry.contains(&def_num) {
+                    retry.insert(5);
+                    entries.push_back((5, value));
                 } else {
                     fields.push(workout_step_message_custom_target_value_low_field(
                         mesg_num,
@@ -39466,6 +39546,9 @@ fn workout_step_message(
                         "% or watts",
                         value,
                     )?);
+                } else if !retry.contains(&def_num) {
+                    retry.insert(6);
+                    entries.push_back((6, value));
                 } else {
                     fields.push(workout_step_message_custom_target_value_high_field(
                         mesg_num,
@@ -39661,6 +39744,9 @@ fn workout_step_message(
                         "",
                         value,
                     )?);
+                } else if !retry.contains(&def_num) {
+                    retry.insert(20);
+                    entries.push_back((20, value));
                 } else {
                     fields.push(workout_step_message_secondary_target_value_field(
                         mesg_num,
@@ -39751,6 +39837,9 @@ fn workout_step_message(
                             value,
                         )?,
                     );
+                } else if !retry.contains(&def_num) {
+                    retry.insert(21);
+                    entries.push_back((21, value));
                 } else {
                     fields.push(
                         workout_step_message_secondary_custom_target_value_low_field(
@@ -39843,6 +39932,9 @@ fn workout_step_message(
                             value,
                         )?,
                     );
+                } else if !retry.contains(&def_num) {
+                    retry.insert(22);
+                    entries.push_back((22, value));
                 } else {
                     fields.push(
                         workout_step_message_secondary_custom_target_value_high_field(
@@ -41493,6 +41585,7 @@ fn schedule_message(
     data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
+    let mut retry: HashSet<u8> = HashSet::new();
     let mut fields = Vec::new();
     let mut entries: VecDeque<(u8, Value)> =
         data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
@@ -41598,6 +41691,9 @@ fn schedule_message(
                         "",
                         value,
                     )?);
+                } else if !retry.contains(&def_num) {
+                    retry.insert(1);
+                    entries.push_back((1, value));
                 } else {
                     fields.push(schedule_message_product_field(
                         mesg_num,
@@ -43457,6 +43553,7 @@ fn monitoring_message(
     data_map: &mut HashMap<u8, Value>,
     accumlators: &mut HashMap<u32, Value>,
 ) -> Result<Vec<FitDataField>> {
+    let mut retry: HashSet<u8> = HashSet::new();
     let mut fields = Vec::new();
     let mut entries: VecDeque<(u8, Value)> =
         data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
@@ -43571,6 +43668,9 @@ fn monitoring_message(
                         "strokes",
                         value,
                     )?);
+                } else if !retry.contains(&def_num) {
+                    retry.insert(3);
+                    entries.push_back((3, value));
                 } else {
                     fields.push(monitoring_message_cycles_field(
                         mesg_num,

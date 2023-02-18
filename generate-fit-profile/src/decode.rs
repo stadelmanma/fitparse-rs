@@ -18,9 +18,18 @@ impl MessageDefinition {
             writeln!(out, "/// {}", v)?;
         }
         writeln!(out, "fn {}(mesg_num: MesgNum, data_map: &mut HashMap<u8, Value>, accumlators: &mut HashMap<u32, Value>) -> Result<Vec<FitDataField>> {{", self.function_name())?;
+
+        if self.field_map().values().any(|f| f.subfields().len() != 0) {
+            // only certain messages need this, it's the specific case where a subfield
+            // references a field that can come from a component and that component has
+            // a def_number greater than the field doing the lookup, see the Monitoring
+            // message, field #3 references field #5 and when not explicitly defined field
+            // #5 can be derived from field #24.
+            writeln!(out, "let mut retry: HashSet<u8> = HashSet::new();")?;
+        }
+
         writeln!(out, "let mut fields = Vec::new();")?;
         writeln!(out, "let mut entries: VecDeque<(u8, Value)> = data_map.iter().map(|(k, v)| (*k, v.clone())).collect();")?;
-
         writeln!(
             out,
             "while let Some((def_num, value)) = entries.pop_front() {{"
@@ -225,6 +234,17 @@ impl MessageFieldDefinition {
             }
             writeln!(out, "}}")?;
         }
+        // give it one more chance to be resolved incase a component expansion hadn't occured yet
+        writeln!(out, "else if !retry.contains(&def_num) {{")?;
+        writeln!(out, "retry.insert({});", self.def_number())?;
+        writeln!(
+            out,
+            "entries.push_back(({}, {}));",
+            self.def_number(),
+            val_str
+        )?;
+        writeln!(out, "}}")?;
+        //
         writeln!(out, "else {{")?;
         writeln!(
             out,
@@ -346,7 +366,7 @@ pub fn write_decode_file(profile: &FitProfile, out: &mut File) -> Result<(), std
         profile.version()
     )?;
     writeln!(out, "#![allow(unused_variables)]")?;
-    writeln!(out, "use std::collections::{{HashMap, VecDeque}};")?;
+    writeln!(out, "use std::collections::{{HashMap, HashSet, VecDeque}};")?;
     writeln!(out, "use std::convert::TryInto;")?;
     writeln!(out, "use crate::{{FitDataField, Value}};")?;
     writeln!(out, "use crate::error::{{Result}};")?;
