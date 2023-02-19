@@ -1,13 +1,15 @@
 //! Helper functions and structures needed to decode a FIT file using the defined profile.
 use super::parser::FitDataMessage;
+use super::DecodeOption;
 use crate::error::Result;
 use crate::profile::{MesgNum, TimestampField};
 use crate::{FitDataField, FitDataRecord, Value};
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 use std::convert::{From, TryInto};
 
 /// Decodes a raw FitDataMessage using the defined profile. Additional logic is used to handle
 /// values that need to accumlate across multiple messages as well as applying the
+/// time offset to the current base timestamp.
 /// time offset to the current base timestamp.
 pub struct Decoder {
     base_timestamp: TimestampField,
@@ -30,7 +32,11 @@ impl Decoder {
     }
 
     /// Decode a raw FIT data message by applying the defined profile
-    pub fn decode_message(&mut self, mut message: FitDataMessage) -> Result<FitDataRecord> {
+    pub fn decode_message(
+        &mut self,
+        mut message: FitDataMessage,
+        options: &HashSet<DecodeOption>,
+    ) -> Result<FitDataRecord> {
         let mesg_num = MesgNum::from(message.global_message_number());
         let mut record = FitDataRecord::new(mesg_num);
 
@@ -43,7 +49,7 @@ impl Decoder {
 
         // process raw data
         let mut fields =
-            mesg_num.decode_message(message.fields_mut(), &mut self.accumulate_fields)?;
+            mesg_num.decode_message(message.fields_mut(), &mut self.accumulate_fields, options)?;
         fields.sort_by_key(|f| f.number());
         record.extend(fields);
 

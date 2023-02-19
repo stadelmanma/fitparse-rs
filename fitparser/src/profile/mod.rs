@@ -1,9 +1,10 @@
 //! Defines the FIT profile used to convert raw parser output into final values that can be
 //! interpreted without using the FIT profile.
+use crate::de::DecodeOption;
 use crate::error::{ErrorKind, Result};
 use crate::{FitDataField, Value};
 use chrono::{DateTime, Duration, Local, NaiveDate, TimeZone};
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 use std::convert::TryInto;
 use std::f64::EPSILON;
 
@@ -206,8 +207,9 @@ pub fn data_field_with_info(
     offset: f64,
     units: &str,
     value: Value,
+    options: &HashSet<DecodeOption>,
 ) -> Result<FitDataField> {
-    let value = convert_value(data_type, scale, offset, value)?;
+    let value = convert_value(data_type, scale, offset, value, options)?;
     Ok(FitDataField::new(
         name.to_string(),
         def_number,
@@ -232,6 +234,7 @@ fn convert_value(
     scale: f64,
     offset: f64,
     value: Value,
+    options: &HashSet<DecodeOption>,
 ) -> Result<Value> {
     // for array types return inner vector unmodified
     if let Value::Array(vals) = value {
@@ -261,7 +264,13 @@ fn convert_value(
     // convert enum or rescale integer value into floating point
     if field_type.is_enum_type() {
         let val: i64 = value.try_into()?;
-        Ok(Value::String(get_field_variant_as_string(field_type, val)))
+        if options.contains(&DecodeOption::ReturnNumericEnumValues) {
+            Ok(Value::SInt64(val))
+        } else if field_type.is_named_variant(val) {
+            Ok(Value::String(get_field_variant_as_string(field_type, val)))
+        } else {
+            Ok(Value::SInt64(val))
+        }
     } else {
         apply_scale_and_offset(value, scale, offset)
     }
