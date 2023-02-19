@@ -51,6 +51,31 @@ pub enum File {
     UnknownVariant(u8),
 }
 impl File {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            9 => true,
+            10 => true,
+            11 => true,
+            14 => true,
+            15 => true,
+            20 => true,
+            28 => true,
+            32 => true,
+            34 => true,
+            35 => true,
+            40 => true,
+            247 => true,
+            254 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             File::Device => 1,
@@ -245,6 +270,102 @@ pub enum MesgNum {
     UnknownVariant(u16),
 }
 impl MesgNum {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            9 => true,
+            10 => true,
+            12 => true,
+            15 => true,
+            18 => true,
+            19 => true,
+            20 => true,
+            21 => true,
+            23 => true,
+            26 => true,
+            27 => true,
+            28 => true,
+            30 => true,
+            31 => true,
+            32 => true,
+            33 => true,
+            34 => true,
+            35 => true,
+            37 => true,
+            38 => true,
+            39 => true,
+            49 => true,
+            51 => true,
+            53 => true,
+            55 => true,
+            72 => true,
+            78 => true,
+            80 => true,
+            81 => true,
+            82 => true,
+            101 => true,
+            103 => true,
+            105 => true,
+            106 => true,
+            127 => true,
+            128 => true,
+            129 => true,
+            131 => true,
+            132 => true,
+            142 => true,
+            145 => true,
+            148 => true,
+            149 => true,
+            150 => true,
+            151 => true,
+            158 => true,
+            159 => true,
+            160 => true,
+            161 => true,
+            162 => true,
+            164 => true,
+            165 => true,
+            167 => true,
+            169 => true,
+            174 => true,
+            177 => true,
+            178 => true,
+            184 => true,
+            185 => true,
+            186 => true,
+            187 => true,
+            188 => true,
+            200 => true,
+            201 => true,
+            202 => true,
+            206 => true,
+            207 => true,
+            208 => true,
+            209 => true,
+            210 => true,
+            225 => true,
+            227 => true,
+            258 => true,
+            259 => true,
+            262 => true,
+            264 => true,
+            268 => true,
+            285 => true,
+            317 => true,
+            375 => true,
+            65280 => true,
+            65534 => true,
+            _ => false,
+        }
+    }
     pub fn as_u16(self) -> u16 {
         match self {
             MesgNum::FileId => 0,
@@ -563,6 +684,13 @@ pub enum Checksum {
     UnknownVariant(u8),
 }
 impl Checksum {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             Checksum::Clear => 0,
@@ -613,6 +741,14 @@ pub enum FileFlags {
     UnknownVariant(u8),
 }
 impl FileFlags {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            2 => true,
+            4 => true,
+            8 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             FileFlags::Read => 2,
@@ -666,6 +802,14 @@ pub enum MesgCount {
     UnknownVariant(u8),
 }
 impl MesgCount {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             MesgCount::NumPerFile => 0,
@@ -719,6 +863,12 @@ pub enum DateTime {
     UnknownVariant(u32),
 }
 impl DateTime {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            268435456 => true,
+            _ => false,
+        }
+    }
     pub fn as_u32(self) -> u32 {
         match self {
             DateTime::Min => 268435456,
@@ -766,6 +916,12 @@ pub enum LocalDateTime {
     UnknownVariant(u32),
 }
 impl LocalDateTime {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            268435456 => true,
+            _ => false,
+        }
+    }
     pub fn as_u32(self) -> u32 {
         match self {
             LocalDateTime::Min => 268435456,
@@ -816,6 +972,14 @@ pub enum MessageIndex {
     UnknownVariant(u16),
 }
 impl MessageIndex {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            4095 => true,
+            28672 => true,
+            32768 => true,
+            _ => false,
+        }
+    }
     pub fn as_u16(self) -> u16 {
         match self {
             MessageIndex::Mask => 4095,
@@ -868,6 +1032,12 @@ pub enum DeviceIndex {
     UnknownVariant(u8),
 }
 impl DeviceIndex {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             DeviceIndex::Creator => 0,
@@ -914,6 +1084,13 @@ pub enum Gender {
     UnknownVariant(u8),
 }
 impl Gender {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             Gender::Female => 0,
@@ -1000,6 +1177,50 @@ pub enum Language {
     UnknownVariant(u8),
 }
 impl Language {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            9 => true,
+            10 => true,
+            11 => true,
+            12 => true,
+            13 => true,
+            14 => true,
+            15 => true,
+            16 => true,
+            17 => true,
+            18 => true,
+            19 => true,
+            20 => true,
+            21 => true,
+            22 => true,
+            23 => true,
+            24 => true,
+            25 => true,
+            26 => true,
+            27 => true,
+            28 => true,
+            29 => true,
+            30 => true,
+            31 => true,
+            32 => true,
+            33 => true,
+            34 => true,
+            35 => true,
+            36 => true,
+            37 => true,
+            254 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             Language::English => 0,
@@ -1167,6 +1388,19 @@ pub enum LanguageBits0 {
     UnknownVariant(u8),
 }
 impl LanguageBits0 {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            1 => true,
+            2 => true,
+            4 => true,
+            8 => true,
+            16 => true,
+            32 => true,
+            64 => true,
+            128 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             LanguageBits0::English => 1,
@@ -1240,6 +1474,19 @@ pub enum LanguageBits1 {
     UnknownVariant(u8),
 }
 impl LanguageBits1 {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            1 => true,
+            2 => true,
+            4 => true,
+            8 => true,
+            16 => true,
+            32 => true,
+            64 => true,
+            128 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             LanguageBits1::Dutch => 1,
@@ -1313,6 +1560,19 @@ pub enum LanguageBits2 {
     UnknownVariant(u8),
 }
 impl LanguageBits2 {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            1 => true,
+            2 => true,
+            4 => true,
+            8 => true,
+            16 => true,
+            32 => true,
+            64 => true,
+            128 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             LanguageBits2::Slovenian => 1,
@@ -1386,6 +1646,19 @@ pub enum LanguageBits3 {
     UnknownVariant(u8),
 }
 impl LanguageBits3 {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            1 => true,
+            2 => true,
+            4 => true,
+            8 => true,
+            16 => true,
+            32 => true,
+            64 => true,
+            128 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             LanguageBits3::Bulgarian => 1,
@@ -1457,6 +1730,17 @@ pub enum LanguageBits4 {
     UnknownVariant(u8),
 }
 impl LanguageBits4 {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            1 => true,
+            2 => true,
+            4 => true,
+            8 => true,
+            16 => true,
+            32 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             LanguageBits4::BrazilianPortuguese => 1,
@@ -1622,6 +1906,117 @@ pub enum TimeZone {
     UnknownVariant(u8),
 }
 impl TimeZone {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            9 => true,
+            10 => true,
+            11 => true,
+            12 => true,
+            13 => true,
+            14 => true,
+            15 => true,
+            16 => true,
+            17 => true,
+            18 => true,
+            19 => true,
+            20 => true,
+            21 => true,
+            22 => true,
+            23 => true,
+            24 => true,
+            25 => true,
+            26 => true,
+            27 => true,
+            28 => true,
+            29 => true,
+            30 => true,
+            31 => true,
+            32 => true,
+            33 => true,
+            34 => true,
+            35 => true,
+            36 => true,
+            37 => true,
+            38 => true,
+            39 => true,
+            40 => true,
+            41 => true,
+            42 => true,
+            43 => true,
+            44 => true,
+            45 => true,
+            46 => true,
+            47 => true,
+            48 => true,
+            49 => true,
+            50 => true,
+            51 => true,
+            52 => true,
+            53 => true,
+            54 => true,
+            55 => true,
+            56 => true,
+            57 => true,
+            58 => true,
+            59 => true,
+            60 => true,
+            61 => true,
+            62 => true,
+            63 => true,
+            64 => true,
+            65 => true,
+            66 => true,
+            67 => true,
+            68 => true,
+            69 => true,
+            70 => true,
+            71 => true,
+            72 => true,
+            73 => true,
+            74 => true,
+            75 => true,
+            76 => true,
+            77 => true,
+            78 => true,
+            79 => true,
+            80 => true,
+            81 => true,
+            82 => true,
+            83 => true,
+            84 => true,
+            85 => true,
+            86 => true,
+            87 => true,
+            88 => true,
+            89 => true,
+            90 => true,
+            91 => true,
+            92 => true,
+            93 => true,
+            94 => true,
+            95 => true,
+            96 => true,
+            97 => true,
+            98 => true,
+            99 => true,
+            100 => true,
+            101 => true,
+            102 => true,
+            103 => true,
+            253 => true,
+            254 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             TimeZone::Almaty => 0,
@@ -1984,6 +2379,14 @@ pub enum DisplayMeasure {
     UnknownVariant(u8),
 }
 impl DisplayMeasure {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             DisplayMeasure::Metric => 0,
@@ -2037,6 +2440,14 @@ pub enum DisplayHeart {
     UnknownVariant(u8),
 }
 impl DisplayHeart {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             DisplayHeart::Bpm => 0,
@@ -2089,6 +2500,13 @@ pub enum DisplayPower {
     UnknownVariant(u8),
 }
 impl DisplayPower {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             DisplayPower::Watts => 0,
@@ -2220,6 +2638,53 @@ pub enum DisplayPosition {
     UnknownVariant(u8),
 }
 impl DisplayPosition {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            9 => true,
+            10 => true,
+            11 => true,
+            12 => true,
+            13 => true,
+            14 => true,
+            15 => true,
+            16 => true,
+            17 => true,
+            18 => true,
+            19 => true,
+            20 => true,
+            21 => true,
+            22 => true,
+            23 => true,
+            24 => true,
+            25 => true,
+            26 => true,
+            27 => true,
+            28 => true,
+            29 => true,
+            30 => true,
+            31 => true,
+            32 => true,
+            33 => true,
+            34 => true,
+            35 => true,
+            36 => true,
+            37 => true,
+            38 => true,
+            39 => true,
+            40 => true,
+            41 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             DisplayPosition::Degree => 0,
@@ -2390,6 +2855,14 @@ pub enum Switch {
     UnknownVariant(u8),
 }
 impl Switch {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             Switch::Off => 0,
@@ -2493,6 +2966,62 @@ pub enum Sport {
     UnknownVariant(u8),
 }
 impl Sport {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            9 => true,
+            10 => true,
+            11 => true,
+            12 => true,
+            13 => true,
+            14 => true,
+            15 => true,
+            16 => true,
+            17 => true,
+            18 => true,
+            19 => true,
+            20 => true,
+            21 => true,
+            22 => true,
+            23 => true,
+            24 => true,
+            25 => true,
+            26 => true,
+            27 => true,
+            28 => true,
+            29 => true,
+            30 => true,
+            31 => true,
+            32 => true,
+            33 => true,
+            34 => true,
+            35 => true,
+            36 => true,
+            37 => true,
+            38 => true,
+            39 => true,
+            40 => true,
+            41 => true,
+            42 => true,
+            43 => true,
+            44 => true,
+            45 => true,
+            46 => true,
+            47 => true,
+            48 => true,
+            53 => true,
+            254 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             Sport::Generic => 0,
@@ -2697,6 +3226,19 @@ pub enum SportBits0 {
     UnknownVariant(u8),
 }
 impl SportBits0 {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            1 => true,
+            2 => true,
+            4 => true,
+            8 => true,
+            16 => true,
+            32 => true,
+            64 => true,
+            128 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             SportBits0::Generic => 1,
@@ -2771,6 +3313,19 @@ pub enum SportBits1 {
     UnknownVariant(u8),
 }
 impl SportBits1 {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            1 => true,
+            2 => true,
+            4 => true,
+            8 => true,
+            16 => true,
+            32 => true,
+            64 => true,
+            128 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             SportBits1::Tennis => 1,
@@ -2845,6 +3400,19 @@ pub enum SportBits2 {
     UnknownVariant(u8),
 }
 impl SportBits2 {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            1 => true,
+            2 => true,
+            4 => true,
+            8 => true,
+            16 => true,
+            32 => true,
+            64 => true,
+            128 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             SportBits2::Mountaineering => 1,
@@ -2919,6 +3487,19 @@ pub enum SportBits3 {
     UnknownVariant(u8),
 }
 impl SportBits3 {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            1 => true,
+            2 => true,
+            4 => true,
+            8 => true,
+            16 => true,
+            32 => true,
+            64 => true,
+            128 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             SportBits3::Driving => 1,
@@ -2993,6 +3574,19 @@ pub enum SportBits4 {
     UnknownVariant(u8),
 }
 impl SportBits4 {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            1 => true,
+            2 => true,
+            4 => true,
+            8 => true,
+            16 => true,
+            32 => true,
+            64 => true,
+            128 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             SportBits4::Sailing => 1,
@@ -3067,6 +3661,19 @@ pub enum SportBits5 {
     UnknownVariant(u8),
 }
 impl SportBits5 {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            1 => true,
+            2 => true,
+            4 => true,
+            8 => true,
+            16 => true,
+            32 => true,
+            64 => true,
+            128 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             SportBits5::WaterSkiing => 1,
@@ -3134,6 +3741,12 @@ pub enum SportBits6 {
     UnknownVariant(u8),
 }
 impl SportBits6 {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            1 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             SportBits6::FloorClimbing => 1,
@@ -3302,6 +3915,77 @@ pub enum SubSport {
     UnknownVariant(u8),
 }
 impl SubSport {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            9 => true,
+            10 => true,
+            11 => true,
+            12 => true,
+            13 => true,
+            14 => true,
+            15 => true,
+            16 => true,
+            17 => true,
+            18 => true,
+            19 => true,
+            20 => true,
+            21 => true,
+            22 => true,
+            23 => true,
+            24 => true,
+            25 => true,
+            26 => true,
+            27 => true,
+            28 => true,
+            29 => true,
+            30 => true,
+            31 => true,
+            32 => true,
+            33 => true,
+            34 => true,
+            35 => true,
+            36 => true,
+            37 => true,
+            38 => true,
+            39 => true,
+            40 => true,
+            41 => true,
+            42 => true,
+            43 => true,
+            44 => true,
+            45 => true,
+            46 => true,
+            47 => true,
+            48 => true,
+            49 => true,
+            50 => true,
+            51 => true,
+            52 => true,
+            53 => true,
+            54 => true,
+            55 => true,
+            56 => true,
+            57 => true,
+            58 => true,
+            59 => true,
+            62 => true,
+            65 => true,
+            67 => true,
+            68 => true,
+            69 => true,
+            254 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             SubSport::Generic => 0,
@@ -3550,6 +4234,20 @@ pub enum SportEvent {
     UnknownVariant(u8),
 }
 impl SportEvent {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             SportEvent::Uncategorized => 0,
@@ -3620,6 +4318,13 @@ pub enum Activity {
     UnknownVariant(u8),
 }
 impl Activity {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             Activity::Manual => 0,
@@ -3674,6 +4379,18 @@ pub enum Intensity {
     UnknownVariant(u8),
 }
 impl Intensity {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             Intensity::Active => 0,
@@ -3743,6 +4460,15 @@ pub enum SessionTrigger {
     UnknownVariant(u8),
 }
 impl SessionTrigger {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             SessionTrigger::ActivityEnd => 0,
@@ -3803,6 +4529,18 @@ pub enum AutolapTrigger {
     UnknownVariant(u8),
 }
 impl AutolapTrigger {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             AutolapTrigger::Time => 0,
@@ -3874,6 +4612,20 @@ pub enum LapTrigger {
     UnknownVariant(u8),
 }
 impl LapTrigger {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             LapTrigger::Manual => 0,
@@ -3950,6 +4702,17 @@ pub enum TimeMode {
     UnknownVariant(u8),
 }
 impl TimeMode {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             TimeMode::Hour12 => 0,
@@ -4016,6 +4779,18 @@ pub enum BacklightMode {
     UnknownVariant(u8),
 }
 impl BacklightMode {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             BacklightMode::Off => 0,
@@ -4082,6 +4857,13 @@ pub enum DateMode {
     UnknownVariant(u8),
 }
 impl DateMode {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             DateMode::DayMonth => 0,
@@ -4132,6 +4914,12 @@ pub enum BacklightTimeout {
     UnknownVariant(u8),
 }
 impl BacklightTimeout {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             BacklightTimeout::Infinite => 0,
@@ -4250,6 +5038,48 @@ pub enum Event {
     UnknownVariant(u8),
 }
 impl Event {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            9 => true,
+            10 => true,
+            11 => true,
+            12 => true,
+            13 => true,
+            14 => true,
+            15 => true,
+            16 => true,
+            17 => true,
+            18 => true,
+            19 => true,
+            20 => true,
+            21 => true,
+            22 => true,
+            23 => true,
+            24 => true,
+            25 => true,
+            26 => true,
+            27 => true,
+            28 => true,
+            32 => true,
+            33 => true,
+            36 => true,
+            42 => true,
+            43 => true,
+            44 => true,
+            45 => true,
+            46 => true,
+            47 => true,
+            75 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             Event::Timer => 0,
@@ -4412,6 +5242,21 @@ pub enum EventType {
     UnknownVariant(u8),
 }
 impl EventType {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            9 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             EventType::Start => 0,
@@ -4487,6 +5332,14 @@ pub enum TimerTrigger {
     UnknownVariant(u8),
 }
 impl TimerTrigger {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             TimerTrigger::Manual => 0,
@@ -4543,6 +5396,15 @@ pub enum FitnessEquipmentState {
     UnknownVariant(u8),
 }
 impl FitnessEquipmentState {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             FitnessEquipmentState::Ready => 0,
@@ -4600,6 +5462,15 @@ pub enum Tone {
     UnknownVariant(u8),
 }
 impl Tone {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             Tone::Off => 0,
@@ -4657,6 +5528,15 @@ pub enum Autoscroll {
     UnknownVariant(u8),
 }
 impl Autoscroll {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             Autoscroll::None => 0,
@@ -4714,6 +5594,14 @@ pub enum ActivityClass {
     UnknownVariant(u8),
 }
 impl ActivityClass {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            100 => true,
+            127 => true,
+            128 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             ActivityClass::LevelMax => 100,
@@ -4767,6 +5655,14 @@ pub enum HrZoneCalc {
     UnknownVariant(u8),
 }
 impl HrZoneCalc {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             HrZoneCalc::Custom => 0,
@@ -4819,6 +5715,13 @@ pub enum PwrZoneCalc {
     UnknownVariant(u8),
 }
 impl PwrZoneCalc {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             PwrZoneCalc::Custom => 0,
@@ -4897,6 +5800,42 @@ pub enum WktStepDuration {
     UnknownVariant(u8),
 }
 impl WktStepDuration {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            9 => true,
+            10 => true,
+            11 => true,
+            12 => true,
+            13 => true,
+            14 => true,
+            15 => true,
+            16 => true,
+            17 => true,
+            18 => true,
+            19 => true,
+            20 => true,
+            21 => true,
+            22 => true,
+            23 => true,
+            24 => true,
+            25 => true,
+            26 => true,
+            27 => true,
+            28 => true,
+            29 => true,
+            31 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             WktStepDuration::Time => 0,
@@ -5053,6 +5992,25 @@ pub enum WktStepTarget {
     UnknownVariant(u8),
 }
 impl WktStepTarget {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            9 => true,
+            10 => true,
+            11 => true,
+            12 => true,
+            13 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             WktStepTarget::Speed => 0,
@@ -5143,6 +6101,18 @@ pub enum Goal {
     UnknownVariant(u8),
 }
 impl Goal {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             Goal::Time => 0,
@@ -5211,6 +6181,17 @@ pub enum GoalRecurrence {
     UnknownVariant(u8),
 }
 impl GoalRecurrence {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             GoalRecurrence::Off => 0,
@@ -5276,6 +6257,14 @@ pub enum GoalSource {
     UnknownVariant(u8),
 }
 impl GoalSource {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             GoalSource::Auto => 0,
@@ -5328,6 +6317,13 @@ pub enum Schedule {
     UnknownVariant(u8),
 }
 impl Schedule {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             Schedule::Workout => 0,
@@ -5429,6 +6425,64 @@ pub enum CoursePoint {
     UnknownVariant(u8),
 }
 impl CoursePoint {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            9 => true,
+            10 => true,
+            11 => true,
+            12 => true,
+            13 => true,
+            14 => true,
+            15 => true,
+            16 => true,
+            17 => true,
+            18 => true,
+            19 => true,
+            20 => true,
+            21 => true,
+            22 => true,
+            23 => true,
+            24 => true,
+            25 => true,
+            27 => true,
+            28 => true,
+            29 => true,
+            30 => true,
+            31 => true,
+            32 => true,
+            33 => true,
+            34 => true,
+            35 => true,
+            36 => true,
+            37 => true,
+            38 => true,
+            39 => true,
+            40 => true,
+            41 => true,
+            42 => true,
+            43 => true,
+            44 => true,
+            45 => true,
+            46 => true,
+            47 => true,
+            48 => true,
+            49 => true,
+            50 => true,
+            51 => true,
+            52 => true,
+            53 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             CoursePoint::Generic => 0,
@@ -5845,6 +6899,218 @@ pub enum Manufacturer {
     UnknownVariant(u16),
 }
 impl Manufacturer {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            9 => true,
+            10 => true,
+            11 => true,
+            12 => true,
+            13 => true,
+            14 => true,
+            15 => true,
+            16 => true,
+            17 => true,
+            18 => true,
+            19 => true,
+            20 => true,
+            21 => true,
+            22 => true,
+            23 => true,
+            24 => true,
+            25 => true,
+            26 => true,
+            27 => true,
+            28 => true,
+            29 => true,
+            30 => true,
+            31 => true,
+            32 => true,
+            33 => true,
+            34 => true,
+            35 => true,
+            36 => true,
+            37 => true,
+            38 => true,
+            39 => true,
+            40 => true,
+            41 => true,
+            42 => true,
+            43 => true,
+            44 => true,
+            45 => true,
+            46 => true,
+            47 => true,
+            48 => true,
+            49 => true,
+            50 => true,
+            51 => true,
+            52 => true,
+            53 => true,
+            54 => true,
+            55 => true,
+            56 => true,
+            57 => true,
+            58 => true,
+            59 => true,
+            60 => true,
+            61 => true,
+            62 => true,
+            63 => true,
+            64 => true,
+            65 => true,
+            66 => true,
+            67 => true,
+            68 => true,
+            69 => true,
+            70 => true,
+            71 => true,
+            72 => true,
+            73 => true,
+            76 => true,
+            77 => true,
+            78 => true,
+            79 => true,
+            80 => true,
+            81 => true,
+            82 => true,
+            83 => true,
+            84 => true,
+            85 => true,
+            86 => true,
+            87 => true,
+            88 => true,
+            89 => true,
+            90 => true,
+            91 => true,
+            92 => true,
+            93 => true,
+            94 => true,
+            95 => true,
+            96 => true,
+            97 => true,
+            98 => true,
+            99 => true,
+            100 => true,
+            101 => true,
+            102 => true,
+            103 => true,
+            104 => true,
+            105 => true,
+            106 => true,
+            107 => true,
+            108 => true,
+            109 => true,
+            110 => true,
+            111 => true,
+            112 => true,
+            113 => true,
+            114 => true,
+            115 => true,
+            116 => true,
+            117 => true,
+            118 => true,
+            119 => true,
+            120 => true,
+            121 => true,
+            122 => true,
+            123 => true,
+            124 => true,
+            125 => true,
+            126 => true,
+            127 => true,
+            128 => true,
+            129 => true,
+            130 => true,
+            131 => true,
+            132 => true,
+            133 => true,
+            134 => true,
+            135 => true,
+            136 => true,
+            137 => true,
+            138 => true,
+            139 => true,
+            140 => true,
+            141 => true,
+            142 => true,
+            143 => true,
+            144 => true,
+            255 => true,
+            257 => true,
+            258 => true,
+            259 => true,
+            260 => true,
+            261 => true,
+            262 => true,
+            263 => true,
+            264 => true,
+            265 => true,
+            266 => true,
+            267 => true,
+            268 => true,
+            269 => true,
+            270 => true,
+            271 => true,
+            272 => true,
+            273 => true,
+            274 => true,
+            275 => true,
+            276 => true,
+            277 => true,
+            278 => true,
+            279 => true,
+            280 => true,
+            281 => true,
+            282 => true,
+            283 => true,
+            284 => true,
+            285 => true,
+            286 => true,
+            287 => true,
+            288 => true,
+            289 => true,
+            290 => true,
+            291 => true,
+            292 => true,
+            293 => true,
+            294 => true,
+            295 => true,
+            296 => true,
+            297 => true,
+            298 => true,
+            299 => true,
+            300 => true,
+            301 => true,
+            302 => true,
+            303 => true,
+            304 => true,
+            305 => true,
+            306 => true,
+            307 => true,
+            308 => true,
+            309 => true,
+            310 => true,
+            311 => true,
+            312 => true,
+            313 => true,
+            314 => true,
+            315 => true,
+            316 => true,
+            317 => true,
+            318 => true,
+            319 => true,
+            5759 => true,
+            _ => false,
+        }
+    }
     pub fn as_u16(self) -> u16 {
         match self {
             Manufacturer::Garmin => 1,
@@ -6938,6 +8204,403 @@ pub enum GarminProduct {
     UnknownVariant(u16),
 }
 impl GarminProduct {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            9 => true,
+            10 => true,
+            11 => true,
+            12 => true,
+            13 => true,
+            14 => true,
+            15 => true,
+            16 => true,
+            255 => true,
+            473 => true,
+            474 => true,
+            475 => true,
+            494 => true,
+            717 => true,
+            782 => true,
+            987 => true,
+            988 => true,
+            1011 => true,
+            1018 => true,
+            1036 => true,
+            1124 => true,
+            1169 => true,
+            1199 => true,
+            1213 => true,
+            1253 => true,
+            1274 => true,
+            1325 => true,
+            1328 => true,
+            1333 => true,
+            1334 => true,
+            1341 => true,
+            1345 => true,
+            1360 => true,
+            1380 => true,
+            1381 => true,
+            1386 => true,
+            1387 => true,
+            1405 => true,
+            1410 => true,
+            1422 => true,
+            1436 => true,
+            1446 => true,
+            1461 => true,
+            1482 => true,
+            1497 => true,
+            1499 => true,
+            1537 => true,
+            1551 => true,
+            1555 => true,
+            1561 => true,
+            1567 => true,
+            1570 => true,
+            1600 => true,
+            1623 => true,
+            1632 => true,
+            1664 => true,
+            1688 => true,
+            1721 => true,
+            1735 => true,
+            1736 => true,
+            1742 => true,
+            1743 => true,
+            1752 => true,
+            1765 => true,
+            1821 => true,
+            1822 => true,
+            1823 => true,
+            1836 => true,
+            1837 => true,
+            1853 => true,
+            1885 => true,
+            1903 => true,
+            1907 => true,
+            1918 => true,
+            1928 => true,
+            1929 => true,
+            1930 => true,
+            1931 => true,
+            1936 => true,
+            1956 => true,
+            1967 => true,
+            1988 => true,
+            2050 => true,
+            2052 => true,
+            2053 => true,
+            2061 => true,
+            2067 => true,
+            2070 => true,
+            2072 => true,
+            2073 => true,
+            2079 => true,
+            2100 => true,
+            2130 => true,
+            2131 => true,
+            2132 => true,
+            2134 => true,
+            2135 => true,
+            2140 => true,
+            2147 => true,
+            2148 => true,
+            2150 => true,
+            2153 => true,
+            2156 => true,
+            2157 => true,
+            2158 => true,
+            2160 => true,
+            2161 => true,
+            2162 => true,
+            2172 => true,
+            2173 => true,
+            2174 => true,
+            2175 => true,
+            2187 => true,
+            2188 => true,
+            2189 => true,
+            2192 => true,
+            2193 => true,
+            2204 => true,
+            2219 => true,
+            2225 => true,
+            2226 => true,
+            2238 => true,
+            2260 => true,
+            2261 => true,
+            2262 => true,
+            2266 => true,
+            2271 => true,
+            2274 => true,
+            2276 => true,
+            2288 => true,
+            2289 => true,
+            2290 => true,
+            2292 => true,
+            2293 => true,
+            2294 => true,
+            2310 => true,
+            2311 => true,
+            2313 => true,
+            2327 => true,
+            2332 => true,
+            2337 => true,
+            2343 => true,
+            2347 => true,
+            2348 => true,
+            2361 => true,
+            2362 => true,
+            2368 => true,
+            2379 => true,
+            2396 => true,
+            2397 => true,
+            2398 => true,
+            2406 => true,
+            2407 => true,
+            2408 => true,
+            2413 => true,
+            2417 => true,
+            2429 => true,
+            2431 => true,
+            2432 => true,
+            2441 => true,
+            2444 => true,
+            2457 => true,
+            2473 => true,
+            2474 => true,
+            2475 => true,
+            2476 => true,
+            2477 => true,
+            2496 => true,
+            2497 => true,
+            2512 => true,
+            2530 => true,
+            2531 => true,
+            2533 => true,
+            2534 => true,
+            2544 => true,
+            2547 => true,
+            2567 => true,
+            2593 => true,
+            2599 => true,
+            2600 => true,
+            2604 => true,
+            2606 => true,
+            2622 => true,
+            2623 => true,
+            2628 => true,
+            2629 => true,
+            2630 => true,
+            2650 => true,
+            2656 => true,
+            2667 => true,
+            2668 => true,
+            2675 => true,
+            2687 => true,
+            2691 => true,
+            2697 => true,
+            2700 => true,
+            2713 => true,
+            2733 => true,
+            2769 => true,
+            2772 => true,
+            2787 => true,
+            2796 => true,
+            2797 => true,
+            2798 => true,
+            2806 => true,
+            2814 => true,
+            2819 => true,
+            2831 => true,
+            2832 => true,
+            2833 => true,
+            2859 => true,
+            2878 => true,
+            2886 => true,
+            2888 => true,
+            2891 => true,
+            2900 => true,
+            2909 => true,
+            2924 => true,
+            2927 => true,
+            2945 => true,
+            2962 => true,
+            2977 => true,
+            2988 => true,
+            3003 => true,
+            3004 => true,
+            3011 => true,
+            3028 => true,
+            3049 => true,
+            3066 => true,
+            3085 => true,
+            3092 => true,
+            3095 => true,
+            3110 => true,
+            3111 => true,
+            3112 => true,
+            3113 => true,
+            3121 => true,
+            3122 => true,
+            3126 => true,
+            3134 => true,
+            3135 => true,
+            3142 => true,
+            3144 => true,
+            3145 => true,
+            3163 => true,
+            3192 => true,
+            3193 => true,
+            3218 => true,
+            3224 => true,
+            3225 => true,
+            3226 => true,
+            3246 => true,
+            3247 => true,
+            3248 => true,
+            3249 => true,
+            3250 => true,
+            3251 => true,
+            3258 => true,
+            3284 => true,
+            3287 => true,
+            3288 => true,
+            3289 => true,
+            3290 => true,
+            3291 => true,
+            3299 => true,
+            3300 => true,
+            3308 => true,
+            3314 => true,
+            3321 => true,
+            3349 => true,
+            3350 => true,
+            3378 => true,
+            3387 => true,
+            3388 => true,
+            3389 => true,
+            3405 => true,
+            3420 => true,
+            3421 => true,
+            3422 => true,
+            3441 => true,
+            3446 => true,
+            3448 => true,
+            3449 => true,
+            3450 => true,
+            3451 => true,
+            3466 => true,
+            3469 => true,
+            3473 => true,
+            3498 => true,
+            3499 => true,
+            3500 => true,
+            3501 => true,
+            3512 => true,
+            3513 => true,
+            3514 => true,
+            3515 => true,
+            3516 => true,
+            3535 => true,
+            3536 => true,
+            3537 => true,
+            3538 => true,
+            3542 => true,
+            3558 => true,
+            3570 => true,
+            3578 => true,
+            3589 => true,
+            3600 => true,
+            3615 => true,
+            3624 => true,
+            3638 => true,
+            3639 => true,
+            3648 => true,
+            3652 => true,
+            3702 => true,
+            3703 => true,
+            3704 => true,
+            3737 => true,
+            3739 => true,
+            3740 => true,
+            3794 => true,
+            3809 => true,
+            3812 => true,
+            3813 => true,
+            3823 => true,
+            3837 => true,
+            3850 => true,
+            3851 => true,
+            3869 => true,
+            3872 => true,
+            3888 => true,
+            3905 => true,
+            3906 => true,
+            3907 => true,
+            3908 => true,
+            3909 => true,
+            3910 => true,
+            3930 => true,
+            3934 => true,
+            3943 => true,
+            3944 => true,
+            3949 => true,
+            3950 => true,
+            3978 => true,
+            3986 => true,
+            3990 => true,
+            3991 => true,
+            3992 => true,
+            3993 => true,
+            4002 => true,
+            4005 => true,
+            4017 => true,
+            4024 => true,
+            4033 => true,
+            4063 => true,
+            4071 => true,
+            4125 => true,
+            4130 => true,
+            4132 => true,
+            4135 => true,
+            4169 => true,
+            4265 => true,
+            4266 => true,
+            4267 => true,
+            4268 => true,
+            4269 => true,
+            4270 => true,
+            4271 => true,
+            4272 => true,
+            4273 => true,
+            4274 => true,
+            4275 => true,
+            4276 => true,
+            10007 => true,
+            10014 => true,
+            20119 => true,
+            20533 => true,
+            20534 => true,
+            20565 => true,
+            30045 => true,
+            30046 => true,
+            30047 => true,
+            65531 => true,
+            65532 => true,
+            65534 => true,
+            _ => false,
+        }
+    }
     pub fn as_u16(self) -> u16 {
         match self {
             GarminProduct::ApproachG12Asia => 1,
@@ -8188,6 +9851,36 @@ pub enum AntplusDeviceType {
     UnknownVariant(u8),
 }
 impl AntplusDeviceType {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            1 => true,
+            11 => true,
+            12 => true,
+            15 => true,
+            16 => true,
+            17 => true,
+            18 => true,
+            19 => true,
+            20 => true,
+            25 => true,
+            26 => true,
+            27 => true,
+            31 => true,
+            34 => true,
+            35 => true,
+            36 => true,
+            38 => true,
+            40 => true,
+            46 => true,
+            119 => true,
+            120 => true,
+            121 => true,
+            122 => true,
+            123 => true,
+            124 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             AntplusDeviceType::Antfs => 1,
@@ -8308,6 +10001,15 @@ pub enum AntNetwork {
     UnknownVariant(u8),
 }
 impl AntNetwork {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             AntNetwork::Public => 0,
@@ -8383,6 +10085,25 @@ pub enum WorkoutCapabilities {
     UnknownVariant(u32),
 }
 impl WorkoutCapabilities {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            1 => true,
+            2 => true,
+            4 => true,
+            8 => true,
+            16 => true,
+            32 => true,
+            128 => true,
+            256 => true,
+            512 => true,
+            1024 => true,
+            2048 => true,
+            4096 => true,
+            8192 => true,
+            16384 => true,
+            _ => false,
+        }
+    }
     pub fn as_u32(self) -> u32 {
         match self {
             WorkoutCapabilities::Interval => 1,
@@ -8473,6 +10194,18 @@ pub enum BatteryStatus {
     UnknownVariant(u8),
 }
 impl BatteryStatus {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             BatteryStatus::New => 1,
@@ -8537,6 +10270,13 @@ pub enum HrType {
     UnknownVariant(u8),
 }
 impl HrType {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             HrType::Normal => 0,
@@ -8595,6 +10335,22 @@ pub enum CourseCapabilities {
     UnknownVariant(u32),
 }
 impl CourseCapabilities {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            1 => true,
+            2 => true,
+            4 => true,
+            8 => true,
+            16 => true,
+            32 => true,
+            64 => true,
+            128 => true,
+            256 => true,
+            512 => true,
+            1024 => true,
+            _ => false,
+        }
+    }
     pub fn as_u32(self) -> u32 {
         match self {
             CourseCapabilities::Processed => 1,
@@ -8670,6 +10426,12 @@ pub enum Weight {
     UnknownVariant(u16),
 }
 impl Weight {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            65534 => true,
+            _ => false,
+        }
+    }
     pub fn as_u16(self) -> u16 {
         match self {
             Weight::Calculating => 65534,
@@ -8716,6 +10478,12 @@ pub enum WorkoutHr {
     UnknownVariant(u32),
 }
 impl WorkoutHr {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            100 => true,
+            _ => false,
+        }
+    }
     pub fn as_u32(self) -> u32 {
         match self {
             WorkoutHr::BpmOffset => 100,
@@ -8762,6 +10530,12 @@ pub enum WorkoutPower {
     UnknownVariant(u32),
 }
 impl WorkoutPower {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            1000 => true,
+            _ => false,
+        }
+    }
     pub fn as_u32(self) -> u32 {
         match self {
             WorkoutPower::WattsOffset => 1000,
@@ -8811,6 +10585,16 @@ pub enum BpStatus {
     UnknownVariant(u8),
 }
 impl BpStatus {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             BpStatus::NoError => 0,
@@ -8873,6 +10657,17 @@ pub enum UserLocalId {
     UnknownVariant(u16),
 }
 impl UserLocalId {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            15 => true,
+            16 => true,
+            255 => true,
+            256 => true,
+            65534 => true,
+            _ => false,
+        }
+    }
     pub fn as_u16(self) -> u16 {
         match self {
             UserLocalId::LocalMin => 0,
@@ -8940,6 +10735,18 @@ pub enum SwimStroke {
     UnknownVariant(u8),
 }
 impl SwimStroke {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             SwimStroke::Freestyle => 0,
@@ -9013,6 +10820,20 @@ pub enum ActivityType {
     UnknownVariant(u8),
 }
 impl ActivityType {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            8 => true,
+            254 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             ActivityType::Generic => 0,
@@ -9119,6 +10940,31 @@ pub enum ActivitySubtype {
     UnknownVariant(u8),
 }
 impl ActivitySubtype {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            9 => true,
+            10 => true,
+            11 => true,
+            12 => true,
+            13 => true,
+            14 => true,
+            15 => true,
+            16 => true,
+            17 => true,
+            18 => true,
+            254 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             ActivitySubtype::Generic => 0,
@@ -9223,6 +11069,14 @@ pub enum ActivityLevel {
     UnknownVariant(u8),
 }
 impl ActivityLevel {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             ActivityLevel::Low => 0,
@@ -9275,6 +11129,13 @@ pub enum Side {
     UnknownVariant(u8),
 }
 impl Side {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             Side::Right => 0,
@@ -9326,6 +11187,13 @@ pub enum LeftRightBalance {
     UnknownVariant(u8),
 }
 impl LeftRightBalance {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            127 => true,
+            128 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             LeftRightBalance::Mask => 127,
@@ -9377,6 +11245,13 @@ pub enum LeftRightBalance100 {
     UnknownVariant(u16),
 }
 impl LeftRightBalance100 {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            16383 => true,
+            32768 => true,
+            _ => false,
+        }
+    }
     pub fn as_u16(self) -> u16 {
         match self {
             LeftRightBalance100::Mask => 16383,
@@ -9428,6 +11303,13 @@ pub enum LengthType {
     UnknownVariant(u8),
 }
 impl LengthType {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             LengthType::Idle => 0,
@@ -9482,6 +11364,18 @@ pub enum DayOfWeek {
     UnknownVariant(u8),
 }
 impl DayOfWeek {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             DayOfWeek::Sunday => 0,
@@ -9585,6 +11479,43 @@ pub enum ConnectivityCapabilities {
     UnknownVariant(u32),
 }
 impl ConnectivityCapabilities {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            1 => true,
+            2 => true,
+            4 => true,
+            8 => true,
+            16 => true,
+            32 => true,
+            64 => true,
+            128 => true,
+            256 => true,
+            512 => true,
+            1024 => true,
+            2048 => true,
+            4096 => true,
+            8192 => true,
+            16384 => true,
+            32768 => true,
+            65536 => true,
+            131072 => true,
+            262144 => true,
+            524288 => true,
+            1048576 => true,
+            2097152 => true,
+            4194304 => true,
+            8388608 => true,
+            16777216 => true,
+            33554432 => true,
+            67108864 => true,
+            134217728 => true,
+            268435456 => true,
+            536870912 => true,
+            1073741824 => true,
+            2147483648 => true,
+            _ => false,
+        }
+    }
     pub fn as_u32(self) -> u32 {
         match self {
             ConnectivityCapabilities::Bluetooth => 1,
@@ -9739,6 +11670,14 @@ pub enum WeatherReport {
     UnknownVariant(u8),
 }
 impl WeatherReport {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             WeatherReport::Current => 0,
@@ -9810,6 +11749,32 @@ pub enum WeatherStatus {
     UnknownVariant(u8),
 }
 impl WeatherStatus {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            11 => true,
+            12 => true,
+            13 => true,
+            14 => true,
+            15 => true,
+            16 => true,
+            17 => true,
+            18 => true,
+            19 => true,
+            20 => true,
+            21 => true,
+            22 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             WeatherStatus::Clear => 0,
@@ -9919,6 +11884,16 @@ pub enum WeatherSeverity {
     UnknownVariant(u8),
 }
 impl WeatherSeverity {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             WeatherSeverity::Unknown => 0,
@@ -10060,6 +12035,96 @@ pub enum WeatherSevereType {
     UnknownVariant(u8),
 }
 impl WeatherSevereType {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            9 => true,
+            10 => true,
+            11 => true,
+            12 => true,
+            13 => true,
+            14 => true,
+            15 => true,
+            16 => true,
+            17 => true,
+            18 => true,
+            19 => true,
+            20 => true,
+            21 => true,
+            22 => true,
+            23 => true,
+            24 => true,
+            25 => true,
+            26 => true,
+            27 => true,
+            28 => true,
+            29 => true,
+            30 => true,
+            31 => true,
+            32 => true,
+            33 => true,
+            34 => true,
+            35 => true,
+            36 => true,
+            37 => true,
+            38 => true,
+            39 => true,
+            40 => true,
+            41 => true,
+            42 => true,
+            43 => true,
+            44 => true,
+            45 => true,
+            46 => true,
+            47 => true,
+            48 => true,
+            49 => true,
+            50 => true,
+            51 => true,
+            52 => true,
+            53 => true,
+            54 => true,
+            55 => true,
+            56 => true,
+            57 => true,
+            58 => true,
+            59 => true,
+            60 => true,
+            61 => true,
+            62 => true,
+            63 => true,
+            64 => true,
+            65 => true,
+            66 => true,
+            67 => true,
+            68 => true,
+            69 => true,
+            70 => true,
+            71 => true,
+            72 => true,
+            73 => true,
+            74 => true,
+            75 => true,
+            76 => true,
+            77 => true,
+            78 => true,
+            79 => true,
+            80 => true,
+            81 => true,
+            82 => true,
+            83 => true,
+            84 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             WeatherSevereType::Unspecified => 0,
@@ -10363,6 +12428,17 @@ pub enum StrokeType {
     UnknownVariant(u8),
 }
 impl StrokeType {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             StrokeType::NoEvent => 0,
@@ -10466,6 +12542,51 @@ pub enum BodyLocation {
     UnknownVariant(u8),
 }
 impl BodyLocation {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            9 => true,
+            10 => true,
+            11 => true,
+            12 => true,
+            13 => true,
+            14 => true,
+            15 => true,
+            16 => true,
+            17 => true,
+            18 => true,
+            19 => true,
+            20 => true,
+            21 => true,
+            22 => true,
+            23 => true,
+            24 => true,
+            25 => true,
+            26 => true,
+            27 => true,
+            28 => true,
+            29 => true,
+            30 => true,
+            31 => true,
+            32 => true,
+            33 => true,
+            34 => true,
+            35 => true,
+            36 => true,
+            37 => true,
+            38 => true,
+            39 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             BodyLocation::LeftLeg => 0,
@@ -10629,6 +12750,13 @@ pub enum SegmentLapStatus {
     UnknownVariant(u8),
 }
 impl SegmentLapStatus {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             SegmentLapStatus::End => 0,
@@ -10687,6 +12815,22 @@ pub enum SegmentLeaderboardType {
     UnknownVariant(u8),
 }
 impl SegmentLeaderboardType {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            9 => true,
+            10 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             SegmentLeaderboardType::Overall => 0,
@@ -10766,6 +12910,14 @@ pub enum SegmentDeleteStatus {
     UnknownVariant(u8),
 }
 impl SegmentDeleteStatus {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             SegmentDeleteStatus::DoNotDelete => 0,
@@ -10818,6 +12970,13 @@ pub enum SegmentSelectionType {
     UnknownVariant(u8),
 }
 impl SegmentSelectionType {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             SegmentSelectionType::Starred => 0,
@@ -10877,6 +13036,17 @@ pub enum SourceType {
     UnknownVariant(u8),
 }
 impl SourceType {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             SourceType::Ant => 0,
@@ -10944,6 +13114,16 @@ pub enum DisplayOrientation {
     UnknownVariant(u8),
 }
 impl DisplayOrientation {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             DisplayOrientation::Auto => 0,
@@ -11006,6 +13186,17 @@ pub enum WorkoutEquipment {
     UnknownVariant(u8),
 }
 impl WorkoutEquipment {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             WorkoutEquipment::None => 0,
@@ -11069,6 +13260,15 @@ pub enum WatchfaceMode {
     UnknownVariant(u8),
 }
 impl WatchfaceMode {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             WatchfaceMode::Digital => 0,
@@ -11125,6 +13325,14 @@ pub enum DigitalWatchfaceLayout {
     UnknownVariant(u8),
 }
 impl DigitalWatchfaceLayout {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             DigitalWatchfaceLayout::Traditional => 0,
@@ -11180,6 +13388,14 @@ pub enum AnalogWatchfaceLayout {
     UnknownVariant(u8),
 }
 impl AnalogWatchfaceLayout {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             AnalogWatchfaceLayout::Minimal => 0,
@@ -11234,6 +13450,15 @@ pub enum RiderPositionType {
     UnknownVariant(u8),
 }
 impl RiderPositionType {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             RiderPositionType::Seated => 0,
@@ -11291,6 +13516,15 @@ pub enum PowerPhaseType {
     UnknownVariant(u8),
 }
 impl PowerPhaseType {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             PowerPhaseType::PowerPhaseStartAngle => 0,
@@ -11364,6 +13598,24 @@ pub enum CameraEventType {
     UnknownVariant(u8),
 }
 impl CameraEventType {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            11 => true,
+            12 => true,
+            13 => true,
+            14 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             CameraEventType::VideoStart => 0,
@@ -11451,6 +13703,15 @@ pub enum SensorType {
     UnknownVariant(u8),
 }
 impl SensorType {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             SensorType::Accelerometer => 0,
@@ -11508,6 +13769,15 @@ pub enum BikeLightNetworkConfigType {
     UnknownVariant(u8),
 }
 impl BikeLightNetworkConfigType {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             BikeLightNetworkConfigType::Auto => 0,
@@ -11571,6 +13841,15 @@ pub enum CommTimeoutType {
     UnknownVariant(u16),
 }
 impl CommTimeoutType {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            _ => false,
+        }
+    }
     pub fn as_u16(self) -> u16 {
         match self {
             CommTimeoutType::WildcardPairingTimeout => 0,
@@ -11628,6 +13907,15 @@ pub enum CameraOrientationType {
     UnknownVariant(u8),
 }
 impl CameraOrientationType {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             CameraOrientationType::CameraOrientation0 => 0,
@@ -11685,6 +13973,15 @@ pub enum AttitudeStage {
     UnknownVariant(u8),
 }
 impl AttitudeStage {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             AttitudeStage::Failed => 0,
@@ -11751,6 +14048,24 @@ pub enum AttitudeValidity {
     UnknownVariant(u16),
 }
 impl AttitudeValidity {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            1 => true,
+            2 => true,
+            4 => true,
+            8 => true,
+            16 => true,
+            32 => true,
+            64 => true,
+            128 => true,
+            256 => true,
+            512 => true,
+            1024 => true,
+            2048 => true,
+            4096 => true,
+            _ => false,
+        }
+    }
     pub fn as_u16(self) -> u16 {
         match self {
             AttitudeValidity::TrackAngleHeadingValid => 1,
@@ -11836,6 +14151,16 @@ pub enum AutoSyncFrequency {
     UnknownVariant(u8),
 }
 impl AutoSyncFrequency {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             AutoSyncFrequency::Never => 0,
@@ -11902,6 +14227,20 @@ pub enum ExdLayout {
     UnknownVariant(u8),
 }
 impl ExdLayout {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             ExdLayout::FullScreen => 0,
@@ -11981,6 +14320,22 @@ pub enum ExdDisplayType {
     UnknownVariant(u8),
 }
 impl ExdDisplayType {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            9 => true,
+            10 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             ExdDisplayType::Numerical => 0,
@@ -12105,6 +14460,61 @@ pub enum ExdDataUnits {
     UnknownVariant(u8),
 }
 impl ExdDataUnits {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            9 => true,
+            10 => true,
+            11 => true,
+            12 => true,
+            13 => true,
+            14 => true,
+            15 => true,
+            16 => true,
+            17 => true,
+            18 => true,
+            19 => true,
+            20 => true,
+            21 => true,
+            22 => true,
+            23 => true,
+            24 => true,
+            25 => true,
+            26 => true,
+            27 => true,
+            28 => true,
+            29 => true,
+            30 => true,
+            31 => true,
+            32 => true,
+            33 => true,
+            34 => true,
+            35 => true,
+            36 => true,
+            37 => true,
+            38 => true,
+            39 => true,
+            40 => true,
+            41 => true,
+            42 => true,
+            43 => true,
+            44 => true,
+            45 => true,
+            46 => true,
+            47 => true,
+            48 => true,
+            49 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             ExdDataUnits::NoUnits => 0,
@@ -12344,6 +14754,55 @@ pub enum ExdQualifiers {
     UnknownVariant(u8),
 }
 impl ExdQualifiers {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            9 => true,
+            10 => true,
+            11 => true,
+            12 => true,
+            13 => true,
+            14 => true,
+            15 => true,
+            16 => true,
+            17 => true,
+            18 => true,
+            19 => true,
+            20 => true,
+            21 => true,
+            22 => true,
+            23 => true,
+            24 => true,
+            25 => true,
+            26 => true,
+            27 => true,
+            28 => true,
+            29 => true,
+            30 => true,
+            31 => true,
+            32 => true,
+            33 => true,
+            34 => true,
+            242 => true,
+            243 => true,
+            244 => true,
+            245 => true,
+            246 => true,
+            247 => true,
+            248 => true,
+            249 => true,
+            250 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             ExdQualifiers::NoQualifier => 0,
@@ -12615,6 +15074,108 @@ pub enum ExdDescriptors {
     UnknownVariant(u8),
 }
 impl ExdDescriptors {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            9 => true,
+            10 => true,
+            11 => true,
+            12 => true,
+            13 => true,
+            14 => true,
+            15 => true,
+            16 => true,
+            17 => true,
+            18 => true,
+            19 => true,
+            20 => true,
+            21 => true,
+            22 => true,
+            23 => true,
+            24 => true,
+            25 => true,
+            26 => true,
+            27 => true,
+            28 => true,
+            29 => true,
+            30 => true,
+            31 => true,
+            32 => true,
+            33 => true,
+            34 => true,
+            35 => true,
+            36 => true,
+            37 => true,
+            38 => true,
+            39 => true,
+            40 => true,
+            41 => true,
+            42 => true,
+            43 => true,
+            44 => true,
+            45 => true,
+            46 => true,
+            47 => true,
+            48 => true,
+            49 => true,
+            50 => true,
+            51 => true,
+            52 => true,
+            53 => true,
+            54 => true,
+            55 => true,
+            56 => true,
+            57 => true,
+            58 => true,
+            59 => true,
+            60 => true,
+            61 => true,
+            62 => true,
+            63 => true,
+            64 => true,
+            65 => true,
+            66 => true,
+            67 => true,
+            68 => true,
+            69 => true,
+            70 => true,
+            71 => true,
+            72 => true,
+            73 => true,
+            74 => true,
+            75 => true,
+            76 => true,
+            77 => true,
+            78 => true,
+            79 => true,
+            80 => true,
+            81 => true,
+            82 => true,
+            83 => true,
+            84 => true,
+            85 => true,
+            86 => true,
+            87 => true,
+            88 => true,
+            89 => true,
+            90 => true,
+            91 => true,
+            92 => true,
+            93 => true,
+            94 => true,
+            95 => true,
+            96 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             ExdDescriptors::BikeLightBatteryStatus => 0,
@@ -12964,6 +15525,18 @@ pub enum AutoActivityDetect {
     UnknownVariant(u32),
 }
 impl AutoActivityDetect {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            4 => true,
+            8 => true,
+            32 => true,
+            1024 => true,
+            _ => false,
+        }
+    }
     pub fn as_u32(self) -> u32 {
         match self {
             AutoActivityDetect::None => 0,
@@ -13034,6 +15607,19 @@ pub enum SupportedExdScreenLayouts {
     UnknownVariant(u32),
 }
 impl SupportedExdScreenLayouts {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            1 => true,
+            2 => true,
+            4 => true,
+            8 => true,
+            16 => true,
+            32 => true,
+            64 => true,
+            128 => true,
+            _ => false,
+        }
+    }
     pub fn as_u32(self) -> u32 {
         match self {
             SupportedExdScreenLayouts::FullScreen => 1,
@@ -13126,6 +15712,28 @@ pub enum FitBaseType {
     UnknownVariant(u8),
 }
 impl FitBaseType {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            7 => true,
+            10 => true,
+            13 => true,
+            131 => true,
+            132 => true,
+            133 => true,
+            134 => true,
+            136 => true,
+            137 => true,
+            139 => true,
+            140 => true,
+            142 => true,
+            143 => true,
+            144 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             FitBaseType::Enum => 0,
@@ -13256,6 +15864,49 @@ pub enum TurnType {
     UnknownVariant(u8),
 }
 impl TurnType {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            9 => true,
+            10 => true,
+            11 => true,
+            12 => true,
+            13 => true,
+            14 => true,
+            15 => true,
+            16 => true,
+            17 => true,
+            18 => true,
+            19 => true,
+            20 => true,
+            21 => true,
+            22 => true,
+            23 => true,
+            24 => true,
+            25 => true,
+            26 => true,
+            27 => true,
+            28 => true,
+            29 => true,
+            30 => true,
+            31 => true,
+            32 => true,
+            33 => true,
+            34 => true,
+            35 => true,
+            36 => true,
+            37 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             TurnType::ArrivingIdx => 0,
@@ -13413,6 +16064,13 @@ pub enum BikeLightBeamAngleMode {
     UnknownVariant(u8),
 }
 impl BikeLightBeamAngleMode {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             BikeLightBeamAngleMode::Manual => 0,
@@ -13465,6 +16123,14 @@ pub enum FitBaseUnit {
     UnknownVariant(u16),
 }
 impl FitBaseUnit {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            _ => false,
+        }
+    }
     pub fn as_u16(self) -> u16 {
         match self {
             FitBaseUnit::Other => 0,
@@ -13517,6 +16183,13 @@ pub enum SetType {
     UnknownVariant(u8),
 }
 impl SetType {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             SetType::Rest => 0,
@@ -13598,6 +16271,45 @@ pub enum ExerciseCategory {
     UnknownVariant(u16),
 }
 impl ExerciseCategory {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            9 => true,
+            10 => true,
+            11 => true,
+            12 => true,
+            13 => true,
+            14 => true,
+            15 => true,
+            16 => true,
+            17 => true,
+            18 => true,
+            19 => true,
+            20 => true,
+            21 => true,
+            22 => true,
+            23 => true,
+            24 => true,
+            25 => true,
+            26 => true,
+            27 => true,
+            28 => true,
+            29 => true,
+            30 => true,
+            31 => true,
+            32 => true,
+            65534 => true,
+            _ => false,
+        }
+    }
     pub fn as_u16(self) -> u16 {
         match self {
             ExerciseCategory::BenchPress => 0,
@@ -13768,6 +16480,38 @@ pub enum BenchPressExerciseName {
     UnknownVariant(u16),
 }
 impl BenchPressExerciseName {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            9 => true,
+            10 => true,
+            11 => true,
+            12 => true,
+            13 => true,
+            14 => true,
+            15 => true,
+            16 => true,
+            17 => true,
+            18 => true,
+            19 => true,
+            20 => true,
+            21 => true,
+            22 => true,
+            23 => true,
+            24 => true,
+            25 => true,
+            26 => true,
+            _ => false,
+        }
+    }
     pub fn as_u16(self) -> u16 {
         match self {
             BenchPressExerciseName::AlternatingDumbbellChestPressOnSwissBall => 0,
@@ -13953,6 +16697,32 @@ pub enum CalfRaiseExerciseName {
     UnknownVariant(u16),
 }
 impl CalfRaiseExerciseName {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            9 => true,
+            10 => true,
+            11 => true,
+            12 => true,
+            13 => true,
+            14 => true,
+            15 => true,
+            16 => true,
+            17 => true,
+            18 => true,
+            19 => true,
+            20 => true,
+            _ => false,
+        }
+    }
     pub fn as_u16(self) -> u16 {
         match self {
             CalfRaiseExerciseName::Name3WayCalfRaise => 0,
@@ -14111,6 +16881,33 @@ pub enum CardioExerciseName {
     UnknownVariant(u16),
 }
 impl CardioExerciseName {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            9 => true,
+            10 => true,
+            11 => true,
+            12 => true,
+            13 => true,
+            14 => true,
+            15 => true,
+            16 => true,
+            17 => true,
+            18 => true,
+            19 => true,
+            20 => true,
+            21 => true,
+            _ => false,
+        }
+    }
     pub fn as_u16(self) -> u16 {
         match self {
             CardioExerciseName::BobAndWeaveCircle => 0,
@@ -14227,6 +17024,16 @@ pub enum CarryExerciseName {
     UnknownVariant(u16),
 }
 impl CarryExerciseName {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            _ => false,
+        }
+    }
     pub fn as_u16(self) -> u16 {
         match self {
             CarryExerciseName::BarHolds => 0,
@@ -14306,6 +17113,34 @@ pub enum ChopExerciseName {
     UnknownVariant(u16),
 }
 impl ChopExerciseName {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            9 => true,
+            10 => true,
+            11 => true,
+            12 => true,
+            13 => true,
+            14 => true,
+            15 => true,
+            16 => true,
+            17 => true,
+            18 => true,
+            19 => true,
+            20 => true,
+            21 => true,
+            22 => true,
+            _ => false,
+        }
+    }
     pub fn as_u16(self) -> u16 {
         match self {
             ChopExerciseName::CablePullThrough => 0,
@@ -14510,6 +17345,84 @@ pub enum CoreExerciseName {
     UnknownVariant(u16),
 }
 impl CoreExerciseName {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            9 => true,
+            10 => true,
+            11 => true,
+            12 => true,
+            13 => true,
+            14 => true,
+            15 => true,
+            16 => true,
+            17 => true,
+            18 => true,
+            19 => true,
+            20 => true,
+            21 => true,
+            22 => true,
+            23 => true,
+            24 => true,
+            25 => true,
+            26 => true,
+            27 => true,
+            28 => true,
+            29 => true,
+            30 => true,
+            31 => true,
+            32 => true,
+            33 => true,
+            34 => true,
+            35 => true,
+            36 => true,
+            37 => true,
+            38 => true,
+            39 => true,
+            40 => true,
+            41 => true,
+            42 => true,
+            43 => true,
+            44 => true,
+            45 => true,
+            46 => true,
+            47 => true,
+            48 => true,
+            49 => true,
+            50 => true,
+            51 => true,
+            52 => true,
+            53 => true,
+            54 => true,
+            55 => true,
+            56 => true,
+            57 => true,
+            58 => true,
+            59 => true,
+            60 => true,
+            61 => true,
+            62 => true,
+            63 => true,
+            64 => true,
+            65 => true,
+            66 => true,
+            67 => true,
+            68 => true,
+            69 => true,
+            70 => true,
+            71 => true,
+            72 => true,
+            _ => false,
+        }
+    }
     pub fn as_u16(self) -> u16 {
         match self {
             CoreExerciseName::AbsJabs => 0,
@@ -14873,6 +17786,96 @@ pub enum CrunchExerciseName {
     UnknownVariant(u16),
 }
 impl CrunchExerciseName {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            9 => true,
+            10 => true,
+            11 => true,
+            12 => true,
+            13 => true,
+            14 => true,
+            15 => true,
+            16 => true,
+            17 => true,
+            18 => true,
+            19 => true,
+            20 => true,
+            21 => true,
+            22 => true,
+            23 => true,
+            24 => true,
+            25 => true,
+            26 => true,
+            27 => true,
+            28 => true,
+            29 => true,
+            30 => true,
+            31 => true,
+            32 => true,
+            33 => true,
+            34 => true,
+            35 => true,
+            36 => true,
+            37 => true,
+            38 => true,
+            39 => true,
+            40 => true,
+            41 => true,
+            42 => true,
+            43 => true,
+            44 => true,
+            45 => true,
+            46 => true,
+            47 => true,
+            48 => true,
+            49 => true,
+            50 => true,
+            51 => true,
+            52 => true,
+            53 => true,
+            54 => true,
+            55 => true,
+            56 => true,
+            57 => true,
+            58 => true,
+            59 => true,
+            60 => true,
+            61 => true,
+            62 => true,
+            63 => true,
+            64 => true,
+            65 => true,
+            66 => true,
+            67 => true,
+            68 => true,
+            69 => true,
+            70 => true,
+            71 => true,
+            72 => true,
+            73 => true,
+            74 => true,
+            75 => true,
+            76 => true,
+            77 => true,
+            78 => true,
+            79 => true,
+            80 => true,
+            81 => true,
+            82 => true,
+            83 => true,
+            84 => true,
+            _ => false,
+        }
+    }
     pub fn as_u16(self) -> u16 {
         match self {
             CrunchExerciseName::BicycleCrunch => 0,
@@ -15273,6 +18276,55 @@ pub enum CurlExerciseName {
     UnknownVariant(u16),
 }
 impl CurlExerciseName {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            9 => true,
+            10 => true,
+            11 => true,
+            12 => true,
+            13 => true,
+            14 => true,
+            15 => true,
+            16 => true,
+            17 => true,
+            18 => true,
+            19 => true,
+            20 => true,
+            21 => true,
+            22 => true,
+            23 => true,
+            24 => true,
+            25 => true,
+            26 => true,
+            27 => true,
+            28 => true,
+            29 => true,
+            30 => true,
+            31 => true,
+            32 => true,
+            33 => true,
+            34 => true,
+            35 => true,
+            36 => true,
+            37 => true,
+            38 => true,
+            39 => true,
+            40 => true,
+            41 => true,
+            42 => true,
+            43 => true,
+            _ => false,
+        }
+    }
     pub fn as_u16(self) -> u16 {
         match self {
             CurlExerciseName::AlternatingDumbbellBicepsCurl => 0,
@@ -15507,6 +18559,30 @@ pub enum DeadliftExerciseName {
     UnknownVariant(u16),
 }
 impl DeadliftExerciseName {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            9 => true,
+            10 => true,
+            11 => true,
+            12 => true,
+            13 => true,
+            14 => true,
+            15 => true,
+            16 => true,
+            17 => true,
+            18 => true,
+            _ => false,
+        }
+    }
     pub fn as_u16(self) -> u16 {
         match self {
             DeadliftExerciseName::BarbellDeadlift => 0,
@@ -15633,6 +18709,21 @@ pub enum FlyeExerciseName {
     UnknownVariant(u16),
 }
 impl FlyeExerciseName {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            9 => true,
+            _ => false,
+        }
+    }
     pub fn as_u16(self) -> u16 {
         match self {
             FlyeExerciseName::CableCrossover => 0,
@@ -15758,6 +18849,61 @@ pub enum HipRaiseExerciseName {
     UnknownVariant(u16),
 }
 impl HipRaiseExerciseName {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            9 => true,
+            10 => true,
+            11 => true,
+            12 => true,
+            13 => true,
+            14 => true,
+            15 => true,
+            16 => true,
+            17 => true,
+            18 => true,
+            19 => true,
+            20 => true,
+            21 => true,
+            22 => true,
+            23 => true,
+            24 => true,
+            25 => true,
+            26 => true,
+            27 => true,
+            28 => true,
+            29 => true,
+            30 => true,
+            31 => true,
+            32 => true,
+            33 => true,
+            34 => true,
+            35 => true,
+            36 => true,
+            37 => true,
+            38 => true,
+            39 => true,
+            40 => true,
+            41 => true,
+            42 => true,
+            43 => true,
+            44 => true,
+            45 => true,
+            46 => true,
+            47 => true,
+            48 => true,
+            49 => true,
+            _ => false,
+        }
+    }
     pub fn as_u16(self) -> u16 {
         match self {
             HipRaiseExerciseName::BarbellHipThrustOnFloor => 0,
@@ -16052,6 +19198,45 @@ pub enum HipStabilityExerciseName {
     UnknownVariant(u16),
 }
 impl HipStabilityExerciseName {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            9 => true,
+            10 => true,
+            11 => true,
+            12 => true,
+            13 => true,
+            14 => true,
+            15 => true,
+            16 => true,
+            17 => true,
+            18 => true,
+            19 => true,
+            20 => true,
+            21 => true,
+            22 => true,
+            23 => true,
+            24 => true,
+            25 => true,
+            26 => true,
+            27 => true,
+            28 => true,
+            29 => true,
+            30 => true,
+            31 => true,
+            32 => true,
+            33 => true,
+            _ => false,
+        }
+    }
     pub fn as_u16(self) -> u16 {
         match self {
             HipStabilityExerciseName::BandSideLyingLegRaise => 0,
@@ -16236,6 +19421,14 @@ pub enum HipSwingExerciseName {
     UnknownVariant(u16),
 }
 impl HipSwingExerciseName {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            _ => false,
+        }
+    }
     pub fn as_u16(self) -> u16 {
         match self {
             HipSwingExerciseName::SingleArmKettlebellSwing => 0,
@@ -16329,6 +19522,51 @@ pub enum HyperextensionExerciseName {
     UnknownVariant(u16),
 }
 impl HyperextensionExerciseName {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            9 => true,
+            10 => true,
+            11 => true,
+            12 => true,
+            13 => true,
+            14 => true,
+            15 => true,
+            16 => true,
+            17 => true,
+            18 => true,
+            19 => true,
+            20 => true,
+            21 => true,
+            22 => true,
+            23 => true,
+            24 => true,
+            25 => true,
+            26 => true,
+            27 => true,
+            28 => true,
+            29 => true,
+            30 => true,
+            31 => true,
+            32 => true,
+            33 => true,
+            34 => true,
+            35 => true,
+            36 => true,
+            37 => true,
+            38 => true,
+            39 => true,
+            _ => false,
+        }
+    }
     pub fn as_u16(self) -> u16 {
         match self {
             HyperextensionExerciseName::BackExtensionWithOppositeArmAndLegReach => 0,
@@ -16568,6 +19806,45 @@ pub enum LateralRaiseExerciseName {
     UnknownVariant(u16),
 }
 impl LateralRaiseExerciseName {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            9 => true,
+            10 => true,
+            11 => true,
+            12 => true,
+            13 => true,
+            14 => true,
+            15 => true,
+            16 => true,
+            17 => true,
+            18 => true,
+            19 => true,
+            20 => true,
+            21 => true,
+            22 => true,
+            23 => true,
+            24 => true,
+            25 => true,
+            26 => true,
+            27 => true,
+            28 => true,
+            29 => true,
+            30 => true,
+            31 => true,
+            32 => true,
+            33 => true,
+            _ => false,
+        }
+    }
     pub fn as_u16(self) -> u16 {
         match self {
             LateralRaiseExerciseName::Name45DegreeCableExternalRotation => 0,
@@ -16741,6 +20018,23 @@ pub enum LegCurlExerciseName {
     UnknownVariant(u16),
 }
 impl LegCurlExerciseName {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            9 => true,
+            10 => true,
+            11 => true,
+            _ => false,
+        }
+    }
     pub fn as_u16(self) -> u16 {
         match self {
             LegCurlExerciseName::LegCurl => 0,
@@ -16850,6 +20144,33 @@ pub enum LegRaiseExerciseName {
     UnknownVariant(u16),
 }
 impl LegRaiseExerciseName {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            9 => true,
+            10 => true,
+            11 => true,
+            12 => true,
+            13 => true,
+            14 => true,
+            15 => true,
+            16 => true,
+            17 => true,
+            18 => true,
+            19 => true,
+            20 => true,
+            21 => true,
+            _ => false,
+        }
+    }
     pub fn as_u16(self) -> u16 {
         match self {
             LegRaiseExerciseName::HangingKneeRaise => 0,
@@ -17058,6 +20379,92 @@ pub enum LungeExerciseName {
     UnknownVariant(u16),
 }
 impl LungeExerciseName {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            9 => true,
+            10 => true,
+            11 => true,
+            12 => true,
+            13 => true,
+            14 => true,
+            15 => true,
+            16 => true,
+            17 => true,
+            18 => true,
+            19 => true,
+            20 => true,
+            21 => true,
+            22 => true,
+            23 => true,
+            24 => true,
+            25 => true,
+            26 => true,
+            27 => true,
+            28 => true,
+            29 => true,
+            30 => true,
+            31 => true,
+            32 => true,
+            33 => true,
+            34 => true,
+            35 => true,
+            36 => true,
+            37 => true,
+            38 => true,
+            39 => true,
+            40 => true,
+            41 => true,
+            42 => true,
+            43 => true,
+            44 => true,
+            45 => true,
+            46 => true,
+            47 => true,
+            48 => true,
+            49 => true,
+            50 => true,
+            51 => true,
+            52 => true,
+            53 => true,
+            54 => true,
+            55 => true,
+            56 => true,
+            57 => true,
+            58 => true,
+            59 => true,
+            60 => true,
+            61 => true,
+            62 => true,
+            63 => true,
+            64 => true,
+            65 => true,
+            66 => true,
+            67 => true,
+            68 => true,
+            69 => true,
+            70 => true,
+            71 => true,
+            72 => true,
+            73 => true,
+            74 => true,
+            75 => true,
+            76 => true,
+            77 => true,
+            78 => true,
+            79 => true,
+            80 => true,
+            _ => false,
+        }
+    }
     pub fn as_u16(self) -> u16 {
         match self {
             LungeExerciseName::OverheadLunge => 0,
@@ -17423,6 +20830,32 @@ pub enum OlympicLiftExerciseName {
     UnknownVariant(u16),
 }
 impl OlympicLiftExerciseName {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            9 => true,
+            10 => true,
+            11 => true,
+            12 => true,
+            13 => true,
+            14 => true,
+            15 => true,
+            16 => true,
+            17 => true,
+            18 => true,
+            19 => true,
+            20 => true,
+            _ => false,
+        }
+    }
     pub fn as_u16(self) -> u16 {
         match self {
             OlympicLiftExerciseName::BarbellHangPowerClean => 0,
@@ -17672,6 +21105,146 @@ pub enum PlankExerciseName {
     UnknownVariant(u16),
 }
 impl PlankExerciseName {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            9 => true,
+            10 => true,
+            11 => true,
+            12 => true,
+            13 => true,
+            14 => true,
+            15 => true,
+            16 => true,
+            17 => true,
+            18 => true,
+            19 => true,
+            20 => true,
+            21 => true,
+            22 => true,
+            23 => true,
+            24 => true,
+            25 => true,
+            26 => true,
+            27 => true,
+            28 => true,
+            29 => true,
+            30 => true,
+            31 => true,
+            32 => true,
+            33 => true,
+            34 => true,
+            35 => true,
+            36 => true,
+            37 => true,
+            38 => true,
+            39 => true,
+            40 => true,
+            41 => true,
+            42 => true,
+            43 => true,
+            44 => true,
+            45 => true,
+            46 => true,
+            47 => true,
+            48 => true,
+            49 => true,
+            50 => true,
+            51 => true,
+            52 => true,
+            53 => true,
+            54 => true,
+            55 => true,
+            56 => true,
+            57 => true,
+            58 => true,
+            59 => true,
+            60 => true,
+            61 => true,
+            62 => true,
+            63 => true,
+            64 => true,
+            65 => true,
+            66 => true,
+            67 => true,
+            68 => true,
+            69 => true,
+            70 => true,
+            71 => true,
+            72 => true,
+            73 => true,
+            74 => true,
+            75 => true,
+            76 => true,
+            77 => true,
+            78 => true,
+            79 => true,
+            80 => true,
+            81 => true,
+            82 => true,
+            83 => true,
+            84 => true,
+            85 => true,
+            86 => true,
+            87 => true,
+            88 => true,
+            89 => true,
+            90 => true,
+            91 => true,
+            92 => true,
+            93 => true,
+            94 => true,
+            95 => true,
+            96 => true,
+            97 => true,
+            98 => true,
+            99 => true,
+            100 => true,
+            101 => true,
+            102 => true,
+            103 => true,
+            104 => true,
+            105 => true,
+            106 => true,
+            107 => true,
+            108 => true,
+            109 => true,
+            110 => true,
+            111 => true,
+            112 => true,
+            113 => true,
+            114 => true,
+            115 => true,
+            116 => true,
+            117 => true,
+            118 => true,
+            119 => true,
+            120 => true,
+            121 => true,
+            122 => true,
+            123 => true,
+            124 => true,
+            125 => true,
+            126 => true,
+            127 => true,
+            128 => true,
+            129 => true,
+            130 => true,
+            131 => true,
+            132 => true,
+            133 => true,
+            134 => true,
+            _ => false,
+        }
+    }
     pub fn as_u16(self) -> u16 {
         match self {
             PlankExerciseName::Name45DegreePlank => 0,
@@ -18276,6 +21849,44 @@ pub enum PlyoExerciseName {
     UnknownVariant(u16),
 }
 impl PlyoExerciseName {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            9 => true,
+            10 => true,
+            11 => true,
+            12 => true,
+            13 => true,
+            14 => true,
+            15 => true,
+            16 => true,
+            17 => true,
+            18 => true,
+            19 => true,
+            20 => true,
+            21 => true,
+            22 => true,
+            23 => true,
+            24 => true,
+            25 => true,
+            26 => true,
+            27 => true,
+            28 => true,
+            29 => true,
+            30 => true,
+            31 => true,
+            32 => true,
+            _ => false,
+        }
+    }
     pub fn as_u16(self) -> u16 {
         match self {
             PlyoExerciseName::AlternatingJumpLunge => 0,
@@ -18473,6 +22084,50 @@ pub enum PullUpExerciseName {
     UnknownVariant(u16),
 }
 impl PullUpExerciseName {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            9 => true,
+            10 => true,
+            11 => true,
+            12 => true,
+            13 => true,
+            14 => true,
+            15 => true,
+            16 => true,
+            17 => true,
+            18 => true,
+            19 => true,
+            20 => true,
+            21 => true,
+            22 => true,
+            23 => true,
+            24 => true,
+            25 => true,
+            26 => true,
+            27 => true,
+            28 => true,
+            29 => true,
+            30 => true,
+            31 => true,
+            32 => true,
+            33 => true,
+            34 => true,
+            35 => true,
+            36 => true,
+            37 => true,
+            38 => true,
+            _ => false,
+        }
+    }
     pub fn as_u16(self) -> u16 {
         match self {
             PullUpExerciseName::BandedPullUps => 0,
@@ -18712,6 +22367,90 @@ pub enum PushUpExerciseName {
     UnknownVariant(u16),
 }
 impl PushUpExerciseName {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            9 => true,
+            10 => true,
+            11 => true,
+            12 => true,
+            13 => true,
+            14 => true,
+            15 => true,
+            16 => true,
+            17 => true,
+            18 => true,
+            19 => true,
+            20 => true,
+            21 => true,
+            22 => true,
+            23 => true,
+            24 => true,
+            25 => true,
+            26 => true,
+            27 => true,
+            28 => true,
+            29 => true,
+            30 => true,
+            31 => true,
+            32 => true,
+            33 => true,
+            34 => true,
+            35 => true,
+            36 => true,
+            37 => true,
+            38 => true,
+            39 => true,
+            40 => true,
+            41 => true,
+            42 => true,
+            43 => true,
+            44 => true,
+            45 => true,
+            46 => true,
+            47 => true,
+            48 => true,
+            49 => true,
+            50 => true,
+            51 => true,
+            52 => true,
+            53 => true,
+            54 => true,
+            55 => true,
+            56 => true,
+            57 => true,
+            58 => true,
+            59 => true,
+            60 => true,
+            61 => true,
+            62 => true,
+            63 => true,
+            64 => true,
+            65 => true,
+            66 => true,
+            67 => true,
+            68 => true,
+            69 => true,
+            70 => true,
+            71 => true,
+            72 => true,
+            73 => true,
+            74 => true,
+            75 => true,
+            76 => true,
+            77 => true,
+            78 => true,
+            _ => false,
+        }
+    }
     pub fn as_u16(self) -> u16 {
         match self {
             PushUpExerciseName::ChestPressWithBand => 0,
@@ -19080,6 +22819,45 @@ pub enum RowExerciseName {
     UnknownVariant(u16),
 }
 impl RowExerciseName {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            9 => true,
+            10 => true,
+            11 => true,
+            12 => true,
+            13 => true,
+            14 => true,
+            15 => true,
+            16 => true,
+            17 => true,
+            18 => true,
+            19 => true,
+            20 => true,
+            21 => true,
+            22 => true,
+            23 => true,
+            24 => true,
+            25 => true,
+            26 => true,
+            27 => true,
+            28 => true,
+            29 => true,
+            30 => true,
+            31 => true,
+            32 => true,
+            33 => true,
+            _ => false,
+        }
+    }
     pub fn as_u16(self) -> u16 {
         match self {
             RowExerciseName::BarbellStraightLegDeadliftToRow => 0,
@@ -19273,6 +23051,35 @@ pub enum ShoulderPressExerciseName {
     UnknownVariant(u16),
 }
 impl ShoulderPressExerciseName {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            9 => true,
+            10 => true,
+            11 => true,
+            12 => true,
+            13 => true,
+            14 => true,
+            15 => true,
+            16 => true,
+            17 => true,
+            18 => true,
+            19 => true,
+            20 => true,
+            21 => true,
+            22 => true,
+            23 => true,
+            _ => false,
+        }
+    }
     pub fn as_u16(self) -> u16 {
         match self {
             ShoulderPressExerciseName::AlternatingDumbbellShoulderPress => 0,
@@ -19455,6 +23262,44 @@ pub enum ShoulderStabilityExerciseName {
     UnknownVariant(u16),
 }
 impl ShoulderStabilityExerciseName {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            9 => true,
+            10 => true,
+            11 => true,
+            12 => true,
+            13 => true,
+            14 => true,
+            15 => true,
+            16 => true,
+            17 => true,
+            18 => true,
+            19 => true,
+            20 => true,
+            21 => true,
+            22 => true,
+            23 => true,
+            24 => true,
+            25 => true,
+            26 => true,
+            27 => true,
+            28 => true,
+            29 => true,
+            30 => true,
+            31 => true,
+            32 => true,
+            _ => false,
+        }
+    }
     pub fn as_u16(self) -> u16 {
         match self {
             ShoulderStabilityExerciseName::Name90DegreeCableExternalRotation => 0,
@@ -19654,6 +23499,28 @@ pub enum ShrugExerciseName {
     UnknownVariant(u16),
 }
 impl ShrugExerciseName {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            9 => true,
+            10 => true,
+            11 => true,
+            12 => true,
+            13 => true,
+            14 => true,
+            15 => true,
+            16 => true,
+            _ => false,
+        }
+    }
     pub fn as_u16(self) -> u16 {
         match self {
             ShrugExerciseName::BarbellJumpShrug => 0,
@@ -19788,6 +23655,49 @@ pub enum SitUpExerciseName {
     UnknownVariant(u16),
 }
 impl SitUpExerciseName {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            9 => true,
+            10 => true,
+            11 => true,
+            12 => true,
+            13 => true,
+            14 => true,
+            15 => true,
+            16 => true,
+            17 => true,
+            18 => true,
+            19 => true,
+            20 => true,
+            21 => true,
+            22 => true,
+            23 => true,
+            24 => true,
+            25 => true,
+            26 => true,
+            27 => true,
+            28 => true,
+            29 => true,
+            30 => true,
+            31 => true,
+            32 => true,
+            33 => true,
+            34 => true,
+            35 => true,
+            36 => true,
+            37 => true,
+            _ => false,
+        }
+    }
     pub fn as_u16(self) -> u16 {
         match self {
             SitUpExerciseName::AlternatingSitUp => 0,
@@ -20050,6 +23960,103 @@ pub enum SquatExerciseName {
     UnknownVariant(u16),
 }
 impl SquatExerciseName {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            9 => true,
+            10 => true,
+            11 => true,
+            12 => true,
+            13 => true,
+            14 => true,
+            15 => true,
+            16 => true,
+            17 => true,
+            18 => true,
+            19 => true,
+            20 => true,
+            21 => true,
+            22 => true,
+            23 => true,
+            24 => true,
+            25 => true,
+            26 => true,
+            27 => true,
+            28 => true,
+            29 => true,
+            30 => true,
+            31 => true,
+            32 => true,
+            33 => true,
+            34 => true,
+            35 => true,
+            36 => true,
+            37 => true,
+            38 => true,
+            39 => true,
+            40 => true,
+            41 => true,
+            42 => true,
+            43 => true,
+            44 => true,
+            45 => true,
+            46 => true,
+            47 => true,
+            48 => true,
+            49 => true,
+            50 => true,
+            51 => true,
+            52 => true,
+            53 => true,
+            54 => true,
+            55 => true,
+            56 => true,
+            57 => true,
+            58 => true,
+            59 => true,
+            60 => true,
+            61 => true,
+            62 => true,
+            63 => true,
+            64 => true,
+            65 => true,
+            66 => true,
+            67 => true,
+            68 => true,
+            69 => true,
+            70 => true,
+            71 => true,
+            72 => true,
+            73 => true,
+            74 => true,
+            75 => true,
+            76 => true,
+            77 => true,
+            78 => true,
+            79 => true,
+            80 => true,
+            81 => true,
+            82 => true,
+            83 => true,
+            84 => true,
+            85 => true,
+            86 => true,
+            87 => true,
+            88 => true,
+            89 => true,
+            90 => true,
+            91 => true,
+            _ => false,
+        }
+    }
     pub fn as_u16(self) -> u16 {
         match self {
             SquatExerciseName::LegPress => 0,
@@ -20417,6 +24424,24 @@ pub enum TotalBodyExerciseName {
     UnknownVariant(u16),
 }
 impl TotalBodyExerciseName {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            9 => true,
+            10 => true,
+            11 => true,
+            12 => true,
+            _ => false,
+        }
+    }
     pub fn as_u16(self) -> u16 {
         match self {
             TotalBodyExerciseName::Burpee => 0,
@@ -20544,6 +24569,52 @@ pub enum TricepsExtensionExerciseName {
     UnknownVariant(u16),
 }
 impl TricepsExtensionExerciseName {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            9 => true,
+            10 => true,
+            11 => true,
+            12 => true,
+            13 => true,
+            14 => true,
+            15 => true,
+            16 => true,
+            17 => true,
+            18 => true,
+            19 => true,
+            20 => true,
+            21 => true,
+            22 => true,
+            23 => true,
+            24 => true,
+            25 => true,
+            26 => true,
+            27 => true,
+            28 => true,
+            29 => true,
+            30 => true,
+            31 => true,
+            32 => true,
+            33 => true,
+            34 => true,
+            35 => true,
+            36 => true,
+            37 => true,
+            38 => true,
+            39 => true,
+            40 => true,
+            _ => false,
+        }
+    }
     pub fn as_u16(self) -> u16 {
         match self {
             TricepsExtensionExerciseName::BenchDip => 0,
@@ -20796,6 +24867,42 @@ pub enum WarmUpExerciseName {
     UnknownVariant(u16),
 }
 impl WarmUpExerciseName {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            9 => true,
+            10 => true,
+            11 => true,
+            12 => true,
+            13 => true,
+            14 => true,
+            15 => true,
+            16 => true,
+            17 => true,
+            18 => true,
+            19 => true,
+            20 => true,
+            21 => true,
+            22 => true,
+            23 => true,
+            24 => true,
+            25 => true,
+            26 => true,
+            27 => true,
+            28 => true,
+            29 => true,
+            30 => true,
+            _ => false,
+        }
+    }
     pub fn as_u16(self) -> u16 {
         match self {
             WarmUpExerciseName::QuadrupedRocking => 0,
@@ -20946,6 +25053,15 @@ pub enum RunExerciseName {
     UnknownVariant(u16),
 }
 impl RunExerciseName {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            _ => false,
+        }
+    }
     pub fn as_u16(self) -> u16 {
         match self {
             RunExerciseName::Run => 0,
@@ -21003,6 +25119,15 @@ pub enum WaterType {
     UnknownVariant(u8),
 }
 impl WaterType {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             WaterType::Fresh => 0,
@@ -21058,6 +25183,12 @@ pub enum TissueModelType {
     UnknownVariant(u8),
 }
 impl TissueModelType {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             TissueModelType::Zhl16c => 0,
@@ -21105,6 +25236,14 @@ pub enum DiveGasStatus {
     UnknownVariant(u8),
 }
 impl DiveGasStatus {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             DiveGasStatus::Disabled => 0,
@@ -21159,6 +25298,13 @@ pub enum DiveAlarmType {
     UnknownVariant(u8),
 }
 impl DiveAlarmType {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             DiveAlarmType::Depth => 0,
@@ -21208,6 +25354,13 @@ pub enum DiveBacklightMode {
     UnknownVariant(u8),
 }
 impl DiveBacklightMode {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             DiveBacklightMode::AtDepth => 0,
@@ -21257,6 +25410,13 @@ pub enum FaveroProduct {
     UnknownVariant(u16),
 }
 impl FaveroProduct {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            10 => true,
+            12 => true,
+            _ => false,
+        }
+    }
     pub fn as_u16(self) -> u16 {
         match self {
             FaveroProduct::AssiomaUno => 10,
@@ -21307,6 +25467,14 @@ pub enum ClimbProEvent {
     UnknownVariant(u8),
 }
 impl ClimbProEvent {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             ClimbProEvent::Approach => 0,
@@ -21360,6 +25528,14 @@ pub enum TapSensitivity {
     UnknownVariant(u8),
 }
 impl TapSensitivity {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             TapSensitivity::High => 0,
@@ -21414,6 +25590,15 @@ pub enum RadarThreatLevelType {
     UnknownVariant(u8),
 }
 impl RadarThreatLevelType {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            _ => false,
+        }
+    }
     pub fn as_u8(self) -> u8 {
         match self {
             RadarThreatLevelType::ThreatUnknown => 0,
@@ -21813,6 +25998,198 @@ impl FieldDataType {
             FieldDataType::ClimbProEvent => true,
             FieldDataType::TapSensitivity => true,
             FieldDataType::RadarThreatLevelType => true,
+            _ => false,
+        }
+    }
+    pub fn is_named_variant(self, value: i64) -> bool {
+        match self {
+            FieldDataType::File => File::is_named_variant(value),
+            FieldDataType::MesgNum => MesgNum::is_named_variant(value),
+            FieldDataType::Checksum => Checksum::is_named_variant(value),
+            FieldDataType::FileFlags => FileFlags::is_named_variant(value),
+            FieldDataType::MesgCount => MesgCount::is_named_variant(value),
+            FieldDataType::MessageIndex => MessageIndex::is_named_variant(value),
+            FieldDataType::DeviceIndex => DeviceIndex::is_named_variant(value),
+            FieldDataType::Gender => Gender::is_named_variant(value),
+            FieldDataType::Language => Language::is_named_variant(value),
+            FieldDataType::LanguageBits0 => LanguageBits0::is_named_variant(value),
+            FieldDataType::LanguageBits1 => LanguageBits1::is_named_variant(value),
+            FieldDataType::LanguageBits2 => LanguageBits2::is_named_variant(value),
+            FieldDataType::LanguageBits3 => LanguageBits3::is_named_variant(value),
+            FieldDataType::LanguageBits4 => LanguageBits4::is_named_variant(value),
+            FieldDataType::TimeZone => TimeZone::is_named_variant(value),
+            FieldDataType::DisplayMeasure => DisplayMeasure::is_named_variant(value),
+            FieldDataType::DisplayHeart => DisplayHeart::is_named_variant(value),
+            FieldDataType::DisplayPower => DisplayPower::is_named_variant(value),
+            FieldDataType::DisplayPosition => DisplayPosition::is_named_variant(value),
+            FieldDataType::Switch => Switch::is_named_variant(value),
+            FieldDataType::Sport => Sport::is_named_variant(value),
+            FieldDataType::SportBits0 => SportBits0::is_named_variant(value),
+            FieldDataType::SportBits1 => SportBits1::is_named_variant(value),
+            FieldDataType::SportBits2 => SportBits2::is_named_variant(value),
+            FieldDataType::SportBits3 => SportBits3::is_named_variant(value),
+            FieldDataType::SportBits4 => SportBits4::is_named_variant(value),
+            FieldDataType::SportBits5 => SportBits5::is_named_variant(value),
+            FieldDataType::SportBits6 => SportBits6::is_named_variant(value),
+            FieldDataType::SubSport => SubSport::is_named_variant(value),
+            FieldDataType::SportEvent => SportEvent::is_named_variant(value),
+            FieldDataType::Activity => Activity::is_named_variant(value),
+            FieldDataType::Intensity => Intensity::is_named_variant(value),
+            FieldDataType::SessionTrigger => SessionTrigger::is_named_variant(value),
+            FieldDataType::AutolapTrigger => AutolapTrigger::is_named_variant(value),
+            FieldDataType::LapTrigger => LapTrigger::is_named_variant(value),
+            FieldDataType::TimeMode => TimeMode::is_named_variant(value),
+            FieldDataType::BacklightMode => BacklightMode::is_named_variant(value),
+            FieldDataType::DateMode => DateMode::is_named_variant(value),
+            FieldDataType::BacklightTimeout => BacklightTimeout::is_named_variant(value),
+            FieldDataType::Event => Event::is_named_variant(value),
+            FieldDataType::EventType => EventType::is_named_variant(value),
+            FieldDataType::TimerTrigger => TimerTrigger::is_named_variant(value),
+            FieldDataType::FitnessEquipmentState => FitnessEquipmentState::is_named_variant(value),
+            FieldDataType::Tone => Tone::is_named_variant(value),
+            FieldDataType::Autoscroll => Autoscroll::is_named_variant(value),
+            FieldDataType::ActivityClass => ActivityClass::is_named_variant(value),
+            FieldDataType::HrZoneCalc => HrZoneCalc::is_named_variant(value),
+            FieldDataType::PwrZoneCalc => PwrZoneCalc::is_named_variant(value),
+            FieldDataType::WktStepDuration => WktStepDuration::is_named_variant(value),
+            FieldDataType::WktStepTarget => WktStepTarget::is_named_variant(value),
+            FieldDataType::Goal => Goal::is_named_variant(value),
+            FieldDataType::GoalRecurrence => GoalRecurrence::is_named_variant(value),
+            FieldDataType::GoalSource => GoalSource::is_named_variant(value),
+            FieldDataType::Schedule => Schedule::is_named_variant(value),
+            FieldDataType::CoursePoint => CoursePoint::is_named_variant(value),
+            FieldDataType::Manufacturer => Manufacturer::is_named_variant(value),
+            FieldDataType::GarminProduct => GarminProduct::is_named_variant(value),
+            FieldDataType::AntplusDeviceType => AntplusDeviceType::is_named_variant(value),
+            FieldDataType::AntNetwork => AntNetwork::is_named_variant(value),
+            FieldDataType::WorkoutCapabilities => WorkoutCapabilities::is_named_variant(value),
+            FieldDataType::BatteryStatus => BatteryStatus::is_named_variant(value),
+            FieldDataType::HrType => HrType::is_named_variant(value),
+            FieldDataType::CourseCapabilities => CourseCapabilities::is_named_variant(value),
+            FieldDataType::Weight => Weight::is_named_variant(value),
+            FieldDataType::WorkoutHr => WorkoutHr::is_named_variant(value),
+            FieldDataType::WorkoutPower => WorkoutPower::is_named_variant(value),
+            FieldDataType::BpStatus => BpStatus::is_named_variant(value),
+            FieldDataType::UserLocalId => UserLocalId::is_named_variant(value),
+            FieldDataType::SwimStroke => SwimStroke::is_named_variant(value),
+            FieldDataType::ActivityType => ActivityType::is_named_variant(value),
+            FieldDataType::ActivitySubtype => ActivitySubtype::is_named_variant(value),
+            FieldDataType::ActivityLevel => ActivityLevel::is_named_variant(value),
+            FieldDataType::Side => Side::is_named_variant(value),
+            FieldDataType::LeftRightBalance => LeftRightBalance::is_named_variant(value),
+            FieldDataType::LeftRightBalance100 => LeftRightBalance100::is_named_variant(value),
+            FieldDataType::LengthType => LengthType::is_named_variant(value),
+            FieldDataType::DayOfWeek => DayOfWeek::is_named_variant(value),
+            FieldDataType::ConnectivityCapabilities => {
+                ConnectivityCapabilities::is_named_variant(value)
+            }
+            FieldDataType::WeatherReport => WeatherReport::is_named_variant(value),
+            FieldDataType::WeatherStatus => WeatherStatus::is_named_variant(value),
+            FieldDataType::WeatherSeverity => WeatherSeverity::is_named_variant(value),
+            FieldDataType::WeatherSevereType => WeatherSevereType::is_named_variant(value),
+            FieldDataType::StrokeType => StrokeType::is_named_variant(value),
+            FieldDataType::BodyLocation => BodyLocation::is_named_variant(value),
+            FieldDataType::SegmentLapStatus => SegmentLapStatus::is_named_variant(value),
+            FieldDataType::SegmentLeaderboardType => {
+                SegmentLeaderboardType::is_named_variant(value)
+            }
+            FieldDataType::SegmentDeleteStatus => SegmentDeleteStatus::is_named_variant(value),
+            FieldDataType::SegmentSelectionType => SegmentSelectionType::is_named_variant(value),
+            FieldDataType::SourceType => SourceType::is_named_variant(value),
+            FieldDataType::DisplayOrientation => DisplayOrientation::is_named_variant(value),
+            FieldDataType::WorkoutEquipment => WorkoutEquipment::is_named_variant(value),
+            FieldDataType::WatchfaceMode => WatchfaceMode::is_named_variant(value),
+            FieldDataType::DigitalWatchfaceLayout => {
+                DigitalWatchfaceLayout::is_named_variant(value)
+            }
+            FieldDataType::AnalogWatchfaceLayout => AnalogWatchfaceLayout::is_named_variant(value),
+            FieldDataType::RiderPositionType => RiderPositionType::is_named_variant(value),
+            FieldDataType::PowerPhaseType => PowerPhaseType::is_named_variant(value),
+            FieldDataType::CameraEventType => CameraEventType::is_named_variant(value),
+            FieldDataType::SensorType => SensorType::is_named_variant(value),
+            FieldDataType::BikeLightNetworkConfigType => {
+                BikeLightNetworkConfigType::is_named_variant(value)
+            }
+            FieldDataType::CommTimeoutType => CommTimeoutType::is_named_variant(value),
+            FieldDataType::CameraOrientationType => CameraOrientationType::is_named_variant(value),
+            FieldDataType::AttitudeStage => AttitudeStage::is_named_variant(value),
+            FieldDataType::AttitudeValidity => AttitudeValidity::is_named_variant(value),
+            FieldDataType::AutoSyncFrequency => AutoSyncFrequency::is_named_variant(value),
+            FieldDataType::ExdLayout => ExdLayout::is_named_variant(value),
+            FieldDataType::ExdDisplayType => ExdDisplayType::is_named_variant(value),
+            FieldDataType::ExdDataUnits => ExdDataUnits::is_named_variant(value),
+            FieldDataType::ExdQualifiers => ExdQualifiers::is_named_variant(value),
+            FieldDataType::ExdDescriptors => ExdDescriptors::is_named_variant(value),
+            FieldDataType::AutoActivityDetect => AutoActivityDetect::is_named_variant(value),
+            FieldDataType::SupportedExdScreenLayouts => {
+                SupportedExdScreenLayouts::is_named_variant(value)
+            }
+            FieldDataType::FitBaseType => FitBaseType::is_named_variant(value),
+            FieldDataType::TurnType => TurnType::is_named_variant(value),
+            FieldDataType::BikeLightBeamAngleMode => {
+                BikeLightBeamAngleMode::is_named_variant(value)
+            }
+            FieldDataType::FitBaseUnit => FitBaseUnit::is_named_variant(value),
+            FieldDataType::SetType => SetType::is_named_variant(value),
+            FieldDataType::ExerciseCategory => ExerciseCategory::is_named_variant(value),
+            FieldDataType::BenchPressExerciseName => {
+                BenchPressExerciseName::is_named_variant(value)
+            }
+            FieldDataType::CalfRaiseExerciseName => CalfRaiseExerciseName::is_named_variant(value),
+            FieldDataType::CardioExerciseName => CardioExerciseName::is_named_variant(value),
+            FieldDataType::CarryExerciseName => CarryExerciseName::is_named_variant(value),
+            FieldDataType::ChopExerciseName => ChopExerciseName::is_named_variant(value),
+            FieldDataType::CoreExerciseName => CoreExerciseName::is_named_variant(value),
+            FieldDataType::CrunchExerciseName => CrunchExerciseName::is_named_variant(value),
+            FieldDataType::CurlExerciseName => CurlExerciseName::is_named_variant(value),
+            FieldDataType::DeadliftExerciseName => DeadliftExerciseName::is_named_variant(value),
+            FieldDataType::FlyeExerciseName => FlyeExerciseName::is_named_variant(value),
+            FieldDataType::HipRaiseExerciseName => HipRaiseExerciseName::is_named_variant(value),
+            FieldDataType::HipStabilityExerciseName => {
+                HipStabilityExerciseName::is_named_variant(value)
+            }
+            FieldDataType::HipSwingExerciseName => HipSwingExerciseName::is_named_variant(value),
+            FieldDataType::HyperextensionExerciseName => {
+                HyperextensionExerciseName::is_named_variant(value)
+            }
+            FieldDataType::LateralRaiseExerciseName => {
+                LateralRaiseExerciseName::is_named_variant(value)
+            }
+            FieldDataType::LegCurlExerciseName => LegCurlExerciseName::is_named_variant(value),
+            FieldDataType::LegRaiseExerciseName => LegRaiseExerciseName::is_named_variant(value),
+            FieldDataType::LungeExerciseName => LungeExerciseName::is_named_variant(value),
+            FieldDataType::OlympicLiftExerciseName => {
+                OlympicLiftExerciseName::is_named_variant(value)
+            }
+            FieldDataType::PlankExerciseName => PlankExerciseName::is_named_variant(value),
+            FieldDataType::PlyoExerciseName => PlyoExerciseName::is_named_variant(value),
+            FieldDataType::PullUpExerciseName => PullUpExerciseName::is_named_variant(value),
+            FieldDataType::PushUpExerciseName => PushUpExerciseName::is_named_variant(value),
+            FieldDataType::RowExerciseName => RowExerciseName::is_named_variant(value),
+            FieldDataType::ShoulderPressExerciseName => {
+                ShoulderPressExerciseName::is_named_variant(value)
+            }
+            FieldDataType::ShoulderStabilityExerciseName => {
+                ShoulderStabilityExerciseName::is_named_variant(value)
+            }
+            FieldDataType::ShrugExerciseName => ShrugExerciseName::is_named_variant(value),
+            FieldDataType::SitUpExerciseName => SitUpExerciseName::is_named_variant(value),
+            FieldDataType::SquatExerciseName => SquatExerciseName::is_named_variant(value),
+            FieldDataType::TotalBodyExerciseName => TotalBodyExerciseName::is_named_variant(value),
+            FieldDataType::TricepsExtensionExerciseName => {
+                TricepsExtensionExerciseName::is_named_variant(value)
+            }
+            FieldDataType::WarmUpExerciseName => WarmUpExerciseName::is_named_variant(value),
+            FieldDataType::RunExerciseName => RunExerciseName::is_named_variant(value),
+            FieldDataType::WaterType => WaterType::is_named_variant(value),
+            FieldDataType::TissueModelType => TissueModelType::is_named_variant(value),
+            FieldDataType::DiveGasStatus => DiveGasStatus::is_named_variant(value),
+            FieldDataType::DiveAlarmType => DiveAlarmType::is_named_variant(value),
+            FieldDataType::DiveBacklightMode => DiveBacklightMode::is_named_variant(value),
+            FieldDataType::FaveroProduct => FaveroProduct::is_named_variant(value),
+            FieldDataType::ClimbProEvent => ClimbProEvent::is_named_variant(value),
+            FieldDataType::TapSensitivity => TapSensitivity::is_named_variant(value),
+            FieldDataType::RadarThreatLevelType => RadarThreatLevelType::is_named_variant(value),
             _ => false,
         }
     }

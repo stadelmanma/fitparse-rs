@@ -21,6 +21,8 @@ pub enum DecodeOption {
     SkipHeaderCrcValidation,
     /// Ignore data section checksum value
     SkipDataCrcValidation,
+    /// Return the numeric value instead of string name for all enums
+    ReturnNumericEnumValues,
 }
 
 /// Stores a FIT file object (header, message or CRC)
@@ -63,6 +65,11 @@ impl Deserializer {
             end_of_messages: 0,
             crc: 0,
         }
+    }
+
+    /// Fetch options for the deserializer
+    fn options(&mut self) -> &HashSet<DecodeOption> {
+        &self.options
     }
 
     /// Add or remove decoding options for deserializer by manipulating the set
@@ -235,7 +242,8 @@ impl FitStreamProcessor {
 
     /// Decode a FIT data message into a FIT data record using the defined FIT profile.
     pub fn decode_message(&mut self, msg: FitDataMessage) -> Result<FitDataRecord> {
-        self.decoder.decode_message(msg)
+        self.decoder
+            .decode_message(msg, self.deserializer.options())
     }
 }
 

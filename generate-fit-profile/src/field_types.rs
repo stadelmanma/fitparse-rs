@@ -29,6 +29,15 @@ impl FieldTypeDefintion {
     fn generate_impl(&self, out: &mut File) -> Result<(), std::io::Error> {
         writeln!(out, "impl {} {{", self.titlized_name())?;
 
+        writeln!(out, "pub fn is_named_variant(value: i64) -> bool {{")?;
+        writeln!(out, "match value {{")?;
+        for variant in self.variant_map().values() {
+            writeln!(out, "{} => true,", variant.value())?;
+        }
+        writeln!(out, "_ => false",)?;
+        writeln!(out, "}}")?;
+        writeln!(out, "}}")?;
+
         writeln!(out, "pub fn as_{0}(self) -> {0} {{", self.base_type())?;
         writeln!(out, "match self {{")?;
         for variant in self.variant_map().values() {
@@ -123,7 +132,20 @@ impl FieldTypeDefintion {
         writeln!(out, "where")?;
         writeln!(out, "S: Serializer,")?;
         writeln!(out, "{{")?;
-        writeln!(out, "serializer.serialize_str(&self.to_string())")?;
+        if self.is_true_enum() {
+            writeln!(out, "serializer.serialize_str(&self.to_string())")?;
+        } else {
+            writeln!(out, "match &self {{")?;
+            writeln!(
+                out,
+                "{}::{}(value) => serializer.serialize_{}(*value),",
+                self.titlized_name(),
+                self.other_value_field_name(),
+                self.base_type(),
+            )?;
+            writeln!(out, "_ => serializer.serialize_str(&self.to_string())")?;
+            writeln!(out, "}}")?;
+        }
         writeln!(out, "}}")?;
         writeln!(out, "}}")?;
 
@@ -189,8 +211,26 @@ pub enum FieldDataType {{
     writeln!(out, "            _ => false,")?;
     writeln!(out, "        }}")?;
     writeln!(out, "    }}")?;
-    writeln!(out, "}}")?;
 
+    writeln!(
+        out,
+        "    pub fn is_named_variant(self, value: i64) -> bool {{"
+    )?;
+    writeln!(out, "        match self {{")?;
+    for field_type in field_types {
+        if !field_type.variant_map().is_empty() && !is_enum_force_false.contains(field_type.name())
+        {
+            writeln!(
+                out,
+                "FieldDataType::{0} => {0}::is_named_variant(value),",
+                field_type.titlized_name(),
+            )?;
+        }
+    }
+    writeln!(out, "            _ => false,")?;
+    writeln!(out, "        }}")?;
+    writeln!(out, "    }}")?;
+    writeln!(out, "}}")?;
     writeln!(
         out,
         "pub fn get_field_variant_as_string(field_type: FieldDataType , value: i64) -> String {{"

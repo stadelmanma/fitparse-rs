@@ -17,7 +17,7 @@ impl MessageDefinition {
         if let Some(v) = self.comment() {
             writeln!(out, "/// {}", v)?;
         }
-        writeln!(out, "fn {}(mesg_num: MesgNum, data_map: &mut HashMap<u8, Value>, accumlators: &mut HashMap<u32, Value>) -> Result<Vec<FitDataField>> {{", self.function_name())?;
+        writeln!(out, "fn {}(mesg_num: MesgNum, data_map: &mut HashMap<u8, Value>, accumlators: &mut HashMap<u32, Value>, options: &HashSet<DecodeOption>) -> Result<Vec<FitDataField>> {{", self.function_name())?;
         writeln!(out, "let mut fields = Vec::new();")?;
         writeln!(out, "let mut entries: VecDeque<(u8, Value)> = data_map.iter().map(|(k, v)| (*k, v.clone())).collect();")?;
 
@@ -248,7 +248,7 @@ impl MessageFieldDefinition {
         }
 
         writeln!(out,
-            "fn {}_{}_field(mesg_num: MesgNum, accumlators: &mut HashMap<u32, Value>, data_map: &HashMap<u8, Value>, accumulate: bool, scale: f64, offset: f64, units: &'static str, value: Value) -> Result<FitDataField> {{",
+            "fn {}_{}_field(mesg_num: MesgNum, accumlators: &mut HashMap<u32, Value>, options: &HashSet<DecodeOption>, data_map: &HashMap<u8, Value>, accumulate: bool, scale: f64, offset: f64, units: &'static str, value: Value) -> Result<FitDataField> {{",
             mesg_def.function_name(), self.name())?;
 
         // generate acccumated field code
@@ -265,7 +265,7 @@ impl MessageFieldDefinition {
         // generate field
         writeln!(
             out,
-            "data_field_with_info({0}, \"{1}\", FieldDataType::{2}, scale, offset, units, value)",
+            "data_field_with_info({0}, \"{1}\", FieldDataType::{2}, scale, offset, units, value, options)",
             self.def_number(),
             self.name(),
             self.field_type()
@@ -283,7 +283,7 @@ impl MessageFieldDefinition {
         alt_offset: Option<f64>,
     ) -> String {
         format!(
-            "{0}_{1}_field(mesg_num, accumlators, data_map, {2}, {3:.6}, {4:.6}, \"{5}\", {6})",
+            "{0}_{1}_field(mesg_num, accumlators, options, data_map, {2}, {3:.6}, {4:.6}, \"{5}\", {6})",
             mesg_def.function_name(),
             self.name(),
             self.accumulate(),
@@ -321,12 +321,12 @@ fn create_mesg_num_to_mesg_decode_fn(
         out,
         "  /// Decode the raw values from a FitDataMessage based on the Global Message Number"
     )?;
-    writeln!(out, "  pub fn decode_message(self, data_map: &mut HashMap<u8, Value>, accumlators: &mut HashMap<u32, Value>) -> Result<Vec<FitDataField>> {{")?;
+    writeln!(out, "  pub fn decode_message(self, data_map: &mut HashMap<u8, Value>, accumlators: &mut HashMap<u32, Value>, options: &HashSet<DecodeOption>) -> Result<Vec<FitDataField>> {{")?;
     writeln!(out, "    match self {{")?;
     for msg in messages {
         writeln!(
             out,
-            "MesgNum::{} => {}(self, data_map, accumlators),",
+            "MesgNum::{} => {}(self, data_map, accumlators, options),",
             msg.titlized_name(),
             msg.function_name()
         )?;
@@ -346,9 +346,10 @@ pub fn write_decode_file(profile: &FitProfile, out: &mut File) -> Result<(), std
         profile.version()
     )?;
     writeln!(out, "#![allow(unused_variables)]")?;
-    writeln!(out, "use std::collections::{{HashMap, VecDeque}};")?;
+    writeln!(out, "use std::collections::{{HashMap, HashSet, VecDeque}};")?;
     writeln!(out, "use std::convert::TryInto;")?;
     writeln!(out, "use crate::{{FitDataField, Value}};")?;
+    writeln!(out, "use crate::de::{{DecodeOption}};")?;
     writeln!(out, "use crate::error::{{Result}};")?;
     writeln!(
         out,
