@@ -1,7 +1,8 @@
 //! Read one or more FIT files and dump their contents as JSON
 use fitparser;
+use fitparser::de::{from_reader_with_options, DecodeOption};
 use serde::Serialize;
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, HashSet};
 use std::error::Error;
 use std::fs::File;
 use std::io;
@@ -24,6 +25,14 @@ struct Cli {
     /// a "-" as the output file name will result in all content being printed to STDOUT.
     #[structopt(short, long, parse(from_os_str))]
     output: Option<PathBuf>,
+
+    /// Return all enum values with their numeric value instead of the string variant name
+    #[structopt(long)]
+    numeric_enums: bool,
+
+    /// Skip checking the header and data section CRC values
+    #[structopt(long)]
+    no_crc_check: bool,
 }
 
 /// Alternate serialization format
@@ -96,13 +105,27 @@ impl OutputLocation {
 
 fn run() -> Result<(), Box<dyn Error>> {
     let opt = Cli::from_args();
+
+    // set any decode options
+    let mut decode_opts = HashSet::new();
+    if opt.numeric_enums {
+        decode_opts.insert(DecodeOption::ReturnNumericEnumValues);
+    }
+    if opt.no_crc_check {
+        decode_opts.insert(DecodeOption::SkipHeaderCrcValidation);
+        decode_opts.insert(DecodeOption::SkipDataCrcValidation);
+    }
+
+    // define parsed and serialized data output location
     let output_loc = opt
         .output
         .map_or(OutputLocation::Inplace, OutputLocation::new);
     let collect_all = matches!(output_loc, OutputLocation::LocalFile(_));
+
+    // read from STDIN if no files were given
     if opt.files.is_empty() {
         let mut stdin = io::stdin();
-        let data = fitparser::from_reader(&mut stdin)?;
+        let data = from_reader_with_options(&mut stdin, &decode_opts)?;
         output_loc.write_json_file(&PathBuf::from("<stdin>"), data)?;
         return Ok(());
     }
@@ -112,7 +135,7 @@ fn run() -> Result<(), Box<dyn Error>> {
     for file in opt.files {
         // open file and parse data
         let mut fp = File::open(&file)?;
-        let mut data = fitparser::from_reader(&mut fp)?;
+        let mut data = from_reader_with_options(&mut fp, &decode_opts)?;
 
         // output a single fit file's data into a single output file
         if collect_all {
