@@ -30,16 +30,21 @@ pub struct FieldTypeDefintion {
     name: String,
     titlized_name: String,
     base_type: &'static str,
+    is_true_enum: bool,
     comment: Option<String>,
     variant_map: BTreeMap<i64, FieldTypeVariant>,
 }
 
 impl FieldTypeDefintion {
     fn new(name: String, base_type: &'static str, comment: Option<String>) -> Self {
+        let is_true_enum = base_type == "enum";
+        let base_type = if is_true_enum { "u8" } else { base_type };
+
         FieldTypeDefintion {
             name: name.clone(),
             titlized_name: titlecase_string(&name),
             base_type,
+            is_true_enum,
             comment,
             variant_map: BTreeMap::new(),
         }
@@ -57,12 +62,24 @@ impl FieldTypeDefintion {
         &self.base_type
     }
 
+    pub fn is_true_enum(&self) -> bool {
+        self.is_true_enum
+    }
+
     pub fn comment(&self) -> Option<&str> {
         self.comment.as_deref()
     }
 
     pub fn variant_map(&self) -> &BTreeMap<i64, FieldTypeVariant> {
         &self.variant_map
+    }
+
+    pub fn other_value_field_name(&self) -> &'static str {
+        if self.is_true_enum() {
+            "UnknownVariant"
+        } else {
+            "Value"
+        }
     }
 }
 
@@ -285,7 +302,7 @@ macro_rules! split_csv_string ( ($value:expr) => ( {$value.split(',').map(|v| v.
 /// Match a base type string to a rust type for enum generation
 fn base_type_to_rust_type(base_type_str: &str) -> &'static str {
     match base_type_str {
-        "enum" => "u8",
+        "enum" => "enum", // "pseduo-type" we use to detect real enums, changed to u8 later on
         "sint8" => "i8",
         "uint8" => "u8",
         "uint8z" => "u8",
