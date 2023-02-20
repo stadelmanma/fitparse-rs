@@ -267,7 +267,7 @@ pub enum MesgNum {
     MfgRangeMin,
     /// 0xFF00 - 0xFFFE reserved for manufacturer specific messages
     MfgRangeMax,
-    UnknownVariant(u16),
+    Value(u16),
 }
 impl MesgNum {
     pub fn is_named_variant(value: i64) -> bool {
@@ -459,7 +459,7 @@ impl MesgNum {
             MesgNum::DeviceAuxBatteryInfo => 375,
             MesgNum::MfgRangeMin => 65280,
             MesgNum::MfgRangeMax => 65534,
-            MesgNum::UnknownVariant(value) => value,
+            MesgNum::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -560,7 +560,7 @@ impl fmt::Display for MesgNum {
             MesgNum::DeviceAuxBatteryInfo => write!(f, "device_aux_battery_info"),
             MesgNum::MfgRangeMin => write!(f, "mfg_range_min"),
             MesgNum::MfgRangeMax => write!(f, "mfg_range_max"),
-            MesgNum::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            MesgNum::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -658,7 +658,7 @@ impl convert::From<u16> for MesgNum {
             375 => MesgNum::DeviceAuxBatteryInfo,
             65280 => MesgNum::MfgRangeMin,
             65534 => MesgNum::MfgRangeMax,
-            _ => MesgNum::UnknownVariant(value),
+            _ => MesgNum::Value(value),
         }
     }
 }
@@ -672,7 +672,10 @@ impl Serialize for MesgNum {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            MesgNum::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -681,7 +684,7 @@ pub enum Checksum {
     Clear,
     /// Set to mark checksum as valid if computes to invalid values 0 or 0xFF. Checksum can also be set to ok to save encoding computation time.
     Ok,
-    UnknownVariant(u8),
+    Value(u8),
 }
 impl Checksum {
     pub fn is_named_variant(value: i64) -> bool {
@@ -695,7 +698,7 @@ impl Checksum {
         match self {
             Checksum::Clear => 0,
             Checksum::Ok => 1,
-            Checksum::UnknownVariant(value) => value,
+            Checksum::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -707,7 +710,7 @@ impl fmt::Display for Checksum {
         match &self {
             Checksum::Clear => write!(f, "clear"),
             Checksum::Ok => write!(f, "ok"),
-            Checksum::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            Checksum::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -716,7 +719,7 @@ impl convert::From<u8> for Checksum {
         match value {
             0 => Checksum::Clear,
             1 => Checksum::Ok,
-            _ => Checksum::UnknownVariant(value),
+            _ => Checksum::Value(value),
         }
     }
 }
@@ -730,7 +733,10 @@ impl Serialize for Checksum {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            Checksum::Value(value) => serializer.serialize_u8(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -738,7 +744,7 @@ pub enum FileFlags {
     Read,
     Write,
     Erase,
-    UnknownVariant(u8),
+    Value(u8),
 }
 impl FileFlags {
     pub fn is_named_variant(value: i64) -> bool {
@@ -754,7 +760,7 @@ impl FileFlags {
             FileFlags::Read => 2,
             FileFlags::Write => 4,
             FileFlags::Erase => 8,
-            FileFlags::UnknownVariant(value) => value,
+            FileFlags::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -767,7 +773,7 @@ impl fmt::Display for FileFlags {
             FileFlags::Read => write!(f, "read"),
             FileFlags::Write => write!(f, "write"),
             FileFlags::Erase => write!(f, "erase"),
-            FileFlags::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            FileFlags::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -777,7 +783,7 @@ impl convert::From<u8> for FileFlags {
             2 => FileFlags::Read,
             4 => FileFlags::Write,
             8 => FileFlags::Erase,
-            _ => FileFlags::UnknownVariant(value),
+            _ => FileFlags::Value(value),
         }
     }
 }
@@ -791,7 +797,10 @@ impl Serialize for FileFlags {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            FileFlags::Value(value) => serializer.serialize_u8(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -860,7 +869,7 @@ impl Serialize for MesgCount {
 pub enum DateTime {
     /// if date_time is < 0x10000000 then it is system time (seconds from device power on)
     Min,
-    UnknownVariant(u32),
+    Value(u32),
 }
 impl DateTime {
     pub fn is_named_variant(value: i64) -> bool {
@@ -872,7 +881,7 @@ impl DateTime {
     pub fn as_u32(self) -> u32 {
         match self {
             DateTime::Min => 268435456,
-            DateTime::UnknownVariant(value) => value,
+            DateTime::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -883,7 +892,7 @@ impl fmt::Display for DateTime {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
             DateTime::Min => write!(f, "min"),
-            DateTime::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            DateTime::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -891,7 +900,7 @@ impl convert::From<u32> for DateTime {
     fn from(value: u32) -> Self {
         match value {
             268435456 => DateTime::Min,
-            _ => DateTime::UnknownVariant(value),
+            _ => DateTime::Value(value),
         }
     }
 }
@@ -905,7 +914,10 @@ impl Serialize for DateTime {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            DateTime::Value(value) => serializer.serialize_u32(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 /// seconds since 00:00 Dec 31 1989 in local time zone
@@ -913,7 +925,7 @@ impl Serialize for DateTime {
 pub enum LocalDateTime {
     /// if date_time is < 0x10000000 then it is system time (seconds from device power on)
     Min,
-    UnknownVariant(u32),
+    Value(u32),
 }
 impl LocalDateTime {
     pub fn is_named_variant(value: i64) -> bool {
@@ -925,7 +937,7 @@ impl LocalDateTime {
     pub fn as_u32(self) -> u32 {
         match self {
             LocalDateTime::Min => 268435456,
-            LocalDateTime::UnknownVariant(value) => value,
+            LocalDateTime::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -936,7 +948,7 @@ impl fmt::Display for LocalDateTime {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
             LocalDateTime::Min => write!(f, "min"),
-            LocalDateTime::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            LocalDateTime::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -944,7 +956,7 @@ impl convert::From<u32> for LocalDateTime {
     fn from(value: u32) -> Self {
         match value {
             268435456 => LocalDateTime::Min,
-            _ => LocalDateTime::UnknownVariant(value),
+            _ => LocalDateTime::Value(value),
         }
     }
 }
@@ -958,7 +970,10 @@ impl Serialize for LocalDateTime {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            LocalDateTime::Value(value) => serializer.serialize_u32(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -969,7 +984,7 @@ pub enum MessageIndex {
     Reserved,
     /// message is selected if set
     Selected,
-    UnknownVariant(u16),
+    Value(u16),
 }
 impl MessageIndex {
     pub fn is_named_variant(value: i64) -> bool {
@@ -985,7 +1000,7 @@ impl MessageIndex {
             MessageIndex::Mask => 4095,
             MessageIndex::Reserved => 28672,
             MessageIndex::Selected => 32768,
-            MessageIndex::UnknownVariant(value) => value,
+            MessageIndex::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -998,7 +1013,7 @@ impl fmt::Display for MessageIndex {
             MessageIndex::Mask => write!(f, "mask"),
             MessageIndex::Reserved => write!(f, "reserved"),
             MessageIndex::Selected => write!(f, "selected"),
-            MessageIndex::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            MessageIndex::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -1008,7 +1023,7 @@ impl convert::From<u16> for MessageIndex {
             4095 => MessageIndex::Mask,
             28672 => MessageIndex::Reserved,
             32768 => MessageIndex::Selected,
-            _ => MessageIndex::UnknownVariant(value),
+            _ => MessageIndex::Value(value),
         }
     }
 }
@@ -1022,14 +1037,17 @@ impl Serialize for MessageIndex {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            MessageIndex::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum DeviceIndex {
     /// Creator of the file is always device index 0.
     Creator,
-    UnknownVariant(u8),
+    Value(u8),
 }
 impl DeviceIndex {
     pub fn is_named_variant(value: i64) -> bool {
@@ -1041,7 +1059,7 @@ impl DeviceIndex {
     pub fn as_u8(self) -> u8 {
         match self {
             DeviceIndex::Creator => 0,
-            DeviceIndex::UnknownVariant(value) => value,
+            DeviceIndex::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -1052,7 +1070,7 @@ impl fmt::Display for DeviceIndex {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
             DeviceIndex::Creator => write!(f, "creator"),
-            DeviceIndex::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            DeviceIndex::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -1060,7 +1078,7 @@ impl convert::From<u8> for DeviceIndex {
     fn from(value: u8) -> Self {
         match value {
             0 => DeviceIndex::Creator,
-            _ => DeviceIndex::UnknownVariant(value),
+            _ => DeviceIndex::Value(value),
         }
     }
 }
@@ -1074,7 +1092,10 @@ impl Serialize for DeviceIndex {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            DeviceIndex::Value(value) => serializer.serialize_u8(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -1385,7 +1406,7 @@ pub enum LanguageBits0 {
     Croatian,
     Czech,
     Danish,
-    UnknownVariant(u8),
+    Value(u8),
 }
 impl LanguageBits0 {
     pub fn is_named_variant(value: i64) -> bool {
@@ -1411,7 +1432,7 @@ impl LanguageBits0 {
             LanguageBits0::Croatian => 32,
             LanguageBits0::Czech => 64,
             LanguageBits0::Danish => 128,
-            LanguageBits0::UnknownVariant(value) => value,
+            LanguageBits0::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -1429,7 +1450,7 @@ impl fmt::Display for LanguageBits0 {
             LanguageBits0::Croatian => write!(f, "croatian"),
             LanguageBits0::Czech => write!(f, "czech"),
             LanguageBits0::Danish => write!(f, "danish"),
-            LanguageBits0::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            LanguageBits0::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -1444,7 +1465,7 @@ impl convert::From<u8> for LanguageBits0 {
             32 => LanguageBits0::Croatian,
             64 => LanguageBits0::Czech,
             128 => LanguageBits0::Danish,
-            _ => LanguageBits0::UnknownVariant(value),
+            _ => LanguageBits0::Value(value),
         }
     }
 }
@@ -1458,7 +1479,10 @@ impl Serialize for LanguageBits0 {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            LanguageBits0::Value(value) => serializer.serialize_u8(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -1471,7 +1495,7 @@ pub enum LanguageBits1 {
     Polish,
     Portuguese,
     Slovakian,
-    UnknownVariant(u8),
+    Value(u8),
 }
 impl LanguageBits1 {
     pub fn is_named_variant(value: i64) -> bool {
@@ -1497,7 +1521,7 @@ impl LanguageBits1 {
             LanguageBits1::Polish => 32,
             LanguageBits1::Portuguese => 64,
             LanguageBits1::Slovakian => 128,
-            LanguageBits1::UnknownVariant(value) => value,
+            LanguageBits1::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -1515,7 +1539,7 @@ impl fmt::Display for LanguageBits1 {
             LanguageBits1::Polish => write!(f, "polish"),
             LanguageBits1::Portuguese => write!(f, "portuguese"),
             LanguageBits1::Slovakian => write!(f, "slovakian"),
-            LanguageBits1::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            LanguageBits1::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -1530,7 +1554,7 @@ impl convert::From<u8> for LanguageBits1 {
             32 => LanguageBits1::Polish,
             64 => LanguageBits1::Portuguese,
             128 => LanguageBits1::Slovakian,
-            _ => LanguageBits1::UnknownVariant(value),
+            _ => LanguageBits1::Value(value),
         }
     }
 }
@@ -1544,7 +1568,10 @@ impl Serialize for LanguageBits1 {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            LanguageBits1::Value(value) => serializer.serialize_u8(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -1557,7 +1584,7 @@ pub enum LanguageBits2 {
     Ukrainian,
     Arabic,
     Farsi,
-    UnknownVariant(u8),
+    Value(u8),
 }
 impl LanguageBits2 {
     pub fn is_named_variant(value: i64) -> bool {
@@ -1583,7 +1610,7 @@ impl LanguageBits2 {
             LanguageBits2::Ukrainian => 32,
             LanguageBits2::Arabic => 64,
             LanguageBits2::Farsi => 128,
-            LanguageBits2::UnknownVariant(value) => value,
+            LanguageBits2::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -1601,7 +1628,7 @@ impl fmt::Display for LanguageBits2 {
             LanguageBits2::Ukrainian => write!(f, "ukrainian"),
             LanguageBits2::Arabic => write!(f, "arabic"),
             LanguageBits2::Farsi => write!(f, "farsi"),
-            LanguageBits2::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            LanguageBits2::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -1616,7 +1643,7 @@ impl convert::From<u8> for LanguageBits2 {
             32 => LanguageBits2::Ukrainian,
             64 => LanguageBits2::Arabic,
             128 => LanguageBits2::Farsi,
-            _ => LanguageBits2::UnknownVariant(value),
+            _ => LanguageBits2::Value(value),
         }
     }
 }
@@ -1630,7 +1657,10 @@ impl Serialize for LanguageBits2 {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            LanguageBits2::Value(value) => serializer.serialize_u8(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -1643,7 +1673,7 @@ pub enum LanguageBits3 {
     Taiwanese,
     Thai,
     Hebrew,
-    UnknownVariant(u8),
+    Value(u8),
 }
 impl LanguageBits3 {
     pub fn is_named_variant(value: i64) -> bool {
@@ -1669,7 +1699,7 @@ impl LanguageBits3 {
             LanguageBits3::Taiwanese => 32,
             LanguageBits3::Thai => 64,
             LanguageBits3::Hebrew => 128,
-            LanguageBits3::UnknownVariant(value) => value,
+            LanguageBits3::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -1687,7 +1717,7 @@ impl fmt::Display for LanguageBits3 {
             LanguageBits3::Taiwanese => write!(f, "taiwanese"),
             LanguageBits3::Thai => write!(f, "thai"),
             LanguageBits3::Hebrew => write!(f, "hebrew"),
-            LanguageBits3::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            LanguageBits3::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -1702,7 +1732,7 @@ impl convert::From<u8> for LanguageBits3 {
             32 => LanguageBits3::Taiwanese,
             64 => LanguageBits3::Thai,
             128 => LanguageBits3::Hebrew,
-            _ => LanguageBits3::UnknownVariant(value),
+            _ => LanguageBits3::Value(value),
         }
     }
 }
@@ -1716,7 +1746,10 @@ impl Serialize for LanguageBits3 {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            LanguageBits3::Value(value) => serializer.serialize_u8(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -1727,7 +1760,7 @@ pub enum LanguageBits4 {
     Vietnamese,
     Burmese,
     Mongolian,
-    UnknownVariant(u8),
+    Value(u8),
 }
 impl LanguageBits4 {
     pub fn is_named_variant(value: i64) -> bool {
@@ -1749,7 +1782,7 @@ impl LanguageBits4 {
             LanguageBits4::Vietnamese => 8,
             LanguageBits4::Burmese => 16,
             LanguageBits4::Mongolian => 32,
-            LanguageBits4::UnknownVariant(value) => value,
+            LanguageBits4::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -1765,7 +1798,7 @@ impl fmt::Display for LanguageBits4 {
             LanguageBits4::Vietnamese => write!(f, "vietnamese"),
             LanguageBits4::Burmese => write!(f, "burmese"),
             LanguageBits4::Mongolian => write!(f, "mongolian"),
-            LanguageBits4::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            LanguageBits4::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -1778,7 +1811,7 @@ impl convert::From<u8> for LanguageBits4 {
             8 => LanguageBits4::Vietnamese,
             16 => LanguageBits4::Burmese,
             32 => LanguageBits4::Mongolian,
-            _ => LanguageBits4::UnknownVariant(value),
+            _ => LanguageBits4::Value(value),
         }
     }
 }
@@ -1792,7 +1825,10 @@ impl Serialize for LanguageBits4 {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            LanguageBits4::Value(value) => serializer.serialize_u8(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -3223,7 +3259,7 @@ pub enum SportBits0 {
     Swimming,
     Basketball,
     Soccer,
-    UnknownVariant(u8),
+    Value(u8),
 }
 impl SportBits0 {
     pub fn is_named_variant(value: i64) -> bool {
@@ -3249,7 +3285,7 @@ impl SportBits0 {
             SportBits0::Swimming => 32,
             SportBits0::Basketball => 64,
             SportBits0::Soccer => 128,
-            SportBits0::UnknownVariant(value) => value,
+            SportBits0::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -3267,7 +3303,7 @@ impl fmt::Display for SportBits0 {
             SportBits0::Swimming => write!(f, "swimming"),
             SportBits0::Basketball => write!(f, "basketball"),
             SportBits0::Soccer => write!(f, "soccer"),
-            SportBits0::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            SportBits0::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -3282,7 +3318,7 @@ impl convert::From<u8> for SportBits0 {
             32 => SportBits0::Swimming,
             64 => SportBits0::Basketball,
             128 => SportBits0::Soccer,
-            _ => SportBits0::UnknownVariant(value),
+            _ => SportBits0::Value(value),
         }
     }
 }
@@ -3296,7 +3332,10 @@ impl Serialize for SportBits0 {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            SportBits0::Value(value) => serializer.serialize_u8(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 /// Bit field corresponding to sport enum type (1 << (sport-8)).
@@ -3310,7 +3349,7 @@ pub enum SportBits1 {
     AlpineSkiing,
     Snowboarding,
     Rowing,
-    UnknownVariant(u8),
+    Value(u8),
 }
 impl SportBits1 {
     pub fn is_named_variant(value: i64) -> bool {
@@ -3336,7 +3375,7 @@ impl SportBits1 {
             SportBits1::AlpineSkiing => 32,
             SportBits1::Snowboarding => 64,
             SportBits1::Rowing => 128,
-            SportBits1::UnknownVariant(value) => value,
+            SportBits1::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -3354,7 +3393,7 @@ impl fmt::Display for SportBits1 {
             SportBits1::AlpineSkiing => write!(f, "alpine_skiing"),
             SportBits1::Snowboarding => write!(f, "snowboarding"),
             SportBits1::Rowing => write!(f, "rowing"),
-            SportBits1::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            SportBits1::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -3369,7 +3408,7 @@ impl convert::From<u8> for SportBits1 {
             32 => SportBits1::AlpineSkiing,
             64 => SportBits1::Snowboarding,
             128 => SportBits1::Rowing,
-            _ => SportBits1::UnknownVariant(value),
+            _ => SportBits1::Value(value),
         }
     }
 }
@@ -3383,7 +3422,10 @@ impl Serialize for SportBits1 {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            SportBits1::Value(value) => serializer.serialize_u8(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 /// Bit field corresponding to sport enum type (1 << (sport-16)).
@@ -3397,7 +3439,7 @@ pub enum SportBits2 {
     EBiking,
     Motorcycling,
     Boating,
-    UnknownVariant(u8),
+    Value(u8),
 }
 impl SportBits2 {
     pub fn is_named_variant(value: i64) -> bool {
@@ -3423,7 +3465,7 @@ impl SportBits2 {
             SportBits2::EBiking => 32,
             SportBits2::Motorcycling => 64,
             SportBits2::Boating => 128,
-            SportBits2::UnknownVariant(value) => value,
+            SportBits2::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -3441,7 +3483,7 @@ impl fmt::Display for SportBits2 {
             SportBits2::EBiking => write!(f, "e_biking"),
             SportBits2::Motorcycling => write!(f, "motorcycling"),
             SportBits2::Boating => write!(f, "boating"),
-            SportBits2::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            SportBits2::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -3456,7 +3498,7 @@ impl convert::From<u8> for SportBits2 {
             32 => SportBits2::EBiking,
             64 => SportBits2::Motorcycling,
             128 => SportBits2::Boating,
-            _ => SportBits2::UnknownVariant(value),
+            _ => SportBits2::Value(value),
         }
     }
 }
@@ -3470,7 +3512,10 @@ impl Serialize for SportBits2 {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            SportBits2::Value(value) => serializer.serialize_u8(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 /// Bit field corresponding to sport enum type (1 << (sport-24)).
@@ -3484,7 +3529,7 @@ pub enum SportBits3 {
     Fishing,
     InlineSkating,
     RockClimbing,
-    UnknownVariant(u8),
+    Value(u8),
 }
 impl SportBits3 {
     pub fn is_named_variant(value: i64) -> bool {
@@ -3510,7 +3555,7 @@ impl SportBits3 {
             SportBits3::Fishing => 32,
             SportBits3::InlineSkating => 64,
             SportBits3::RockClimbing => 128,
-            SportBits3::UnknownVariant(value) => value,
+            SportBits3::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -3528,7 +3573,7 @@ impl fmt::Display for SportBits3 {
             SportBits3::Fishing => write!(f, "fishing"),
             SportBits3::InlineSkating => write!(f, "inline_skating"),
             SportBits3::RockClimbing => write!(f, "rock_climbing"),
-            SportBits3::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            SportBits3::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -3543,7 +3588,7 @@ impl convert::From<u8> for SportBits3 {
             32 => SportBits3::Fishing,
             64 => SportBits3::InlineSkating,
             128 => SportBits3::RockClimbing,
-            _ => SportBits3::UnknownVariant(value),
+            _ => SportBits3::Value(value),
         }
     }
 }
@@ -3557,7 +3602,10 @@ impl Serialize for SportBits3 {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            SportBits3::Value(value) => serializer.serialize_u8(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 /// Bit field corresponding to sport enum type (1 << (sport-32)).
@@ -3571,7 +3619,7 @@ pub enum SportBits4 {
     StandUpPaddleboarding,
     Surfing,
     Wakeboarding,
-    UnknownVariant(u8),
+    Value(u8),
 }
 impl SportBits4 {
     pub fn is_named_variant(value: i64) -> bool {
@@ -3597,7 +3645,7 @@ impl SportBits4 {
             SportBits4::StandUpPaddleboarding => 32,
             SportBits4::Surfing => 64,
             SportBits4::Wakeboarding => 128,
-            SportBits4::UnknownVariant(value) => value,
+            SportBits4::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -3615,7 +3663,7 @@ impl fmt::Display for SportBits4 {
             SportBits4::StandUpPaddleboarding => write!(f, "stand_up_paddleboarding"),
             SportBits4::Surfing => write!(f, "surfing"),
             SportBits4::Wakeboarding => write!(f, "wakeboarding"),
-            SportBits4::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            SportBits4::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -3630,7 +3678,7 @@ impl convert::From<u8> for SportBits4 {
             32 => SportBits4::StandUpPaddleboarding,
             64 => SportBits4::Surfing,
             128 => SportBits4::Wakeboarding,
-            _ => SportBits4::UnknownVariant(value),
+            _ => SportBits4::Value(value),
         }
     }
 }
@@ -3644,7 +3692,10 @@ impl Serialize for SportBits4 {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            SportBits4::Value(value) => serializer.serialize_u8(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 /// Bit field corresponding to sport enum type (1 << (sport-40)).
@@ -3658,7 +3709,7 @@ pub enum SportBits5 {
     Tactical,
     Jumpmaster,
     Boxing,
-    UnknownVariant(u8),
+    Value(u8),
 }
 impl SportBits5 {
     pub fn is_named_variant(value: i64) -> bool {
@@ -3684,7 +3735,7 @@ impl SportBits5 {
             SportBits5::Tactical => 32,
             SportBits5::Jumpmaster => 64,
             SportBits5::Boxing => 128,
-            SportBits5::UnknownVariant(value) => value,
+            SportBits5::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -3702,7 +3753,7 @@ impl fmt::Display for SportBits5 {
             SportBits5::Tactical => write!(f, "tactical"),
             SportBits5::Jumpmaster => write!(f, "jumpmaster"),
             SportBits5::Boxing => write!(f, "boxing"),
-            SportBits5::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            SportBits5::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -3717,7 +3768,7 @@ impl convert::From<u8> for SportBits5 {
             32 => SportBits5::Tactical,
             64 => SportBits5::Jumpmaster,
             128 => SportBits5::Boxing,
-            _ => SportBits5::UnknownVariant(value),
+            _ => SportBits5::Value(value),
         }
     }
 }
@@ -3731,14 +3782,17 @@ impl Serialize for SportBits5 {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            SportBits5::Value(value) => serializer.serialize_u8(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 /// Bit field corresponding to sport enum type (1 << (sport-48)).
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SportBits6 {
     FloorClimbing,
-    UnknownVariant(u8),
+    Value(u8),
 }
 impl SportBits6 {
     pub fn is_named_variant(value: i64) -> bool {
@@ -3750,7 +3804,7 @@ impl SportBits6 {
     pub fn as_u8(self) -> u8 {
         match self {
             SportBits6::FloorClimbing => 1,
-            SportBits6::UnknownVariant(value) => value,
+            SportBits6::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -3761,7 +3815,7 @@ impl fmt::Display for SportBits6 {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
             SportBits6::FloorClimbing => write!(f, "floor_climbing"),
-            SportBits6::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            SportBits6::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -3769,7 +3823,7 @@ impl convert::From<u8> for SportBits6 {
     fn from(value: u8) -> Self {
         match value {
             1 => SportBits6::FloorClimbing,
-            _ => SportBits6::UnknownVariant(value),
+            _ => SportBits6::Value(value),
         }
     }
 }
@@ -3783,7 +3837,10 @@ impl Serialize for SportBits6 {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            SportBits6::Value(value) => serializer.serialize_u8(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -4911,7 +4968,7 @@ impl Serialize for DateMode {
 pub enum BacklightTimeout {
     /// Backlight stays on forever.
     Infinite,
-    UnknownVariant(u8),
+    Value(u8),
 }
 impl BacklightTimeout {
     pub fn is_named_variant(value: i64) -> bool {
@@ -4923,7 +4980,7 @@ impl BacklightTimeout {
     pub fn as_u8(self) -> u8 {
         match self {
             BacklightTimeout::Infinite => 0,
-            BacklightTimeout::UnknownVariant(value) => value,
+            BacklightTimeout::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -4934,7 +4991,7 @@ impl fmt::Display for BacklightTimeout {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
             BacklightTimeout::Infinite => write!(f, "infinite"),
-            BacklightTimeout::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            BacklightTimeout::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -4942,7 +4999,7 @@ impl convert::From<u8> for BacklightTimeout {
     fn from(value: u8) -> Self {
         match value {
             0 => BacklightTimeout::Infinite,
-            _ => BacklightTimeout::UnknownVariant(value),
+            _ => BacklightTimeout::Value(value),
         }
     }
 }
@@ -4956,7 +5013,10 @@ impl Serialize for BacklightTimeout {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            BacklightTimeout::Value(value) => serializer.serialize_u8(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -6896,7 +6956,7 @@ pub enum Manufacturer {
     Fazua,
     OrekaTraining,
     Actigraphcorp,
-    UnknownVariant(u16),
+    Value(u16),
 }
 impl Manufacturer {
     pub fn is_named_variant(value: i64) -> bool {
@@ -7320,7 +7380,7 @@ impl Manufacturer {
             Manufacturer::Fazua => 318,
             Manufacturer::OrekaTraining => 319,
             Manufacturer::Actigraphcorp => 5759,
-            Manufacturer::UnknownVariant(value) => value,
+            Manufacturer::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -7537,7 +7597,7 @@ impl fmt::Display for Manufacturer {
             Manufacturer::Fazua => write!(f, "fazua"),
             Manufacturer::OrekaTraining => write!(f, "oreka_training"),
             Manufacturer::Actigraphcorp => write!(f, "actigraphcorp"),
-            Manufacturer::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            Manufacturer::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -7751,7 +7811,7 @@ impl convert::From<u16> for Manufacturer {
             318 => Manufacturer::Fazua,
             319 => Manufacturer::OrekaTraining,
             5759 => Manufacturer::Actigraphcorp,
-            _ => Manufacturer::UnknownVariant(value),
+            _ => Manufacturer::Value(value),
         }
     }
 }
@@ -7765,7 +7825,10 @@ impl Serialize for Manufacturer {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            Manufacturer::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -8201,7 +8264,7 @@ pub enum GarminProduct {
     AndroidAntplusPlugin,
     /// Garmin Connect website
     Connect,
-    UnknownVariant(u16),
+    Value(u16),
 }
 impl GarminProduct {
     pub fn is_named_variant(value: i64) -> bool {
@@ -8995,7 +9058,7 @@ impl GarminProduct {
             GarminProduct::ConnectiqSimulator => 65531,
             GarminProduct::AndroidAntplusPlugin => 65532,
             GarminProduct::Connect => 65534,
-            GarminProduct::UnknownVariant(value) => value,
+            GarminProduct::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -9405,7 +9468,7 @@ impl fmt::Display for GarminProduct {
             GarminProduct::ConnectiqSimulator => write!(f, "connectiq_simulator"),
             GarminProduct::AndroidAntplusPlugin => write!(f, "android_antplus_plugin"),
             GarminProduct::Connect => write!(f, "connect"),
-            GarminProduct::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            GarminProduct::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -9804,7 +9867,7 @@ impl convert::From<u16> for GarminProduct {
             65531 => GarminProduct::ConnectiqSimulator,
             65532 => GarminProduct::AndroidAntplusPlugin,
             65534 => GarminProduct::Connect,
-            _ => GarminProduct::UnknownVariant(value),
+            _ => GarminProduct::Value(value),
         }
     }
 }
@@ -9818,7 +9881,10 @@ impl Serialize for GarminProduct {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            GarminProduct::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -9848,7 +9914,7 @@ pub enum AntplusDeviceType {
     BikeCadence,
     BikeSpeed,
     StrideSpeedDistance,
-    UnknownVariant(u8),
+    Value(u8),
 }
 impl AntplusDeviceType {
     pub fn is_named_variant(value: i64) -> bool {
@@ -9908,7 +9974,7 @@ impl AntplusDeviceType {
             AntplusDeviceType::BikeCadence => 122,
             AntplusDeviceType::BikeSpeed => 123,
             AntplusDeviceType::StrideSpeedDistance => 124,
-            AntplusDeviceType::UnknownVariant(value) => value,
+            AntplusDeviceType::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -9943,7 +10009,7 @@ impl fmt::Display for AntplusDeviceType {
             AntplusDeviceType::BikeCadence => write!(f, "bike_cadence"),
             AntplusDeviceType::BikeSpeed => write!(f, "bike_speed"),
             AntplusDeviceType::StrideSpeedDistance => write!(f, "stride_speed_distance"),
-            AntplusDeviceType::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            AntplusDeviceType::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -9975,7 +10041,7 @@ impl convert::From<u8> for AntplusDeviceType {
             122 => AntplusDeviceType::BikeCadence,
             123 => AntplusDeviceType::BikeSpeed,
             124 => AntplusDeviceType::StrideSpeedDistance,
-            _ => AntplusDeviceType::UnknownVariant(value),
+            _ => AntplusDeviceType::Value(value),
         }
     }
 }
@@ -9989,7 +10055,10 @@ impl Serialize for AntplusDeviceType {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            AntplusDeviceType::Value(value) => serializer.serialize_u8(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -10082,7 +10151,7 @@ pub enum WorkoutCapabilities {
     /// Resistance source required for workout step.
     Resistance,
     Protected,
-    UnknownVariant(u32),
+    Value(u32),
 }
 impl WorkoutCapabilities {
     pub fn is_named_variant(value: i64) -> bool {
@@ -10120,7 +10189,7 @@ impl WorkoutCapabilities {
             WorkoutCapabilities::Grade => 4096,
             WorkoutCapabilities::Resistance => 8192,
             WorkoutCapabilities::Protected => 16384,
-            WorkoutCapabilities::UnknownVariant(value) => value,
+            WorkoutCapabilities::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -10144,7 +10213,7 @@ impl fmt::Display for WorkoutCapabilities {
             WorkoutCapabilities::Grade => write!(f, "grade"),
             WorkoutCapabilities::Resistance => write!(f, "resistance"),
             WorkoutCapabilities::Protected => write!(f, "protected"),
-            WorkoutCapabilities::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            WorkoutCapabilities::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -10165,7 +10234,7 @@ impl convert::From<u32> for WorkoutCapabilities {
             4096 => WorkoutCapabilities::Grade,
             8192 => WorkoutCapabilities::Resistance,
             16384 => WorkoutCapabilities::Protected,
-            _ => WorkoutCapabilities::UnknownVariant(value),
+            _ => WorkoutCapabilities::Value(value),
         }
     }
 }
@@ -10179,7 +10248,10 @@ impl Serialize for WorkoutCapabilities {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            WorkoutCapabilities::Value(value) => serializer.serialize_u32(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -10191,7 +10263,7 @@ pub enum BatteryStatus {
     Critical,
     Charging,
     Unknown,
-    UnknownVariant(u8),
+    Value(u8),
 }
 impl BatteryStatus {
     pub fn is_named_variant(value: i64) -> bool {
@@ -10215,7 +10287,7 @@ impl BatteryStatus {
             BatteryStatus::Critical => 5,
             BatteryStatus::Charging => 6,
             BatteryStatus::Unknown => 7,
-            BatteryStatus::UnknownVariant(value) => value,
+            BatteryStatus::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -10232,7 +10304,7 @@ impl fmt::Display for BatteryStatus {
             BatteryStatus::Critical => write!(f, "critical"),
             BatteryStatus::Charging => write!(f, "charging"),
             BatteryStatus::Unknown => write!(f, "unknown"),
-            BatteryStatus::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            BatteryStatus::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -10246,7 +10318,7 @@ impl convert::From<u8> for BatteryStatus {
             5 => BatteryStatus::Critical,
             6 => BatteryStatus::Charging,
             7 => BatteryStatus::Unknown,
-            _ => BatteryStatus::UnknownVariant(value),
+            _ => BatteryStatus::Value(value),
         }
     }
 }
@@ -10260,7 +10332,10 @@ impl Serialize for BatteryStatus {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            BatteryStatus::Value(value) => serializer.serialize_u8(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -10332,7 +10407,7 @@ pub enum CourseCapabilities {
     Training,
     Navigation,
     Bikeway,
-    UnknownVariant(u32),
+    Value(u32),
 }
 impl CourseCapabilities {
     pub fn is_named_variant(value: i64) -> bool {
@@ -10364,7 +10439,7 @@ impl CourseCapabilities {
             CourseCapabilities::Training => 256,
             CourseCapabilities::Navigation => 512,
             CourseCapabilities::Bikeway => 1024,
-            CourseCapabilities::UnknownVariant(value) => value,
+            CourseCapabilities::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -10385,7 +10460,7 @@ impl fmt::Display for CourseCapabilities {
             CourseCapabilities::Training => write!(f, "training"),
             CourseCapabilities::Navigation => write!(f, "navigation"),
             CourseCapabilities::Bikeway => write!(f, "bikeway"),
-            CourseCapabilities::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            CourseCapabilities::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -10403,7 +10478,7 @@ impl convert::From<u32> for CourseCapabilities {
             256 => CourseCapabilities::Training,
             512 => CourseCapabilities::Navigation,
             1024 => CourseCapabilities::Bikeway,
-            _ => CourseCapabilities::UnknownVariant(value),
+            _ => CourseCapabilities::Value(value),
         }
     }
 }
@@ -10417,13 +10492,16 @@ impl Serialize for CourseCapabilities {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            CourseCapabilities::Value(value) => serializer.serialize_u32(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum Weight {
     Calculating,
-    UnknownVariant(u16),
+    Value(u16),
 }
 impl Weight {
     pub fn is_named_variant(value: i64) -> bool {
@@ -10435,7 +10513,7 @@ impl Weight {
     pub fn as_u16(self) -> u16 {
         match self {
             Weight::Calculating => 65534,
-            Weight::UnknownVariant(value) => value,
+            Weight::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -10446,7 +10524,7 @@ impl fmt::Display for Weight {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
             Weight::Calculating => write!(f, "calculating"),
-            Weight::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            Weight::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -10454,7 +10532,7 @@ impl convert::From<u16> for Weight {
     fn from(value: u16) -> Self {
         match value {
             65534 => Weight::Calculating,
-            _ => Weight::UnknownVariant(value),
+            _ => Weight::Value(value),
         }
     }
 }
@@ -10468,14 +10546,17 @@ impl Serialize for Weight {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            Weight::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 /// 0 - 100 indicates% of max hr; >100 indicates bpm (255 max) plus 100
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum WorkoutHr {
     BpmOffset,
-    UnknownVariant(u32),
+    Value(u32),
 }
 impl WorkoutHr {
     pub fn is_named_variant(value: i64) -> bool {
@@ -10487,7 +10568,7 @@ impl WorkoutHr {
     pub fn as_u32(self) -> u32 {
         match self {
             WorkoutHr::BpmOffset => 100,
-            WorkoutHr::UnknownVariant(value) => value,
+            WorkoutHr::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -10498,7 +10579,7 @@ impl fmt::Display for WorkoutHr {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
             WorkoutHr::BpmOffset => write!(f, "bpm_offset"),
-            WorkoutHr::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            WorkoutHr::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -10506,7 +10587,7 @@ impl convert::From<u32> for WorkoutHr {
     fn from(value: u32) -> Self {
         match value {
             100 => WorkoutHr::BpmOffset,
-            _ => WorkoutHr::UnknownVariant(value),
+            _ => WorkoutHr::Value(value),
         }
     }
 }
@@ -10520,14 +10601,17 @@ impl Serialize for WorkoutHr {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            WorkoutHr::Value(value) => serializer.serialize_u32(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 /// 0 - 1000 indicates % of functional threshold power; >1000 indicates watts plus 1000.
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum WorkoutPower {
     WattsOffset,
-    UnknownVariant(u32),
+    Value(u32),
 }
 impl WorkoutPower {
     pub fn is_named_variant(value: i64) -> bool {
@@ -10539,7 +10623,7 @@ impl WorkoutPower {
     pub fn as_u32(self) -> u32 {
         match self {
             WorkoutPower::WattsOffset => 1000,
-            WorkoutPower::UnknownVariant(value) => value,
+            WorkoutPower::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -10550,7 +10634,7 @@ impl fmt::Display for WorkoutPower {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
             WorkoutPower::WattsOffset => write!(f, "watts_offset"),
-            WorkoutPower::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            WorkoutPower::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -10558,7 +10642,7 @@ impl convert::From<u32> for WorkoutPower {
     fn from(value: u32) -> Self {
         match value {
             1000 => WorkoutPower::WattsOffset,
-            _ => WorkoutPower::UnknownVariant(value),
+            _ => WorkoutPower::Value(value),
         }
     }
 }
@@ -10572,7 +10656,10 @@ impl Serialize for WorkoutPower {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            WorkoutPower::Value(value) => serializer.serialize_u32(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -10654,7 +10741,7 @@ pub enum UserLocalId {
     StationaryMax,
     PortableMin,
     PortableMax,
-    UnknownVariant(u16),
+    Value(u16),
 }
 impl UserLocalId {
     pub fn is_named_variant(value: i64) -> bool {
@@ -10676,7 +10763,7 @@ impl UserLocalId {
             UserLocalId::StationaryMax => 255,
             UserLocalId::PortableMin => 256,
             UserLocalId::PortableMax => 65534,
-            UserLocalId::UnknownVariant(value) => value,
+            UserLocalId::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -10692,7 +10779,7 @@ impl fmt::Display for UserLocalId {
             UserLocalId::StationaryMax => write!(f, "stationary_max"),
             UserLocalId::PortableMin => write!(f, "portable_min"),
             UserLocalId::PortableMax => write!(f, "portable_max"),
-            UserLocalId::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            UserLocalId::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -10705,7 +10792,7 @@ impl convert::From<u16> for UserLocalId {
             255 => UserLocalId::StationaryMax,
             256 => UserLocalId::PortableMin,
             65534 => UserLocalId::PortableMax,
-            _ => UserLocalId::UnknownVariant(value),
+            _ => UserLocalId::Value(value),
         }
     }
 }
@@ -10719,7 +10806,10 @@ impl Serialize for UserLocalId {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            UserLocalId::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -11184,7 +11274,7 @@ pub enum LeftRightBalance {
     Mask,
     /// data corresponds to right if set, otherwise unknown
     Right,
-    UnknownVariant(u8),
+    Value(u8),
 }
 impl LeftRightBalance {
     pub fn is_named_variant(value: i64) -> bool {
@@ -11198,7 +11288,7 @@ impl LeftRightBalance {
         match self {
             LeftRightBalance::Mask => 127,
             LeftRightBalance::Right => 128,
-            LeftRightBalance::UnknownVariant(value) => value,
+            LeftRightBalance::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -11210,7 +11300,7 @@ impl fmt::Display for LeftRightBalance {
         match &self {
             LeftRightBalance::Mask => write!(f, "mask"),
             LeftRightBalance::Right => write!(f, "right"),
-            LeftRightBalance::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            LeftRightBalance::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -11219,7 +11309,7 @@ impl convert::From<u8> for LeftRightBalance {
         match value {
             127 => LeftRightBalance::Mask,
             128 => LeftRightBalance::Right,
-            _ => LeftRightBalance::UnknownVariant(value),
+            _ => LeftRightBalance::Value(value),
         }
     }
 }
@@ -11233,7 +11323,10 @@ impl Serialize for LeftRightBalance {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            LeftRightBalance::Value(value) => serializer.serialize_u8(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -11242,7 +11335,7 @@ pub enum LeftRightBalance100 {
     Mask,
     /// data corresponds to right if set, otherwise unknown
     Right,
-    UnknownVariant(u16),
+    Value(u16),
 }
 impl LeftRightBalance100 {
     pub fn is_named_variant(value: i64) -> bool {
@@ -11256,7 +11349,7 @@ impl LeftRightBalance100 {
         match self {
             LeftRightBalance100::Mask => 16383,
             LeftRightBalance100::Right => 32768,
-            LeftRightBalance100::UnknownVariant(value) => value,
+            LeftRightBalance100::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -11268,7 +11361,7 @@ impl fmt::Display for LeftRightBalance100 {
         match &self {
             LeftRightBalance100::Mask => write!(f, "mask"),
             LeftRightBalance100::Right => write!(f, "right"),
-            LeftRightBalance100::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            LeftRightBalance100::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -11277,7 +11370,7 @@ impl convert::From<u16> for LeftRightBalance100 {
         match value {
             16383 => LeftRightBalance100::Mask,
             32768 => LeftRightBalance100::Right,
-            _ => LeftRightBalance100::UnknownVariant(value),
+            _ => LeftRightBalance100::Value(value),
         }
     }
 }
@@ -11291,7 +11384,10 @@ impl Serialize for LeftRightBalance100 {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            LeftRightBalance100::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -11476,7 +11572,7 @@ pub enum ConnectivityCapabilities {
     LiveTrackMessaging,
     /// Device supports instant input feature
     InstantInput,
-    UnknownVariant(u32),
+    Value(u32),
 }
 impl ConnectivityCapabilities {
     pub fn is_named_variant(value: i64) -> bool {
@@ -11550,7 +11646,7 @@ impl ConnectivityCapabilities {
             ConnectivityCapabilities::LiveTrackAutoStart => 536870912,
             ConnectivityCapabilities::LiveTrackMessaging => 1073741824,
             ConnectivityCapabilities::InstantInput => 2147483648,
-            ConnectivityCapabilities::UnknownVariant(value) => value,
+            ConnectivityCapabilities::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -11604,9 +11700,7 @@ impl fmt::Display for ConnectivityCapabilities {
             ConnectivityCapabilities::LiveTrackAutoStart => write!(f, "live_track_auto_start"),
             ConnectivityCapabilities::LiveTrackMessaging => write!(f, "live_track_messaging"),
             ConnectivityCapabilities::InstantInput => write!(f, "instant_input"),
-            ConnectivityCapabilities::UnknownVariant(value) => {
-                write!(f, "unknown_variant_{}", *value)
-            }
+            ConnectivityCapabilities::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -11645,7 +11739,7 @@ impl convert::From<u32> for ConnectivityCapabilities {
             536870912 => ConnectivityCapabilities::LiveTrackAutoStart,
             1073741824 => ConnectivityCapabilities::LiveTrackMessaging,
             2147483648 => ConnectivityCapabilities::InstantInput,
-            _ => ConnectivityCapabilities::UnknownVariant(value),
+            _ => ConnectivityCapabilities::Value(value),
         }
     }
 }
@@ -11659,7 +11753,10 @@ impl Serialize for ConnectivityCapabilities {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            ConnectivityCapabilities::Value(value) => serializer.serialize_u32(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -13838,7 +13935,7 @@ pub enum CommTimeoutType {
     ConnectionLost,
     /// Connection closed due to extended bad communications
     ConnectionTimeout,
-    UnknownVariant(u16),
+    Value(u16),
 }
 impl CommTimeoutType {
     pub fn is_named_variant(value: i64) -> bool {
@@ -13856,7 +13953,7 @@ impl CommTimeoutType {
             CommTimeoutType::PairingTimeout => 1,
             CommTimeoutType::ConnectionLost => 2,
             CommTimeoutType::ConnectionTimeout => 3,
-            CommTimeoutType::UnknownVariant(value) => value,
+            CommTimeoutType::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -13870,7 +13967,7 @@ impl fmt::Display for CommTimeoutType {
             CommTimeoutType::PairingTimeout => write!(f, "pairing_timeout"),
             CommTimeoutType::ConnectionLost => write!(f, "connection_lost"),
             CommTimeoutType::ConnectionTimeout => write!(f, "connection_timeout"),
-            CommTimeoutType::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            CommTimeoutType::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -13881,7 +13978,7 @@ impl convert::From<u16> for CommTimeoutType {
             1 => CommTimeoutType::PairingTimeout,
             2 => CommTimeoutType::ConnectionLost,
             3 => CommTimeoutType::ConnectionTimeout,
-            _ => CommTimeoutType::UnknownVariant(value),
+            _ => CommTimeoutType::Value(value),
         }
     }
 }
@@ -13895,7 +13992,10 @@ impl Serialize for CommTimeoutType {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            CommTimeoutType::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -14045,7 +14145,7 @@ pub enum AttitudeValidity {
     SolutionCoasting,
     TrueTrackAngle,
     MagneticHeading,
-    UnknownVariant(u16),
+    Value(u16),
 }
 impl AttitudeValidity {
     pub fn is_named_variant(value: i64) -> bool {
@@ -14081,7 +14181,7 @@ impl AttitudeValidity {
             AttitudeValidity::SolutionCoasting => 1024,
             AttitudeValidity::TrueTrackAngle => 2048,
             AttitudeValidity::MagneticHeading => 4096,
-            AttitudeValidity::UnknownVariant(value) => value,
+            AttitudeValidity::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -14104,7 +14204,7 @@ impl fmt::Display for AttitudeValidity {
             AttitudeValidity::SolutionCoasting => write!(f, "solution_coasting"),
             AttitudeValidity::TrueTrackAngle => write!(f, "true_track_angle"),
             AttitudeValidity::MagneticHeading => write!(f, "magnetic_heading"),
-            AttitudeValidity::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            AttitudeValidity::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -14124,7 +14224,7 @@ impl convert::From<u16> for AttitudeValidity {
             1024 => AttitudeValidity::SolutionCoasting,
             2048 => AttitudeValidity::TrueTrackAngle,
             4096 => AttitudeValidity::MagneticHeading,
-            _ => AttitudeValidity::UnknownVariant(value),
+            _ => AttitudeValidity::Value(value),
         }
     }
 }
@@ -14138,7 +14238,10 @@ impl Serialize for AttitudeValidity {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            AttitudeValidity::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -15522,7 +15625,7 @@ pub enum AutoActivityDetect {
     Walking,
     Elliptical,
     Sedentary,
-    UnknownVariant(u32),
+    Value(u32),
 }
 impl AutoActivityDetect {
     pub fn is_named_variant(value: i64) -> bool {
@@ -15546,7 +15649,7 @@ impl AutoActivityDetect {
             AutoActivityDetect::Walking => 8,
             AutoActivityDetect::Elliptical => 32,
             AutoActivityDetect::Sedentary => 1024,
-            AutoActivityDetect::UnknownVariant(value) => value,
+            AutoActivityDetect::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -15563,7 +15666,7 @@ impl fmt::Display for AutoActivityDetect {
             AutoActivityDetect::Walking => write!(f, "walking"),
             AutoActivityDetect::Elliptical => write!(f, "elliptical"),
             AutoActivityDetect::Sedentary => write!(f, "sedentary"),
-            AutoActivityDetect::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            AutoActivityDetect::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -15577,7 +15680,7 @@ impl convert::From<u32> for AutoActivityDetect {
             8 => AutoActivityDetect::Walking,
             32 => AutoActivityDetect::Elliptical,
             1024 => AutoActivityDetect::Sedentary,
-            _ => AutoActivityDetect::UnknownVariant(value),
+            _ => AutoActivityDetect::Value(value),
         }
     }
 }
@@ -15591,7 +15694,10 @@ impl Serialize for AutoActivityDetect {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            AutoActivityDetect::Value(value) => serializer.serialize_u32(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -15604,7 +15710,7 @@ pub enum SupportedExdScreenLayouts {
     FullQuarterSplit,
     HalfVerticalLeftSplit,
     HalfHorizontalTopSplit,
-    UnknownVariant(u32),
+    Value(u32),
 }
 impl SupportedExdScreenLayouts {
     pub fn is_named_variant(value: i64) -> bool {
@@ -15630,7 +15736,7 @@ impl SupportedExdScreenLayouts {
             SupportedExdScreenLayouts::FullQuarterSplit => 32,
             SupportedExdScreenLayouts::HalfVerticalLeftSplit => 64,
             SupportedExdScreenLayouts::HalfHorizontalTopSplit => 128,
-            SupportedExdScreenLayouts::UnknownVariant(value) => value,
+            SupportedExdScreenLayouts::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -15656,9 +15762,7 @@ impl fmt::Display for SupportedExdScreenLayouts {
             SupportedExdScreenLayouts::HalfHorizontalTopSplit => {
                 write!(f, "half_horizontal_top_split")
             }
-            SupportedExdScreenLayouts::UnknownVariant(value) => {
-                write!(f, "unknown_variant_{}", *value)
-            }
+            SupportedExdScreenLayouts::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -15673,7 +15777,7 @@ impl convert::From<u32> for SupportedExdScreenLayouts {
             32 => SupportedExdScreenLayouts::FullQuarterSplit,
             64 => SupportedExdScreenLayouts::HalfVerticalLeftSplit,
             128 => SupportedExdScreenLayouts::HalfHorizontalTopSplit,
-            _ => SupportedExdScreenLayouts::UnknownVariant(value),
+            _ => SupportedExdScreenLayouts::Value(value),
         }
     }
 }
@@ -15687,7 +15791,10 @@ impl Serialize for SupportedExdScreenLayouts {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            SupportedExdScreenLayouts::Value(value) => serializer.serialize_u32(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -15709,7 +15816,7 @@ pub enum FitBaseType {
     Sint64,
     Uint64,
     Uint64z,
-    UnknownVariant(u8),
+    Value(u8),
 }
 impl FitBaseType {
     pub fn is_named_variant(value: i64) -> bool {
@@ -15753,7 +15860,7 @@ impl FitBaseType {
             FitBaseType::Sint64 => 142,
             FitBaseType::Uint64 => 143,
             FitBaseType::Uint64z => 144,
-            FitBaseType::UnknownVariant(value) => value,
+            FitBaseType::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -15780,7 +15887,7 @@ impl fmt::Display for FitBaseType {
             FitBaseType::Sint64 => write!(f, "sint64"),
             FitBaseType::Uint64 => write!(f, "uint64"),
             FitBaseType::Uint64z => write!(f, "uint64z"),
-            FitBaseType::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            FitBaseType::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -15804,7 +15911,7 @@ impl convert::From<u8> for FitBaseType {
             142 => FitBaseType::Sint64,
             143 => FitBaseType::Uint64,
             144 => FitBaseType::Uint64z,
-            _ => FitBaseType::UnknownVariant(value),
+            _ => FitBaseType::Value(value),
         }
     }
 }
@@ -15818,7 +15925,10 @@ impl Serialize for FitBaseType {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            FitBaseType::Value(value) => serializer.serialize_u8(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -16061,7 +16171,7 @@ impl Serialize for TurnType {
 pub enum BikeLightBeamAngleMode {
     Manual,
     Auto,
-    UnknownVariant(u8),
+    Value(u8),
 }
 impl BikeLightBeamAngleMode {
     pub fn is_named_variant(value: i64) -> bool {
@@ -16075,7 +16185,7 @@ impl BikeLightBeamAngleMode {
         match self {
             BikeLightBeamAngleMode::Manual => 0,
             BikeLightBeamAngleMode::Auto => 1,
-            BikeLightBeamAngleMode::UnknownVariant(value) => value,
+            BikeLightBeamAngleMode::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -16087,9 +16197,7 @@ impl fmt::Display for BikeLightBeamAngleMode {
         match &self {
             BikeLightBeamAngleMode::Manual => write!(f, "manual"),
             BikeLightBeamAngleMode::Auto => write!(f, "auto"),
-            BikeLightBeamAngleMode::UnknownVariant(value) => {
-                write!(f, "unknown_variant_{}", *value)
-            }
+            BikeLightBeamAngleMode::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -16098,7 +16206,7 @@ impl convert::From<u8> for BikeLightBeamAngleMode {
         match value {
             0 => BikeLightBeamAngleMode::Manual,
             1 => BikeLightBeamAngleMode::Auto,
-            _ => BikeLightBeamAngleMode::UnknownVariant(value),
+            _ => BikeLightBeamAngleMode::Value(value),
         }
     }
 }
@@ -16112,7 +16220,10 @@ impl Serialize for BikeLightBeamAngleMode {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            BikeLightBeamAngleMode::Value(value) => serializer.serialize_u8(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -16120,7 +16231,7 @@ pub enum FitBaseUnit {
     Other,
     Kilogram,
     Pound,
-    UnknownVariant(u16),
+    Value(u16),
 }
 impl FitBaseUnit {
     pub fn is_named_variant(value: i64) -> bool {
@@ -16136,7 +16247,7 @@ impl FitBaseUnit {
             FitBaseUnit::Other => 0,
             FitBaseUnit::Kilogram => 1,
             FitBaseUnit::Pound => 2,
-            FitBaseUnit::UnknownVariant(value) => value,
+            FitBaseUnit::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -16149,7 +16260,7 @@ impl fmt::Display for FitBaseUnit {
             FitBaseUnit::Other => write!(f, "other"),
             FitBaseUnit::Kilogram => write!(f, "kilogram"),
             FitBaseUnit::Pound => write!(f, "pound"),
-            FitBaseUnit::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            FitBaseUnit::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -16159,7 +16270,7 @@ impl convert::From<u16> for FitBaseUnit {
             0 => FitBaseUnit::Other,
             1 => FitBaseUnit::Kilogram,
             2 => FitBaseUnit::Pound,
-            _ => FitBaseUnit::UnknownVariant(value),
+            _ => FitBaseUnit::Value(value),
         }
     }
 }
@@ -16173,14 +16284,17 @@ impl Serialize for FitBaseUnit {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            FitBaseUnit::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SetType {
     Rest,
     Active,
-    UnknownVariant(u8),
+    Value(u8),
 }
 impl SetType {
     pub fn is_named_variant(value: i64) -> bool {
@@ -16194,7 +16308,7 @@ impl SetType {
         match self {
             SetType::Rest => 0,
             SetType::Active => 1,
-            SetType::UnknownVariant(value) => value,
+            SetType::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -16206,7 +16320,7 @@ impl fmt::Display for SetType {
         match &self {
             SetType::Rest => write!(f, "rest"),
             SetType::Active => write!(f, "active"),
-            SetType::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            SetType::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -16215,7 +16329,7 @@ impl convert::From<u8> for SetType {
         match value {
             0 => SetType::Rest,
             1 => SetType::Active,
-            _ => SetType::UnknownVariant(value),
+            _ => SetType::Value(value),
         }
     }
 }
@@ -16229,7 +16343,10 @@ impl Serialize for SetType {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            SetType::Value(value) => serializer.serialize_u8(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -16268,7 +16385,7 @@ pub enum ExerciseCategory {
     WarmUp,
     Run,
     Unknown,
-    UnknownVariant(u16),
+    Value(u16),
 }
 impl ExerciseCategory {
     pub fn is_named_variant(value: i64) -> bool {
@@ -16346,7 +16463,7 @@ impl ExerciseCategory {
             ExerciseCategory::WarmUp => 31,
             ExerciseCategory::Run => 32,
             ExerciseCategory::Unknown => 65534,
-            ExerciseCategory::UnknownVariant(value) => value,
+            ExerciseCategory::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -16390,7 +16507,7 @@ impl fmt::Display for ExerciseCategory {
             ExerciseCategory::WarmUp => write!(f, "warm_up"),
             ExerciseCategory::Run => write!(f, "run"),
             ExerciseCategory::Unknown => write!(f, "unknown"),
-            ExerciseCategory::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            ExerciseCategory::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -16431,7 +16548,7 @@ impl convert::From<u16> for ExerciseCategory {
             31 => ExerciseCategory::WarmUp,
             32 => ExerciseCategory::Run,
             65534 => ExerciseCategory::Unknown,
-            _ => ExerciseCategory::UnknownVariant(value),
+            _ => ExerciseCategory::Value(value),
         }
     }
 }
@@ -16445,7 +16562,10 @@ impl Serialize for ExerciseCategory {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            ExerciseCategory::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -16477,7 +16597,7 @@ pub enum BenchPressExerciseName {
     TripleStopBarbellBenchPress,
     WideGripBarbellBenchPress,
     AlternatingDumbbellChestPress,
-    UnknownVariant(u16),
+    Value(u16),
 }
 impl BenchPressExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
@@ -16541,7 +16661,7 @@ impl BenchPressExerciseName {
             BenchPressExerciseName::TripleStopBarbellBenchPress => 24,
             BenchPressExerciseName::WideGripBarbellBenchPress => 25,
             BenchPressExerciseName::AlternatingDumbbellChestPress => 26,
-            BenchPressExerciseName::UnknownVariant(value) => value,
+            BenchPressExerciseName::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -16618,9 +16738,7 @@ impl fmt::Display for BenchPressExerciseName {
             BenchPressExerciseName::AlternatingDumbbellChestPress => {
                 write!(f, "alternating_dumbbell_chest_press")
             }
-            BenchPressExerciseName::UnknownVariant(value) => {
-                write!(f, "unknown_variant_{}", *value)
-            }
+            BenchPressExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -16654,7 +16772,7 @@ impl convert::From<u16> for BenchPressExerciseName {
             24 => BenchPressExerciseName::TripleStopBarbellBenchPress,
             25 => BenchPressExerciseName::WideGripBarbellBenchPress,
             26 => BenchPressExerciseName::AlternatingDumbbellChestPress,
-            _ => BenchPressExerciseName::UnknownVariant(value),
+            _ => BenchPressExerciseName::Value(value),
         }
     }
 }
@@ -16668,7 +16786,10 @@ impl Serialize for BenchPressExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            BenchPressExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -16694,7 +16815,7 @@ pub enum CalfRaiseExerciseName {
     StandingCalfRaise,
     WeightedStandingCalfRaise,
     StandingDumbbellCalfRaise,
-    UnknownVariant(u16),
+    Value(u16),
 }
 impl CalfRaiseExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
@@ -16746,7 +16867,7 @@ impl CalfRaiseExerciseName {
             CalfRaiseExerciseName::StandingCalfRaise => 18,
             CalfRaiseExerciseName::WeightedStandingCalfRaise => 19,
             CalfRaiseExerciseName::StandingDumbbellCalfRaise => 20,
-            CalfRaiseExerciseName::UnknownVariant(value) => value,
+            CalfRaiseExerciseName::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -16809,7 +16930,7 @@ impl fmt::Display for CalfRaiseExerciseName {
             CalfRaiseExerciseName::StandingDumbbellCalfRaise => {
                 write!(f, "standing_dumbbell_calf_raise")
             }
-            CalfRaiseExerciseName::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            CalfRaiseExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -16837,7 +16958,7 @@ impl convert::From<u16> for CalfRaiseExerciseName {
             18 => CalfRaiseExerciseName::StandingCalfRaise,
             19 => CalfRaiseExerciseName::WeightedStandingCalfRaise,
             20 => CalfRaiseExerciseName::StandingDumbbellCalfRaise,
-            _ => CalfRaiseExerciseName::UnknownVariant(value),
+            _ => CalfRaiseExerciseName::Value(value),
         }
     }
 }
@@ -16851,7 +16972,10 @@ impl Serialize for CalfRaiseExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            CalfRaiseExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -16878,7 +17002,7 @@ pub enum CardioExerciseName {
     WeightedSquatJacks,
     TripleUnder,
     WeightedTripleUnder,
-    UnknownVariant(u16),
+    Value(u16),
 }
 impl CardioExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
@@ -16932,7 +17056,7 @@ impl CardioExerciseName {
             CardioExerciseName::WeightedSquatJacks => 19,
             CardioExerciseName::TripleUnder => 20,
             CardioExerciseName::WeightedTripleUnder => 21,
-            CardioExerciseName::UnknownVariant(value) => value,
+            CardioExerciseName::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -16968,7 +17092,7 @@ impl fmt::Display for CardioExerciseName {
             CardioExerciseName::WeightedSquatJacks => write!(f, "weighted_squat_jacks"),
             CardioExerciseName::TripleUnder => write!(f, "triple_under"),
             CardioExerciseName::WeightedTripleUnder => write!(f, "weighted_triple_under"),
-            CardioExerciseName::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            CardioExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -16997,7 +17121,7 @@ impl convert::From<u16> for CardioExerciseName {
             19 => CardioExerciseName::WeightedSquatJacks,
             20 => CardioExerciseName::TripleUnder,
             21 => CardioExerciseName::WeightedTripleUnder,
-            _ => CardioExerciseName::UnknownVariant(value),
+            _ => CardioExerciseName::Value(value),
         }
     }
 }
@@ -17011,7 +17135,10 @@ impl Serialize for CardioExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            CardioExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -17021,7 +17148,7 @@ pub enum CarryExerciseName {
     FarmersWalkOnToes,
     HexDumbbellHold,
     OverheadCarry,
-    UnknownVariant(u16),
+    Value(u16),
 }
 impl CarryExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
@@ -17041,7 +17168,7 @@ impl CarryExerciseName {
             CarryExerciseName::FarmersWalkOnToes => 2,
             CarryExerciseName::HexDumbbellHold => 3,
             CarryExerciseName::OverheadCarry => 4,
-            CarryExerciseName::UnknownVariant(value) => value,
+            CarryExerciseName::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -17056,7 +17183,7 @@ impl fmt::Display for CarryExerciseName {
             CarryExerciseName::FarmersWalkOnToes => write!(f, "farmers_walk_on_toes"),
             CarryExerciseName::HexDumbbellHold => write!(f, "hex_dumbbell_hold"),
             CarryExerciseName::OverheadCarry => write!(f, "overhead_carry"),
-            CarryExerciseName::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            CarryExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -17068,7 +17195,7 @@ impl convert::From<u16> for CarryExerciseName {
             2 => CarryExerciseName::FarmersWalkOnToes,
             3 => CarryExerciseName::HexDumbbellHold,
             4 => CarryExerciseName::OverheadCarry,
-            _ => CarryExerciseName::UnknownVariant(value),
+            _ => CarryExerciseName::Value(value),
         }
     }
 }
@@ -17082,7 +17209,10 @@ impl Serialize for CarryExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            CarryExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -17110,7 +17240,7 @@ pub enum ChopExerciseName {
     StandingSplitRotationalChop,
     StandingSplitRotationalReverseChop,
     StandingStabilityReverseChop,
-    UnknownVariant(u16),
+    Value(u16),
 }
 impl ChopExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
@@ -17166,7 +17296,7 @@ impl ChopExerciseName {
             ChopExerciseName::StandingSplitRotationalChop => 20,
             ChopExerciseName::StandingSplitRotationalReverseChop => 21,
             ChopExerciseName::StandingStabilityReverseChop => 22,
-            ChopExerciseName::UnknownVariant(value) => value,
+            ChopExerciseName::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -17217,7 +17347,7 @@ impl fmt::Display for ChopExerciseName {
             ChopExerciseName::StandingStabilityReverseChop => {
                 write!(f, "standing_stability_reverse_chop")
             }
-            ChopExerciseName::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            ChopExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -17247,7 +17377,7 @@ impl convert::From<u16> for ChopExerciseName {
             20 => ChopExerciseName::StandingSplitRotationalChop,
             21 => ChopExerciseName::StandingSplitRotationalReverseChop,
             22 => ChopExerciseName::StandingStabilityReverseChop,
-            _ => ChopExerciseName::UnknownVariant(value),
+            _ => ChopExerciseName::Value(value),
         }
     }
 }
@@ -17261,7 +17391,10 @@ impl Serialize for ChopExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            ChopExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -17342,7 +17475,7 @@ pub enum CoreExerciseName {
     Swimming,
     Teaser,
     TheHundred,
-    UnknownVariant(u16),
+    Value(u16),
 }
 impl CoreExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
@@ -17498,7 +17631,7 @@ impl CoreExerciseName {
             CoreExerciseName::Swimming => 70,
             CoreExerciseName::Teaser => 71,
             CoreExerciseName::TheHundred => 72,
-            CoreExerciseName::UnknownVariant(value) => value,
+            CoreExerciseName::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -17599,7 +17732,7 @@ impl fmt::Display for CoreExerciseName {
             CoreExerciseName::Swimming => write!(f, "swimming"),
             CoreExerciseName::Teaser => write!(f, "teaser"),
             CoreExerciseName::TheHundred => write!(f, "the_hundred"),
-            CoreExerciseName::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            CoreExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -17679,7 +17812,7 @@ impl convert::From<u16> for CoreExerciseName {
             70 => CoreExerciseName::Swimming,
             71 => CoreExerciseName::Teaser,
             72 => CoreExerciseName::TheHundred,
-            _ => CoreExerciseName::UnknownVariant(value),
+            _ => CoreExerciseName::Value(value),
         }
     }
 }
@@ -17693,7 +17826,10 @@ impl Serialize for CoreExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            CoreExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -17783,7 +17919,7 @@ pub enum CrunchExerciseName {
     WeightedToesToBar,
     Crunch,
     StraightLegCrunchWithBall,
-    UnknownVariant(u16),
+    Value(u16),
 }
 impl CrunchExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
@@ -17963,7 +18099,7 @@ impl CrunchExerciseName {
             CrunchExerciseName::WeightedToesToBar => 82,
             CrunchExerciseName::Crunch => 83,
             CrunchExerciseName::StraightLegCrunchWithBall => 84,
-            CrunchExerciseName::UnknownVariant(value) => value,
+            CrunchExerciseName::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -18118,7 +18254,7 @@ impl fmt::Display for CrunchExerciseName {
             CrunchExerciseName::StraightLegCrunchWithBall => {
                 write!(f, "straight_leg_crunch_with_ball")
             }
-            CrunchExerciseName::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            CrunchExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -18210,7 +18346,7 @@ impl convert::From<u16> for CrunchExerciseName {
             82 => CrunchExerciseName::WeightedToesToBar,
             83 => CrunchExerciseName::Crunch,
             84 => CrunchExerciseName::StraightLegCrunchWithBall,
-            _ => CrunchExerciseName::UnknownVariant(value),
+            _ => CrunchExerciseName::Value(value),
         }
     }
 }
@@ -18224,7 +18360,10 @@ impl Serialize for CrunchExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            CrunchExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -18273,7 +18412,7 @@ pub enum CurlExerciseName {
     SwissBallEzBarPreacherCurl,
     TwistingStandingDumbbellBicepsCurl,
     WideGripEzBarBicepsCurl,
-    UnknownVariant(u16),
+    Value(u16),
 }
 impl CurlExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
@@ -18371,7 +18510,7 @@ impl CurlExerciseName {
             CurlExerciseName::SwissBallEzBarPreacherCurl => 41,
             CurlExerciseName::TwistingStandingDumbbellBicepsCurl => 42,
             CurlExerciseName::WideGripEzBarBicepsCurl => 43,
-            CurlExerciseName::UnknownVariant(value) => value,
+            CurlExerciseName::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -18467,7 +18606,7 @@ impl fmt::Display for CurlExerciseName {
                 write!(f, "twisting_standing_dumbbell_biceps_curl")
             }
             CurlExerciseName::WideGripEzBarBicepsCurl => write!(f, "wide_grip_ez_bar_biceps_curl"),
-            CurlExerciseName::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            CurlExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -18518,7 +18657,7 @@ impl convert::From<u16> for CurlExerciseName {
             41 => CurlExerciseName::SwissBallEzBarPreacherCurl,
             42 => CurlExerciseName::TwistingStandingDumbbellBicepsCurl,
             43 => CurlExerciseName::WideGripEzBarBicepsCurl,
-            _ => CurlExerciseName::UnknownVariant(value),
+            _ => CurlExerciseName::Value(value),
         }
     }
 }
@@ -18532,7 +18671,10 @@ impl Serialize for CurlExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            CurlExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -18556,7 +18698,7 @@ pub enum DeadliftExerciseName {
     SumoDeadliftHighPull,
     TrapBarDeadlift,
     WideGripBarbellDeadlift,
-    UnknownVariant(u16),
+    Value(u16),
 }
 impl DeadliftExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
@@ -18604,7 +18746,7 @@ impl DeadliftExerciseName {
             DeadliftExerciseName::SumoDeadliftHighPull => 16,
             DeadliftExerciseName::TrapBarDeadlift => 17,
             DeadliftExerciseName::WideGripBarbellDeadlift => 18,
-            DeadliftExerciseName::UnknownVariant(value) => value,
+            DeadliftExerciseName::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -18651,7 +18793,7 @@ impl fmt::Display for DeadliftExerciseName {
             DeadliftExerciseName::WideGripBarbellDeadlift => {
                 write!(f, "wide_grip_barbell_deadlift")
             }
-            DeadliftExerciseName::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            DeadliftExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -18677,7 +18819,7 @@ impl convert::From<u16> for DeadliftExerciseName {
             16 => DeadliftExerciseName::SumoDeadliftHighPull,
             17 => DeadliftExerciseName::TrapBarDeadlift,
             18 => DeadliftExerciseName::WideGripBarbellDeadlift,
-            _ => DeadliftExerciseName::UnknownVariant(value),
+            _ => DeadliftExerciseName::Value(value),
         }
     }
 }
@@ -18691,7 +18833,10 @@ impl Serialize for DeadliftExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            DeadliftExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -18706,7 +18851,7 @@ pub enum FlyeExerciseName {
     SwissBallDumbbellFlye,
     ArmRotations,
     HugATree,
-    UnknownVariant(u16),
+    Value(u16),
 }
 impl FlyeExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
@@ -18736,7 +18881,7 @@ impl FlyeExerciseName {
             FlyeExerciseName::SwissBallDumbbellFlye => 7,
             FlyeExerciseName::ArmRotations => 8,
             FlyeExerciseName::HugATree => 9,
-            FlyeExerciseName::UnknownVariant(value) => value,
+            FlyeExerciseName::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -18758,7 +18903,7 @@ impl fmt::Display for FlyeExerciseName {
             FlyeExerciseName::SwissBallDumbbellFlye => write!(f, "swiss_ball_dumbbell_flye"),
             FlyeExerciseName::ArmRotations => write!(f, "arm_rotations"),
             FlyeExerciseName::HugATree => write!(f, "hug_a_tree"),
-            FlyeExerciseName::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            FlyeExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -18775,7 +18920,7 @@ impl convert::From<u16> for FlyeExerciseName {
             7 => FlyeExerciseName::SwissBallDumbbellFlye,
             8 => FlyeExerciseName::ArmRotations,
             9 => FlyeExerciseName::HugATree,
-            _ => FlyeExerciseName::UnknownVariant(value),
+            _ => FlyeExerciseName::Value(value),
         }
     }
 }
@@ -18789,7 +18934,10 @@ impl Serialize for FlyeExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            FlyeExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -18846,7 +18994,7 @@ pub enum HipRaiseExerciseName {
     LegCircles,
     LegLift,
     LegLiftInExternalRotation,
-    UnknownVariant(u16),
+    Value(u16),
 }
 impl HipRaiseExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
@@ -18956,7 +19104,7 @@ impl HipRaiseExerciseName {
             HipRaiseExerciseName::LegCircles => 47,
             HipRaiseExerciseName::LegLift => 48,
             HipRaiseExerciseName::LegLiftInExternalRotation => 49,
-            HipRaiseExerciseName::UnknownVariant(value) => value,
+            HipRaiseExerciseName::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -19085,7 +19233,7 @@ impl fmt::Display for HipRaiseExerciseName {
             HipRaiseExerciseName::LegLiftInExternalRotation => {
                 write!(f, "leg_lift_in_external_rotation")
             }
-            HipRaiseExerciseName::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            HipRaiseExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -19142,7 +19290,7 @@ impl convert::From<u16> for HipRaiseExerciseName {
             47 => HipRaiseExerciseName::LegCircles,
             48 => HipRaiseExerciseName::LegLift,
             49 => HipRaiseExerciseName::LegLiftInExternalRotation,
-            _ => HipRaiseExerciseName::UnknownVariant(value),
+            _ => HipRaiseExerciseName::Value(value),
         }
     }
 }
@@ -19156,7 +19304,10 @@ impl Serialize for HipRaiseExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            HipRaiseExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -19195,7 +19346,7 @@ pub enum HipStabilityExerciseName {
     WeightedStandingRearLegRaise,
     SupineHipInternalRotation,
     WeightedSupineHipInternalRotation,
-    UnknownVariant(u16),
+    Value(u16),
 }
 impl HipStabilityExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
@@ -19273,7 +19424,7 @@ impl HipStabilityExerciseName {
             HipStabilityExerciseName::WeightedStandingRearLegRaise => 31,
             HipStabilityExerciseName::SupineHipInternalRotation => 32,
             HipStabilityExerciseName::WeightedSupineHipInternalRotation => 33,
-            HipStabilityExerciseName::UnknownVariant(value) => value,
+            HipStabilityExerciseName::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -19353,9 +19504,7 @@ impl fmt::Display for HipStabilityExerciseName {
             HipStabilityExerciseName::WeightedSupineHipInternalRotation => {
                 write!(f, "weighted_supine_hip_internal_rotation")
             }
-            HipStabilityExerciseName::UnknownVariant(value) => {
-                write!(f, "unknown_variant_{}", *value)
-            }
+            HipStabilityExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -19396,7 +19545,7 @@ impl convert::From<u16> for HipStabilityExerciseName {
             31 => HipStabilityExerciseName::WeightedStandingRearLegRaise,
             32 => HipStabilityExerciseName::SupineHipInternalRotation,
             33 => HipStabilityExerciseName::WeightedSupineHipInternalRotation,
-            _ => HipStabilityExerciseName::UnknownVariant(value),
+            _ => HipStabilityExerciseName::Value(value),
         }
     }
 }
@@ -19410,7 +19559,10 @@ impl Serialize for HipStabilityExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            HipStabilityExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -19418,7 +19570,7 @@ pub enum HipSwingExerciseName {
     SingleArmKettlebellSwing,
     SingleArmDumbbellSwing,
     StepOutSwing,
-    UnknownVariant(u16),
+    Value(u16),
 }
 impl HipSwingExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
@@ -19434,7 +19586,7 @@ impl HipSwingExerciseName {
             HipSwingExerciseName::SingleArmKettlebellSwing => 0,
             HipSwingExerciseName::SingleArmDumbbellSwing => 1,
             HipSwingExerciseName::StepOutSwing => 2,
-            HipSwingExerciseName::UnknownVariant(value) => value,
+            HipSwingExerciseName::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -19449,7 +19601,7 @@ impl fmt::Display for HipSwingExerciseName {
             }
             HipSwingExerciseName::SingleArmDumbbellSwing => write!(f, "single_arm_dumbbell_swing"),
             HipSwingExerciseName::StepOutSwing => write!(f, "step_out_swing"),
-            HipSwingExerciseName::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            HipSwingExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -19459,7 +19611,7 @@ impl convert::From<u16> for HipSwingExerciseName {
             0 => HipSwingExerciseName::SingleArmKettlebellSwing,
             1 => HipSwingExerciseName::SingleArmDumbbellSwing,
             2 => HipSwingExerciseName::StepOutSwing,
-            _ => HipSwingExerciseName::UnknownVariant(value),
+            _ => HipSwingExerciseName::Value(value),
         }
     }
 }
@@ -19473,7 +19625,10 @@ impl Serialize for HipSwingExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            HipSwingExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -19519,7 +19674,7 @@ pub enum HyperextensionExerciseName {
     Cobra,
     /// Deprecated do not use
     SupineFloorBarre,
-    UnknownVariant(u16),
+    Value(u16),
 }
 impl HyperextensionExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
@@ -19609,7 +19764,7 @@ impl HyperextensionExerciseName {
             HyperextensionExerciseName::SupermanOnSwissBall => 37,
             HyperextensionExerciseName::Cobra => 38,
             HyperextensionExerciseName::SupineFloorBarre => 39,
-            HyperextensionExerciseName::UnknownVariant(value) => value,
+            HyperextensionExerciseName::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -19701,9 +19856,7 @@ impl fmt::Display for HyperextensionExerciseName {
             HyperextensionExerciseName::SupermanOnSwissBall => write!(f, "superman_on_swiss_ball"),
             HyperextensionExerciseName::Cobra => write!(f, "cobra"),
             HyperextensionExerciseName::SupineFloorBarre => write!(f, "supine_floor_barre"),
-            HyperextensionExerciseName::UnknownVariant(value) => {
-                write!(f, "unknown_variant_{}", *value)
-            }
+            HyperextensionExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -19750,7 +19903,7 @@ impl convert::From<u16> for HyperextensionExerciseName {
             37 => HyperextensionExerciseName::SupermanOnSwissBall,
             38 => HyperextensionExerciseName::Cobra,
             39 => HyperextensionExerciseName::SupineFloorBarre,
-            _ => HyperextensionExerciseName::UnknownVariant(value),
+            _ => HyperextensionExerciseName::Value(value),
         }
     }
 }
@@ -19764,7 +19917,10 @@ impl Serialize for HyperextensionExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            HyperextensionExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -19803,7 +19959,7 @@ pub enum LateralRaiseExerciseName {
     WeightedWallSlide,
     ArmCircles,
     ShavingTheHead,
-    UnknownVariant(u16),
+    Value(u16),
 }
 impl LateralRaiseExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
@@ -19881,7 +20037,7 @@ impl LateralRaiseExerciseName {
             LateralRaiseExerciseName::WeightedWallSlide => 31,
             LateralRaiseExerciseName::ArmCircles => 32,
             LateralRaiseExerciseName::ShavingTheHead => 33,
-            LateralRaiseExerciseName::UnknownVariant(value) => value,
+            LateralRaiseExerciseName::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -19941,9 +20097,7 @@ impl fmt::Display for LateralRaiseExerciseName {
             LateralRaiseExerciseName::WeightedWallSlide => write!(f, "weighted_wall_slide"),
             LateralRaiseExerciseName::ArmCircles => write!(f, "arm_circles"),
             LateralRaiseExerciseName::ShavingTheHead => write!(f, "shaving_the_head"),
-            LateralRaiseExerciseName::UnknownVariant(value) => {
-                write!(f, "unknown_variant_{}", *value)
-            }
+            LateralRaiseExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -19984,7 +20138,7 @@ impl convert::From<u16> for LateralRaiseExerciseName {
             31 => LateralRaiseExerciseName::WeightedWallSlide,
             32 => LateralRaiseExerciseName::ArmCircles,
             33 => LateralRaiseExerciseName::ShavingTheHead,
-            _ => LateralRaiseExerciseName::UnknownVariant(value),
+            _ => LateralRaiseExerciseName::Value(value),
         }
     }
 }
@@ -19998,7 +20152,10 @@ impl Serialize for LateralRaiseExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            LateralRaiseExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -20015,7 +20172,7 @@ pub enum LegCurlExerciseName {
     StaggeredStanceGoodMorning,
     SwissBallHipRaiseAndLegCurl,
     ZercherGoodMorning,
-    UnknownVariant(u16),
+    Value(u16),
 }
 impl LegCurlExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
@@ -20049,7 +20206,7 @@ impl LegCurlExerciseName {
             LegCurlExerciseName::StaggeredStanceGoodMorning => 9,
             LegCurlExerciseName::SwissBallHipRaiseAndLegCurl => 10,
             LegCurlExerciseName::ZercherGoodMorning => 11,
-            LegCurlExerciseName::UnknownVariant(value) => value,
+            LegCurlExerciseName::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -20081,7 +20238,7 @@ impl fmt::Display for LegCurlExerciseName {
                 write!(f, "swiss_ball_hip_raise_and_leg_curl")
             }
             LegCurlExerciseName::ZercherGoodMorning => write!(f, "zercher_good_morning"),
-            LegCurlExerciseName::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            LegCurlExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -20100,7 +20257,7 @@ impl convert::From<u16> for LegCurlExerciseName {
             9 => LegCurlExerciseName::StaggeredStanceGoodMorning,
             10 => LegCurlExerciseName::SwissBallHipRaiseAndLegCurl,
             11 => LegCurlExerciseName::ZercherGoodMorning,
-            _ => LegCurlExerciseName::UnknownVariant(value),
+            _ => LegCurlExerciseName::Value(value),
         }
     }
 }
@@ -20114,7 +20271,10 @@ impl Serialize for LegCurlExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            LegCurlExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -20141,7 +20301,7 @@ pub enum LegRaiseExerciseName {
     WeightedHangingKneeRaise,
     LateralStepover,
     WeightedLateralStepover,
-    UnknownVariant(u16),
+    Value(u16),
 }
 impl LegRaiseExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
@@ -20195,7 +20355,7 @@ impl LegRaiseExerciseName {
             LegRaiseExerciseName::WeightedHangingKneeRaise => 19,
             LegRaiseExerciseName::LateralStepover => 20,
             LegRaiseExerciseName::WeightedLateralStepover => 21,
-            LegRaiseExerciseName::UnknownVariant(value) => value,
+            LegRaiseExerciseName::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -20247,7 +20407,7 @@ impl fmt::Display for LegRaiseExerciseName {
             }
             LegRaiseExerciseName::LateralStepover => write!(f, "lateral_stepover"),
             LegRaiseExerciseName::WeightedLateralStepover => write!(f, "weighted_lateral_stepover"),
-            LegRaiseExerciseName::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            LegRaiseExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -20276,7 +20436,7 @@ impl convert::From<u16> for LegRaiseExerciseName {
             19 => LegRaiseExerciseName::WeightedHangingKneeRaise,
             20 => LegRaiseExerciseName::LateralStepover,
             21 => LegRaiseExerciseName::WeightedLateralStepover,
-            _ => LegRaiseExerciseName::UnknownVariant(value),
+            _ => LegRaiseExerciseName::Value(value),
         }
     }
 }
@@ -20290,7 +20450,10 @@ impl Serialize for LegRaiseExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            LegRaiseExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -20376,7 +20539,7 @@ pub enum LungeExerciseName {
     WalkingLunge,
     WeightedWalkingLunge,
     WideGripOverheadBarbellSplitSquat,
-    UnknownVariant(u16),
+    Value(u16),
 }
 impl LungeExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
@@ -20548,7 +20711,7 @@ impl LungeExerciseName {
             LungeExerciseName::WalkingLunge => 78,
             LungeExerciseName::WeightedWalkingLunge => 79,
             LungeExerciseName::WideGripOverheadBarbellSplitSquat => 80,
-            LungeExerciseName::UnknownVariant(value) => value,
+            LungeExerciseName::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -20699,7 +20862,7 @@ impl fmt::Display for LungeExerciseName {
             LungeExerciseName::WideGripOverheadBarbellSplitSquat => {
                 write!(f, "wide_grip_overhead_barbell_split_squat")
             }
-            LungeExerciseName::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            LungeExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -20787,7 +20950,7 @@ impl convert::From<u16> for LungeExerciseName {
             78 => LungeExerciseName::WalkingLunge,
             79 => LungeExerciseName::WeightedWalkingLunge,
             80 => LungeExerciseName::WideGripOverheadBarbellSplitSquat,
-            _ => LungeExerciseName::UnknownVariant(value),
+            _ => LungeExerciseName::Value(value),
         }
     }
 }
@@ -20801,7 +20964,10 @@ impl Serialize for LungeExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            LungeExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -20827,7 +20993,7 @@ pub enum OlympicLiftExerciseName {
     SingleArmKettlebellSnatch,
     SplitJerk,
     SquatCleanAndJerk,
-    UnknownVariant(u16),
+    Value(u16),
 }
 impl OlympicLiftExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
@@ -20879,7 +21045,7 @@ impl OlympicLiftExerciseName {
             OlympicLiftExerciseName::SingleArmKettlebellSnatch => 18,
             OlympicLiftExerciseName::SplitJerk => 19,
             OlympicLiftExerciseName::SquatCleanAndJerk => 20,
-            OlympicLiftExerciseName::UnknownVariant(value) => value,
+            OlympicLiftExerciseName::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -20918,9 +21084,7 @@ impl fmt::Display for OlympicLiftExerciseName {
             }
             OlympicLiftExerciseName::SplitJerk => write!(f, "split_jerk"),
             OlympicLiftExerciseName::SquatCleanAndJerk => write!(f, "squat_clean_and_jerk"),
-            OlympicLiftExerciseName::UnknownVariant(value) => {
-                write!(f, "unknown_variant_{}", *value)
-            }
+            OlympicLiftExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -20948,7 +21112,7 @@ impl convert::From<u16> for OlympicLiftExerciseName {
             18 => OlympicLiftExerciseName::SingleArmKettlebellSnatch,
             19 => OlympicLiftExerciseName::SplitJerk,
             20 => OlympicLiftExerciseName::SquatCleanAndJerk,
-            _ => OlympicLiftExerciseName::UnknownVariant(value),
+            _ => OlympicLiftExerciseName::Value(value),
         }
     }
 }
@@ -20962,7 +21126,10 @@ impl Serialize for OlympicLiftExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            OlympicLiftExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -21102,7 +21269,7 @@ pub enum PlankExerciseName {
     PlankWithArmVariations,
     PlankWithLegLift,
     ReversePlankWithLegPull,
-    UnknownVariant(u16),
+    Value(u16),
 }
 impl PlankExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
@@ -21382,7 +21549,7 @@ impl PlankExerciseName {
             PlankExerciseName::PlankWithArmVariations => 132,
             PlankExerciseName::PlankWithLegLift => 133,
             PlankExerciseName::ReversePlankWithLegPull => 134,
-            PlankExerciseName::UnknownVariant(value) => value,
+            PlankExerciseName::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -21652,7 +21819,7 @@ impl fmt::Display for PlankExerciseName {
             PlankExerciseName::PlankWithArmVariations => write!(f, "plank_with_arm_variations"),
             PlankExerciseName::PlankWithLegLift => write!(f, "plank_with_leg_lift"),
             PlankExerciseName::ReversePlankWithLegPull => write!(f, "reverse_plank_with_leg_pull"),
-            PlankExerciseName::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            PlankExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -21794,7 +21961,7 @@ impl convert::From<u16> for PlankExerciseName {
             132 => PlankExerciseName::PlankWithArmVariations,
             133 => PlankExerciseName::PlankWithLegLift,
             134 => PlankExerciseName::ReversePlankWithLegPull,
-            _ => PlankExerciseName::UnknownVariant(value),
+            _ => PlankExerciseName::Value(value),
         }
     }
 }
@@ -21808,7 +21975,10 @@ impl Serialize for PlankExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            PlankExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -21846,7 +22016,7 @@ pub enum PlyoExerciseName {
     WeightedSquatJumpOntoBox,
     SquatJumpsInAndOut,
     WeightedSquatJumpsInAndOut,
-    UnknownVariant(u16),
+    Value(u16),
 }
 impl PlyoExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
@@ -21922,7 +22092,7 @@ impl PlyoExerciseName {
             PlyoExerciseName::WeightedSquatJumpOntoBox => 30,
             PlyoExerciseName::SquatJumpsInAndOut => 31,
             PlyoExerciseName::WeightedSquatJumpsInAndOut => 32,
-            PlyoExerciseName::UnknownVariant(value) => value,
+            PlyoExerciseName::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -21983,7 +22153,7 @@ impl fmt::Display for PlyoExerciseName {
             PlyoExerciseName::WeightedSquatJumpsInAndOut => {
                 write!(f, "weighted_squat_jumps_in_and_out")
             }
-            PlyoExerciseName::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            PlyoExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -22023,7 +22193,7 @@ impl convert::From<u16> for PlyoExerciseName {
             30 => PlyoExerciseName::WeightedSquatJumpOntoBox,
             31 => PlyoExerciseName::SquatJumpsInAndOut,
             32 => PlyoExerciseName::WeightedSquatJumpsInAndOut,
-            _ => PlyoExerciseName::UnknownVariant(value),
+            _ => PlyoExerciseName::Value(value),
         }
     }
 }
@@ -22037,7 +22207,10 @@ impl Serialize for PlyoExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            PlyoExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -22081,7 +22254,7 @@ pub enum PullUpExerciseName {
     SuspendedChinUp,
     WeightedSuspendedChinUp,
     PullUp,
-    UnknownVariant(u16),
+    Value(u16),
 }
 impl PullUpExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
@@ -22169,7 +22342,7 @@ impl PullUpExerciseName {
             PullUpExerciseName::SuspendedChinUp => 36,
             PullUpExerciseName::WeightedSuspendedChinUp => 37,
             PullUpExerciseName::PullUp => 38,
-            PullUpExerciseName::UnknownVariant(value) => value,
+            PullUpExerciseName::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -22220,7 +22393,7 @@ impl fmt::Display for PullUpExerciseName {
             PullUpExerciseName::SuspendedChinUp => write!(f, "suspended_chin_up"),
             PullUpExerciseName::WeightedSuspendedChinUp => write!(f, "weighted_suspended_chin_up"),
             PullUpExerciseName::PullUp => write!(f, "pull_up"),
-            PullUpExerciseName::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            PullUpExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -22266,7 +22439,7 @@ impl convert::From<u16> for PullUpExerciseName {
             36 => PullUpExerciseName::SuspendedChinUp,
             37 => PullUpExerciseName::WeightedSuspendedChinUp,
             38 => PullUpExerciseName::PullUp,
-            _ => PullUpExerciseName::UnknownVariant(value),
+            _ => PullUpExerciseName::Value(value),
         }
     }
 }
@@ -22280,7 +22453,10 @@ impl Serialize for PullUpExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            PullUpExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -22364,7 +22540,7 @@ pub enum PushUpExerciseName {
     WeightedRingPushUp,
     PushUp,
     PilatesPushup,
-    UnknownVariant(u16),
+    Value(u16),
 }
 impl PushUpExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
@@ -22532,7 +22708,7 @@ impl PushUpExerciseName {
             PushUpExerciseName::WeightedRingPushUp => 76,
             PushUpExerciseName::PushUp => 77,
             PushUpExerciseName::PilatesPushup => 78,
-            PushUpExerciseName::UnknownVariant(value) => value,
+            PushUpExerciseName::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -22677,7 +22853,7 @@ impl fmt::Display for PushUpExerciseName {
             PushUpExerciseName::WeightedRingPushUp => write!(f, "weighted_ring_push_up"),
             PushUpExerciseName::PushUp => write!(f, "push_up"),
             PushUpExerciseName::PilatesPushup => write!(f, "pilates_pushup"),
-            PushUpExerciseName::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            PushUpExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -22763,7 +22939,7 @@ impl convert::From<u16> for PushUpExerciseName {
             76 => PushUpExerciseName::WeightedRingPushUp,
             77 => PushUpExerciseName::PushUp,
             78 => PushUpExerciseName::PilatesPushup,
-            _ => PushUpExerciseName::UnknownVariant(value),
+            _ => PushUpExerciseName::Value(value),
         }
     }
 }
@@ -22777,7 +22953,10 @@ impl Serialize for PushUpExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            PushUpExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -22816,7 +22995,7 @@ pub enum RowExerciseName {
     UnderhandGripCableRow,
     VGripCableRow,
     WideGripSeatedCableRow,
-    UnknownVariant(u16),
+    Value(u16),
 }
 impl RowExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
@@ -22894,7 +23073,7 @@ impl RowExerciseName {
             RowExerciseName::UnderhandGripCableRow => 31,
             RowExerciseName::VGripCableRow => 32,
             RowExerciseName::WideGripSeatedCableRow => 33,
-            RowExerciseName::UnknownVariant(value) => value,
+            RowExerciseName::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -22964,7 +23143,7 @@ impl fmt::Display for RowExerciseName {
             RowExerciseName::UnderhandGripCableRow => write!(f, "underhand_grip_cable_row"),
             RowExerciseName::VGripCableRow => write!(f, "v_grip_cable_row"),
             RowExerciseName::WideGripSeatedCableRow => write!(f, "wide_grip_seated_cable_row"),
-            RowExerciseName::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            RowExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -23005,7 +23184,7 @@ impl convert::From<u16> for RowExerciseName {
             31 => RowExerciseName::UnderhandGripCableRow,
             32 => RowExerciseName::VGripCableRow,
             33 => RowExerciseName::WideGripSeatedCableRow,
-            _ => RowExerciseName::UnknownVariant(value),
+            _ => RowExerciseName::Value(value),
         }
     }
 }
@@ -23019,7 +23198,10 @@ impl Serialize for RowExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            RowExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -23048,7 +23230,7 @@ pub enum ShoulderPressExerciseName {
     SplitStanceHammerCurlToPress,
     SwissBallDumbbellShoulderPress,
     WeightPlateFrontRaise,
-    UnknownVariant(u16),
+    Value(u16),
 }
 impl ShoulderPressExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
@@ -23106,7 +23288,7 @@ impl ShoulderPressExerciseName {
             ShoulderPressExerciseName::SplitStanceHammerCurlToPress => 21,
             ShoulderPressExerciseName::SwissBallDumbbellShoulderPress => 22,
             ShoulderPressExerciseName::WeightPlateFrontRaise => 23,
-            ShoulderPressExerciseName::UnknownVariant(value) => value,
+            ShoulderPressExerciseName::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -23174,9 +23356,7 @@ impl fmt::Display for ShoulderPressExerciseName {
             ShoulderPressExerciseName::WeightPlateFrontRaise => {
                 write!(f, "weight_plate_front_raise")
             }
-            ShoulderPressExerciseName::UnknownVariant(value) => {
-                write!(f, "unknown_variant_{}", *value)
-            }
+            ShoulderPressExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -23207,7 +23387,7 @@ impl convert::From<u16> for ShoulderPressExerciseName {
             21 => ShoulderPressExerciseName::SplitStanceHammerCurlToPress,
             22 => ShoulderPressExerciseName::SwissBallDumbbellShoulderPress,
             23 => ShoulderPressExerciseName::WeightPlateFrontRaise,
-            _ => ShoulderPressExerciseName::UnknownVariant(value),
+            _ => ShoulderPressExerciseName::Value(value),
         }
     }
 }
@@ -23221,7 +23401,10 @@ impl Serialize for ShoulderPressExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            ShoulderPressExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -23259,7 +23442,7 @@ pub enum ShoulderStabilityExerciseName {
     WeightedSwissBallWRaise,
     SwissBallYRaise,
     WeightedSwissBallYRaise,
-    UnknownVariant(u16),
+    Value(u16),
 }
 impl ShoulderStabilityExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
@@ -23335,7 +23518,7 @@ impl ShoulderStabilityExerciseName {
             ShoulderStabilityExerciseName::WeightedSwissBallWRaise => 30,
             ShoulderStabilityExerciseName::SwissBallYRaise => 31,
             ShoulderStabilityExerciseName::WeightedSwissBallYRaise => 32,
-            ShoulderStabilityExerciseName::UnknownVariant(value) => value,
+            ShoulderStabilityExerciseName::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -23418,9 +23601,7 @@ impl fmt::Display for ShoulderStabilityExerciseName {
             ShoulderStabilityExerciseName::WeightedSwissBallYRaise => {
                 write!(f, "weighted_swiss_ball_y_raise")
             }
-            ShoulderStabilityExerciseName::UnknownVariant(value) => {
-                write!(f, "unknown_variant_{}", *value)
-            }
+            ShoulderStabilityExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -23460,7 +23641,7 @@ impl convert::From<u16> for ShoulderStabilityExerciseName {
             30 => ShoulderStabilityExerciseName::WeightedSwissBallWRaise,
             31 => ShoulderStabilityExerciseName::SwissBallYRaise,
             32 => ShoulderStabilityExerciseName::WeightedSwissBallYRaise,
-            _ => ShoulderStabilityExerciseName::UnknownVariant(value),
+            _ => ShoulderStabilityExerciseName::Value(value),
         }
     }
 }
@@ -23474,7 +23655,10 @@ impl Serialize for ShoulderStabilityExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            ShoulderStabilityExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -23496,7 +23680,7 @@ pub enum ShrugExerciseName {
     SerratusShrug,
     WeightedSerratusShrug,
     WideGripJumpShrug,
-    UnknownVariant(u16),
+    Value(u16),
 }
 impl ShrugExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
@@ -23540,7 +23724,7 @@ impl ShrugExerciseName {
             ShrugExerciseName::SerratusShrug => 14,
             ShrugExerciseName::WeightedSerratusShrug => 15,
             ShrugExerciseName::WideGripJumpShrug => 16,
-            ShrugExerciseName::UnknownVariant(value) => value,
+            ShrugExerciseName::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -23571,7 +23755,7 @@ impl fmt::Display for ShrugExerciseName {
             ShrugExerciseName::SerratusShrug => write!(f, "serratus_shrug"),
             ShrugExerciseName::WeightedSerratusShrug => write!(f, "weighted_serratus_shrug"),
             ShrugExerciseName::WideGripJumpShrug => write!(f, "wide_grip_jump_shrug"),
-            ShrugExerciseName::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            ShrugExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -23595,7 +23779,7 @@ impl convert::From<u16> for ShrugExerciseName {
             14 => ShrugExerciseName::SerratusShrug,
             15 => ShrugExerciseName::WeightedSerratusShrug,
             16 => ShrugExerciseName::WideGripJumpShrug,
-            _ => ShrugExerciseName::UnknownVariant(value),
+            _ => ShrugExerciseName::Value(value),
         }
     }
 }
@@ -23609,7 +23793,10 @@ impl Serialize for ShrugExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            ShrugExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -23652,7 +23839,7 @@ pub enum SitUpExerciseName {
     XAbs,
     WeightedXAbs,
     SitUp,
-    UnknownVariant(u16),
+    Value(u16),
 }
 impl SitUpExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
@@ -23738,7 +23925,7 @@ impl SitUpExerciseName {
             SitUpExerciseName::XAbs => 35,
             SitUpExerciseName::WeightedXAbs => 36,
             SitUpExerciseName::SitUp => 37,
-            SitUpExerciseName::UnknownVariant(value) => value,
+            SitUpExerciseName::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -23800,7 +23987,7 @@ impl fmt::Display for SitUpExerciseName {
             SitUpExerciseName::XAbs => write!(f, "x_abs"),
             SitUpExerciseName::WeightedXAbs => write!(f, "weighted_x_abs"),
             SitUpExerciseName::SitUp => write!(f, "sit_up"),
-            SitUpExerciseName::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            SitUpExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -23845,7 +24032,7 @@ impl convert::From<u16> for SitUpExerciseName {
             35 => SitUpExerciseName::XAbs,
             36 => SitUpExerciseName::WeightedXAbs,
             37 => SitUpExerciseName::SitUp,
-            _ => SitUpExerciseName::UnknownVariant(value),
+            _ => SitUpExerciseName::Value(value),
         }
     }
 }
@@ -23859,7 +24046,10 @@ impl Serialize for SitUpExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            SitUpExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -23957,7 +24147,7 @@ pub enum SquatExerciseName {
     SquatJumpsInNOut,
     PilatesPlieSquatsParallelTurnedOutFlatAndHeels,
     ReleveStraightLegAndKneeBentWithOneLegVariation,
-    UnknownVariant(u16),
+    Value(u16),
 }
 impl SquatExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
@@ -24151,7 +24341,7 @@ impl SquatExerciseName {
             SquatExerciseName::SquatJumpsInNOut => 89,
             SquatExerciseName::PilatesPlieSquatsParallelTurnedOutFlatAndHeels => 90,
             SquatExerciseName::ReleveStraightLegAndKneeBentWithOneLegVariation => 91,
-            SquatExerciseName::UnknownVariant(value) => value,
+            SquatExerciseName::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -24290,7 +24480,7 @@ impl fmt::Display for SquatExerciseName {
                 f,
                 "releve_straight_leg_and_knee_bent_with_one_leg_variation"
             ),
-            SquatExerciseName::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            SquatExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -24389,7 +24579,7 @@ impl convert::From<u16> for SquatExerciseName {
             89 => SquatExerciseName::SquatJumpsInNOut,
             90 => SquatExerciseName::PilatesPlieSquatsParallelTurnedOutFlatAndHeels,
             91 => SquatExerciseName::ReleveStraightLegAndKneeBentWithOneLegVariation,
-            _ => SquatExerciseName::UnknownVariant(value),
+            _ => SquatExerciseName::Value(value),
         }
     }
 }
@@ -24403,7 +24593,10 @@ impl Serialize for SquatExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            SquatExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -24421,7 +24614,7 @@ pub enum TotalBodyExerciseName {
     WeightedSquatPlankPushUp,
     StandingTRotationBalance,
     WeightedStandingTRotationBalance,
-    UnknownVariant(u16),
+    Value(u16),
 }
 impl TotalBodyExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
@@ -24457,7 +24650,7 @@ impl TotalBodyExerciseName {
             TotalBodyExerciseName::WeightedSquatPlankPushUp => 10,
             TotalBodyExerciseName::StandingTRotationBalance => 11,
             TotalBodyExerciseName::WeightedStandingTRotationBalance => 12,
-            TotalBodyExerciseName::UnknownVariant(value) => value,
+            TotalBodyExerciseName::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -24486,7 +24679,7 @@ impl fmt::Display for TotalBodyExerciseName {
             TotalBodyExerciseName::WeightedStandingTRotationBalance => {
                 write!(f, "weighted_standing_t_rotation_balance")
             }
-            TotalBodyExerciseName::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            TotalBodyExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -24506,7 +24699,7 @@ impl convert::From<u16> for TotalBodyExerciseName {
             10 => TotalBodyExerciseName::WeightedSquatPlankPushUp,
             11 => TotalBodyExerciseName::StandingTRotationBalance,
             12 => TotalBodyExerciseName::WeightedStandingTRotationBalance,
-            _ => TotalBodyExerciseName::UnknownVariant(value),
+            _ => TotalBodyExerciseName::Value(value),
         }
     }
 }
@@ -24520,7 +24713,10 @@ impl Serialize for TotalBodyExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            TotalBodyExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -24566,7 +24762,7 @@ pub enum TricepsExtensionExerciseName {
     TricepsExtensionOnFloor,
     TricepsPressdown,
     WeightedDip,
-    UnknownVariant(u16),
+    Value(u16),
 }
 impl TricepsExtensionExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
@@ -24658,7 +24854,7 @@ impl TricepsExtensionExerciseName {
             TricepsExtensionExerciseName::TricepsExtensionOnFloor => 38,
             TricepsExtensionExerciseName::TricepsPressdown => 39,
             TricepsExtensionExerciseName::WeightedDip => 40,
-            TricepsExtensionExerciseName::UnknownVariant(value) => value,
+            TricepsExtensionExerciseName::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -24763,9 +24959,7 @@ impl fmt::Display for TricepsExtensionExerciseName {
             }
             TricepsExtensionExerciseName::TricepsPressdown => write!(f, "triceps_pressdown"),
             TricepsExtensionExerciseName::WeightedDip => write!(f, "weighted_dip"),
-            TricepsExtensionExerciseName::UnknownVariant(value) => {
-                write!(f, "unknown_variant_{}", *value)
-            }
+            TricepsExtensionExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -24813,7 +25007,7 @@ impl convert::From<u16> for TricepsExtensionExerciseName {
             38 => TricepsExtensionExerciseName::TricepsExtensionOnFloor,
             39 => TricepsExtensionExerciseName::TricepsPressdown,
             40 => TricepsExtensionExerciseName::WeightedDip,
-            _ => TricepsExtensionExerciseName::UnknownVariant(value),
+            _ => TricepsExtensionExerciseName::Value(value),
         }
     }
 }
@@ -24827,7 +25021,10 @@ impl Serialize for TricepsExtensionExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            TricepsExtensionExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -24864,7 +25061,7 @@ pub enum WarmUpExerciseName {
     WalkingLegCradles,
     Walkout,
     WalkoutFromPushUpPosition,
-    UnknownVariant(u16),
+    Value(u16),
 }
 impl WarmUpExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
@@ -24936,7 +25133,7 @@ impl WarmUpExerciseName {
             WarmUpExerciseName::WalkingLegCradles => 28,
             WarmUpExerciseName::Walkout => 29,
             WarmUpExerciseName::WalkoutFromPushUpPosition => 30,
-            WarmUpExerciseName::UnknownVariant(value) => value,
+            WarmUpExerciseName::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -24989,7 +25186,7 @@ impl fmt::Display for WarmUpExerciseName {
             WarmUpExerciseName::WalkoutFromPushUpPosition => {
                 write!(f, "walkout_from_push_up_position")
             }
-            WarmUpExerciseName::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            WarmUpExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -25027,7 +25224,7 @@ impl convert::From<u16> for WarmUpExerciseName {
             28 => WarmUpExerciseName::WalkingLegCradles,
             29 => WarmUpExerciseName::Walkout,
             30 => WarmUpExerciseName::WalkoutFromPushUpPosition,
-            _ => WarmUpExerciseName::UnknownVariant(value),
+            _ => WarmUpExerciseName::Value(value),
         }
     }
 }
@@ -25041,7 +25238,10 @@ impl Serialize for WarmUpExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            WarmUpExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -25050,7 +25250,7 @@ pub enum RunExerciseName {
     Walk,
     Jog,
     Sprint,
-    UnknownVariant(u16),
+    Value(u16),
 }
 impl RunExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
@@ -25068,7 +25268,7 @@ impl RunExerciseName {
             RunExerciseName::Walk => 1,
             RunExerciseName::Jog => 2,
             RunExerciseName::Sprint => 3,
-            RunExerciseName::UnknownVariant(value) => value,
+            RunExerciseName::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -25082,7 +25282,7 @@ impl fmt::Display for RunExerciseName {
             RunExerciseName::Walk => write!(f, "walk"),
             RunExerciseName::Jog => write!(f, "jog"),
             RunExerciseName::Sprint => write!(f, "sprint"),
-            RunExerciseName::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            RunExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -25093,7 +25293,7 @@ impl convert::From<u16> for RunExerciseName {
             1 => RunExerciseName::Walk,
             2 => RunExerciseName::Jog,
             3 => RunExerciseName::Sprint,
-            _ => RunExerciseName::UnknownVariant(value),
+            _ => RunExerciseName::Value(value),
         }
     }
 }
@@ -25107,7 +25307,10 @@ impl Serialize for RunExerciseName {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            RunExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -25407,7 +25610,7 @@ impl Serialize for DiveBacklightMode {
 pub enum FaveroProduct {
     AssiomaUno,
     AssiomaDuo,
-    UnknownVariant(u16),
+    Value(u16),
 }
 impl FaveroProduct {
     pub fn is_named_variant(value: i64) -> bool {
@@ -25421,7 +25624,7 @@ impl FaveroProduct {
         match self {
             FaveroProduct::AssiomaUno => 10,
             FaveroProduct::AssiomaDuo => 12,
-            FaveroProduct::UnknownVariant(value) => value,
+            FaveroProduct::Value(value) => value,
         }
     }
     pub fn as_i64(self) -> i64 {
@@ -25433,7 +25636,7 @@ impl fmt::Display for FaveroProduct {
         match &self {
             FaveroProduct::AssiomaUno => write!(f, "assioma_uno"),
             FaveroProduct::AssiomaDuo => write!(f, "assioma_duo"),
-            FaveroProduct::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            FaveroProduct::Value(value) => write!(f, "{}", value),
         }
     }
 }
@@ -25442,7 +25645,7 @@ impl convert::From<u16> for FaveroProduct {
         match value {
             10 => FaveroProduct::AssiomaUno,
             12 => FaveroProduct::AssiomaDuo,
-            _ => FaveroProduct::UnknownVariant(value),
+            _ => FaveroProduct::Value(value),
         }
     }
 }
@@ -25456,7 +25659,10 @@ impl Serialize for FaveroProduct {
     where
         S: Serializer,
     {
-        serializer.serialize_str(&self.to_string())
+        match &self {
+            FaveroProduct::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
