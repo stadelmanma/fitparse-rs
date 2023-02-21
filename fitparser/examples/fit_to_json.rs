@@ -26,6 +26,10 @@ struct Cli {
     #[structopt(short, long, parse(from_os_str))]
     output: Option<PathBuf>,
 
+    /// Drop fields and messages that aren't defined in the profile
+    #[structopt(long)]
+    drop_unknown: bool,
+
     /// Return all enum values with their numeric value instead of the string variant name
     #[structopt(long)]
     numeric_enums: bool,
@@ -108,6 +112,9 @@ fn run() -> Result<(), Box<dyn Error>> {
 
     // set any decode options
     let mut decode_opts = HashSet::new();
+    if opt.drop_unknown {
+        decode_opts.insert(DecodeOption::DropUnknownFields);
+    }
     if opt.numeric_enums {
         decode_opts.insert(DecodeOption::ReturnNumericEnumValues);
     }

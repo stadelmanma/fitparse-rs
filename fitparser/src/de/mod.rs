@@ -17,12 +17,16 @@ pub use parser::{FitDataMessage, FitDefinitionMessage, FitFileHeader};
 /// Decoding options for the deserializer
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum DecodeOption {
+    /// Drop message fields that don't exist in the generated profile
+    DropUnknownFields,
+    /// Drop entire messages that don't exist in the generated profile
+    DropUnknownMessages,
+    /// Return the numeric value instead of string name for all enums
+    ReturnNumericEnumValues,
     /// Ignore header section checksum value if it exists
     SkipHeaderCrcValidation,
     /// Ignore data section checksum value
     SkipDataCrcValidation,
-    /// Return the numeric value instead of string name for all enums
-    ReturnNumericEnumValues,
 }
 
 /// Stores a FIT file object (header, message or CRC)
@@ -262,7 +266,10 @@ pub fn from_bytes_with_options(
         match obj {
             FitObject::Crc(..) => processor.reset(),
             FitObject::Header(..) => {}
-            FitObject::DataMessage(msg) => records.push(processor.decode_message(msg)?),
+            FitObject::DataMessage(msg) => {
+                // add code to drop unknown messages
+                records.push(processor.decode_message(msg)?)
+            }
             FitObject::DefinitionMessage(..) => {}
         }
         buffer = buf;

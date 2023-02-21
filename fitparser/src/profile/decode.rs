@@ -207,7 +207,11 @@ fn file_id_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -492,7 +496,11 @@ fn file_creator_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -662,7 +670,11 @@ fn timestamp_correlation_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -906,7 +918,11 @@ fn software_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -1121,7 +1137,11 @@ fn slave_device_message(
                     )?);
                 }
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -1299,7 +1319,11 @@ fn capabilities_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -1501,7 +1525,11 @@ fn file_capabilities_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -1800,7 +1828,11 @@ fn mesg_capabilities_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -2097,7 +2129,11 @@ fn field_capabilities_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -2585,7 +2621,11 @@ fn device_settings_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -3630,7 +3670,11 @@ fn user_profile_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -4494,7 +4538,11 @@ fn hrm_profile_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -4751,7 +4799,11 @@ fn sdm_profile_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -5404,7 +5456,11 @@ fn bike_profile_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -6456,7 +6512,11 @@ fn connectivity_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -6900,7 +6960,11 @@ fn watchface_settings_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -7077,7 +7141,11 @@ fn ohr_settings_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -7212,7 +7280,11 @@ fn zones_target_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -7402,7 +7474,11 @@ fn sport_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -7538,7 +7614,11 @@ fn hr_zone_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -7674,7 +7754,11 @@ fn speed_zone_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -7810,7 +7894,11 @@ fn cadence_zone_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -7946,7 +8034,11 @@ fn power_zone_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -8095,7 +8187,11 @@ fn met_zone_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -8548,7 +8644,11 @@ fn dive_settings_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -9310,7 +9410,11 @@ fn dive_alarm_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -9567,7 +9671,11 @@ fn dive_gas_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -9860,7 +9968,11 @@ fn goal_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -10333,7 +10445,11 @@ fn activity_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -12483,7 +12599,11 @@ fn session_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -17722,7 +17842,11 @@ fn lap_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -21079,7 +21203,11 @@ fn length_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -22599,7 +22727,11 @@ fn record_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -25508,7 +25640,11 @@ fn event_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -26904,7 +27040,11 @@ fn device_info_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -27606,7 +27746,11 @@ fn device_aux_battery_info_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -27928,7 +28072,11 @@ fn training_file_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -28374,7 +28522,11 @@ fn weather_conditions_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -28905,7 +29057,11 @@ fn weather_alert_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -29204,7 +29360,11 @@ fn gps_metadata_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -29530,7 +29690,11 @@ fn camera_event_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -29807,7 +29971,11 @@ fn gyroscope_data_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -30240,7 +30408,11 @@ fn accelerometer_data_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -30706,7 +30878,11 @@ fn magnetometer_data_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -31021,7 +31197,11 @@ fn barometer_data_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -31283,7 +31463,11 @@ fn three_d_sensor_calibration_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -31646,7 +31830,11 @@ fn one_d_sensor_calibration_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -31893,7 +32081,11 @@ fn video_frame_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -32116,7 +32308,11 @@ fn obdii_data_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -32417,7 +32613,11 @@ fn nmea_sentence_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -32680,7 +32880,11 @@ fn aviation_attitude_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -33060,7 +33264,11 @@ fn video_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -33198,7 +33406,11 @@ fn video_title_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -33336,7 +33548,11 @@ fn video_description_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -33526,7 +33742,11 @@ fn video_clip_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -33879,7 +34099,11 @@ fn set_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -34326,7 +34550,11 @@ fn jump_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -34676,7 +34904,11 @@ fn climb_pro_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -35064,7 +35296,11 @@ fn field_description_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -35524,7 +35760,11 @@ fn developer_data_id_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -35727,7 +35967,11 @@ fn course_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -35955,7 +36199,11 @@ fn course_point_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -36314,7 +36562,11 @@ fn segment_id_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -36671,7 +36923,11 @@ fn segment_leaderboard_entry_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -36958,7 +37214,11 @@ fn segment_point_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -38384,7 +38644,11 @@ fn segment_lap_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -41037,7 +41301,11 @@ fn segment_file_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -41388,7 +41656,11 @@ fn workout_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -41684,7 +41956,11 @@ fn workout_session_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -43088,7 +43364,11 @@ fn workout_step_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -44722,7 +45002,11 @@ fn exercise_title_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -45034,7 +45318,11 @@ fn schedule_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -45425,7 +45713,11 @@ fn totals_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -45882,7 +46174,11 @@ fn weight_scale_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -46393,7 +46689,11 @@ fn blood_pressure_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -46787,7 +47087,11 @@ fn monitoring_info_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -47448,7 +47752,11 @@ fn monitoring_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -48380,7 +48688,11 @@ fn hr_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -48532,7 +48844,11 @@ fn stress_level_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -48686,7 +49002,11 @@ fn memo_glob_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -48929,7 +49249,11 @@ fn ant_channel_id_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -49185,7 +49509,11 @@ fn ant_rx_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -49441,7 +49769,11 @@ fn ant_tx_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -49645,7 +49977,11 @@ fn exd_screen_configuration_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -49863,7 +50199,11 @@ fn exd_data_field_configuration_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -50173,7 +50513,11 @@ fn exd_data_concept_configuration_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -50701,7 +51045,11 @@ fn dive_summary_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -51218,7 +51566,11 @@ fn hrv_message(
                     value,
                 )?);
             }
-            _ => fields.push(unknown_field(def_num, value)),
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
         }
     }
     Ok(fields)
@@ -51251,7 +51603,16 @@ fn hrv_message_time_field(
     )
 }
 
-fn unknown_message(data_map: &HashMap<u8, Value>) -> Result<Vec<FitDataField>> {
+fn unknown_message(
+    data_map: &HashMap<u8, Value>,
+    options: &HashSet<DecodeOption>,
+) -> Result<Vec<FitDataField>> {
+    // since it's an unknown message all the fields are unknown
+    if options.contains(&DecodeOption::DropUnknownFields) {
+        {
+            return Ok(Vec::new());
+        }
+    }
     let fields = data_map
         .iter()
         .map(|(k, v)| unknown_field(*k, v.clone()))
@@ -51400,7 +51761,7 @@ impl MesgNum {
             }
             MesgNum::DiveSummary => dive_summary_message(self, data_map, accumlators, options),
             MesgNum::Hrv => hrv_message(self, data_map, accumlators, options),
-            _ => unknown_message(data_map),
+            _ => unknown_message(data_map, options),
         }
     }
 }
