@@ -1,6 +1,7 @@
 //! Deserialize a stream of FIT file data into the serde data model by parsing the file and
 //! applying the packaged FIT profile to the data.
 use crate::error::{ErrorKind, Result};
+use crate::profile::MesgNum;
 use crate::FitDataRecord;
 use nom::number::complete::le_u16;
 use std::collections::{HashMap, HashSet};
@@ -71,8 +72,8 @@ impl Deserializer {
         }
     }
 
-    /// Fetch options for the deserializer
-    fn options(&mut self) -> &HashSet<DecodeOption> {
+    /// Fetch decoding options for the deserializer
+    fn options(&self) -> &HashSet<DecodeOption> {
         &self.options
     }
 
@@ -231,6 +232,11 @@ impl FitStreamProcessor {
         self.deserializer.options_mut().remove(&opt);
     }
 
+    /// Fetch decoding options from the deserializer
+    pub fn options(&self) -> &HashSet<DecodeOption> {
+        self.deserializer.options()
+    }
+
     /// Reset the decoder state and definition messages in use, this should be called at the end of
     /// each FIT file to ensure the accumlator fields in the decoder will produce the right values
     /// per file.
@@ -267,8 +273,20 @@ pub fn from_bytes_with_options(
             FitObject::Crc(..) => processor.reset(),
             FitObject::Header(..) => {}
             FitObject::DataMessage(msg) => {
-                // add code to drop unknown messages
-                records.push(processor.decode_message(msg)?)
+                let rec = processor.decode_message(msg)?;
+                // drop the unknown messages if desired but we still need to
+                // decode them just incase the header contains a time-offset
+                // otherwise we'll get incorrect timestamps down the line
+                if processor
+                    .options()
+                    .contains(&DecodeOption::DropUnknownMessages)
+                {
+                    if MesgNum::is_named_variant(rec.kind().as_i64()) {
+                        records.push(rec);
+                    }
+                } else {
+                    records.push(rec);
+                }
             }
             FitObject::DefinitionMessage(..) => {}
         }

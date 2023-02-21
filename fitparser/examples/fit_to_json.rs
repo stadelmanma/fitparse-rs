@@ -114,6 +114,7 @@ fn run() -> Result<(), Box<dyn Error>> {
     let mut decode_opts = HashSet::new();
     if opt.drop_unknown {
         decode_opts.insert(DecodeOption::DropUnknownFields);
+        decode_opts.insert(DecodeOption::DropUnknownMessages);
     }
     if opt.numeric_enums {
         decode_opts.insert(DecodeOption::ReturnNumericEnumValues);
