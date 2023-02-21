@@ -31,7 +31,15 @@ impl MessageDefinition {
             field.write_field_decode_block(out, &self, "value", None, None)?;
             writeln!(out, "}}")?;
         }
-        writeln!(out, "_ => fields.push(unknown_field(def_num, value))")?;
+        writeln!(out, "_ => {{")?;
+        writeln!(
+            out,
+            "if !options.contains(&DecodeOption::DropUnknownFields) {{"
+        )?;
+        writeln!(out, "fields.push(unknown_field(def_num, value));")?;
+        writeln!(out, "}}")?;
+        writeln!(out, "}}")?;
+
         writeln!(out, "}}")?;
         writeln!(out, "}}")?;
 
@@ -301,8 +309,13 @@ fn write_unknown_mesg_fn(out: &mut File) -> Result<(), std::io::Error> {
         "{}",
         "
         fn unknown_message(
-        data_map: &HashMap<u8, Value>
+        data_map: &HashMap<u8, Value>,
+        options: &HashSet<DecodeOption>,
     ) -> Result<Vec<FitDataField>> {
+        // since it's an unknown message all the fields are unknown
+        if options.contains(&DecodeOption::DropUnknownFields) {{
+            return Ok(Vec::new());
+        }}
         let fields = data_map.iter()
             .map(|(k, v)| unknown_field(*k, v.clone()))
             .collect();
@@ -331,7 +344,7 @@ fn create_mesg_num_to_mesg_decode_fn(
             msg.function_name()
         )?;
     }
-    writeln!(out, "_ => unknown_message(data_map),")?;
+    writeln!(out, "_ => unknown_message(data_map, options),")?;
     writeln!(out, "    }}")?;
     writeln!(out, "  }}")?;
     writeln!(out, "}}")?;
