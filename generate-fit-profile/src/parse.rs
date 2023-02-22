@@ -177,6 +177,7 @@ pub struct MessageFieldDefinition {
     offset: f64,
     units: String,
     accumulate: bool,
+    parent_field: Option<Box<MessageFieldDefinition>>,
     subfields: Vec<(String, String, MessageFieldDefinition)>,
     components: Vec<(u8, MessageFieldDefinition)>,
     raw_components: Vec<MessageFieldComponent>,
@@ -205,6 +206,7 @@ impl MessageFieldDefinition {
             offset,
             units: units.to_string(),
             accumulate,
+            parent_field: None,
             subfields: Vec::new(),
             components: Vec::new(),
             raw_components,
@@ -244,8 +246,20 @@ impl MessageFieldDefinition {
         self.accumulate
     }
 
+    pub fn parent_field(&self) -> &Option<Box<MessageFieldDefinition>> {
+        &self.parent_field
+    }
+
+    pub fn set_parent_field(&mut self, field: MessageFieldDefinition) {
+        self.parent_field = Some(Box::new(field));
+    }
+
     pub fn subfields(&self) -> &[(String, String, MessageFieldDefinition)] {
         &self.subfields
+    }
+
+    pub fn subfields_mut(&mut self) -> &mut [(String, String, MessageFieldDefinition)] {
+        &mut self.subfields
     }
 
     pub fn raw_components(&self) -> &[MessageFieldComponent] {
@@ -453,10 +467,16 @@ fn post_process_message(msg: MessageDefinition) -> MessageDefinition {
         .map(|v| (v.name().to_owned(), v.clone()))
         .collect();
 
+    // this all seems horrendously over complicated and inefficient but it's "run once"
+    // code, not "application code" that's regularly executed so we'll clean it up later.
     let mut updated_field_map = BTreeMap::new();
     for (def_num, mut field_def) in field_map.into_iter() {
         if !field_def.raw_components().is_empty() {
             field_def.components = process_components(&field_def, &name_to_field);
+        }
+        let extra_fld_def = field_def.clone();
+        for (_, _, sub_fld) in field_def.subfields_mut() {
+            sub_fld.set_parent_field(extra_fld_def.clone());
         }
         updated_field_map.insert(def_num, field_def);
     }
@@ -485,6 +505,7 @@ fn process_components(
             offset: comp_info.offset(),
             units: comp_info.units().to_owned(),
             accumulate: comp_info.accumulate(),
+            parent_field: dest_field.parent_field().clone(),
             subfields: dest_field.subfields().to_vec(),
             components: process_components(dest_field, field_lookup),
             raw_components: Vec::new(),

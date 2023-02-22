@@ -313,9 +313,14 @@ fn file_id_message_favero_product_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "product"
+    } else {
+        "favero_product"
+    };
     data_field_with_info(
         2,
-        "favero_product",
+        name,
         FieldDataType::FaveroProduct,
         scale,
         offset,
@@ -340,9 +345,14 @@ fn file_id_message_garmin_product_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "product"
+    } else {
+        "garmin_product"
+    };
     data_field_with_info(
         2,
-        "garmin_product",
+        name,
         FieldDataType::GarminProduct,
         scale,
         offset,
@@ -1216,9 +1226,14 @@ fn slave_device_message_favero_product_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "product"
+    } else {
+        "favero_product"
+    };
     data_field_with_info(
         1,
-        "favero_product",
+        name,
         FieldDataType::FaveroProduct,
         scale,
         offset,
@@ -1243,9 +1258,14 @@ fn slave_device_message_garmin_product_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "product"
+    } else {
+        "garmin_product"
+    };
     data_field_with_info(
         1,
-        "garmin_product",
+        name,
         FieldDataType::GarminProduct,
         scale,
         offset,
@@ -1961,9 +1981,14 @@ fn mesg_capabilities_message_num_per_file_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "count"
+    } else {
+        "num_per_file"
+    };
     data_field_with_info(
         3,
-        "num_per_file",
+        name,
         FieldDataType::UInt16,
         scale,
         offset,
@@ -1988,9 +2013,14 @@ fn mesg_capabilities_message_max_per_file_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "count"
+    } else {
+        "max_per_file"
+    };
     data_field_with_info(
         3,
-        "max_per_file",
+        name,
         FieldDataType::UInt16,
         scale,
         offset,
@@ -2015,9 +2045,14 @@ fn mesg_capabilities_message_max_per_file_type_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "count"
+    } else {
+        "max_per_file_type"
+    };
     data_field_with_info(
         3,
-        "max_per_file_type",
+        name,
         FieldDataType::UInt16,
         scale,
         offset,
@@ -7039,9 +7074,14 @@ fn watchface_settings_message_digital_layout_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "layout"
+    } else {
+        "digital_layout"
+    };
     data_field_with_info(
         1,
-        "digital_layout",
+        name,
         FieldDataType::DigitalWatchfaceLayout,
         scale,
         offset,
@@ -7066,9 +7106,14 @@ fn watchface_settings_message_analog_layout_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "layout"
+    } else {
+        "analog_layout"
+    };
     data_field_with_info(
         1,
-        "analog_layout",
+        name,
         FieldDataType::AnalogWatchfaceLayout,
         scale,
         offset,
@@ -9236,9 +9281,14 @@ fn dive_settings_message_heart_rate_antplus_device_type_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "heart_rate_source"
+    } else {
+        "heart_rate_antplus_device_type"
+    };
     data_field_with_info(
         20,
-        "heart_rate_antplus_device_type",
+        name,
         FieldDataType::AntplusDeviceType,
         scale,
         offset,
@@ -9263,9 +9313,14 @@ fn dive_settings_message_heart_rate_local_device_type_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "heart_rate_source"
+    } else {
+        "heart_rate_local_device_type"
+    };
     data_field_with_info(
         20,
-        "heart_rate_local_device_type",
+        name,
         FieldDataType::LocalDeviceType,
         scale,
         offset,
@@ -12921,9 +12976,14 @@ fn session_message_total_strides_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "total_cycles"
+    } else {
+        "total_strides"
+    };
     data_field_with_info(
         10,
-        "total_strides",
+        name,
         FieldDataType::UInt32,
         scale,
         offset,
@@ -12948,9 +13008,14 @@ fn session_message_total_strokes_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "total_cycles"
+    } else {
+        "total_strokes"
+    };
     data_field_with_info(
         10,
-        "total_strokes",
+        name,
         FieldDataType::UInt32,
         scale,
         offset,
@@ -13110,9 +13175,14 @@ fn session_message_avg_running_cadence_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "avg_cadence"
+    } else {
+        "avg_running_cadence"
+    };
     data_field_with_info(
         18,
-        "avg_running_cadence",
+        name,
         FieldDataType::UInt8,
         scale,
         offset,
@@ -13164,9 +13234,14 @@ fn session_message_max_running_cadence_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "max_cadence"
+    } else {
+        "max_running_cadence"
+    };
     data_field_with_info(
         19,
-        "max_running_cadence",
+        name,
         FieldDataType::UInt8,
         scale,
         offset,
@@ -18164,9 +18239,14 @@ fn lap_message_total_strides_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "total_cycles"
+    } else {
+        "total_strides"
+    };
     data_field_with_info(
         10,
-        "total_strides",
+        name,
         FieldDataType::UInt32,
         scale,
         offset,
@@ -18191,9 +18271,14 @@ fn lap_message_total_strokes_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "total_cycles"
+    } else {
+        "total_strokes"
+    };
     data_field_with_info(
         10,
-        "total_strokes",
+        name,
         FieldDataType::UInt32,
         scale,
         offset,
@@ -18353,9 +18438,14 @@ fn lap_message_avg_running_cadence_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "avg_cadence"
+    } else {
+        "avg_running_cadence"
+    };
     data_field_with_info(
         17,
-        "avg_running_cadence",
+        name,
         FieldDataType::UInt8,
         scale,
         offset,
@@ -18407,9 +18497,14 @@ fn lap_message_max_running_cadence_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "max_cadence"
+    } else {
+        "max_running_cadence"
+    };
     data_field_with_info(
         18,
-        "max_running_cadence",
+        name,
         FieldDataType::UInt8,
         scale,
         offset,
@@ -25746,9 +25841,14 @@ fn event_message_timer_trigger_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "data"
+    } else {
+        "timer_trigger"
+    };
     data_field_with_info(
         3,
-        "timer_trigger",
+        name,
         FieldDataType::TimerTrigger,
         scale,
         offset,
@@ -25773,9 +25873,14 @@ fn event_message_course_point_index_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "data"
+    } else {
+        "course_point_index"
+    };
     data_field_with_info(
         3,
-        "course_point_index",
+        name,
         FieldDataType::MessageIndex,
         scale,
         offset,
@@ -25800,9 +25905,14 @@ fn event_message_battery_level_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "data"
+    } else {
+        "battery_level"
+    };
     data_field_with_info(
         3,
-        "battery_level",
+        name,
         FieldDataType::UInt16,
         scale,
         offset,
@@ -25827,9 +25937,14 @@ fn event_message_virtual_partner_speed_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "data"
+    } else {
+        "virtual_partner_speed"
+    };
     data_field_with_info(
         3,
-        "virtual_partner_speed",
+        name,
         FieldDataType::UInt16,
         scale,
         offset,
@@ -25854,9 +25969,14 @@ fn event_message_hr_high_alert_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "data"
+    } else {
+        "hr_high_alert"
+    };
     data_field_with_info(
         3,
-        "hr_high_alert",
+        name,
         FieldDataType::UInt8,
         scale,
         offset,
@@ -25881,9 +26001,14 @@ fn event_message_hr_low_alert_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "data"
+    } else {
+        "hr_low_alert"
+    };
     data_field_with_info(
         3,
-        "hr_low_alert",
+        name,
         FieldDataType::UInt8,
         scale,
         offset,
@@ -25908,9 +26033,14 @@ fn event_message_speed_high_alert_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "data"
+    } else {
+        "speed_high_alert"
+    };
     data_field_with_info(
         3,
-        "speed_high_alert",
+        name,
         FieldDataType::UInt32,
         scale,
         offset,
@@ -25935,9 +26065,14 @@ fn event_message_speed_low_alert_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "data"
+    } else {
+        "speed_low_alert"
+    };
     data_field_with_info(
         3,
-        "speed_low_alert",
+        name,
         FieldDataType::UInt32,
         scale,
         offset,
@@ -25962,9 +26097,14 @@ fn event_message_cad_high_alert_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "data"
+    } else {
+        "cad_high_alert"
+    };
     data_field_with_info(
         3,
-        "cad_high_alert",
+        name,
         FieldDataType::UInt16,
         scale,
         offset,
@@ -25989,9 +26129,14 @@ fn event_message_cad_low_alert_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "data"
+    } else {
+        "cad_low_alert"
+    };
     data_field_with_info(
         3,
-        "cad_low_alert",
+        name,
         FieldDataType::UInt16,
         scale,
         offset,
@@ -26016,9 +26161,14 @@ fn event_message_power_high_alert_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "data"
+    } else {
+        "power_high_alert"
+    };
     data_field_with_info(
         3,
-        "power_high_alert",
+        name,
         FieldDataType::UInt16,
         scale,
         offset,
@@ -26043,9 +26193,14 @@ fn event_message_power_low_alert_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "data"
+    } else {
+        "power_low_alert"
+    };
     data_field_with_info(
         3,
-        "power_low_alert",
+        name,
         FieldDataType::UInt16,
         scale,
         offset,
@@ -26070,9 +26225,14 @@ fn event_message_time_duration_alert_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "data"
+    } else {
+        "time_duration_alert"
+    };
     data_field_with_info(
         3,
-        "time_duration_alert",
+        name,
         FieldDataType::UInt32,
         scale,
         offset,
@@ -26097,9 +26257,14 @@ fn event_message_distance_duration_alert_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "data"
+    } else {
+        "distance_duration_alert"
+    };
     data_field_with_info(
         3,
-        "distance_duration_alert",
+        name,
         FieldDataType::UInt32,
         scale,
         offset,
@@ -26124,9 +26289,14 @@ fn event_message_calorie_duration_alert_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "data"
+    } else {
+        "calorie_duration_alert"
+    };
     data_field_with_info(
         3,
-        "calorie_duration_alert",
+        name,
         FieldDataType::UInt32,
         scale,
         offset,
@@ -26151,9 +26321,14 @@ fn event_message_fitness_equipment_state_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "data"
+    } else {
+        "fitness_equipment_state"
+    };
     data_field_with_info(
         3,
-        "fitness_equipment_state",
+        name,
         FieldDataType::FitnessEquipmentState,
         scale,
         offset,
@@ -26178,9 +26353,14 @@ fn event_message_sport_point_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "data"
+    } else {
+        "sport_point"
+    };
     data_field_with_info(
         3,
-        "sport_point",
+        name,
         FieldDataType::UInt32,
         scale,
         offset,
@@ -26205,9 +26385,14 @@ fn event_message_gear_change_data_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "data"
+    } else {
+        "gear_change_data"
+    };
     data_field_with_info(
         3,
-        "gear_change_data",
+        name,
         FieldDataType::UInt32,
         scale,
         offset,
@@ -26232,9 +26417,14 @@ fn event_message_rider_position_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "data"
+    } else {
+        "rider_position"
+    };
     data_field_with_info(
         3,
-        "rider_position",
+        name,
         FieldDataType::RiderPositionType,
         scale,
         offset,
@@ -26259,9 +26449,14 @@ fn event_message_comm_timeout_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "data"
+    } else {
+        "comm_timeout"
+    };
     data_field_with_info(
         3,
-        "comm_timeout",
+        name,
         FieldDataType::CommTimeoutType,
         scale,
         offset,
@@ -26286,9 +26481,14 @@ fn event_message_radar_threat_alert_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "data"
+    } else {
+        "radar_threat_alert"
+    };
     data_field_with_info(
         3,
-        "radar_threat_alert",
+        name,
         FieldDataType::UInt32,
         scale,
         offset,
@@ -27119,9 +27319,14 @@ fn device_info_message_antplus_device_type_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "device_type"
+    } else {
+        "antplus_device_type"
+    };
     data_field_with_info(
         1,
-        "antplus_device_type",
+        name,
         FieldDataType::AntplusDeviceType,
         scale,
         offset,
@@ -27146,9 +27351,14 @@ fn device_info_message_ant_device_type_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "device_type"
+    } else {
+        "ant_device_type"
+    };
     data_field_with_info(
         1,
-        "ant_device_type",
+        name,
         FieldDataType::UInt8,
         scale,
         offset,
@@ -27254,9 +27464,14 @@ fn device_info_message_favero_product_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "product"
+    } else {
+        "favero_product"
+    };
     data_field_with_info(
         4,
-        "favero_product",
+        name,
         FieldDataType::FaveroProduct,
         scale,
         offset,
@@ -27281,9 +27496,14 @@ fn device_info_message_garmin_product_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "product"
+    } else {
+        "garmin_product"
+    };
     data_field_with_info(
         4,
-        "garmin_product",
+        name,
         FieldDataType::GarminProduct,
         scale,
         offset,
@@ -28178,9 +28398,14 @@ fn training_file_message_favero_product_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "product"
+    } else {
+        "favero_product"
+    };
     data_field_with_info(
         2,
-        "favero_product",
+        name,
         FieldDataType::FaveroProduct,
         scale,
         offset,
@@ -28205,9 +28430,14 @@ fn training_file_message_garmin_product_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "product"
+    } else {
+        "garmin_product"
+    };
     data_field_with_info(
         2,
-        "garmin_product",
+        name,
         FieldDataType::GarminProduct,
         scale,
         offset,
@@ -31542,9 +31772,14 @@ fn three_d_sensor_calibration_message_accel_cal_factor_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "calibration_factor"
+    } else {
+        "accel_cal_factor"
+    };
     data_field_with_info(
         1,
-        "accel_cal_factor",
+        name,
         FieldDataType::UInt32,
         scale,
         offset,
@@ -31569,9 +31804,14 @@ fn three_d_sensor_calibration_message_gyro_cal_factor_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "calibration_factor"
+    } else {
+        "gyro_cal_factor"
+    };
     data_field_with_info(
         1,
-        "gyro_cal_factor",
+        name,
         FieldDataType::UInt32,
         scale,
         offset,
@@ -31909,9 +32149,14 @@ fn one_d_sensor_calibration_message_baro_cal_factor_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "calibration_factor"
+    } else {
+        "baro_cal_factor"
+    };
     data_field_with_info(
         1,
-        "baro_cal_factor",
+        name,
         FieldDataType::UInt32,
         scale,
         offset,
@@ -38966,9 +39211,14 @@ fn segment_lap_message_total_strokes_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "total_cycles"
+    } else {
+        "total_strokes"
+    };
     data_field_with_info(
         10,
-        "total_strokes",
+        name,
         FieldDataType::UInt32,
         scale,
         offset,
@@ -43470,9 +43720,14 @@ fn workout_step_message_duration_time_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "duration_value"
+    } else {
+        "duration_time"
+    };
     data_field_with_info(
         2,
-        "duration_time",
+        name,
         FieldDataType::UInt32,
         scale,
         offset,
@@ -43497,9 +43752,14 @@ fn workout_step_message_duration_distance_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "duration_value"
+    } else {
+        "duration_distance"
+    };
     data_field_with_info(
         2,
-        "duration_distance",
+        name,
         FieldDataType::UInt32,
         scale,
         offset,
@@ -43524,9 +43784,14 @@ fn workout_step_message_duration_hr_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "duration_value"
+    } else {
+        "duration_hr"
+    };
     data_field_with_info(
         2,
-        "duration_hr",
+        name,
         FieldDataType::WorkoutHr,
         scale,
         offset,
@@ -43551,9 +43816,14 @@ fn workout_step_message_duration_calories_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "duration_value"
+    } else {
+        "duration_calories"
+    };
     data_field_with_info(
         2,
-        "duration_calories",
+        name,
         FieldDataType::UInt32,
         scale,
         offset,
@@ -43578,9 +43848,14 @@ fn workout_step_message_duration_step_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "duration_value"
+    } else {
+        "duration_step"
+    };
     data_field_with_info(
         2,
-        "duration_step",
+        name,
         FieldDataType::UInt32,
         scale,
         offset,
@@ -43605,9 +43880,14 @@ fn workout_step_message_duration_power_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "duration_value"
+    } else {
+        "duration_power"
+    };
     data_field_with_info(
         2,
-        "duration_power",
+        name,
         FieldDataType::WorkoutPower,
         scale,
         offset,
@@ -43632,9 +43912,14 @@ fn workout_step_message_duration_reps_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "duration_value"
+    } else {
+        "duration_reps"
+    };
     data_field_with_info(
         2,
-        "duration_reps",
+        name,
         FieldDataType::UInt32,
         scale,
         offset,
@@ -43713,9 +43998,14 @@ fn workout_step_message_target_speed_zone_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "target_value"
+    } else {
+        "target_speed_zone"
+    };
     data_field_with_info(
         4,
-        "target_speed_zone",
+        name,
         FieldDataType::UInt32,
         scale,
         offset,
@@ -43740,9 +44030,14 @@ fn workout_step_message_target_hr_zone_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "target_value"
+    } else {
+        "target_hr_zone"
+    };
     data_field_with_info(
         4,
-        "target_hr_zone",
+        name,
         FieldDataType::UInt32,
         scale,
         offset,
@@ -43767,9 +44062,14 @@ fn workout_step_message_target_cadence_zone_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "target_value"
+    } else {
+        "target_cadence_zone"
+    };
     data_field_with_info(
         4,
-        "target_cadence_zone",
+        name,
         FieldDataType::UInt32,
         scale,
         offset,
@@ -43794,9 +44094,14 @@ fn workout_step_message_target_power_zone_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "target_value"
+    } else {
+        "target_power_zone"
+    };
     data_field_with_info(
         4,
-        "target_power_zone",
+        name,
         FieldDataType::UInt32,
         scale,
         offset,
@@ -43821,9 +44126,14 @@ fn workout_step_message_repeat_steps_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "target_value"
+    } else {
+        "repeat_steps"
+    };
     data_field_with_info(
         4,
-        "repeat_steps",
+        name,
         FieldDataType::UInt32,
         scale,
         offset,
@@ -43848,9 +44158,14 @@ fn workout_step_message_repeat_time_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "target_value"
+    } else {
+        "repeat_time"
+    };
     data_field_with_info(
         4,
-        "repeat_time",
+        name,
         FieldDataType::UInt32,
         scale,
         offset,
@@ -43875,9 +44190,14 @@ fn workout_step_message_repeat_distance_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "target_value"
+    } else {
+        "repeat_distance"
+    };
     data_field_with_info(
         4,
-        "repeat_distance",
+        name,
         FieldDataType::UInt32,
         scale,
         offset,
@@ -43902,9 +44222,14 @@ fn workout_step_message_repeat_calories_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "target_value"
+    } else {
+        "repeat_calories"
+    };
     data_field_with_info(
         4,
-        "repeat_calories",
+        name,
         FieldDataType::UInt32,
         scale,
         offset,
@@ -43929,9 +44254,14 @@ fn workout_step_message_repeat_hr_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "target_value"
+    } else {
+        "repeat_hr"
+    };
     data_field_with_info(
         4,
-        "repeat_hr",
+        name,
         FieldDataType::WorkoutHr,
         scale,
         offset,
@@ -43956,9 +44286,14 @@ fn workout_step_message_repeat_power_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "target_value"
+    } else {
+        "repeat_power"
+    };
     data_field_with_info(
         4,
-        "repeat_power",
+        name,
         FieldDataType::WorkoutPower,
         scale,
         offset,
@@ -43983,9 +44318,14 @@ fn workout_step_message_target_stroke_type_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "target_value"
+    } else {
+        "target_stroke_type"
+    };
     data_field_with_info(
         4,
-        "target_stroke_type",
+        name,
         FieldDataType::SwimStroke,
         scale,
         offset,
@@ -44037,9 +44377,14 @@ fn workout_step_message_custom_target_speed_low_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "custom_target_value_low"
+    } else {
+        "custom_target_speed_low"
+    };
     data_field_with_info(
         5,
-        "custom_target_speed_low",
+        name,
         FieldDataType::UInt32,
         scale,
         offset,
@@ -44064,9 +44409,14 @@ fn workout_step_message_custom_target_heart_rate_low_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "custom_target_value_low"
+    } else {
+        "custom_target_heart_rate_low"
+    };
     data_field_with_info(
         5,
-        "custom_target_heart_rate_low",
+        name,
         FieldDataType::WorkoutHr,
         scale,
         offset,
@@ -44091,9 +44441,14 @@ fn workout_step_message_custom_target_cadence_low_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "custom_target_value_low"
+    } else {
+        "custom_target_cadence_low"
+    };
     data_field_with_info(
         5,
-        "custom_target_cadence_low",
+        name,
         FieldDataType::UInt32,
         scale,
         offset,
@@ -44118,9 +44473,14 @@ fn workout_step_message_custom_target_power_low_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "custom_target_value_low"
+    } else {
+        "custom_target_power_low"
+    };
     data_field_with_info(
         5,
-        "custom_target_power_low",
+        name,
         FieldDataType::WorkoutPower,
         scale,
         offset,
@@ -44172,9 +44532,14 @@ fn workout_step_message_custom_target_speed_high_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "custom_target_value_high"
+    } else {
+        "custom_target_speed_high"
+    };
     data_field_with_info(
         6,
-        "custom_target_speed_high",
+        name,
         FieldDataType::UInt32,
         scale,
         offset,
@@ -44199,9 +44564,14 @@ fn workout_step_message_custom_target_heart_rate_high_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "custom_target_value_high"
+    } else {
+        "custom_target_heart_rate_high"
+    };
     data_field_with_info(
         6,
-        "custom_target_heart_rate_high",
+        name,
         FieldDataType::WorkoutHr,
         scale,
         offset,
@@ -44226,9 +44596,14 @@ fn workout_step_message_custom_target_cadence_high_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "custom_target_value_high"
+    } else {
+        "custom_target_cadence_high"
+    };
     data_field_with_info(
         6,
-        "custom_target_cadence_high",
+        name,
         FieldDataType::UInt32,
         scale,
         offset,
@@ -44253,9 +44628,14 @@ fn workout_step_message_custom_target_power_high_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "custom_target_value_high"
+    } else {
+        "custom_target_power_high"
+    };
     data_field_with_info(
         6,
-        "custom_target_power_high",
+        name,
         FieldDataType::WorkoutPower,
         scale,
         offset,
@@ -44523,9 +44903,14 @@ fn workout_step_message_secondary_target_speed_zone_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "secondary_target_value"
+    } else {
+        "secondary_target_speed_zone"
+    };
     data_field_with_info(
         20,
-        "secondary_target_speed_zone",
+        name,
         FieldDataType::UInt32,
         scale,
         offset,
@@ -44550,9 +44935,14 @@ fn workout_step_message_secondary_target_hr_zone_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "secondary_target_value"
+    } else {
+        "secondary_target_hr_zone"
+    };
     data_field_with_info(
         20,
-        "secondary_target_hr_zone",
+        name,
         FieldDataType::UInt32,
         scale,
         offset,
@@ -44577,9 +44967,14 @@ fn workout_step_message_secondary_target_cadence_zone_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "secondary_target_value"
+    } else {
+        "secondary_target_cadence_zone"
+    };
     data_field_with_info(
         20,
-        "secondary_target_cadence_zone",
+        name,
         FieldDataType::UInt32,
         scale,
         offset,
@@ -44604,9 +44999,14 @@ fn workout_step_message_secondary_target_power_zone_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "secondary_target_value"
+    } else {
+        "secondary_target_power_zone"
+    };
     data_field_with_info(
         20,
-        "secondary_target_power_zone",
+        name,
         FieldDataType::UInt32,
         scale,
         offset,
@@ -44631,9 +45031,14 @@ fn workout_step_message_secondary_target_stroke_type_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "secondary_target_value"
+    } else {
+        "secondary_target_stroke_type"
+    };
     data_field_with_info(
         20,
-        "secondary_target_stroke_type",
+        name,
         FieldDataType::SwimStroke,
         scale,
         offset,
@@ -44685,9 +45090,14 @@ fn workout_step_message_secondary_custom_target_speed_low_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "secondary_custom_target_value_low"
+    } else {
+        "secondary_custom_target_speed_low"
+    };
     data_field_with_info(
         21,
-        "secondary_custom_target_speed_low",
+        name,
         FieldDataType::UInt32,
         scale,
         offset,
@@ -44712,9 +45122,14 @@ fn workout_step_message_secondary_custom_target_heart_rate_low_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "secondary_custom_target_value_low"
+    } else {
+        "secondary_custom_target_heart_rate_low"
+    };
     data_field_with_info(
         21,
-        "secondary_custom_target_heart_rate_low",
+        name,
         FieldDataType::WorkoutHr,
         scale,
         offset,
@@ -44739,9 +45154,14 @@ fn workout_step_message_secondary_custom_target_cadence_low_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "secondary_custom_target_value_low"
+    } else {
+        "secondary_custom_target_cadence_low"
+    };
     data_field_with_info(
         21,
-        "secondary_custom_target_cadence_low",
+        name,
         FieldDataType::UInt32,
         scale,
         offset,
@@ -44766,9 +45186,14 @@ fn workout_step_message_secondary_custom_target_power_low_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "secondary_custom_target_value_low"
+    } else {
+        "secondary_custom_target_power_low"
+    };
     data_field_with_info(
         21,
-        "secondary_custom_target_power_low",
+        name,
         FieldDataType::WorkoutPower,
         scale,
         offset,
@@ -44820,9 +45245,14 @@ fn workout_step_message_secondary_custom_target_speed_high_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "secondary_custom_target_value_high"
+    } else {
+        "secondary_custom_target_speed_high"
+    };
     data_field_with_info(
         22,
-        "secondary_custom_target_speed_high",
+        name,
         FieldDataType::UInt32,
         scale,
         offset,
@@ -44847,9 +45277,14 @@ fn workout_step_message_secondary_custom_target_heart_rate_high_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "secondary_custom_target_value_high"
+    } else {
+        "secondary_custom_target_heart_rate_high"
+    };
     data_field_with_info(
         22,
-        "secondary_custom_target_heart_rate_high",
+        name,
         FieldDataType::WorkoutHr,
         scale,
         offset,
@@ -44874,9 +45309,14 @@ fn workout_step_message_secondary_custom_target_cadence_high_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "secondary_custom_target_value_high"
+    } else {
+        "secondary_custom_target_cadence_high"
+    };
     data_field_with_info(
         22,
-        "secondary_custom_target_cadence_high",
+        name,
         FieldDataType::UInt32,
         scale,
         offset,
@@ -44901,9 +45341,14 @@ fn workout_step_message_secondary_custom_target_power_high_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "secondary_custom_target_value_high"
+    } else {
+        "secondary_custom_target_power_high"
+    };
     data_field_with_info(
         22,
-        "secondary_custom_target_power_high",
+        name,
         FieldDataType::WorkoutPower,
         scale,
         offset,
@@ -45397,9 +45842,14 @@ fn schedule_message_favero_product_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "product"
+    } else {
+        "favero_product"
+    };
     data_field_with_info(
         1,
-        "favero_product",
+        name,
         FieldDataType::FaveroProduct,
         scale,
         offset,
@@ -45424,9 +45874,14 @@ fn schedule_message_garmin_product_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "product"
+    } else {
+        "garmin_product"
+    };
     data_field_with_info(
         1,
-        "garmin_product",
+        name,
         FieldDataType::GarminProduct,
         scale,
         offset,
@@ -47885,9 +48340,14 @@ fn monitoring_message_steps_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "cycles"
+    } else {
+        "steps"
+    };
     data_field_with_info(
         3,
-        "steps",
+        name,
         FieldDataType::UInt32,
         scale,
         offset,
@@ -47912,9 +48372,14 @@ fn monitoring_message_strokes_field(
     } else {
         value
     };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "cycles"
+    } else {
+        "strokes"
+    };
     data_field_with_info(
         3,
-        "strokes",
+        name,
         FieldDataType::UInt32,
         scale,
         offset,

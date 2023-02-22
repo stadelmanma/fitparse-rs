@@ -270,14 +270,33 @@ impl MessageFieldDefinition {
         writeln!(out, "else {{")?;
         writeln!(out, "  value")?;
         writeln!(out, "}};")?;
+
         // generate field
-        writeln!(
-            out,
-            "data_field_with_info({0}, \"{1}\", FieldDataType::{2}, scale, offset, units, value, options)",
-            self.def_number(),
-            self.name(),
-            self.field_type()
-        )?;
+        if let Some(parent) = self.parent_field() {
+            writeln!(
+                out,
+                "let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {{"
+            )?;
+            writeln!(out, "\"{}\"", parent.name())?;
+            writeln!(out, "}}")?;
+            writeln!(out, "else {{")?;
+            writeln!(out, "\"{}\"", self.name())?;
+            writeln!(out, "}};")?;
+            writeln!(
+                out,
+                "data_field_with_info({}, name, FieldDataType::{}, scale, offset, units, value, options)",
+                self.def_number(),
+                self.field_type()
+            )?;
+        } else {
+            writeln!(
+                out,
+                "data_field_with_info({0}, \"{1}\", FieldDataType::{2}, scale, offset, units, value, options)",
+                self.def_number(),
+                self.name(),
+                self.field_type()
+            )?;
+        }
         //
         writeln!(out, "}}")?;
         Ok(())
