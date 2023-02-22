@@ -4,6 +4,8 @@
 * Restructured project to drop the calamine dependency for end users, profile
   generation is now done in a separate private crate
 * Update calamine dependency
+* Refactor profile decoding module to be functional and not create large "info" structures
+* Implement new decoding options to cover additional use cases
 
 ## v0.5.1
 * Bump packaged FIT SDK version to 21.89.00
