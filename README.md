@@ -52,6 +52,11 @@ a streaming data source you can use the `de::FitStreamProcessor` struct. See
 the `streaming.rs` example file for basic usage and manual processing of
 `FitObject` variants.
 
+Additional decoding options are also available to customize the output of the
+parser. See the source code of the `fitparser/src/de/mod.rs` to view all options
+(or view the crate docs). The `fit_to_json` example program demos all of the
+currently available options as well.
+
 
 ## Updating the FIT profile
 
