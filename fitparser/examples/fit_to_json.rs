@@ -34,6 +34,10 @@ struct Cli {
     #[structopt(long)]
     numeric_enums: bool,
 
+    /// Keep generic subfield names in the output instead of the specific resolved name
+    #[structopt(long)]
+    keep_generic_names: bool,
+
     /// Skip checking the header and data section CRC values
     #[structopt(long)]
     no_crc_check: bool,
@@ -115,6 +119,9 @@ fn run() -> Result<(), Box<dyn Error>> {
     if opt.drop_unknown {
         decode_opts.insert(DecodeOption::DropUnknownFields);
         decode_opts.insert(DecodeOption::DropUnknownMessages);
+    }
+    if opt.keep_generic_names {
+        decode_opts.insert(DecodeOption::UseGenericSubFieldName);
     }
     if opt.numeric_enums {
         decode_opts.insert(DecodeOption::ReturnNumericEnumValues);

@@ -28,6 +28,8 @@ pub enum DecodeOption {
     SkipHeaderCrcValidation,
     /// Ignore data section checksum value
     SkipDataCrcValidation,
+    /// Keep the generic name when resolving subfields in the FIT profile
+    UseGenericSubFieldName,
 }
 
 /// Stores a FIT file object (header, message or CRC)
