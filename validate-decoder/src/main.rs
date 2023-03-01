@@ -1,7 +1,7 @@
 //! Parse the FIT SDK profile excel workbook to generate the decoding module.
-use fitparser;
-use fitparser::FitDataRecord;
-use fitparser::Value;
+use fitparser::de::{from_reader_with_options, DecodeOption};
+use fitparser::{self, FitDataField, FitDataRecord, Value};
+use std::collections::{HashMap, HashSet};
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 use std::path::PathBuf;
@@ -150,30 +150,83 @@ fn validate_data(ref_data: &[Message], parsed_data: &[FitDataRecord]) -> Result<
             ))
             .into());
         }
-        for (fidx, (ref_fld, data_fld)) in ref_msg.fields.iter().zip(data_rec.fields()).enumerate()
+        // convert fields into maps to make comparison not order dependent
+        let ref_fld_map = ref_msg
+            .fields
+            .iter()
+            .map(|f| (f.number, f))
+            .collect::<HashMap<u8, &Field>>();
+        let parsed_fld_map = data_rec
+            .fields()
+            .iter()
+            .map(|f| (f.number(), f))
+            .collect::<HashMap<u8, &FitDataField>>();
+        let mut missing_in_ref_msg = HashSet::new();
+        let mut missing_in_data_msg = HashSet::new();
+        for key in ref_fld_map
+            .keys()
+            .collect::<HashSet<&u8>>()
+            .union(&parsed_fld_map.keys().collect::<HashSet<&u8>>())
         {
-            if ref_fld.number != data_fld.number() {
-                return Err(ErrorKind::ValidationError(format!(
-                    "field number difference in message #{}, field #{}: {:?} != {:?}",
-                    idx + 1,
-                    fidx + 1,
-                    ref_msg,
-                    data_rec
-                ))
-                .into());
-            }
+            let ref_fld = match ref_fld_map.get(key) {
+                Some(f) => *f,
+                None => {
+                    missing_in_ref_msg.insert(**key);
+                    continue;
+                }
+            };
+            let data_fld = match parsed_fld_map.get(key) {
+                Some(f) => *f,
+                None => {
+                    missing_in_data_msg.insert(**key);
+                    continue;
+                }
+            };
+
             if ref_fld.name != data_fld.name() {
                 return Err(ErrorKind::ValidationError(format!(
-                    "field name difference in message #{}, field #{}: {} != {}",
+                    "field name difference in message #{}, field #{}: '{}' != '{}'",
                     idx + 1,
-                    fidx + 1,
+                    ref_fld.number,
                     ref_fld.name,
                     data_fld.name()
                 ))
                 .into());
             }
+
             // TODO validate value
-            // TODO valdate units
+
+            let ref_fld_units = ref_fld.units.clone().unwrap_or(String::new());
+            if ref_fld_units != data_fld.units() {
+                return Err(ErrorKind::ValidationError(format!(
+                    "field unit difference in message #{}, field #{}: '{}' != '{}'",
+                    idx + 1,
+                    ref_fld.number,
+                    ref_fld_units,
+                    data_fld.units()
+                ))
+                .into());
+            }
+        }
+        if !missing_in_ref_msg.is_empty() {
+            return Err(ErrorKind::ValidationError(format!(
+                "The following fields were present in parsed message #{} but missing in the reference message: {:?}:\n{:?}\n{:?}",
+                idx + 1,
+                missing_in_ref_msg,
+                ref_msg,
+                data_rec
+            ))
+            .into());
+        }
+        if !missing_in_data_msg.is_empty() {
+            return Err(ErrorKind::ValidationError(format!(
+                "The following fields were present in refence message #{} but missing in the parsed message: {:?}:\n{:?}\n{:?}",
+                idx + 1,
+                missing_in_data_msg,
+                ref_msg,
+                data_rec
+            ))
+            .into());
         }
     }
 
@@ -187,7 +240,11 @@ fn run() -> Result<()> {
     let ref_data = parse_ref_file(&opt.ref_file)?;
 
     let mut fp = File::open(&ref_data.fit_file)?;
-    let data = fitparser::from_reader(&mut fp)?;
+    let decode_opts = HashSet::from([
+        DecodeOption::ReturnNumericEnumValues,
+        DecodeOption::UseGenericSubFieldName,
+    ]);
+    let data = from_reader_with_options(&mut fp, &decode_opts)?;
 
     validate_data(&ref_data.messages, &data)?;
     Ok(())
