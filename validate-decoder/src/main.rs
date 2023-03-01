@@ -121,34 +121,42 @@ fn parse_value(val_str: &str) -> Value {
     }
 }
 
-fn validate_data(ref_data: &[Message], parsed_data: &[FitDataRecord]) -> Result<()> {
+fn validate_data(ref_data: &[Message], parsed_data: &[FitDataRecord]) -> Vec<Error> {
+    let mut errors = Vec::new();
     if ref_data.len() != parsed_data.len() {
-        return Err(ErrorKind::ValidationError(format!(
-            "reference file and parsed file have different number of messsages: {} != {}",
-            ref_data.len(),
-            parsed_data.len()
-        ))
-        .into());
+        errors.push(
+            ErrorKind::ValidationError(format!(
+                "reference file and parsed file have different number of messsages: {} != {}",
+                ref_data.len(),
+                parsed_data.len()
+            ))
+            .into(),
+        );
+        return errors;
     }
 
     for (idx, (ref_msg, data_rec)) in ref_data.iter().zip(parsed_data).enumerate() {
         if ref_msg.number != data_rec.kind().as_u16() {
-            return Err(ErrorKind::ValidationError(format!(
-                "message number difference in message #{}: {} != {}",
-                idx + 1,
-                ref_msg.number,
-                data_rec.kind().as_u16()
-            ))
-            .into());
+            errors.push(
+                ErrorKind::ValidationError(format!(
+                    "message number difference in message #{}: {} != {}",
+                    idx + 1,
+                    ref_msg.number,
+                    data_rec.kind().as_u16()
+                ))
+                .into(),
+            );
         }
         if ref_msg.name != data_rec.kind().to_string() {
-            return Err(ErrorKind::ValidationError(format!(
-                "message name difference in message #{}: {} != {}",
-                idx + 1,
-                ref_msg.name,
-                data_rec.kind().to_string()
-            ))
-            .into());
+            errors.push(
+                ErrorKind::ValidationError(format!(
+                    "message name difference in message #{}: {} != {}",
+                    idx + 1,
+                    ref_msg.name,
+                    data_rec.kind().to_string()
+                ))
+                .into(),
+            );
         }
         // convert fields into maps to make comparison not order dependent
         let ref_fld_map = ref_msg
@@ -184,32 +192,36 @@ fn validate_data(ref_data: &[Message], parsed_data: &[FitDataRecord]) -> Result<
             };
 
             if ref_fld.name != data_fld.name() {
-                return Err(ErrorKind::ValidationError(format!(
-                    "field name difference in message #{}, field #{}: '{}' != '{}'",
-                    idx + 1,
-                    ref_fld.number,
-                    ref_fld.name,
-                    data_fld.name()
-                ))
-                .into());
+                errors.push(
+                    ErrorKind::ValidationError(format!(
+                        "field name difference in message #{}, field #{}: '{}' != '{}'",
+                        idx + 1,
+                        ref_fld.number,
+                        ref_fld.name,
+                        data_fld.name()
+                    ))
+                    .into(),
+                );
             }
 
             // TODO validate value
 
             let ref_fld_units = ref_fld.units.clone().unwrap_or(String::new());
             if ref_fld_units != data_fld.units() {
-                return Err(ErrorKind::ValidationError(format!(
-                    "field unit difference in message #{}, field #{}: '{}' != '{}'",
-                    idx + 1,
-                    ref_fld.number,
-                    ref_fld_units,
-                    data_fld.units()
-                ))
-                .into());
+                errors.push(
+                    ErrorKind::ValidationError(format!(
+                        "field unit difference in message #{}, field #{}: '{}' != '{}'",
+                        idx + 1,
+                        ref_fld.number,
+                        ref_fld_units,
+                        data_fld.units()
+                    ))
+                    .into(),
+                );
             }
         }
         if !missing_in_ref_msg.is_empty() {
-            return Err(ErrorKind::ValidationError(format!(
+            errors.push(ErrorKind::ValidationError(format!(
                 "The following fields were present in parsed message #{} but missing in the reference message: {:?}:\n{:?}\n{:?}",
                 idx + 1,
                 missing_in_ref_msg,
@@ -219,7 +231,7 @@ fn validate_data(ref_data: &[Message], parsed_data: &[FitDataRecord]) -> Result<
             .into());
         }
         if !missing_in_data_msg.is_empty() {
-            return Err(ErrorKind::ValidationError(format!(
+            errors.push(ErrorKind::ValidationError(format!(
                 "The following fields were present in refence message #{} but missing in the parsed message: {:?}:\n{:?}\n{:?}",
                 idx + 1,
                 missing_in_data_msg,
@@ -230,8 +242,7 @@ fn validate_data(ref_data: &[Message], parsed_data: &[FitDataRecord]) -> Result<
         }
     }
 
-    eprintln!("Valdiation successful!");
-    Ok(())
+    errors
 }
 
 fn run() -> Result<()> {
@@ -246,8 +257,21 @@ fn run() -> Result<()> {
     ]);
     let data = from_reader_with_options(&mut fp, &decode_opts)?;
 
-    validate_data(&ref_data.messages, &data)?;
-    Ok(())
+    let errors = validate_data(&ref_data.messages, &data);
+    for e in &errors {
+        eprintln!("{}\n", e);
+    }
+
+    if errors.is_empty() {
+        eprintln!("Valdiation successful!");
+        Ok(())
+    } else {
+        Err(ErrorKind::ValidationError(format!(
+            "Validation failed {} errors present",
+            errors.len()
+        ))
+        .into())
+    }
 }
 
 fn main() {
