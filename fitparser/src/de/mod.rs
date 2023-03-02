@@ -22,6 +22,9 @@ pub enum DecodeOption {
     DropUnknownFields,
     /// Drop entire messages that don't exist in the generated profile
     DropUnknownMessages,
+    /// Keep the original field that's value under went component extraction
+    /// by default they are replaced by the expanded fields
+    KeepCompositeFields,
     /// Return the numeric value instead of string name for all enums
     ReturnNumericEnumValues,
     /// Ignore header section checksum value if it exists
