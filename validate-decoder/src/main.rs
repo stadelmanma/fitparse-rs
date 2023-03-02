@@ -1,7 +1,9 @@
 //! Parse the FIT SDK profile excel workbook to generate the decoding module.
+use chrono::{DateTime, Duration, Local, NaiveDate, TimeZone};
 use fitparser::de::{from_reader_with_options, DecodeOption};
 use fitparser::{self, FitDataField, FitDataRecord, Value};
 use std::collections::{HashMap, HashSet};
+use std::convert::TryInto;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 use std::path::PathBuf;
@@ -39,6 +41,15 @@ struct Message {
 struct RefFile {
     fit_file: PathBuf,
     messages: Vec<Message>,
+}
+
+fn value_to_cmp_str(value: &Value) -> String {
+    match value {
+        Value::Timestamp(val) => val.timestamp().to_string(),
+        Value::Float32(val) => ((val * 1000.0).round() / 1000.0).to_string(),
+        Value::Float64(val) => ((val * 1000.0).round() / 1000.0).to_string(),
+        _ => value.to_string(),
+    }
 }
 
 fn parse_ref_file(ref_file: &PathBuf) -> Result<RefFile> {
@@ -204,15 +215,39 @@ fn validate_data(ref_data: &[Message], parsed_data: &[FitDataRecord]) -> Vec<Err
                 );
             }
 
-            // TODO validate value
+            // attempt to validate values, this is a bit fragile since the FIT SDK
+            // does some odd stuff
+            let ref_fld_value = if (ref_fld.name == "timestamp") || (ref_fld.name == "start_time") {
+                let val: f64 = ref_fld.value.clone().try_into().unwrap();
+                let ref_date = NaiveDate::from_ymd(1989, 12, 31).and_hms(0, 0, 0);
+                let ts = TimeZone::from_utc_datetime(&Local, &ref_date)
+                    + Duration::seconds(val.round() as i64);
+                Value::Timestamp(ts)
+            } else {
+                ref_fld.value.clone()
+            };
+            if value_to_cmp_str(&ref_fld_value) != value_to_cmp_str(data_fld.value()) {
+                errors.push(
+                    ErrorKind::ValidationError(format!(
+                        "field value difference in message #{}, field #{} ({}): '{}' != '{}'",
+                        idx + 1,
+                        ref_fld.number,
+                        ref_fld.name,
+                        value_to_cmp_str(&ref_fld_value),
+                        value_to_cmp_str(data_fld.value())
+                    ))
+                    .into(),
+                );
+            }
 
             let ref_fld_units = ref_fld.units.clone().unwrap_or(String::new());
             if ref_fld_units != data_fld.units() {
                 errors.push(
                     ErrorKind::ValidationError(format!(
-                        "field unit difference in message #{}, field #{}: '{}' != '{}'",
+                        "field unit difference in message #{}, field #{} ({}): '{}' != '{}'",
                         idx + 1,
                         ref_fld.number,
+                        ref_fld.name,
                         ref_fld_units,
                         data_fld.units()
                     ))

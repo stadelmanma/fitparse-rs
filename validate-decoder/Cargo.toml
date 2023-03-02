@@ -10,5 +10,6 @@ readme = "README.md"
 keywords = ["ant", "fit", "garmin"]
 
 [dependencies]
+chrono = { version = "0.4" }
 structopt = "0.3"
 fitparser = { path = "../fitparser" }
