@@ -38,6 +38,10 @@ struct Cli {
     #[structopt(long)]
     keep_generic_names: bool,
 
+    /// Keep composite fields that are expanded into 1 or more component fields
+    #[structopt(long)]
+    keep_composite_fields: bool,
+
     /// Skip checking the header and data section CRC values
     #[structopt(long)]
     no_crc_check: bool,
@@ -122,6 +126,9 @@ fn run() -> Result<(), Box<dyn Error>> {
     }
     if opt.keep_generic_names {
         decode_opts.insert(DecodeOption::UseGenericSubFieldName);
+    }
+    if opt.keep_composite_fields {
+        decode_opts.insert(DecodeOption::KeepCompositeFields);
     }
     if opt.numeric_enums {
         decode_opts.insert(DecodeOption::ReturnNumericEnumValues);
