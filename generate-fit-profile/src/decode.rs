@@ -124,6 +124,23 @@ impl MessageFieldDefinition {
             }
         }
 
+        // if the decode option is present add the parent field prior to expansion
+        writeln!(
+            out,
+            "if options.contains(&DecodeOption::KeepCompositeFields) {{"
+        )?;
+        writeln!(
+            out,
+            "fields.push({}?);",
+            self.generate_create_fn_call(
+                mesg_def,
+                &format!("{}.clone()", val_str),
+                alt_scale,
+                alt_offset
+            )
+        )?;
+        writeln!(out, "}}")?;
+
         // expand them and then pop to individual values to avoid cloning twice
         writeln!(
             out,
@@ -249,12 +266,6 @@ impl MessageFieldDefinition {
         out: &mut File,
         mesg_def: &MessageDefinition,
     ) -> Result<(), std::io::Error> {
-        if !self.components().is_empty() {
-            // fields with components are always expanded
-            // and never actually created
-            return Ok(());
-        }
-
         writeln!(out,
             "fn {}_{}_field(mesg_num: MesgNum, accumlators: &mut HashMap<u32, Value>, options: &HashSet<DecodeOption>, data_map: &HashMap<u8, Value>, accumulate: bool, scale: f64, offset: f64, units: &'static str, value: Value) -> Result<FitDataField> {{",
             mesg_def.function_name(), self.name())?;

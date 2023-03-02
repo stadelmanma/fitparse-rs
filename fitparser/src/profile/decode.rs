@@ -11021,6 +11021,19 @@ fn session_message(
             }
             14 => {
                 // total_distance / total_timer_time
+                if options.contains(&DecodeOption::KeepCompositeFields) {
+                    fields.push(session_message_avg_speed_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1000.000000,
+                        0.000000,
+                        "m/s",
+                        value.clone(),
+                    )?);
+                }
                 let mut avg_speed_component_values = expand_components(value, &[16]);
                 let enhanced_avg_speed = avg_speed_component_values.pop().unwrap();
                 data_map.insert(124, enhanced_avg_speed.clone());
@@ -11038,6 +11051,19 @@ fn session_message(
                 )?);
             }
             15 => {
+                if options.contains(&DecodeOption::KeepCompositeFields) {
+                    fields.push(session_message_max_speed_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1000.000000,
+                        0.000000,
+                        "m/s",
+                        value.clone(),
+                    )?);
+                }
                 let mut max_speed_component_values = expand_components(value, &[16]);
                 let enhanced_max_speed = max_speed_component_values.pop().unwrap();
                 data_map.insert(125, enhanced_max_speed.clone());
@@ -11493,6 +11519,19 @@ fn session_message(
                 )?);
             }
             49 => {
+                if options.contains(&DecodeOption::KeepCompositeFields) {
+                    fields.push(session_message_avg_altitude_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        5.000000,
+                        500.000000,
+                        "m",
+                        value.clone(),
+                    )?);
+                }
                 let mut avg_altitude_component_values = expand_components(value, &[16]);
                 let enhanced_avg_altitude = avg_altitude_component_values.pop().unwrap();
                 data_map.insert(126, enhanced_avg_altitude.clone());
@@ -11509,6 +11548,19 @@ fn session_message(
                 )?);
             }
             50 => {
+                if options.contains(&DecodeOption::KeepCompositeFields) {
+                    fields.push(session_message_max_altitude_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        5.000000,
+                        500.000000,
+                        "m",
+                        value.clone(),
+                    )?);
+                }
                 let mut max_altitude_component_values = expand_components(value, &[16]);
                 let enhanced_max_altitude = max_altitude_component_values.pop().unwrap();
                 data_map.insert(128, enhanced_max_altitude.clone());
@@ -11785,6 +11837,19 @@ fn session_message(
                 )?);
             }
             71 => {
+                if options.contains(&DecodeOption::KeepCompositeFields) {
+                    fields.push(session_message_min_altitude_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        5.000000,
+                        500.000000,
+                        "m",
+                        value.clone(),
+                    )?);
+                }
                 let mut min_altitude_component_values = expand_components(value, &[16]);
                 let enhanced_min_altitude = min_altitude_component_values.pop().unwrap();
                 data_map.insert(127, enhanced_min_altitude.clone());
@@ -13078,6 +13143,60 @@ fn session_message_total_fat_calories_field(
         options,
     )
 }
+fn session_message_avg_speed_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 14, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        14,
+        "avg_speed",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn session_message_max_speed_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 15, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        15,
+        "max_speed",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
 fn session_message_avg_heart_rate_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
@@ -13952,6 +14071,60 @@ fn session_message_total_work_field(
         options,
     )
 }
+fn session_message_avg_altitude_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 49, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        49,
+        "avg_altitude",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn session_message_max_altitude_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 50, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        50,
+        "max_altitude",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
 fn session_message_gps_accuracy_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
@@ -14484,6 +14657,33 @@ fn session_message_best_lap_index_field(
     data_field_with_info(
         70,
         "best_lap_index",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn session_message_min_altitude_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 71, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        71,
+        "min_altitude",
         FieldDataType::UInt16,
         scale,
         offset,
@@ -16487,6 +16687,19 @@ fn lap_message(
                 )?);
             }
             13 => {
+                if options.contains(&DecodeOption::KeepCompositeFields) {
+                    fields.push(lap_message_avg_speed_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1000.000000,
+                        0.000000,
+                        "m/s",
+                        value.clone(),
+                    )?);
+                }
                 let mut avg_speed_component_values = expand_components(value, &[16]);
                 let enhanced_avg_speed = avg_speed_component_values.pop().unwrap();
                 data_map.insert(110, enhanced_avg_speed.clone());
@@ -16503,6 +16716,19 @@ fn lap_message(
                 )?);
             }
             14 => {
+                if options.contains(&DecodeOption::KeepCompositeFields) {
+                    fields.push(lap_message_max_speed_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1000.000000,
+                        0.000000,
+                        "m/s",
+                        value.clone(),
+                    )?);
+                }
                 let mut max_speed_component_values = expand_components(value, &[16]);
                 let enhanced_max_speed = max_speed_component_values.pop().unwrap();
                 data_map.insert(111, enhanced_max_speed.clone());
@@ -16836,6 +17062,19 @@ fn lap_message(
                 )?);
             }
             42 => {
+                if options.contains(&DecodeOption::KeepCompositeFields) {
+                    fields.push(lap_message_avg_altitude_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        5.000000,
+                        500.000000,
+                        "m",
+                        value.clone(),
+                    )?);
+                }
                 let mut avg_altitude_component_values = expand_components(value, &[16]);
                 let enhanced_avg_altitude = avg_altitude_component_values.pop().unwrap();
                 data_map.insert(112, enhanced_avg_altitude.clone());
@@ -16852,6 +17091,19 @@ fn lap_message(
                 )?);
             }
             43 => {
+                if options.contains(&DecodeOption::KeepCompositeFields) {
+                    fields.push(lap_message_max_altitude_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        5.000000,
+                        500.000000,
+                        "m",
+                        value.clone(),
+                    )?);
+                }
                 let mut max_altitude_component_values = expand_components(value, &[16]);
                 let enhanced_max_altitude = max_altitude_component_values.pop().unwrap();
                 data_map.insert(114, enhanced_max_altitude.clone());
@@ -17102,6 +17354,19 @@ fn lap_message(
                 )?);
             }
             62 => {
+                if options.contains(&DecodeOption::KeepCompositeFields) {
+                    fields.push(lap_message_min_altitude_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        5.000000,
+                        500.000000,
+                        "m",
+                        value.clone(),
+                    )?);
+                }
                 let mut min_altitude_component_values = expand_components(value, &[16]);
                 let enhanced_min_altitude = min_altitude_component_values.pop().unwrap();
                 data_map.insert(113, enhanced_min_altitude.clone());
@@ -18341,6 +18606,60 @@ fn lap_message_total_fat_calories_field(
         options,
     )
 }
+fn lap_message_avg_speed_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 13, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        13,
+        "avg_speed",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn lap_message_max_speed_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 14, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        14,
+        "max_speed",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
 fn lap_message_avg_heart_rate_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
@@ -18972,6 +19291,60 @@ fn lap_message_total_work_field(
         options,
     )
 }
+fn lap_message_avg_altitude_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 42, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        42,
+        "avg_altitude",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn lap_message_max_altitude_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 43, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        43,
+        "max_altitude",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
 fn lap_message_gps_accuracy_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
@@ -19450,6 +19823,33 @@ fn lap_message_repetition_num_field(
     data_field_with_info(
         61,
         "repetition_num",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn lap_message_min_altitude_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 62, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        62,
+        "min_altitude",
         FieldDataType::UInt16,
         scale,
         offset,
@@ -21831,6 +22231,19 @@ fn record_message(
                 )?);
             }
             2 => {
+                if options.contains(&DecodeOption::KeepCompositeFields) {
+                    fields.push(record_message_altitude_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        5.000000,
+                        500.000000,
+                        "m",
+                        value.clone(),
+                    )?);
+                }
                 let mut altitude_component_values = expand_components(value, &[16]);
                 let enhanced_altitude = altitude_component_values.pop().unwrap();
                 data_map.insert(78, enhanced_altitude.clone());
@@ -21886,6 +22299,19 @@ fn record_message(
                 )?);
             }
             6 => {
+                if options.contains(&DecodeOption::KeepCompositeFields) {
+                    fields.push(record_message_speed_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1000.000000,
+                        0.000000,
+                        "m/s",
+                        value.clone(),
+                    )?);
+                }
                 let mut speed_component_values = expand_components(value, &[16]);
                 let enhanced_speed = speed_component_values.pop().unwrap();
                 data_map.insert(73, enhanced_speed.clone());
@@ -21915,11 +22341,37 @@ fn record_message(
                 )?);
             }
             8 => {
+                if options.contains(&DecodeOption::KeepCompositeFields) {
+                    fields.push(record_message_compressed_speed_distance_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "m/s,m",
+                        value.clone(),
+                    )?);
+                }
                 let mut compressed_speed_distance_component_values =
                     expand_components(value, &[12, 12]);
                 let distance = compressed_speed_distance_component_values.pop().unwrap();
                 let speed = compressed_speed_distance_component_values.pop().unwrap();
                 data_map.insert(6, speed.clone());
+                if options.contains(&DecodeOption::KeepCompositeFields) {
+                    fields.push(record_message_speed_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        100.000000,
+                        0.000000,
+                        "m/s",
+                        speed.clone(),
+                    )?);
+                }
                 let mut speed_component_values = expand_components(speed, &[16]);
                 let enhanced_speed = speed_component_values.pop().unwrap();
                 data_map.insert(73, enhanced_speed.clone());
@@ -22028,6 +22480,19 @@ fn record_message(
                 )?);
             }
             18 => {
+                if options.contains(&DecodeOption::KeepCompositeFields) {
+                    fields.push(record_message_cycles_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        true,
+                        1.000000,
+                        0.000000,
+                        "cycles",
+                        value.clone(),
+                    )?);
+                }
                 let mut cycles_component_values = expand_components(value, &[8]);
                 let total_cycles = cycles_component_values.pop().unwrap();
                 data_map.insert(19, total_cycles.clone());
@@ -22057,6 +22522,19 @@ fn record_message(
                 )?);
             }
             28 => {
+                if options.contains(&DecodeOption::KeepCompositeFields) {
+                    fields.push(record_message_compressed_accumulated_power_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        true,
+                        1.000000,
+                        0.000000,
+                        "watts",
+                        value.clone(),
+                    )?);
+                }
                 let mut compressed_accumulated_power_component_values =
                     expand_components(value, &[16]);
                 let accumulated_power =
@@ -22885,6 +23363,33 @@ fn record_message_position_long_field(
         options,
     )
 }
+fn record_message_altitude_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 2, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        2,
+        "altitude",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
 fn record_message_heart_rate_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
@@ -22966,6 +23471,33 @@ fn record_message_distance_field(
         options,
     )
 }
+fn record_message_speed_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 6, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        6,
+        "speed",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
 fn record_message_power_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
@@ -22986,6 +23518,33 @@ fn record_message_power_field(
         7,
         "power",
         FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn record_message_compressed_speed_distance_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        8,
+        "compressed_speed_distance",
+        FieldDataType::Byte,
         scale,
         offset,
         units,
@@ -23155,6 +23714,33 @@ fn record_message_speed_1s_field(
         options,
     )
 }
+fn record_message_cycles_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 18, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        18,
+        "cycles",
+        FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
 fn record_message_total_cycles_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
@@ -23175,6 +23761,33 @@ fn record_message_total_cycles_field(
         19,
         "total_cycles",
         FieldDataType::UInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn record_message_compressed_accumulated_power_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 28, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        28,
+        "compressed_accumulated_power",
+        FieldDataType::UInt16,
         scale,
         offset,
         units,
@@ -24732,6 +25345,19 @@ fn event_message(
                 )?);
             }
             2 => {
+                if options.contains(&DecodeOption::KeepCompositeFields) {
+                    fields.push(event_message_data16_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value.clone(),
+                    )?);
+                }
                 let mut data16_component_values = expand_components(value, &[16]);
                 let data = data16_component_values.pop().unwrap();
                 data_map.insert(3, data.clone());
@@ -25791,6 +26417,33 @@ fn event_message_event_type_field(
         1,
         "event_type",
         FieldDataType::EventType,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn event_message_data16_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 2, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        2,
+        "data16",
+        FieldDataType::UInt16,
         scale,
         offset,
         units,
@@ -34754,6 +35407,19 @@ fn jump_message(
                 )?);
             }
             7 => {
+                if options.contains(&DecodeOption::KeepCompositeFields) {
+                    fields.push(jump_message_speed_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1000.000000,
+                        0.000000,
+                        "m/s",
+                        value.clone(),
+                    )?);
+                }
                 let mut speed_component_values = expand_components(value, &[16]);
                 let enhanced_speed = speed_component_values.pop().unwrap();
                 data_map.insert(8, enhanced_speed.clone());
@@ -34986,6 +35652,33 @@ fn jump_message_position_long_field(
         6,
         "position_long",
         FieldDataType::SInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn jump_message_speed_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 7, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        7,
+        "speed",
+        FieldDataType::UInt16,
         scale,
         offset,
         units,
@@ -48030,6 +48723,19 @@ fn monitoring_message(
             }
             24 => {
                 // Indicates single type / intensity for duration since last monitoring message.
+                if options.contains(&DecodeOption::KeepCompositeFields) {
+                    fields.push(monitoring_message_current_activity_type_intensity_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value.clone(),
+                    )?);
+                }
                 let mut current_activity_type_intensity_component_values =
                     expand_components(value, &[5, 3]);
                 let intensity = current_activity_type_intensity_component_values
@@ -48739,6 +49445,33 @@ fn monitoring_message_active_calories_field(
         options,
     )
 }
+fn monitoring_message_current_activity_type_intensity_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 24, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        24,
+        "current_activity_type_intensity",
+        FieldDataType::Byte,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
 fn monitoring_message_timestamp_min_8_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
@@ -49061,6 +49794,19 @@ fn hr_message(
                 )?);
             }
             1 => {
+                if options.contains(&DecodeOption::KeepCompositeFields) {
+                    fields.push(hr_message_time256_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        256.000000,
+                        0.000000,
+                        "s",
+                        value.clone(),
+                    )?);
+                }
                 let mut time256_component_values = expand_components(value, &[8]);
                 let fractional_timestamp = time256_component_values.pop().unwrap();
                 data_map.insert(0, fractional_timestamp.clone());
@@ -49103,6 +49849,19 @@ fn hr_message(
                 )?);
             }
             10 => {
+                if options.contains(&DecodeOption::KeepCompositeFields) {
+                    fields.push(hr_message_event_timestamp_12_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "s",
+                        value.clone(),
+                    )?);
+                }
                 let mut event_timestamp_12_component_values =
                     expand_components(value, &[12, 12, 12, 12, 12, 12, 12, 12, 12, 12]);
                 let event_timestamp_10 = event_timestamp_12_component_values.pop().unwrap();
@@ -49189,6 +49948,33 @@ fn hr_message_fractional_timestamp_field(
         options,
     )
 }
+fn hr_message_time256_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 1, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        1,
+        "time256",
+        FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
 fn hr_message_filtered_bpm_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
@@ -49236,6 +50022,33 @@ fn hr_message_event_timestamp_field(
         9,
         "event_timestamp",
         FieldDataType::UInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn hr_message_event_timestamp_12_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 10, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        10,
+        "event_timestamp_12",
+        FieldDataType::Byte,
         scale,
         offset,
         units,
@@ -49896,6 +50709,19 @@ fn ant_rx_message(
                 )?);
             }
             2 => {
+                if options.contains(&DecodeOption::KeepCompositeFields) {
+                    fields.push(ant_rx_message_mesg_data_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value.clone(),
+                    )?);
+                }
                 let mut mesg_data_component_values =
                     expand_components(value, &[8, 8, 8, 8, 8, 8, 8, 8, 8]);
                 let data_8 = mesg_data_component_values.pop().unwrap();
@@ -50037,6 +50863,33 @@ fn ant_rx_message_mesg_id_field(
         options,
     )
 }
+fn ant_rx_message_mesg_data_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 2, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        2,
+        "mesg_data",
+        FieldDataType::Byte,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
 fn ant_rx_message_channel_number_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
@@ -50156,6 +51009,19 @@ fn ant_tx_message(
                 )?);
             }
             2 => {
+                if options.contains(&DecodeOption::KeepCompositeFields) {
+                    fields.push(ant_tx_message_mesg_data_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value.clone(),
+                    )?);
+                }
                 let mut mesg_data_component_values =
                     expand_components(value, &[8, 8, 8, 8, 8, 8, 8, 8, 8]);
                 let data_8 = mesg_data_component_values.pop().unwrap();
@@ -50289,6 +51155,33 @@ fn ant_tx_message_mesg_id_field(
     data_field_with_info(
         1,
         "mesg_id",
+        FieldDataType::Byte,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn ant_tx_message_mesg_data_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 2, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        2,
+        "mesg_data",
         FieldDataType::Byte,
         scale,
         offset,
@@ -50584,6 +51477,19 @@ fn exd_data_field_configuration_message(
                 )?);
             }
             1 => {
+                if options.contains(&DecodeOption::KeepCompositeFields) {
+                    fields.push(exd_data_field_configuration_message_concept_field_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value.clone(),
+                    )?);
+                }
                 let mut concept_field_component_values = expand_components(value, &[4, 4]);
                 let concept_count = concept_field_component_values.pop().unwrap();
                 let field_id = concept_field_component_values.pop().unwrap();
@@ -50693,6 +51599,33 @@ fn exd_data_field_configuration_message_screen_index_field(
         0,
         "screen_index",
         FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn exd_data_field_configuration_message_concept_field_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 1, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        1,
+        "concept_field",
+        FieldDataType::Byte,
         scale,
         offset,
         units,
@@ -50833,6 +51766,19 @@ fn exd_data_concept_configuration_message(
                 )?);
             }
             1 => {
+                if options.contains(&DecodeOption::KeepCompositeFields) {
+                    fields.push(exd_data_concept_configuration_message_concept_field_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value.clone(),
+                    )?);
+                }
                 let mut concept_field_component_values = expand_components(value, &[4, 4]);
                 let concept_index = concept_field_component_values.pop().unwrap();
                 let field_id = concept_field_component_values.pop().unwrap();
@@ -51007,6 +51953,33 @@ fn exd_data_concept_configuration_message_screen_index_field(
         0,
         "screen_index",
         FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn exd_data_concept_configuration_message_concept_field_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 1, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        1,
+        "concept_field",
+        FieldDataType::Byte,
         scale,
         offset,
         units,
