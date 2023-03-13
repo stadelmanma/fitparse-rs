@@ -99,8 +99,11 @@ fn extract_component(input: &[u8], mut offset: usize, nbits: usize) -> ((&[u8], 
             offset += 1;
         }
     }
-
-    ((&input[idx..], offset), Value::UInt64(acc))
+    if input.len() > idx {
+        ((&input[idx..], offset), Value::UInt64(acc))
+    } else {
+        ((&[], offset), Value::UInt64(acc))
+    }
 }
 
 /// Increment the stored field value
