@@ -80,30 +80,27 @@ impl From<TimestampField> for Value {
     }
 }
 
-/// Applies a bitmask to the value and uses the field info to derive additional fields based on the
-/// defined components
-fn expand_components(value: Value, parts: &[u8]) -> Vec<Value> {
-    // extract out each field by masking specific bits, spanning 1 or more bytes
+/// Extracts a component of a defined size from the provided byte slice
+/// Returns an updated slice, new starting offset and the extracted value.
+fn extract_component(input: &[u8], mut offset: usize, nbits: usize) -> ((&[u8], usize), Value) {
     let bit_mask = [1u8, 2u8, 4u8, 8u8, 16u8, 32u8, 64u8, 128u8];
-    let mut bytes = value.to_ne_bytes().into_iter();
-    let mut components = Vec::new();
+    let mut bytes = input.iter().copied();
+    let mut idx = 0;
     let mut byte = bytes.next().unwrap_or(0);
-    let mut bit_pos = 0;
-    for nbits in parts {
-        let mut tmp: u64 = 0;
-        for pos in 0..*nbits {
-            tmp |= (((byte & bit_mask[bit_pos]) >> bit_pos) as u64) << pos;
-            if bit_pos == 7 {
-                byte = bytes.next().unwrap_or(0);
-                bit_pos = 0;
-            } else {
-                bit_pos += 1;
-            }
+    let mut acc: u64 = 0;
+
+    for pos in 0..nbits {
+        acc |= (((byte & bit_mask[offset]) >> offset) as u64) << pos;
+        if offset == 7 {
+            byte = bytes.next().unwrap_or(0);
+            idx += 1;
+            offset = 0;
+        } else {
+            offset += 1;
         }
-        components.push(Value::UInt64(tmp));
     }
 
-    components
+    ((&input[idx..], offset), Value::UInt64(acc))
 }
 
 /// Increment the stored field value

@@ -1,7 +1,7 @@
 //! Auto generated profile messages from FIT SDK Release: 21.89.00
 #![allow(unused_variables)]
 use super::field_types::*;
-use super::{calculate_cumulative_value, data_field_with_info, expand_components, unknown_field};
+use super::{calculate_cumulative_value, data_field_with_info, extract_component, unknown_field};
 use crate::de::DecodeOption;
 use crate::error::Result;
 use crate::{FitDataField, Value};
@@ -11034,8 +11034,8 @@ fn session_message(
                         value.clone(),
                     )?);
                 }
-                let mut avg_speed_component_values = expand_components(value, &[16]);
-                let enhanced_avg_speed = avg_speed_component_values.pop().unwrap();
+                let input = value.to_ne_bytes();
+                let ((input, offset), enhanced_avg_speed) = extract_component(&input, 0usize, 16);
                 data_map.insert(124, enhanced_avg_speed.clone());
                 // total_distance / total_timer_time
                 fields.push(session_message_enhanced_avg_speed_field(
@@ -11064,8 +11064,8 @@ fn session_message(
                         value.clone(),
                     )?);
                 }
-                let mut max_speed_component_values = expand_components(value, &[16]);
-                let enhanced_max_speed = max_speed_component_values.pop().unwrap();
+                let input = value.to_ne_bytes();
+                let ((input, offset), enhanced_max_speed) = extract_component(&input, 0usize, 16);
                 data_map.insert(125, enhanced_max_speed.clone());
                 fields.push(session_message_enhanced_max_speed_field(
                     mesg_num,
@@ -11532,8 +11532,9 @@ fn session_message(
                         value.clone(),
                     )?);
                 }
-                let mut avg_altitude_component_values = expand_components(value, &[16]);
-                let enhanced_avg_altitude = avg_altitude_component_values.pop().unwrap();
+                let input = value.to_ne_bytes();
+                let ((input, offset), enhanced_avg_altitude) =
+                    extract_component(&input, 0usize, 16);
                 data_map.insert(126, enhanced_avg_altitude.clone());
                 fields.push(session_message_enhanced_avg_altitude_field(
                     mesg_num,
@@ -11561,8 +11562,9 @@ fn session_message(
                         value.clone(),
                     )?);
                 }
-                let mut max_altitude_component_values = expand_components(value, &[16]);
-                let enhanced_max_altitude = max_altitude_component_values.pop().unwrap();
+                let input = value.to_ne_bytes();
+                let ((input, offset), enhanced_max_altitude) =
+                    extract_component(&input, 0usize, 16);
                 data_map.insert(128, enhanced_max_altitude.clone());
                 fields.push(session_message_enhanced_max_altitude_field(
                     mesg_num,
@@ -11850,8 +11852,9 @@ fn session_message(
                         value.clone(),
                     )?);
                 }
-                let mut min_altitude_component_values = expand_components(value, &[16]);
-                let enhanced_min_altitude = min_altitude_component_values.pop().unwrap();
+                let input = value.to_ne_bytes();
+                let ((input, offset), enhanced_min_altitude) =
+                    extract_component(&input, 0usize, 16);
                 data_map.insert(127, enhanced_min_altitude.clone());
                 fields.push(session_message_enhanced_min_altitude_field(
                     mesg_num,
@@ -16700,8 +16703,8 @@ fn lap_message(
                         value.clone(),
                     )?);
                 }
-                let mut avg_speed_component_values = expand_components(value, &[16]);
-                let enhanced_avg_speed = avg_speed_component_values.pop().unwrap();
+                let input = value.to_ne_bytes();
+                let ((input, offset), enhanced_avg_speed) = extract_component(&input, 0usize, 16);
                 data_map.insert(110, enhanced_avg_speed.clone());
                 fields.push(lap_message_enhanced_avg_speed_field(
                     mesg_num,
@@ -16729,8 +16732,8 @@ fn lap_message(
                         value.clone(),
                     )?);
                 }
-                let mut max_speed_component_values = expand_components(value, &[16]);
-                let enhanced_max_speed = max_speed_component_values.pop().unwrap();
+                let input = value.to_ne_bytes();
+                let ((input, offset), enhanced_max_speed) = extract_component(&input, 0usize, 16);
                 data_map.insert(111, enhanced_max_speed.clone());
                 fields.push(lap_message_enhanced_max_speed_field(
                     mesg_num,
@@ -17075,8 +17078,9 @@ fn lap_message(
                         value.clone(),
                     )?);
                 }
-                let mut avg_altitude_component_values = expand_components(value, &[16]);
-                let enhanced_avg_altitude = avg_altitude_component_values.pop().unwrap();
+                let input = value.to_ne_bytes();
+                let ((input, offset), enhanced_avg_altitude) =
+                    extract_component(&input, 0usize, 16);
                 data_map.insert(112, enhanced_avg_altitude.clone());
                 fields.push(lap_message_enhanced_avg_altitude_field(
                     mesg_num,
@@ -17104,8 +17108,9 @@ fn lap_message(
                         value.clone(),
                     )?);
                 }
-                let mut max_altitude_component_values = expand_components(value, &[16]);
-                let enhanced_max_altitude = max_altitude_component_values.pop().unwrap();
+                let input = value.to_ne_bytes();
+                let ((input, offset), enhanced_max_altitude) =
+                    extract_component(&input, 0usize, 16);
                 data_map.insert(114, enhanced_max_altitude.clone());
                 fields.push(lap_message_enhanced_max_altitude_field(
                     mesg_num,
@@ -17367,8 +17372,9 @@ fn lap_message(
                         value.clone(),
                     )?);
                 }
-                let mut min_altitude_component_values = expand_components(value, &[16]);
-                let enhanced_min_altitude = min_altitude_component_values.pop().unwrap();
+                let input = value.to_ne_bytes();
+                let ((input, offset), enhanced_min_altitude) =
+                    extract_component(&input, 0usize, 16);
                 data_map.insert(113, enhanced_min_altitude.clone());
                 fields.push(lap_message_enhanced_min_altitude_field(
                     mesg_num,
@@ -22244,8 +22250,8 @@ fn record_message(
                         value.clone(),
                     )?);
                 }
-                let mut altitude_component_values = expand_components(value, &[16]);
-                let enhanced_altitude = altitude_component_values.pop().unwrap();
+                let input = value.to_ne_bytes();
+                let ((input, offset), enhanced_altitude) = extract_component(&input, 0usize, 16);
                 data_map.insert(78, enhanced_altitude.clone());
                 fields.push(record_message_enhanced_altitude_field(
                     mesg_num,
@@ -22312,8 +22318,8 @@ fn record_message(
                         value.clone(),
                     )?);
                 }
-                let mut speed_component_values = expand_components(value, &[16]);
-                let enhanced_speed = speed_component_values.pop().unwrap();
+                let input = value.to_ne_bytes();
+                let ((input, offset), enhanced_speed) = extract_component(&input, 0usize, 16);
                 data_map.insert(73, enhanced_speed.clone());
                 fields.push(record_message_enhanced_speed_field(
                     mesg_num,
@@ -22354,10 +22360,9 @@ fn record_message(
                         value.clone(),
                     )?);
                 }
-                let mut compressed_speed_distance_component_values =
-                    expand_components(value, &[12, 12]);
-                let distance = compressed_speed_distance_component_values.pop().unwrap();
-                let speed = compressed_speed_distance_component_values.pop().unwrap();
+                let input = value.to_ne_bytes();
+                let ((input, offset), speed) = extract_component(&input, 0usize, 12);
+                let ((input, offset), distance) = extract_component(input, offset, 12);
                 data_map.insert(6, speed.clone());
                 if options.contains(&DecodeOption::KeepCompositeFields) {
                     fields.push(record_message_speed_field(
@@ -22372,8 +22377,8 @@ fn record_message(
                         speed.clone(),
                     )?);
                 }
-                let mut speed_component_values = expand_components(speed, &[16]);
-                let enhanced_speed = speed_component_values.pop().unwrap();
+                let input = speed.to_ne_bytes();
+                let ((input, offset), enhanced_speed) = extract_component(&input, 0usize, 16);
                 data_map.insert(73, enhanced_speed.clone());
                 fields.push(record_message_enhanced_speed_field(
                     mesg_num,
@@ -22493,8 +22498,8 @@ fn record_message(
                         value.clone(),
                     )?);
                 }
-                let mut cycles_component_values = expand_components(value, &[8]);
-                let total_cycles = cycles_component_values.pop().unwrap();
+                let input = value.to_ne_bytes();
+                let ((input, offset), total_cycles) = extract_component(&input, 0usize, 8);
                 data_map.insert(19, total_cycles.clone());
                 fields.push(record_message_total_cycles_field(
                     mesg_num,
@@ -22535,10 +22540,8 @@ fn record_message(
                         value.clone(),
                     )?);
                 }
-                let mut compressed_accumulated_power_component_values =
-                    expand_components(value, &[16]);
-                let accumulated_power =
-                    compressed_accumulated_power_component_values.pop().unwrap();
+                let input = value.to_ne_bytes();
+                let ((input, offset), accumulated_power) = extract_component(&input, 0usize, 16);
                 data_map.insert(29, accumulated_power.clone());
                 fields.push(record_message_accumulated_power_field(
                     mesg_num,
@@ -25358,8 +25361,8 @@ fn event_message(
                         value.clone(),
                     )?);
                 }
-                let mut data16_component_values = expand_components(value, &[16]);
-                let data = data16_component_values.pop().unwrap();
+                let input = value.to_ne_bytes();
+                let ((input, offset), data) = extract_component(&input, 0usize, 16);
                 data_map.insert(3, data.clone());
                 if Event::Timer.as_i64()
                     == data_map
@@ -35420,8 +35423,8 @@ fn jump_message(
                         value.clone(),
                     )?);
                 }
-                let mut speed_component_values = expand_components(value, &[16]);
-                let enhanced_speed = speed_component_values.pop().unwrap();
+                let input = value.to_ne_bytes();
+                let ((input, offset), enhanced_speed) = extract_component(&input, 0usize, 16);
                 data_map.insert(8, enhanced_speed.clone());
                 fields.push(jump_message_enhanced_speed_field(
                     mesg_num,
@@ -48736,14 +48739,9 @@ fn monitoring_message(
                         value.clone(),
                     )?);
                 }
-                let mut current_activity_type_intensity_component_values =
-                    expand_components(value, &[5, 3]);
-                let intensity = current_activity_type_intensity_component_values
-                    .pop()
-                    .unwrap();
-                let activity_type = current_activity_type_intensity_component_values
-                    .pop()
-                    .unwrap();
+                let input = value.to_ne_bytes();
+                let ((input, offset), activity_type) = extract_component(&input, 0usize, 5);
+                let ((input, offset), intensity) = extract_component(input, offset, 3);
                 data_map.insert(5, activity_type.clone());
                 fields.push(monitoring_message_activity_type_field(
                     mesg_num,
@@ -49807,8 +49805,8 @@ fn hr_message(
                         value.clone(),
                     )?);
                 }
-                let mut time256_component_values = expand_components(value, &[8]);
-                let fractional_timestamp = time256_component_values.pop().unwrap();
+                let input = value.to_ne_bytes();
+                let ((input, offset), fractional_timestamp) = extract_component(&input, 0usize, 8);
                 data_map.insert(0, fractional_timestamp.clone());
                 fields.push(hr_message_fractional_timestamp_field(
                     mesg_num,
@@ -49862,18 +49860,17 @@ fn hr_message(
                         value.clone(),
                     )?);
                 }
-                let mut event_timestamp_12_component_values =
-                    expand_components(value, &[12, 12, 12, 12, 12, 12, 12, 12, 12, 12]);
-                let event_timestamp_10 = event_timestamp_12_component_values.pop().unwrap();
-                let event_timestamp_9 = event_timestamp_12_component_values.pop().unwrap();
-                let event_timestamp_8 = event_timestamp_12_component_values.pop().unwrap();
-                let event_timestamp_7 = event_timestamp_12_component_values.pop().unwrap();
-                let event_timestamp_6 = event_timestamp_12_component_values.pop().unwrap();
-                let event_timestamp_5 = event_timestamp_12_component_values.pop().unwrap();
-                let event_timestamp_4 = event_timestamp_12_component_values.pop().unwrap();
-                let event_timestamp_3 = event_timestamp_12_component_values.pop().unwrap();
-                let event_timestamp_2 = event_timestamp_12_component_values.pop().unwrap();
-                let event_timestamp_1 = event_timestamp_12_component_values.pop().unwrap();
+                let input = value.to_ne_bytes();
+                let ((input, offset), event_timestamp_1) = extract_component(&input, 0usize, 12);
+                let ((input, offset), event_timestamp_2) = extract_component(input, offset, 12);
+                let ((input, offset), event_timestamp_3) = extract_component(input, offset, 12);
+                let ((input, offset), event_timestamp_4) = extract_component(input, offset, 12);
+                let ((input, offset), event_timestamp_5) = extract_component(input, offset, 12);
+                let ((input, offset), event_timestamp_6) = extract_component(input, offset, 12);
+                let ((input, offset), event_timestamp_7) = extract_component(input, offset, 12);
+                let ((input, offset), event_timestamp_8) = extract_component(input, offset, 12);
+                let ((input, offset), event_timestamp_9) = extract_component(input, offset, 12);
+                let ((input, offset), event_timestamp_10) = extract_component(input, offset, 12);
                 let event_timestamp = Value::Array(vec![
                     event_timestamp_1,
                     event_timestamp_2,
@@ -50722,17 +50719,16 @@ fn ant_rx_message(
                         value.clone(),
                     )?);
                 }
-                let mut mesg_data_component_values =
-                    expand_components(value, &[8, 8, 8, 8, 8, 8, 8, 8, 8]);
-                let data_8 = mesg_data_component_values.pop().unwrap();
-                let data_7 = mesg_data_component_values.pop().unwrap();
-                let data_6 = mesg_data_component_values.pop().unwrap();
-                let data_5 = mesg_data_component_values.pop().unwrap();
-                let data_4 = mesg_data_component_values.pop().unwrap();
-                let data_3 = mesg_data_component_values.pop().unwrap();
-                let data_2 = mesg_data_component_values.pop().unwrap();
-                let data_1 = mesg_data_component_values.pop().unwrap();
-                let channel_number = mesg_data_component_values.pop().unwrap();
+                let input = value.to_ne_bytes();
+                let ((input, offset), channel_number) = extract_component(&input, 0usize, 8);
+                let ((input, offset), data_1) = extract_component(input, offset, 8);
+                let ((input, offset), data_2) = extract_component(input, offset, 8);
+                let ((input, offset), data_3) = extract_component(input, offset, 8);
+                let ((input, offset), data_4) = extract_component(input, offset, 8);
+                let ((input, offset), data_5) = extract_component(input, offset, 8);
+                let ((input, offset), data_6) = extract_component(input, offset, 8);
+                let ((input, offset), data_7) = extract_component(input, offset, 8);
+                let ((input, offset), data_8) = extract_component(input, offset, 8);
                 data_map.insert(3, channel_number.clone());
                 fields.push(ant_rx_message_channel_number_field(
                     mesg_num,
@@ -51022,17 +51018,16 @@ fn ant_tx_message(
                         value.clone(),
                     )?);
                 }
-                let mut mesg_data_component_values =
-                    expand_components(value, &[8, 8, 8, 8, 8, 8, 8, 8, 8]);
-                let data_8 = mesg_data_component_values.pop().unwrap();
-                let data_7 = mesg_data_component_values.pop().unwrap();
-                let data_6 = mesg_data_component_values.pop().unwrap();
-                let data_5 = mesg_data_component_values.pop().unwrap();
-                let data_4 = mesg_data_component_values.pop().unwrap();
-                let data_3 = mesg_data_component_values.pop().unwrap();
-                let data_2 = mesg_data_component_values.pop().unwrap();
-                let data_1 = mesg_data_component_values.pop().unwrap();
-                let channel_number = mesg_data_component_values.pop().unwrap();
+                let input = value.to_ne_bytes();
+                let ((input, offset), channel_number) = extract_component(&input, 0usize, 8);
+                let ((input, offset), data_1) = extract_component(input, offset, 8);
+                let ((input, offset), data_2) = extract_component(input, offset, 8);
+                let ((input, offset), data_3) = extract_component(input, offset, 8);
+                let ((input, offset), data_4) = extract_component(input, offset, 8);
+                let ((input, offset), data_5) = extract_component(input, offset, 8);
+                let ((input, offset), data_6) = extract_component(input, offset, 8);
+                let ((input, offset), data_7) = extract_component(input, offset, 8);
+                let ((input, offset), data_8) = extract_component(input, offset, 8);
                 data_map.insert(3, channel_number.clone());
                 fields.push(ant_tx_message_channel_number_field(
                     mesg_num,
@@ -51490,9 +51485,9 @@ fn exd_data_field_configuration_message(
                         value.clone(),
                     )?);
                 }
-                let mut concept_field_component_values = expand_components(value, &[4, 4]);
-                let concept_count = concept_field_component_values.pop().unwrap();
-                let field_id = concept_field_component_values.pop().unwrap();
+                let input = value.to_ne_bytes();
+                let ((input, offset), field_id) = extract_component(&input, 0usize, 4);
+                let ((input, offset), concept_count) = extract_component(input, offset, 4);
                 data_map.insert(2, field_id.clone());
                 fields.push(exd_data_field_configuration_message_field_id_field(
                     mesg_num,
@@ -51779,9 +51774,9 @@ fn exd_data_concept_configuration_message(
                         value.clone(),
                     )?);
                 }
-                let mut concept_field_component_values = expand_components(value, &[4, 4]);
-                let concept_index = concept_field_component_values.pop().unwrap();
-                let field_id = concept_field_component_values.pop().unwrap();
+                let input = value.to_ne_bytes();
+                let ((input, offset), field_id) = extract_component(&input, 0usize, 4);
+                let ((input, offset), concept_index) = extract_component(input, offset, 4);
                 data_map.insert(2, field_id.clone());
                 fields.push(exd_data_concept_configuration_message_field_id_field(
                     mesg_num,

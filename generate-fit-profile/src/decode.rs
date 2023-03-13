@@ -141,25 +141,21 @@ impl MessageFieldDefinition {
         )?;
         writeln!(out, "}}")?;
 
-        // expand them and then pop to individual values to avoid cloning twice
-        writeln!(
-            out,
-            "let mut {}_component_values = expand_components({}, &[{}]);",
-            self.name(),
-            val_str,
-            self.components()
-                .iter()
-                .map(|(n, _)| n.to_string())
-                .collect::<Vec<String>>()
-                .join(",")
-        )?;
-        for vn in var_names.iter().rev() {
+        // convert value to byte array and extract out components
+        writeln!(out, "let input = {}.to_ne_bytes();", val_str)?;
+        let mut inp_str = "&input";
+        let mut offset_str = "0usize";
+        for (vn, csize) in var_names
+            .iter()
+            .zip(self.components().iter().map(|(n, _)| n))
+        {
             writeln!(
                 out,
-                "let {} = {}_component_values.pop().unwrap();",
-                vn,
-                self.name()
+                "let ((input, offset), {}) = extract_component({}, {}, {});",
+                vn, inp_str, offset_str, csize,
             )?;
+            inp_str = "input";
+            offset_str = "offset";
         }
 
         let mut comps_decoded = HashSet::new();
@@ -396,7 +392,7 @@ pub fn write_decode_file(profile: &FitProfile, out: &mut File) -> Result<(), std
     writeln!(out, "use crate::error::{{Result}};")?;
     writeln!(
         out,
-        "use super::{{calculate_cumulative_value, data_field_with_info, expand_components, unknown_field}};"
+        "use super::{{calculate_cumulative_value, data_field_with_info, extract_component, unknown_field}};"
     )?;
     writeln!(out, "use super::field_types::*;")?;
     writeln!(out, "/// FIT SDK version used to generate profile decoder")?;
