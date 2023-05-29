@@ -75,6 +75,7 @@ impl MessageFieldDefinition {
         if let Some(v) = self.comment() {
             writeln!(out, "// {v}")?;
         }
+        
         if !self.components().is_empty() {
             self.write_component_exp(out, mesg_def, val_str, alt_scale, alt_offset)?;
         } else if !self.subfields().is_empty() {

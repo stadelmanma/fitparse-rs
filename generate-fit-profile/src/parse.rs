@@ -25,17 +25,46 @@ impl FitProfile {
     }
 }
 
+/// Defines the structure of a field type
 #[derive(Clone, Debug)]
 pub struct FieldTypeDefintion {
+    /// The name of the field type
     name: String,
+
+    /// The name of the field type with the first letter capitalized
     titlized_name: String,
+
+    /// The base type of the field type
     base_type: &'static str,
+
+    /// Whether or not this field type is a true enum
     is_true_enum: bool,
+
+    /// Any (optional) comments for this field type
     comment: Option<String>,
+
+    /// A map of variant values to variant definitions
     variant_map: BTreeMap<i64, FieldTypeVariant>,
 }
 
 impl FieldTypeDefintion {
+    /// Create a new field type definition with the given name, base type, and optional comment
+    ///
+    /// # Arguments
+    ///
+    /// * `name` - The name of the field type
+    /// * `base_type` - The base type of the field type (see the `base_type_to_rust_type` function for valid values)
+    /// * `comment` - An optional comment for the field type - Set to `None` if no comment is available
+    ///
+    /// # Returns
+    ///
+    /// A new field type definition
+    ///
+    /// # Example
+    ///
+    /// ```ignore
+    /// let field_type = FieldTypeDefintion::new("file", "u8", Some("The type of file".to_string()));
+    /// ```
     fn new(name: &str, base_type: &'static str, comment: Option<String>) -> Self {
         let is_true_enum = base_type == "enum";
         let base_type = if is_true_enum { "u8" } else { base_type };
@@ -50,30 +79,39 @@ impl FieldTypeDefintion {
         }
     }
 
+    /// Returns the name of the field type
     pub fn name(&self) -> &str {
         &self.name
     }
 
+    /// Returns the name of the field type with the first letter capitalized
     pub fn titlized_name(&self) -> &str {
         &self.titlized_name
     }
 
+    /// Returns the base type of the field type
+    // TODO: Determine if this needs to be 'static
     pub const fn base_type(&self) -> &'static str {
         self.base_type
     }
 
+    /// Returns whether or not this field type is a true enum
     pub const fn is_true_enum(&self) -> bool {
         self.is_true_enum
     }
 
+    /// Returns any (optional) comments for this field type
     pub fn comment(&self) -> Option<&str> {
         self.comment.as_deref()
     }
 
+    /// Returns a map of variant values to variant definitions
     pub const fn variant_map(&self) -> &BTreeMap<i64, FieldTypeVariant> {
         &self.variant_map
     }
 
+    /// Returns the name of the field type's value field
+    // TODO: Determine if this needs to be 'static
     pub const fn other_value_field_name(&self) -> &'static str {
         if self.is_true_enum() {
             "UnknownVariant"
@@ -367,41 +405,39 @@ fn titlecase_string(value: &str) -> String {
     words.join("")
 }
 
-fn process_types(sheet: Range<DataType>) -> Vec<FieldTypeDefintion> {
+#[allow(clippy::cast_possible_truncation)]
+fn process_types(sheet: &Range<DataType>) -> Vec<FieldTypeDefintion> {
     let mut field_types: Vec<FieldTypeDefintion> = Vec::new();
 
     for row in sheet.rows().skip(1) {
         if !row[0].is_empty() {
             // extract enum name
-            let enum_name = match row[0].get_string() {
-                Some(v) => v.to_string(),
-                None => panic!("Enum type name must be a string row={row:?}."),
-            };
+            let enum_name = row[0].get_string().map_or_else(
+                || panic!("Enum type name must be a string row={row:?}."),
+                std::string::ToString::to_string,
+            );
 
             // extract base type and convert to its rust equivalent
-            let rust_type = match row[1].get_string() {
-                Some(v) => base_type_to_rust_type(v),
-                None => panic!("Base type name must be a string row={row:?}."),
-            };
+            let rust_type = row[1].get_string().map_or_else(
+                || panic!("Base type name must be a string row={row:?}."),
+                base_type_to_rust_type,
+            );
             let comment = row[4].get_string().map(std::string::ToString::to_string);
             field_types.push(FieldTypeDefintion::new(&enum_name, rust_type, comment));
         } else if !row[2].is_empty() {
-            let field_type = match field_types.last_mut() {
-                Some(v) => v,
-                None => panic!("field_types vector was empty!"),
-            };
+            let Some(field_type) = field_types.last_mut() else { panic!("field_types vector was empty!") };
             // add enum variant
             // extract enum name
-            let name = match row[2].get_string() {
-                Some(v) => v.to_string(),
-                None => panic!("Enum variant name must be a string row={row:?}."),
-            };
+            let name = row[2].get_string().map_or_else(
+                || panic!("Enum variant name must be a string row={row:?}."),
+                std::string::ToString::to_string,
+            );
 
             // handle mix of numeric and hex string data values
             let value = match &row[3] {
                 DataType::Float(v) => *v as i64,
                 DataType::Int(v) => *v,
-                DataType::String(v) => i64::from_str_radix(&v[2..], 16).unwrap(),
+                DataType::String(v) => i64::from_str_radix(&v[2..], 16).unwrap_or_default(),
                 _ => {
                     panic!("Unsupported enum variant value data type row={row:?}.");
                 }
@@ -500,6 +536,7 @@ fn process_components(
 ) -> Vec<(u8, MessageFieldDefinition)> {
     let mut components = Vec::new();
     for comp_info in field.raw_components() {
+        // FIXME: What happens if the `get()` returns `None`?
         let dest_field = field_lookup.get(comp_info.name()).unwrap();
         let comp_fld = MessageFieldDefinition {
             def_number: dest_field.def_number(),
@@ -516,11 +553,12 @@ fn process_components(
             raw_components: Vec::new(),
             comment: dest_field.comment().map(std::borrow::ToOwned::to_owned),
         };
-        components.push((comp_info.bits(), comp_fld))
+        components.push((comp_info.bits(), comp_fld));
     }
     components
 }
 
+#[allow(clippy::cast_possible_truncation, clippy::cast_sign_loss)]
 fn new_message_field_definition(row: &[DataType]) -> MessageFieldDefinition {
     let def_number = match row[1] {
         DataType::Float(v) => v as u8,
@@ -550,7 +588,7 @@ fn new_message_field_definition(row: &[DataType]) -> MessageFieldDefinition {
     )
 }
 
-fn process_messages(sheet: Range<DataType>) -> Vec<MessageDefinition> {
+fn process_messages(sheet: &Range<DataType>) -> Vec<MessageDefinition> {
     let mut rows = sheet.rows().skip(2);
     let mut messages: Vec<MessageDefinition> = Vec::new();
     let mut msg: MessageDefinition;
@@ -558,7 +596,7 @@ fn process_messages(sheet: Range<DataType>) -> Vec<MessageDefinition> {
     let mut last_def_number: u8 = 0;
 
     // parse first message row to initialize first message to prevent unitialized compile error in loop
-    let row = rows.next().unwrap();
+    let row = rows.next().unwrap_or_default();
     if let Some(v) = row[0].get_string() {
         msg = MessageDefinition::new(
             v,
@@ -594,6 +632,7 @@ fn process_messages(sheet: Range<DataType>) -> Vec<MessageDefinition> {
             let mut temp_row: Vec<DataType> = Vec::from(row);
             temp_row[1] = DataType::Int(i64::from(last_def_number));
             field = new_message_field_definition(&temp_row);
+
             // store subfield ref_field, ref_field_value and defintion, if multiple values can
             // trigger this subfield we simply duplicate them
             let ref_field_names = row[11].get_string().expect("No reference field name(s)");
@@ -623,14 +662,14 @@ pub fn parse_profile(
 
     // process Types sheet
     let field_types = if let Some(Ok(sheet)) = excel.worksheet_range("Types") {
-        process_types(sheet)
+        process_types(&sheet)
     } else {
         panic!("Could not access workbook sheet 'Types'");
     };
 
     // process Messages sheet
     let messages = if let Some(Ok(sheet)) = excel.worksheet_range("Messages") {
-        process_messages(sheet)
+        process_messages(&sheet)
     } else {
         panic!("Could not access workbook sheet 'Messages'");
     };
