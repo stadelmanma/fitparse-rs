@@ -6,14 +6,10 @@
 version: 2
 updates:
   - package-ecosystem: "cargo"
-    directory: "/fit2csv" # Location of package manifests
+    directory: "/fitparser" # Location of package manifests
     schedule:
       interval: "daily"
   - package-ecosystem: "cargo"
-    directory: "/fit2json" # Location of package manifests
-    schedule:
-      interval: "daily"
-  - package-ecosystem: "cargo"
-    directory: "/gpx2csv" # Location of package manifests
+    directory: "/generate-fit-profile" # Location of package manifests
     schedule:
       interval: "daily"
