@@ -15,7 +15,7 @@ impl MessageDefinition {
 
     fn write_decode_function_def(&self, out: &mut File) -> Result<(), std::io::Error> {
         if let Some(v) = self.comment() {
-            writeln!(out, "/// {}", v)?;
+            writeln!(out, "/// {v}")?;
         }
         writeln!(out, "fn {}(mesg_num: MesgNum, data_map: &mut HashMap<u8, Value>, accumlators: &mut HashMap<u32, Value>, options: &HashSet<DecodeOption>) -> Result<Vec<FitDataField>> {{", self.function_name())?;
         writeln!(out, "let mut fields = Vec::new();")?;
@@ -28,7 +28,7 @@ impl MessageDefinition {
         writeln!(out, "match def_num {{")?;
         for field in self.field_map().values() {
             writeln!(out, "{0} => {{", field.def_number())?;
-            field.write_field_decode_block(out, &self, "value", None, None)?;
+            field.write_field_decode_block(out, self, "value", None, None)?;
             writeln!(out, "}}")?;
         }
         writeln!(out, "_ => {{")?;
@@ -47,13 +47,13 @@ impl MessageDefinition {
         writeln!(out, "}}")?;
 
         for field in self.field_map().values() {
-            field.write_create_fn_def(out, &self)?;
+            field.write_create_fn_def(out, self)?;
             let mut created_subfield_fns = HashSet::new();
             for (_, _, sub_field_info) in field.subfields() {
                 if !created_subfield_fns.contains(sub_field_info.name()) {
                     // only create the function once, even if multiple values reference
                     // the subfield
-                    sub_field_info.write_create_fn_def(out, &self)?;
+                    sub_field_info.write_create_fn_def(out, self)?;
                 }
                 created_subfield_fns.insert(sub_field_info.name());
             }
@@ -73,7 +73,7 @@ impl MessageFieldDefinition {
         alt_offset: Option<f64>,
     ) -> Result<(), std::io::Error> {
         if let Some(v) = self.comment() {
-            writeln!(out, "// {}", v)?;
+            writeln!(out, "// {v}")?;
         }
         if !self.components().is_empty() {
             self.write_component_exp(out, mesg_def, val_str, alt_scale, alt_offset)?;
@@ -117,7 +117,7 @@ impl MessageFieldDefinition {
                 var_names.push(format!(
                     "{}_{}",
                     fld.name(),
-                    array_flds.get(&fld.def_number()).unwrap()
+                    array_flds.get(&fld.def_number()).unwrap_or(&0)
                 ));
             } else {
                 var_names.push(fld.name().to_owned());
@@ -134,7 +134,7 @@ impl MessageFieldDefinition {
             "fields.push({}?);",
             self.generate_create_fn_call(
                 mesg_def,
-                &format!("{}.clone()", val_str),
+                &format!("{val_str}.clone()"),
                 alt_scale,
                 alt_offset
             )
@@ -142,7 +142,7 @@ impl MessageFieldDefinition {
         writeln!(out, "}}")?;
 
         // convert value to byte array and extract out components
-        writeln!(out, "let input = {}.to_ne_bytes();", val_str)?;
+        writeln!(out, "let input = {val_str}.to_ne_bytes();")?;
         let mut inp_str = "&input";
         let mut offset_str = "0usize";
         for (vn, csize) in var_names
@@ -151,8 +151,7 @@ impl MessageFieldDefinition {
         {
             writeln!(
                 out,
-                "let ((input, offset), {}) = extract_component({}, {}, {});",
-                vn, inp_str, offset_str, csize,
+                "let ((input, offset), {vn}) = extract_component({inp_str}, {offset_str}, {csize});",
             )?;
             inp_str = "input";
             offset_str = "offset";
@@ -172,8 +171,7 @@ impl MessageFieldDefinition {
                     out,
                     "let {} = Value::Array(vec![{}]);",
                     comp.name(),
-                    (0..*array_flds.get(&comp.def_number()).unwrap())
-                        .into_iter()
+                    (0..*array_flds.get(&comp.def_number()).unwrap_or(&0))
                         .map(|i| format!("{}_{}", comp.name(), i + 1))
                         .collect::<Vec<String>>()
                         .join(",")
@@ -321,8 +319,8 @@ impl MessageFieldDefinition {
             mesg_def.function_name(),
             self.name(),
             self.accumulate(),
-            alt_scale.unwrap_or(self.scale()),
-            alt_offset.unwrap_or(self.offset()),
+            alt_scale.unwrap_or_else(|| self.scale()),
+            alt_offset.unwrap_or_else(|| self.offset()),
             self.units(),
             val_str,
         )
@@ -332,21 +330,20 @@ impl MessageFieldDefinition {
 fn write_unknown_mesg_fn(out: &mut File) -> Result<(), std::io::Error> {
     writeln!(
         out,
-        "{}",
         "
         fn unknown_message(
         data_map: &HashMap<u8, Value>,
         options: &HashSet<DecodeOption>,
-    ) -> Result<Vec<FitDataField>> {
+    ) -> Result<Vec<FitDataField>> {{
         // since it's an unknown message all the fields are unknown
-        if options.contains(&DecodeOption::DropUnknownFields) {{
+        if options.contains(&DecodeOption::DropUnknownFields) {{{{
             return Ok(Vec::new());
-        }}
+        }}}}
         let fields = data_map.iter()
             .map(|(k, v)| unknown_field(*k, v.clone()))
             .collect();
         Ok(fields)
-    }
+    }}
     "
     )
 }

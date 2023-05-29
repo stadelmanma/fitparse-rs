@@ -4,7 +4,7 @@ use std::collections::{BTreeMap, HashMap};
 use std::path::PathBuf;
 
 // the fields in these structs are mostly duplicated from code in src/profile/parser.rs
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Default)]
 pub struct FitProfile {
     version: String,
     field_types: Vec<FieldTypeDefintion>,
@@ -36,13 +36,13 @@ pub struct FieldTypeDefintion {
 }
 
 impl FieldTypeDefintion {
-    fn new(name: String, base_type: &'static str, comment: Option<String>) -> Self {
+    fn new(name: &str, base_type: &'static str, comment: Option<String>) -> Self {
         let is_true_enum = base_type == "enum";
         let base_type = if is_true_enum { "u8" } else { base_type };
 
-        FieldTypeDefintion {
-            name: name.clone(),
-            titlized_name: titlecase_string(&name),
+        Self {
+            name: name.to_string(),
+            titlized_name: titlecase_string(name),
             base_type,
             is_true_enum,
             comment,
@@ -58,11 +58,11 @@ impl FieldTypeDefintion {
         &self.titlized_name
     }
 
-    pub fn base_type(&self) -> &'static str {
-        &self.base_type
+    pub const fn base_type(&self) -> &'static str {
+        self.base_type
     }
 
-    pub fn is_true_enum(&self) -> bool {
+    pub const fn is_true_enum(&self) -> bool {
         self.is_true_enum
     }
 
@@ -70,11 +70,11 @@ impl FieldTypeDefintion {
         self.comment.as_deref()
     }
 
-    pub fn variant_map(&self) -> &BTreeMap<i64, FieldTypeVariant> {
+    pub const fn variant_map(&self) -> &BTreeMap<i64, FieldTypeVariant> {
         &self.variant_map
     }
 
-    pub fn other_value_field_name(&self) -> &'static str {
+    pub const fn other_value_field_name(&self) -> &'static str {
         if self.is_true_enum() {
             "UnknownVariant"
         } else {
@@ -97,12 +97,12 @@ impl FieldTypeVariant {
         let mut titlized_name = titlecase_string(&name);
         let first_let = titlized_name.as_bytes()[0];
         if !first_let.is_ascii_alphabetic() {
-            titlized_name = format!("Name{}", titlized_name);
+            titlized_name = format!("Name{titlized_name}");
         }
 
-        FieldTypeVariant {
-            name: name.clone(),
-            titlized_name: titlized_name,
+        Self {
+            name,
+            titlized_name,
             value,
             comment,
         }
@@ -116,7 +116,7 @@ impl FieldTypeVariant {
         &self.titlized_name
     }
 
-    pub fn value(&self) -> i64 {
+    pub const fn value(&self) -> i64 {
         self.value
     }
 
@@ -135,9 +135,9 @@ pub struct MessageDefinition {
 
 impl MessageDefinition {
     fn new(name: &str, comment: Option<String>) -> Self {
-        MessageDefinition {
+        Self {
             name: name.to_string(),
-            titlized_name: titlecase_string(&name),
+            titlized_name: titlecase_string(name),
             comment,
             field_map: BTreeMap::new(),
         }
@@ -151,7 +151,7 @@ impl MessageDefinition {
         &self.titlized_name
     }
 
-    pub fn field_map(&self) -> &BTreeMap<u8, MessageFieldDefinition> {
+    pub const fn field_map(&self) -> &BTreeMap<u8, MessageFieldDefinition> {
         &self.field_map
     }
 
@@ -160,6 +160,7 @@ impl MessageDefinition {
     }
 
     pub fn get_field_by_name(&self, name: &str) -> &MessageFieldDefinition {
+        // FIXME: Unsafe `unwrap` call - `None` case isn't handled.
         self.field_map()
             .values()
             .find(|f| f.name() == name)
@@ -167,7 +168,7 @@ impl MessageDefinition {
     }
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Default)]
 pub struct MessageFieldDefinition {
     def_number: u8,
     name: String,
@@ -185,6 +186,7 @@ pub struct MessageFieldDefinition {
 }
 
 impl MessageFieldDefinition {
+    #[allow(clippy::too_many_arguments)]
     fn new(
         def_number: u8,
         name: &str,
@@ -197,7 +199,7 @@ impl MessageFieldDefinition {
         raw_components: Vec<MessageFieldComponent>,
         comment: Option<String>,
     ) -> Self {
-        MessageFieldDefinition {
+        Self {
             def_number,
             name: name.to_string(),
             field_type: field_type_str_to_field_type(field_type),
@@ -214,7 +216,7 @@ impl MessageFieldDefinition {
         }
     }
 
-    pub fn def_number(&self) -> u8 {
+    pub const fn def_number(&self) -> u8 {
         self.def_number
     }
 
@@ -226,15 +228,15 @@ impl MessageFieldDefinition {
         &self.field_type
     }
 
-    pub fn is_array(&self) -> bool {
+    pub const fn is_array(&self) -> bool {
         self.is_array
     }
 
-    pub fn scale(&self) -> f64 {
+    pub const fn scale(&self) -> f64 {
         self.scale
     }
 
-    pub fn offset(&self) -> f64 {
+    pub const fn offset(&self) -> f64 {
         self.offset
     }
 
@@ -242,23 +244,23 @@ impl MessageFieldDefinition {
         &self.units
     }
 
-    pub fn accumulate(&self) -> bool {
+    pub const fn accumulate(&self) -> bool {
         self.accumulate
     }
 
-    pub fn parent_field(&self) -> &Option<Box<MessageFieldDefinition>> {
+    pub const fn parent_field(&self) -> &Option<Box<Self>> {
         &self.parent_field
     }
 
-    pub fn set_parent_field(&mut self, field: MessageFieldDefinition) {
+    pub fn set_parent_field(&mut self, field: Self) {
         self.parent_field = Some(Box::new(field));
     }
 
-    pub fn subfields(&self) -> &[(String, String, MessageFieldDefinition)] {
+    pub fn subfields(&self) -> &[(String, String, Self)] {
         &self.subfields
     }
 
-    pub fn subfields_mut(&mut self) -> &mut [(String, String, MessageFieldDefinition)] {
+    pub fn subfields_mut(&mut self) -> &mut [(String, String, Self)] {
         &mut self.subfields
     }
 
@@ -266,7 +268,7 @@ impl MessageFieldDefinition {
         &self.raw_components
     }
 
-    pub fn components(&self) -> &[(u8, MessageFieldDefinition)] {
+    pub fn components(&self) -> &[(u8, Self)] {
         &self.components
     }
 
@@ -290,11 +292,11 @@ impl MessageFieldComponent {
         &self.name
     }
 
-    pub fn scale(&self) -> f64 {
+    pub const fn scale(&self) -> f64 {
         self.scale
     }
 
-    pub fn offset(&self) -> f64 {
+    pub const fn offset(&self) -> f64 {
         self.offset
     }
 
@@ -302,11 +304,11 @@ impl MessageFieldComponent {
         &self.units
     }
 
-    pub fn accumulate(&self) -> bool {
+    pub const fn accumulate(&self) -> bool {
         self.accumulate
     }
 
-    pub fn bits(&self) -> u8 {
+    pub const fn bits(&self) -> u8 {
         self.bits
     }
 }
@@ -318,15 +320,12 @@ fn base_type_to_rust_type(base_type_str: &str) -> &'static str {
     match base_type_str {
         "enum" => "enum", // "pseduo-type" we use to detect real enums, changed to u8 later on
         "sint8" => "i8",
-        "uint8" => "u8",
-        "uint8z" => "u8",
+        "uint8" | "unit8z" => "u8",
         "sint16" => "i16",
-        "uint16" => "u16",
-        "uint16z" => "u16",
+        "uint16" | "uint16z" => "u16",
         "sint32" => "i32",
-        "uint32" => "u32",
-        "uint32z" => "u32",
-        _ => panic!("unsupported base_type for enum field: {}", base_type_str),
+        "uint32" | "uint32z" => "u32",
+        _ => panic!("unsupported base_type for enum field: {base_type_str}"),
     }
 }
 
@@ -354,7 +353,10 @@ fn field_type_str_to_field_type(field_type_str: &str) -> String {
 }
 
 fn titlecase_string(value: &str) -> String {
-    let mut words: Vec<String> = value.split('_').map(|v| v.to_string()).collect();
+    let mut words: Vec<String> = value
+        .split('_')
+        .map(std::string::ToString::to_string)
+        .collect();
 
     for word in &mut words {
         if let Some(l) = word.get_mut(0..1) {
@@ -373,16 +375,16 @@ fn process_types(sheet: Range<DataType>) -> Vec<FieldTypeDefintion> {
             // extract enum name
             let enum_name = match row[0].get_string() {
                 Some(v) => v.to_string(),
-                None => panic!("Enum type name must be a string row={:?}.", row),
+                None => panic!("Enum type name must be a string row={row:?}."),
             };
 
             // extract base type and convert to its rust equivalent
             let rust_type = match row[1].get_string() {
                 Some(v) => base_type_to_rust_type(v),
-                None => panic!("Base type name must be a string row={:?}.", row),
+                None => panic!("Base type name must be a string row={row:?}."),
             };
-            let comment = row[4].get_string().map(|v| v.to_string());
-            field_types.push(FieldTypeDefintion::new(enum_name, rust_type, comment));
+            let comment = row[4].get_string().map(std::string::ToString::to_string);
+            field_types.push(FieldTypeDefintion::new(&enum_name, rust_type, comment));
         } else if !row[2].is_empty() {
             let field_type = match field_types.last_mut() {
                 Some(v) => v,
@@ -392,7 +394,7 @@ fn process_types(sheet: Range<DataType>) -> Vec<FieldTypeDefintion> {
             // extract enum name
             let name = match row[2].get_string() {
                 Some(v) => v.to_string(),
-                None => panic!("Enum variant name must be a string row={:?}.", row),
+                None => panic!("Enum variant name must be a string row={row:?}."),
             };
 
             // handle mix of numeric and hex string data values
@@ -401,10 +403,10 @@ fn process_types(sheet: Range<DataType>) -> Vec<FieldTypeDefintion> {
                 DataType::Int(v) => *v,
                 DataType::String(v) => i64::from_str_radix(&v[2..], 16).unwrap(),
                 _ => {
-                    panic!("Unsupported enum variant value data type row={:?}.", row);
+                    panic!("Unsupported enum variant value data type row={row:?}.");
                 }
             };
-            let comment = row[4].get_string().map(|v| v.to_string());
+            let comment = row[4].get_string().map(std::string::ToString::to_string);
             field_type
                 .variant_map
                 .insert(value, FieldTypeVariant::new(name, value, comment));
@@ -424,7 +426,10 @@ fn parse_message_field_components(row: &[DataType]) -> Vec<MessageFieldComponent
             return components;
         }
     };
-    let cols: Vec<String> = row[6..=10].iter().map(|v| v.to_string()).collect();
+    let cols: Vec<String> = row[6..=10]
+        .iter()
+        .map(std::string::ToString::to_string)
+        .collect();
     let mut scales = split_csv_string!(cols[0]).map(|s| s.parse::<f64>().ok());
     let mut offsets = split_csv_string!(cols[1]).map(|s| s.parse::<f64>().ok());
     let mut units = split_csv_string!(cols[2]);
@@ -441,7 +446,7 @@ fn parse_message_field_components(row: &[DataType]) -> Vec<MessageFieldComponent
             bits: bits
                 .next()
                 .flatten()
-                .unwrap_or_else(|| panic!("Could not parse bits value for row: {:?}", row)),
+                .unwrap_or_else(|| panic!("Could not parse bits value for row: {row:?}")),
             accumulate: accumulate.next().unwrap_or(false),
         });
     }
@@ -470,7 +475,7 @@ fn post_process_message(msg: MessageDefinition) -> MessageDefinition {
     // this all seems horrendously over complicated and inefficient but it's "run once"
     // code, not "application code" that's regularly executed so we'll clean it up later.
     let mut updated_field_map = BTreeMap::new();
-    for (def_num, mut field_def) in field_map.into_iter() {
+    for (def_num, mut field_def) in field_map {
         if !field_def.raw_components().is_empty() {
             field_def.components = process_components(&field_def, &name_to_field);
         }
@@ -509,7 +514,7 @@ fn process_components(
             subfields: dest_field.subfields().to_vec(),
             components: process_components(dest_field, field_lookup),
             raw_components: Vec::new(),
-            comment: dest_field.comment().map(|s| s.to_owned()),
+            comment: dest_field.comment().map(std::borrow::ToOwned::to_owned),
         };
         components.push((comp_info.bits(), comp_fld))
     }
@@ -520,16 +525,16 @@ fn new_message_field_definition(row: &[DataType]) -> MessageFieldDefinition {
     let def_number = match row[1] {
         DataType::Float(v) => v as u8,
         DataType::Int(v) => v as u8,
-        _ => panic!("Field defintiton number must be an integer, row={:?}.", row),
+        _ => panic!("Field defintiton number must be an integer, row={row:?}."),
     };
     let name = row[2]
         .get_string()
-        .unwrap_or_else(|| panic!("Field name must be a string, row={:?}.", row));
+        .unwrap_or_else(|| panic!("Field name must be a string, row={row:?}."));
     let ftype = row[3]
         .get_string()
-        .unwrap_or_else(|| panic!("Field type must be a string, row={:?}.", row));
+        .unwrap_or_else(|| panic!("Field type must be a string, row={row:?}."));
     let components = parse_message_field_components(row);
-    let comment = row[13].get_string().map(|v| v.to_string());
+    let comment = row[13].get_string().map(std::string::ToString::to_string);
 
     MessageFieldDefinition::new(
         def_number,
@@ -555,9 +560,12 @@ fn process_messages(sheet: Range<DataType>) -> Vec<MessageDefinition> {
     // parse first message row to initialize first message to prevent unitialized compile error in loop
     let row = rows.next().unwrap();
     if let Some(v) = row[0].get_string() {
-        msg = MessageDefinition::new(v, row[13].get_string().map(|v| v.to_string()));
+        msg = MessageDefinition::new(
+            v,
+            row[13].get_string().map(std::string::ToString::to_string),
+        );
     } else {
-        panic!("Message name must be a string row={:?}.", row);
+        panic!("Message name must be a string row={row:?}.");
     }
 
     // process messages and fields
@@ -566,9 +574,12 @@ fn process_messages(sheet: Range<DataType>) -> Vec<MessageDefinition> {
         if !row[0].is_empty() {
             if let Some(v) = row[0].get_string() {
                 messages.push(msg);
-                msg = MessageDefinition::new(v, row[13].get_string().map(|v| v.to_string()));
+                msg = MessageDefinition::new(
+                    v,
+                    row[13].get_string().map(std::string::ToString::to_string),
+                );
             } else {
-                panic!("Message name must be a string row={:?}.", row);
+                panic!("Message name must be a string row={row:?}.");
             }
         } else if !row[1].is_empty() {
             field = new_message_field_definition(row);
@@ -581,7 +592,7 @@ fn process_messages(sheet: Range<DataType>) -> Vec<MessageDefinition> {
                 .get_mut(&last_def_number)
                 .expect("No parent field defined for subfield!");
             let mut temp_row: Vec<DataType> = Vec::from(row);
-            temp_row[1] = DataType::Int(last_def_number as i64);
+            temp_row[1] = DataType::Int(i64::from(last_def_number));
             field = new_message_field_definition(&temp_row);
             // store subfield ref_field, ref_field_value and defintion, if multiple values can
             // trigger this subfield we simply duplicate them
@@ -600,17 +611,15 @@ fn process_messages(sheet: Range<DataType>) -> Vec<MessageDefinition> {
     messages.push(msg);
     // post process messages once we have "all" the
     // information present
-    messages
-        .into_iter()
-        .map(|m| post_process_message(m))
-        .collect()
+    messages.into_iter().map(post_process_message).collect()
 }
 
+#[allow(clippy::module_name_repetitions)]
 pub fn parse_profile(
     profile_fname: &PathBuf,
     version: String,
 ) -> Result<FitProfile, Box<dyn std::error::Error>> {
-    let mut excel: Xlsx<_> = open_workbook(&profile_fname)?;
+    let mut excel: Xlsx<_> = open_workbook(profile_fname)?;
 
     // process Types sheet
     let field_types = if let Some(Ok(sheet)) = excel.worksheet_range("Types") {

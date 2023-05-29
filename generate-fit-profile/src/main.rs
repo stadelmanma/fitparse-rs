@@ -29,36 +29,45 @@ struct Cli {
 /// call rustfmt on a generated file to cleanup auto-gen code
 fn rustfmt(fname: &PathBuf) {
     Command::new("rustfmt")
-        .arg(&fname)
+        .arg(fname)
         .status()
-        .unwrap_or_else(|_| panic!("failed to execute rustfmt on {:?}", fname));
+        .unwrap_or_else(|_| panic!("failed to execute rustfmt on {fname:?}"));
 }
 
 fn run() -> Result<(), Box<dyn std::error::Error>> {
-    let opt = Cli::from_args();
-    let profile_fname = opt.profile_path;
-    let profile_vers = match opt.sdk_version {
-        Some(vers) => vers,
-        None => match profile_fname.parent().and_then(|p| p.file_name()) {
-            Some(dirname) => dirname.to_str().unwrap().replace("FitSDKRelease_", ""),
-            None => String::from("unknown"),
+    let opts = Cli::from_args();
+    let profile_fname = opts.profile_path;
+
+    let profile_vers = opts.sdk_version.map_or_else(
+        || {
+            profile_fname
+                .parent()
+                .and_then(std::path::Path::file_name)
+                .map_or_else(
+                    || String::from("unknown"),
+                    |dirname| {
+                        dirname
+                            .to_str()
+                            .unwrap_or_default()
+                            .replace("FitSDKRelease_", "")
+                    },
+                )
         },
-    };
-    if !profile_vers.chars().all(|c| c.is_ascii_digit() || c == '.') {
-        panic!(
-            "Could not determine version from Profile.xslx path: '{:?}' - %{}%",
-            profile_fname, profile_vers
+        |vers| vers,
+    );
+
+    assert!(profile_vers.chars().all(|c| c.is_ascii_digit() || c == '.'),
+            "Could not determine version from Profile.xslx path: '{profile_fname:?}' - %{profile_vers}%"
         );
-    }
 
     // process excel file and output
-    let profile = parse_profile(&profile_fname, profile_vers).unwrap();
+    let profile = parse_profile(&profile_fname, profile_vers).unwrap_or_default();
 
     let dest_dir = Path::new("./fitparser/src/profile");
     let types_fname = dest_dir.join("field_types.rs");
     eprintln!("Generating file: {:?}", &types_fname);
-    let mut out = File::create(&types_fname)?;
-    write_types_file(&profile, &mut out)?;
+    let mut out_file = File::create(&types_fname)?;
+    write_types_file(&profile, &mut out_file)?;
     rustfmt(&types_fname);
 
     let decode_fname = dest_dir.join("decode.rs");
@@ -74,7 +83,7 @@ fn main() {
     std::process::exit(match run() {
         Ok(_) => 0,
         Err(err) => {
-            eprintln!("{}", err);
+            eprintln!("{err}");
             1
         }
     });
