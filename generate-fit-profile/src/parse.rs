@@ -546,7 +546,7 @@ fn new_message_field_definition(row: &[DataType]) -> MessageFieldDefinition {
 }
 
 fn process_messages(sheet: Range<DataType>) -> Vec<MessageDefinition> {
-    let mut rows = sheet.rows().skip(2);
+    let mut rows = sheet.rows().skip(1);
     let mut messages: Vec<MessageDefinition> = Vec::new();
     let mut msg: MessageDefinition;
     let mut field: MessageFieldDefinition;
