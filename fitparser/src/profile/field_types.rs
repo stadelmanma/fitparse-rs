@@ -1,4 +1,4 @@
-//! Auto generated profile field types from FIT SDK Release: 21.89.00
+//! Auto generated profile field types from FIT SDK Release: 21.105.00
 //! Not all of these may be used by the defined set of FIT messages
 #![allow(missing_docs)]
 #![allow(dead_code)]
@@ -253,6 +253,7 @@ pub enum MesgNum {
     MagnetometerData,
     BarometerData,
     OneDSensorCalibration,
+    TimeInZone,
     Set,
     StressLevel,
     DiveSettings,
@@ -261,8 +262,12 @@ pub enum MesgNum {
     ExerciseTitle,
     DiveSummary,
     Jump,
+    Split,
     ClimbPro,
+    TankUpdate,
+    TankSummary,
     DeviceAuxBatteryInfo,
+    DiveApneaAlarm,
     /// 0xFF00 - 0xFFFE reserved for manufacturer specific messages
     MfgRangeMin,
     /// 0xFF00 - 0xFFFE reserved for manufacturer specific messages
@@ -351,6 +356,7 @@ impl MesgNum {
             208 => true,
             209 => true,
             210 => true,
+            216 => true,
             225 => true,
             227 => true,
             258 => true,
@@ -359,8 +365,12 @@ impl MesgNum {
             264 => true,
             268 => true,
             285 => true,
+            312 => true,
             317 => true,
+            319 => true,
+            323 => true,
             375 => true,
+            393 => true,
             65280 => true,
             65534 => true,
             _ => false,
@@ -447,6 +457,7 @@ impl MesgNum {
             MesgNum::MagnetometerData => 208,
             MesgNum::BarometerData => 209,
             MesgNum::OneDSensorCalibration => 210,
+            MesgNum::TimeInZone => 216,
             MesgNum::Set => 225,
             MesgNum::StressLevel => 227,
             MesgNum::DiveSettings => 258,
@@ -455,8 +466,12 @@ impl MesgNum {
             MesgNum::ExerciseTitle => 264,
             MesgNum::DiveSummary => 268,
             MesgNum::Jump => 285,
+            MesgNum::Split => 312,
             MesgNum::ClimbPro => 317,
+            MesgNum::TankUpdate => 319,
+            MesgNum::TankSummary => 323,
             MesgNum::DeviceAuxBatteryInfo => 375,
+            MesgNum::DiveApneaAlarm => 393,
             MesgNum::MfgRangeMin => 65280,
             MesgNum::MfgRangeMax => 65534,
             MesgNum::Value(value) => value,
@@ -548,6 +563,7 @@ impl fmt::Display for MesgNum {
             MesgNum::MagnetometerData => write!(f, "magnetometer_data"),
             MesgNum::BarometerData => write!(f, "barometer_data"),
             MesgNum::OneDSensorCalibration => write!(f, "one_d_sensor_calibration"),
+            MesgNum::TimeInZone => write!(f, "time_in_zone"),
             MesgNum::Set => write!(f, "set"),
             MesgNum::StressLevel => write!(f, "stress_level"),
             MesgNum::DiveSettings => write!(f, "dive_settings"),
@@ -556,8 +572,12 @@ impl fmt::Display for MesgNum {
             MesgNum::ExerciseTitle => write!(f, "exercise_title"),
             MesgNum::DiveSummary => write!(f, "dive_summary"),
             MesgNum::Jump => write!(f, "jump"),
+            MesgNum::Split => write!(f, "split"),
             MesgNum::ClimbPro => write!(f, "climb_pro"),
+            MesgNum::TankUpdate => write!(f, "tank_update"),
+            MesgNum::TankSummary => write!(f, "tank_summary"),
             MesgNum::DeviceAuxBatteryInfo => write!(f, "device_aux_battery_info"),
+            MesgNum::DiveApneaAlarm => write!(f, "dive_apnea_alarm"),
             MesgNum::MfgRangeMin => write!(f, "mfg_range_min"),
             MesgNum::MfgRangeMax => write!(f, "mfg_range_max"),
             MesgNum::Value(value) => write!(f, "{}", value),
@@ -646,6 +666,7 @@ impl convert::From<u16> for MesgNum {
             208 => MesgNum::MagnetometerData,
             209 => MesgNum::BarometerData,
             210 => MesgNum::OneDSensorCalibration,
+            216 => MesgNum::TimeInZone,
             225 => MesgNum::Set,
             227 => MesgNum::StressLevel,
             258 => MesgNum::DiveSettings,
@@ -654,8 +675,12 @@ impl convert::From<u16> for MesgNum {
             264 => MesgNum::ExerciseTitle,
             268 => MesgNum::DiveSummary,
             285 => MesgNum::Jump,
+            312 => MesgNum::Split,
             317 => MesgNum::ClimbPro,
+            319 => MesgNum::TankUpdate,
+            323 => MesgNum::TankSummary,
             375 => MesgNum::DeviceAuxBatteryInfo,
+            393 => MesgNum::DiveApneaAlarm,
             65280 => MesgNum::MfgRangeMin,
             65534 => MesgNum::MfgRangeMax,
             _ => MesgNum::Value(value),
@@ -2997,6 +3022,10 @@ pub enum Sport {
     Boxing,
     FloorClimbing,
     Diving,
+    Hiit,
+    Racket,
+    WaterTubing,
+    Wakesurfing,
     /// All is for goals only to include all sports.
     All,
     UnknownVariant(u8),
@@ -3054,6 +3083,10 @@ impl Sport {
             47 => true,
             48 => true,
             53 => true,
+            62 => true,
+            64 => true,
+            76 => true,
+            77 => true,
             254 => true,
             _ => false,
         }
@@ -3110,6 +3143,10 @@ impl Sport {
             Sport::Boxing => 47,
             Sport::FloorClimbing => 48,
             Sport::Diving => 53,
+            Sport::Hiit => 62,
+            Sport::Racket => 64,
+            Sport::WaterTubing => 76,
+            Sport::Wakesurfing => 77,
             Sport::All => 254,
             Sport::UnknownVariant(value) => value,
         }
@@ -3171,6 +3208,10 @@ impl fmt::Display for Sport {
             Sport::Boxing => write!(f, "boxing"),
             Sport::FloorClimbing => write!(f, "floor_climbing"),
             Sport::Diving => write!(f, "diving"),
+            Sport::Hiit => write!(f, "hiit"),
+            Sport::Racket => write!(f, "racket"),
+            Sport::WaterTubing => write!(f, "water_tubing"),
+            Sport::Wakesurfing => write!(f, "wakesurfing"),
             Sport::All => write!(f, "all"),
             Sport::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
@@ -3229,6 +3270,10 @@ impl convert::From<u8> for Sport {
             47 => Sport::Boxing,
             48 => Sport::FloorClimbing,
             53 => Sport::Diving,
+            62 => Sport::Hiit,
+            64 => Sport::Racket,
+            76 => Sport::WaterTubing,
+            77 => Sport::Wakesurfing,
             254 => Sport::All,
             _ => Sport::UnknownVariant(value),
         }
@@ -3968,6 +4013,18 @@ pub enum SubSport {
     IndoorClimbing,
     /// Climbing
     Bouldering,
+    /// High Intensity Interval Training
+    Hiit,
+    /// HIIT
+    Amrap,
+    /// HIIT
+    Emom,
+    /// HIIT
+    Tabata,
+    /// Racket
+    Pickleball,
+    /// Racket
+    Padel,
     All,
     UnknownVariant(u8),
 }
@@ -4039,6 +4096,12 @@ impl SubSport {
             67 => true,
             68 => true,
             69 => true,
+            70 => true,
+            73 => true,
+            74 => true,
+            75 => true,
+            84 => true,
+            85 => true,
             254 => true,
             _ => false,
         }
@@ -4110,6 +4173,12 @@ impl SubSport {
             SubSport::Ultra => 67,
             SubSport::IndoorClimbing => 68,
             SubSport::Bouldering => 69,
+            SubSport::Hiit => 70,
+            SubSport::Amrap => 73,
+            SubSport::Emom => 74,
+            SubSport::Tabata => 75,
+            SubSport::Pickleball => 84,
+            SubSport::Padel => 85,
             SubSport::All => 254,
             SubSport::UnknownVariant(value) => value,
         }
@@ -4186,6 +4255,12 @@ impl fmt::Display for SubSport {
             SubSport::Ultra => write!(f, "ultra"),
             SubSport::IndoorClimbing => write!(f, "indoor_climbing"),
             SubSport::Bouldering => write!(f, "bouldering"),
+            SubSport::Hiit => write!(f, "hiit"),
+            SubSport::Amrap => write!(f, "amrap"),
+            SubSport::Emom => write!(f, "emom"),
+            SubSport::Tabata => write!(f, "tabata"),
+            SubSport::Pickleball => write!(f, "pickleball"),
+            SubSport::Padel => write!(f, "padel"),
             SubSport::All => write!(f, "all"),
             SubSport::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
@@ -4259,6 +4334,12 @@ impl convert::From<u8> for SubSport {
             67 => SubSport::Ultra,
             68 => SubSport::IndoorClimbing,
             69 => SubSport::Bouldering,
+            70 => SubSport::Hiit,
+            73 => SubSport::Amrap,
+            74 => SubSport::Emom,
+            75 => SubSport::Tabata,
+            84 => SubSport::Pickleball,
+            85 => SubSport::Padel,
             254 => SubSport::All,
             _ => SubSport::UnknownVariant(value),
         }
@@ -5093,8 +5174,24 @@ pub enum Event {
     ElevLowAlert,
     /// marker
     CommTimeout,
+    /// marker
+    DiveAlert,
+    /// marker
+    DiveGasSwitched,
+    /// marker
+    TankPressureReserve,
+    /// marker
+    TankPressureCritical,
+    /// marker
+    TankLost,
     /// start/stop/marker
     RadarThreatAlert,
+    /// marker
+    TankBatteryLow,
+    /// marker - tank pod has connected
+    TankPodConnected,
+    /// marker - tank pod has lost connection
+    TankPodDisconnected,
     UnknownVariant(u8),
 }
 impl Event {
@@ -5136,7 +5233,15 @@ impl Event {
             45 => true,
             46 => true,
             47 => true,
+            56 => true,
+            57 => true,
+            71 => true,
+            72 => true,
+            73 => true,
             75 => true,
+            76 => true,
+            81 => true,
+            82 => true,
             _ => false,
         }
     }
@@ -5178,7 +5283,15 @@ impl Event {
             Event::ElevHighAlert => 45,
             Event::ElevLowAlert => 46,
             Event::CommTimeout => 47,
+            Event::DiveAlert => 56,
+            Event::DiveGasSwitched => 57,
+            Event::TankPressureReserve => 71,
+            Event::TankPressureCritical => 72,
+            Event::TankLost => 73,
             Event::RadarThreatAlert => 75,
+            Event::TankBatteryLow => 76,
+            Event::TankPodConnected => 81,
+            Event::TankPodDisconnected => 82,
             Event::UnknownVariant(value) => value,
         }
     }
@@ -5225,7 +5338,15 @@ impl fmt::Display for Event {
             Event::ElevHighAlert => write!(f, "elev_high_alert"),
             Event::ElevLowAlert => write!(f, "elev_low_alert"),
             Event::CommTimeout => write!(f, "comm_timeout"),
+            Event::DiveAlert => write!(f, "dive_alert"),
+            Event::DiveGasSwitched => write!(f, "dive_gas_switched"),
+            Event::TankPressureReserve => write!(f, "tank_pressure_reserve"),
+            Event::TankPressureCritical => write!(f, "tank_pressure_critical"),
+            Event::TankLost => write!(f, "tank_lost"),
             Event::RadarThreatAlert => write!(f, "radar_threat_alert"),
+            Event::TankBatteryLow => write!(f, "tank_battery_low"),
+            Event::TankPodConnected => write!(f, "tank_pod_connected"),
+            Event::TankPodDisconnected => write!(f, "tank_pod_disconnected"),
             Event::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
@@ -5269,7 +5390,15 @@ impl convert::From<u8> for Event {
             45 => Event::ElevHighAlert,
             46 => Event::ElevLowAlert,
             47 => Event::CommTimeout,
+            56 => Event::DiveAlert,
+            57 => Event::DiveGasSwitched,
+            71 => Event::TankPressureReserve,
+            72 => Event::TankPressureCritical,
+            73 => Event::TankLost,
             75 => Event::RadarThreatAlert,
+            76 => Event::TankBatteryLow,
+            81 => Event::TankPodConnected,
+            82 => Event::TankPodDisconnected,
             _ => Event::UnknownVariant(value),
         }
     }
@@ -5712,6 +5841,7 @@ pub enum HrZoneCalc {
     Custom,
     PercentMaxHr,
     PercentHrr,
+    PercentLthr,
     UnknownVariant(u8),
 }
 impl HrZoneCalc {
@@ -5720,6 +5850,7 @@ impl HrZoneCalc {
             0 => true,
             1 => true,
             2 => true,
+            3 => true,
             _ => false,
         }
     }
@@ -5728,6 +5859,7 @@ impl HrZoneCalc {
             HrZoneCalc::Custom => 0,
             HrZoneCalc::PercentMaxHr => 1,
             HrZoneCalc::PercentHrr => 2,
+            HrZoneCalc::PercentLthr => 3,
             HrZoneCalc::UnknownVariant(value) => value,
         }
     }
@@ -5741,6 +5873,7 @@ impl fmt::Display for HrZoneCalc {
             HrZoneCalc::Custom => write!(f, "custom"),
             HrZoneCalc::PercentMaxHr => write!(f, "percent_max_hr"),
             HrZoneCalc::PercentHrr => write!(f, "percent_hrr"),
+            HrZoneCalc::PercentLthr => write!(f, "percent_lthr"),
             HrZoneCalc::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
@@ -5751,6 +5884,7 @@ impl convert::From<u8> for HrZoneCalc {
             0 => HrZoneCalc::Custom,
             1 => HrZoneCalc::PercentMaxHr,
             2 => HrZoneCalc::PercentHrr,
+            3 => HrZoneCalc::PercentLthr,
             _ => HrZoneCalc::UnknownVariant(value),
         }
     }
@@ -6887,6 +7021,7 @@ pub enum Manufacturer {
     TagHeuer,
     KeiserFitness,
     ZwiftByte,
+    PorscheEp,
     Development,
     Healthandlife,
     Lezyne,
@@ -6955,6 +7090,10 @@ pub enum Manufacturer {
     RaceRepublic,
     Fazua,
     OrekaTraining,
+    /// Lishun Electric & Communication
+    Lsec,
+    LululemonStudio,
+    Shanyue,
     Actigraphcorp,
     Value(u16),
 }
@@ -7103,6 +7242,7 @@ impl Manufacturer {
             142 => true,
             143 => true,
             144 => true,
+            145 => true,
             255 => true,
             257 => true,
             258 => true,
@@ -7167,6 +7307,9 @@ impl Manufacturer {
             317 => true,
             318 => true,
             319 => true,
+            320 => true,
+            321 => true,
+            322 => true,
             5759 => true,
             _ => false,
         }
@@ -7315,6 +7458,7 @@ impl Manufacturer {
             Manufacturer::TagHeuer => 142,
             Manufacturer::KeiserFitness => 143,
             Manufacturer::ZwiftByte => 144,
+            Manufacturer::PorscheEp => 145,
             Manufacturer::Development => 255,
             Manufacturer::Healthandlife => 257,
             Manufacturer::Lezyne => 258,
@@ -7379,6 +7523,9 @@ impl Manufacturer {
             Manufacturer::RaceRepublic => 317,
             Manufacturer::Fazua => 318,
             Manufacturer::OrekaTraining => 319,
+            Manufacturer::Lsec => 320,
+            Manufacturer::LululemonStudio => 321,
+            Manufacturer::Shanyue => 322,
             Manufacturer::Actigraphcorp => 5759,
             Manufacturer::Value(value) => value,
         }
@@ -7532,6 +7679,7 @@ impl fmt::Display for Manufacturer {
             Manufacturer::TagHeuer => write!(f, "tag_heuer"),
             Manufacturer::KeiserFitness => write!(f, "keiser_fitness"),
             Manufacturer::ZwiftByte => write!(f, "zwift_byte"),
+            Manufacturer::PorscheEp => write!(f, "porsche_ep"),
             Manufacturer::Development => write!(f, "development"),
             Manufacturer::Healthandlife => write!(f, "healthandlife"),
             Manufacturer::Lezyne => write!(f, "lezyne"),
@@ -7596,6 +7744,9 @@ impl fmt::Display for Manufacturer {
             Manufacturer::RaceRepublic => write!(f, "race_republic"),
             Manufacturer::Fazua => write!(f, "fazua"),
             Manufacturer::OrekaTraining => write!(f, "oreka_training"),
+            Manufacturer::Lsec => write!(f, "lsec"),
+            Manufacturer::LululemonStudio => write!(f, "lululemon_studio"),
+            Manufacturer::Shanyue => write!(f, "shanyue"),
             Manufacturer::Actigraphcorp => write!(f, "actigraphcorp"),
             Manufacturer::Value(value) => write!(f, "{}", value),
         }
@@ -7746,6 +7897,7 @@ impl convert::From<u16> for Manufacturer {
             142 => Manufacturer::TagHeuer,
             143 => Manufacturer::KeiserFitness,
             144 => Manufacturer::ZwiftByte,
+            145 => Manufacturer::PorscheEp,
             255 => Manufacturer::Development,
             257 => Manufacturer::Healthandlife,
             258 => Manufacturer::Lezyne,
@@ -7810,6 +7962,9 @@ impl convert::From<u16> for Manufacturer {
             317 => Manufacturer::RaceRepublic,
             318 => Manufacturer::Fazua,
             319 => Manufacturer::OrekaTraining,
+            320 => Manufacturer::Lsec,
+            321 => Manufacturer::LululemonStudio,
+            322 => Manufacturer::Shanyue,
             5759 => Manufacturer::Actigraphcorp,
             _ => Manufacturer::Value(value),
         }
@@ -8028,6 +8183,7 @@ pub enum GarminProduct {
     Fenix3HrKor,
     Nautix,
     VivoActiveHrApac,
+    Fr35,
     Oregon7xxWw,
     Edge820,
     EdgeExplore820,
@@ -8057,6 +8213,7 @@ pub enum GarminProduct {
     Fenix5,
     Vivoactive3,
     Edge1030,
+    Fr35Sea,
     Fr235ChinaNfc,
     Foretrex601701,
     VivoMoveHr,
@@ -8191,6 +8348,7 @@ pub enum GarminProduct {
     Edge130PlusAsia,
     ApproachS12,
     VenusqAsia,
+    Edge1040,
     MarqGolferAsia,
     Venu2Plus,
     Fr55,
@@ -8209,6 +8367,8 @@ pub enum GarminProduct {
     Venu2sAsia,
     Venu2Asia,
     Fr945LteAsia,
+    VivoMoveSport,
+    VivomoveTrend,
     ApproachS12Asia,
     Fr255Music,
     Fr255SmallMusic,
@@ -8221,10 +8381,16 @@ pub enum GarminProduct {
     Fr55Asia,
     Vivosmart5,
     Instinct2Asia,
+    /// Adventurer, Athlete, Captain, Golfer
+    MarqGen2,
+    Venusq2,
+    Venusq2music,
+    MarqGen2Aviator,
     D2AirX10,
     HrmProPlus,
     DescentG1Asia,
     Tactix7,
+    InstinctCrossover,
     EdgeExplore2,
     /// Neo Smart, Tacx
     TacxNeoSmart,
@@ -8250,6 +8416,8 @@ pub enum GarminProduct {
     TacxFlux2Smart,
     /// Magnum, Tacx
     TacxMagnum,
+    Edge1040Asia,
+    Enduro2,
     /// SDM4 footpod
     Sdm4,
     EdgeRemote,
@@ -8446,6 +8614,7 @@ impl GarminProduct {
             2477 => true,
             2496 => true,
             2497 => true,
+            2503 => true,
             2512 => true,
             2530 => true,
             2531 => true,
@@ -8474,6 +8643,7 @@ impl GarminProduct {
             2697 => true,
             2700 => true,
             2713 => true,
+            2727 => true,
             2733 => true,
             2769 => true,
             2772 => true,
@@ -8602,6 +8772,7 @@ impl GarminProduct {
             3813 => true,
             3823 => true,
             3837 => true,
+            3843 => true,
             3850 => true,
             3851 => true,
             3869 => true,
@@ -8620,6 +8791,8 @@ impl GarminProduct {
             3949 => true,
             3950 => true,
             3978 => true,
+            3982 => true,
+            3983 => true,
             3986 => true,
             3990 => true,
             3991 => true,
@@ -8632,10 +8805,15 @@ impl GarminProduct {
             4033 => true,
             4063 => true,
             4071 => true,
+            4105 => true,
+            4115 => true,
+            4116 => true,
+            4124 => true,
             4125 => true,
             4130 => true,
             4132 => true,
             4135 => true,
+            4155 => true,
             4169 => true,
             4265 => true,
             4266 => true,
@@ -8649,6 +8827,8 @@ impl GarminProduct {
             4274 => true,
             4275 => true,
             4276 => true,
+            4305 => true,
+            4341 => true,
             10007 => true,
             10014 => true,
             20119 => true,
@@ -8843,6 +9023,7 @@ impl GarminProduct {
             GarminProduct::Fenix3HrKor => 2477,
             GarminProduct::Nautix => 2496,
             GarminProduct::VivoActiveHrApac => 2497,
+            GarminProduct::Fr35 => 2503,
             GarminProduct::Oregon7xxWw => 2512,
             GarminProduct::Edge820 => 2530,
             GarminProduct::EdgeExplore820 => 2531,
@@ -8871,6 +9052,7 @@ impl GarminProduct {
             GarminProduct::Fenix5 => 2697,
             GarminProduct::Vivoactive3 => 2700,
             GarminProduct::Edge1030 => 2713,
+            GarminProduct::Fr35Sea => 2727,
             GarminProduct::Fr235ChinaNfc => 2733,
             GarminProduct::Foretrex601701 => 2769,
             GarminProduct::VivoMoveHr => 2772,
@@ -8999,6 +9181,7 @@ impl GarminProduct {
             GarminProduct::Edge130PlusAsia => 3813,
             GarminProduct::ApproachS12 => 3823,
             GarminProduct::VenusqAsia => 3837,
+            GarminProduct::Edge1040 => 3843,
             GarminProduct::MarqGolferAsia => 3850,
             GarminProduct::Venu2Plus => 3851,
             GarminProduct::Fr55 => 3869,
@@ -9017,6 +9200,8 @@ impl GarminProduct {
             GarminProduct::Venu2sAsia => 3949,
             GarminProduct::Venu2Asia => 3950,
             GarminProduct::Fr945LteAsia => 3978,
+            GarminProduct::VivoMoveSport => 3982,
+            GarminProduct::VivomoveTrend => 3983,
             GarminProduct::ApproachS12Asia => 3986,
             GarminProduct::Fr255Music => 3990,
             GarminProduct::Fr255SmallMusic => 3991,
@@ -9029,10 +9214,15 @@ impl GarminProduct {
             GarminProduct::Fr55Asia => 4033,
             GarminProduct::Vivosmart5 => 4063,
             GarminProduct::Instinct2Asia => 4071,
+            GarminProduct::MarqGen2 => 4105,
+            GarminProduct::Venusq2 => 4115,
+            GarminProduct::Venusq2music => 4116,
+            GarminProduct::MarqGen2Aviator => 4124,
             GarminProduct::D2AirX10 => 4125,
             GarminProduct::HrmProPlus => 4130,
             GarminProduct::DescentG1Asia => 4132,
             GarminProduct::Tactix7 => 4135,
+            GarminProduct::InstinctCrossover => 4155,
             GarminProduct::EdgeExplore2 => 4169,
             GarminProduct::TacxNeoSmart => 4265,
             GarminProduct::TacxNeo2Smart => 4266,
@@ -9046,6 +9236,8 @@ impl GarminProduct {
             GarminProduct::TacxFluxFluxSSmart => 4274,
             GarminProduct::TacxFlux2Smart => 4275,
             GarminProduct::TacxMagnum => 4276,
+            GarminProduct::Edge1040Asia => 4305,
+            GarminProduct::Enduro2 => 4341,
             GarminProduct::Sdm4 => 10007,
             GarminProduct::EdgeRemote => 10014,
             GarminProduct::TrainingCenter => 20119,
@@ -9251,6 +9443,7 @@ impl fmt::Display for GarminProduct {
             GarminProduct::Fenix3HrKor => write!(f, "fenix3_hr_kor"),
             GarminProduct::Nautix => write!(f, "nautix"),
             GarminProduct::VivoActiveHrApac => write!(f, "vivo_active_hr_apac"),
+            GarminProduct::Fr35 => write!(f, "fr35"),
             GarminProduct::Oregon7xxWw => write!(f, "oregon7xx_ww"),
             GarminProduct::Edge820 => write!(f, "edge_820"),
             GarminProduct::EdgeExplore820 => write!(f, "edge_explore_820"),
@@ -9279,6 +9472,7 @@ impl fmt::Display for GarminProduct {
             GarminProduct::Fenix5 => write!(f, "fenix5"),
             GarminProduct::Vivoactive3 => write!(f, "vivoactive3"),
             GarminProduct::Edge1030 => write!(f, "edge_1030"),
+            GarminProduct::Fr35Sea => write!(f, "fr35_sea"),
             GarminProduct::Fr235ChinaNfc => write!(f, "fr235_china_nfc"),
             GarminProduct::Foretrex601701 => write!(f, "foretrex_601_701"),
             GarminProduct::VivoMoveHr => write!(f, "vivo_move_hr"),
@@ -9407,6 +9601,7 @@ impl fmt::Display for GarminProduct {
             GarminProduct::Edge130PlusAsia => write!(f, "edge_130_plus_asia"),
             GarminProduct::ApproachS12 => write!(f, "approach_s12"),
             GarminProduct::VenusqAsia => write!(f, "venusq_asia"),
+            GarminProduct::Edge1040 => write!(f, "edge_1040"),
             GarminProduct::MarqGolferAsia => write!(f, "marq_golfer_asia"),
             GarminProduct::Venu2Plus => write!(f, "venu2_plus"),
             GarminProduct::Fr55 => write!(f, "fr55"),
@@ -9425,6 +9620,8 @@ impl fmt::Display for GarminProduct {
             GarminProduct::Venu2sAsia => write!(f, "venu2s_asia"),
             GarminProduct::Venu2Asia => write!(f, "venu2_asia"),
             GarminProduct::Fr945LteAsia => write!(f, "fr945_lte_asia"),
+            GarminProduct::VivoMoveSport => write!(f, "vivo_move_sport"),
+            GarminProduct::VivomoveTrend => write!(f, "vivomove_trend"),
             GarminProduct::ApproachS12Asia => write!(f, "approach_S12_asia"),
             GarminProduct::Fr255Music => write!(f, "fr255_music"),
             GarminProduct::Fr255SmallMusic => write!(f, "fr255_small_music"),
@@ -9437,10 +9634,15 @@ impl fmt::Display for GarminProduct {
             GarminProduct::Fr55Asia => write!(f, "fr55_asia"),
             GarminProduct::Vivosmart5 => write!(f, "vivosmart_5"),
             GarminProduct::Instinct2Asia => write!(f, "instinct_2_asia"),
+            GarminProduct::MarqGen2 => write!(f, "marq_gen2"),
+            GarminProduct::Venusq2 => write!(f, "venusq2"),
+            GarminProduct::Venusq2music => write!(f, "venusq2music"),
+            GarminProduct::MarqGen2Aviator => write!(f, "marq_gen2_aviator"),
             GarminProduct::D2AirX10 => write!(f, "d2_air_x10"),
             GarminProduct::HrmProPlus => write!(f, "hrm_pro_plus"),
             GarminProduct::DescentG1Asia => write!(f, "descent_g1_asia"),
             GarminProduct::Tactix7 => write!(f, "tactix7"),
+            GarminProduct::InstinctCrossover => write!(f, "instinct_crossover"),
             GarminProduct::EdgeExplore2 => write!(f, "edge_explore2"),
             GarminProduct::TacxNeoSmart => write!(f, "tacx_neo_smart"),
             GarminProduct::TacxNeo2Smart => write!(f, "tacx_neo2_smart"),
@@ -9454,6 +9656,8 @@ impl fmt::Display for GarminProduct {
             GarminProduct::TacxFluxFluxSSmart => write!(f, "tacx_flux_flux_s_smart"),
             GarminProduct::TacxFlux2Smart => write!(f, "tacx_flux2_smart"),
             GarminProduct::TacxMagnum => write!(f, "tacx_magnum"),
+            GarminProduct::Edge1040Asia => write!(f, "edge_1040_asia"),
+            GarminProduct::Enduro2 => write!(f, "enduro2"),
             GarminProduct::Sdm4 => write!(f, "sdm4"),
             GarminProduct::EdgeRemote => write!(f, "edge_remote"),
             GarminProduct::TrainingCenter => write!(f, "training_center"),
@@ -9652,6 +9856,7 @@ impl convert::From<u16> for GarminProduct {
             2477 => GarminProduct::Fenix3HrKor,
             2496 => GarminProduct::Nautix,
             2497 => GarminProduct::VivoActiveHrApac,
+            2503 => GarminProduct::Fr35,
             2512 => GarminProduct::Oregon7xxWw,
             2530 => GarminProduct::Edge820,
             2531 => GarminProduct::EdgeExplore820,
@@ -9680,6 +9885,7 @@ impl convert::From<u16> for GarminProduct {
             2697 => GarminProduct::Fenix5,
             2700 => GarminProduct::Vivoactive3,
             2713 => GarminProduct::Edge1030,
+            2727 => GarminProduct::Fr35Sea,
             2733 => GarminProduct::Fr235ChinaNfc,
             2769 => GarminProduct::Foretrex601701,
             2772 => GarminProduct::VivoMoveHr,
@@ -9808,6 +10014,7 @@ impl convert::From<u16> for GarminProduct {
             3813 => GarminProduct::Edge130PlusAsia,
             3823 => GarminProduct::ApproachS12,
             3837 => GarminProduct::VenusqAsia,
+            3843 => GarminProduct::Edge1040,
             3850 => GarminProduct::MarqGolferAsia,
             3851 => GarminProduct::Venu2Plus,
             3869 => GarminProduct::Fr55,
@@ -9826,6 +10033,8 @@ impl convert::From<u16> for GarminProduct {
             3949 => GarminProduct::Venu2sAsia,
             3950 => GarminProduct::Venu2Asia,
             3978 => GarminProduct::Fr945LteAsia,
+            3982 => GarminProduct::VivoMoveSport,
+            3983 => GarminProduct::VivomoveTrend,
             3986 => GarminProduct::ApproachS12Asia,
             3990 => GarminProduct::Fr255Music,
             3991 => GarminProduct::Fr255SmallMusic,
@@ -9838,10 +10047,15 @@ impl convert::From<u16> for GarminProduct {
             4033 => GarminProduct::Fr55Asia,
             4063 => GarminProduct::Vivosmart5,
             4071 => GarminProduct::Instinct2Asia,
+            4105 => GarminProduct::MarqGen2,
+            4115 => GarminProduct::Venusq2,
+            4116 => GarminProduct::Venusq2music,
+            4124 => GarminProduct::MarqGen2Aviator,
             4125 => GarminProduct::D2AirX10,
             4130 => GarminProduct::HrmProPlus,
             4132 => GarminProduct::DescentG1Asia,
             4135 => GarminProduct::Tactix7,
+            4155 => GarminProduct::InstinctCrossover,
             4169 => GarminProduct::EdgeExplore2,
             4265 => GarminProduct::TacxNeoSmart,
             4266 => GarminProduct::TacxNeo2Smart,
@@ -9855,6 +10069,8 @@ impl convert::From<u16> for GarminProduct {
             4274 => GarminProduct::TacxFluxFluxSSmart,
             4275 => GarminProduct::TacxFlux2Smart,
             4276 => GarminProduct::TacxMagnum,
+            4305 => GarminProduct::Edge1040Asia,
+            4341 => GarminProduct::Enduro2,
             10007 => GarminProduct::Sdm4,
             10014 => GarminProduct::EdgeRemote,
             20119 => GarminProduct::TrainingCenter,
@@ -10407,6 +10623,8 @@ pub enum CourseCapabilities {
     Training,
     Navigation,
     Bikeway,
+    /// Denote course files to be used as flight plans
+    Aviation,
     Value(u32),
 }
 impl CourseCapabilities {
@@ -10423,6 +10641,7 @@ impl CourseCapabilities {
             256 => true,
             512 => true,
             1024 => true,
+            4096 => true,
             _ => false,
         }
     }
@@ -10439,6 +10658,7 @@ impl CourseCapabilities {
             CourseCapabilities::Training => 256,
             CourseCapabilities::Navigation => 512,
             CourseCapabilities::Bikeway => 1024,
+            CourseCapabilities::Aviation => 4096,
             CourseCapabilities::Value(value) => value,
         }
     }
@@ -10460,6 +10680,7 @@ impl fmt::Display for CourseCapabilities {
             CourseCapabilities::Training => write!(f, "training"),
             CourseCapabilities::Navigation => write!(f, "navigation"),
             CourseCapabilities::Bikeway => write!(f, "bikeway"),
+            CourseCapabilities::Aviation => write!(f, "aviation"),
             CourseCapabilities::Value(value) => write!(f, "{}", value),
         }
     }
@@ -10478,6 +10699,7 @@ impl convert::From<u32> for CourseCapabilities {
             256 => CourseCapabilities::Training,
             512 => CourseCapabilities::Navigation,
             1024 => CourseCapabilities::Bikeway,
+            4096 => CourseCapabilities::Aviation,
             _ => CourseCapabilities::Value(value),
         }
     }
@@ -13196,6 +13418,267 @@ impl Serialize for SourceType {
         S: Serializer,
     {
         serializer.serialize_str(&self.to_string())
+    }
+}
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
+pub enum LocalDeviceType {
+    /// Onboard gps receiver
+    Gps,
+    /// Onboard glonass receiver
+    Glonass,
+    /// Onboard gps glonass receiver
+    GpsGlonass,
+    /// Onboard sensor
+    Accelerometer,
+    /// Onboard sensor
+    Barometer,
+    /// Onboard sensor
+    Temperature,
+    /// Onboard wrist HR sensor
+    Whr,
+    /// Onboard software package
+    SensorHub,
+    Value(u8),
+}
+impl LocalDeviceType {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            10 => true,
+            12 => true,
+            _ => false,
+        }
+    }
+    pub fn as_u8(self) -> u8 {
+        match self {
+            LocalDeviceType::Gps => 0,
+            LocalDeviceType::Glonass => 1,
+            LocalDeviceType::GpsGlonass => 2,
+            LocalDeviceType::Accelerometer => 3,
+            LocalDeviceType::Barometer => 4,
+            LocalDeviceType::Temperature => 5,
+            LocalDeviceType::Whr => 10,
+            LocalDeviceType::SensorHub => 12,
+            LocalDeviceType::Value(value) => value,
+        }
+    }
+    pub fn as_i64(self) -> i64 {
+        self.as_u8() as i64
+    }
+}
+impl fmt::Display for LocalDeviceType {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match &self {
+            LocalDeviceType::Gps => write!(f, "gps"),
+            LocalDeviceType::Glonass => write!(f, "glonass"),
+            LocalDeviceType::GpsGlonass => write!(f, "gps_glonass"),
+            LocalDeviceType::Accelerometer => write!(f, "accelerometer"),
+            LocalDeviceType::Barometer => write!(f, "barometer"),
+            LocalDeviceType::Temperature => write!(f, "temperature"),
+            LocalDeviceType::Whr => write!(f, "whr"),
+            LocalDeviceType::SensorHub => write!(f, "sensor_hub"),
+            LocalDeviceType::Value(value) => write!(f, "{}", value),
+        }
+    }
+}
+impl convert::From<u8> for LocalDeviceType {
+    fn from(value: u8) -> Self {
+        match value {
+            0 => LocalDeviceType::Gps,
+            1 => LocalDeviceType::Glonass,
+            2 => LocalDeviceType::GpsGlonass,
+            3 => LocalDeviceType::Accelerometer,
+            4 => LocalDeviceType::Barometer,
+            5 => LocalDeviceType::Temperature,
+            10 => LocalDeviceType::Whr,
+            12 => LocalDeviceType::SensorHub,
+            _ => LocalDeviceType::Value(value),
+        }
+    }
+}
+impl convert::From<i64> for LocalDeviceType {
+    fn from(value: i64) -> Self {
+        LocalDeviceType::from(value as u8)
+    }
+}
+impl Serialize for LocalDeviceType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match &self {
+            LocalDeviceType::Value(value) => serializer.serialize_u8(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
+    }
+}
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
+pub enum BleDeviceType {
+    /// GPS that is provided over a proprietary bluetooth service
+    ConnectedGps,
+    HeartRate,
+    BikePower,
+    BikeSpeedCadence,
+    BikeSpeed,
+    BikeCadence,
+    Footpod,
+    /// Indoor-Bike FTMS protocol
+    BikeTrainer,
+    Value(u8),
+}
+impl BleDeviceType {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            _ => false,
+        }
+    }
+    pub fn as_u8(self) -> u8 {
+        match self {
+            BleDeviceType::ConnectedGps => 0,
+            BleDeviceType::HeartRate => 1,
+            BleDeviceType::BikePower => 2,
+            BleDeviceType::BikeSpeedCadence => 3,
+            BleDeviceType::BikeSpeed => 4,
+            BleDeviceType::BikeCadence => 5,
+            BleDeviceType::Footpod => 6,
+            BleDeviceType::BikeTrainer => 7,
+            BleDeviceType::Value(value) => value,
+        }
+    }
+    pub fn as_i64(self) -> i64 {
+        self.as_u8() as i64
+    }
+}
+impl fmt::Display for BleDeviceType {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match &self {
+            BleDeviceType::ConnectedGps => write!(f, "connected_gps"),
+            BleDeviceType::HeartRate => write!(f, "heart_rate"),
+            BleDeviceType::BikePower => write!(f, "bike_power"),
+            BleDeviceType::BikeSpeedCadence => write!(f, "bike_speed_cadence"),
+            BleDeviceType::BikeSpeed => write!(f, "bike_speed"),
+            BleDeviceType::BikeCadence => write!(f, "bike_cadence"),
+            BleDeviceType::Footpod => write!(f, "footpod"),
+            BleDeviceType::BikeTrainer => write!(f, "bike_trainer"),
+            BleDeviceType::Value(value) => write!(f, "{}", value),
+        }
+    }
+}
+impl convert::From<u8> for BleDeviceType {
+    fn from(value: u8) -> Self {
+        match value {
+            0 => BleDeviceType::ConnectedGps,
+            1 => BleDeviceType::HeartRate,
+            2 => BleDeviceType::BikePower,
+            3 => BleDeviceType::BikeSpeedCadence,
+            4 => BleDeviceType::BikeSpeed,
+            5 => BleDeviceType::BikeCadence,
+            6 => BleDeviceType::Footpod,
+            7 => BleDeviceType::BikeTrainer,
+            _ => BleDeviceType::Value(value),
+        }
+    }
+}
+impl convert::From<i64> for BleDeviceType {
+    fn from(value: i64) -> Self {
+        BleDeviceType::from(value as u8)
+    }
+}
+impl Serialize for BleDeviceType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match &self {
+            BleDeviceType::Value(value) => serializer.serialize_u8(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
+    }
+}
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
+pub enum AntChannelId {
+    AntDeviceNumber,
+    AntDeviceType,
+    AntTransmissionTypeLowerNibble,
+    AntExtendedDeviceNumberUpperNibble,
+    Value(u32),
+}
+impl AntChannelId {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            65535 => true,
+            16711680 => true,
+            251658240 => true,
+            4026531840 => true,
+            _ => false,
+        }
+    }
+    pub fn as_u32(self) -> u32 {
+        match self {
+            AntChannelId::AntDeviceNumber => 65535,
+            AntChannelId::AntDeviceType => 16711680,
+            AntChannelId::AntTransmissionTypeLowerNibble => 251658240,
+            AntChannelId::AntExtendedDeviceNumberUpperNibble => 4026531840,
+            AntChannelId::Value(value) => value,
+        }
+    }
+    pub fn as_i64(self) -> i64 {
+        self.as_u32() as i64
+    }
+}
+impl fmt::Display for AntChannelId {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match &self {
+            AntChannelId::AntDeviceNumber => write!(f, "ant_device_number"),
+            AntChannelId::AntDeviceType => write!(f, "ant_device_type"),
+            AntChannelId::AntTransmissionTypeLowerNibble => {
+                write!(f, "ant_transmission_type_lower_nibble")
+            }
+            AntChannelId::AntExtendedDeviceNumberUpperNibble => {
+                write!(f, "ant_extended_device_number_upper_nibble")
+            }
+            AntChannelId::Value(value) => write!(f, "{}", value),
+        }
+    }
+}
+impl convert::From<u32> for AntChannelId {
+    fn from(value: u32) -> Self {
+        match value {
+            65535 => AntChannelId::AntDeviceNumber,
+            16711680 => AntChannelId::AntDeviceType,
+            251658240 => AntChannelId::AntTransmissionTypeLowerNibble,
+            4026531840 => AntChannelId::AntExtendedDeviceNumberUpperNibble,
+            _ => AntChannelId::Value(value),
+        }
+    }
+}
+impl convert::From<i64> for AntChannelId {
+    fn from(value: i64) -> Self {
+        AntChannelId::from(value as u32)
+    }
+}
+impl Serialize for AntChannelId {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match &self {
+            AntChannelId::Value(value) => serializer.serialize_u32(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -25493,11 +25976,261 @@ impl Serialize for DiveGasStatus {
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
+pub enum DiveAlert {
+    NdlReached,
+    GasSwitchPrompted,
+    NearSurface,
+    ApproachingNdl,
+    Po2Warn,
+    Po2CritHigh,
+    Po2CritLow,
+    TimeAlert,
+    DepthAlert,
+    DecoCeilingBroken,
+    DecoComplete,
+    SafetyStopBroken,
+    SafetyStopComplete,
+    CnsWarning,
+    CnsCritical,
+    OtuWarning,
+    OtuCritical,
+    AscentCritical,
+    AlertDismissedByKey,
+    AlertDismissedByTimeout,
+    BatteryLow,
+    BatteryCritical,
+    SafetyStopStarted,
+    ApproachingFirstDecoStop,
+    SetpointSwitchAutoLow,
+    SetpointSwitchAutoHigh,
+    SetpointSwitchManualLow,
+    SetpointSwitchManualHigh,
+    AutoSetpointSwitchIgnored,
+    SwitchedToOpenCircuit,
+    SwitchedToClosedCircuit,
+    TankBatteryLow,
+    /// ccr diluent has low po2
+    Po2CcrDilLow,
+    /// a deco stop has been cleared
+    DecoStopCleared,
+    /// Target Depth Apnea Alarm triggered
+    ApneaNeutralBuoyancy,
+    /// Neutral Buoyance Apnea Alarm triggered
+    ApneaTargetDepth,
+    /// Surface Apnea Alarm triggered
+    ApneaSurface,
+    /// High Speed Apnea Alarm triggered
+    ApneaHighSpeed,
+    /// Low Speed Apnea Alarm triggered
+    ApneaLowSpeed,
+    UnknownVariant(u8),
+}
+impl DiveAlert {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            9 => true,
+            10 => true,
+            11 => true,
+            12 => true,
+            13 => true,
+            14 => true,
+            15 => true,
+            16 => true,
+            17 => true,
+            18 => true,
+            19 => true,
+            20 => true,
+            21 => true,
+            22 => true,
+            23 => true,
+            24 => true,
+            25 => true,
+            26 => true,
+            27 => true,
+            28 => true,
+            29 => true,
+            30 => true,
+            32 => true,
+            33 => true,
+            34 => true,
+            35 => true,
+            36 => true,
+            37 => true,
+            38 => true,
+            39 => true,
+            _ => false,
+        }
+    }
+    pub fn as_u8(self) -> u8 {
+        match self {
+            DiveAlert::NdlReached => 0,
+            DiveAlert::GasSwitchPrompted => 1,
+            DiveAlert::NearSurface => 2,
+            DiveAlert::ApproachingNdl => 3,
+            DiveAlert::Po2Warn => 4,
+            DiveAlert::Po2CritHigh => 5,
+            DiveAlert::Po2CritLow => 6,
+            DiveAlert::TimeAlert => 7,
+            DiveAlert::DepthAlert => 8,
+            DiveAlert::DecoCeilingBroken => 9,
+            DiveAlert::DecoComplete => 10,
+            DiveAlert::SafetyStopBroken => 11,
+            DiveAlert::SafetyStopComplete => 12,
+            DiveAlert::CnsWarning => 13,
+            DiveAlert::CnsCritical => 14,
+            DiveAlert::OtuWarning => 15,
+            DiveAlert::OtuCritical => 16,
+            DiveAlert::AscentCritical => 17,
+            DiveAlert::AlertDismissedByKey => 18,
+            DiveAlert::AlertDismissedByTimeout => 19,
+            DiveAlert::BatteryLow => 20,
+            DiveAlert::BatteryCritical => 21,
+            DiveAlert::SafetyStopStarted => 22,
+            DiveAlert::ApproachingFirstDecoStop => 23,
+            DiveAlert::SetpointSwitchAutoLow => 24,
+            DiveAlert::SetpointSwitchAutoHigh => 25,
+            DiveAlert::SetpointSwitchManualLow => 26,
+            DiveAlert::SetpointSwitchManualHigh => 27,
+            DiveAlert::AutoSetpointSwitchIgnored => 28,
+            DiveAlert::SwitchedToOpenCircuit => 29,
+            DiveAlert::SwitchedToClosedCircuit => 30,
+            DiveAlert::TankBatteryLow => 32,
+            DiveAlert::Po2CcrDilLow => 33,
+            DiveAlert::DecoStopCleared => 34,
+            DiveAlert::ApneaNeutralBuoyancy => 35,
+            DiveAlert::ApneaTargetDepth => 36,
+            DiveAlert::ApneaSurface => 37,
+            DiveAlert::ApneaHighSpeed => 38,
+            DiveAlert::ApneaLowSpeed => 39,
+            DiveAlert::UnknownVariant(value) => value,
+        }
+    }
+    pub fn as_i64(self) -> i64 {
+        self.as_u8() as i64
+    }
+}
+impl fmt::Display for DiveAlert {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match &self {
+            DiveAlert::NdlReached => write!(f, "ndl_reached"),
+            DiveAlert::GasSwitchPrompted => write!(f, "gas_switch_prompted"),
+            DiveAlert::NearSurface => write!(f, "near_surface"),
+            DiveAlert::ApproachingNdl => write!(f, "approaching_ndl"),
+            DiveAlert::Po2Warn => write!(f, "po2_warn"),
+            DiveAlert::Po2CritHigh => write!(f, "po2_crit_high"),
+            DiveAlert::Po2CritLow => write!(f, "po2_crit_low"),
+            DiveAlert::TimeAlert => write!(f, "time_alert"),
+            DiveAlert::DepthAlert => write!(f, "depth_alert"),
+            DiveAlert::DecoCeilingBroken => write!(f, "deco_ceiling_broken"),
+            DiveAlert::DecoComplete => write!(f, "deco_complete"),
+            DiveAlert::SafetyStopBroken => write!(f, "safety_stop_broken"),
+            DiveAlert::SafetyStopComplete => write!(f, "safety_stop_complete"),
+            DiveAlert::CnsWarning => write!(f, "cns_warning"),
+            DiveAlert::CnsCritical => write!(f, "cns_critical"),
+            DiveAlert::OtuWarning => write!(f, "otu_warning"),
+            DiveAlert::OtuCritical => write!(f, "otu_critical"),
+            DiveAlert::AscentCritical => write!(f, "ascent_critical"),
+            DiveAlert::AlertDismissedByKey => write!(f, "alert_dismissed_by_key"),
+            DiveAlert::AlertDismissedByTimeout => write!(f, "alert_dismissed_by_timeout"),
+            DiveAlert::BatteryLow => write!(f, "battery_low"),
+            DiveAlert::BatteryCritical => write!(f, "battery_critical"),
+            DiveAlert::SafetyStopStarted => write!(f, "safety_stop_started"),
+            DiveAlert::ApproachingFirstDecoStop => write!(f, "approaching_first_deco_stop"),
+            DiveAlert::SetpointSwitchAutoLow => write!(f, "setpoint_switch_auto_low"),
+            DiveAlert::SetpointSwitchAutoHigh => write!(f, "setpoint_switch_auto_high"),
+            DiveAlert::SetpointSwitchManualLow => write!(f, "setpoint_switch_manual_low"),
+            DiveAlert::SetpointSwitchManualHigh => write!(f, "setpoint_switch_manual_high"),
+            DiveAlert::AutoSetpointSwitchIgnored => write!(f, "auto_setpoint_switch_ignored"),
+            DiveAlert::SwitchedToOpenCircuit => write!(f, "switched_to_open_circuit"),
+            DiveAlert::SwitchedToClosedCircuit => write!(f, "switched_to_closed_circuit"),
+            DiveAlert::TankBatteryLow => write!(f, "tank_battery_low"),
+            DiveAlert::Po2CcrDilLow => write!(f, "po2_ccr_dil_low"),
+            DiveAlert::DecoStopCleared => write!(f, "deco_stop_cleared"),
+            DiveAlert::ApneaNeutralBuoyancy => write!(f, "apnea_neutral_buoyancy"),
+            DiveAlert::ApneaTargetDepth => write!(f, "apnea_target_depth"),
+            DiveAlert::ApneaSurface => write!(f, "apnea_surface"),
+            DiveAlert::ApneaHighSpeed => write!(f, "apnea_high_speed"),
+            DiveAlert::ApneaLowSpeed => write!(f, "apnea_low_speed"),
+            DiveAlert::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+        }
+    }
+}
+impl convert::From<u8> for DiveAlert {
+    fn from(value: u8) -> Self {
+        match value {
+            0 => DiveAlert::NdlReached,
+            1 => DiveAlert::GasSwitchPrompted,
+            2 => DiveAlert::NearSurface,
+            3 => DiveAlert::ApproachingNdl,
+            4 => DiveAlert::Po2Warn,
+            5 => DiveAlert::Po2CritHigh,
+            6 => DiveAlert::Po2CritLow,
+            7 => DiveAlert::TimeAlert,
+            8 => DiveAlert::DepthAlert,
+            9 => DiveAlert::DecoCeilingBroken,
+            10 => DiveAlert::DecoComplete,
+            11 => DiveAlert::SafetyStopBroken,
+            12 => DiveAlert::SafetyStopComplete,
+            13 => DiveAlert::CnsWarning,
+            14 => DiveAlert::CnsCritical,
+            15 => DiveAlert::OtuWarning,
+            16 => DiveAlert::OtuCritical,
+            17 => DiveAlert::AscentCritical,
+            18 => DiveAlert::AlertDismissedByKey,
+            19 => DiveAlert::AlertDismissedByTimeout,
+            20 => DiveAlert::BatteryLow,
+            21 => DiveAlert::BatteryCritical,
+            22 => DiveAlert::SafetyStopStarted,
+            23 => DiveAlert::ApproachingFirstDecoStop,
+            24 => DiveAlert::SetpointSwitchAutoLow,
+            25 => DiveAlert::SetpointSwitchAutoHigh,
+            26 => DiveAlert::SetpointSwitchManualLow,
+            27 => DiveAlert::SetpointSwitchManualHigh,
+            28 => DiveAlert::AutoSetpointSwitchIgnored,
+            29 => DiveAlert::SwitchedToOpenCircuit,
+            30 => DiveAlert::SwitchedToClosedCircuit,
+            32 => DiveAlert::TankBatteryLow,
+            33 => DiveAlert::Po2CcrDilLow,
+            34 => DiveAlert::DecoStopCleared,
+            35 => DiveAlert::ApneaNeutralBuoyancy,
+            36 => DiveAlert::ApneaTargetDepth,
+            37 => DiveAlert::ApneaSurface,
+            38 => DiveAlert::ApneaHighSpeed,
+            39 => DiveAlert::ApneaLowSpeed,
+            _ => DiveAlert::UnknownVariant(value),
+        }
+    }
+}
+impl convert::From<i64> for DiveAlert {
+    fn from(value: i64) -> Self {
+        DiveAlert::from(value as u8)
+    }
+}
+impl Serialize for DiveAlert {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum DiveAlarmType {
     /// Alarm when a certain depth is crossed
     Depth,
     /// Alarm when a certain time has transpired
     Time,
+    /// Alarm when a certain ascent or descent rate is exceeded
+    Speed,
     UnknownVariant(u8),
 }
 impl DiveAlarmType {
@@ -25505,6 +26238,7 @@ impl DiveAlarmType {
         match value {
             0 => true,
             1 => true,
+            2 => true,
             _ => false,
         }
     }
@@ -25512,6 +26246,7 @@ impl DiveAlarmType {
         match self {
             DiveAlarmType::Depth => 0,
             DiveAlarmType::Time => 1,
+            DiveAlarmType::Speed => 2,
             DiveAlarmType::UnknownVariant(value) => value,
         }
     }
@@ -25524,6 +26259,7 @@ impl fmt::Display for DiveAlarmType {
         match &self {
             DiveAlarmType::Depth => write!(f, "depth"),
             DiveAlarmType::Time => write!(f, "time"),
+            DiveAlarmType::Speed => write!(f, "speed"),
             DiveAlarmType::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
         }
     }
@@ -25533,6 +26269,7 @@ impl convert::From<u8> for DiveAlarmType {
         match value {
             0 => DiveAlarmType::Depth,
             1 => DiveAlarmType::Time,
+            2 => DiveAlarmType::Speed,
             _ => DiveAlarmType::UnknownVariant(value),
         }
     }
@@ -25607,6 +26344,120 @@ impl Serialize for DiveBacklightMode {
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
+pub enum CcrSetpointSwitchMode {
+    /// User switches setpoints manually
+    Manual,
+    /// Switch automatically based on depth
+    Automatic,
+    UnknownVariant(u8),
+}
+impl CcrSetpointSwitchMode {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            _ => false,
+        }
+    }
+    pub fn as_u8(self) -> u8 {
+        match self {
+            CcrSetpointSwitchMode::Manual => 0,
+            CcrSetpointSwitchMode::Automatic => 1,
+            CcrSetpointSwitchMode::UnknownVariant(value) => value,
+        }
+    }
+    pub fn as_i64(self) -> i64 {
+        self.as_u8() as i64
+    }
+}
+impl fmt::Display for CcrSetpointSwitchMode {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match &self {
+            CcrSetpointSwitchMode::Manual => write!(f, "manual"),
+            CcrSetpointSwitchMode::Automatic => write!(f, "automatic"),
+            CcrSetpointSwitchMode::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+        }
+    }
+}
+impl convert::From<u8> for CcrSetpointSwitchMode {
+    fn from(value: u8) -> Self {
+        match value {
+            0 => CcrSetpointSwitchMode::Manual,
+            1 => CcrSetpointSwitchMode::Automatic,
+            _ => CcrSetpointSwitchMode::UnknownVariant(value),
+        }
+    }
+}
+impl convert::From<i64> for CcrSetpointSwitchMode {
+    fn from(value: i64) -> Self {
+        CcrSetpointSwitchMode::from(value as u8)
+    }
+}
+impl Serialize for CcrSetpointSwitchMode {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
+pub enum DiveGasMode {
+    OpenCircuit,
+    ClosedCircuitDiluent,
+    UnknownVariant(u8),
+}
+impl DiveGasMode {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            _ => false,
+        }
+    }
+    pub fn as_u8(self) -> u8 {
+        match self {
+            DiveGasMode::OpenCircuit => 0,
+            DiveGasMode::ClosedCircuitDiluent => 1,
+            DiveGasMode::UnknownVariant(value) => value,
+        }
+    }
+    pub fn as_i64(self) -> i64 {
+        self.as_u8() as i64
+    }
+}
+impl fmt::Display for DiveGasMode {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match &self {
+            DiveGasMode::OpenCircuit => write!(f, "open_circuit"),
+            DiveGasMode::ClosedCircuitDiluent => write!(f, "closed_circuit_diluent"),
+            DiveGasMode::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+        }
+    }
+}
+impl convert::From<u8> for DiveGasMode {
+    fn from(value: u8) -> Self {
+        match value {
+            0 => DiveGasMode::OpenCircuit,
+            1 => DiveGasMode::ClosedCircuitDiluent,
+            _ => DiveGasMode::UnknownVariant(value),
+        }
+    }
+}
+impl convert::From<i64> for DiveGasMode {
+    fn from(value: i64) -> Self {
+        DiveGasMode::from(value as u8)
+    }
+}
+impl Serialize for DiveGasMode {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum FaveroProduct {
     AssiomaUno,
     AssiomaDuo,
@@ -25666,6 +26517,161 @@ impl Serialize for FaveroProduct {
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
+pub enum SplitType {
+    AscentSplit,
+    DescentSplit,
+    IntervalActive,
+    IntervalRest,
+    IntervalWarmup,
+    IntervalCooldown,
+    IntervalRecovery,
+    IntervalOther,
+    ClimbActive,
+    ClimbRest,
+    SurfActive,
+    RunActive,
+    RunRest,
+    WorkoutRound,
+    /// run/walk detection running
+    RwdRun,
+    /// run/walk detection walking
+    RwdWalk,
+    WindsurfActive,
+    /// run/walk detection standing
+    RwdStand,
+    /// Marks the time going from ascent_split to descent_split/used in backcountry ski
+    Transition,
+    SkiLiftSplit,
+    SkiRunSplit,
+    UnknownVariant(u8),
+}
+impl SplitType {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            1 => true,
+            2 => true,
+            3 => true,
+            4 => true,
+            5 => true,
+            6 => true,
+            7 => true,
+            8 => true,
+            9 => true,
+            10 => true,
+            11 => true,
+            12 => true,
+            13 => true,
+            14 => true,
+            17 => true,
+            18 => true,
+            21 => true,
+            22 => true,
+            23 => true,
+            28 => true,
+            29 => true,
+            _ => false,
+        }
+    }
+    pub fn as_u8(self) -> u8 {
+        match self {
+            SplitType::AscentSplit => 1,
+            SplitType::DescentSplit => 2,
+            SplitType::IntervalActive => 3,
+            SplitType::IntervalRest => 4,
+            SplitType::IntervalWarmup => 5,
+            SplitType::IntervalCooldown => 6,
+            SplitType::IntervalRecovery => 7,
+            SplitType::IntervalOther => 8,
+            SplitType::ClimbActive => 9,
+            SplitType::ClimbRest => 10,
+            SplitType::SurfActive => 11,
+            SplitType::RunActive => 12,
+            SplitType::RunRest => 13,
+            SplitType::WorkoutRound => 14,
+            SplitType::RwdRun => 17,
+            SplitType::RwdWalk => 18,
+            SplitType::WindsurfActive => 21,
+            SplitType::RwdStand => 22,
+            SplitType::Transition => 23,
+            SplitType::SkiLiftSplit => 28,
+            SplitType::SkiRunSplit => 29,
+            SplitType::UnknownVariant(value) => value,
+        }
+    }
+    pub fn as_i64(self) -> i64 {
+        self.as_u8() as i64
+    }
+}
+impl fmt::Display for SplitType {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match &self {
+            SplitType::AscentSplit => write!(f, "ascent_split"),
+            SplitType::DescentSplit => write!(f, "descent_split"),
+            SplitType::IntervalActive => write!(f, "interval_active"),
+            SplitType::IntervalRest => write!(f, "interval_rest"),
+            SplitType::IntervalWarmup => write!(f, "interval_warmup"),
+            SplitType::IntervalCooldown => write!(f, "interval_cooldown"),
+            SplitType::IntervalRecovery => write!(f, "interval_recovery"),
+            SplitType::IntervalOther => write!(f, "interval_other"),
+            SplitType::ClimbActive => write!(f, "climb_active"),
+            SplitType::ClimbRest => write!(f, "climb_rest"),
+            SplitType::SurfActive => write!(f, "surf_active"),
+            SplitType::RunActive => write!(f, "run_active"),
+            SplitType::RunRest => write!(f, "run_rest"),
+            SplitType::WorkoutRound => write!(f, "workout_round"),
+            SplitType::RwdRun => write!(f, "rwd_run"),
+            SplitType::RwdWalk => write!(f, "rwd_walk"),
+            SplitType::WindsurfActive => write!(f, "windsurf_active"),
+            SplitType::RwdStand => write!(f, "rwd_stand"),
+            SplitType::Transition => write!(f, "transition"),
+            SplitType::SkiLiftSplit => write!(f, "ski_lift_split"),
+            SplitType::SkiRunSplit => write!(f, "ski_run_split"),
+            SplitType::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+        }
+    }
+}
+impl convert::From<u8> for SplitType {
+    fn from(value: u8) -> Self {
+        match value {
+            1 => SplitType::AscentSplit,
+            2 => SplitType::DescentSplit,
+            3 => SplitType::IntervalActive,
+            4 => SplitType::IntervalRest,
+            5 => SplitType::IntervalWarmup,
+            6 => SplitType::IntervalCooldown,
+            7 => SplitType::IntervalRecovery,
+            8 => SplitType::IntervalOther,
+            9 => SplitType::ClimbActive,
+            10 => SplitType::ClimbRest,
+            11 => SplitType::SurfActive,
+            12 => SplitType::RunActive,
+            13 => SplitType::RunRest,
+            14 => SplitType::WorkoutRound,
+            17 => SplitType::RwdRun,
+            18 => SplitType::RwdWalk,
+            21 => SplitType::WindsurfActive,
+            22 => SplitType::RwdStand,
+            23 => SplitType::Transition,
+            28 => SplitType::SkiLiftSplit,
+            29 => SplitType::SkiRunSplit,
+            _ => SplitType::UnknownVariant(value),
+        }
+    }
+}
+impl convert::From<i64> for SplitType {
+    fn from(value: i64) -> Self {
+        SplitType::from(value as u8)
+    }
+}
+impl Serialize for SplitType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum ClimbProEvent {
     Approach,
     Start,
@@ -25719,6 +26725,72 @@ impl convert::From<i64> for ClimbProEvent {
     }
 }
 impl Serialize for ClimbProEvent {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
+pub enum GasConsumptionRateType {
+    /// Pressure-based Surface Air Consumption
+    PressureSac,
+    /// Volumetric Surface Air Consumption
+    VolumeSac,
+    /// Respiratory Minute Volume
+    Rmv,
+    UnknownVariant(u8),
+}
+impl GasConsumptionRateType {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            2 => true,
+            _ => false,
+        }
+    }
+    pub fn as_u8(self) -> u8 {
+        match self {
+            GasConsumptionRateType::PressureSac => 0,
+            GasConsumptionRateType::VolumeSac => 1,
+            GasConsumptionRateType::Rmv => 2,
+            GasConsumptionRateType::UnknownVariant(value) => value,
+        }
+    }
+    pub fn as_i64(self) -> i64 {
+        self.as_u8() as i64
+    }
+}
+impl fmt::Display for GasConsumptionRateType {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match &self {
+            GasConsumptionRateType::PressureSac => write!(f, "pressure_sac"),
+            GasConsumptionRateType::VolumeSac => write!(f, "volume_sac"),
+            GasConsumptionRateType::Rmv => write!(f, "rmv"),
+            GasConsumptionRateType::UnknownVariant(value) => {
+                write!(f, "unknown_variant_{}", *value)
+            }
+        }
+    }
+}
+impl convert::From<u8> for GasConsumptionRateType {
+    fn from(value: u8) -> Self {
+        match value {
+            0 => GasConsumptionRateType::PressureSac,
+            1 => GasConsumptionRateType::VolumeSac,
+            2 => GasConsumptionRateType::Rmv,
+            _ => GasConsumptionRateType::UnknownVariant(value),
+        }
+    }
+}
+impl convert::From<i64> for GasConsumptionRateType {
+    fn from(value: i64) -> Self {
+        GasConsumptionRateType::from(value as u8)
+    }
+}
+impl Serialize for GasConsumptionRateType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
@@ -25853,6 +26925,64 @@ impl Serialize for RadarThreatLevelType {
         serializer.serialize_str(&self.to_string())
     }
 }
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
+pub enum NoFlyTimeMode {
+    /// Standard Diver Alert Network no-fly guidance
+    Standard,
+    /// Flat 24 hour no-fly guidance
+    Flat24Hours,
+    UnknownVariant(u8),
+}
+impl NoFlyTimeMode {
+    pub fn is_named_variant(value: i64) -> bool {
+        match value {
+            0 => true,
+            1 => true,
+            _ => false,
+        }
+    }
+    pub fn as_u8(self) -> u8 {
+        match self {
+            NoFlyTimeMode::Standard => 0,
+            NoFlyTimeMode::Flat24Hours => 1,
+            NoFlyTimeMode::UnknownVariant(value) => value,
+        }
+    }
+    pub fn as_i64(self) -> i64 {
+        self.as_u8() as i64
+    }
+}
+impl fmt::Display for NoFlyTimeMode {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match &self {
+            NoFlyTimeMode::Standard => write!(f, "standard"),
+            NoFlyTimeMode::Flat24Hours => write!(f, "flat_24_hours"),
+            NoFlyTimeMode::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+        }
+    }
+}
+impl convert::From<u8> for NoFlyTimeMode {
+    fn from(value: u8) -> Self {
+        match value {
+            0 => NoFlyTimeMode::Standard,
+            1 => NoFlyTimeMode::Flat24Hours,
+            _ => NoFlyTimeMode::UnknownVariant(value),
+        }
+    }
+}
+impl convert::From<i64> for NoFlyTimeMode {
+    fn from(value: i64) -> Self {
+        NoFlyTimeMode::from(value as u8)
+    }
+}
+impl Serialize for NoFlyTimeMode {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
 
 /// Describe all possible data types of a field
 ///
@@ -25970,6 +27100,8 @@ pub enum FieldDataType {
     SegmentSelectionType,
     SourceType,
     LocalDeviceType,
+    BleDeviceType,
+    AntChannelId,
     DisplayOrientation,
     WorkoutEquipment,
     WatchfaceMode,
@@ -26034,12 +27166,18 @@ pub enum FieldDataType {
     WaterType,
     TissueModelType,
     DiveGasStatus,
+    DiveAlert,
     DiveAlarmType,
     DiveBacklightMode,
+    CcrSetpointSwitchMode,
+    DiveGasMode,
     FaveroProduct,
+    SplitType,
     ClimbProEvent,
+    GasConsumptionRateType,
     TapSensitivity,
     RadarThreatLevelType,
+    NoFlyTimeMode,
 }
 impl FieldDataType {
     #[allow(clippy::match_like_matches_macro)]
@@ -26134,6 +27272,9 @@ impl FieldDataType {
             FieldDataType::SegmentDeleteStatus => true,
             FieldDataType::SegmentSelectionType => true,
             FieldDataType::SourceType => true,
+            FieldDataType::LocalDeviceType => true,
+            FieldDataType::BleDeviceType => true,
+            FieldDataType::AntChannelId => true,
             FieldDataType::DisplayOrientation => true,
             FieldDataType::WorkoutEquipment => true,
             FieldDataType::WatchfaceMode => true,
@@ -26198,12 +27339,18 @@ impl FieldDataType {
             FieldDataType::WaterType => true,
             FieldDataType::TissueModelType => true,
             FieldDataType::DiveGasStatus => true,
+            FieldDataType::DiveAlert => true,
             FieldDataType::DiveAlarmType => true,
             FieldDataType::DiveBacklightMode => true,
+            FieldDataType::CcrSetpointSwitchMode => true,
+            FieldDataType::DiveGasMode => true,
             FieldDataType::FaveroProduct => true,
+            FieldDataType::SplitType => true,
             FieldDataType::ClimbProEvent => true,
+            FieldDataType::GasConsumptionRateType => true,
             FieldDataType::TapSensitivity => true,
             FieldDataType::RadarThreatLevelType => true,
+            FieldDataType::NoFlyTimeMode => true,
             _ => false,
         }
     }
@@ -26302,6 +27449,9 @@ impl FieldDataType {
             FieldDataType::SegmentDeleteStatus => SegmentDeleteStatus::is_named_variant(value),
             FieldDataType::SegmentSelectionType => SegmentSelectionType::is_named_variant(value),
             FieldDataType::SourceType => SourceType::is_named_variant(value),
+            FieldDataType::LocalDeviceType => LocalDeviceType::is_named_variant(value),
+            FieldDataType::BleDeviceType => BleDeviceType::is_named_variant(value),
+            FieldDataType::AntChannelId => AntChannelId::is_named_variant(value),
             FieldDataType::DisplayOrientation => DisplayOrientation::is_named_variant(value),
             FieldDataType::WorkoutEquipment => WorkoutEquipment::is_named_variant(value),
             FieldDataType::WatchfaceMode => WatchfaceMode::is_named_variant(value),
@@ -26390,12 +27540,20 @@ impl FieldDataType {
             FieldDataType::WaterType => WaterType::is_named_variant(value),
             FieldDataType::TissueModelType => TissueModelType::is_named_variant(value),
             FieldDataType::DiveGasStatus => DiveGasStatus::is_named_variant(value),
+            FieldDataType::DiveAlert => DiveAlert::is_named_variant(value),
             FieldDataType::DiveAlarmType => DiveAlarmType::is_named_variant(value),
             FieldDataType::DiveBacklightMode => DiveBacklightMode::is_named_variant(value),
+            FieldDataType::CcrSetpointSwitchMode => CcrSetpointSwitchMode::is_named_variant(value),
+            FieldDataType::DiveGasMode => DiveGasMode::is_named_variant(value),
             FieldDataType::FaveroProduct => FaveroProduct::is_named_variant(value),
+            FieldDataType::SplitType => SplitType::is_named_variant(value),
             FieldDataType::ClimbProEvent => ClimbProEvent::is_named_variant(value),
+            FieldDataType::GasConsumptionRateType => {
+                GasConsumptionRateType::is_named_variant(value)
+            }
             FieldDataType::TapSensitivity => TapSensitivity::is_named_variant(value),
             FieldDataType::RadarThreatLevelType => RadarThreatLevelType::is_named_variant(value),
+            FieldDataType::NoFlyTimeMode => NoFlyTimeMode::is_named_variant(value),
             _ => false,
         }
     }
@@ -26493,6 +27651,9 @@ pub fn get_field_variant_as_string(field_type: FieldDataType, value: i64) -> Str
         FieldDataType::SegmentDeleteStatus => SegmentDeleteStatus::from(value).to_string(),
         FieldDataType::SegmentSelectionType => SegmentSelectionType::from(value).to_string(),
         FieldDataType::SourceType => SourceType::from(value).to_string(),
+        FieldDataType::LocalDeviceType => LocalDeviceType::from(value).to_string(),
+        FieldDataType::BleDeviceType => BleDeviceType::from(value).to_string(),
+        FieldDataType::AntChannelId => AntChannelId::from(value).to_string(),
         FieldDataType::DisplayOrientation => DisplayOrientation::from(value).to_string(),
         FieldDataType::WorkoutEquipment => WorkoutEquipment::from(value).to_string(),
         FieldDataType::WatchfaceMode => WatchfaceMode::from(value).to_string(),
@@ -26573,12 +27734,18 @@ pub fn get_field_variant_as_string(field_type: FieldDataType, value: i64) -> Str
         FieldDataType::WaterType => WaterType::from(value).to_string(),
         FieldDataType::TissueModelType => TissueModelType::from(value).to_string(),
         FieldDataType::DiveGasStatus => DiveGasStatus::from(value).to_string(),
+        FieldDataType::DiveAlert => DiveAlert::from(value).to_string(),
         FieldDataType::DiveAlarmType => DiveAlarmType::from(value).to_string(),
         FieldDataType::DiveBacklightMode => DiveBacklightMode::from(value).to_string(),
+        FieldDataType::CcrSetpointSwitchMode => CcrSetpointSwitchMode::from(value).to_string(),
+        FieldDataType::DiveGasMode => DiveGasMode::from(value).to_string(),
         FieldDataType::FaveroProduct => FaveroProduct::from(value).to_string(),
+        FieldDataType::SplitType => SplitType::from(value).to_string(),
         FieldDataType::ClimbProEvent => ClimbProEvent::from(value).to_string(),
+        FieldDataType::GasConsumptionRateType => GasConsumptionRateType::from(value).to_string(),
         FieldDataType::TapSensitivity => TapSensitivity::from(value).to_string(),
         FieldDataType::RadarThreatLevelType => RadarThreatLevelType::from(value).to_string(),
+        FieldDataType::NoFlyTimeMode => NoFlyTimeMode::from(value).to_string(),
         _ => format!("Undefined{}", value),
     }
 }
