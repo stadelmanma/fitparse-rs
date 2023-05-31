@@ -9,7 +9,7 @@ impl FieldTypeDefintion {
     /// Generate an enum from the field type variants
     fn generate_enum(&self, out: &mut File) -> Result<(), std::io::Error> {
         if let Some(v) = self.comment() {
-            writeln!(out, "/// {}", v)?;
+            writeln!(out, "/// {v}")?;
         }
         writeln!(
             out,
@@ -30,7 +30,8 @@ impl FieldTypeDefintion {
         self.generate_impl(out)
     }
 
-    /// generate to/from integer and to_string implementation for field type enum
+    /// generate to/from integer and `to_string` implementation for field type enum
+    #[allow(clippy::too_many_lines)]
     fn generate_impl(&self, out: &mut File) -> Result<(), std::io::Error> {
         writeln!(out, "impl {} {{", self.titlized_name())?;
 
@@ -207,7 +208,7 @@ pub enum FieldDataType {{
 "
     )?;
     for type_name in base_types {
-        writeln!(out, " {},", type_name)?;
+        writeln!(out, " {type_name},")?;
     }
     for field_type in field_types {
         writeln!(out, "{},", field_type.titlized_name())?;
