@@ -44,7 +44,12 @@ fn run() -> Result<(), Box<dyn std::error::Error>> {
                 .and_then(std::path::Path::file_name)
                 .map_or_else(
                     || String::from("unknown"),
-                    |dirname| dirname.to_str().unwrap().replace("FitSDKRelease_", ""),
+                    |dirname| {
+                        dirname
+                            .to_str()
+                            .expect("Unable to convert dirname to str")
+                            .replace("FitSDKRelease_", "")
+                    },
                 )
         },
         |vers| vers,
@@ -55,7 +60,8 @@ fn run() -> Result<(), Box<dyn std::error::Error>> {
     );
 
     // process excel file and output
-    let profile = parse_profile(&profile_fname, profile_vers).unwrap();
+    // let profile = parse_profile(&profile_fname, profile_vers).unwrap();
+    let profile = parse_profile(&profile_fname, profile_vers).expect("Failed to parse profile");
 
     let dest_dir = Path::new("./fitparser/src/profile");
     let types_fname = dest_dir.join("field_types.rs");

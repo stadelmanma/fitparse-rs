@@ -117,7 +117,9 @@ impl MessageFieldDefinition {
                 var_names.push(format!(
                     "{}_{}",
                     fld.name(),
-                    array_flds.get(&fld.def_number()).unwrap()
+                    array_flds
+                        .get(&fld.def_number())
+                        .expect("array_flds should have entry")
                 ));
             } else {
                 var_names.push(fld.name().to_owned());
@@ -171,7 +173,9 @@ impl MessageFieldDefinition {
                     out,
                     "let {} = Value::Array(vec![{}]);",
                     comp.name(),
-                    (0..*array_flds.get(&comp.def_number()).unwrap())
+                    (0..*array_flds
+                        .get(&comp.def_number())
+                        .expect("array_flds should have entry"))
                         .map(|i| format!("{}_{}", comp.name(), i + 1))
                         .collect::<Vec<String>>()
                         .join(",")
