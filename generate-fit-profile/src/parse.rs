@@ -163,7 +163,7 @@ impl MessageDefinition {
         self.field_map()
             .values()
             .find(|f| f.name() == name)
-            .unwrap()
+            .expect("Field not found")
     }
 }
 
@@ -366,6 +366,7 @@ fn titlecase_string(value: &str) -> String {
     words.join("")
 }
 
+#[allow(clippy::cast_possible_truncation)]
 fn process_types(sheet: &Range<DataType>) -> Vec<FieldTypeDefintion> {
     let mut field_types: Vec<FieldTypeDefintion> = Vec::new();
 
@@ -398,7 +399,9 @@ fn process_types(sheet: &Range<DataType>) -> Vec<FieldTypeDefintion> {
             let value = match &row[3] {
                 DataType::Float(v) => *v as i64,
                 DataType::Int(v) => *v,
-                DataType::String(v) => i64::from_str_radix(&v[2..], 16).unwrap(),
+                DataType::String(v) => {
+                    i64::from_str_radix(&v[2..], 16).expect("Failed to parse hex string to i64")
+                }
                 _ => {
                     panic!("Unsupported enum variant value data type row={row:?}.");
                 }
@@ -497,7 +500,9 @@ fn process_components(
 ) -> Vec<(u8, MessageFieldDefinition)> {
     let mut components = Vec::new();
     for comp_info in field.raw_components() {
-        let dest_field = field_lookup.get(comp_info.name()).unwrap();
+        let dest_field = field_lookup
+            .get(comp_info.name())
+            .expect("Failed to find component field");
         let comp_fld = MessageFieldDefinition {
             def_number: dest_field.def_number(),
             name: dest_field.name().to_owned(),
@@ -513,11 +518,12 @@ fn process_components(
             raw_components: Vec::new(),
             comment: dest_field.comment().map(std::borrow::ToOwned::to_owned),
         };
-        components.push((comp_info.bits(), comp_fld))
+        components.push((comp_info.bits(), comp_fld));
     }
     components
 }
 
+#[allow(clippy::cast_possible_truncation, clippy::cast_sign_loss)]
 fn new_message_field_definition(row: &[DataType]) -> MessageFieldDefinition {
     let def_number = match row[1] {
         DataType::Float(v) => v as u8,
@@ -555,7 +561,10 @@ fn process_messages(sheet: &Range<DataType>) -> Vec<MessageDefinition> {
     let mut last_def_number: u8 = 0;
 
     // parse first message row to initialize first message to prevent unitialized compile error in loop
-    let row = rows.next().unwrap();
+    //
+    // let row = rows.next().unwrap();
+    let row = rows.next().expect("No rows in sheet.");
+
     if let Some(v) = row[0].get_string() {
         msg = MessageDefinition::new(
             v,
@@ -611,6 +620,7 @@ fn process_messages(sheet: &Range<DataType>) -> Vec<MessageDefinition> {
     messages.into_iter().map(post_process_message).collect()
 }
 
+#[allow(clippy::module_name_repetitions)]
 pub fn parse_profile(
     profile_fname: &PathBuf,
     version: String,
