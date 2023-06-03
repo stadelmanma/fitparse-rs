@@ -3,7 +3,7 @@
 ## v0.6.0
 * Restructured project to drop the calamine dependency for end users, profile
   generation is now done in a separate private crate
-* Update calamine dependency
+* Update calamine dependency (evensolberg)
 * Refactor profile decoding module to be functional and not create large "info" structures
 * Implement new decoding options to cover additional use cases
 * Improve component expansion to use a nom-like call chain to avoid loops and clones
