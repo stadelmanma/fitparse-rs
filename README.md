@@ -2,7 +2,7 @@
 [![LICENSE](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Crates.io Version](https://img.shields.io/crates/v/fitparser.svg)](https://crates.io/crates/fitparser)
 [![Docs.rs](https://docs.rs/fitparser/badge.svg)](https://docs.rs/fitparser)
-[![Build Status](https://travis-ci.org/stadelmanma/fitparse-rs.svg?branch=master)](https://travis-ci.org/stadelmanma/fitparse-rs)
+[![Build Status](https://github.com/stadelmanma/fitparse-rs/actions/workflows/ci.yml/badge.svg)](https://github.com/stadelmanma/fitparse-rs/actions/workflows/ci.yml)
 
 
 ## Overview
