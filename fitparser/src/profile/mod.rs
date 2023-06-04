@@ -18,10 +18,10 @@ impl Value {
     /// Convert the value into a vector of bytes
     fn to_ne_bytes(&self) -> Vec<u8> {
         match self {
-            Value::Byte(val) => vec![*val as u8],
-            Value::Enum(val) => vec![*val as u8],
+            Value::Byte(val) => vec![*val],
+            Value::Enum(val) => vec![*val],
             Value::SInt8(val) => vec![*val as u8],
-            Value::UInt8(val) => vec![*val as u8],
+            Value::UInt8(val) => vec![*val],
             Value::SInt16(val) => val.to_ne_bytes().to_vec(),
             Value::UInt16(val) => val.to_ne_bytes().to_vec(),
             Value::SInt32(val) => val.to_ne_bytes().to_vec(),
@@ -30,7 +30,7 @@ impl Value {
             Value::Timestamp(val) => val.timestamp().to_ne_bytes().to_vec(),
             Value::Float32(val) => val.to_ne_bytes().to_vec(),
             Value::Float64(val) => val.to_ne_bytes().to_vec(),
-            Value::UInt8z(val) => vec![*val as u8],
+            Value::UInt8z(val) => vec![*val],
             Value::UInt16z(val) => val.to_ne_bytes().to_vec(),
             Value::UInt32z(val) => val.to_ne_bytes().to_vec(),
             Value::SInt64(val) => val.to_ne_bytes().to_vec(),
@@ -199,6 +199,7 @@ pub fn calculate_cumulative_value(
 }
 
 /// Build a data field using the provided FIT profile information
+#[allow(clippy::too_many_arguments)]
 pub fn data_field_with_info(
     def_number: u8,
     name: &str,
@@ -242,7 +243,7 @@ fn convert_value(
             .into_iter()
             .map(|v| apply_scale_and_offset(v, scale, offset))
             .collect();
-        return vals.map(|v| Value::Array(v));
+        return vals.map(Value::Array);
     }
 
     // handle time types specially, if for some reason I can't convert to an integer we will

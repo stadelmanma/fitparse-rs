@@ -3,6 +3,7 @@
 #![allow(missing_docs)]
 #![allow(dead_code)]
 #![allow(clippy::unreadable_literal)]
+#![allow(clippy::all)]
 use serde::ser::Serializer;
 use serde::Serialize;
 use std::convert;

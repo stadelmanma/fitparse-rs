@@ -1,5 +1,6 @@
 //! Auto generated profile messages from FIT SDK Release: 21.105.00
 #![allow(unused_variables)]
+#![allow(clippy::all)]
 use super::field_types::*;
 use super::{calculate_cumulative_value, data_field_with_info, extract_component, unknown_field};
 use crate::de::DecodeOption;

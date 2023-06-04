@@ -11,7 +11,6 @@ use nom::sequence::tuple;
 use nom::{Err, IResult, Needed};
 use std::collections::HashMap;
 use std::convert::From;
-use std::fmt::Display;
 use std::sync::Arc;
 
 /// Define an is_valid function needed for parsing here, this function is not needed for normal use
@@ -341,7 +340,8 @@ fn fit_file_header_impl(input: &[u8]) -> IResult<&[u8], FitFileHeader> {
         tuple((le_u8, le_u8, le_u16, le_u32))(input)?;
     let (input, _) = tag(".FIT")(input)?;
     let (input, crc) = cond(header_size > 12, le_u16)(input)?;
-    let protocol_ver_enc = split_decimal_to_float(proto >> 4, proto & ((1 << 4) - 1));
+    let protocol_ver_enc =
+        split_decimal_to_float((proto >> 4) as u16, (proto & ((1 << 4) - 1)) as u16);
     let profile_ver_enc = split_decimal_to_float(prof / 100, prof % 100);
 
     Ok((
@@ -357,10 +357,13 @@ fn fit_file_header_impl(input: &[u8]) -> IResult<&[u8], FitFileHeader> {
 }
 
 /// Convert a split decimal style value with fix precision into a single floating point value
-///
-/// This function should never fail as long as integer values are passed in as the arguments
-fn split_decimal_to_float<T: Display>(left: T, right: T) -> f32 {
-    format!("{}.{}", left, right).parse().unwrap()
+fn split_decimal_to_float(left: u16, right: u16) -> f32 {
+    let scale = ((right as f32).log10() + 1f32).floor() as i32;
+    if right > 0 {
+        (left as f32) + (right as f32) / 10f32.powi(scale)
+    } else {
+        left as f32
+    }
 }
 
 /// Parse a FIT data or definition message
@@ -525,7 +528,7 @@ fn data_message_fields<'a>(
         Err(Err::Incomplete(_)) => {
             // output a correct "needed" value, subtract one because we've already parsed the header
             Err(Err::Incomplete(Needed::new(
-                def_mesg.data_message_size() as usize - input.len() - 1,
+                def_mesg.data_message_size() - input.len() - 1,
             )))
         }
         Err(r) => Err(r),

@@ -54,7 +54,7 @@ impl From<io::Error> for Error {
 
 impl fmt::Display for ErrorKind {
     fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
-        match &*self {
+        match self {
             ErrorKind::InvalidCrc((_, obj, exp_val, calc_val)) => match obj {
                 FitObject::Header(_) => write!(
                     fmt,
