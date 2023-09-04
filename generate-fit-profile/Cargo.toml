@@ -10,5 +10,5 @@ readme = "README.md"
 keywords = ["ant", "fit", "garmin"]
 
 [dependencies]
-calamine = "0.21.2"
+calamine = "0.22.0"
 structopt = "0.3"
