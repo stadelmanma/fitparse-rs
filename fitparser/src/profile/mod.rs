@@ -62,7 +62,10 @@ impl TimestampField {
     /// converts offset value into a proper timestamp
     fn to_date_time(self) -> DateTime<Local> {
         // reference date defined in FIT profile, it's either in UTC or local TZ
-        let ref_date = NaiveDate::from_ymd(1989, 12, 31).and_hms(0, 0, 0);
+        let ref_date = NaiveDate::from_ymd_opt(1989, 12, 31)
+            .map(|d: NaiveDate| d.and_hms_opt(0, 0, 0))
+            .flatten()
+            .unwrap();
         match self {
             Self::Local(value) => {
                 TimeZone::from_local_datetime(&Local, &ref_date).unwrap() + Duration::seconds(value)
