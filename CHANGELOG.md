@@ -1,7 +1,9 @@
 # Changelog
 
 ## v0.6.1
-* Bump packaged FIT SDK version to 21.115.00
+* Bump packaged FIT SDK version to 21.115.
+* Fix chrono deprecations
+* Update dependencies
 
 ## v0.6.0
 * Restructured project to drop the calamine dependency for end users, profile
