@@ -1,7 +1,10 @@
 # Changelog
 
+## HEAD
+* Bump packaged FIT SDK version to 21.126.00
+
 ## v0.6.1
-* Bump packaged FIT SDK version to 21.115.
+* Bump packaged FIT SDK version to 21.115.00
 * Fix chrono deprecations
 * Update dependencies
 
