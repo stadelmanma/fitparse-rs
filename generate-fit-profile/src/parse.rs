@@ -1,5 +1,7 @@
 //! Code used to parse the Profile.xlsx file into useful data structures
 use calamine::{open_workbook, DataType, Range, Reader, Xlsx};
+use proc_macro2::Ident;
+use quote::format_ident;
 use std::collections::{BTreeMap, HashMap};
 use std::path::PathBuf;
 
@@ -129,15 +131,19 @@ impl FieldTypeVariant {
 pub struct MessageDefinition {
     name: String,
     titlized_name: String,
+    struct_ident: Ident,
     comment: Option<String>,
     field_map: BTreeMap<u8, MessageFieldDefinition>,
 }
 
 impl MessageDefinition {
     fn new(name: &str, comment: Option<String>) -> Self {
+        let titlized_name = titlecase_string(name);
+        let struct_ident = format_ident!("{}", titlized_name);
         Self {
             name: name.to_string(),
-            titlized_name: titlecase_string(name),
+            titlized_name,
+            struct_ident,
             comment,
             field_map: BTreeMap::new(),
         }
@@ -151,8 +157,16 @@ impl MessageDefinition {
         &self.titlized_name
     }
 
+    pub fn struct_ident(&self) -> &Ident {
+        &self.struct_ident
+    }
+
     pub const fn field_map(&self) -> &BTreeMap<u8, MessageFieldDefinition> {
         &self.field_map
+    }
+
+    pub fn fields(&self) -> impl Iterator<Item = &MessageFieldDefinition> {
+        self.field_map.values()
     }
 
     pub fn comment(&self) -> Option<&str> {
@@ -171,6 +185,7 @@ impl MessageDefinition {
 pub struct MessageFieldDefinition {
     def_number: u8,
     name: String,
+    field_ident: Ident,
     field_type: String,
     is_array: bool,
     scale: f64,
@@ -201,6 +216,7 @@ impl MessageFieldDefinition {
         Self {
             def_number,
             name: name.to_string(),
+            field_ident: format_ident!("r#{}", name),
             field_type: field_type_str_to_field_type(field_type),
             is_array,
             scale,
@@ -221,6 +237,10 @@ impl MessageFieldDefinition {
 
     pub fn name(&self) -> &str {
         &self.name
+    }
+
+    pub fn field_ident(&self) -> &Ident {
+        &self.field_ident
     }
 
     pub fn field_type(&self) -> &str {
@@ -386,7 +406,9 @@ fn process_types(sheet: &Range<DataType>) -> Vec<FieldTypeDefintion> {
             let comment = row[4].get_string().map(std::string::ToString::to_string);
             field_types.push(FieldTypeDefintion::new(&enum_name, rust_type, comment));
         } else if !row[2].is_empty() {
-            let Some(field_type) = field_types.last_mut() else { panic!("field_types vector was empty!") };
+            let Some(field_type) = field_types.last_mut() else {
+                panic!("field_types vector was empty!")
+            };
 
             // add enum variant
             // extract enum name
@@ -462,6 +484,7 @@ fn post_process_message(msg: MessageDefinition) -> MessageDefinition {
     let MessageDefinition {
         name,
         titlized_name,
+        struct_ident,
         comment,
         field_map,
     } = msg;
@@ -489,6 +512,7 @@ fn post_process_message(msg: MessageDefinition) -> MessageDefinition {
     MessageDefinition {
         name,
         titlized_name,
+        struct_ident,
         comment,
         field_map: updated_field_map,
     }
@@ -506,6 +530,7 @@ fn process_components(
         let comp_fld = MessageFieldDefinition {
             def_number: dest_field.def_number(),
             name: dest_field.name().to_owned(),
+            field_ident: dest_field.field_ident().to_owned(),
             field_type: dest_field.field_type().to_owned(),
             is_array: dest_field.is_array(),
             scale: comp_info.scale(),

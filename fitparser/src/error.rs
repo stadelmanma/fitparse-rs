@@ -4,7 +4,7 @@ use std::io;
 use std::{error, fmt};
 
 /// The result of a deserialization operation.
-pub type Result<T> = ::std::result::Result<T, Error>;
+pub type Result<T, E = Error> = ::std::result::Result<T, E>;
 
 /// An error that can be produced during deserializing.
 pub type Error = Box<ErrorKind>;

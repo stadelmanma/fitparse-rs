@@ -9,6 +9,8 @@ mod decode;
 use crate::decode::write_decode_file;
 mod field_types;
 use crate::field_types::write_types_file;
+mod messages;
+use crate::messages::write_messages_file;
 mod parse;
 use crate::parse::parse_profile;
 
@@ -75,6 +77,12 @@ fn run() -> Result<(), Box<dyn std::error::Error>> {
     let mut out_file = File::create(&decode_fname)?;
     write_decode_file(&profile, &mut out_file)?;
     rustfmt(&decode_fname);
+
+    let messages_fname = dest_dir.join("messages.rs");
+    eprintln!("Generating file: {:?}", &messages_fname);
+    let mut out_file = File::create(&messages_fname)?;
+    write_messages_file(&profile, &mut out_file)?;
+    rustfmt(&messages_fname);
 
     Ok(())
 }

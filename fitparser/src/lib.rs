@@ -357,6 +357,7 @@ impl fmt::Display for ValueWithUnits {
 
 #[cfg(test)]
 mod tests {
+    use super::profile::{MesgNum, Message, MessageParseOptions};
     use super::*;
     use std::collections::HashSet;
 
@@ -365,6 +366,9 @@ mod tests {
         let data = include_bytes!("../tests/fixtures/Activity.fit").to_vec();
         let fit_data = from_bytes(&data).unwrap();
         assert_eq!(fit_data.len(), 22);
+        for record in fit_data {
+            assert!(Message::parse(record).is_ok());
+        }
     }
 
     #[test]
@@ -372,6 +376,9 @@ mod tests {
         let data = include_bytes!("../tests/fixtures/DeveloperData.fit").to_vec();
         let fit_data = from_bytes(&data).unwrap();
         assert_eq!(fit_data.len(), 6);
+        for record in fit_data {
+            assert!(Message::parse(record).is_ok());
+        }
     }
 
     #[test]
@@ -379,6 +386,9 @@ mod tests {
         let data = include_bytes!("../tests/fixtures/MonitoringFile.fit").to_vec();
         let fit_data = from_bytes(&data).unwrap();
         assert_eq!(fit_data.len(), 355);
+        for record in fit_data {
+            assert!(Message::parse(record).is_ok());
+        }
     }
 
     #[test]
@@ -386,6 +396,9 @@ mod tests {
         let data = include_bytes!("../tests/fixtures/Settings.fit").to_vec();
         let fit_data = from_bytes(&data).unwrap();
         assert_eq!(fit_data.len(), 3);
+        for record in fit_data {
+            assert!(Message::parse(record).is_ok());
+        }
     }
 
     #[test]
@@ -393,6 +406,9 @@ mod tests {
         let data = include_bytes!("../tests/fixtures/WeightScaleMultiUser.fit").to_vec();
         let fit_data = from_bytes(&data).unwrap();
         assert_eq!(fit_data.len(), 7);
+        for record in fit_data {
+            assert!(Message::parse(record).is_ok());
+        }
     }
 
     #[test]
@@ -400,6 +416,9 @@ mod tests {
         let data = include_bytes!("../tests/fixtures/WeightScaleSingleUser.fit").to_vec();
         let fit_data = from_bytes(&data).unwrap();
         assert_eq!(fit_data.len(), 6);
+        for record in fit_data {
+            assert!(Message::parse(record).is_ok());
+        }
     }
 
     #[test]
@@ -407,6 +426,9 @@ mod tests {
         let data = include_bytes!("../tests/fixtures/WorkoutCustomTargetValues.fit").to_vec();
         let fit_data = from_bytes(&data).unwrap();
         assert_eq!(fit_data.len(), 6);
+        for record in fit_data {
+            assert!(Message::parse(record).is_ok());
+        }
     }
 
     #[test]
@@ -414,6 +436,9 @@ mod tests {
         let data = include_bytes!("../tests/fixtures/WorkoutIndividualSteps.fit").to_vec();
         let fit_data = from_bytes(&data).unwrap();
         assert_eq!(fit_data.len(), 6);
+        for record in fit_data {
+            assert!(Message::parse(record).is_ok());
+        }
     }
 
     #[test]
@@ -421,6 +446,9 @@ mod tests {
         let data = include_bytes!("../tests/fixtures/WorkoutRepeatGreaterThanStep.fit").to_vec();
         let fit_data = from_bytes(&data).unwrap();
         assert_eq!(fit_data.len(), 7);
+        for record in fit_data {
+            assert!(Message::parse(record).is_ok());
+        }
     }
 
     #[test]
@@ -428,6 +456,9 @@ mod tests {
         let data = include_bytes!("../tests/fixtures/WorkoutRepeatSteps.fit").to_vec();
         let fit_data = from_bytes(&data).unwrap();
         assert_eq!(fit_data.len(), 7);
+        for record in fit_data {
+            assert!(Message::parse(record).is_ok());
+        }
     }
 
     #[test]
@@ -437,6 +468,13 @@ mod tests {
         let data = include_bytes!("../tests/fixtures/garmin-fenix-5-bike.fit").to_vec();
         let fit_data = from_bytes(&data).unwrap();
         assert_eq!(fit_data.len(), 143);
+        let mut options = MessageParseOptions::default();
+        options.ignore_unexpected_fields = true;
+        for record in fit_data {
+            if MesgNum::is_named_variant(record.kind().as_i64()) {
+                assert!(Message::parse_with_options(record, options).is_ok());
+            }
+        }
     }
 
     #[test]
@@ -445,6 +483,13 @@ mod tests {
         let data = include_bytes!("../tests/fixtures/sample_mulitple_header.fit").to_vec();
         let fit_data = from_bytes(&data).unwrap();
         assert_eq!(fit_data.len(), 3023);
+        let mut options = MessageParseOptions::default();
+        options.ignore_unexpected_fields = true;
+        for record in fit_data {
+            if MesgNum::is_named_variant(record.kind().as_i64()) {
+                assert!(Message::parse_with_options(record, options).is_ok());
+            }
+        }
     }
 
     #[test]

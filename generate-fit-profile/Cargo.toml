@@ -11,4 +11,6 @@ keywords = ["ant", "fit", "garmin"]
 
 [dependencies]
 calamine = "0.22"
+proc-macro2 = "1.0.78"
+quote = "1.0.35"
 structopt = "0.3"
