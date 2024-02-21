@@ -1,4 +1,4 @@
-//! Auto generated profile messages from FIT SDK Release: 21.126.00
+//! Auto generated profile messages from FIT SDK Release: 21.133.00
 #![allow(unused_variables)]
 use super::field_types::*;
 use super::{calculate_cumulative_value, data_field_with_info, extract_component, unknown_field};
@@ -8,7 +8,7 @@ use crate::{FitDataField, Value};
 use std::collections::{HashMap, HashSet, VecDeque};
 use std::convert::TryInto;
 /// FIT SDK version used to generate profile decoder
-pub const VERSION: &str = "21.126.00";
+pub const VERSION: &str = "21.133.00";
 /// Must be first message in file.
 fn file_id_message(
     mesg_num: MesgNum,
@@ -56875,6 +56875,2031 @@ fn max_met_data_message_speed_source_field(
         options,
     )
 }
+/// Body battery data used for HSA custom data logging
+fn hsa_body_battery_data_message(
+    mesg_num: MesgNum,
+    data_map: &mut HashMap<u8, Value>,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+) -> Result<Vec<FitDataField>> {
+    let mut fields = Vec::new();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
+    while let Some((def_num, value)) = entries.pop_front() {
+        match def_num {
+            0 => {
+                // Processing interval length in seconds
+                fields.push(hsa_body_battery_data_message_processing_interval_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "s",
+                    value,
+                )?);
+            }
+            1 => {
+                // Body battery level
+                fields.push(hsa_body_battery_data_message_level_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "percent",
+                    value,
+                )?);
+            }
+            2 => {
+                // Body battery charged value
+                fields.push(hsa_body_battery_data_message_charged_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "",
+                    value,
+                )?);
+            }
+            3 => {
+                // Body battery uncharged value
+                fields.push(hsa_body_battery_data_message_uncharged_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "",
+                    value,
+                )?);
+            }
+            253 => {
+                fields.push(hsa_body_battery_data_message_timestamp_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "s",
+                    value,
+                )?);
+            }
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
+        }
+    }
+    Ok(fields)
+}
+fn hsa_body_battery_data_message_processing_interval_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 0, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        0,
+        "processing_interval",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn hsa_body_battery_data_message_level_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 1, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        1,
+        "level",
+        FieldDataType::SInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn hsa_body_battery_data_message_charged_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 2, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        2,
+        "charged",
+        FieldDataType::SInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn hsa_body_battery_data_message_uncharged_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 3, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        3,
+        "uncharged",
+        FieldDataType::SInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn hsa_body_battery_data_message_timestamp_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 253, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        253,
+        "timestamp",
+        FieldDataType::DateTime,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+/// HSA events
+fn hsa_event_message(
+    mesg_num: MesgNum,
+    data_map: &mut HashMap<u8, Value>,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+) -> Result<Vec<FitDataField>> {
+    let mut fields = Vec::new();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
+    while let Some((def_num, value)) = entries.pop_front() {
+        match def_num {
+            0 => {
+                // Event ID
+                fields.push(hsa_event_message_event_id_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "",
+                    value,
+                )?);
+            }
+            253 => {
+                fields.push(hsa_event_message_timestamp_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "s",
+                    value,
+                )?);
+            }
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
+        }
+    }
+    Ok(fields)
+}
+fn hsa_event_message_event_id_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 0, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        0,
+        "event_id",
+        FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn hsa_event_message_timestamp_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 253, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        253,
+        "timestamp",
+        FieldDataType::DateTime,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+/// Raw accelerometer data used for HSA custom data logging
+fn hsa_accelerometer_data_message(
+    mesg_num: MesgNum,
+    data_map: &mut HashMap<u8, Value>,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+) -> Result<Vec<FitDataField>> {
+    let mut fields = Vec::new();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
+    while let Some((def_num, value)) = entries.pop_front() {
+        match def_num {
+            0 => {
+                // Millisecond resolution of the timestamp
+                fields.push(hsa_accelerometer_data_message_timestamp_ms_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "ms",
+                    value,
+                )?);
+            }
+            1 => {
+                // Sampling Interval in Milliseconds
+                fields.push(hsa_accelerometer_data_message_sampling_interval_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "ms",
+                    value,
+                )?);
+            }
+            2 => {
+                // X-Axis Measurement
+                fields.push(hsa_accelerometer_data_message_accel_x_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1.024000,
+                    0.000000,
+                    "mG",
+                    value,
+                )?);
+            }
+            3 => {
+                // Y-Axis Measurement
+                fields.push(hsa_accelerometer_data_message_accel_y_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1.024000,
+                    0.000000,
+                    "mG",
+                    value,
+                )?);
+            }
+            4 => {
+                // Z-Axis Measurement
+                fields.push(hsa_accelerometer_data_message_accel_z_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1.024000,
+                    0.000000,
+                    "mG",
+                    value,
+                )?);
+            }
+            5 => {
+                // 32 kHz timestamp
+                fields.push(hsa_accelerometer_data_message_timestamp_32k_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "",
+                    value,
+                )?);
+            }
+            253 => {
+                fields.push(hsa_accelerometer_data_message_timestamp_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "s",
+                    value,
+                )?);
+            }
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
+        }
+    }
+    Ok(fields)
+}
+fn hsa_accelerometer_data_message_timestamp_ms_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 0, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        0,
+        "timestamp_ms",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn hsa_accelerometer_data_message_sampling_interval_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 1, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        1,
+        "sampling_interval",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn hsa_accelerometer_data_message_accel_x_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 2, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        2,
+        "accel_x",
+        FieldDataType::SInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn hsa_accelerometer_data_message_accel_y_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 3, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        3,
+        "accel_y",
+        FieldDataType::SInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn hsa_accelerometer_data_message_accel_z_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 4, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        4,
+        "accel_z",
+        FieldDataType::SInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn hsa_accelerometer_data_message_timestamp_32k_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 5, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        5,
+        "timestamp_32k",
+        FieldDataType::UInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn hsa_accelerometer_data_message_timestamp_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 253, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        253,
+        "timestamp",
+        FieldDataType::DateTime,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn hsa_gyroscope_data_message(
+    mesg_num: MesgNum,
+    data_map: &mut HashMap<u8, Value>,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+) -> Result<Vec<FitDataField>> {
+    let mut fields = Vec::new();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
+    while let Some((def_num, value)) = entries.pop_front() {
+        match def_num {
+            0 => {
+                // Millisecond resolution of the timestamp
+                fields.push(hsa_gyroscope_data_message_timestamp_ms_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "ms",
+                    value,
+                )?);
+            }
+            1 => {
+                // Sampling Interval in 32 kHz timescale
+                fields.push(hsa_gyroscope_data_message_sampling_interval_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "1/32768 s",
+                    value,
+                )?);
+            }
+            2 => {
+                // X-Axis Measurement
+                fields.push(hsa_gyroscope_data_message_gyro_x_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    28.571430,
+                    0.000000,
+                    "deg/s",
+                    value,
+                )?);
+            }
+            3 => {
+                // Y-Axis Measurement
+                fields.push(hsa_gyroscope_data_message_gyro_y_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    28.571430,
+                    0.000000,
+                    "deg/s",
+                    value,
+                )?);
+            }
+            4 => {
+                // Z-Axis Measurement
+                fields.push(hsa_gyroscope_data_message_gyro_z_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    28.571430,
+                    0.000000,
+                    "deg/s",
+                    value,
+                )?);
+            }
+            5 => {
+                // 32 kHz timestamp
+                fields.push(hsa_gyroscope_data_message_timestamp_32k_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "1/32768 s",
+                    value,
+                )?);
+            }
+            253 => {
+                fields.push(hsa_gyroscope_data_message_timestamp_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "s",
+                    value,
+                )?);
+            }
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
+        }
+    }
+    Ok(fields)
+}
+fn hsa_gyroscope_data_message_timestamp_ms_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 0, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        0,
+        "timestamp_ms",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn hsa_gyroscope_data_message_sampling_interval_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 1, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        1,
+        "sampling_interval",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn hsa_gyroscope_data_message_gyro_x_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 2, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        2,
+        "gyro_x",
+        FieldDataType::SInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn hsa_gyroscope_data_message_gyro_y_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 3, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        3,
+        "gyro_y",
+        FieldDataType::SInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn hsa_gyroscope_data_message_gyro_z_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 4, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        4,
+        "gyro_z",
+        FieldDataType::SInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn hsa_gyroscope_data_message_timestamp_32k_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 5, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        5,
+        "timestamp_32k",
+        FieldDataType::UInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn hsa_gyroscope_data_message_timestamp_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 253, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        253,
+        "timestamp",
+        FieldDataType::DateTime,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+/// User's current daily step data used for HSA custom data logging
+fn hsa_step_data_message(
+    mesg_num: MesgNum,
+    data_map: &mut HashMap<u8, Value>,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+) -> Result<Vec<FitDataField>> {
+    let mut fields = Vec::new();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
+    while let Some((def_num, value)) = entries.pop_front() {
+        match def_num {
+            0 => {
+                // Processing interval length in seconds
+                fields.push(hsa_step_data_message_processing_interval_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "s",
+                    value,
+                )?);
+            }
+            1 => {
+                // Total step sum
+                fields.push(hsa_step_data_message_steps_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "steps",
+                    value,
+                )?);
+            }
+            253 => {
+                fields.push(hsa_step_data_message_timestamp_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "s",
+                    value,
+                )?);
+            }
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
+        }
+    }
+    Ok(fields)
+}
+fn hsa_step_data_message_processing_interval_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 0, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        0,
+        "processing_interval",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn hsa_step_data_message_steps_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 1, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        1,
+        "steps",
+        FieldDataType::UInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn hsa_step_data_message_timestamp_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 253, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        253,
+        "timestamp",
+        FieldDataType::DateTime,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+/// User's current SpO2 data used for HSA custom data logging
+fn hsa_spo2_data_message(
+    mesg_num: MesgNum,
+    data_map: &mut HashMap<u8, Value>,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+) -> Result<Vec<FitDataField>> {
+    let mut fields = Vec::new();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
+    while let Some((def_num, value)) = entries.pop_front() {
+        match def_num {
+            0 => {
+                // Processing interval length in seconds
+                fields.push(hsa_spo2_data_message_processing_interval_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "s",
+                    value,
+                )?);
+            }
+            1 => {
+                // SpO2 Reading
+                fields.push(hsa_spo2_data_message_reading_spo2_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "percent",
+                    value,
+                )?);
+            }
+            2 => {
+                // SpO2 Confidence
+                fields.push(hsa_spo2_data_message_confidence_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "",
+                    value,
+                )?);
+            }
+            253 => {
+                fields.push(hsa_spo2_data_message_timestamp_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "s",
+                    value,
+                )?);
+            }
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
+        }
+    }
+    Ok(fields)
+}
+fn hsa_spo2_data_message_processing_interval_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 0, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        0,
+        "processing_interval",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn hsa_spo2_data_message_reading_spo2_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 1, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        1,
+        "reading_spo2",
+        FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn hsa_spo2_data_message_confidence_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 2, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        2,
+        "confidence",
+        FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn hsa_spo2_data_message_timestamp_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 253, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        253,
+        "timestamp",
+        FieldDataType::DateTime,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+/// User's current stress data used for HSA custom data logging
+fn hsa_stress_data_message(
+    mesg_num: MesgNum,
+    data_map: &mut HashMap<u8, Value>,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+) -> Result<Vec<FitDataField>> {
+    let mut fields = Vec::new();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
+    while let Some((def_num, value)) = entries.pop_front() {
+        match def_num {
+            0 => {
+                // Processing interval length in seconds
+                fields.push(hsa_stress_data_message_processing_interval_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "s",
+                    value,
+                )?);
+            }
+            1 => {
+                // Stress Level ( 0 - 100 ) -300 indicates invalid -200 indicates large motion -100 indicates off wrist
+                fields.push(hsa_stress_data_message_stress_level_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "s",
+                    value,
+                )?);
+            }
+            253 => {
+                fields.push(hsa_stress_data_message_timestamp_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "",
+                    value,
+                )?);
+            }
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
+        }
+    }
+    Ok(fields)
+}
+fn hsa_stress_data_message_processing_interval_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 0, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        0,
+        "processing_interval",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn hsa_stress_data_message_stress_level_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 1, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        1,
+        "stress_level",
+        FieldDataType::SInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn hsa_stress_data_message_timestamp_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 253, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        253,
+        "timestamp",
+        FieldDataType::DateTime,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+/// User's current respiration data used for HSA custom data logging
+fn hsa_respiration_data_message(
+    mesg_num: MesgNum,
+    data_map: &mut HashMap<u8, Value>,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+) -> Result<Vec<FitDataField>> {
+    let mut fields = Vec::new();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
+    while let Some((def_num, value)) = entries.pop_front() {
+        match def_num {
+            0 => {
+                // Processing interval length in seconds
+                fields.push(hsa_respiration_data_message_processing_interval_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "s",
+                    value,
+                )?);
+            }
+            1 => {
+                // Breaths * 100 /min -300 indicates invalid -200 indicates large motion -100 indicates off wrist
+                fields.push(hsa_respiration_data_message_respiration_rate_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    100.000000,
+                    0.000000,
+                    "breaths/min",
+                    value,
+                )?);
+            }
+            253 => {
+                fields.push(hsa_respiration_data_message_timestamp_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "s",
+                    value,
+                )?);
+            }
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
+        }
+    }
+    Ok(fields)
+}
+fn hsa_respiration_data_message_processing_interval_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 0, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        0,
+        "processing_interval",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn hsa_respiration_data_message_respiration_rate_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 1, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        1,
+        "respiration_rate",
+        FieldDataType::SInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn hsa_respiration_data_message_timestamp_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 253, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        253,
+        "timestamp",
+        FieldDataType::DateTime,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+/// User's current heart rate data used for HSA custom data logging
+fn hsa_heart_rate_data_message(
+    mesg_num: MesgNum,
+    data_map: &mut HashMap<u8, Value>,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+) -> Result<Vec<FitDataField>> {
+    let mut fields = Vec::new();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
+    while let Some((def_num, value)) = entries.pop_front() {
+        match def_num {
+            0 => {
+                // Processing interval length in seconds
+                fields.push(hsa_heart_rate_data_message_processing_interval_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "s",
+                    value,
+                )?);
+            }
+            1 => {
+                // Status of measurements in buffer - 0 indicates SEARCHING 1 indicates LOCKED
+                fields.push(hsa_heart_rate_data_message_status_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "",
+                    value,
+                )?);
+            }
+            2 => {
+                // Beats / min
+                fields.push(hsa_heart_rate_data_message_heart_rate_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "bpm",
+                    value,
+                )?);
+            }
+            253 => {
+                fields.push(hsa_heart_rate_data_message_timestamp_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "s",
+                    value,
+                )?);
+            }
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
+        }
+    }
+    Ok(fields)
+}
+fn hsa_heart_rate_data_message_processing_interval_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 0, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        0,
+        "processing_interval",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn hsa_heart_rate_data_message_status_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 1, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        1,
+        "status",
+        FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn hsa_heart_rate_data_message_heart_rate_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 2, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        2,
+        "heart_rate",
+        FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn hsa_heart_rate_data_message_timestamp_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 253, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        253,
+        "timestamp",
+        FieldDataType::DateTime,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+/// Configuration data for HSA custom data logging
+fn hsa_configuration_data_message(
+    mesg_num: MesgNum,
+    data_map: &mut HashMap<u8, Value>,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+) -> Result<Vec<FitDataField>> {
+    let mut fields = Vec::new();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
+    while let Some((def_num, value)) = entries.pop_front() {
+        match def_num {
+            0 => {
+                fields.push(hsa_configuration_data_message_data_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "",
+                    value,
+                )?);
+            }
+            1 => {
+                // Size in bytes of data field
+                fields.push(hsa_configuration_data_message_data_size_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "",
+                    value,
+                )?);
+            }
+            253 => {
+                // Encoded configuration data
+                fields.push(hsa_configuration_data_message_timestamp_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "s",
+                    value,
+                )?);
+            }
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
+        }
+    }
+    Ok(fields)
+}
+fn hsa_configuration_data_message_data_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 0, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        0,
+        "data",
+        FieldDataType::Byte,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn hsa_configuration_data_message_data_size_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 1, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        1,
+        "data_size",
+        FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn hsa_configuration_data_message_timestamp_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 253, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        253,
+        "timestamp",
+        FieldDataType::DateTime,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+/// Wrist temperature data used for HSA custom data logging
+fn hsa_wrist_temperature_data_message(
+    mesg_num: MesgNum,
+    data_map: &mut HashMap<u8, Value>,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+) -> Result<Vec<FitDataField>> {
+    let mut fields = Vec::new();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
+    while let Some((def_num, value)) = entries.pop_front() {
+        match def_num {
+            0 => {
+                // Processing interval length in seconds
+                fields.push(
+                    hsa_wrist_temperature_data_message_processing_interval_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "s",
+                        value,
+                    )?,
+                );
+            }
+            1 => {
+                // Wrist temperature reading
+                fields.push(hsa_wrist_temperature_data_message_value_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1000.000000,
+                    0.000000,
+                    "degC",
+                    value,
+                )?);
+            }
+            253 => {
+                fields.push(hsa_wrist_temperature_data_message_timestamp_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "s",
+                    value,
+                )?);
+            }
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
+        }
+    }
+    Ok(fields)
+}
+fn hsa_wrist_temperature_data_message_processing_interval_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 0, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        0,
+        "processing_interval",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn hsa_wrist_temperature_data_message_value_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 1, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        1,
+        "value",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn hsa_wrist_temperature_data_message_timestamp_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 253, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        253,
+        "timestamp",
+        FieldDataType::DateTime,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
 fn memo_glob_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -59971,6 +61996,272 @@ fn dive_summary_message_timestamp_field(
         options,
     )
 }
+/// Number of acclerometer zero crossings summed over the specified time interval
+fn aad_accel_features_message(
+    mesg_num: MesgNum,
+    data_map: &mut HashMap<u8, Value>,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+) -> Result<Vec<FitDataField>> {
+    let mut fields = Vec::new();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
+    while let Some((def_num, value)) = entries.pop_front() {
+        match def_num {
+            0 => {
+                // Time interval length in seconds
+                fields.push(aad_accel_features_message_time_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "s",
+                    value,
+                )?);
+            }
+            1 => {
+                // Total accelerometer energy in the interval
+                fields.push(aad_accel_features_message_energy_total_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "",
+                    value,
+                )?);
+            }
+            2 => {
+                // Count of zero crossings
+                fields.push(aad_accel_features_message_zero_cross_cnt_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "",
+                    value,
+                )?);
+            }
+            3 => {
+                // Instance ID of zero crossing algorithm
+                fields.push(aad_accel_features_message_instance_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "",
+                    value,
+                )?);
+            }
+            4 => {
+                // Total accelerometer time above threshold in the interval
+                fields.push(aad_accel_features_message_time_above_threshold_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    25.000000,
+                    0.000000,
+                    "s",
+                    value,
+                )?);
+            }
+            253 => {
+                fields.push(aad_accel_features_message_timestamp_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "",
+                    value,
+                )?);
+            }
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
+        }
+    }
+    Ok(fields)
+}
+fn aad_accel_features_message_time_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 0, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        0,
+        "time",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn aad_accel_features_message_energy_total_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 1, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        1,
+        "energy_total",
+        FieldDataType::UInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn aad_accel_features_message_zero_cross_cnt_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 2, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        2,
+        "zero_cross_cnt",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn aad_accel_features_message_instance_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 3, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        3,
+        "instance",
+        FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn aad_accel_features_message_time_above_threshold_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 4, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        4,
+        "time_above_threshold",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn aad_accel_features_message_timestamp_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 253, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        253,
+        "timestamp",
+        FieldDataType::DateTime,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
 /// Heart rate variability
 fn hrv_message(
     mesg_num: MesgNum,
@@ -60623,6 +62914,368 @@ fn hrv_value_message_timestamp_field(
         options,
     )
 }
+/// Raw Beat-to-Beat Interval values
+fn raw_bbi_message(
+    mesg_num: MesgNum,
+    data_map: &mut HashMap<u8, Value>,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+) -> Result<Vec<FitDataField>> {
+    let mut fields = Vec::new();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
+    while let Some((def_num, value)) = entries.pop_front() {
+        match def_num {
+            0 => {
+                // ms since last overnight_raw_bbi message
+                fields.push(raw_bbi_message_timestamp_ms_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "ms",
+                    value,
+                )?);
+            }
+            1 => {
+                // 1 bit for gap indicator, 1 bit for quality indicator, and 14 bits for Beat-to-Beat interval values in whole-integer millisecond resolution
+                if options.contains(&DecodeOption::KeepCompositeFields) {
+                    fields.push(raw_bbi_message_data_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1.000000,
+                        0.000000,
+                        "",
+                        value.clone(),
+                    )?);
+                }
+                let input = value.to_ne_bytes();
+                let ((input, offset), time_1) = extract_component(&input, 0usize, 14);
+                let ((input, offset), quality_1) = extract_component(input, offset, 1);
+                let ((input, offset), gap_1) = extract_component(input, offset, 1);
+                let ((input, offset), time_2) = extract_component(input, offset, 14);
+                let ((input, offset), quality_2) = extract_component(input, offset, 1);
+                let ((input, offset), gap_2) = extract_component(input, offset, 1);
+                let ((input, offset), time_3) = extract_component(input, offset, 14);
+                let ((input, offset), quality_3) = extract_component(input, offset, 1);
+                let ((input, offset), gap_3) = extract_component(input, offset, 1);
+                let ((input, offset), time_4) = extract_component(input, offset, 14);
+                let ((input, offset), quality_4) = extract_component(input, offset, 1);
+                let ((input, offset), gap_4) = extract_component(input, offset, 1);
+                let ((input, offset), time_5) = extract_component(input, offset, 14);
+                let ((input, offset), quality_5) = extract_component(input, offset, 1);
+                let ((input, offset), gap_5) = extract_component(input, offset, 1);
+                let ((input, offset), time_6) = extract_component(input, offset, 14);
+                let ((input, offset), quality_6) = extract_component(input, offset, 1);
+                let ((input, offset), gap_6) = extract_component(input, offset, 1);
+                let ((input, offset), time_7) = extract_component(input, offset, 14);
+                let ((input, offset), quality_7) = extract_component(input, offset, 1);
+                let ((input, offset), gap_7) = extract_component(input, offset, 1);
+                let ((input, offset), time_8) = extract_component(input, offset, 14);
+                let ((input, offset), quality_8) = extract_component(input, offset, 1);
+                let ((input, offset), gap_8) = extract_component(input, offset, 1);
+                let ((input, offset), time_9) = extract_component(input, offset, 14);
+                let ((input, offset), quality_9) = extract_component(input, offset, 1);
+                let ((input, offset), gap_9) = extract_component(input, offset, 1);
+                let ((input, offset), time_10) = extract_component(input, offset, 14);
+                let ((input, offset), quality_10) = extract_component(input, offset, 1);
+                let ((input, offset), gap_10) = extract_component(input, offset, 1);
+                let ((input, offset), time_11) = extract_component(input, offset, 14);
+                let ((input, offset), quality_11) = extract_component(input, offset, 1);
+                let ((input, offset), gap_11) = extract_component(input, offset, 1);
+                let ((input, offset), time_12) = extract_component(input, offset, 14);
+                let ((input, offset), quality_12) = extract_component(input, offset, 1);
+                let ((input, offset), gap_12) = extract_component(input, offset, 1);
+                let ((input, offset), time_13) = extract_component(input, offset, 14);
+                let ((input, offset), quality_13) = extract_component(input, offset, 1);
+                let ((input, offset), gap_13) = extract_component(input, offset, 1);
+                let ((input, offset), time_14) = extract_component(input, offset, 14);
+                let ((input, offset), quality_14) = extract_component(input, offset, 1);
+                let ((input, offset), gap_14) = extract_component(input, offset, 1);
+                let ((input, offset), time_15) = extract_component(input, offset, 14);
+                let ((input, offset), quality_15) = extract_component(input, offset, 1);
+                let ((input, offset), gap_15) = extract_component(input, offset, 1);
+                let time = Value::Array(vec![
+                    time_1, time_2, time_3, time_4, time_5, time_6, time_7, time_8, time_9,
+                    time_10, time_11, time_12, time_13, time_14, time_15,
+                ]);
+                data_map.insert(2, time.clone());
+                // Array of millisecond times between beats
+                fields.push(raw_bbi_message_time_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "",
+                    time,
+                )?);
+                let quality = Value::Array(vec![
+                    quality_1, quality_2, quality_3, quality_4, quality_5, quality_6, quality_7,
+                    quality_8, quality_9, quality_10, quality_11, quality_12, quality_13,
+                    quality_14, quality_15,
+                ]);
+                data_map.insert(3, quality.clone());
+                fields.push(raw_bbi_message_quality_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "",
+                    quality,
+                )?);
+                let gap = Value::Array(vec![
+                    gap_1, gap_2, gap_3, gap_4, gap_5, gap_6, gap_7, gap_8, gap_9, gap_10, gap_11,
+                    gap_12, gap_13, gap_14, gap_15,
+                ]);
+                data_map.insert(4, gap.clone());
+                fields.push(raw_bbi_message_gap_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "",
+                    gap,
+                )?);
+            }
+            2 => {
+                // Array of millisecond times between beats
+                fields.push(raw_bbi_message_time_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "ms",
+                    value,
+                )?);
+            }
+            3 => {
+                fields.push(raw_bbi_message_quality_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "",
+                    value,
+                )?);
+            }
+            4 => {
+                fields.push(raw_bbi_message_gap_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "",
+                    value,
+                )?);
+            }
+            253 => {
+                fields.push(raw_bbi_message_timestamp_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "",
+                    value,
+                )?);
+            }
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
+        }
+    }
+    Ok(fields)
+}
+fn raw_bbi_message_timestamp_ms_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 0, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        0,
+        "timestamp_ms",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn raw_bbi_message_data_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 1, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        1,
+        "data",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn raw_bbi_message_time_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 2, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        2,
+        "time",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn raw_bbi_message_quality_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 3, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        3,
+        "quality",
+        FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn raw_bbi_message_gap_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 4, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        4,
+        "gap",
+        FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn raw_bbi_message_timestamp_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 253, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        253,
+        "timestamp",
+        FieldDataType::DateTime,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
 fn respiration_rate_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -60698,6 +63351,448 @@ fn respiration_rate_message_respiration_rate_field(
     )
 }
 fn respiration_rate_message_timestamp_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 253, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        253,
+        "timestamp",
+        FieldDataType::DateTime,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+/// Specifically used for XERO products.
+fn chrono_shot_session_message(
+    mesg_num: MesgNum,
+    data_map: &mut HashMap<u8, Value>,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+) -> Result<Vec<FitDataField>> {
+    let mut fields = Vec::new();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
+    while let Some((def_num, value)) = entries.pop_front() {
+        match def_num {
+            0 => {
+                fields.push(chrono_shot_session_message_min_speed_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1000.000000,
+                    0.000000,
+                    "m/s",
+                    value,
+                )?);
+            }
+            1 => {
+                fields.push(chrono_shot_session_message_max_speed_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1000.000000,
+                    0.000000,
+                    "m/s",
+                    value,
+                )?);
+            }
+            2 => {
+                fields.push(chrono_shot_session_message_avg_speed_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1000.000000,
+                    0.000000,
+                    "m/s",
+                    value,
+                )?);
+            }
+            3 => {
+                fields.push(chrono_shot_session_message_shot_count_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "",
+                    value,
+                )?);
+            }
+            4 => {
+                fields.push(chrono_shot_session_message_projectile_type_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "",
+                    value,
+                )?);
+            }
+            5 => {
+                fields.push(chrono_shot_session_message_grain_weight_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    10.000000,
+                    0.000000,
+                    "gr",
+                    value,
+                )?);
+            }
+            253 => {
+                fields.push(chrono_shot_session_message_timestamp_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "",
+                    value,
+                )?);
+            }
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
+        }
+    }
+    Ok(fields)
+}
+fn chrono_shot_session_message_min_speed_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 0, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        0,
+        "min_speed",
+        FieldDataType::UInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn chrono_shot_session_message_max_speed_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 1, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        1,
+        "max_speed",
+        FieldDataType::UInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn chrono_shot_session_message_avg_speed_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 2, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        2,
+        "avg_speed",
+        FieldDataType::UInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn chrono_shot_session_message_shot_count_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 3, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        3,
+        "shot_count",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn chrono_shot_session_message_projectile_type_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 4, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        4,
+        "projectile_type",
+        FieldDataType::ProjectileType,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn chrono_shot_session_message_grain_weight_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 5, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        5,
+        "grain_weight",
+        FieldDataType::UInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn chrono_shot_session_message_timestamp_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 253, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        253,
+        "timestamp",
+        FieldDataType::DateTime,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+/// Specifically used for XERO products.
+fn chrono_shot_data_message(
+    mesg_num: MesgNum,
+    data_map: &mut HashMap<u8, Value>,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+) -> Result<Vec<FitDataField>> {
+    let mut fields = Vec::new();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
+    while let Some((def_num, value)) = entries.pop_front() {
+        match def_num {
+            0 => {
+                fields.push(chrono_shot_data_message_shot_speed_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1000.000000,
+                    0.000000,
+                    "m/s",
+                    value,
+                )?);
+            }
+            1 => {
+                fields.push(chrono_shot_data_message_shot_num_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "",
+                    value,
+                )?);
+            }
+            253 => {
+                fields.push(chrono_shot_data_message_timestamp_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1.000000,
+                    0.000000,
+                    "",
+                    value,
+                )?);
+            }
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
+        }
+    }
+    Ok(fields)
+}
+fn chrono_shot_data_message_shot_speed_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 0, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        0,
+        "shot_speed",
+        FieldDataType::UInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn chrono_shot_data_message_shot_num_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 1, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        1,
+        "shot_num",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn chrono_shot_data_message_timestamp_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
     options: &HashSet<DecodeOption>,
@@ -61833,6 +64928,31 @@ impl MesgNum {
             MesgNum::Hr => hr_message(self, data_map, accumlators, options),
             MesgNum::StressLevel => stress_level_message(self, data_map, accumlators, options),
             MesgNum::MaxMetData => max_met_data_message(self, data_map, accumlators, options),
+            MesgNum::HsaBodyBatteryData => {
+                hsa_body_battery_data_message(self, data_map, accumlators, options)
+            }
+            MesgNum::HsaEvent => hsa_event_message(self, data_map, accumlators, options),
+            MesgNum::HsaAccelerometerData => {
+                hsa_accelerometer_data_message(self, data_map, accumlators, options)
+            }
+            MesgNum::HsaGyroscopeData => {
+                hsa_gyroscope_data_message(self, data_map, accumlators, options)
+            }
+            MesgNum::HsaStepData => hsa_step_data_message(self, data_map, accumlators, options),
+            MesgNum::HsaSpo2Data => hsa_spo2_data_message(self, data_map, accumlators, options),
+            MesgNum::HsaStressData => hsa_stress_data_message(self, data_map, accumlators, options),
+            MesgNum::HsaRespirationData => {
+                hsa_respiration_data_message(self, data_map, accumlators, options)
+            }
+            MesgNum::HsaHeartRateData => {
+                hsa_heart_rate_data_message(self, data_map, accumlators, options)
+            }
+            MesgNum::HsaConfigurationData => {
+                hsa_configuration_data_message(self, data_map, accumlators, options)
+            }
+            MesgNum::HsaWristTemperatureData => {
+                hsa_wrist_temperature_data_message(self, data_map, accumlators, options)
+            }
             MesgNum::MemoGlob => memo_glob_message(self, data_map, accumlators, options),
             MesgNum::SleepLevel => sleep_level_message(self, data_map, accumlators, options),
             MesgNum::AntChannelId => ant_channel_id_message(self, data_map, accumlators, options),
@@ -61848,14 +64968,24 @@ impl MesgNum {
                 exd_data_concept_configuration_message(self, data_map, accumlators, options)
             }
             MesgNum::DiveSummary => dive_summary_message(self, data_map, accumlators, options),
+            MesgNum::AadAccelFeatures => {
+                aad_accel_features_message(self, data_map, accumlators, options)
+            }
             MesgNum::Hrv => hrv_message(self, data_map, accumlators, options),
             MesgNum::BeatIntervals => beat_intervals_message(self, data_map, accumlators, options),
             MesgNum::HrvStatusSummary => {
                 hrv_status_summary_message(self, data_map, accumlators, options)
             }
             MesgNum::HrvValue => hrv_value_message(self, data_map, accumlators, options),
+            MesgNum::RawBbi => raw_bbi_message(self, data_map, accumlators, options),
             MesgNum::RespirationRate => {
                 respiration_rate_message(self, data_map, accumlators, options)
+            }
+            MesgNum::ChronoShotSession => {
+                chrono_shot_session_message(self, data_map, accumlators, options)
+            }
+            MesgNum::ChronoShotData => {
+                chrono_shot_data_message(self, data_map, accumlators, options)
             }
             MesgNum::TankUpdate => tank_update_message(self, data_map, accumlators, options),
             MesgNum::TankSummary => tank_summary_message(self, data_map, accumlators, options),

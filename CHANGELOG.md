@@ -1,7 +1,8 @@
 # Changelog
 
 ## HEAD
-* Bump packaged FIT SDK version to 21.126.00
+* Bump packaged FIT SDK version to 21.133.00 (robinkrahl)
+* Remove dead code files in generate-fit-profile (robinkrahl)
 
 ## v0.6.1
 * Bump packaged FIT SDK version to 21.115.00
