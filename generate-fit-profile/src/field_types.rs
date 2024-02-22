@@ -1,305 +1,293 @@
 //! Functions to generate the field-types in Rust from the fit profile.
-use std::collections::HashSet;
-use std::fs::File;
-use std::io::prelude::*;
-
 use crate::parse::{FieldTypeDefintion, FieldTypeVariant, FitProfile};
+use proc_macro2::TokenStream;
+use quote::{format_ident, quote};
+use std::collections::HashSet;
+use std::{
+    fs::File,
+    io::{Error, Write},
+};
 
-impl FieldTypeDefintion {
-    /// Generate an enum from the field type variants
-    fn generate_enum(&self, out: &mut File) -> Result<(), std::io::Error> {
-        if let Some(v) = self.comment() {
-            writeln!(out, "/// {v}")?;
-        }
-        writeln!(
-            out,
-            "#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]"
-        )?;
-        writeln!(out, "pub enum {} {{", self.titlized_name())?;
-        for variant in self.variant_map().values() {
-            variant.write_variant_line(out)?;
-        }
-        writeln!(
-            out,
-            "{}({}),",
-            self.other_value_field_name(),
-            self.base_type()
-        )?;
-        writeln!(out, "}}")?;
-
-        self.generate_impl(out)
-    }
-
-    /// generate to/from integer and `to_string` implementation for field type enum
-    #[allow(clippy::too_many_lines)]
-    fn generate_impl(&self, out: &mut File) -> Result<(), std::io::Error> {
-        writeln!(out, "impl {} {{", self.titlized_name())?;
-
-        writeln!(out, "pub fn is_named_variant(value: i64) -> bool {{")?;
-        writeln!(out, "match value {{")?;
-        for variant in self.variant_map().values() {
-            writeln!(out, "{} => true,", variant.value())?;
-        }
-        writeln!(out, "_ => false",)?;
-        writeln!(out, "}}")?;
-        writeln!(out, "}}")?;
-
-        writeln!(out, "pub fn as_{0}(self) -> {0} {{", self.base_type())?;
-        writeln!(out, "match self {{")?;
-        for variant in self.variant_map().values() {
-            writeln!(
-                out,
-                "{}::{} => {},",
-                self.titlized_name(),
-                variant.titlized_name(),
-                variant.value()
-            )?;
-        }
-        writeln!(
-            out,
-            "{}::{}(value) => value",
-            self.titlized_name(),
-            self.other_value_field_name(),
-        )?;
-        writeln!(out, "}}")?;
-        writeln!(out, "}}")?;
-
-        writeln!(out, "pub fn as_i64(self) -> i64 {{")?;
-        writeln!(out, "self.as_{}() as i64", self.base_type())?;
-        writeln!(out, "}}")?;
-
-        writeln!(out, "}}")?;
-
-        writeln!(out, "impl fmt::Display for {} {{", self.titlized_name())?;
-        writeln!(
-            out,
-            "fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {{"
-        )?;
-        writeln!(out, "match &self {{")?;
-        for variant in self.variant_map().values() {
-            writeln!(
-                out,
-                "{}::{} => write!(f, \"{}\"),",
-                self.titlized_name(),
-                variant.titlized_name(),
-                variant.name()
-            )?;
-        }
-        if self.is_true_enum() {
-            writeln!(
-                out,
-                "{}::{}(value) => write!(f, \"unknown_variant_{{}}\", *value)",
-                self.titlized_name(),
-                self.other_value_field_name(),
-            )?;
-        } else {
-            writeln!(
-                out,
-                "{}::{}(value) => write!(f, \"{{}}\", value),",
-                self.titlized_name(),
-                self.other_value_field_name(),
-            )?;
-        }
-        writeln!(out, "}}")?;
-        writeln!(out, "}}")?;
-        writeln!(out, "}}")?;
-
-        writeln!(
-            out,
-            "impl convert::From<{}> for {} {{",
-            self.base_type(),
-            self.titlized_name()
-        )?;
-        writeln!(out, "fn from(value: {0}) -> Self {{", self.base_type())?;
-        writeln!(out, "match value {{")?;
-        for variant in self.variant_map().values() {
-            writeln!(
-                out,
-                "{} => {}::{},",
-                variant.value(),
-                self.titlized_name(),
-                variant.titlized_name()
-            )?;
-        }
-        writeln!(
-            out,
-            " _ => {}::{}(value)",
-            self.titlized_name(),
-            self.other_value_field_name()
-        )?;
-        writeln!(out, "}}")?;
-        writeln!(out, "}}")?;
-        writeln!(out, "}}")?;
-
-        writeln!(
-            out,
-            "impl convert::From<i64> for {} {{",
-            self.titlized_name()
-        )?;
-        writeln!(out, "fn from(value: i64) -> Self {{")?;
-        writeln!(
-            out,
-            "{0}::from(value as {1})",
-            self.titlized_name(),
-            self.base_type()
-        )?;
-        writeln!(out, "}}")?;
-        writeln!(out, "}}")?;
-
-        writeln!(out, "impl Serialize for {} {{", self.titlized_name())?;
-        writeln!(
-            out,
-            "fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>"
-        )?;
-        writeln!(out, "where")?;
-        writeln!(out, "S: Serializer,")?;
-        writeln!(out, "{{")?;
-        if self.is_true_enum() {
-            writeln!(out, "serializer.serialize_str(&self.to_string())")?;
-        } else {
-            writeln!(out, "match &self {{")?;
-            writeln!(
-                out,
-                "{}::{}(value) => serializer.serialize_{}(*value),",
-                self.titlized_name(),
-                self.other_value_field_name(),
-                self.base_type(),
-            )?;
-            writeln!(out, "_ => serializer.serialize_str(&self.to_string())")?;
-            writeln!(out, "}}")?;
-        }
-        writeln!(out, "}}")?;
-        writeln!(out, "}}")?;
-
-        Ok(())
+fn doc_comment(comment: Option<&str>) -> TokenStream {
+    if let Some(v) = comment {
+        quote!(#[doc = #v])
+    } else {
+        TokenStream::new()
     }
 }
 
-impl FieldTypeVariant {
-    fn write_variant_line(&self, out: &mut File) -> Result<(), std::io::Error> {
-        if let Some(v) = self.comment() {
-            writeln!(out, "/// {}\n{},", v, self.titlized_name())
-        } else {
-            writeln!(out, "{},", self.titlized_name())
+/// convert a string like "u8" into a u8 type token
+fn type_str_as_type(type_str: &str) -> syn::Type {
+    syn::parse_str(type_str).expect("Unable to parse type")
+}
+
+/// A hacky way to get quote to output numeric literals without
+/// a type suffix since we store everything parsed as i64
+/// we use parse instead of from in case this hits a negative number.
+/// As of now I don't think negative values are present in enums.
+fn bare_number_literal(value: i64) -> syn::Index {
+    syn::parse_str(&format!("{}", value)).expect("Could not parse number as index")
+}
+
+fn field_type_enum_is_named_variant(field_type: &FieldTypeDefintion) -> TokenStream {
+    let variant_values = field_type.variant_map().keys();
+    quote! {
+        pub fn is_named_variant(value: i64) -> bool {
+            match value {
+                #( #variant_values => true,)*
+                _ => false
+            }
         }
     }
 }
 
-fn generate_main_field_type_enum(
-    field_types: &[FieldTypeDefintion],
-    out: &mut File,
-) -> Result<(), std::io::Error> {
+fn field_type_enum_as_type(field_type: &FieldTypeDefintion) -> TokenStream {
+    let ident = field_type.ident();
+    let fn_ident = format_ident!("as_{}", field_type.base_type());
+    let rtype = type_str_as_type(field_type.base_type());
+    let match_arms = field_type
+        .variant_map()
+        .values()
+        .map(|v| (v.ident(), bare_number_literal(v.value())))
+        .map(|(vid, val)| quote!(#ident::#vid => #val));
+    let other_value_ident = format_ident!("{}", field_type.other_value_field_name());
+
+    quote! {
+        pub fn #fn_ident(self) -> #rtype {
+            match self {
+                #( #match_arms,)*
+                #ident::#other_value_ident(value) => value
+
+            }
+        }
+
+       pub fn as_i64(self) -> i64 {
+        self.#fn_ident() as i64
+       }
+    }
+}
+
+fn field_type_enum_impl(field_type: &FieldTypeDefintion) -> TokenStream {
+    let ident = field_type.ident();
+    let is_named_variant = field_type_enum_is_named_variant(field_type);
+    let as_numeric_types = field_type_enum_as_type(field_type);
+
+    quote! {
+        impl #ident {
+            #is_named_variant
+            #as_numeric_types
+        }
+    }
+}
+
+fn field_type_enum_impl_display(field_type: &FieldTypeDefintion) -> TokenStream {
+    let ident = field_type.ident();
+    let match_arms = field_type
+        .variant_map()
+        .values()
+        .map(|v| (v.ident(), v.name()))
+        .map(|(vid, name)| quote!(#ident::#vid => write!(f, #name)));
+    let other_val_ident = format_ident!("{}", field_type.other_value_field_name());
+    let other_match_arm = if field_type.is_true_enum() {
+        quote!(#ident::#other_val_ident(value) => write!(f, "unknown_variant_{}", value))
+    } else {
+        quote!(#ident::#other_val_ident(value) => write!(f, "{}", value))
+    };
+
+    quote! {
+        impl fmt::Display for #ident {
+            fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+                match &self {
+                    #( #match_arms,)*
+                    #other_match_arm
+                }
+            }
+        }
+    }
+}
+
+fn field_type_enum_impl_from(field_type: &FieldTypeDefintion) -> TokenStream {
+    let ident = field_type.ident();
+    let base_type = type_str_as_type(field_type.base_type());
+    let match_arms = field_type
+        .variant_map()
+        .values()
+        .map(|v| (v.ident(), bare_number_literal(v.value())))
+        .map(|(vid, value)| quote!(#value => #ident::#vid));
+    let other_val_ident = format_ident!("{}", field_type.other_value_field_name());
+
+    quote! {
+            impl convert::From<#base_type> for #ident {
+                fn from(value: #base_type) -> Self {
+                    match value {
+                        #( #match_arms, )*
+                        _ => #ident::#other_val_ident(value)
+                    }
+                }
+            }
+
+        impl convert::From<i64> for #ident {
+            fn from(value: i64) -> Self {
+                #ident::from(value as #base_type)
+            }
+        }
+    }
+}
+
+fn field_type_enum_impl_serialize(field_type: &FieldTypeDefintion) -> TokenStream {
+    let ident = field_type.ident();
+    let fn_body = if field_type.is_true_enum() {
+        quote!(serializer.serialize_str(&self.to_string()))
+    } else {
+        let serialize_fn = format_ident!("serialize_{}", field_type.base_type());
+        let other_val_ident = format_ident!("{}", field_type.other_value_field_name());
+        quote! {
+            match &self {
+                #ident::#other_val_ident(value) => serializer.#serialize_fn(*value),
+                _ => serializer.serialize_str(&self.to_string())
+            }
+        }
+    };
+
+    quote! {
+        impl Serialize for #ident {
+            fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error> where S: Serializer {
+                #fn_body
+            }
+        }
+    }
+}
+
+fn field_type_enum_variant_line(variant: &FieldTypeVariant) -> TokenStream {
+    let comment = doc_comment(variant.comment());
+    let ident = variant.ident();
+    quote! {
+        #comment
+        #ident
+    }
+}
+
+fn field_type_enum_other_value(field_type: &FieldTypeDefintion) -> TokenStream {
+    let ident = format_ident!("{}", field_type.other_value_field_name());
+    let base_type = format_ident!("{}", field_type.base_type());
+
+    quote! {
+        #ident(#base_type)
+    }
+}
+
+fn field_type_enum(field_type: &FieldTypeDefintion) -> TokenStream {
+    if field_type.variant_map().is_empty() {
+        return TokenStream::new();
+    }
+    let comment = doc_comment(field_type.comment());
+    let ident = field_type.ident();
+    let variants = field_type
+        .variant_map()
+        .values()
+        .map(field_type_enum_variant_line);
+    let other_val = field_type_enum_other_value(field_type);
+    let enum_impl = field_type_enum_impl(field_type);
+    let impl_display = field_type_enum_impl_display(field_type);
+    let impl_from = field_type_enum_impl_from(field_type);
+    let impl_serialize = field_type_enum_impl_serialize(field_type);
+
+    quote! {
+        #comment
+        #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
+        pub enum #ident {
+            #(#variants,)*
+            #other_val
+        }
+        #enum_impl
+        #impl_display
+        #impl_from
+        #impl_serialize
+    }
+}
+
+fn generate_main_field_type_enum(field_types: &[FieldTypeDefintion]) -> TokenStream {
     let base_types = vec![
         "Bool", "SInt8", "UInt8", "SInt16", "UInt16", "SInt32", "UInt32", "String", "Float32",
         "Float64", "UInt8z", "UInt16z", "UInt32z", "Byte", "SInt64", "UInt64", "UInt64z",
-    ];
+    ]
+    .into_iter()
+    .map(|s| format_ident!("{}", s));
+    let variants = field_types.iter().map(|f| f.ident());
     let mut is_enum_force_false = HashSet::new();
     is_enum_force_false.insert("date_time".to_string());
     is_enum_force_false.insert("local_date_time".to_string());
+    let filtered_field_types: Vec<_> = field_types
+        .iter()
+        .filter(|f| !f.variant_map().is_empty())
+        .filter(|f| !is_enum_force_false.contains(f.name()))
+        .map(|f| f.ident())
+        .collect();
+    let is_enum_match_arms = filtered_field_types
+        .iter()
+        .map(|i| quote!(FieldDataType::#i => true));
+    let is_named_match_arms = filtered_field_types
+        .iter()
+        .map(|i| quote!(FieldDataType::#i => #i::is_named_variant(value)));
+    let as_string_match_arms = filtered_field_types
+        .iter()
+        .map(|i| quote!(FieldDataType::#i => #i::from(value).to_string()));
 
-    writeln!(
-        out,
-        "
-/// Describe all possible data types of a field
-///
-/// The Enum type's value is actually an enum of enums.
-#[derive(Clone, Copy, Debug)]
-pub enum FieldDataType {{
-"
-    )?;
-    for type_name in base_types {
-        writeln!(out, " {type_name},")?;
-    }
-    for field_type in field_types {
-        writeln!(out, "{},", field_type.titlized_name())?;
-    }
+    quote! {
+        /// Describe all possible data types of a field
+        ///
+        /// The Enum type's value is actually an enum of enums.
+        #[derive(Clone, Copy, Debug)]
+        pub enum FieldDataType {
+            #( #base_types ,)*
+            #( #variants ,)*
+        }
 
-    writeln!(out, "}}")?;
-
-    writeln!(out, "impl FieldDataType {{")?;
-    writeln!(out, "    #[allow(clippy::match_like_matches_macro)]")?;
-    writeln!(out, "    pub fn is_enum_type(self) -> bool {{")?;
-    writeln!(out, "        match self {{")?;
-    for field_type in field_types {
-        if !field_type.variant_map().is_empty() && !is_enum_force_false.contains(field_type.name())
-        {
-            writeln!(
-                out,
-                "FieldDataType::{} => true,",
-                field_type.titlized_name()
-            )?;
+        impl FieldDataType {
+            #[allow(clippy::match_like_matches_macro)]
+            pub fn is_enum_type(self) -> bool {
+                match self {
+                    #( #is_enum_match_arms, )*
+                    _ => false
+                }
+            }
+            pub fn is_named_variant(self, value: i64) -> bool {
+                match self {
+                    #( #is_named_match_arms, )*
+                    _ => false
+                }
+            }
+        }
+        pub fn get_field_variant_as_string(field_type: FieldDataType , value: i64) -> String {
+            match field_type {
+                #( #as_string_match_arms, )*
+                _ => format!("Undefined{}", value),
+            }
         }
     }
-    writeln!(out, "            _ => false,")?;
-    writeln!(out, "        }}")?;
-    writeln!(out, "    }}")?;
-
-    writeln!(
-        out,
-        "    pub fn is_named_variant(self, value: i64) -> bool {{"
-    )?;
-    writeln!(out, "        match self {{")?;
-    for field_type in field_types {
-        if !field_type.variant_map().is_empty() && !is_enum_force_false.contains(field_type.name())
-        {
-            writeln!(
-                out,
-                "FieldDataType::{0} => {0}::is_named_variant(value),",
-                field_type.titlized_name(),
-            )?;
-        }
-    }
-    writeln!(out, "            _ => false,")?;
-    writeln!(out, "        }}")?;
-    writeln!(out, "    }}")?;
-    writeln!(out, "}}")?;
-    writeln!(
-        out,
-        "pub fn get_field_variant_as_string(field_type: FieldDataType , value: i64) -> String {{"
-    )?;
-    writeln!(out, "    match field_type {{")?;
-    for field_type in field_types {
-        if !field_type.variant_map().is_empty() && !is_enum_force_false.contains(field_type.name())
-        {
-            writeln!(
-                out,
-                "        FieldDataType::{0} => {0}::from(value).to_string(),",
-                field_type.titlized_name()
-            )?;
-        }
-    }
-    writeln!(out, "        _ => format!(\"Undefined{{}}\", value),")?;
-    writeln!(out, "    }}")?;
-    writeln!(out, "}}")?;
-
-    Ok(())
 }
 
-pub fn write_types_file(profile: &FitProfile, out: &mut File) -> Result<(), std::io::Error> {
-    writeln!(
-        out,
-        "//! Auto generated profile field types from FIT SDK Release: {}",
+pub fn write_types_file(profile: &FitProfile, out: &mut File) -> Result<(), Error> {
+    let comment = format!(
+        "Auto generated profile field types from FIT SDK Release: {}",
         profile.version()
-    )?;
-    writeln!(
-        out,
-        "//! Not all of these may be used by the defined set of FIT messages"
-    )?;
-    writeln!(out, "#![allow(missing_docs)]")?;
-    writeln!(out, "#![allow(dead_code)]")?;
-    writeln!(out, "#![allow(clippy::unreadable_literal)]")?;
-    writeln!(out, "use serde::Serialize;")?;
-    writeln!(out, "use serde::ser::Serializer;")?;
-    writeln!(out, "use std::convert;")?;
-    writeln!(out, "use std::fmt;")?;
+    );
+    let main_enum = generate_main_field_type_enum(profile.field_types());
+    let field_type_enums = profile.field_types().iter().map(field_type_enum);
+    let output = quote! {
+        #![allow(missing_docs)]
+        #![allow(dead_code)]
+        #![allow(clippy::unreadable_literal)]
+        #![doc = #comment]
+        #![doc = "Not all of these may be used by the defined set of FIT messages"]
 
-    // output enums and implementations
-    for field_type in profile.field_types() {
-        if !field_type.variant_map().is_empty() {
-            field_type.generate_enum(out)?;
-        }
-    }
-    generate_main_field_type_enum(profile.field_types(), out)?;
+        use serde::{Serialize, ser::Serializer};
+        use std::{convert, fmt};
 
-    Ok(())
+        #main_enum
+
+        #( #field_type_enums )*
+    };
+
+    write!(out, "{}", output)
 }
