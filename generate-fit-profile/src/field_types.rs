@@ -45,17 +45,17 @@ fn field_type_enum_as_type(field_type: &FieldTypeDefintion) -> TokenStream {
     let ident = field_type.ident();
     let fn_ident = format_ident!("as_{}", field_type.base_type());
     let rtype = type_str_as_type(field_type.base_type());
-    let match_arms = field_type
+    let variant_idents = field_type.variant_map().values().map(|v| v.ident());
+    let variant_values = field_type
         .variant_map()
         .values()
-        .map(|v| (v.ident(), bare_number_literal(v.value())))
-        .map(|(vid, val)| quote!(#ident::#vid => #val));
+        .map(|v| bare_number_literal(v.value()));
     let other_value_ident = format_ident!("{}", field_type.other_value_field_name());
 
     quote! {
         pub fn #fn_ident(self) -> #rtype {
             match self {
-                #( #match_arms,)*
+                #( #ident::#variant_idents => #variant_values,)*
                 #ident::#other_value_ident(value) => value
 
             }
@@ -82,11 +82,8 @@ fn field_type_enum_impl(field_type: &FieldTypeDefintion) -> TokenStream {
 
 fn field_type_enum_impl_display(field_type: &FieldTypeDefintion) -> TokenStream {
     let ident = field_type.ident();
-    let match_arms = field_type
-        .variant_map()
-        .values()
-        .map(|v| (v.ident(), v.name()))
-        .map(|(vid, name)| quote!(#ident::#vid => write!(f, #name)));
+    let variant_idents = field_type.variant_map().values().map(|v| v.ident());
+    let variant_names = field_type.variant_map().values().map(|v| v.name());
     let other_val_ident = format_ident!("{}", field_type.other_value_field_name());
     let other_match_arm = if field_type.is_true_enum() {
         quote!(#ident::#other_val_ident(value) => write!(f, "unknown_variant_{}", value))
@@ -98,7 +95,7 @@ fn field_type_enum_impl_display(field_type: &FieldTypeDefintion) -> TokenStream 
         impl fmt::Display for #ident {
             fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
                 match &self {
-                    #( #match_arms,)*
+                    #( #ident::#variant_idents => write!(f, #variant_names),)*
                     #other_match_arm
                 }
             }
@@ -109,18 +106,18 @@ fn field_type_enum_impl_display(field_type: &FieldTypeDefintion) -> TokenStream 
 fn field_type_enum_impl_from(field_type: &FieldTypeDefintion) -> TokenStream {
     let ident = field_type.ident();
     let base_type = type_str_as_type(field_type.base_type());
-    let match_arms = field_type
+    let variant_idents = field_type.variant_map().values().map(|v| v.ident());
+    let variant_values = field_type
         .variant_map()
         .values()
-        .map(|v| (v.ident(), bare_number_literal(v.value())))
-        .map(|(vid, value)| quote!(#value => #ident::#vid));
+        .map(|v| bare_number_literal(v.value()));
     let other_val_ident = format_ident!("{}", field_type.other_value_field_name());
 
     quote! {
             impl convert::From<#base_type> for #ident {
                 fn from(value: #base_type) -> Self {
                     match value {
-                        #( #match_arms, )*
+                        #( #variant_values => #ident::#variant_idents, )*
                         _ => #ident::#other_val_ident(value)
                     }
                 }
@@ -217,21 +214,12 @@ fn generate_main_field_type_enum(field_types: &[FieldTypeDefintion]) -> TokenStr
     let mut is_enum_force_false = HashSet::new();
     is_enum_force_false.insert("date_time".to_string());
     is_enum_force_false.insert("local_date_time".to_string());
-    let filtered_field_types: Vec<_> = field_types
+    let filtered_field_idents: Vec<_> = field_types
         .iter()
         .filter(|f| !f.variant_map().is_empty())
         .filter(|f| !is_enum_force_false.contains(f.name()))
         .map(|f| f.ident())
         .collect();
-    let is_enum_match_arms = filtered_field_types
-        .iter()
-        .map(|i| quote!(FieldDataType::#i => true));
-    let is_named_match_arms = filtered_field_types
-        .iter()
-        .map(|i| quote!(FieldDataType::#i => #i::is_named_variant(value)));
-    let as_string_match_arms = filtered_field_types
-        .iter()
-        .map(|i| quote!(FieldDataType::#i => #i::from(value).to_string()));
 
     quote! {
         /// Describe all possible data types of a field
@@ -247,20 +235,20 @@ fn generate_main_field_type_enum(field_types: &[FieldTypeDefintion]) -> TokenStr
             #[allow(clippy::match_like_matches_macro)]
             pub fn is_enum_type(self) -> bool {
                 match self {
-                    #( #is_enum_match_arms, )*
+                    #( FieldDataType::#filtered_field_idents => true, )*
                     _ => false
                 }
             }
             pub fn is_named_variant(self, value: i64) -> bool {
                 match self {
-                    #( #is_named_match_arms, )*
+                    #( FieldDataType::#filtered_field_idents => #filtered_field_idents::is_named_variant(value), )*
                     _ => false
                 }
             }
         }
         pub fn get_field_variant_as_string(field_type: FieldDataType , value: i64) -> String {
             match field_type {
-                #( #as_string_match_arms, )*
+                #( FieldDataType::#filtered_field_idents => #filtered_field_idents::from(value).to_string(), )*
                 _ => format!("Undefined{}", value),
             }
         }
