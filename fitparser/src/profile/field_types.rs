@@ -1,78 +1,869 @@
-//! Auto generated profile field types from FIT SDK Release: 21.133.00
-//! Not all of these may be used by the defined set of FIT messages
 #![allow(missing_docs)]
 #![allow(dead_code)]
 #![allow(clippy::unreadable_literal)]
-use serde::ser::Serializer;
-use serde::Serialize;
-use std::convert;
-use std::fmt;
+#![doc = "Auto generated profile field types from FIT SDK Release: 21.133.00"]
+#![doc = "Not all of these may be used by the defined set of FIT messages"]
+use serde::{ser::Serializer, Serialize};
+use std::{convert, fmt};
+#[doc = r" Describe all possible data types of a field"]
+#[doc = r""]
+#[doc = r" The Enum type's value is actually an enum of enums."]
+#[derive(Clone, Copy, Debug)]
+pub enum FieldDataType {
+    Bool,
+    SInt8,
+    UInt8,
+    SInt16,
+    UInt16,
+    SInt32,
+    UInt32,
+    String,
+    Float32,
+    Float64,
+    UInt8z,
+    UInt16z,
+    UInt32z,
+    Byte,
+    SInt64,
+    UInt64,
+    UInt64z,
+    File,
+    MesgNum,
+    Checksum,
+    FileFlags,
+    MesgCount,
+    DateTime,
+    LocalDateTime,
+    MessageIndex,
+    DeviceIndex,
+    Gender,
+    Language,
+    LanguageBits0,
+    LanguageBits1,
+    LanguageBits2,
+    LanguageBits3,
+    LanguageBits4,
+    TimeZone,
+    DisplayMeasure,
+    DisplayHeart,
+    DisplayPower,
+    DisplayPosition,
+    Switch,
+    Sport,
+    SportBits0,
+    SportBits1,
+    SportBits2,
+    SportBits3,
+    SportBits4,
+    SportBits5,
+    SportBits6,
+    SubSport,
+    SportEvent,
+    Activity,
+    Intensity,
+    SessionTrigger,
+    AutolapTrigger,
+    LapTrigger,
+    TimeMode,
+    BacklightMode,
+    DateMode,
+    BacklightTimeout,
+    Event,
+    EventType,
+    TimerTrigger,
+    FitnessEquipmentState,
+    Tone,
+    Autoscroll,
+    ActivityClass,
+    HrZoneCalc,
+    PwrZoneCalc,
+    WktStepDuration,
+    WktStepTarget,
+    Goal,
+    GoalRecurrence,
+    GoalSource,
+    Schedule,
+    CoursePoint,
+    Manufacturer,
+    GarminProduct,
+    AntplusDeviceType,
+    AntNetwork,
+    WorkoutCapabilities,
+    BatteryStatus,
+    HrType,
+    CourseCapabilities,
+    Weight,
+    WorkoutHr,
+    WorkoutPower,
+    BpStatus,
+    UserLocalId,
+    SwimStroke,
+    ActivityType,
+    ActivitySubtype,
+    ActivityLevel,
+    Side,
+    LeftRightBalance,
+    LeftRightBalance100,
+    LengthType,
+    DayOfWeek,
+    ConnectivityCapabilities,
+    WeatherReport,
+    WeatherStatus,
+    WeatherSeverity,
+    WeatherSevereType,
+    TimeIntoDay,
+    LocaltimeIntoDay,
+    StrokeType,
+    BodyLocation,
+    SegmentLapStatus,
+    SegmentLeaderboardType,
+    SegmentDeleteStatus,
+    SegmentSelectionType,
+    SourceType,
+    LocalDeviceType,
+    BleDeviceType,
+    AntChannelId,
+    DisplayOrientation,
+    WorkoutEquipment,
+    WatchfaceMode,
+    DigitalWatchfaceLayout,
+    AnalogWatchfaceLayout,
+    RiderPositionType,
+    PowerPhaseType,
+    CameraEventType,
+    SensorType,
+    BikeLightNetworkConfigType,
+    CommTimeoutType,
+    CameraOrientationType,
+    AttitudeStage,
+    AttitudeValidity,
+    AutoSyncFrequency,
+    ExdLayout,
+    ExdDisplayType,
+    ExdDataUnits,
+    ExdQualifiers,
+    ExdDescriptors,
+    AutoActivityDetect,
+    SupportedExdScreenLayouts,
+    FitBaseType,
+    TurnType,
+    BikeLightBeamAngleMode,
+    FitBaseUnit,
+    SetType,
+    MaxMetCategory,
+    ExerciseCategory,
+    BenchPressExerciseName,
+    CalfRaiseExerciseName,
+    CardioExerciseName,
+    CarryExerciseName,
+    ChopExerciseName,
+    CoreExerciseName,
+    CrunchExerciseName,
+    CurlExerciseName,
+    DeadliftExerciseName,
+    FlyeExerciseName,
+    HipRaiseExerciseName,
+    HipStabilityExerciseName,
+    HipSwingExerciseName,
+    HyperextensionExerciseName,
+    LateralRaiseExerciseName,
+    LegCurlExerciseName,
+    LegRaiseExerciseName,
+    LungeExerciseName,
+    OlympicLiftExerciseName,
+    PlankExerciseName,
+    PlyoExerciseName,
+    PullUpExerciseName,
+    PushUpExerciseName,
+    RowExerciseName,
+    ShoulderPressExerciseName,
+    ShoulderStabilityExerciseName,
+    ShrugExerciseName,
+    SitUpExerciseName,
+    SquatExerciseName,
+    TotalBodyExerciseName,
+    TricepsExtensionExerciseName,
+    WarmUpExerciseName,
+    RunExerciseName,
+    WaterType,
+    TissueModelType,
+    DiveGasStatus,
+    DiveAlert,
+    DiveAlarmType,
+    DiveBacklightMode,
+    SleepLevel,
+    Spo2MeasurementType,
+    CcrSetpointSwitchMode,
+    DiveGasMode,
+    ProjectileType,
+    FaveroProduct,
+    SplitType,
+    ClimbProEvent,
+    GasConsumptionRateType,
+    TapSensitivity,
+    RadarThreatLevelType,
+    MaxMetSpeedSource,
+    MaxMetHeartRateSource,
+    HrvStatus,
+    NoFlyTimeMode,
+}
+impl FieldDataType {
+    #[allow(clippy::match_like_matches_macro)]
+    pub fn is_enum_type(self) -> bool {
+        match self {
+            FieldDataType::File => true,
+            FieldDataType::MesgNum => true,
+            FieldDataType::Checksum => true,
+            FieldDataType::FileFlags => true,
+            FieldDataType::MesgCount => true,
+            FieldDataType::MessageIndex => true,
+            FieldDataType::DeviceIndex => true,
+            FieldDataType::Gender => true,
+            FieldDataType::Language => true,
+            FieldDataType::LanguageBits0 => true,
+            FieldDataType::LanguageBits1 => true,
+            FieldDataType::LanguageBits2 => true,
+            FieldDataType::LanguageBits3 => true,
+            FieldDataType::LanguageBits4 => true,
+            FieldDataType::TimeZone => true,
+            FieldDataType::DisplayMeasure => true,
+            FieldDataType::DisplayHeart => true,
+            FieldDataType::DisplayPower => true,
+            FieldDataType::DisplayPosition => true,
+            FieldDataType::Switch => true,
+            FieldDataType::Sport => true,
+            FieldDataType::SportBits0 => true,
+            FieldDataType::SportBits1 => true,
+            FieldDataType::SportBits2 => true,
+            FieldDataType::SportBits3 => true,
+            FieldDataType::SportBits4 => true,
+            FieldDataType::SportBits5 => true,
+            FieldDataType::SportBits6 => true,
+            FieldDataType::SubSport => true,
+            FieldDataType::SportEvent => true,
+            FieldDataType::Activity => true,
+            FieldDataType::Intensity => true,
+            FieldDataType::SessionTrigger => true,
+            FieldDataType::AutolapTrigger => true,
+            FieldDataType::LapTrigger => true,
+            FieldDataType::TimeMode => true,
+            FieldDataType::BacklightMode => true,
+            FieldDataType::DateMode => true,
+            FieldDataType::BacklightTimeout => true,
+            FieldDataType::Event => true,
+            FieldDataType::EventType => true,
+            FieldDataType::TimerTrigger => true,
+            FieldDataType::FitnessEquipmentState => true,
+            FieldDataType::Tone => true,
+            FieldDataType::Autoscroll => true,
+            FieldDataType::ActivityClass => true,
+            FieldDataType::HrZoneCalc => true,
+            FieldDataType::PwrZoneCalc => true,
+            FieldDataType::WktStepDuration => true,
+            FieldDataType::WktStepTarget => true,
+            FieldDataType::Goal => true,
+            FieldDataType::GoalRecurrence => true,
+            FieldDataType::GoalSource => true,
+            FieldDataType::Schedule => true,
+            FieldDataType::CoursePoint => true,
+            FieldDataType::Manufacturer => true,
+            FieldDataType::GarminProduct => true,
+            FieldDataType::AntplusDeviceType => true,
+            FieldDataType::AntNetwork => true,
+            FieldDataType::WorkoutCapabilities => true,
+            FieldDataType::BatteryStatus => true,
+            FieldDataType::HrType => true,
+            FieldDataType::CourseCapabilities => true,
+            FieldDataType::Weight => true,
+            FieldDataType::WorkoutHr => true,
+            FieldDataType::WorkoutPower => true,
+            FieldDataType::BpStatus => true,
+            FieldDataType::UserLocalId => true,
+            FieldDataType::SwimStroke => true,
+            FieldDataType::ActivityType => true,
+            FieldDataType::ActivitySubtype => true,
+            FieldDataType::ActivityLevel => true,
+            FieldDataType::Side => true,
+            FieldDataType::LeftRightBalance => true,
+            FieldDataType::LeftRightBalance100 => true,
+            FieldDataType::LengthType => true,
+            FieldDataType::DayOfWeek => true,
+            FieldDataType::ConnectivityCapabilities => true,
+            FieldDataType::WeatherReport => true,
+            FieldDataType::WeatherStatus => true,
+            FieldDataType::WeatherSeverity => true,
+            FieldDataType::WeatherSevereType => true,
+            FieldDataType::StrokeType => true,
+            FieldDataType::BodyLocation => true,
+            FieldDataType::SegmentLapStatus => true,
+            FieldDataType::SegmentLeaderboardType => true,
+            FieldDataType::SegmentDeleteStatus => true,
+            FieldDataType::SegmentSelectionType => true,
+            FieldDataType::SourceType => true,
+            FieldDataType::LocalDeviceType => true,
+            FieldDataType::BleDeviceType => true,
+            FieldDataType::AntChannelId => true,
+            FieldDataType::DisplayOrientation => true,
+            FieldDataType::WorkoutEquipment => true,
+            FieldDataType::WatchfaceMode => true,
+            FieldDataType::DigitalWatchfaceLayout => true,
+            FieldDataType::AnalogWatchfaceLayout => true,
+            FieldDataType::RiderPositionType => true,
+            FieldDataType::PowerPhaseType => true,
+            FieldDataType::CameraEventType => true,
+            FieldDataType::SensorType => true,
+            FieldDataType::BikeLightNetworkConfigType => true,
+            FieldDataType::CommTimeoutType => true,
+            FieldDataType::CameraOrientationType => true,
+            FieldDataType::AttitudeStage => true,
+            FieldDataType::AttitudeValidity => true,
+            FieldDataType::AutoSyncFrequency => true,
+            FieldDataType::ExdLayout => true,
+            FieldDataType::ExdDisplayType => true,
+            FieldDataType::ExdDataUnits => true,
+            FieldDataType::ExdQualifiers => true,
+            FieldDataType::ExdDescriptors => true,
+            FieldDataType::AutoActivityDetect => true,
+            FieldDataType::SupportedExdScreenLayouts => true,
+            FieldDataType::FitBaseType => true,
+            FieldDataType::TurnType => true,
+            FieldDataType::BikeLightBeamAngleMode => true,
+            FieldDataType::FitBaseUnit => true,
+            FieldDataType::SetType => true,
+            FieldDataType::MaxMetCategory => true,
+            FieldDataType::ExerciseCategory => true,
+            FieldDataType::BenchPressExerciseName => true,
+            FieldDataType::CalfRaiseExerciseName => true,
+            FieldDataType::CardioExerciseName => true,
+            FieldDataType::CarryExerciseName => true,
+            FieldDataType::ChopExerciseName => true,
+            FieldDataType::CoreExerciseName => true,
+            FieldDataType::CrunchExerciseName => true,
+            FieldDataType::CurlExerciseName => true,
+            FieldDataType::DeadliftExerciseName => true,
+            FieldDataType::FlyeExerciseName => true,
+            FieldDataType::HipRaiseExerciseName => true,
+            FieldDataType::HipStabilityExerciseName => true,
+            FieldDataType::HipSwingExerciseName => true,
+            FieldDataType::HyperextensionExerciseName => true,
+            FieldDataType::LateralRaiseExerciseName => true,
+            FieldDataType::LegCurlExerciseName => true,
+            FieldDataType::LegRaiseExerciseName => true,
+            FieldDataType::LungeExerciseName => true,
+            FieldDataType::OlympicLiftExerciseName => true,
+            FieldDataType::PlankExerciseName => true,
+            FieldDataType::PlyoExerciseName => true,
+            FieldDataType::PullUpExerciseName => true,
+            FieldDataType::PushUpExerciseName => true,
+            FieldDataType::RowExerciseName => true,
+            FieldDataType::ShoulderPressExerciseName => true,
+            FieldDataType::ShoulderStabilityExerciseName => true,
+            FieldDataType::ShrugExerciseName => true,
+            FieldDataType::SitUpExerciseName => true,
+            FieldDataType::SquatExerciseName => true,
+            FieldDataType::TotalBodyExerciseName => true,
+            FieldDataType::TricepsExtensionExerciseName => true,
+            FieldDataType::WarmUpExerciseName => true,
+            FieldDataType::RunExerciseName => true,
+            FieldDataType::WaterType => true,
+            FieldDataType::TissueModelType => true,
+            FieldDataType::DiveGasStatus => true,
+            FieldDataType::DiveAlert => true,
+            FieldDataType::DiveAlarmType => true,
+            FieldDataType::DiveBacklightMode => true,
+            FieldDataType::SleepLevel => true,
+            FieldDataType::Spo2MeasurementType => true,
+            FieldDataType::CcrSetpointSwitchMode => true,
+            FieldDataType::DiveGasMode => true,
+            FieldDataType::ProjectileType => true,
+            FieldDataType::FaveroProduct => true,
+            FieldDataType::SplitType => true,
+            FieldDataType::ClimbProEvent => true,
+            FieldDataType::GasConsumptionRateType => true,
+            FieldDataType::TapSensitivity => true,
+            FieldDataType::RadarThreatLevelType => true,
+            FieldDataType::MaxMetSpeedSource => true,
+            FieldDataType::MaxMetHeartRateSource => true,
+            FieldDataType::HrvStatus => true,
+            FieldDataType::NoFlyTimeMode => true,
+            _ => false,
+        }
+    }
+    pub fn is_named_variant(self, value: i64) -> bool {
+        match self {
+            FieldDataType::File => File::is_named_variant(value),
+            FieldDataType::MesgNum => MesgNum::is_named_variant(value),
+            FieldDataType::Checksum => Checksum::is_named_variant(value),
+            FieldDataType::FileFlags => FileFlags::is_named_variant(value),
+            FieldDataType::MesgCount => MesgCount::is_named_variant(value),
+            FieldDataType::MessageIndex => MessageIndex::is_named_variant(value),
+            FieldDataType::DeviceIndex => DeviceIndex::is_named_variant(value),
+            FieldDataType::Gender => Gender::is_named_variant(value),
+            FieldDataType::Language => Language::is_named_variant(value),
+            FieldDataType::LanguageBits0 => LanguageBits0::is_named_variant(value),
+            FieldDataType::LanguageBits1 => LanguageBits1::is_named_variant(value),
+            FieldDataType::LanguageBits2 => LanguageBits2::is_named_variant(value),
+            FieldDataType::LanguageBits3 => LanguageBits3::is_named_variant(value),
+            FieldDataType::LanguageBits4 => LanguageBits4::is_named_variant(value),
+            FieldDataType::TimeZone => TimeZone::is_named_variant(value),
+            FieldDataType::DisplayMeasure => DisplayMeasure::is_named_variant(value),
+            FieldDataType::DisplayHeart => DisplayHeart::is_named_variant(value),
+            FieldDataType::DisplayPower => DisplayPower::is_named_variant(value),
+            FieldDataType::DisplayPosition => DisplayPosition::is_named_variant(value),
+            FieldDataType::Switch => Switch::is_named_variant(value),
+            FieldDataType::Sport => Sport::is_named_variant(value),
+            FieldDataType::SportBits0 => SportBits0::is_named_variant(value),
+            FieldDataType::SportBits1 => SportBits1::is_named_variant(value),
+            FieldDataType::SportBits2 => SportBits2::is_named_variant(value),
+            FieldDataType::SportBits3 => SportBits3::is_named_variant(value),
+            FieldDataType::SportBits4 => SportBits4::is_named_variant(value),
+            FieldDataType::SportBits5 => SportBits5::is_named_variant(value),
+            FieldDataType::SportBits6 => SportBits6::is_named_variant(value),
+            FieldDataType::SubSport => SubSport::is_named_variant(value),
+            FieldDataType::SportEvent => SportEvent::is_named_variant(value),
+            FieldDataType::Activity => Activity::is_named_variant(value),
+            FieldDataType::Intensity => Intensity::is_named_variant(value),
+            FieldDataType::SessionTrigger => SessionTrigger::is_named_variant(value),
+            FieldDataType::AutolapTrigger => AutolapTrigger::is_named_variant(value),
+            FieldDataType::LapTrigger => LapTrigger::is_named_variant(value),
+            FieldDataType::TimeMode => TimeMode::is_named_variant(value),
+            FieldDataType::BacklightMode => BacklightMode::is_named_variant(value),
+            FieldDataType::DateMode => DateMode::is_named_variant(value),
+            FieldDataType::BacklightTimeout => BacklightTimeout::is_named_variant(value),
+            FieldDataType::Event => Event::is_named_variant(value),
+            FieldDataType::EventType => EventType::is_named_variant(value),
+            FieldDataType::TimerTrigger => TimerTrigger::is_named_variant(value),
+            FieldDataType::FitnessEquipmentState => FitnessEquipmentState::is_named_variant(value),
+            FieldDataType::Tone => Tone::is_named_variant(value),
+            FieldDataType::Autoscroll => Autoscroll::is_named_variant(value),
+            FieldDataType::ActivityClass => ActivityClass::is_named_variant(value),
+            FieldDataType::HrZoneCalc => HrZoneCalc::is_named_variant(value),
+            FieldDataType::PwrZoneCalc => PwrZoneCalc::is_named_variant(value),
+            FieldDataType::WktStepDuration => WktStepDuration::is_named_variant(value),
+            FieldDataType::WktStepTarget => WktStepTarget::is_named_variant(value),
+            FieldDataType::Goal => Goal::is_named_variant(value),
+            FieldDataType::GoalRecurrence => GoalRecurrence::is_named_variant(value),
+            FieldDataType::GoalSource => GoalSource::is_named_variant(value),
+            FieldDataType::Schedule => Schedule::is_named_variant(value),
+            FieldDataType::CoursePoint => CoursePoint::is_named_variant(value),
+            FieldDataType::Manufacturer => Manufacturer::is_named_variant(value),
+            FieldDataType::GarminProduct => GarminProduct::is_named_variant(value),
+            FieldDataType::AntplusDeviceType => AntplusDeviceType::is_named_variant(value),
+            FieldDataType::AntNetwork => AntNetwork::is_named_variant(value),
+            FieldDataType::WorkoutCapabilities => WorkoutCapabilities::is_named_variant(value),
+            FieldDataType::BatteryStatus => BatteryStatus::is_named_variant(value),
+            FieldDataType::HrType => HrType::is_named_variant(value),
+            FieldDataType::CourseCapabilities => CourseCapabilities::is_named_variant(value),
+            FieldDataType::Weight => Weight::is_named_variant(value),
+            FieldDataType::WorkoutHr => WorkoutHr::is_named_variant(value),
+            FieldDataType::WorkoutPower => WorkoutPower::is_named_variant(value),
+            FieldDataType::BpStatus => BpStatus::is_named_variant(value),
+            FieldDataType::UserLocalId => UserLocalId::is_named_variant(value),
+            FieldDataType::SwimStroke => SwimStroke::is_named_variant(value),
+            FieldDataType::ActivityType => ActivityType::is_named_variant(value),
+            FieldDataType::ActivitySubtype => ActivitySubtype::is_named_variant(value),
+            FieldDataType::ActivityLevel => ActivityLevel::is_named_variant(value),
+            FieldDataType::Side => Side::is_named_variant(value),
+            FieldDataType::LeftRightBalance => LeftRightBalance::is_named_variant(value),
+            FieldDataType::LeftRightBalance100 => LeftRightBalance100::is_named_variant(value),
+            FieldDataType::LengthType => LengthType::is_named_variant(value),
+            FieldDataType::DayOfWeek => DayOfWeek::is_named_variant(value),
+            FieldDataType::ConnectivityCapabilities => {
+                ConnectivityCapabilities::is_named_variant(value)
+            }
+            FieldDataType::WeatherReport => WeatherReport::is_named_variant(value),
+            FieldDataType::WeatherStatus => WeatherStatus::is_named_variant(value),
+            FieldDataType::WeatherSeverity => WeatherSeverity::is_named_variant(value),
+            FieldDataType::WeatherSevereType => WeatherSevereType::is_named_variant(value),
+            FieldDataType::StrokeType => StrokeType::is_named_variant(value),
+            FieldDataType::BodyLocation => BodyLocation::is_named_variant(value),
+            FieldDataType::SegmentLapStatus => SegmentLapStatus::is_named_variant(value),
+            FieldDataType::SegmentLeaderboardType => {
+                SegmentLeaderboardType::is_named_variant(value)
+            }
+            FieldDataType::SegmentDeleteStatus => SegmentDeleteStatus::is_named_variant(value),
+            FieldDataType::SegmentSelectionType => SegmentSelectionType::is_named_variant(value),
+            FieldDataType::SourceType => SourceType::is_named_variant(value),
+            FieldDataType::LocalDeviceType => LocalDeviceType::is_named_variant(value),
+            FieldDataType::BleDeviceType => BleDeviceType::is_named_variant(value),
+            FieldDataType::AntChannelId => AntChannelId::is_named_variant(value),
+            FieldDataType::DisplayOrientation => DisplayOrientation::is_named_variant(value),
+            FieldDataType::WorkoutEquipment => WorkoutEquipment::is_named_variant(value),
+            FieldDataType::WatchfaceMode => WatchfaceMode::is_named_variant(value),
+            FieldDataType::DigitalWatchfaceLayout => {
+                DigitalWatchfaceLayout::is_named_variant(value)
+            }
+            FieldDataType::AnalogWatchfaceLayout => AnalogWatchfaceLayout::is_named_variant(value),
+            FieldDataType::RiderPositionType => RiderPositionType::is_named_variant(value),
+            FieldDataType::PowerPhaseType => PowerPhaseType::is_named_variant(value),
+            FieldDataType::CameraEventType => CameraEventType::is_named_variant(value),
+            FieldDataType::SensorType => SensorType::is_named_variant(value),
+            FieldDataType::BikeLightNetworkConfigType => {
+                BikeLightNetworkConfigType::is_named_variant(value)
+            }
+            FieldDataType::CommTimeoutType => CommTimeoutType::is_named_variant(value),
+            FieldDataType::CameraOrientationType => CameraOrientationType::is_named_variant(value),
+            FieldDataType::AttitudeStage => AttitudeStage::is_named_variant(value),
+            FieldDataType::AttitudeValidity => AttitudeValidity::is_named_variant(value),
+            FieldDataType::AutoSyncFrequency => AutoSyncFrequency::is_named_variant(value),
+            FieldDataType::ExdLayout => ExdLayout::is_named_variant(value),
+            FieldDataType::ExdDisplayType => ExdDisplayType::is_named_variant(value),
+            FieldDataType::ExdDataUnits => ExdDataUnits::is_named_variant(value),
+            FieldDataType::ExdQualifiers => ExdQualifiers::is_named_variant(value),
+            FieldDataType::ExdDescriptors => ExdDescriptors::is_named_variant(value),
+            FieldDataType::AutoActivityDetect => AutoActivityDetect::is_named_variant(value),
+            FieldDataType::SupportedExdScreenLayouts => {
+                SupportedExdScreenLayouts::is_named_variant(value)
+            }
+            FieldDataType::FitBaseType => FitBaseType::is_named_variant(value),
+            FieldDataType::TurnType => TurnType::is_named_variant(value),
+            FieldDataType::BikeLightBeamAngleMode => {
+                BikeLightBeamAngleMode::is_named_variant(value)
+            }
+            FieldDataType::FitBaseUnit => FitBaseUnit::is_named_variant(value),
+            FieldDataType::SetType => SetType::is_named_variant(value),
+            FieldDataType::MaxMetCategory => MaxMetCategory::is_named_variant(value),
+            FieldDataType::ExerciseCategory => ExerciseCategory::is_named_variant(value),
+            FieldDataType::BenchPressExerciseName => {
+                BenchPressExerciseName::is_named_variant(value)
+            }
+            FieldDataType::CalfRaiseExerciseName => CalfRaiseExerciseName::is_named_variant(value),
+            FieldDataType::CardioExerciseName => CardioExerciseName::is_named_variant(value),
+            FieldDataType::CarryExerciseName => CarryExerciseName::is_named_variant(value),
+            FieldDataType::ChopExerciseName => ChopExerciseName::is_named_variant(value),
+            FieldDataType::CoreExerciseName => CoreExerciseName::is_named_variant(value),
+            FieldDataType::CrunchExerciseName => CrunchExerciseName::is_named_variant(value),
+            FieldDataType::CurlExerciseName => CurlExerciseName::is_named_variant(value),
+            FieldDataType::DeadliftExerciseName => DeadliftExerciseName::is_named_variant(value),
+            FieldDataType::FlyeExerciseName => FlyeExerciseName::is_named_variant(value),
+            FieldDataType::HipRaiseExerciseName => HipRaiseExerciseName::is_named_variant(value),
+            FieldDataType::HipStabilityExerciseName => {
+                HipStabilityExerciseName::is_named_variant(value)
+            }
+            FieldDataType::HipSwingExerciseName => HipSwingExerciseName::is_named_variant(value),
+            FieldDataType::HyperextensionExerciseName => {
+                HyperextensionExerciseName::is_named_variant(value)
+            }
+            FieldDataType::LateralRaiseExerciseName => {
+                LateralRaiseExerciseName::is_named_variant(value)
+            }
+            FieldDataType::LegCurlExerciseName => LegCurlExerciseName::is_named_variant(value),
+            FieldDataType::LegRaiseExerciseName => LegRaiseExerciseName::is_named_variant(value),
+            FieldDataType::LungeExerciseName => LungeExerciseName::is_named_variant(value),
+            FieldDataType::OlympicLiftExerciseName => {
+                OlympicLiftExerciseName::is_named_variant(value)
+            }
+            FieldDataType::PlankExerciseName => PlankExerciseName::is_named_variant(value),
+            FieldDataType::PlyoExerciseName => PlyoExerciseName::is_named_variant(value),
+            FieldDataType::PullUpExerciseName => PullUpExerciseName::is_named_variant(value),
+            FieldDataType::PushUpExerciseName => PushUpExerciseName::is_named_variant(value),
+            FieldDataType::RowExerciseName => RowExerciseName::is_named_variant(value),
+            FieldDataType::ShoulderPressExerciseName => {
+                ShoulderPressExerciseName::is_named_variant(value)
+            }
+            FieldDataType::ShoulderStabilityExerciseName => {
+                ShoulderStabilityExerciseName::is_named_variant(value)
+            }
+            FieldDataType::ShrugExerciseName => ShrugExerciseName::is_named_variant(value),
+            FieldDataType::SitUpExerciseName => SitUpExerciseName::is_named_variant(value),
+            FieldDataType::SquatExerciseName => SquatExerciseName::is_named_variant(value),
+            FieldDataType::TotalBodyExerciseName => TotalBodyExerciseName::is_named_variant(value),
+            FieldDataType::TricepsExtensionExerciseName => {
+                TricepsExtensionExerciseName::is_named_variant(value)
+            }
+            FieldDataType::WarmUpExerciseName => WarmUpExerciseName::is_named_variant(value),
+            FieldDataType::RunExerciseName => RunExerciseName::is_named_variant(value),
+            FieldDataType::WaterType => WaterType::is_named_variant(value),
+            FieldDataType::TissueModelType => TissueModelType::is_named_variant(value),
+            FieldDataType::DiveGasStatus => DiveGasStatus::is_named_variant(value),
+            FieldDataType::DiveAlert => DiveAlert::is_named_variant(value),
+            FieldDataType::DiveAlarmType => DiveAlarmType::is_named_variant(value),
+            FieldDataType::DiveBacklightMode => DiveBacklightMode::is_named_variant(value),
+            FieldDataType::SleepLevel => SleepLevel::is_named_variant(value),
+            FieldDataType::Spo2MeasurementType => Spo2MeasurementType::is_named_variant(value),
+            FieldDataType::CcrSetpointSwitchMode => CcrSetpointSwitchMode::is_named_variant(value),
+            FieldDataType::DiveGasMode => DiveGasMode::is_named_variant(value),
+            FieldDataType::ProjectileType => ProjectileType::is_named_variant(value),
+            FieldDataType::FaveroProduct => FaveroProduct::is_named_variant(value),
+            FieldDataType::SplitType => SplitType::is_named_variant(value),
+            FieldDataType::ClimbProEvent => ClimbProEvent::is_named_variant(value),
+            FieldDataType::GasConsumptionRateType => {
+                GasConsumptionRateType::is_named_variant(value)
+            }
+            FieldDataType::TapSensitivity => TapSensitivity::is_named_variant(value),
+            FieldDataType::RadarThreatLevelType => RadarThreatLevelType::is_named_variant(value),
+            FieldDataType::MaxMetSpeedSource => MaxMetSpeedSource::is_named_variant(value),
+            FieldDataType::MaxMetHeartRateSource => MaxMetHeartRateSource::is_named_variant(value),
+            FieldDataType::HrvStatus => HrvStatus::is_named_variant(value),
+            FieldDataType::NoFlyTimeMode => NoFlyTimeMode::is_named_variant(value),
+            _ => false,
+        }
+    }
+}
+pub fn get_field_variant_as_string(field_type: FieldDataType, value: i64) -> String {
+    match field_type {
+        FieldDataType::File => File::from(value).to_string(),
+        FieldDataType::MesgNum => MesgNum::from(value).to_string(),
+        FieldDataType::Checksum => Checksum::from(value).to_string(),
+        FieldDataType::FileFlags => FileFlags::from(value).to_string(),
+        FieldDataType::MesgCount => MesgCount::from(value).to_string(),
+        FieldDataType::MessageIndex => MessageIndex::from(value).to_string(),
+        FieldDataType::DeviceIndex => DeviceIndex::from(value).to_string(),
+        FieldDataType::Gender => Gender::from(value).to_string(),
+        FieldDataType::Language => Language::from(value).to_string(),
+        FieldDataType::LanguageBits0 => LanguageBits0::from(value).to_string(),
+        FieldDataType::LanguageBits1 => LanguageBits1::from(value).to_string(),
+        FieldDataType::LanguageBits2 => LanguageBits2::from(value).to_string(),
+        FieldDataType::LanguageBits3 => LanguageBits3::from(value).to_string(),
+        FieldDataType::LanguageBits4 => LanguageBits4::from(value).to_string(),
+        FieldDataType::TimeZone => TimeZone::from(value).to_string(),
+        FieldDataType::DisplayMeasure => DisplayMeasure::from(value).to_string(),
+        FieldDataType::DisplayHeart => DisplayHeart::from(value).to_string(),
+        FieldDataType::DisplayPower => DisplayPower::from(value).to_string(),
+        FieldDataType::DisplayPosition => DisplayPosition::from(value).to_string(),
+        FieldDataType::Switch => Switch::from(value).to_string(),
+        FieldDataType::Sport => Sport::from(value).to_string(),
+        FieldDataType::SportBits0 => SportBits0::from(value).to_string(),
+        FieldDataType::SportBits1 => SportBits1::from(value).to_string(),
+        FieldDataType::SportBits2 => SportBits2::from(value).to_string(),
+        FieldDataType::SportBits3 => SportBits3::from(value).to_string(),
+        FieldDataType::SportBits4 => SportBits4::from(value).to_string(),
+        FieldDataType::SportBits5 => SportBits5::from(value).to_string(),
+        FieldDataType::SportBits6 => SportBits6::from(value).to_string(),
+        FieldDataType::SubSport => SubSport::from(value).to_string(),
+        FieldDataType::SportEvent => SportEvent::from(value).to_string(),
+        FieldDataType::Activity => Activity::from(value).to_string(),
+        FieldDataType::Intensity => Intensity::from(value).to_string(),
+        FieldDataType::SessionTrigger => SessionTrigger::from(value).to_string(),
+        FieldDataType::AutolapTrigger => AutolapTrigger::from(value).to_string(),
+        FieldDataType::LapTrigger => LapTrigger::from(value).to_string(),
+        FieldDataType::TimeMode => TimeMode::from(value).to_string(),
+        FieldDataType::BacklightMode => BacklightMode::from(value).to_string(),
+        FieldDataType::DateMode => DateMode::from(value).to_string(),
+        FieldDataType::BacklightTimeout => BacklightTimeout::from(value).to_string(),
+        FieldDataType::Event => Event::from(value).to_string(),
+        FieldDataType::EventType => EventType::from(value).to_string(),
+        FieldDataType::TimerTrigger => TimerTrigger::from(value).to_string(),
+        FieldDataType::FitnessEquipmentState => FitnessEquipmentState::from(value).to_string(),
+        FieldDataType::Tone => Tone::from(value).to_string(),
+        FieldDataType::Autoscroll => Autoscroll::from(value).to_string(),
+        FieldDataType::ActivityClass => ActivityClass::from(value).to_string(),
+        FieldDataType::HrZoneCalc => HrZoneCalc::from(value).to_string(),
+        FieldDataType::PwrZoneCalc => PwrZoneCalc::from(value).to_string(),
+        FieldDataType::WktStepDuration => WktStepDuration::from(value).to_string(),
+        FieldDataType::WktStepTarget => WktStepTarget::from(value).to_string(),
+        FieldDataType::Goal => Goal::from(value).to_string(),
+        FieldDataType::GoalRecurrence => GoalRecurrence::from(value).to_string(),
+        FieldDataType::GoalSource => GoalSource::from(value).to_string(),
+        FieldDataType::Schedule => Schedule::from(value).to_string(),
+        FieldDataType::CoursePoint => CoursePoint::from(value).to_string(),
+        FieldDataType::Manufacturer => Manufacturer::from(value).to_string(),
+        FieldDataType::GarminProduct => GarminProduct::from(value).to_string(),
+        FieldDataType::AntplusDeviceType => AntplusDeviceType::from(value).to_string(),
+        FieldDataType::AntNetwork => AntNetwork::from(value).to_string(),
+        FieldDataType::WorkoutCapabilities => WorkoutCapabilities::from(value).to_string(),
+        FieldDataType::BatteryStatus => BatteryStatus::from(value).to_string(),
+        FieldDataType::HrType => HrType::from(value).to_string(),
+        FieldDataType::CourseCapabilities => CourseCapabilities::from(value).to_string(),
+        FieldDataType::Weight => Weight::from(value).to_string(),
+        FieldDataType::WorkoutHr => WorkoutHr::from(value).to_string(),
+        FieldDataType::WorkoutPower => WorkoutPower::from(value).to_string(),
+        FieldDataType::BpStatus => BpStatus::from(value).to_string(),
+        FieldDataType::UserLocalId => UserLocalId::from(value).to_string(),
+        FieldDataType::SwimStroke => SwimStroke::from(value).to_string(),
+        FieldDataType::ActivityType => ActivityType::from(value).to_string(),
+        FieldDataType::ActivitySubtype => ActivitySubtype::from(value).to_string(),
+        FieldDataType::ActivityLevel => ActivityLevel::from(value).to_string(),
+        FieldDataType::Side => Side::from(value).to_string(),
+        FieldDataType::LeftRightBalance => LeftRightBalance::from(value).to_string(),
+        FieldDataType::LeftRightBalance100 => LeftRightBalance100::from(value).to_string(),
+        FieldDataType::LengthType => LengthType::from(value).to_string(),
+        FieldDataType::DayOfWeek => DayOfWeek::from(value).to_string(),
+        FieldDataType::ConnectivityCapabilities => {
+            ConnectivityCapabilities::from(value).to_string()
+        }
+        FieldDataType::WeatherReport => WeatherReport::from(value).to_string(),
+        FieldDataType::WeatherStatus => WeatherStatus::from(value).to_string(),
+        FieldDataType::WeatherSeverity => WeatherSeverity::from(value).to_string(),
+        FieldDataType::WeatherSevereType => WeatherSevereType::from(value).to_string(),
+        FieldDataType::StrokeType => StrokeType::from(value).to_string(),
+        FieldDataType::BodyLocation => BodyLocation::from(value).to_string(),
+        FieldDataType::SegmentLapStatus => SegmentLapStatus::from(value).to_string(),
+        FieldDataType::SegmentLeaderboardType => SegmentLeaderboardType::from(value).to_string(),
+        FieldDataType::SegmentDeleteStatus => SegmentDeleteStatus::from(value).to_string(),
+        FieldDataType::SegmentSelectionType => SegmentSelectionType::from(value).to_string(),
+        FieldDataType::SourceType => SourceType::from(value).to_string(),
+        FieldDataType::LocalDeviceType => LocalDeviceType::from(value).to_string(),
+        FieldDataType::BleDeviceType => BleDeviceType::from(value).to_string(),
+        FieldDataType::AntChannelId => AntChannelId::from(value).to_string(),
+        FieldDataType::DisplayOrientation => DisplayOrientation::from(value).to_string(),
+        FieldDataType::WorkoutEquipment => WorkoutEquipment::from(value).to_string(),
+        FieldDataType::WatchfaceMode => WatchfaceMode::from(value).to_string(),
+        FieldDataType::DigitalWatchfaceLayout => DigitalWatchfaceLayout::from(value).to_string(),
+        FieldDataType::AnalogWatchfaceLayout => AnalogWatchfaceLayout::from(value).to_string(),
+        FieldDataType::RiderPositionType => RiderPositionType::from(value).to_string(),
+        FieldDataType::PowerPhaseType => PowerPhaseType::from(value).to_string(),
+        FieldDataType::CameraEventType => CameraEventType::from(value).to_string(),
+        FieldDataType::SensorType => SensorType::from(value).to_string(),
+        FieldDataType::BikeLightNetworkConfigType => {
+            BikeLightNetworkConfigType::from(value).to_string()
+        }
+        FieldDataType::CommTimeoutType => CommTimeoutType::from(value).to_string(),
+        FieldDataType::CameraOrientationType => CameraOrientationType::from(value).to_string(),
+        FieldDataType::AttitudeStage => AttitudeStage::from(value).to_string(),
+        FieldDataType::AttitudeValidity => AttitudeValidity::from(value).to_string(),
+        FieldDataType::AutoSyncFrequency => AutoSyncFrequency::from(value).to_string(),
+        FieldDataType::ExdLayout => ExdLayout::from(value).to_string(),
+        FieldDataType::ExdDisplayType => ExdDisplayType::from(value).to_string(),
+        FieldDataType::ExdDataUnits => ExdDataUnits::from(value).to_string(),
+        FieldDataType::ExdQualifiers => ExdQualifiers::from(value).to_string(),
+        FieldDataType::ExdDescriptors => ExdDescriptors::from(value).to_string(),
+        FieldDataType::AutoActivityDetect => AutoActivityDetect::from(value).to_string(),
+        FieldDataType::SupportedExdScreenLayouts => {
+            SupportedExdScreenLayouts::from(value).to_string()
+        }
+        FieldDataType::FitBaseType => FitBaseType::from(value).to_string(),
+        FieldDataType::TurnType => TurnType::from(value).to_string(),
+        FieldDataType::BikeLightBeamAngleMode => BikeLightBeamAngleMode::from(value).to_string(),
+        FieldDataType::FitBaseUnit => FitBaseUnit::from(value).to_string(),
+        FieldDataType::SetType => SetType::from(value).to_string(),
+        FieldDataType::MaxMetCategory => MaxMetCategory::from(value).to_string(),
+        FieldDataType::ExerciseCategory => ExerciseCategory::from(value).to_string(),
+        FieldDataType::BenchPressExerciseName => BenchPressExerciseName::from(value).to_string(),
+        FieldDataType::CalfRaiseExerciseName => CalfRaiseExerciseName::from(value).to_string(),
+        FieldDataType::CardioExerciseName => CardioExerciseName::from(value).to_string(),
+        FieldDataType::CarryExerciseName => CarryExerciseName::from(value).to_string(),
+        FieldDataType::ChopExerciseName => ChopExerciseName::from(value).to_string(),
+        FieldDataType::CoreExerciseName => CoreExerciseName::from(value).to_string(),
+        FieldDataType::CrunchExerciseName => CrunchExerciseName::from(value).to_string(),
+        FieldDataType::CurlExerciseName => CurlExerciseName::from(value).to_string(),
+        FieldDataType::DeadliftExerciseName => DeadliftExerciseName::from(value).to_string(),
+        FieldDataType::FlyeExerciseName => FlyeExerciseName::from(value).to_string(),
+        FieldDataType::HipRaiseExerciseName => HipRaiseExerciseName::from(value).to_string(),
+        FieldDataType::HipStabilityExerciseName => {
+            HipStabilityExerciseName::from(value).to_string()
+        }
+        FieldDataType::HipSwingExerciseName => HipSwingExerciseName::from(value).to_string(),
+        FieldDataType::HyperextensionExerciseName => {
+            HyperextensionExerciseName::from(value).to_string()
+        }
+        FieldDataType::LateralRaiseExerciseName => {
+            LateralRaiseExerciseName::from(value).to_string()
+        }
+        FieldDataType::LegCurlExerciseName => LegCurlExerciseName::from(value).to_string(),
+        FieldDataType::LegRaiseExerciseName => LegRaiseExerciseName::from(value).to_string(),
+        FieldDataType::LungeExerciseName => LungeExerciseName::from(value).to_string(),
+        FieldDataType::OlympicLiftExerciseName => OlympicLiftExerciseName::from(value).to_string(),
+        FieldDataType::PlankExerciseName => PlankExerciseName::from(value).to_string(),
+        FieldDataType::PlyoExerciseName => PlyoExerciseName::from(value).to_string(),
+        FieldDataType::PullUpExerciseName => PullUpExerciseName::from(value).to_string(),
+        FieldDataType::PushUpExerciseName => PushUpExerciseName::from(value).to_string(),
+        FieldDataType::RowExerciseName => RowExerciseName::from(value).to_string(),
+        FieldDataType::ShoulderPressExerciseName => {
+            ShoulderPressExerciseName::from(value).to_string()
+        }
+        FieldDataType::ShoulderStabilityExerciseName => {
+            ShoulderStabilityExerciseName::from(value).to_string()
+        }
+        FieldDataType::ShrugExerciseName => ShrugExerciseName::from(value).to_string(),
+        FieldDataType::SitUpExerciseName => SitUpExerciseName::from(value).to_string(),
+        FieldDataType::SquatExerciseName => SquatExerciseName::from(value).to_string(),
+        FieldDataType::TotalBodyExerciseName => TotalBodyExerciseName::from(value).to_string(),
+        FieldDataType::TricepsExtensionExerciseName => {
+            TricepsExtensionExerciseName::from(value).to_string()
+        }
+        FieldDataType::WarmUpExerciseName => WarmUpExerciseName::from(value).to_string(),
+        FieldDataType::RunExerciseName => RunExerciseName::from(value).to_string(),
+        FieldDataType::WaterType => WaterType::from(value).to_string(),
+        FieldDataType::TissueModelType => TissueModelType::from(value).to_string(),
+        FieldDataType::DiveGasStatus => DiveGasStatus::from(value).to_string(),
+        FieldDataType::DiveAlert => DiveAlert::from(value).to_string(),
+        FieldDataType::DiveAlarmType => DiveAlarmType::from(value).to_string(),
+        FieldDataType::DiveBacklightMode => DiveBacklightMode::from(value).to_string(),
+        FieldDataType::SleepLevel => SleepLevel::from(value).to_string(),
+        FieldDataType::Spo2MeasurementType => Spo2MeasurementType::from(value).to_string(),
+        FieldDataType::CcrSetpointSwitchMode => CcrSetpointSwitchMode::from(value).to_string(),
+        FieldDataType::DiveGasMode => DiveGasMode::from(value).to_string(),
+        FieldDataType::ProjectileType => ProjectileType::from(value).to_string(),
+        FieldDataType::FaveroProduct => FaveroProduct::from(value).to_string(),
+        FieldDataType::SplitType => SplitType::from(value).to_string(),
+        FieldDataType::ClimbProEvent => ClimbProEvent::from(value).to_string(),
+        FieldDataType::GasConsumptionRateType => GasConsumptionRateType::from(value).to_string(),
+        FieldDataType::TapSensitivity => TapSensitivity::from(value).to_string(),
+        FieldDataType::RadarThreatLevelType => RadarThreatLevelType::from(value).to_string(),
+        FieldDataType::MaxMetSpeedSource => MaxMetSpeedSource::from(value).to_string(),
+        FieldDataType::MaxMetHeartRateSource => MaxMetHeartRateSource::from(value).to_string(),
+        FieldDataType::HrvStatus => HrvStatus::from(value).to_string(),
+        FieldDataType::NoFlyTimeMode => NoFlyTimeMode::from(value).to_string(),
+        _ => format!("Undefined{}", value),
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum File {
-    /// Read only, single file. Must be in root directory.
+    #[doc = "Read only, single file. Must be in root directory."]
     Device,
-    /// Read/write, single file. Directory=Settings
+    #[doc = "Read/write, single file. Directory=Settings"]
     Settings,
-    /// Read/write, multiple files, file number = sport type. Directory=Sports
+    #[doc = "Read/write, multiple files, file number = sport type. Directory=Sports"]
     Sport,
-    /// Read/erase, multiple files. Directory=Activities
+    #[doc = "Read/erase, multiple files. Directory=Activities"]
     Activity,
-    /// Read/write/erase, multiple files. Directory=Workouts
+    #[doc = "Read/write/erase, multiple files. Directory=Workouts"]
     Workout,
-    /// Read/write/erase, multiple files. Directory=Courses
+    #[doc = "Read/write/erase, multiple files. Directory=Courses"]
     Course,
-    /// Read/write, single file. Directory=Schedules
+    #[doc = "Read/write, single file. Directory=Schedules"]
     Schedules,
-    /// Read only, single file. Circular buffer. All message definitions at start of file. Directory=Weight
+    #[doc = "Read only, single file. Circular buffer. All message definitions at start of file. Directory=Weight"]
     Weight,
-    /// Read only, single file. Directory=Totals
+    #[doc = "Read only, single file. Directory=Totals"]
     Totals,
-    /// Read/write, single file. Directory=Goals
+    #[doc = "Read/write, single file. Directory=Goals"]
     Goals,
-    /// Read only. Directory=Blood Pressure
+    #[doc = "Read only. Directory=Blood Pressure"]
     BloodPressure,
-    /// Read only. Directory=Monitoring. File number=sub type.
+    #[doc = "Read only. Directory=Monitoring. File number=sub type."]
     MonitoringA,
-    /// Read/erase, multiple files. Directory=Activities
+    #[doc = "Read/erase, multiple files. Directory=Activities"]
     ActivitySummary,
     MonitoringDaily,
-    /// Read only. Directory=Monitoring. File number=identifier
+    #[doc = "Read only. Directory=Monitoring. File number=identifier"]
     MonitoringB,
-    /// Read/write/erase. Multiple Files. Directory=Segments
+    #[doc = "Read/write/erase. Multiple Files. Directory=Segments"]
     Segment,
-    /// Read/write/erase. Single File. Directory=Segments
+    #[doc = "Read/write/erase. Single File. Directory=Segments"]
     SegmentList,
-    /// Read/write/erase. Single File. Directory=Settings
+    #[doc = "Read/write/erase. Single File. Directory=Settings"]
     ExdConfiguration,
-    /// 0xF7 - 0xFE reserved for manufacturer specific file types
+    #[doc = "0xF7 - 0xFE reserved for manufacturer specific file types"]
     MfgRangeMin,
-    /// 0xF7 - 0xFE reserved for manufacturer specific file types
+    #[doc = "0xF7 - 0xFE reserved for manufacturer specific file types"]
     MfgRangeMax,
     UnknownVariant(u8),
 }
 impl File {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            9 => true,
-            10 => true,
-            11 => true,
-            14 => true,
-            15 => true,
-            20 => true,
-            28 => true,
-            32 => true,
-            34 => true,
-            35 => true,
-            40 => true,
-            247 => true,
-            254 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            9i64 => true,
+            10i64 => true,
+            11i64 => true,
+            14i64 => true,
+            15i64 => true,
+            20i64 => true,
+            28i64 => true,
+            32i64 => true,
+            34i64 => true,
+            35i64 => true,
+            40i64 => true,
+            247i64 => true,
+            254i64 => true,
             _ => false,
         }
     }
@@ -128,7 +919,7 @@ impl fmt::Display for File {
             File::ExdConfiguration => write!(f, "exd_configuration"),
             File::MfgRangeMin => write!(f, "mfg_range_min"),
             File::MfgRangeMax => write!(f, "mfg_range_max"),
-            File::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            File::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -292,138 +1083,138 @@ pub enum MesgNum {
     ChronoShotData,
     HsaConfigurationData,
     DiveApneaAlarm,
-    /// Message number for the HSA wrist temperature data message
+    #[doc = "Message number for the HSA wrist temperature data message"]
     HsaWristTemperatureData,
-    /// 0xFF00 - 0xFFFE reserved for manufacturer specific messages
+    #[doc = "0xFF00 - 0xFFFE reserved for manufacturer specific messages"]
     MfgRangeMin,
-    /// 0xFF00 - 0xFFFE reserved for manufacturer specific messages
+    #[doc = "0xFF00 - 0xFFFE reserved for manufacturer specific messages"]
     MfgRangeMax,
     Value(u16),
 }
 impl MesgNum {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            9 => true,
-            10 => true,
-            12 => true,
-            15 => true,
-            18 => true,
-            19 => true,
-            20 => true,
-            21 => true,
-            23 => true,
-            26 => true,
-            27 => true,
-            28 => true,
-            30 => true,
-            31 => true,
-            32 => true,
-            33 => true,
-            34 => true,
-            35 => true,
-            37 => true,
-            38 => true,
-            39 => true,
-            49 => true,
-            51 => true,
-            53 => true,
-            55 => true,
-            72 => true,
-            78 => true,
-            80 => true,
-            81 => true,
-            82 => true,
-            101 => true,
-            103 => true,
-            105 => true,
-            106 => true,
-            127 => true,
-            128 => true,
-            129 => true,
-            131 => true,
-            132 => true,
-            142 => true,
-            145 => true,
-            148 => true,
-            149 => true,
-            150 => true,
-            151 => true,
-            158 => true,
-            159 => true,
-            160 => true,
-            161 => true,
-            162 => true,
-            164 => true,
-            165 => true,
-            167 => true,
-            169 => true,
-            174 => true,
-            177 => true,
-            178 => true,
-            184 => true,
-            185 => true,
-            186 => true,
-            187 => true,
-            188 => true,
-            200 => true,
-            201 => true,
-            202 => true,
-            206 => true,
-            207 => true,
-            208 => true,
-            209 => true,
-            210 => true,
-            211 => true,
-            216 => true,
-            225 => true,
-            227 => true,
-            229 => true,
-            258 => true,
-            259 => true,
-            262 => true,
-            264 => true,
-            268 => true,
-            269 => true,
-            275 => true,
-            285 => true,
-            289 => true,
-            290 => true,
-            297 => true,
-            302 => true,
-            304 => true,
-            305 => true,
-            306 => true,
-            307 => true,
-            308 => true,
-            312 => true,
-            313 => true,
-            314 => true,
-            315 => true,
-            317 => true,
-            319 => true,
-            323 => true,
-            346 => true,
-            370 => true,
-            371 => true,
-            372 => true,
-            375 => true,
-            376 => true,
-            387 => true,
-            388 => true,
-            389 => true,
-            393 => true,
-            409 => true,
-            65280 => true,
-            65534 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            9i64 => true,
+            10i64 => true,
+            12i64 => true,
+            15i64 => true,
+            18i64 => true,
+            19i64 => true,
+            20i64 => true,
+            21i64 => true,
+            23i64 => true,
+            26i64 => true,
+            27i64 => true,
+            28i64 => true,
+            30i64 => true,
+            31i64 => true,
+            32i64 => true,
+            33i64 => true,
+            34i64 => true,
+            35i64 => true,
+            37i64 => true,
+            38i64 => true,
+            39i64 => true,
+            49i64 => true,
+            51i64 => true,
+            53i64 => true,
+            55i64 => true,
+            72i64 => true,
+            78i64 => true,
+            80i64 => true,
+            81i64 => true,
+            82i64 => true,
+            101i64 => true,
+            103i64 => true,
+            105i64 => true,
+            106i64 => true,
+            127i64 => true,
+            128i64 => true,
+            129i64 => true,
+            131i64 => true,
+            132i64 => true,
+            142i64 => true,
+            145i64 => true,
+            148i64 => true,
+            149i64 => true,
+            150i64 => true,
+            151i64 => true,
+            158i64 => true,
+            159i64 => true,
+            160i64 => true,
+            161i64 => true,
+            162i64 => true,
+            164i64 => true,
+            165i64 => true,
+            167i64 => true,
+            169i64 => true,
+            174i64 => true,
+            177i64 => true,
+            178i64 => true,
+            184i64 => true,
+            185i64 => true,
+            186i64 => true,
+            187i64 => true,
+            188i64 => true,
+            200i64 => true,
+            201i64 => true,
+            202i64 => true,
+            206i64 => true,
+            207i64 => true,
+            208i64 => true,
+            209i64 => true,
+            210i64 => true,
+            211i64 => true,
+            216i64 => true,
+            225i64 => true,
+            227i64 => true,
+            229i64 => true,
+            258i64 => true,
+            259i64 => true,
+            262i64 => true,
+            264i64 => true,
+            268i64 => true,
+            269i64 => true,
+            275i64 => true,
+            285i64 => true,
+            289i64 => true,
+            290i64 => true,
+            297i64 => true,
+            302i64 => true,
+            304i64 => true,
+            305i64 => true,
+            306i64 => true,
+            307i64 => true,
+            308i64 => true,
+            312i64 => true,
+            313i64 => true,
+            314i64 => true,
+            315i64 => true,
+            317i64 => true,
+            319i64 => true,
+            323i64 => true,
+            346i64 => true,
+            370i64 => true,
+            371i64 => true,
+            372i64 => true,
+            375i64 => true,
+            376i64 => true,
+            387i64 => true,
+            388i64 => true,
+            389i64 => true,
+            393i64 => true,
+            409i64 => true,
+            65280i64 => true,
+            65534i64 => true,
             _ => false,
         }
     }
@@ -831,17 +1622,17 @@ impl Serialize for MesgNum {
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum Checksum {
-    /// Allows clear of checksum for flash memory where can only write 1 to 0 without erasing sector.
+    #[doc = "Allows clear of checksum for flash memory where can only write 1 to 0 without erasing sector."]
     Clear,
-    /// Set to mark checksum as valid if computes to invalid values 0 or 0xFF. Checksum can also be set to ok to save encoding computation time.
+    #[doc = "Set to mark checksum as valid if computes to invalid values 0 or 0xFF. Checksum can also be set to ok to save encoding computation time."]
     Ok,
     Value(u8),
 }
 impl Checksum {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
+            0i64 => true,
+            1i64 => true,
             _ => false,
         }
     }
@@ -900,9 +1691,9 @@ pub enum FileFlags {
 impl FileFlags {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            2 => true,
-            4 => true,
-            8 => true,
+            2i64 => true,
+            4i64 => true,
+            8i64 => true,
             _ => false,
         }
     }
@@ -964,9 +1755,9 @@ pub enum MesgCount {
 impl MesgCount {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
             _ => false,
         }
     }
@@ -988,7 +1779,7 @@ impl fmt::Display for MesgCount {
             MesgCount::NumPerFile => write!(f, "num_per_file"),
             MesgCount::MaxPerFile => write!(f, "max_per_file"),
             MesgCount::MaxPerFileType => write!(f, "max_per_file_type"),
-            MesgCount::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            MesgCount::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -1015,17 +1806,17 @@ impl Serialize for MesgCount {
         serializer.serialize_str(&self.to_string())
     }
 }
-/// seconds since UTC 00:00 Dec 31 1989
+#[doc = "seconds since UTC 00:00 Dec 31 1989"]
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum DateTime {
-    /// if date_time is < 0x10000000 then it is system time (seconds from device power on)
+    #[doc = "if date_time is < 0x10000000 then it is system time (seconds from device power on)"]
     Min,
     Value(u32),
 }
 impl DateTime {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            268435456 => true,
+            268435456i64 => true,
             _ => false,
         }
     }
@@ -1071,17 +1862,17 @@ impl Serialize for DateTime {
         }
     }
 }
-/// seconds since 00:00 Dec 31 1989 in local time zone
+#[doc = "seconds since 00:00 Dec 31 1989 in local time zone"]
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum LocalDateTime {
-    /// if date_time is < 0x10000000 then it is system time (seconds from device power on)
+    #[doc = "if date_time is < 0x10000000 then it is system time (seconds from device power on)"]
     Min,
     Value(u32),
 }
 impl LocalDateTime {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            268435456 => true,
+            268435456i64 => true,
             _ => false,
         }
     }
@@ -1129,20 +1920,20 @@ impl Serialize for LocalDateTime {
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum MessageIndex {
-    /// index
+    #[doc = "index"]
     Mask,
-    /// reserved (default 0)
+    #[doc = "reserved (default 0)"]
     Reserved,
-    /// message is selected if set
+    #[doc = "message is selected if set"]
     Selected,
     Value(u16),
 }
 impl MessageIndex {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            4095 => true,
-            28672 => true,
-            32768 => true,
+            4095i64 => true,
+            28672i64 => true,
+            32768i64 => true,
             _ => false,
         }
     }
@@ -1196,14 +1987,14 @@ impl Serialize for MessageIndex {
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum DeviceIndex {
-    /// Creator of the file is always device index 0.
+    #[doc = "Creator of the file is always device index 0."]
     Creator,
     Value(u8),
 }
 impl DeviceIndex {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
+            0i64 => true,
             _ => false,
         }
     }
@@ -1258,8 +2049,8 @@ pub enum Gender {
 impl Gender {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
+            0i64 => true,
+            1i64 => true,
             _ => false,
         }
     }
@@ -1279,7 +2070,7 @@ impl fmt::Display for Gender {
         match &self {
             Gender::Female => write!(f, "female"),
             Gender::Male => write!(f, "male"),
-            Gender::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            Gender::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -1351,45 +2142,45 @@ pub enum Language {
 impl Language {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            9 => true,
-            10 => true,
-            11 => true,
-            12 => true,
-            13 => true,
-            14 => true,
-            15 => true,
-            16 => true,
-            17 => true,
-            18 => true,
-            19 => true,
-            20 => true,
-            21 => true,
-            22 => true,
-            23 => true,
-            24 => true,
-            25 => true,
-            26 => true,
-            27 => true,
-            28 => true,
-            29 => true,
-            30 => true,
-            31 => true,
-            32 => true,
-            33 => true,
-            34 => true,
-            35 => true,
-            36 => true,
-            37 => true,
-            254 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            9i64 => true,
+            10i64 => true,
+            11i64 => true,
+            12i64 => true,
+            13i64 => true,
+            14i64 => true,
+            15i64 => true,
+            16i64 => true,
+            17i64 => true,
+            18i64 => true,
+            19i64 => true,
+            20i64 => true,
+            21i64 => true,
+            22i64 => true,
+            23i64 => true,
+            24i64 => true,
+            25i64 => true,
+            26i64 => true,
+            27i64 => true,
+            28i64 => true,
+            29i64 => true,
+            30i64 => true,
+            31i64 => true,
+            32i64 => true,
+            33i64 => true,
+            34i64 => true,
+            35i64 => true,
+            36i64 => true,
+            37i64 => true,
+            254i64 => true,
             _ => false,
         }
     }
@@ -1483,7 +2274,7 @@ impl fmt::Display for Language {
             Language::Burmese => write!(f, "burmese"),
             Language::Mongolian => write!(f, "mongolian"),
             Language::Custom => write!(f, "custom"),
-            Language::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            Language::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -1546,7 +2337,7 @@ impl Serialize for Language {
         serializer.serialize_str(&self.to_string())
     }
 }
-/// Bit field corresponding to language enum type (1 << language).
+#[doc = "Bit field corresponding to language enum type (1 << language)."]
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum LanguageBits0 {
     English,
@@ -1562,14 +2353,14 @@ pub enum LanguageBits0 {
 impl LanguageBits0 {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            1 => true,
-            2 => true,
-            4 => true,
-            8 => true,
-            16 => true,
-            32 => true,
-            64 => true,
-            128 => true,
+            1i64 => true,
+            2i64 => true,
+            4i64 => true,
+            8i64 => true,
+            16i64 => true,
+            32i64 => true,
+            64i64 => true,
+            128i64 => true,
             _ => false,
         }
     }
@@ -1651,14 +2442,14 @@ pub enum LanguageBits1 {
 impl LanguageBits1 {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            1 => true,
-            2 => true,
-            4 => true,
-            8 => true,
-            16 => true,
-            32 => true,
-            64 => true,
-            128 => true,
+            1i64 => true,
+            2i64 => true,
+            4i64 => true,
+            8i64 => true,
+            16i64 => true,
+            32i64 => true,
+            64i64 => true,
+            128i64 => true,
             _ => false,
         }
     }
@@ -1740,14 +2531,14 @@ pub enum LanguageBits2 {
 impl LanguageBits2 {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            1 => true,
-            2 => true,
-            4 => true,
-            8 => true,
-            16 => true,
-            32 => true,
-            64 => true,
-            128 => true,
+            1i64 => true,
+            2i64 => true,
+            4i64 => true,
+            8i64 => true,
+            16i64 => true,
+            32i64 => true,
+            64i64 => true,
+            128i64 => true,
             _ => false,
         }
     }
@@ -1829,14 +2620,14 @@ pub enum LanguageBits3 {
 impl LanguageBits3 {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            1 => true,
-            2 => true,
-            4 => true,
-            8 => true,
-            16 => true,
-            32 => true,
-            64 => true,
-            128 => true,
+            1i64 => true,
+            2i64 => true,
+            4i64 => true,
+            8i64 => true,
+            16i64 => true,
+            32i64 => true,
+            64i64 => true,
+            128i64 => true,
             _ => false,
         }
     }
@@ -1916,12 +2707,12 @@ pub enum LanguageBits4 {
 impl LanguageBits4 {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            1 => true,
-            2 => true,
-            4 => true,
-            8 => true,
-            16 => true,
-            32 => true,
+            1i64 => true,
+            2i64 => true,
+            4i64 => true,
+            8i64 => true,
+            16i64 => true,
+            32i64 => true,
             _ => false,
         }
     }
@@ -2095,112 +2886,112 @@ pub enum TimeZone {
 impl TimeZone {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            9 => true,
-            10 => true,
-            11 => true,
-            12 => true,
-            13 => true,
-            14 => true,
-            15 => true,
-            16 => true,
-            17 => true,
-            18 => true,
-            19 => true,
-            20 => true,
-            21 => true,
-            22 => true,
-            23 => true,
-            24 => true,
-            25 => true,
-            26 => true,
-            27 => true,
-            28 => true,
-            29 => true,
-            30 => true,
-            31 => true,
-            32 => true,
-            33 => true,
-            34 => true,
-            35 => true,
-            36 => true,
-            37 => true,
-            38 => true,
-            39 => true,
-            40 => true,
-            41 => true,
-            42 => true,
-            43 => true,
-            44 => true,
-            45 => true,
-            46 => true,
-            47 => true,
-            48 => true,
-            49 => true,
-            50 => true,
-            51 => true,
-            52 => true,
-            53 => true,
-            54 => true,
-            55 => true,
-            56 => true,
-            57 => true,
-            58 => true,
-            59 => true,
-            60 => true,
-            61 => true,
-            62 => true,
-            63 => true,
-            64 => true,
-            65 => true,
-            66 => true,
-            67 => true,
-            68 => true,
-            69 => true,
-            70 => true,
-            71 => true,
-            72 => true,
-            73 => true,
-            74 => true,
-            75 => true,
-            76 => true,
-            77 => true,
-            78 => true,
-            79 => true,
-            80 => true,
-            81 => true,
-            82 => true,
-            83 => true,
-            84 => true,
-            85 => true,
-            86 => true,
-            87 => true,
-            88 => true,
-            89 => true,
-            90 => true,
-            91 => true,
-            92 => true,
-            93 => true,
-            94 => true,
-            95 => true,
-            96 => true,
-            97 => true,
-            98 => true,
-            99 => true,
-            100 => true,
-            101 => true,
-            102 => true,
-            103 => true,
-            253 => true,
-            254 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            9i64 => true,
+            10i64 => true,
+            11i64 => true,
+            12i64 => true,
+            13i64 => true,
+            14i64 => true,
+            15i64 => true,
+            16i64 => true,
+            17i64 => true,
+            18i64 => true,
+            19i64 => true,
+            20i64 => true,
+            21i64 => true,
+            22i64 => true,
+            23i64 => true,
+            24i64 => true,
+            25i64 => true,
+            26i64 => true,
+            27i64 => true,
+            28i64 => true,
+            29i64 => true,
+            30i64 => true,
+            31i64 => true,
+            32i64 => true,
+            33i64 => true,
+            34i64 => true,
+            35i64 => true,
+            36i64 => true,
+            37i64 => true,
+            38i64 => true,
+            39i64 => true,
+            40i64 => true,
+            41i64 => true,
+            42i64 => true,
+            43i64 => true,
+            44i64 => true,
+            45i64 => true,
+            46i64 => true,
+            47i64 => true,
+            48i64 => true,
+            49i64 => true,
+            50i64 => true,
+            51i64 => true,
+            52i64 => true,
+            53i64 => true,
+            54i64 => true,
+            55i64 => true,
+            56i64 => true,
+            57i64 => true,
+            58i64 => true,
+            59i64 => true,
+            60i64 => true,
+            61i64 => true,
+            62i64 => true,
+            63i64 => true,
+            64i64 => true,
+            65i64 => true,
+            66i64 => true,
+            67i64 => true,
+            68i64 => true,
+            69i64 => true,
+            70i64 => true,
+            71i64 => true,
+            72i64 => true,
+            73i64 => true,
+            74i64 => true,
+            75i64 => true,
+            76i64 => true,
+            77i64 => true,
+            78i64 => true,
+            79i64 => true,
+            80i64 => true,
+            81i64 => true,
+            82i64 => true,
+            83i64 => true,
+            84i64 => true,
+            85i64 => true,
+            86i64 => true,
+            87i64 => true,
+            88i64 => true,
+            89i64 => true,
+            90i64 => true,
+            91i64 => true,
+            92i64 => true,
+            93i64 => true,
+            94i64 => true,
+            95i64 => true,
+            96i64 => true,
+            97i64 => true,
+            98i64 => true,
+            99i64 => true,
+            100i64 => true,
+            101i64 => true,
+            102i64 => true,
+            103i64 => true,
+            253i64 => true,
+            254i64 => true,
             _ => false,
         }
     }
@@ -2428,7 +3219,7 @@ impl fmt::Display for TimeZone {
             TimeZone::Santiago => write!(f, "santiago"),
             TimeZone::Manual => write!(f, "manual"),
             TimeZone::Automatic => write!(f, "automatic"),
-            TimeZone::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            TimeZone::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -2568,9 +3359,9 @@ pub enum DisplayMeasure {
 impl DisplayMeasure {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
             _ => false,
         }
     }
@@ -2592,7 +3383,7 @@ impl fmt::Display for DisplayMeasure {
             DisplayMeasure::Metric => write!(f, "metric"),
             DisplayMeasure::Statute => write!(f, "statute"),
             DisplayMeasure::Nautical => write!(f, "nautical"),
-            DisplayMeasure::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            DisplayMeasure::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -2629,9 +3420,9 @@ pub enum DisplayHeart {
 impl DisplayHeart {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
             _ => false,
         }
     }
@@ -2653,7 +3444,7 @@ impl fmt::Display for DisplayHeart {
             DisplayHeart::Bpm => write!(f, "bpm"),
             DisplayHeart::Max => write!(f, "max"),
             DisplayHeart::Reserve => write!(f, "reserve"),
-            DisplayHeart::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            DisplayHeart::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -2689,8 +3480,8 @@ pub enum DisplayPower {
 impl DisplayPower {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
+            0i64 => true,
+            1i64 => true,
             _ => false,
         }
     }
@@ -2710,7 +3501,7 @@ impl fmt::Display for DisplayPower {
         match &self {
             DisplayPower::Watts => write!(f, "watts"),
             DisplayPower::PercentFtp => write!(f, "percent_ftp"),
-            DisplayPower::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            DisplayPower::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -2738,137 +3529,137 @@ impl Serialize for DisplayPower {
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum DisplayPosition {
-    /// dd.dddddd
+    #[doc = "dd.dddddd"]
     Degree,
-    /// dddmm.mmm
+    #[doc = "dddmm.mmm"]
     DegreeMinute,
-    /// dddmmss
+    #[doc = "dddmmss"]
     DegreeMinuteSecond,
-    /// Austrian Grid (BMN)
+    #[doc = "Austrian Grid (BMN)"]
     AustrianGrid,
-    /// British National Grid
+    #[doc = "British National Grid"]
     BritishGrid,
-    /// Dutch grid system
+    #[doc = "Dutch grid system"]
     DutchGrid,
-    /// Hungarian grid system
+    #[doc = "Hungarian grid system"]
     HungarianGrid,
-    /// Finnish grid system Zone3 KKJ27
+    #[doc = "Finnish grid system Zone3 KKJ27"]
     FinnishGrid,
-    /// Gausss Krueger (German)
+    #[doc = "Gausss Krueger (German)"]
     GermanGrid,
-    /// Icelandic Grid
+    #[doc = "Icelandic Grid"]
     IcelandicGrid,
-    /// Indonesian Equatorial LCO
+    #[doc = "Indonesian Equatorial LCO"]
     IndonesianEquatorial,
-    /// Indonesian Irian LCO
+    #[doc = "Indonesian Irian LCO"]
     IndonesianIrian,
-    /// Indonesian Southern LCO
+    #[doc = "Indonesian Southern LCO"]
     IndonesianSouthern,
-    /// India zone 0
+    #[doc = "India zone 0"]
     IndiaZone0,
-    /// India zone IA
+    #[doc = "India zone IA"]
     IndiaZoneIA,
-    /// India zone IB
+    #[doc = "India zone IB"]
     IndiaZoneIB,
-    /// India zone IIA
+    #[doc = "India zone IIA"]
     IndiaZoneIIA,
-    /// India zone IIB
+    #[doc = "India zone IIB"]
     IndiaZoneIIB,
-    /// India zone IIIA
+    #[doc = "India zone IIIA"]
     IndiaZoneIIIA,
-    /// India zone IIIB
+    #[doc = "India zone IIIB"]
     IndiaZoneIIIB,
-    /// India zone IVA
+    #[doc = "India zone IVA"]
     IndiaZoneIVA,
-    /// India zone IVB
+    #[doc = "India zone IVB"]
     IndiaZoneIVB,
-    /// Irish Transverse Mercator
+    #[doc = "Irish Transverse Mercator"]
     IrishTransverse,
-    /// Irish Grid
+    #[doc = "Irish Grid"]
     IrishGrid,
-    /// Loran TD
+    #[doc = "Loran TD"]
     Loran,
-    /// Maidenhead grid system
+    #[doc = "Maidenhead grid system"]
     MaidenheadGrid,
-    /// MGRS grid system
+    #[doc = "MGRS grid system"]
     MgrsGrid,
-    /// New Zealand grid system
+    #[doc = "New Zealand grid system"]
     NewZealandGrid,
-    /// New Zealand Transverse Mercator
+    #[doc = "New Zealand Transverse Mercator"]
     NewZealandTransverse,
-    /// Qatar National Grid
+    #[doc = "Qatar National Grid"]
     QatarGrid,
-    /// Modified RT-90 (Sweden)
+    #[doc = "Modified RT-90 (Sweden)"]
     ModifiedSwedishGrid,
-    /// RT-90 (Sweden)
+    #[doc = "RT-90 (Sweden)"]
     SwedishGrid,
-    /// South African Grid
+    #[doc = "South African Grid"]
     SouthAfricanGrid,
-    /// Swiss CH-1903 grid
+    #[doc = "Swiss CH-1903 grid"]
     SwissGrid,
-    /// Taiwan Grid
+    #[doc = "Taiwan Grid"]
     TaiwanGrid,
-    /// United States National Grid
+    #[doc = "United States National Grid"]
     UnitedStatesGrid,
-    /// UTM/UPS grid system
+    #[doc = "UTM/UPS grid system"]
     UtmUpsGrid,
-    /// West Malayan RSO
+    #[doc = "West Malayan RSO"]
     WestMalayan,
-    /// Borneo RSO
+    #[doc = "Borneo RSO"]
     BorneoRso,
-    /// Estonian grid system
+    #[doc = "Estonian grid system"]
     EstonianGrid,
-    /// Latvian Transverse Mercator
+    #[doc = "Latvian Transverse Mercator"]
     LatvianGrid,
-    /// Reference Grid 99 TM (Swedish)
+    #[doc = "Reference Grid 99 TM (Swedish)"]
     SwedishRef99Grid,
     UnknownVariant(u8),
 }
 impl DisplayPosition {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            9 => true,
-            10 => true,
-            11 => true,
-            12 => true,
-            13 => true,
-            14 => true,
-            15 => true,
-            16 => true,
-            17 => true,
-            18 => true,
-            19 => true,
-            20 => true,
-            21 => true,
-            22 => true,
-            23 => true,
-            24 => true,
-            25 => true,
-            26 => true,
-            27 => true,
-            28 => true,
-            29 => true,
-            30 => true,
-            31 => true,
-            32 => true,
-            33 => true,
-            34 => true,
-            35 => true,
-            36 => true,
-            37 => true,
-            38 => true,
-            39 => true,
-            40 => true,
-            41 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            9i64 => true,
+            10i64 => true,
+            11i64 => true,
+            12i64 => true,
+            13i64 => true,
+            14i64 => true,
+            15i64 => true,
+            16i64 => true,
+            17i64 => true,
+            18i64 => true,
+            19i64 => true,
+            20i64 => true,
+            21i64 => true,
+            22i64 => true,
+            23i64 => true,
+            24i64 => true,
+            25i64 => true,
+            26i64 => true,
+            27i64 => true,
+            28i64 => true,
+            29i64 => true,
+            30i64 => true,
+            31i64 => true,
+            32i64 => true,
+            33i64 => true,
+            34i64 => true,
+            35i64 => true,
+            36i64 => true,
+            37i64 => true,
+            38i64 => true,
+            39i64 => true,
+            40i64 => true,
+            41i64 => true,
             _ => false,
         }
     }
@@ -2968,7 +3759,7 @@ impl fmt::Display for DisplayPosition {
             DisplayPosition::EstonianGrid => write!(f, "estonian_grid"),
             DisplayPosition::LatvianGrid => write!(f, "latvian_grid"),
             DisplayPosition::SwedishRef99Grid => write!(f, "swedish_ref_99_grid"),
-            DisplayPosition::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            DisplayPosition::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -3044,9 +3835,9 @@ pub enum Switch {
 impl Switch {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
             _ => false,
         }
     }
@@ -3068,7 +3859,7 @@ impl fmt::Display for Switch {
             Switch::Off => write!(f, "off"),
             Switch::On => write!(f, "on"),
             Switch::Auto => write!(f, "auto"),
-            Switch::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            Switch::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -3100,7 +3891,7 @@ pub enum Sport {
     Generic,
     Running,
     Cycling,
-    /// Mulitsport transition
+    #[doc = "Mulitsport transition"]
     Transition,
     FitnessEquipment,
     Swimming,
@@ -3166,82 +3957,82 @@ pub enum Sport {
     Snorkeling,
     Dance,
     JumpRope,
-    /// All is for goals only to include all sports.
+    #[doc = "All is for goals only to include all sports."]
     All,
     UnknownVariant(u8),
 }
 impl Sport {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            9 => true,
-            10 => true,
-            11 => true,
-            12 => true,
-            13 => true,
-            14 => true,
-            15 => true,
-            16 => true,
-            17 => true,
-            18 => true,
-            19 => true,
-            20 => true,
-            21 => true,
-            22 => true,
-            23 => true,
-            24 => true,
-            25 => true,
-            26 => true,
-            27 => true,
-            28 => true,
-            29 => true,
-            30 => true,
-            31 => true,
-            32 => true,
-            33 => true,
-            34 => true,
-            35 => true,
-            36 => true,
-            37 => true,
-            38 => true,
-            39 => true,
-            40 => true,
-            41 => true,
-            42 => true,
-            43 => true,
-            44 => true,
-            45 => true,
-            46 => true,
-            47 => true,
-            48 => true,
-            49 => true,
-            53 => true,
-            62 => true,
-            64 => true,
-            65 => true,
-            66 => true,
-            67 => true,
-            69 => true,
-            71 => true,
-            72 => true,
-            73 => true,
-            74 => true,
-            75 => true,
-            76 => true,
-            77 => true,
-            80 => true,
-            82 => true,
-            83 => true,
-            84 => true,
-            254 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            9i64 => true,
+            10i64 => true,
+            11i64 => true,
+            12i64 => true,
+            13i64 => true,
+            14i64 => true,
+            15i64 => true,
+            16i64 => true,
+            17i64 => true,
+            18i64 => true,
+            19i64 => true,
+            20i64 => true,
+            21i64 => true,
+            22i64 => true,
+            23i64 => true,
+            24i64 => true,
+            25i64 => true,
+            26i64 => true,
+            27i64 => true,
+            28i64 => true,
+            29i64 => true,
+            30i64 => true,
+            31i64 => true,
+            32i64 => true,
+            33i64 => true,
+            34i64 => true,
+            35i64 => true,
+            36i64 => true,
+            37i64 => true,
+            38i64 => true,
+            39i64 => true,
+            40i64 => true,
+            41i64 => true,
+            42i64 => true,
+            43i64 => true,
+            44i64 => true,
+            45i64 => true,
+            46i64 => true,
+            47i64 => true,
+            48i64 => true,
+            49i64 => true,
+            53i64 => true,
+            62i64 => true,
+            64i64 => true,
+            65i64 => true,
+            66i64 => true,
+            67i64 => true,
+            69i64 => true,
+            71i64 => true,
+            72i64 => true,
+            73i64 => true,
+            74i64 => true,
+            75i64 => true,
+            76i64 => true,
+            77i64 => true,
+            80i64 => true,
+            82i64 => true,
+            83i64 => true,
+            84i64 => true,
+            254i64 => true,
             _ => false,
         }
     }
@@ -3395,7 +4186,7 @@ impl fmt::Display for Sport {
             Sport::Dance => write!(f, "dance"),
             Sport::JumpRope => write!(f, "jump_rope"),
             Sport::All => write!(f, "all"),
-            Sport::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            Sport::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -3488,13 +4279,13 @@ impl Serialize for Sport {
         serializer.serialize_str(&self.to_string())
     }
 }
-/// Bit field corresponding to sport enum type (1 << sport).
+#[doc = "Bit field corresponding to sport enum type (1 << sport)."]
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SportBits0 {
     Generic,
     Running,
     Cycling,
-    /// Mulitsport transition
+    #[doc = "Mulitsport transition"]
     Transition,
     FitnessEquipment,
     Swimming,
@@ -3505,14 +4296,14 @@ pub enum SportBits0 {
 impl SportBits0 {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            1 => true,
-            2 => true,
-            4 => true,
-            8 => true,
-            16 => true,
-            32 => true,
-            64 => true,
-            128 => true,
+            1i64 => true,
+            2i64 => true,
+            4i64 => true,
+            8i64 => true,
+            16i64 => true,
+            32i64 => true,
+            64i64 => true,
+            128i64 => true,
             _ => false,
         }
     }
@@ -3579,7 +4370,7 @@ impl Serialize for SportBits0 {
         }
     }
 }
-/// Bit field corresponding to sport enum type (1 << (sport-8)).
+#[doc = "Bit field corresponding to sport enum type (1 << (sport-8))."]
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SportBits1 {
     Tennis,
@@ -3595,14 +4386,14 @@ pub enum SportBits1 {
 impl SportBits1 {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            1 => true,
-            2 => true,
-            4 => true,
-            8 => true,
-            16 => true,
-            32 => true,
-            64 => true,
-            128 => true,
+            1i64 => true,
+            2i64 => true,
+            4i64 => true,
+            8i64 => true,
+            16i64 => true,
+            32i64 => true,
+            64i64 => true,
+            128i64 => true,
             _ => false,
         }
     }
@@ -3669,7 +4460,7 @@ impl Serialize for SportBits1 {
         }
     }
 }
-/// Bit field corresponding to sport enum type (1 << (sport-16)).
+#[doc = "Bit field corresponding to sport enum type (1 << (sport-16))."]
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SportBits2 {
     Mountaineering,
@@ -3685,14 +4476,14 @@ pub enum SportBits2 {
 impl SportBits2 {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            1 => true,
-            2 => true,
-            4 => true,
-            8 => true,
-            16 => true,
-            32 => true,
-            64 => true,
-            128 => true,
+            1i64 => true,
+            2i64 => true,
+            4i64 => true,
+            8i64 => true,
+            16i64 => true,
+            32i64 => true,
+            64i64 => true,
+            128i64 => true,
             _ => false,
         }
     }
@@ -3759,7 +4550,7 @@ impl Serialize for SportBits2 {
         }
     }
 }
-/// Bit field corresponding to sport enum type (1 << (sport-24)).
+#[doc = "Bit field corresponding to sport enum type (1 << (sport-24))."]
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SportBits3 {
     Driving,
@@ -3775,14 +4566,14 @@ pub enum SportBits3 {
 impl SportBits3 {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            1 => true,
-            2 => true,
-            4 => true,
-            8 => true,
-            16 => true,
-            32 => true,
-            64 => true,
-            128 => true,
+            1i64 => true,
+            2i64 => true,
+            4i64 => true,
+            8i64 => true,
+            16i64 => true,
+            32i64 => true,
+            64i64 => true,
+            128i64 => true,
             _ => false,
         }
     }
@@ -3849,7 +4640,7 @@ impl Serialize for SportBits3 {
         }
     }
 }
-/// Bit field corresponding to sport enum type (1 << (sport-32)).
+#[doc = "Bit field corresponding to sport enum type (1 << (sport-32))."]
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SportBits4 {
     Sailing,
@@ -3865,14 +4656,14 @@ pub enum SportBits4 {
 impl SportBits4 {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            1 => true,
-            2 => true,
-            4 => true,
-            8 => true,
-            16 => true,
-            32 => true,
-            64 => true,
-            128 => true,
+            1i64 => true,
+            2i64 => true,
+            4i64 => true,
+            8i64 => true,
+            16i64 => true,
+            32i64 => true,
+            64i64 => true,
+            128i64 => true,
             _ => false,
         }
     }
@@ -3939,7 +4730,7 @@ impl Serialize for SportBits4 {
         }
     }
 }
-/// Bit field corresponding to sport enum type (1 << (sport-40)).
+#[doc = "Bit field corresponding to sport enum type (1 << (sport-40))."]
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SportBits5 {
     WaterSkiing,
@@ -3955,14 +4746,14 @@ pub enum SportBits5 {
 impl SportBits5 {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            1 => true,
-            2 => true,
-            4 => true,
-            8 => true,
-            16 => true,
-            32 => true,
-            64 => true,
-            128 => true,
+            1i64 => true,
+            2i64 => true,
+            4i64 => true,
+            8i64 => true,
+            16i64 => true,
+            32i64 => true,
+            64i64 => true,
+            128i64 => true,
             _ => false,
         }
     }
@@ -4029,7 +4820,7 @@ impl Serialize for SportBits5 {
         }
     }
 }
-/// Bit field corresponding to sport enum type (1 << (sport-48)).
+#[doc = "Bit field corresponding to sport enum type (1 << (sport-48))."]
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SportBits6 {
     FloorClimbing,
@@ -4038,7 +4829,7 @@ pub enum SportBits6 {
 impl SportBits6 {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            1 => true,
+            1i64 => true,
             _ => false,
         }
     }
@@ -4087,139 +4878,139 @@ impl Serialize for SportBits6 {
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SubSport {
     Generic,
-    /// Run/Fitness Equipment
+    #[doc = "Run/Fitness Equipment"]
     Treadmill,
-    /// Run
+    #[doc = "Run"]
     Street,
-    /// Run
+    #[doc = "Run"]
     Trail,
-    /// Run
+    #[doc = "Run"]
     Track,
-    /// Cycling
+    #[doc = "Cycling"]
     Spin,
-    /// Cycling/Fitness Equipment
+    #[doc = "Cycling/Fitness Equipment"]
     IndoorCycling,
-    /// Cycling
+    #[doc = "Cycling"]
     Road,
-    /// Cycling
+    #[doc = "Cycling"]
     Mountain,
-    /// Cycling
+    #[doc = "Cycling"]
     Downhill,
-    /// Cycling
+    #[doc = "Cycling"]
     Recumbent,
-    /// Cycling
+    #[doc = "Cycling"]
     Cyclocross,
-    /// Cycling
+    #[doc = "Cycling"]
     HandCycling,
-    /// Cycling
+    #[doc = "Cycling"]
     TrackCycling,
-    /// Fitness Equipment
+    #[doc = "Fitness Equipment"]
     IndoorRowing,
-    /// Fitness Equipment
+    #[doc = "Fitness Equipment"]
     Elliptical,
-    /// Fitness Equipment
+    #[doc = "Fitness Equipment"]
     StairClimbing,
-    /// Swimming
+    #[doc = "Swimming"]
     LapSwimming,
-    /// Swimming
+    #[doc = "Swimming"]
     OpenWater,
-    /// Training
+    #[doc = "Training"]
     FlexibilityTraining,
-    /// Training
+    #[doc = "Training"]
     StrengthTraining,
-    /// Tennis
+    #[doc = "Tennis"]
     WarmUp,
-    /// Tennis
+    #[doc = "Tennis"]
     Match,
-    /// Tennis
+    #[doc = "Tennis"]
     Exercise,
     Challenge,
-    /// Fitness Equipment
+    #[doc = "Fitness Equipment"]
     IndoorSkiing,
-    /// Training
+    #[doc = "Training"]
     CardioTraining,
-    /// Walking/Fitness Equipment
+    #[doc = "Walking/Fitness Equipment"]
     IndoorWalking,
-    /// E-Biking
+    #[doc = "E-Biking"]
     EBikeFitness,
-    /// Cycling
+    #[doc = "Cycling"]
     Bmx,
-    /// Walking
+    #[doc = "Walking"]
     CasualWalking,
-    /// Walking
+    #[doc = "Walking"]
     SpeedWalking,
-    /// Transition
+    #[doc = "Transition"]
     BikeToRunTransition,
-    /// Transition
+    #[doc = "Transition"]
     RunToBikeTransition,
-    /// Transition
+    #[doc = "Transition"]
     SwimToBikeTransition,
-    /// Motorcycling
+    #[doc = "Motorcycling"]
     Atv,
-    /// Motorcycling
+    #[doc = "Motorcycling"]
     Motocross,
-    /// Alpine Skiing/Snowboarding
+    #[doc = "Alpine Skiing/Snowboarding"]
     Backcountry,
-    /// Alpine Skiing/Snowboarding
+    #[doc = "Alpine Skiing/Snowboarding"]
     Resort,
-    /// Flying
+    #[doc = "Flying"]
     RcDrone,
-    /// Flying
+    #[doc = "Flying"]
     Wingsuit,
-    /// Kayaking/Rafting
+    #[doc = "Kayaking/Rafting"]
     Whitewater,
-    /// Cross Country Skiing
+    #[doc = "Cross Country Skiing"]
     SkateSkiing,
-    /// Training
+    #[doc = "Training"]
     Yoga,
-    /// Fitness Equipment
+    #[doc = "Fitness Equipment"]
     Pilates,
-    /// Run
+    #[doc = "Run"]
     IndoorRunning,
-    /// Cycling
+    #[doc = "Cycling"]
     GravelCycling,
-    /// Cycling
+    #[doc = "Cycling"]
     EBikeMountain,
-    /// Cycling
+    #[doc = "Cycling"]
     Commuting,
-    /// Cycling
+    #[doc = "Cycling"]
     MixedSurface,
     Navigate,
     TrackMe,
     Map,
-    /// Diving
+    #[doc = "Diving"]
     SingleGasDiving,
-    /// Diving
+    #[doc = "Diving"]
     MultiGasDiving,
-    /// Diving
+    #[doc = "Diving"]
     GaugeDiving,
-    /// Diving
+    #[doc = "Diving"]
     ApneaDiving,
-    /// Diving
+    #[doc = "Diving"]
     ApneaHunting,
     VirtualActivity,
-    /// Used for events where participants run, crawl through mud, climb over walls, etc.
+    #[doc = "Used for events where participants run, crawl through mud, climb over walls, etc."]
     Obstacle,
     Breathing,
-    /// Sailing
+    #[doc = "Sailing"]
     SailRace,
-    /// Ultramarathon
+    #[doc = "Ultramarathon"]
     Ultra,
-    /// Climbing
+    #[doc = "Climbing"]
     IndoorClimbing,
-    /// Climbing
+    #[doc = "Climbing"]
     Bouldering,
-    /// High Intensity Interval Training
+    #[doc = "High Intensity Interval Training"]
     Hiit,
-    /// HIIT
+    #[doc = "HIIT"]
     Amrap,
-    /// HIIT
+    #[doc = "HIIT"]
     Emom,
-    /// HIIT
+    #[doc = "HIIT"]
     Tabata,
-    /// Racket
+    #[doc = "Racket"]
     Pickleball,
-    /// Racket
+    #[doc = "Racket"]
     Padel,
     IndoorWheelchairWalk,
     IndoorWheelchairRun,
@@ -4228,25 +5019,25 @@ pub enum SubSport {
     Badminton,
     Racquetball,
     TableTennis,
-    /// Flying
+    #[doc = "Flying"]
     FlyCanopy,
-    /// Flying
+    #[doc = "Flying"]
     FlyParaglide,
-    /// Flying
+    #[doc = "Flying"]
     FlyParamotor,
-    /// Flying
+    #[doc = "Flying"]
     FlyPressurized,
-    /// Flying
+    #[doc = "Flying"]
     FlyNavigate,
-    /// Flying
+    #[doc = "Flying"]
     FlyTimer,
-    /// Flying
+    #[doc = "Flying"]
     FlyAltimeter,
-    /// Flying
+    #[doc = "Flying"]
     FlyWx,
-    /// Flying
+    #[doc = "Flying"]
     FlyVfr,
-    /// Flying
+    #[doc = "Flying"]
     FlyIfr,
     All,
     UnknownVariant(u8),
@@ -4254,95 +5045,95 @@ pub enum SubSport {
 impl SubSport {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            9 => true,
-            10 => true,
-            11 => true,
-            12 => true,
-            13 => true,
-            14 => true,
-            15 => true,
-            16 => true,
-            17 => true,
-            18 => true,
-            19 => true,
-            20 => true,
-            21 => true,
-            22 => true,
-            23 => true,
-            24 => true,
-            25 => true,
-            26 => true,
-            27 => true,
-            28 => true,
-            29 => true,
-            30 => true,
-            31 => true,
-            32 => true,
-            33 => true,
-            34 => true,
-            35 => true,
-            36 => true,
-            37 => true,
-            38 => true,
-            39 => true,
-            40 => true,
-            41 => true,
-            42 => true,
-            43 => true,
-            44 => true,
-            45 => true,
-            46 => true,
-            47 => true,
-            48 => true,
-            49 => true,
-            50 => true,
-            51 => true,
-            52 => true,
-            53 => true,
-            54 => true,
-            55 => true,
-            56 => true,
-            57 => true,
-            58 => true,
-            59 => true,
-            62 => true,
-            65 => true,
-            67 => true,
-            68 => true,
-            69 => true,
-            70 => true,
-            73 => true,
-            74 => true,
-            75 => true,
-            84 => true,
-            85 => true,
-            86 => true,
-            87 => true,
-            88 => true,
-            94 => true,
-            95 => true,
-            96 => true,
-            97 => true,
-            110 => true,
-            111 => true,
-            112 => true,
-            113 => true,
-            114 => true,
-            115 => true,
-            116 => true,
-            117 => true,
-            118 => true,
-            119 => true,
-            254 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            9i64 => true,
+            10i64 => true,
+            11i64 => true,
+            12i64 => true,
+            13i64 => true,
+            14i64 => true,
+            15i64 => true,
+            16i64 => true,
+            17i64 => true,
+            18i64 => true,
+            19i64 => true,
+            20i64 => true,
+            21i64 => true,
+            22i64 => true,
+            23i64 => true,
+            24i64 => true,
+            25i64 => true,
+            26i64 => true,
+            27i64 => true,
+            28i64 => true,
+            29i64 => true,
+            30i64 => true,
+            31i64 => true,
+            32i64 => true,
+            33i64 => true,
+            34i64 => true,
+            35i64 => true,
+            36i64 => true,
+            37i64 => true,
+            38i64 => true,
+            39i64 => true,
+            40i64 => true,
+            41i64 => true,
+            42i64 => true,
+            43i64 => true,
+            44i64 => true,
+            45i64 => true,
+            46i64 => true,
+            47i64 => true,
+            48i64 => true,
+            49i64 => true,
+            50i64 => true,
+            51i64 => true,
+            52i64 => true,
+            53i64 => true,
+            54i64 => true,
+            55i64 => true,
+            56i64 => true,
+            57i64 => true,
+            58i64 => true,
+            59i64 => true,
+            62i64 => true,
+            65i64 => true,
+            67i64 => true,
+            68i64 => true,
+            69i64 => true,
+            70i64 => true,
+            73i64 => true,
+            74i64 => true,
+            75i64 => true,
+            84i64 => true,
+            85i64 => true,
+            86i64 => true,
+            87i64 => true,
+            88i64 => true,
+            94i64 => true,
+            95i64 => true,
+            96i64 => true,
+            97i64 => true,
+            110i64 => true,
+            111i64 => true,
+            112i64 => true,
+            113i64 => true,
+            114i64 => true,
+            115i64 => true,
+            116i64 => true,
+            117i64 => true,
+            118i64 => true,
+            119i64 => true,
+            254i64 => true,
             _ => false,
         }
     }
@@ -4536,7 +5327,7 @@ impl fmt::Display for SubSport {
             SubSport::FlyVfr => write!(f, "fly_vfr"),
             SubSport::FlyIfr => write!(f, "fly_ifr"),
             SubSport::All => write!(f, "all"),
-            SubSport::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            SubSport::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -4665,15 +5456,15 @@ pub enum SportEvent {
 impl SportEvent {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
             _ => false,
         }
     }
@@ -4707,7 +5498,7 @@ impl fmt::Display for SportEvent {
             SportEvent::Training => write!(f, "training"),
             SportEvent::Transportation => write!(f, "transportation"),
             SportEvent::Touring => write!(f, "touring"),
-            SportEvent::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            SportEvent::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -4749,8 +5540,8 @@ pub enum Activity {
 impl Activity {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
+            0i64 => true,
+            1i64 => true,
             _ => false,
         }
     }
@@ -4770,7 +5561,7 @@ impl fmt::Display for Activity {
         match &self {
             Activity::Manual => write!(f, "manual"),
             Activity::AutoMultiSport => write!(f, "auto_multi_sport"),
-            Activity::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            Activity::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -4810,13 +5601,13 @@ pub enum Intensity {
 impl Intensity {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
             _ => false,
         }
     }
@@ -4846,7 +5637,7 @@ impl fmt::Display for Intensity {
             Intensity::Recovery => write!(f, "recovery"),
             Intensity::Interval => write!(f, "interval"),
             Intensity::Other => write!(f, "other"),
-            Intensity::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            Intensity::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -4880,21 +5671,21 @@ impl Serialize for Intensity {
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SessionTrigger {
     ActivityEnd,
-    /// User changed sport.
+    #[doc = "User changed sport."]
     Manual,
-    /// Auto multi-sport feature is enabled and user pressed lap button to advance session.
+    #[doc = "Auto multi-sport feature is enabled and user pressed lap button to advance session."]
     AutoMultiSport,
-    /// Auto sport change caused by user linking to fitness equipment.
+    #[doc = "Auto sport change caused by user linking to fitness equipment."]
     FitnessEquipment,
     UnknownVariant(u8),
 }
 impl SessionTrigger {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
             _ => false,
         }
     }
@@ -4918,7 +5709,7 @@ impl fmt::Display for SessionTrigger {
             SessionTrigger::Manual => write!(f, "manual"),
             SessionTrigger::AutoMultiSport => write!(f, "auto_multi_sport"),
             SessionTrigger::FitnessEquipment => write!(f, "fitness_equipment"),
-            SessionTrigger::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            SessionTrigger::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -4960,13 +5751,13 @@ pub enum AutolapTrigger {
 impl AutolapTrigger {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
             _ => false,
         }
     }
@@ -4996,7 +5787,7 @@ impl fmt::Display for AutolapTrigger {
             AutolapTrigger::PositionWaypoint => write!(f, "position_waypoint"),
             AutolapTrigger::PositionMarked => write!(f, "position_marked"),
             AutolapTrigger::Off => write!(f, "off"),
-            AutolapTrigger::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            AutolapTrigger::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -5043,15 +5834,15 @@ pub enum LapTrigger {
 impl LapTrigger {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
             _ => false,
         }
     }
@@ -5085,7 +5876,7 @@ impl fmt::Display for LapTrigger {
             LapTrigger::PositionMarked => write!(f, "position_marked"),
             LapTrigger::SessionEnd => write!(f, "session_end"),
             LapTrigger::FitnessEquipment => write!(f, "fitness_equipment"),
-            LapTrigger::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            LapTrigger::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -5121,9 +5912,9 @@ impl Serialize for LapTrigger {
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum TimeMode {
     Hour12,
-    /// Does not use a leading zero and has a colon
+    #[doc = "Does not use a leading zero and has a colon"]
     Hour24,
-    /// Uses a leading zero and does not have a colon
+    #[doc = "Uses a leading zero and does not have a colon"]
     Military,
     Hour12WithSeconds,
     Hour24WithSeconds,
@@ -5133,12 +5924,12 @@ pub enum TimeMode {
 impl TimeMode {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
             _ => false,
         }
     }
@@ -5166,7 +5957,7 @@ impl fmt::Display for TimeMode {
             TimeMode::Hour12WithSeconds => write!(f, "hour_12_with_seconds"),
             TimeMode::Hour24WithSeconds => write!(f, "hour_24_with_seconds"),
             TimeMode::Utc => write!(f, "utc"),
-            TimeMode::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            TimeMode::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -5210,13 +6001,13 @@ pub enum BacklightMode {
 impl BacklightMode {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
             _ => false,
         }
     }
@@ -5248,7 +6039,7 @@ impl fmt::Display for BacklightMode {
             BacklightMode::KeyAndMessagesAndSmartNotifications => {
                 write!(f, "key_and_messages_and_smart_notifications")
             }
-            BacklightMode::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            BacklightMode::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -5288,8 +6079,8 @@ pub enum DateMode {
 impl DateMode {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
+            0i64 => true,
+            1i64 => true,
             _ => false,
         }
     }
@@ -5309,7 +6100,7 @@ impl fmt::Display for DateMode {
         match &self {
             DateMode::DayMonth => write!(f, "day_month"),
             DateMode::MonthDay => write!(f, "month_day"),
-            DateMode::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            DateMode::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -5335,17 +6126,17 @@ impl Serialize for DateMode {
         serializer.serialize_str(&self.to_string())
     }
 }
-/// Timeout in seconds.
+#[doc = "Timeout in seconds."]
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum BacklightTimeout {
-    /// Backlight stays on forever.
+    #[doc = "Backlight stays on forever."]
     Infinite,
     Value(u8),
 }
 impl BacklightTimeout {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
+            0i64 => true,
             _ => false,
         }
     }
@@ -5393,149 +6184,149 @@ impl Serialize for BacklightTimeout {
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum Event {
-    /// Group 0. Start / stop_all
+    #[doc = "Group 0. Start / stop_all"]
     Timer,
-    /// start / stop
+    #[doc = "start / stop"]
     Workout,
-    /// Start at beginning of workout. Stop at end of each step.
+    #[doc = "Start at beginning of workout. Stop at end of each step."]
     WorkoutStep,
-    /// stop_all group 0
+    #[doc = "stop_all group 0"]
     PowerDown,
-    /// stop_all group 0
+    #[doc = "stop_all group 0"]
     PowerUp,
-    /// start / stop group 0
+    #[doc = "start / stop group 0"]
     OffCourse,
-    /// Stop at end of each session.
+    #[doc = "Stop at end of each session."]
     Session,
-    /// Stop at end of each lap.
+    #[doc = "Stop at end of each lap."]
     Lap,
-    /// marker
+    #[doc = "marker"]
     CoursePoint,
-    /// marker
+    #[doc = "marker"]
     Battery,
-    /// Group 1. Start at beginning of activity if VP enabled, when VP pace is changed during activity or VP enabled mid activity. stop_disable when VP disabled.
+    #[doc = "Group 1. Start at beginning of activity if VP enabled, when VP pace is changed during activity or VP enabled mid activity. stop_disable when VP disabled."]
     VirtualPartnerPace,
-    /// Group 0. Start / stop when in alert condition.
+    #[doc = "Group 0. Start / stop when in alert condition."]
     HrHighAlert,
-    /// Group 0. Start / stop when in alert condition.
+    #[doc = "Group 0. Start / stop when in alert condition."]
     HrLowAlert,
-    /// Group 0. Start / stop when in alert condition.
+    #[doc = "Group 0. Start / stop when in alert condition."]
     SpeedHighAlert,
-    /// Group 0. Start / stop when in alert condition.
+    #[doc = "Group 0. Start / stop when in alert condition."]
     SpeedLowAlert,
-    /// Group 0. Start / stop when in alert condition.
+    #[doc = "Group 0. Start / stop when in alert condition."]
     CadHighAlert,
-    /// Group 0. Start / stop when in alert condition.
+    #[doc = "Group 0. Start / stop when in alert condition."]
     CadLowAlert,
-    /// Group 0. Start / stop when in alert condition.
+    #[doc = "Group 0. Start / stop when in alert condition."]
     PowerHighAlert,
-    /// Group 0. Start / stop when in alert condition.
+    #[doc = "Group 0. Start / stop when in alert condition."]
     PowerLowAlert,
-    /// marker
+    #[doc = "marker"]
     RecoveryHr,
-    /// marker
+    #[doc = "marker"]
     BatteryLow,
-    /// Group 1. Start if enabled mid activity (not required at start of activity). Stop when duration is reached. stop_disable if disabled.
+    #[doc = "Group 1. Start if enabled mid activity (not required at start of activity). Stop when duration is reached. stop_disable if disabled."]
     TimeDurationAlert,
-    /// Group 1. Start if enabled mid activity (not required at start of activity). Stop when duration is reached. stop_disable if disabled.
+    #[doc = "Group 1. Start if enabled mid activity (not required at start of activity). Stop when duration is reached. stop_disable if disabled."]
     DistanceDurationAlert,
-    /// Group 1. Start if enabled mid activity (not required at start of activity). Stop when duration is reached. stop_disable if disabled.
+    #[doc = "Group 1. Start if enabled mid activity (not required at start of activity). Stop when duration is reached. stop_disable if disabled."]
     CalorieDurationAlert,
-    /// Group 1.. Stop at end of activity.
+    #[doc = "Group 1.. Stop at end of activity."]
     Activity,
-    /// marker
+    #[doc = "marker"]
     FitnessEquipment,
-    /// Stop at end of each length.
+    #[doc = "Stop at end of each length."]
     Length,
-    /// marker
+    #[doc = "marker"]
     UserMarker,
-    /// marker
+    #[doc = "marker"]
     SportPoint,
-    /// start/stop/marker
+    #[doc = "start/stop/marker"]
     Calibration,
-    /// marker
+    #[doc = "marker"]
     FrontGearChange,
-    /// marker
+    #[doc = "marker"]
     RearGearChange,
-    /// marker
+    #[doc = "marker"]
     RiderPositionChange,
-    /// Group 0. Start / stop when in alert condition.
+    #[doc = "Group 0. Start / stop when in alert condition."]
     ElevHighAlert,
-    /// Group 0. Start / stop when in alert condition.
+    #[doc = "Group 0. Start / stop when in alert condition."]
     ElevLowAlert,
-    /// marker
+    #[doc = "marker"]
     CommTimeout,
-    /// marker
+    #[doc = "marker"]
     AutoActivityDetect,
-    /// marker
+    #[doc = "marker"]
     DiveAlert,
-    /// marker
+    #[doc = "marker"]
     DiveGasSwitched,
-    /// marker
+    #[doc = "marker"]
     TankPressureReserve,
-    /// marker
+    #[doc = "marker"]
     TankPressureCritical,
-    /// marker
+    #[doc = "marker"]
     TankLost,
-    /// start/stop/marker
+    #[doc = "start/stop/marker"]
     RadarThreatAlert,
-    /// marker
+    #[doc = "marker"]
     TankBatteryLow,
-    /// marker - tank pod has connected
+    #[doc = "marker - tank pod has connected"]
     TankPodConnected,
-    /// marker - tank pod has lost connection
+    #[doc = "marker - tank pod has lost connection"]
     TankPodDisconnected,
     UnknownVariant(u8),
 }
 impl Event {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            9 => true,
-            10 => true,
-            11 => true,
-            12 => true,
-            13 => true,
-            14 => true,
-            15 => true,
-            16 => true,
-            17 => true,
-            18 => true,
-            19 => true,
-            20 => true,
-            21 => true,
-            22 => true,
-            23 => true,
-            24 => true,
-            25 => true,
-            26 => true,
-            27 => true,
-            28 => true,
-            32 => true,
-            33 => true,
-            36 => true,
-            42 => true,
-            43 => true,
-            44 => true,
-            45 => true,
-            46 => true,
-            47 => true,
-            54 => true,
-            56 => true,
-            57 => true,
-            71 => true,
-            72 => true,
-            73 => true,
-            75 => true,
-            76 => true,
-            81 => true,
-            82 => true,
+            0i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            9i64 => true,
+            10i64 => true,
+            11i64 => true,
+            12i64 => true,
+            13i64 => true,
+            14i64 => true,
+            15i64 => true,
+            16i64 => true,
+            17i64 => true,
+            18i64 => true,
+            19i64 => true,
+            20i64 => true,
+            21i64 => true,
+            22i64 => true,
+            23i64 => true,
+            24i64 => true,
+            25i64 => true,
+            26i64 => true,
+            27i64 => true,
+            28i64 => true,
+            32i64 => true,
+            33i64 => true,
+            36i64 => true,
+            42i64 => true,
+            43i64 => true,
+            44i64 => true,
+            45i64 => true,
+            46i64 => true,
+            47i64 => true,
+            54i64 => true,
+            56i64 => true,
+            57i64 => true,
+            71i64 => true,
+            72i64 => true,
+            73i64 => true,
+            75i64 => true,
+            76i64 => true,
+            81i64 => true,
+            82i64 => true,
             _ => false,
         }
     }
@@ -5643,7 +6434,7 @@ impl fmt::Display for Event {
             Event::TankBatteryLow => write!(f, "tank_battery_low"),
             Event::TankPodConnected => write!(f, "tank_pod_connected"),
             Event::TankPodDisconnected => write!(f, "tank_pod_disconnected"),
-            Event::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            Event::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -5730,16 +6521,16 @@ pub enum EventType {
 impl EventType {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            9 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            9i64 => true,
             _ => false,
         }
     }
@@ -5775,7 +6566,7 @@ impl fmt::Display for EventType {
             EventType::EndAllDepreciated => write!(f, "end_all_depreciated"),
             EventType::StopDisable => write!(f, "stop_disable"),
             EventType::StopDisableAll => write!(f, "stop_disable_all"),
-            EventType::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            EventType::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -5809,7 +6600,7 @@ impl Serialize for EventType {
         serializer.serialize_str(&self.to_string())
     }
 }
-/// timer event data
+#[doc = "timer event data"]
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum TimerTrigger {
     Manual,
@@ -5820,9 +6611,9 @@ pub enum TimerTrigger {
 impl TimerTrigger {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
             _ => false,
         }
     }
@@ -5844,7 +6635,7 @@ impl fmt::Display for TimerTrigger {
             TimerTrigger::Manual => write!(f, "manual"),
             TimerTrigger::Auto => write!(f, "auto"),
             TimerTrigger::FitnessEquipment => write!(f, "fitness_equipment"),
-            TimerTrigger::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            TimerTrigger::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -5871,23 +6662,23 @@ impl Serialize for TimerTrigger {
         serializer.serialize_str(&self.to_string())
     }
 }
-/// fitness equipment event data
+#[doc = "fitness equipment event data"]
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum FitnessEquipmentState {
     Ready,
     InUse,
     Paused,
-    /// lost connection to fitness equipment
+    #[doc = "lost connection to fitness equipment"]
     Unknown,
     UnknownVariant(u8),
 }
 impl FitnessEquipmentState {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
             _ => false,
         }
     }
@@ -5911,7 +6702,7 @@ impl fmt::Display for FitnessEquipmentState {
             FitnessEquipmentState::InUse => write!(f, "in_use"),
             FitnessEquipmentState::Paused => write!(f, "paused"),
             FitnessEquipmentState::Unknown => write!(f, "unknown"),
-            FitnessEquipmentState::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            FitnessEquipmentState::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -5950,10 +6741,10 @@ pub enum Tone {
 impl Tone {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
             _ => false,
         }
     }
@@ -5977,7 +6768,7 @@ impl fmt::Display for Tone {
             Tone::Tone => write!(f, "tone"),
             Tone::Vibrate => write!(f, "vibrate"),
             Tone::ToneAndVibrate => write!(f, "tone_and_vibrate"),
-            Tone::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            Tone::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -6016,10 +6807,10 @@ pub enum Autoscroll {
 impl Autoscroll {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
             _ => false,
         }
     }
@@ -6043,7 +6834,7 @@ impl fmt::Display for Autoscroll {
             Autoscroll::Slow => write!(f, "slow"),
             Autoscroll::Medium => write!(f, "medium"),
             Autoscroll::Fast => write!(f, "fast"),
-            Autoscroll::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            Autoscroll::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -6074,7 +6865,7 @@ impl Serialize for Autoscroll {
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum ActivityClass {
     LevelMax,
-    /// 0 to 100
+    #[doc = "0 to 100"]
     Level,
     Athlete,
     UnknownVariant(u8),
@@ -6082,9 +6873,9 @@ pub enum ActivityClass {
 impl ActivityClass {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            100 => true,
-            127 => true,
-            128 => true,
+            100i64 => true,
+            127i64 => true,
+            128i64 => true,
             _ => false,
         }
     }
@@ -6106,7 +6897,7 @@ impl fmt::Display for ActivityClass {
             ActivityClass::LevelMax => write!(f, "level_max"),
             ActivityClass::Level => write!(f, "level"),
             ActivityClass::Athlete => write!(f, "athlete"),
-            ActivityClass::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            ActivityClass::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -6144,10 +6935,10 @@ pub enum HrZoneCalc {
 impl HrZoneCalc {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
             _ => false,
         }
     }
@@ -6171,7 +6962,7 @@ impl fmt::Display for HrZoneCalc {
             HrZoneCalc::PercentMaxHr => write!(f, "percent_max_hr"),
             HrZoneCalc::PercentHrr => write!(f, "percent_hrr"),
             HrZoneCalc::PercentLthr => write!(f, "percent_lthr"),
-            HrZoneCalc::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            HrZoneCalc::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -6208,8 +6999,8 @@ pub enum PwrZoneCalc {
 impl PwrZoneCalc {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
+            0i64 => true,
+            1i64 => true,
             _ => false,
         }
     }
@@ -6229,7 +7020,7 @@ impl fmt::Display for PwrZoneCalc {
         match &self {
             PwrZoneCalc::Custom => write!(f, "custom"),
             PwrZoneCalc::PercentFtp => write!(f, "percent_ftp"),
-            PwrZoneCalc::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            PwrZoneCalc::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -6293,37 +7084,37 @@ pub enum WktStepDuration {
 impl WktStepDuration {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            9 => true,
-            10 => true,
-            11 => true,
-            12 => true,
-            13 => true,
-            14 => true,
-            15 => true,
-            16 => true,
-            17 => true,
-            18 => true,
-            19 => true,
-            20 => true,
-            21 => true,
-            22 => true,
-            23 => true,
-            24 => true,
-            25 => true,
-            26 => true,
-            27 => true,
-            28 => true,
-            29 => true,
-            31 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            9i64 => true,
+            10i64 => true,
+            11i64 => true,
+            12i64 => true,
+            13i64 => true,
+            14i64 => true,
+            15i64 => true,
+            16i64 => true,
+            17i64 => true,
+            18i64 => true,
+            19i64 => true,
+            20i64 => true,
+            21i64 => true,
+            22i64 => true,
+            23i64 => true,
+            24i64 => true,
+            25i64 => true,
+            26i64 => true,
+            27i64 => true,
+            28i64 => true,
+            29i64 => true,
+            31i64 => true,
             _ => false,
         }
     }
@@ -6409,7 +7200,7 @@ impl fmt::Display for WktStepDuration {
             WktStepDuration::RepetitionTime => write!(f, "repetition_time"),
             WktStepDuration::Reps => write!(f, "reps"),
             WktStepDuration::TimeOnly => write!(f, "time_only"),
-            WktStepDuration::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            WktStepDuration::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -6485,20 +7276,20 @@ pub enum WktStepTarget {
 impl WktStepTarget {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            9 => true,
-            10 => true,
-            11 => true,
-            12 => true,
-            13 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            9i64 => true,
+            10i64 => true,
+            11i64 => true,
+            12i64 => true,
+            13i64 => true,
             _ => false,
         }
     }
@@ -6542,7 +7333,7 @@ impl fmt::Display for WktStepTarget {
             WktStepTarget::SwimStroke => write!(f, "swim_stroke"),
             WktStepTarget::SpeedLap => write!(f, "speed_lap"),
             WktStepTarget::HeartRateLap => write!(f, "heart_rate_lap"),
-            WktStepTarget::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            WktStepTarget::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -6594,13 +7385,13 @@ pub enum Goal {
 impl Goal {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
             _ => false,
         }
     }
@@ -6630,7 +7421,7 @@ impl fmt::Display for Goal {
             Goal::Steps => write!(f, "steps"),
             Goal::Ascent => write!(f, "ascent"),
             Goal::ActiveMinutes => write!(f, "active_minutes"),
-            Goal::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            Goal::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -6674,12 +7465,12 @@ pub enum GoalRecurrence {
 impl GoalRecurrence {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
             _ => false,
         }
     }
@@ -6707,7 +7498,7 @@ impl fmt::Display for GoalRecurrence {
             GoalRecurrence::Monthly => write!(f, "monthly"),
             GoalRecurrence::Yearly => write!(f, "yearly"),
             GoalRecurrence::Custom => write!(f, "custom"),
-            GoalRecurrence::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            GoalRecurrence::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -6739,20 +7530,20 @@ impl Serialize for GoalRecurrence {
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum GoalSource {
-    /// Device generated
+    #[doc = "Device generated"]
     Auto,
-    /// Social network sourced goal
+    #[doc = "Social network sourced goal"]
     Community,
-    /// Manually generated
+    #[doc = "Manually generated"]
     User,
     UnknownVariant(u8),
 }
 impl GoalSource {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
             _ => false,
         }
     }
@@ -6774,7 +7565,7 @@ impl fmt::Display for GoalSource {
             GoalSource::Auto => write!(f, "auto"),
             GoalSource::Community => write!(f, "community"),
             GoalSource::User => write!(f, "user"),
-            GoalSource::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            GoalSource::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -6810,8 +7601,8 @@ pub enum Schedule {
 impl Schedule {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
+            0i64 => true,
+            1i64 => true,
             _ => false,
         }
     }
@@ -6831,7 +7622,7 @@ impl fmt::Display for Schedule {
         match &self {
             Schedule::Workout => write!(f, "workout"),
             Schedule::Course => write!(f, "course"),
-            Schedule::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            Schedule::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -6888,7 +7679,7 @@ pub enum CoursePoint {
     Campsite,
     AidStation,
     RestArea,
-    /// Used with UpAhead
+    #[doc = "Used with UpAhead"]
     GeneralDistance,
     Service,
     EnergyGel,
@@ -6918,59 +7709,59 @@ pub enum CoursePoint {
 impl CoursePoint {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            9 => true,
-            10 => true,
-            11 => true,
-            12 => true,
-            13 => true,
-            14 => true,
-            15 => true,
-            16 => true,
-            17 => true,
-            18 => true,
-            19 => true,
-            20 => true,
-            21 => true,
-            22 => true,
-            23 => true,
-            24 => true,
-            25 => true,
-            27 => true,
-            28 => true,
-            29 => true,
-            30 => true,
-            31 => true,
-            32 => true,
-            33 => true,
-            34 => true,
-            35 => true,
-            36 => true,
-            37 => true,
-            38 => true,
-            39 => true,
-            40 => true,
-            41 => true,
-            42 => true,
-            43 => true,
-            44 => true,
-            45 => true,
-            46 => true,
-            47 => true,
-            48 => true,
-            49 => true,
-            50 => true,
-            51 => true,
-            52 => true,
-            53 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            9i64 => true,
+            10i64 => true,
+            11i64 => true,
+            12i64 => true,
+            13i64 => true,
+            14i64 => true,
+            15i64 => true,
+            16i64 => true,
+            17i64 => true,
+            18i64 => true,
+            19i64 => true,
+            20i64 => true,
+            21i64 => true,
+            22i64 => true,
+            23i64 => true,
+            24i64 => true,
+            25i64 => true,
+            27i64 => true,
+            28i64 => true,
+            29i64 => true,
+            30i64 => true,
+            31i64 => true,
+            32i64 => true,
+            33i64 => true,
+            34i64 => true,
+            35i64 => true,
+            36i64 => true,
+            37i64 => true,
+            38i64 => true,
+            39i64 => true,
+            40i64 => true,
+            41i64 => true,
+            42i64 => true,
+            43i64 => true,
+            44i64 => true,
+            45i64 => true,
+            46i64 => true,
+            47i64 => true,
+            48i64 => true,
+            49i64 => true,
+            50i64 => true,
+            51i64 => true,
+            52i64 => true,
+            53i64 => true,
             _ => false,
         }
     }
@@ -7092,7 +7883,7 @@ impl fmt::Display for CoursePoint {
             CoursePoint::Transport => write!(f, "transport"),
             CoursePoint::Alert => write!(f, "alert"),
             CoursePoint::Info => write!(f, "info"),
-            CoursePoint::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            CoursePoint::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -7172,7 +7963,7 @@ impl Serialize for CoursePoint {
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum Manufacturer {
     Garmin,
-    /// Do not use. Used by FR405 for ANTFS man id.
+    #[doc = "Do not use. Used by FR405 for ANTFS man id."]
     GarminFr405Antfs,
     Zephyr,
     Dayton,
@@ -7265,7 +8056,7 @@ pub enum Manufacturer {
     InsideRideTechnologies,
     SoundOfMotion,
     Stryd,
-    /// Indoorcycling Group
+    #[doc = "Indoorcycling Group"]
     Icg,
     MiPulse,
     BsxAthletics,
@@ -7273,15 +8064,15 @@ pub enum Manufacturer {
     CampagnoloSrl,
     BodyBikeSmart,
     Praxisworks,
-    /// Limits Technology Ltd.
+    #[doc = "Limits Technology Ltd."]
     LimitsTechnology,
-    /// TopAction Technology Inc.
+    #[doc = "TopAction Technology Inc."]
     TopactionTechnology,
     Cosinuss,
     Fitcare,
     Magene,
     GiantManufacturingCo,
-    /// Tigrasport
+    #[doc = "Tigrasport"]
     Tigrasport,
     Salutron,
     Technogym,
@@ -7334,13 +8125,13 @@ pub enum Manufacturer {
     FaveroElectronics,
     Dynovelo,
     Strava,
-    /// Amer Sports
+    #[doc = "Amer Sports"]
     Precor,
     Bryton,
     Sram,
-    /// MiTAC Global Corporation (Mio Technology)
+    #[doc = "MiTAC Global Corporation (Mio Technology)"]
     Navman,
-    /// COBI GmbH
+    #[doc = "COBI GmbH"]
     Cobi,
     Spivi,
     MioMagellan,
@@ -7348,7 +8139,7 @@ pub enum Manufacturer {
     SensitivusGauge,
     Podoon,
     LifeTimeFitness,
-    /// Falco eMotors Inc.
+    #[doc = "Falco eMotors Inc."]
     FalcoEMotors,
     Minoura,
     Cycliq,
@@ -7392,7 +8183,7 @@ pub enum Manufacturer {
     RaceRepublic,
     Fazua,
     OrekaTraining,
-    /// Lishun Electric & Communication
+    #[doc = "Lishun Electric & Communication"]
     Lsec,
     LululemonStudio,
     Shanyue,
@@ -7408,228 +8199,228 @@ pub enum Manufacturer {
 impl Manufacturer {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            9 => true,
-            10 => true,
-            11 => true,
-            12 => true,
-            13 => true,
-            14 => true,
-            15 => true,
-            16 => true,
-            17 => true,
-            18 => true,
-            19 => true,
-            20 => true,
-            21 => true,
-            22 => true,
-            23 => true,
-            24 => true,
-            25 => true,
-            26 => true,
-            27 => true,
-            28 => true,
-            29 => true,
-            30 => true,
-            31 => true,
-            32 => true,
-            33 => true,
-            34 => true,
-            35 => true,
-            36 => true,
-            37 => true,
-            38 => true,
-            39 => true,
-            40 => true,
-            41 => true,
-            42 => true,
-            43 => true,
-            44 => true,
-            45 => true,
-            46 => true,
-            47 => true,
-            48 => true,
-            49 => true,
-            50 => true,
-            51 => true,
-            52 => true,
-            53 => true,
-            54 => true,
-            55 => true,
-            56 => true,
-            57 => true,
-            58 => true,
-            59 => true,
-            60 => true,
-            61 => true,
-            62 => true,
-            63 => true,
-            64 => true,
-            65 => true,
-            66 => true,
-            67 => true,
-            68 => true,
-            69 => true,
-            70 => true,
-            71 => true,
-            72 => true,
-            73 => true,
-            76 => true,
-            77 => true,
-            78 => true,
-            79 => true,
-            80 => true,
-            81 => true,
-            82 => true,
-            83 => true,
-            84 => true,
-            85 => true,
-            86 => true,
-            87 => true,
-            88 => true,
-            89 => true,
-            90 => true,
-            91 => true,
-            92 => true,
-            93 => true,
-            94 => true,
-            95 => true,
-            96 => true,
-            97 => true,
-            98 => true,
-            99 => true,
-            100 => true,
-            101 => true,
-            102 => true,
-            103 => true,
-            104 => true,
-            105 => true,
-            106 => true,
-            107 => true,
-            108 => true,
-            109 => true,
-            110 => true,
-            111 => true,
-            112 => true,
-            113 => true,
-            114 => true,
-            115 => true,
-            116 => true,
-            117 => true,
-            118 => true,
-            119 => true,
-            120 => true,
-            121 => true,
-            122 => true,
-            123 => true,
-            124 => true,
-            125 => true,
-            126 => true,
-            127 => true,
-            128 => true,
-            129 => true,
-            130 => true,
-            131 => true,
-            132 => true,
-            133 => true,
-            134 => true,
-            135 => true,
-            136 => true,
-            137 => true,
-            138 => true,
-            139 => true,
-            140 => true,
-            141 => true,
-            142 => true,
-            143 => true,
-            144 => true,
-            145 => true,
-            146 => true,
-            147 => true,
-            148 => true,
-            149 => true,
-            150 => true,
-            255 => true,
-            257 => true,
-            258 => true,
-            259 => true,
-            260 => true,
-            261 => true,
-            262 => true,
-            263 => true,
-            264 => true,
-            265 => true,
-            266 => true,
-            267 => true,
-            268 => true,
-            269 => true,
-            270 => true,
-            271 => true,
-            272 => true,
-            273 => true,
-            274 => true,
-            275 => true,
-            276 => true,
-            277 => true,
-            278 => true,
-            279 => true,
-            280 => true,
-            281 => true,
-            282 => true,
-            283 => true,
-            284 => true,
-            285 => true,
-            286 => true,
-            287 => true,
-            288 => true,
-            289 => true,
-            290 => true,
-            291 => true,
-            292 => true,
-            293 => true,
-            294 => true,
-            295 => true,
-            296 => true,
-            297 => true,
-            298 => true,
-            299 => true,
-            300 => true,
-            301 => true,
-            302 => true,
-            303 => true,
-            304 => true,
-            305 => true,
-            306 => true,
-            307 => true,
-            308 => true,
-            309 => true,
-            310 => true,
-            311 => true,
-            312 => true,
-            313 => true,
-            314 => true,
-            315 => true,
-            316 => true,
-            317 => true,
-            318 => true,
-            319 => true,
-            320 => true,
-            321 => true,
-            322 => true,
-            323 => true,
-            324 => true,
-            325 => true,
-            326 => true,
-            327 => true,
-            328 => true,
-            5759 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            9i64 => true,
+            10i64 => true,
+            11i64 => true,
+            12i64 => true,
+            13i64 => true,
+            14i64 => true,
+            15i64 => true,
+            16i64 => true,
+            17i64 => true,
+            18i64 => true,
+            19i64 => true,
+            20i64 => true,
+            21i64 => true,
+            22i64 => true,
+            23i64 => true,
+            24i64 => true,
+            25i64 => true,
+            26i64 => true,
+            27i64 => true,
+            28i64 => true,
+            29i64 => true,
+            30i64 => true,
+            31i64 => true,
+            32i64 => true,
+            33i64 => true,
+            34i64 => true,
+            35i64 => true,
+            36i64 => true,
+            37i64 => true,
+            38i64 => true,
+            39i64 => true,
+            40i64 => true,
+            41i64 => true,
+            42i64 => true,
+            43i64 => true,
+            44i64 => true,
+            45i64 => true,
+            46i64 => true,
+            47i64 => true,
+            48i64 => true,
+            49i64 => true,
+            50i64 => true,
+            51i64 => true,
+            52i64 => true,
+            53i64 => true,
+            54i64 => true,
+            55i64 => true,
+            56i64 => true,
+            57i64 => true,
+            58i64 => true,
+            59i64 => true,
+            60i64 => true,
+            61i64 => true,
+            62i64 => true,
+            63i64 => true,
+            64i64 => true,
+            65i64 => true,
+            66i64 => true,
+            67i64 => true,
+            68i64 => true,
+            69i64 => true,
+            70i64 => true,
+            71i64 => true,
+            72i64 => true,
+            73i64 => true,
+            76i64 => true,
+            77i64 => true,
+            78i64 => true,
+            79i64 => true,
+            80i64 => true,
+            81i64 => true,
+            82i64 => true,
+            83i64 => true,
+            84i64 => true,
+            85i64 => true,
+            86i64 => true,
+            87i64 => true,
+            88i64 => true,
+            89i64 => true,
+            90i64 => true,
+            91i64 => true,
+            92i64 => true,
+            93i64 => true,
+            94i64 => true,
+            95i64 => true,
+            96i64 => true,
+            97i64 => true,
+            98i64 => true,
+            99i64 => true,
+            100i64 => true,
+            101i64 => true,
+            102i64 => true,
+            103i64 => true,
+            104i64 => true,
+            105i64 => true,
+            106i64 => true,
+            107i64 => true,
+            108i64 => true,
+            109i64 => true,
+            110i64 => true,
+            111i64 => true,
+            112i64 => true,
+            113i64 => true,
+            114i64 => true,
+            115i64 => true,
+            116i64 => true,
+            117i64 => true,
+            118i64 => true,
+            119i64 => true,
+            120i64 => true,
+            121i64 => true,
+            122i64 => true,
+            123i64 => true,
+            124i64 => true,
+            125i64 => true,
+            126i64 => true,
+            127i64 => true,
+            128i64 => true,
+            129i64 => true,
+            130i64 => true,
+            131i64 => true,
+            132i64 => true,
+            133i64 => true,
+            134i64 => true,
+            135i64 => true,
+            136i64 => true,
+            137i64 => true,
+            138i64 => true,
+            139i64 => true,
+            140i64 => true,
+            141i64 => true,
+            142i64 => true,
+            143i64 => true,
+            144i64 => true,
+            145i64 => true,
+            146i64 => true,
+            147i64 => true,
+            148i64 => true,
+            149i64 => true,
+            150i64 => true,
+            255i64 => true,
+            257i64 => true,
+            258i64 => true,
+            259i64 => true,
+            260i64 => true,
+            261i64 => true,
+            262i64 => true,
+            263i64 => true,
+            264i64 => true,
+            265i64 => true,
+            266i64 => true,
+            267i64 => true,
+            268i64 => true,
+            269i64 => true,
+            270i64 => true,
+            271i64 => true,
+            272i64 => true,
+            273i64 => true,
+            274i64 => true,
+            275i64 => true,
+            276i64 => true,
+            277i64 => true,
+            278i64 => true,
+            279i64 => true,
+            280i64 => true,
+            281i64 => true,
+            282i64 => true,
+            283i64 => true,
+            284i64 => true,
+            285i64 => true,
+            286i64 => true,
+            287i64 => true,
+            288i64 => true,
+            289i64 => true,
+            290i64 => true,
+            291i64 => true,
+            292i64 => true,
+            293i64 => true,
+            294i64 => true,
+            295i64 => true,
+            296i64 => true,
+            297i64 => true,
+            298i64 => true,
+            299i64 => true,
+            300i64 => true,
+            301i64 => true,
+            302i64 => true,
+            303i64 => true,
+            304i64 => true,
+            305i64 => true,
+            306i64 => true,
+            307i64 => true,
+            308i64 => true,
+            309i64 => true,
+            310i64 => true,
+            311i64 => true,
+            312i64 => true,
+            313i64 => true,
+            314i64 => true,
+            315i64 => true,
+            316i64 => true,
+            317i64 => true,
+            318i64 => true,
+            319i64 => true,
+            320i64 => true,
+            321i64 => true,
+            322i64 => true,
+            323i64 => true,
+            324i64 => true,
+            325i64 => true,
+            326i64 => true,
+            327i64 => true,
+            328i64 => true,
+            5759i64 => true,
             _ => false,
         }
     }
@@ -8341,50 +9132,50 @@ impl Serialize for Manufacturer {
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum GarminProduct {
     ApproachG12Asia,
-    /// AXH01 HRM chipset
+    #[doc = "AXH01 HRM chipset"]
     Axh01,
     Axb01,
     Axb02,
     Hrm2ss,
     DsiAlf02,
     Hrm3ss,
-    /// hrm_run model for HRM ANT+ messaging
+    #[doc = "hrm_run model for HRM ANT+ messaging"]
     HrmRunSingleByteProductId,
-    /// BSM model for ANT+ messaging
+    #[doc = "BSM model for ANT+ messaging"]
     Bsm,
-    /// BCM model for ANT+ messaging
+    #[doc = "BCM model for ANT+ messaging"]
     Bcm,
-    /// AXS01 HRM Bike Chipset model for ANT+ messaging
+    #[doc = "AXS01 HRM Bike Chipset model for ANT+ messaging"]
     Axs01,
-    /// hrm_tri model for HRM ANT+ messaging
+    #[doc = "hrm_tri model for HRM ANT+ messaging"]
     HrmTriSingleByteProductId,
-    /// hrm4 run model for HRM ANT+ messaging
+    #[doc = "hrm4 run model for HRM ANT+ messaging"]
     Hrm4RunSingleByteProductId,
-    /// fr225 model for HRM ANT+ messaging
+    #[doc = "fr225 model for HRM ANT+ messaging"]
     Fr225SingleByteProductId,
-    /// gen3_bsm model for Bike Speed ANT+ messaging
+    #[doc = "gen3_bsm model for Bike Speed ANT+ messaging"]
     Gen3BsmSingleByteProductId,
-    /// gen3_bcm model for Bike Cadence ANT+ messaging
+    #[doc = "gen3_bcm model for Bike Cadence ANT+ messaging"]
     Gen3BcmSingleByteProductId,
     HrmFitSingleByteProductId,
-    /// Garmin Wearable Optical Heart Rate Sensor for ANT+ HR Profile Broadcasting
+    #[doc = "Garmin Wearable Optical Heart Rate Sensor for ANT+ HR Profile Broadcasting"]
     OHR,
     Fr301China,
     Fr301Japan,
     Fr301Korea,
     Fr301Taiwan,
-    /// Forerunner 405
+    #[doc = "Forerunner 405"]
     Fr405,
-    /// Forerunner 50
+    #[doc = "Forerunner 50"]
     Fr50,
     Fr405Japan,
-    /// Forerunner 60
+    #[doc = "Forerunner 60"]
     Fr60,
     DsiAlf01,
-    /// Forerunner 310
+    #[doc = "Forerunner 310"]
     Fr310xt,
     Edge500,
-    /// Forerunner 110
+    #[doc = "Forerunner 110"]
     Fr110,
     Edge800,
     Edge500Taiwan,
@@ -8424,10 +9215,10 @@ pub enum GarminProduct {
     Fr10Japan,
     Edge810Japan,
     VirbElite,
-    /// Also Edge Touring Plus
+    #[doc = "Also Edge Touring Plus"]
     EdgeTouring,
     Edge510Japan,
-    /// Also HRM-Swim
+    #[doc = "Also HRM-Swim"]
     HrmTri,
     HrmRun,
     Fr920xt,
@@ -8544,7 +9335,7 @@ pub enum GarminProduct {
     Fr735xtJapan,
     Fenix5s,
     D2BravoTitanium,
-    /// Varia UT 800 SW
+    #[doc = "Varia UT 800 SW"]
     VariaUt800,
     RunningDynamicsPod,
     Edge820China,
@@ -8616,9 +9407,9 @@ pub enum GarminProduct {
     Fr235lAsia,
     Fr245Asia,
     VivoActive3mApac,
-    /// gen3 bike speed sensor
+    #[doc = "gen3 bike speed sensor"]
     Gen3Bsm,
-    /// gen3 bike cadence sensor
+    #[doc = "gen3 bike cadence sensor"]
     Gen3Bcm,
     VivoSmart4Asia,
     Vivoactive4Small,
@@ -8637,9 +9428,9 @@ pub enum GarminProduct {
     Fenix6Sport,
     Fenix6,
     Fenix6x,
-    /// HRM-Dual
+    #[doc = "HRM-Dual"]
     HrmDual,
-    /// HRM-Pro
+    #[doc = "HRM-Pro"]
     HrmPro,
     VivoMove3Premium,
     ApproachS40,
@@ -8679,7 +9470,7 @@ pub enum GarminProduct {
     DescentMk2s,
     Edge130Plus,
     Edge1030Plus,
-    /// Rally 100/200 Power Meter Series
+    #[doc = "Rally 100/200 Power Meter Series"]
     Rally200,
     Fr745,
     Venusq,
@@ -8689,7 +9480,7 @@ pub enum GarminProduct {
     Swim2Apac,
     MarqAdventurerAsia,
     Fr945Lte,
-    /// Mk2 and Mk2i
+    #[doc = "Mk2 and Mk2i"]
     DescentMk2Asia,
     Venu2,
     Venu2s,
@@ -8739,7 +9530,7 @@ pub enum GarminProduct {
     Edge840,
     Vivosmart5,
     Instinct2Asia,
-    /// Adventurer, Athlete, Captain, Golfer
+    #[doc = "Adventurer, Athlete, Captain, Golfer"]
     MarqGen2,
     Venusq2,
     Venusq2music,
@@ -8757,29 +9548,29 @@ pub enum GarminProduct {
     Fr265Small,
     Venu3,
     Venu3s,
-    /// Neo Smart, Tacx
+    #[doc = "Neo Smart, Tacx"]
     TacxNeoSmart,
-    /// Neo 2 Smart, Tacx
+    #[doc = "Neo 2 Smart, Tacx"]
     TacxNeo2Smart,
-    /// Neo 2T Smart, Tacx
+    #[doc = "Neo 2T Smart, Tacx"]
     TacxNeo2TSmart,
-    /// Neo Smart Bike, Tacx
+    #[doc = "Neo Smart Bike, Tacx"]
     TacxNeoSmartBike,
-    /// Satori Smart, Tacx
+    #[doc = "Satori Smart, Tacx"]
     TacxSatoriSmart,
-    /// Flow Smart, Tacx
+    #[doc = "Flow Smart, Tacx"]
     TacxFlowSmart,
-    /// Vortex Smart, Tacx
+    #[doc = "Vortex Smart, Tacx"]
     TacxVortexSmart,
-    /// Bushido Smart, Tacx
+    #[doc = "Bushido Smart, Tacx"]
     TacxBushidoSmart,
-    /// Genius Smart, Tacx
+    #[doc = "Genius Smart, Tacx"]
     TacxGeniusSmart,
-    /// Flux/Flux S Smart, Tacx
+    #[doc = "Flux/Flux S Smart, Tacx"]
     TacxFluxFluxSSmart,
-    /// Flux 2 Smart, Tacx
+    #[doc = "Flux 2 Smart, Tacx"]
     TacxFlux2Smart,
-    /// Magnum, Tacx
+    #[doc = "Magnum, Tacx"]
     TacxMagnum,
     Edge1040Asia,
     EpixGen2Pro42,
@@ -8797,7 +9588,7 @@ pub enum GarminProduct {
     HrmFit,
     MarqGen2Commander,
     D2Mach1Pro,
-    /// SDM4 footpod
+    #[doc = "SDM4 footpod"]
     Sdm4,
     EdgeRemote,
     TrainingCenter,
@@ -8809,444 +9600,444 @@ pub enum GarminProduct {
     TacxTrainingAppLegacy,
     ConnectiqSimulator,
     AndroidAntplusPlugin,
-    /// Garmin Connect website
+    #[doc = "Garmin Connect website"]
     Connect,
     Value(u16),
 }
 impl GarminProduct {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            9 => true,
-            10 => true,
-            11 => true,
-            12 => true,
-            13 => true,
-            14 => true,
-            15 => true,
-            16 => true,
-            22 => true,
-            255 => true,
-            473 => true,
-            474 => true,
-            475 => true,
-            494 => true,
-            717 => true,
-            782 => true,
-            987 => true,
-            988 => true,
-            1011 => true,
-            1018 => true,
-            1036 => true,
-            1124 => true,
-            1169 => true,
-            1199 => true,
-            1213 => true,
-            1253 => true,
-            1274 => true,
-            1325 => true,
-            1328 => true,
-            1333 => true,
-            1334 => true,
-            1341 => true,
-            1345 => true,
-            1360 => true,
-            1380 => true,
-            1381 => true,
-            1386 => true,
-            1387 => true,
-            1405 => true,
-            1410 => true,
-            1422 => true,
-            1436 => true,
-            1446 => true,
-            1461 => true,
-            1482 => true,
-            1497 => true,
-            1499 => true,
-            1537 => true,
-            1551 => true,
-            1555 => true,
-            1561 => true,
-            1567 => true,
-            1570 => true,
-            1600 => true,
-            1623 => true,
-            1632 => true,
-            1664 => true,
-            1688 => true,
-            1721 => true,
-            1735 => true,
-            1736 => true,
-            1742 => true,
-            1743 => true,
-            1752 => true,
-            1765 => true,
-            1821 => true,
-            1822 => true,
-            1823 => true,
-            1836 => true,
-            1837 => true,
-            1853 => true,
-            1885 => true,
-            1903 => true,
-            1907 => true,
-            1918 => true,
-            1928 => true,
-            1929 => true,
-            1930 => true,
-            1931 => true,
-            1936 => true,
-            1956 => true,
-            1967 => true,
-            1988 => true,
-            2050 => true,
-            2052 => true,
-            2053 => true,
-            2061 => true,
-            2067 => true,
-            2070 => true,
-            2072 => true,
-            2073 => true,
-            2079 => true,
-            2100 => true,
-            2130 => true,
-            2131 => true,
-            2132 => true,
-            2134 => true,
-            2135 => true,
-            2140 => true,
-            2147 => true,
-            2148 => true,
-            2150 => true,
-            2153 => true,
-            2156 => true,
-            2157 => true,
-            2158 => true,
-            2160 => true,
-            2161 => true,
-            2162 => true,
-            2172 => true,
-            2173 => true,
-            2174 => true,
-            2175 => true,
-            2187 => true,
-            2188 => true,
-            2189 => true,
-            2192 => true,
-            2193 => true,
-            2204 => true,
-            2219 => true,
-            2225 => true,
-            2226 => true,
-            2238 => true,
-            2260 => true,
-            2261 => true,
-            2262 => true,
-            2266 => true,
-            2271 => true,
-            2274 => true,
-            2276 => true,
-            2288 => true,
-            2289 => true,
-            2290 => true,
-            2292 => true,
-            2293 => true,
-            2294 => true,
-            2310 => true,
-            2311 => true,
-            2313 => true,
-            2327 => true,
-            2332 => true,
-            2337 => true,
-            2343 => true,
-            2347 => true,
-            2348 => true,
-            2361 => true,
-            2362 => true,
-            2368 => true,
-            2379 => true,
-            2396 => true,
-            2397 => true,
-            2398 => true,
-            2406 => true,
-            2407 => true,
-            2408 => true,
-            2413 => true,
-            2417 => true,
-            2429 => true,
-            2431 => true,
-            2432 => true,
-            2441 => true,
-            2444 => true,
-            2457 => true,
-            2473 => true,
-            2474 => true,
-            2475 => true,
-            2476 => true,
-            2477 => true,
-            2496 => true,
-            2497 => true,
-            2503 => true,
-            2512 => true,
-            2530 => true,
-            2531 => true,
-            2533 => true,
-            2534 => true,
-            2544 => true,
-            2547 => true,
-            2567 => true,
-            2593 => true,
-            2599 => true,
-            2600 => true,
-            2604 => true,
-            2606 => true,
-            2622 => true,
-            2623 => true,
-            2628 => true,
-            2629 => true,
-            2630 => true,
-            2650 => true,
-            2656 => true,
-            2667 => true,
-            2668 => true,
-            2675 => true,
-            2687 => true,
-            2691 => true,
-            2697 => true,
-            2700 => true,
-            2713 => true,
-            2727 => true,
-            2733 => true,
-            2769 => true,
-            2772 => true,
-            2787 => true,
-            2796 => true,
-            2797 => true,
-            2798 => true,
-            2806 => true,
-            2814 => true,
-            2819 => true,
-            2831 => true,
-            2832 => true,
-            2833 => true,
-            2859 => true,
-            2878 => true,
-            2886 => true,
-            2888 => true,
-            2891 => true,
-            2900 => true,
-            2909 => true,
-            2924 => true,
-            2927 => true,
-            2945 => true,
-            2962 => true,
-            2977 => true,
-            2988 => true,
-            3003 => true,
-            3004 => true,
-            3011 => true,
-            3028 => true,
-            3049 => true,
-            3066 => true,
-            3085 => true,
-            3092 => true,
-            3095 => true,
-            3110 => true,
-            3111 => true,
-            3112 => true,
-            3113 => true,
-            3121 => true,
-            3122 => true,
-            3126 => true,
-            3134 => true,
-            3135 => true,
-            3142 => true,
-            3143 => true,
-            3144 => true,
-            3145 => true,
-            3163 => true,
-            3192 => true,
-            3193 => true,
-            3218 => true,
-            3224 => true,
-            3225 => true,
-            3226 => true,
-            3246 => true,
-            3247 => true,
-            3248 => true,
-            3249 => true,
-            3250 => true,
-            3251 => true,
-            3258 => true,
-            3284 => true,
-            3287 => true,
-            3288 => true,
-            3289 => true,
-            3290 => true,
-            3291 => true,
-            3299 => true,
-            3300 => true,
-            3308 => true,
-            3314 => true,
-            3321 => true,
-            3349 => true,
-            3350 => true,
-            3378 => true,
-            3387 => true,
-            3388 => true,
-            3389 => true,
-            3405 => true,
-            3420 => true,
-            3421 => true,
-            3422 => true,
-            3441 => true,
-            3446 => true,
-            3448 => true,
-            3449 => true,
-            3450 => true,
-            3451 => true,
-            3466 => true,
-            3469 => true,
-            3473 => true,
-            3498 => true,
-            3499 => true,
-            3500 => true,
-            3501 => true,
-            3512 => true,
-            3513 => true,
-            3514 => true,
-            3515 => true,
-            3516 => true,
-            3535 => true,
-            3536 => true,
-            3537 => true,
-            3538 => true,
-            3542 => true,
-            3558 => true,
-            3570 => true,
-            3578 => true,
-            3589 => true,
-            3600 => true,
-            3615 => true,
-            3624 => true,
-            3638 => true,
-            3639 => true,
-            3648 => true,
-            3652 => true,
-            3702 => true,
-            3703 => true,
-            3704 => true,
-            3737 => true,
-            3739 => true,
-            3740 => true,
-            3794 => true,
-            3808 => true,
-            3809 => true,
-            3812 => true,
-            3813 => true,
-            3823 => true,
-            3837 => true,
-            3843 => true,
-            3850 => true,
-            3851 => true,
-            3865 => true,
-            3869 => true,
-            3872 => true,
-            3888 => true,
-            3905 => true,
-            3906 => true,
-            3907 => true,
-            3908 => true,
-            3909 => true,
-            3910 => true,
-            3930 => true,
-            3934 => true,
-            3943 => true,
-            3944 => true,
-            3949 => true,
-            3950 => true,
-            3978 => true,
-            3982 => true,
-            3983 => true,
-            3986 => true,
-            3990 => true,
-            3991 => true,
-            3992 => true,
-            3993 => true,
-            4002 => true,
-            4005 => true,
-            4017 => true,
-            4024 => true,
-            4033 => true,
-            4061 => true,
-            4062 => true,
-            4063 => true,
-            4071 => true,
-            4105 => true,
-            4115 => true,
-            4116 => true,
-            4124 => true,
-            4125 => true,
-            4130 => true,
-            4132 => true,
-            4135 => true,
-            4155 => true,
-            4169 => true,
-            4222 => true,
-            4223 => true,
-            4233 => true,
-            4257 => true,
-            4258 => true,
-            4260 => true,
-            4261 => true,
-            4265 => true,
-            4266 => true,
-            4267 => true,
-            4268 => true,
-            4269 => true,
-            4270 => true,
-            4271 => true,
-            4272 => true,
-            4273 => true,
-            4274 => true,
-            4275 => true,
-            4276 => true,
-            4305 => true,
-            4312 => true,
-            4313 => true,
-            4314 => true,
-            4315 => true,
-            4341 => true,
-            4374 => true,
-            4375 => true,
-            4376 => true,
-            4380 => true,
-            4394 => true,
-            4426 => true,
-            4442 => true,
-            4446 => true,
-            4472 => true,
-            4556 => true,
-            10007 => true,
-            10014 => true,
-            20119 => true,
-            20533 => true,
-            20534 => true,
-            20565 => true,
-            30045 => true,
-            30046 => true,
-            30047 => true,
-            65531 => true,
-            65532 => true,
-            65534 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            9i64 => true,
+            10i64 => true,
+            11i64 => true,
+            12i64 => true,
+            13i64 => true,
+            14i64 => true,
+            15i64 => true,
+            16i64 => true,
+            22i64 => true,
+            255i64 => true,
+            473i64 => true,
+            474i64 => true,
+            475i64 => true,
+            494i64 => true,
+            717i64 => true,
+            782i64 => true,
+            987i64 => true,
+            988i64 => true,
+            1011i64 => true,
+            1018i64 => true,
+            1036i64 => true,
+            1124i64 => true,
+            1169i64 => true,
+            1199i64 => true,
+            1213i64 => true,
+            1253i64 => true,
+            1274i64 => true,
+            1325i64 => true,
+            1328i64 => true,
+            1333i64 => true,
+            1334i64 => true,
+            1341i64 => true,
+            1345i64 => true,
+            1360i64 => true,
+            1380i64 => true,
+            1381i64 => true,
+            1386i64 => true,
+            1387i64 => true,
+            1405i64 => true,
+            1410i64 => true,
+            1422i64 => true,
+            1436i64 => true,
+            1446i64 => true,
+            1461i64 => true,
+            1482i64 => true,
+            1497i64 => true,
+            1499i64 => true,
+            1537i64 => true,
+            1551i64 => true,
+            1555i64 => true,
+            1561i64 => true,
+            1567i64 => true,
+            1570i64 => true,
+            1600i64 => true,
+            1623i64 => true,
+            1632i64 => true,
+            1664i64 => true,
+            1688i64 => true,
+            1721i64 => true,
+            1735i64 => true,
+            1736i64 => true,
+            1742i64 => true,
+            1743i64 => true,
+            1752i64 => true,
+            1765i64 => true,
+            1821i64 => true,
+            1822i64 => true,
+            1823i64 => true,
+            1836i64 => true,
+            1837i64 => true,
+            1853i64 => true,
+            1885i64 => true,
+            1903i64 => true,
+            1907i64 => true,
+            1918i64 => true,
+            1928i64 => true,
+            1929i64 => true,
+            1930i64 => true,
+            1931i64 => true,
+            1936i64 => true,
+            1956i64 => true,
+            1967i64 => true,
+            1988i64 => true,
+            2050i64 => true,
+            2052i64 => true,
+            2053i64 => true,
+            2061i64 => true,
+            2067i64 => true,
+            2070i64 => true,
+            2072i64 => true,
+            2073i64 => true,
+            2079i64 => true,
+            2100i64 => true,
+            2130i64 => true,
+            2131i64 => true,
+            2132i64 => true,
+            2134i64 => true,
+            2135i64 => true,
+            2140i64 => true,
+            2147i64 => true,
+            2148i64 => true,
+            2150i64 => true,
+            2153i64 => true,
+            2156i64 => true,
+            2157i64 => true,
+            2158i64 => true,
+            2160i64 => true,
+            2161i64 => true,
+            2162i64 => true,
+            2172i64 => true,
+            2173i64 => true,
+            2174i64 => true,
+            2175i64 => true,
+            2187i64 => true,
+            2188i64 => true,
+            2189i64 => true,
+            2192i64 => true,
+            2193i64 => true,
+            2204i64 => true,
+            2219i64 => true,
+            2225i64 => true,
+            2226i64 => true,
+            2238i64 => true,
+            2260i64 => true,
+            2261i64 => true,
+            2262i64 => true,
+            2266i64 => true,
+            2271i64 => true,
+            2274i64 => true,
+            2276i64 => true,
+            2288i64 => true,
+            2289i64 => true,
+            2290i64 => true,
+            2292i64 => true,
+            2293i64 => true,
+            2294i64 => true,
+            2310i64 => true,
+            2311i64 => true,
+            2313i64 => true,
+            2327i64 => true,
+            2332i64 => true,
+            2337i64 => true,
+            2343i64 => true,
+            2347i64 => true,
+            2348i64 => true,
+            2361i64 => true,
+            2362i64 => true,
+            2368i64 => true,
+            2379i64 => true,
+            2396i64 => true,
+            2397i64 => true,
+            2398i64 => true,
+            2406i64 => true,
+            2407i64 => true,
+            2408i64 => true,
+            2413i64 => true,
+            2417i64 => true,
+            2429i64 => true,
+            2431i64 => true,
+            2432i64 => true,
+            2441i64 => true,
+            2444i64 => true,
+            2457i64 => true,
+            2473i64 => true,
+            2474i64 => true,
+            2475i64 => true,
+            2476i64 => true,
+            2477i64 => true,
+            2496i64 => true,
+            2497i64 => true,
+            2503i64 => true,
+            2512i64 => true,
+            2530i64 => true,
+            2531i64 => true,
+            2533i64 => true,
+            2534i64 => true,
+            2544i64 => true,
+            2547i64 => true,
+            2567i64 => true,
+            2593i64 => true,
+            2599i64 => true,
+            2600i64 => true,
+            2604i64 => true,
+            2606i64 => true,
+            2622i64 => true,
+            2623i64 => true,
+            2628i64 => true,
+            2629i64 => true,
+            2630i64 => true,
+            2650i64 => true,
+            2656i64 => true,
+            2667i64 => true,
+            2668i64 => true,
+            2675i64 => true,
+            2687i64 => true,
+            2691i64 => true,
+            2697i64 => true,
+            2700i64 => true,
+            2713i64 => true,
+            2727i64 => true,
+            2733i64 => true,
+            2769i64 => true,
+            2772i64 => true,
+            2787i64 => true,
+            2796i64 => true,
+            2797i64 => true,
+            2798i64 => true,
+            2806i64 => true,
+            2814i64 => true,
+            2819i64 => true,
+            2831i64 => true,
+            2832i64 => true,
+            2833i64 => true,
+            2859i64 => true,
+            2878i64 => true,
+            2886i64 => true,
+            2888i64 => true,
+            2891i64 => true,
+            2900i64 => true,
+            2909i64 => true,
+            2924i64 => true,
+            2927i64 => true,
+            2945i64 => true,
+            2962i64 => true,
+            2977i64 => true,
+            2988i64 => true,
+            3003i64 => true,
+            3004i64 => true,
+            3011i64 => true,
+            3028i64 => true,
+            3049i64 => true,
+            3066i64 => true,
+            3085i64 => true,
+            3092i64 => true,
+            3095i64 => true,
+            3110i64 => true,
+            3111i64 => true,
+            3112i64 => true,
+            3113i64 => true,
+            3121i64 => true,
+            3122i64 => true,
+            3126i64 => true,
+            3134i64 => true,
+            3135i64 => true,
+            3142i64 => true,
+            3143i64 => true,
+            3144i64 => true,
+            3145i64 => true,
+            3163i64 => true,
+            3192i64 => true,
+            3193i64 => true,
+            3218i64 => true,
+            3224i64 => true,
+            3225i64 => true,
+            3226i64 => true,
+            3246i64 => true,
+            3247i64 => true,
+            3248i64 => true,
+            3249i64 => true,
+            3250i64 => true,
+            3251i64 => true,
+            3258i64 => true,
+            3284i64 => true,
+            3287i64 => true,
+            3288i64 => true,
+            3289i64 => true,
+            3290i64 => true,
+            3291i64 => true,
+            3299i64 => true,
+            3300i64 => true,
+            3308i64 => true,
+            3314i64 => true,
+            3321i64 => true,
+            3349i64 => true,
+            3350i64 => true,
+            3378i64 => true,
+            3387i64 => true,
+            3388i64 => true,
+            3389i64 => true,
+            3405i64 => true,
+            3420i64 => true,
+            3421i64 => true,
+            3422i64 => true,
+            3441i64 => true,
+            3446i64 => true,
+            3448i64 => true,
+            3449i64 => true,
+            3450i64 => true,
+            3451i64 => true,
+            3466i64 => true,
+            3469i64 => true,
+            3473i64 => true,
+            3498i64 => true,
+            3499i64 => true,
+            3500i64 => true,
+            3501i64 => true,
+            3512i64 => true,
+            3513i64 => true,
+            3514i64 => true,
+            3515i64 => true,
+            3516i64 => true,
+            3535i64 => true,
+            3536i64 => true,
+            3537i64 => true,
+            3538i64 => true,
+            3542i64 => true,
+            3558i64 => true,
+            3570i64 => true,
+            3578i64 => true,
+            3589i64 => true,
+            3600i64 => true,
+            3615i64 => true,
+            3624i64 => true,
+            3638i64 => true,
+            3639i64 => true,
+            3648i64 => true,
+            3652i64 => true,
+            3702i64 => true,
+            3703i64 => true,
+            3704i64 => true,
+            3737i64 => true,
+            3739i64 => true,
+            3740i64 => true,
+            3794i64 => true,
+            3808i64 => true,
+            3809i64 => true,
+            3812i64 => true,
+            3813i64 => true,
+            3823i64 => true,
+            3837i64 => true,
+            3843i64 => true,
+            3850i64 => true,
+            3851i64 => true,
+            3865i64 => true,
+            3869i64 => true,
+            3872i64 => true,
+            3888i64 => true,
+            3905i64 => true,
+            3906i64 => true,
+            3907i64 => true,
+            3908i64 => true,
+            3909i64 => true,
+            3910i64 => true,
+            3930i64 => true,
+            3934i64 => true,
+            3943i64 => true,
+            3944i64 => true,
+            3949i64 => true,
+            3950i64 => true,
+            3978i64 => true,
+            3982i64 => true,
+            3983i64 => true,
+            3986i64 => true,
+            3990i64 => true,
+            3991i64 => true,
+            3992i64 => true,
+            3993i64 => true,
+            4002i64 => true,
+            4005i64 => true,
+            4017i64 => true,
+            4024i64 => true,
+            4033i64 => true,
+            4061i64 => true,
+            4062i64 => true,
+            4063i64 => true,
+            4071i64 => true,
+            4105i64 => true,
+            4115i64 => true,
+            4116i64 => true,
+            4124i64 => true,
+            4125i64 => true,
+            4130i64 => true,
+            4132i64 => true,
+            4135i64 => true,
+            4155i64 => true,
+            4169i64 => true,
+            4222i64 => true,
+            4223i64 => true,
+            4233i64 => true,
+            4257i64 => true,
+            4258i64 => true,
+            4260i64 => true,
+            4261i64 => true,
+            4265i64 => true,
+            4266i64 => true,
+            4267i64 => true,
+            4268i64 => true,
+            4269i64 => true,
+            4270i64 => true,
+            4271i64 => true,
+            4272i64 => true,
+            4273i64 => true,
+            4274i64 => true,
+            4275i64 => true,
+            4276i64 => true,
+            4305i64 => true,
+            4312i64 => true,
+            4313i64 => true,
+            4314i64 => true,
+            4315i64 => true,
+            4341i64 => true,
+            4374i64 => true,
+            4375i64 => true,
+            4376i64 => true,
+            4380i64 => true,
+            4394i64 => true,
+            4426i64 => true,
+            4442i64 => true,
+            4446i64 => true,
+            4472i64 => true,
+            4556i64 => true,
+            10007i64 => true,
+            10014i64 => true,
+            20119i64 => true,
+            20533i64 => true,
+            20534i64 => true,
+            20565i64 => true,
+            30045i64 => true,
+            30046i64 => true,
+            30047i64 => true,
+            65531i64 => true,
+            65532i64 => true,
+            65534i64 => true,
             _ => false,
         }
     }
@@ -10622,31 +11413,31 @@ pub enum AntplusDeviceType {
 impl AntplusDeviceType {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            1 => true,
-            11 => true,
-            12 => true,
-            15 => true,
-            16 => true,
-            17 => true,
-            18 => true,
-            19 => true,
-            20 => true,
-            25 => true,
-            26 => true,
-            27 => true,
-            31 => true,
-            34 => true,
-            35 => true,
-            36 => true,
-            38 => true,
-            40 => true,
-            46 => true,
-            119 => true,
-            120 => true,
-            121 => true,
-            122 => true,
-            123 => true,
-            124 => true,
+            1i64 => true,
+            11i64 => true,
+            12i64 => true,
+            15i64 => true,
+            16i64 => true,
+            17i64 => true,
+            18i64 => true,
+            19i64 => true,
+            20i64 => true,
+            25i64 => true,
+            26i64 => true,
+            27i64 => true,
+            31i64 => true,
+            34i64 => true,
+            35i64 => true,
+            36i64 => true,
+            38i64 => true,
+            40i64 => true,
+            46i64 => true,
+            119i64 => true,
+            120i64 => true,
+            121i64 => true,
+            122i64 => true,
+            123i64 => true,
+            124i64 => true,
             _ => false,
         }
     }
@@ -10775,10 +11566,10 @@ pub enum AntNetwork {
 impl AntNetwork {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
             _ => false,
         }
     }
@@ -10802,7 +11593,7 @@ impl fmt::Display for AntNetwork {
             AntNetwork::Antplus => write!(f, "antplus"),
             AntNetwork::Antfs => write!(f, "antfs"),
             AntNetwork::Private => write!(f, "private"),
-            AntNetwork::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            AntNetwork::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -10837,21 +11628,21 @@ pub enum WorkoutCapabilities {
     FitnessEquipment,
     Firstbeat,
     NewLeaf,
-    /// For backwards compatibility. Watch should add missing id fields then clear flag.
+    #[doc = "For backwards compatibility. Watch should add missing id fields then clear flag."]
     Tcx,
-    /// Speed source required for workout step.
+    #[doc = "Speed source required for workout step."]
     Speed,
-    /// Heart rate source required for workout step.
+    #[doc = "Heart rate source required for workout step."]
     HeartRate,
-    /// Distance source required for workout step.
+    #[doc = "Distance source required for workout step."]
     Distance,
-    /// Cadence source required for workout step.
+    #[doc = "Cadence source required for workout step."]
     Cadence,
-    /// Power source required for workout step.
+    #[doc = "Power source required for workout step."]
     Power,
-    /// Grade source required for workout step.
+    #[doc = "Grade source required for workout step."]
     Grade,
-    /// Resistance source required for workout step.
+    #[doc = "Resistance source required for workout step."]
     Resistance,
     Protected,
     Value(u32),
@@ -10859,20 +11650,20 @@ pub enum WorkoutCapabilities {
 impl WorkoutCapabilities {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            1 => true,
-            2 => true,
-            4 => true,
-            8 => true,
-            16 => true,
-            32 => true,
-            128 => true,
-            256 => true,
-            512 => true,
-            1024 => true,
-            2048 => true,
-            4096 => true,
-            8192 => true,
-            16384 => true,
+            1i64 => true,
+            2i64 => true,
+            4i64 => true,
+            8i64 => true,
+            16i64 => true,
+            32i64 => true,
+            128i64 => true,
+            256i64 => true,
+            512i64 => true,
+            1024i64 => true,
+            2048i64 => true,
+            4096i64 => true,
+            8192i64 => true,
+            16384i64 => true,
             _ => false,
         }
     }
@@ -10971,13 +11762,13 @@ pub enum BatteryStatus {
 impl BatteryStatus {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
             _ => false,
         }
     }
@@ -11050,8 +11841,8 @@ pub enum HrType {
 impl HrType {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
+            0i64 => true,
+            1i64 => true,
             _ => false,
         }
     }
@@ -11071,7 +11862,7 @@ impl fmt::Display for HrType {
         match &self {
             HrType::Normal => write!(f, "normal"),
             HrType::Irregular => write!(f, "irregular"),
-            HrType::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            HrType::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -11110,25 +11901,25 @@ pub enum CourseCapabilities {
     Training,
     Navigation,
     Bikeway,
-    /// Denote course files to be used as flight plans
+    #[doc = "Denote course files to be used as flight plans"]
     Aviation,
     Value(u32),
 }
 impl CourseCapabilities {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            1 => true,
-            2 => true,
-            4 => true,
-            8 => true,
-            16 => true,
-            32 => true,
-            64 => true,
-            128 => true,
-            256 => true,
-            512 => true,
-            1024 => true,
-            4096 => true,
+            1i64 => true,
+            2i64 => true,
+            4i64 => true,
+            8i64 => true,
+            16i64 => true,
+            32i64 => true,
+            64i64 => true,
+            128i64 => true,
+            256i64 => true,
+            512i64 => true,
+            1024i64 => true,
+            4096i64 => true,
             _ => false,
         }
     }
@@ -11215,7 +12006,7 @@ pub enum Weight {
 impl Weight {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            65534 => true,
+            65534i64 => true,
             _ => false,
         }
     }
@@ -11261,7 +12052,7 @@ impl Serialize for Weight {
         }
     }
 }
-/// 0 - 100 indicates% of max hr; >100 indicates bpm (255 max) plus 100
+#[doc = "0 - 100 indicates% of max hr; >100 indicates bpm (255 max) plus 100"]
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum WorkoutHr {
     BpmOffset,
@@ -11270,7 +12061,7 @@ pub enum WorkoutHr {
 impl WorkoutHr {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            100 => true,
+            100i64 => true,
             _ => false,
         }
     }
@@ -11316,7 +12107,7 @@ impl Serialize for WorkoutHr {
         }
     }
 }
-/// 0 - 1000 indicates % of functional threshold power; >1000 indicates watts plus 1000.
+#[doc = "0 - 1000 indicates % of functional threshold power; >1000 indicates watts plus 1000."]
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum WorkoutPower {
     WattsOffset,
@@ -11325,7 +12116,7 @@ pub enum WorkoutPower {
 impl WorkoutPower {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            1000 => true,
+            1000i64 => true,
             _ => false,
         }
     }
@@ -11383,11 +12174,11 @@ pub enum BpStatus {
 impl BpStatus {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
             _ => false,
         }
     }
@@ -11413,7 +12204,7 @@ impl fmt::Display for BpStatus {
             BpStatus::ErrorNoMeasurement => write!(f, "error_no_measurement"),
             BpStatus::ErrorDataOutOfRange => write!(f, "error_data_out_of_range"),
             BpStatus::ErrorIrregularHeartRate => write!(f, "error_irregular_heart_rate"),
-            BpStatus::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            BpStatus::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -11455,12 +12246,12 @@ pub enum UserLocalId {
 impl UserLocalId {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            15 => true,
-            16 => true,
-            255 => true,
-            256 => true,
-            65534 => true,
+            0i64 => true,
+            15i64 => true,
+            16i64 => true,
+            255i64 => true,
+            256i64 => true,
+            65534i64 => true,
             _ => false,
         }
     }
@@ -11529,20 +12320,20 @@ pub enum SwimStroke {
     Butterfly,
     Drill,
     Mixed,
-    /// IM is a mixed interval containing the same number of lengths for each of: Butterfly, Backstroke, Breaststroke, Freestyle, swam in that order.
+    #[doc = "IM is a mixed interval containing the same number of lengths for each of: Butterfly, Backstroke, Breaststroke, Freestyle, swam in that order."]
     Im,
     UnknownVariant(u8),
 }
 impl SwimStroke {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
             _ => false,
         }
     }
@@ -11572,7 +12363,7 @@ impl fmt::Display for SwimStroke {
             SwimStroke::Drill => write!(f, "drill"),
             SwimStroke::Mixed => write!(f, "mixed"),
             SwimStroke::Im => write!(f, "im"),
-            SwimStroke::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            SwimStroke::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -11608,28 +12399,28 @@ pub enum ActivityType {
     Generic,
     Running,
     Cycling,
-    /// Mulitsport transition
+    #[doc = "Mulitsport transition"]
     Transition,
     FitnessEquipment,
     Swimming,
     Walking,
     Sedentary,
-    /// All is for goals only to include all sports.
+    #[doc = "All is for goals only to include all sports."]
     All,
     UnknownVariant(u8),
 }
 impl ActivityType {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            8 => true,
-            254 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            8i64 => true,
+            254i64 => true,
             _ => false,
         }
     }
@@ -11663,7 +12454,7 @@ impl fmt::Display for ActivityType {
             ActivityType::Walking => write!(f, "walking"),
             ActivityType::Sedentary => write!(f, "sedentary"),
             ActivityType::All => write!(f, "all"),
-            ActivityType::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            ActivityType::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -11699,41 +12490,41 @@ impl Serialize for ActivityType {
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum ActivitySubtype {
     Generic,
-    /// Run
+    #[doc = "Run"]
     Treadmill,
-    /// Run
+    #[doc = "Run"]
     Street,
-    /// Run
+    #[doc = "Run"]
     Trail,
-    /// Run
+    #[doc = "Run"]
     Track,
-    /// Cycling
+    #[doc = "Cycling"]
     Spin,
-    /// Cycling
+    #[doc = "Cycling"]
     IndoorCycling,
-    /// Cycling
+    #[doc = "Cycling"]
     Road,
-    /// Cycling
+    #[doc = "Cycling"]
     Mountain,
-    /// Cycling
+    #[doc = "Cycling"]
     Downhill,
-    /// Cycling
+    #[doc = "Cycling"]
     Recumbent,
-    /// Cycling
+    #[doc = "Cycling"]
     Cyclocross,
-    /// Cycling
+    #[doc = "Cycling"]
     HandCycling,
-    /// Cycling
+    #[doc = "Cycling"]
     TrackCycling,
-    /// Fitness Equipment
+    #[doc = "Fitness Equipment"]
     IndoorRowing,
-    /// Fitness Equipment
+    #[doc = "Fitness Equipment"]
     Elliptical,
-    /// Fitness Equipment
+    #[doc = "Fitness Equipment"]
     StairClimbing,
-    /// Swimming
+    #[doc = "Swimming"]
     LapSwimming,
-    /// Swimming
+    #[doc = "Swimming"]
     OpenWater,
     All,
     UnknownVariant(u8),
@@ -11741,26 +12532,26 @@ pub enum ActivitySubtype {
 impl ActivitySubtype {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            9 => true,
-            10 => true,
-            11 => true,
-            12 => true,
-            13 => true,
-            14 => true,
-            15 => true,
-            16 => true,
-            17 => true,
-            18 => true,
-            254 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            9i64 => true,
+            10i64 => true,
+            11i64 => true,
+            12i64 => true,
+            13i64 => true,
+            14i64 => true,
+            15i64 => true,
+            16i64 => true,
+            17i64 => true,
+            18i64 => true,
+            254i64 => true,
             _ => false,
         }
     }
@@ -11816,7 +12607,7 @@ impl fmt::Display for ActivitySubtype {
             ActivitySubtype::LapSwimming => write!(f, "lap_swimming"),
             ActivitySubtype::OpenWater => write!(f, "open_water"),
             ActivitySubtype::All => write!(f, "all"),
-            ActivitySubtype::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            ActivitySubtype::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -11870,9 +12661,9 @@ pub enum ActivityLevel {
 impl ActivityLevel {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
             _ => false,
         }
     }
@@ -11894,7 +12685,7 @@ impl fmt::Display for ActivityLevel {
             ActivityLevel::Low => write!(f, "low"),
             ActivityLevel::Medium => write!(f, "medium"),
             ActivityLevel::High => write!(f, "high"),
-            ActivityLevel::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            ActivityLevel::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -11930,8 +12721,8 @@ pub enum Side {
 impl Side {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
+            0i64 => true,
+            1i64 => true,
             _ => false,
         }
     }
@@ -11951,7 +12742,7 @@ impl fmt::Display for Side {
         match &self {
             Side::Right => write!(f, "right"),
             Side::Left => write!(f, "left"),
-            Side::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            Side::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -11979,17 +12770,17 @@ impl Serialize for Side {
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum LeftRightBalance {
-    /// % contribution
+    #[doc = "% contribution"]
     Mask,
-    /// data corresponds to right if set, otherwise unknown
+    #[doc = "data corresponds to right if set, otherwise unknown"]
     Right,
     Value(u8),
 }
 impl LeftRightBalance {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            127 => true,
-            128 => true,
+            127i64 => true,
+            128i64 => true,
             _ => false,
         }
     }
@@ -12040,17 +12831,17 @@ impl Serialize for LeftRightBalance {
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum LeftRightBalance100 {
-    /// % contribution scaled by 100
+    #[doc = "% contribution scaled by 100"]
     Mask,
-    /// data corresponds to right if set, otherwise unknown
+    #[doc = "data corresponds to right if set, otherwise unknown"]
     Right,
     Value(u16),
 }
 impl LeftRightBalance100 {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            16383 => true,
-            32768 => true,
+            16383i64 => true,
+            32768i64 => true,
             _ => false,
         }
     }
@@ -12101,17 +12892,17 @@ impl Serialize for LeftRightBalance100 {
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum LengthType {
-    /// Rest period. Length with no strokes
+    #[doc = "Rest period. Length with no strokes"]
     Idle,
-    /// Length with strokes.
+    #[doc = "Length with strokes."]
     Active,
     UnknownVariant(u8),
 }
 impl LengthType {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
+            0i64 => true,
+            1i64 => true,
             _ => false,
         }
     }
@@ -12131,7 +12922,7 @@ impl fmt::Display for LengthType {
         match &self {
             LengthType::Idle => write!(f, "idle"),
             LengthType::Active => write!(f, "active"),
-            LengthType::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            LengthType::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -12171,13 +12962,13 @@ pub enum DayOfWeek {
 impl DayOfWeek {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
             _ => false,
         }
     }
@@ -12207,7 +12998,7 @@ impl fmt::Display for DayOfWeek {
             DayOfWeek::Thursday => write!(f, "thursday"),
             DayOfWeek::Friday => write!(f, "friday"),
             DayOfWeek::Saturday => write!(f, "saturday"),
-            DayOfWeek::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            DayOfWeek::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -12255,69 +13046,69 @@ pub enum ConnectivityCapabilities {
     ContinueSyncAfterSoftwareUpdate,
     ConnectIqAppDownload,
     GolfCourseDownload,
-    /// Indicates device is in control of initiating all syncs
+    #[doc = "Indicates device is in control of initiating all syncs"]
     DeviceInitiatesSync,
     ConnectIqWatchAppDownload,
     ConnectIqWidgetDownload,
     ConnectIqWatchFaceDownload,
     ConnectIqDataFieldDownload,
-    /// Device supports delete and reorder of apps via GCM
+    #[doc = "Device supports delete and reorder of apps via GCM"]
     ConnectIqAppManagment,
     SwingSensor,
     SwingSensorRemote,
-    /// Device supports incident detection
+    #[doc = "Device supports incident detection"]
     IncidentDetection,
     AudioPrompts,
-    /// Device supports reporting wifi verification via GCM
+    #[doc = "Device supports reporting wifi verification via GCM"]
     WifiVerification,
-    /// Device supports True Up
+    #[doc = "Device supports True Up"]
     TrueUp,
-    /// Device supports Find My Watch
+    #[doc = "Device supports Find My Watch"]
     FindMyWatch,
     RemoteManualSync,
-    /// Device supports LiveTrack auto start
+    #[doc = "Device supports LiveTrack auto start"]
     LiveTrackAutoStart,
-    /// Device supports LiveTrack Messaging
+    #[doc = "Device supports LiveTrack Messaging"]
     LiveTrackMessaging,
-    /// Device supports instant input feature
+    #[doc = "Device supports instant input feature"]
     InstantInput,
     Value(u32),
 }
 impl ConnectivityCapabilities {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            1 => true,
-            2 => true,
-            4 => true,
-            8 => true,
-            16 => true,
-            32 => true,
-            64 => true,
-            128 => true,
-            256 => true,
-            512 => true,
-            1024 => true,
-            2048 => true,
-            4096 => true,
-            8192 => true,
-            16384 => true,
-            32768 => true,
-            65536 => true,
-            131072 => true,
-            262144 => true,
-            524288 => true,
-            1048576 => true,
-            2097152 => true,
-            4194304 => true,
-            8388608 => true,
-            16777216 => true,
-            33554432 => true,
-            67108864 => true,
-            134217728 => true,
-            268435456 => true,
-            536870912 => true,
-            1073741824 => true,
-            2147483648 => true,
+            1i64 => true,
+            2i64 => true,
+            4i64 => true,
+            8i64 => true,
+            16i64 => true,
+            32i64 => true,
+            64i64 => true,
+            128i64 => true,
+            256i64 => true,
+            512i64 => true,
+            1024i64 => true,
+            2048i64 => true,
+            4096i64 => true,
+            8192i64 => true,
+            16384i64 => true,
+            32768i64 => true,
+            65536i64 => true,
+            131072i64 => true,
+            262144i64 => true,
+            524288i64 => true,
+            1048576i64 => true,
+            2097152i64 => true,
+            4194304i64 => true,
+            8388608i64 => true,
+            16777216i64 => true,
+            33554432i64 => true,
+            67108864i64 => true,
+            134217728i64 => true,
+            268435456i64 => true,
+            536870912i64 => true,
+            1073741824i64 => true,
+            2147483648i64 => true,
             _ => false,
         }
     }
@@ -12478,9 +13269,9 @@ pub enum WeatherReport {
 impl WeatherReport {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
             _ => false,
         }
     }
@@ -12502,7 +13293,7 @@ impl fmt::Display for WeatherReport {
             WeatherReport::Current => write!(f, "current"),
             WeatherReport::HourlyForecast => write!(f, "hourly_forecast"),
             WeatherReport::DailyForecast => write!(f, "daily_forecast"),
-            WeatherReport::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            WeatherReport::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -12557,27 +13348,27 @@ pub enum WeatherStatus {
 impl WeatherStatus {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            11 => true,
-            12 => true,
-            13 => true,
-            14 => true,
-            15 => true,
-            16 => true,
-            17 => true,
-            18 => true,
-            19 => true,
-            20 => true,
-            21 => true,
-            22 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            11i64 => true,
+            12i64 => true,
+            13i64 => true,
+            14i64 => true,
+            15i64 => true,
+            16i64 => true,
+            17i64 => true,
+            18i64 => true,
+            19i64 => true,
+            20i64 => true,
+            21i64 => true,
+            22i64 => true,
             _ => false,
         }
     }
@@ -12635,7 +13426,7 @@ impl fmt::Display for WeatherStatus {
             WeatherStatus::LightRainSnow => write!(f, "light_rain_snow"),
             WeatherStatus::HeavyRainSnow => write!(f, "heavy_rain_snow"),
             WeatherStatus::Cloudy => write!(f, "cloudy"),
-            WeatherStatus::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            WeatherStatus::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -12692,11 +13483,11 @@ pub enum WeatherSeverity {
 impl WeatherSeverity {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
             _ => false,
         }
     }
@@ -12722,7 +13513,7 @@ impl fmt::Display for WeatherSeverity {
             WeatherSeverity::Watch => write!(f, "watch"),
             WeatherSeverity::Advisory => write!(f, "advisory"),
             WeatherSeverity::Statement => write!(f, "statement"),
-            WeatherSeverity::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            WeatherSeverity::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -12843,91 +13634,91 @@ pub enum WeatherSevereType {
 impl WeatherSevereType {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            9 => true,
-            10 => true,
-            11 => true,
-            12 => true,
-            13 => true,
-            14 => true,
-            15 => true,
-            16 => true,
-            17 => true,
-            18 => true,
-            19 => true,
-            20 => true,
-            21 => true,
-            22 => true,
-            23 => true,
-            24 => true,
-            25 => true,
-            26 => true,
-            27 => true,
-            28 => true,
-            29 => true,
-            30 => true,
-            31 => true,
-            32 => true,
-            33 => true,
-            34 => true,
-            35 => true,
-            36 => true,
-            37 => true,
-            38 => true,
-            39 => true,
-            40 => true,
-            41 => true,
-            42 => true,
-            43 => true,
-            44 => true,
-            45 => true,
-            46 => true,
-            47 => true,
-            48 => true,
-            49 => true,
-            50 => true,
-            51 => true,
-            52 => true,
-            53 => true,
-            54 => true,
-            55 => true,
-            56 => true,
-            57 => true,
-            58 => true,
-            59 => true,
-            60 => true,
-            61 => true,
-            62 => true,
-            63 => true,
-            64 => true,
-            65 => true,
-            66 => true,
-            67 => true,
-            68 => true,
-            69 => true,
-            70 => true,
-            71 => true,
-            72 => true,
-            73 => true,
-            74 => true,
-            75 => true,
-            76 => true,
-            77 => true,
-            78 => true,
-            79 => true,
-            80 => true,
-            81 => true,
-            82 => true,
-            83 => true,
-            84 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            9i64 => true,
+            10i64 => true,
+            11i64 => true,
+            12i64 => true,
+            13i64 => true,
+            14i64 => true,
+            15i64 => true,
+            16i64 => true,
+            17i64 => true,
+            18i64 => true,
+            19i64 => true,
+            20i64 => true,
+            21i64 => true,
+            22i64 => true,
+            23i64 => true,
+            24i64 => true,
+            25i64 => true,
+            26i64 => true,
+            27i64 => true,
+            28i64 => true,
+            29i64 => true,
+            30i64 => true,
+            31i64 => true,
+            32i64 => true,
+            33i64 => true,
+            34i64 => true,
+            35i64 => true,
+            36i64 => true,
+            37i64 => true,
+            38i64 => true,
+            39i64 => true,
+            40i64 => true,
+            41i64 => true,
+            42i64 => true,
+            43i64 => true,
+            44i64 => true,
+            45i64 => true,
+            46i64 => true,
+            47i64 => true,
+            48i64 => true,
+            49i64 => true,
+            50i64 => true,
+            51i64 => true,
+            52i64 => true,
+            53i64 => true,
+            54i64 => true,
+            55i64 => true,
+            56i64 => true,
+            57i64 => true,
+            58i64 => true,
+            59i64 => true,
+            60i64 => true,
+            61i64 => true,
+            62i64 => true,
+            63i64 => true,
+            64i64 => true,
+            65i64 => true,
+            66i64 => true,
+            67i64 => true,
+            68i64 => true,
+            69i64 => true,
+            70i64 => true,
+            71i64 => true,
+            72i64 => true,
+            73i64 => true,
+            74i64 => true,
+            75i64 => true,
+            76i64 => true,
+            77i64 => true,
+            78i64 => true,
+            79i64 => true,
+            80i64 => true,
+            81i64 => true,
+            82i64 => true,
+            83i64 => true,
+            84i64 => true,
             _ => false,
         }
     }
@@ -13113,7 +13904,7 @@ impl fmt::Display for WeatherSevereType {
             WeatherSevereType::LowWater => write!(f, "low_water"),
             WeatherSevereType::Hydrological => write!(f, "hydrological"),
             WeatherSevereType::SpecialWeather => write!(f, "special_weather"),
-            WeatherSevereType::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            WeatherSevereType::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -13225,7 +14016,7 @@ impl Serialize for WeatherSevereType {
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum StrokeType {
     NoEvent,
-    /// stroke was detected but cannot be identified
+    #[doc = "stroke was detected but cannot be identified"]
     Other,
     Serve,
     Forehand,
@@ -13236,12 +14027,12 @@ pub enum StrokeType {
 impl StrokeType {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
             _ => false,
         }
     }
@@ -13269,7 +14060,7 @@ impl fmt::Display for StrokeType {
             StrokeType::Forehand => write!(f, "forehand"),
             StrokeType::Backhand => write!(f, "backhand"),
             StrokeType::Smash => write!(f, "smash"),
-            StrokeType::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            StrokeType::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -13327,17 +14118,17 @@ pub enum BodyLocation {
     LeftShoulder,
     LeftBicep,
     LeftTricep,
-    /// Left anterior forearm
+    #[doc = "Left anterior forearm"]
     LeftBrachioradialis,
-    /// Left posterior forearm
+    #[doc = "Left posterior forearm"]
     LeftForearmExtensors,
     RightArm,
     RightShoulder,
     RightBicep,
     RightTricep,
-    /// Right anterior forearm
+    #[doc = "Right anterior forearm"]
     RightBrachioradialis,
-    /// Right posterior forearm
+    #[doc = "Right posterior forearm"]
     RightForearmExtensors,
     Neck,
     Throat,
@@ -13350,46 +14141,46 @@ pub enum BodyLocation {
 impl BodyLocation {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            9 => true,
-            10 => true,
-            11 => true,
-            12 => true,
-            13 => true,
-            14 => true,
-            15 => true,
-            16 => true,
-            17 => true,
-            18 => true,
-            19 => true,
-            20 => true,
-            21 => true,
-            22 => true,
-            23 => true,
-            24 => true,
-            25 => true,
-            26 => true,
-            27 => true,
-            28 => true,
-            29 => true,
-            30 => true,
-            31 => true,
-            32 => true,
-            33 => true,
-            34 => true,
-            35 => true,
-            36 => true,
-            37 => true,
-            38 => true,
-            39 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            9i64 => true,
+            10i64 => true,
+            11i64 => true,
+            12i64 => true,
+            13i64 => true,
+            14i64 => true,
+            15i64 => true,
+            16i64 => true,
+            17i64 => true,
+            18i64 => true,
+            19i64 => true,
+            20i64 => true,
+            21i64 => true,
+            22i64 => true,
+            23i64 => true,
+            24i64 => true,
+            25i64 => true,
+            26i64 => true,
+            27i64 => true,
+            28i64 => true,
+            29i64 => true,
+            30i64 => true,
+            31i64 => true,
+            32i64 => true,
+            33i64 => true,
+            34i64 => true,
+            35i64 => true,
+            36i64 => true,
+            37i64 => true,
+            38i64 => true,
+            39i64 => true,
             _ => false,
         }
     }
@@ -13485,7 +14276,7 @@ impl fmt::Display for BodyLocation {
             BodyLocation::WaistFront => write!(f, "waist_front"),
             BodyLocation::WaistLeft => write!(f, "waist_left"),
             BodyLocation::WaistRight => write!(f, "waist_right"),
-            BodyLocation::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            BodyLocation::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -13558,8 +14349,8 @@ pub enum SegmentLapStatus {
 impl SegmentLapStatus {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
+            0i64 => true,
+            1i64 => true,
             _ => false,
         }
     }
@@ -13579,7 +14370,7 @@ impl fmt::Display for SegmentLapStatus {
         match &self {
             SegmentLapStatus::End => write!(f, "end"),
             SegmentLapStatus::Fail => write!(f, "fail"),
-            SegmentLapStatus::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            SegmentLapStatus::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -13623,17 +14414,17 @@ pub enum SegmentLeaderboardType {
 impl SegmentLeaderboardType {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            9 => true,
-            10 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            9i64 => true,
+            10i64 => true,
             _ => false,
         }
     }
@@ -13671,9 +14462,7 @@ impl fmt::Display for SegmentLeaderboardType {
             SegmentLeaderboardType::Goal => write!(f, "goal"),
             SegmentLeaderboardType::Rival => write!(f, "rival"),
             SegmentLeaderboardType::ClubLeader => write!(f, "club_leader"),
-            SegmentLeaderboardType::UnknownVariant(value) => {
-                write!(f, "unknown_variant_{}", *value)
-            }
+            SegmentLeaderboardType::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -13718,9 +14507,9 @@ pub enum SegmentDeleteStatus {
 impl SegmentDeleteStatus {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
             _ => false,
         }
     }
@@ -13742,7 +14531,7 @@ impl fmt::Display for SegmentDeleteStatus {
             SegmentDeleteStatus::DoNotDelete => write!(f, "do_not_delete"),
             SegmentDeleteStatus::DeleteOne => write!(f, "delete_one"),
             SegmentDeleteStatus::DeleteAll => write!(f, "delete_all"),
-            SegmentDeleteStatus::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            SegmentDeleteStatus::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -13778,8 +14567,8 @@ pub enum SegmentSelectionType {
 impl SegmentSelectionType {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
+            0i64 => true,
+            1i64 => true,
             _ => false,
         }
     }
@@ -13799,7 +14588,7 @@ impl fmt::Display for SegmentSelectionType {
         match &self {
             SegmentSelectionType::Starred => write!(f, "starred"),
             SegmentSelectionType::Suggested => write!(f, "suggested"),
-            SegmentSelectionType::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            SegmentSelectionType::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -13827,29 +14616,29 @@ impl Serialize for SegmentSelectionType {
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SourceType {
-    /// External device connected with ANT
+    #[doc = "External device connected with ANT"]
     Ant,
-    /// External device connected with ANT+
+    #[doc = "External device connected with ANT+"]
     Antplus,
-    /// External device connected with BT
+    #[doc = "External device connected with BT"]
     Bluetooth,
-    /// External device connected with BLE
+    #[doc = "External device connected with BLE"]
     BluetoothLowEnergy,
-    /// External device connected with Wifi
+    #[doc = "External device connected with Wifi"]
     Wifi,
-    /// Onboard device
+    #[doc = "Onboard device"]
     Local,
     UnknownVariant(u8),
 }
 impl SourceType {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
             _ => false,
         }
     }
@@ -13877,7 +14666,7 @@ impl fmt::Display for SourceType {
             SourceType::BluetoothLowEnergy => write!(f, "bluetooth_low_energy"),
             SourceType::Wifi => write!(f, "wifi"),
             SourceType::Local => write!(f, "local"),
-            SourceType::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            SourceType::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -13909,35 +14698,35 @@ impl Serialize for SourceType {
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum LocalDeviceType {
-    /// Onboard gps receiver
+    #[doc = "Onboard gps receiver"]
     Gps,
-    /// Onboard glonass receiver
+    #[doc = "Onboard glonass receiver"]
     Glonass,
-    /// Onboard gps glonass receiver
+    #[doc = "Onboard gps glonass receiver"]
     GpsGlonass,
-    /// Onboard sensor
+    #[doc = "Onboard sensor"]
     Accelerometer,
-    /// Onboard sensor
+    #[doc = "Onboard sensor"]
     Barometer,
-    /// Onboard sensor
+    #[doc = "Onboard sensor"]
     Temperature,
-    /// Onboard wrist HR sensor
+    #[doc = "Onboard wrist HR sensor"]
     Whr,
-    /// Onboard software package
+    #[doc = "Onboard software package"]
     SensorHub,
     Value(u8),
 }
 impl LocalDeviceType {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            10 => true,
-            12 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            10i64 => true,
+            12i64 => true,
             _ => false,
         }
     }
@@ -14006,7 +14795,7 @@ impl Serialize for LocalDeviceType {
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum BleDeviceType {
-    /// GPS that is provided over a proprietary bluetooth service
+    #[doc = "GPS that is provided over a proprietary bluetooth service"]
     ConnectedGps,
     HeartRate,
     BikePower,
@@ -14014,21 +14803,21 @@ pub enum BleDeviceType {
     BikeSpeed,
     BikeCadence,
     Footpod,
-    /// Indoor-Bike FTMS protocol
+    #[doc = "Indoor-Bike FTMS protocol"]
     BikeTrainer,
     Value(u8),
 }
 impl BleDeviceType {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
             _ => false,
         }
     }
@@ -14106,10 +14895,10 @@ pub enum AntChannelId {
 impl AntChannelId {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            65535 => true,
-            16711680 => true,
-            251658240 => true,
-            4026531840 => true,
+            65535i64 => true,
+            16711680i64 => true,
+            251658240i64 => true,
+            4026531840i64 => true,
             _ => false,
         }
     }
@@ -14170,24 +14959,24 @@ impl Serialize for AntChannelId {
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum DisplayOrientation {
-    /// automatic if the device supports it
+    #[doc = "automatic if the device supports it"]
     Auto,
     Portrait,
     Landscape,
-    /// portrait mode but rotated 180 degrees
+    #[doc = "portrait mode but rotated 180 degrees"]
     PortraitFlipped,
-    /// landscape mode but rotated 180 degrees
+    #[doc = "landscape mode but rotated 180 degrees"]
     LandscapeFlipped,
     UnknownVariant(u8),
 }
 impl DisplayOrientation {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
             _ => false,
         }
     }
@@ -14213,7 +15002,7 @@ impl fmt::Display for DisplayOrientation {
             DisplayOrientation::Landscape => write!(f, "landscape"),
             DisplayOrientation::PortraitFlipped => write!(f, "portrait_flipped"),
             DisplayOrientation::LandscapeFlipped => write!(f, "landscape_flipped"),
-            DisplayOrientation::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            DisplayOrientation::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -14255,12 +15044,12 @@ pub enum WorkoutEquipment {
 impl WorkoutEquipment {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
             _ => false,
         }
     }
@@ -14288,7 +15077,7 @@ impl fmt::Display for WorkoutEquipment {
             WorkoutEquipment::SwimPaddles => write!(f, "swim_paddles"),
             WorkoutEquipment::SwimPullBuoy => write!(f, "swim_pull_buoy"),
             WorkoutEquipment::SwimSnorkel => write!(f, "swim_snorkel"),
-            WorkoutEquipment::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            WorkoutEquipment::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -14329,10 +15118,10 @@ pub enum WatchfaceMode {
 impl WatchfaceMode {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
             _ => false,
         }
     }
@@ -14356,7 +15145,7 @@ impl fmt::Display for WatchfaceMode {
             WatchfaceMode::Analog => write!(f, "analog"),
             WatchfaceMode::ConnectIq => write!(f, "connect_iq"),
             WatchfaceMode::Disabled => write!(f, "disabled"),
-            WatchfaceMode::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            WatchfaceMode::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -14394,9 +15183,9 @@ pub enum DigitalWatchfaceLayout {
 impl DigitalWatchfaceLayout {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
             _ => false,
         }
     }
@@ -14418,9 +15207,7 @@ impl fmt::Display for DigitalWatchfaceLayout {
             DigitalWatchfaceLayout::Traditional => write!(f, "traditional"),
             DigitalWatchfaceLayout::Modern => write!(f, "modern"),
             DigitalWatchfaceLayout::Bold => write!(f, "bold"),
-            DigitalWatchfaceLayout::UnknownVariant(value) => {
-                write!(f, "unknown_variant_{}", *value)
-            }
+            DigitalWatchfaceLayout::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -14457,9 +15244,9 @@ pub enum AnalogWatchfaceLayout {
 impl AnalogWatchfaceLayout {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
             _ => false,
         }
     }
@@ -14481,7 +15268,7 @@ impl fmt::Display for AnalogWatchfaceLayout {
             AnalogWatchfaceLayout::Minimal => write!(f, "minimal"),
             AnalogWatchfaceLayout::Traditional => write!(f, "traditional"),
             AnalogWatchfaceLayout::Modern => write!(f, "modern"),
-            AnalogWatchfaceLayout::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            AnalogWatchfaceLayout::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -14519,10 +15306,10 @@ pub enum RiderPositionType {
 impl RiderPositionType {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
             _ => false,
         }
     }
@@ -14546,7 +15333,7 @@ impl fmt::Display for RiderPositionType {
             RiderPositionType::Standing => write!(f, "standing"),
             RiderPositionType::TransitionToSeated => write!(f, "transition_to_seated"),
             RiderPositionType::TransitionToStanding => write!(f, "transition_to_standing"),
-            RiderPositionType::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            RiderPositionType::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -14585,10 +15372,10 @@ pub enum PowerPhaseType {
 impl PowerPhaseType {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
             _ => false,
         }
     }
@@ -14612,7 +15399,7 @@ impl fmt::Display for PowerPhaseType {
             PowerPhaseType::PowerPhaseEndAngle => write!(f, "power_phase_end_angle"),
             PowerPhaseType::PowerPhaseArcLength => write!(f, "power_phase_arc_length"),
             PowerPhaseType::PowerPhaseCenter => write!(f, "power_phase_center"),
-            PowerPhaseType::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            PowerPhaseType::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -14642,24 +15429,24 @@ impl Serialize for PowerPhaseType {
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum CameraEventType {
-    /// Start of video recording
+    #[doc = "Start of video recording"]
     VideoStart,
-    /// Mark of video file split (end of one file, beginning of the other)
+    #[doc = "Mark of video file split (end of one file, beginning of the other)"]
     VideoSplit,
-    /// End of video recording
+    #[doc = "End of video recording"]
     VideoEnd,
-    /// Still photo taken
+    #[doc = "Still photo taken"]
     PhotoTaken,
     VideoSecondStreamStart,
     VideoSecondStreamSplit,
     VideoSecondStreamEnd,
-    /// Mark of video file split start
+    #[doc = "Mark of video file split start"]
     VideoSplitStart,
     VideoSecondStreamSplitStart,
-    /// Mark when a video recording has been paused
+    #[doc = "Mark when a video recording has been paused"]
     VideoPause,
     VideoSecondStreamPause,
-    /// Mark when a video recording has been resumed
+    #[doc = "Mark when a video recording has been resumed"]
     VideoResume,
     VideoSecondStreamResume,
     UnknownVariant(u8),
@@ -14667,19 +15454,19 @@ pub enum CameraEventType {
 impl CameraEventType {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            11 => true,
-            12 => true,
-            13 => true,
-            14 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            11i64 => true,
+            12i64 => true,
+            13i64 => true,
+            14i64 => true,
             _ => false,
         }
     }
@@ -14723,7 +15510,7 @@ impl fmt::Display for CameraEventType {
             CameraEventType::VideoSecondStreamPause => write!(f, "video_second_stream_pause"),
             CameraEventType::VideoResume => write!(f, "video_resume"),
             CameraEventType::VideoSecondStreamResume => write!(f, "video_second_stream_resume"),
-            CameraEventType::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            CameraEventType::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -14764,7 +15551,7 @@ impl Serialize for CameraEventType {
 pub enum SensorType {
     Accelerometer,
     Gyroscope,
-    /// Magnetometer
+    #[doc = "Magnetometer"]
     Compass,
     Barometer,
     UnknownVariant(u8),
@@ -14772,10 +15559,10 @@ pub enum SensorType {
 impl SensorType {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
             _ => false,
         }
     }
@@ -14799,7 +15586,7 @@ impl fmt::Display for SensorType {
             SensorType::Gyroscope => write!(f, "gyroscope"),
             SensorType::Compass => write!(f, "compass"),
             SensorType::Barometer => write!(f, "barometer"),
-            SensorType::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            SensorType::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -14838,10 +15625,10 @@ pub enum BikeLightNetworkConfigType {
 impl BikeLightNetworkConfigType {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            4 => true,
-            5 => true,
-            6 => true,
+            0i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
             _ => false,
         }
     }
@@ -14866,7 +15653,7 @@ impl fmt::Display for BikeLightNetworkConfigType {
             BikeLightNetworkConfigType::HighVisibility => write!(f, "high_visibility"),
             BikeLightNetworkConfigType::Trail => write!(f, "trail"),
             BikeLightNetworkConfigType::UnknownVariant(value) => {
-                write!(f, "unknown_variant_{}", *value)
+                write!(f, "unknown_variant_{}", value)
             }
         }
     }
@@ -14897,23 +15684,23 @@ impl Serialize for BikeLightNetworkConfigType {
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum CommTimeoutType {
-    /// Timeout pairing to any device
+    #[doc = "Timeout pairing to any device"]
     WildcardPairingTimeout,
-    /// Timeout pairing to previously paired device
+    #[doc = "Timeout pairing to previously paired device"]
     PairingTimeout,
-    /// Temporary loss of communications
+    #[doc = "Temporary loss of communications"]
     ConnectionLost,
-    /// Connection closed due to extended bad communications
+    #[doc = "Connection closed due to extended bad communications"]
     ConnectionTimeout,
     Value(u16),
 }
 impl CommTimeoutType {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
             _ => false,
         }
     }
@@ -14979,10 +15766,10 @@ pub enum CameraOrientationType {
 impl CameraOrientationType {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
             _ => false,
         }
     }
@@ -15006,7 +15793,7 @@ impl fmt::Display for CameraOrientationType {
             CameraOrientationType::CameraOrientation90 => write!(f, "camera_orientation_90"),
             CameraOrientationType::CameraOrientation180 => write!(f, "camera_orientation_180"),
             CameraOrientationType::CameraOrientation270 => write!(f, "camera_orientation_270"),
-            CameraOrientationType::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            CameraOrientationType::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -15045,10 +15832,10 @@ pub enum AttitudeStage {
 impl AttitudeStage {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
             _ => false,
         }
     }
@@ -15072,7 +15859,7 @@ impl fmt::Display for AttitudeStage {
             AttitudeStage::Aligning => write!(f, "aligning"),
             AttitudeStage::Degraded => write!(f, "degraded"),
             AttitudeStage::Valid => write!(f, "valid"),
-            AttitudeStage::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            AttitudeStage::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -15120,19 +15907,19 @@ pub enum AttitudeValidity {
 impl AttitudeValidity {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            1 => true,
-            2 => true,
-            4 => true,
-            8 => true,
-            16 => true,
-            32 => true,
-            64 => true,
-            128 => true,
-            256 => true,
-            512 => true,
-            1024 => true,
-            2048 => true,
-            4096 => true,
+            1i64 => true,
+            2i64 => true,
+            4i64 => true,
+            8i64 => true,
+            16i64 => true,
+            32i64 => true,
+            64i64 => true,
+            128i64 => true,
+            256i64 => true,
+            512i64 => true,
+            1024i64 => true,
+            2048i64 => true,
+            4096i64 => true,
             _ => false,
         }
     }
@@ -15226,11 +16013,11 @@ pub enum AutoSyncFrequency {
 impl AutoSyncFrequency {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
             _ => false,
         }
     }
@@ -15256,7 +16043,7 @@ impl fmt::Display for AutoSyncFrequency {
             AutoSyncFrequency::Frequent => write!(f, "frequent"),
             AutoSyncFrequency::OnceADay => write!(f, "once_a_day"),
             AutoSyncFrequency::Remote => write!(f, "remote"),
-            AutoSyncFrequency::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            AutoSyncFrequency::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -15295,22 +16082,22 @@ pub enum ExdLayout {
     FullQuarterSplit,
     HalfVerticalLeftSplit,
     HalfHorizontalTopSplit,
-    /// The EXD may display the configured concepts in any layout it sees fit.
+    #[doc = "The EXD may display the configured concepts in any layout it sees fit."]
     Dynamic,
     UnknownVariant(u8),
 }
 impl ExdLayout {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
             _ => false,
         }
     }
@@ -15344,7 +16131,7 @@ impl fmt::Display for ExdLayout {
             ExdLayout::HalfVerticalLeftSplit => write!(f, "half_vertical_left_split"),
             ExdLayout::HalfHorizontalTopSplit => write!(f, "half_horizontal_top_split"),
             ExdLayout::Dynamic => write!(f, "dynamic"),
-            ExdLayout::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            ExdLayout::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -15395,17 +16182,17 @@ pub enum ExdDisplayType {
 impl ExdDisplayType {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            9 => true,
-            10 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            9i64 => true,
+            10i64 => true,
             _ => false,
         }
     }
@@ -15443,7 +16230,7 @@ impl fmt::Display for ExdDisplayType {
             ExdDisplayType::String => write!(f, "string"),
             ExdDisplayType::SimpleDynamicIcon => write!(f, "simple_dynamic_icon"),
             ExdDisplayType::Gauge => write!(f, "gauge"),
-            ExdDisplayType::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            ExdDisplayType::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -15535,56 +16322,56 @@ pub enum ExdDataUnits {
 impl ExdDataUnits {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            9 => true,
-            10 => true,
-            11 => true,
-            12 => true,
-            13 => true,
-            14 => true,
-            15 => true,
-            16 => true,
-            17 => true,
-            18 => true,
-            19 => true,
-            20 => true,
-            21 => true,
-            22 => true,
-            23 => true,
-            24 => true,
-            25 => true,
-            26 => true,
-            27 => true,
-            28 => true,
-            29 => true,
-            30 => true,
-            31 => true,
-            32 => true,
-            33 => true,
-            34 => true,
-            35 => true,
-            36 => true,
-            37 => true,
-            38 => true,
-            39 => true,
-            40 => true,
-            41 => true,
-            42 => true,
-            43 => true,
-            44 => true,
-            45 => true,
-            46 => true,
-            47 => true,
-            48 => true,
-            49 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            9i64 => true,
+            10i64 => true,
+            11i64 => true,
+            12i64 => true,
+            13i64 => true,
+            14i64 => true,
+            15i64 => true,
+            16i64 => true,
+            17i64 => true,
+            18i64 => true,
+            19i64 => true,
+            20i64 => true,
+            21i64 => true,
+            22i64 => true,
+            23i64 => true,
+            24i64 => true,
+            25i64 => true,
+            26i64 => true,
+            27i64 => true,
+            28i64 => true,
+            29i64 => true,
+            30i64 => true,
+            31i64 => true,
+            32i64 => true,
+            33i64 => true,
+            34i64 => true,
+            35i64 => true,
+            36i64 => true,
+            37i64 => true,
+            38i64 => true,
+            39i64 => true,
+            40i64 => true,
+            41i64 => true,
+            42i64 => true,
+            43i64 => true,
+            44i64 => true,
+            45i64 => true,
+            46i64 => true,
+            47i64 => true,
+            48i64 => true,
+            49i64 => true,
             _ => false,
         }
     }
@@ -15704,7 +16491,7 @@ impl fmt::Display for ExdDataUnits {
             ExdDataUnits::MetersPerMin => write!(f, "meters_per_min"),
             ExdDataUnits::MetersPerSec => write!(f, "meters_per_sec"),
             ExdDataUnits::EightCardinal => write!(f, "eight_cardinal"),
-            ExdDataUnits::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            ExdDataUnits::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -15829,50 +16616,50 @@ pub enum ExdQualifiers {
 impl ExdQualifiers {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            9 => true,
-            10 => true,
-            11 => true,
-            12 => true,
-            13 => true,
-            14 => true,
-            15 => true,
-            16 => true,
-            17 => true,
-            18 => true,
-            19 => true,
-            20 => true,
-            21 => true,
-            22 => true,
-            23 => true,
-            24 => true,
-            25 => true,
-            26 => true,
-            27 => true,
-            28 => true,
-            29 => true,
-            30 => true,
-            31 => true,
-            32 => true,
-            33 => true,
-            34 => true,
-            242 => true,
-            243 => true,
-            244 => true,
-            245 => true,
-            246 => true,
-            247 => true,
-            248 => true,
-            249 => true,
-            250 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            9i64 => true,
+            10i64 => true,
+            11i64 => true,
+            12i64 => true,
+            13i64 => true,
+            14i64 => true,
+            15i64 => true,
+            16i64 => true,
+            17i64 => true,
+            18i64 => true,
+            19i64 => true,
+            20i64 => true,
+            21i64 => true,
+            22i64 => true,
+            23i64 => true,
+            24i64 => true,
+            25i64 => true,
+            26i64 => true,
+            27i64 => true,
+            28i64 => true,
+            29i64 => true,
+            30i64 => true,
+            31i64 => true,
+            32i64 => true,
+            33i64 => true,
+            34i64 => true,
+            242i64 => true,
+            243i64 => true,
+            244i64 => true,
+            245i64 => true,
+            246i64 => true,
+            247i64 => true,
+            248i64 => true,
+            249i64 => true,
+            250i64 => true,
             _ => false,
         }
     }
@@ -15976,7 +16763,7 @@ impl fmt::Display for ExdQualifiers {
             ExdQualifiers::Zone3 => write!(f, "zone_3"),
             ExdQualifiers::Zone2 => write!(f, "zone_2"),
             ExdQualifiers::Zone1 => write!(f, "zone_1"),
-            ExdQualifiers::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            ExdQualifiers::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -16111,7 +16898,7 @@ pub enum ExdDescriptors {
     RightPowerPhaseStartAngle,
     LeftPowerPhaseFinishAngle,
     RightPowerPhaseFinishAngle,
-    /// Combined gear information
+    #[doc = "Combined gear information"]
     Gears,
     Pace,
     TrainingEffect,
@@ -16149,103 +16936,103 @@ pub enum ExdDescriptors {
 impl ExdDescriptors {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            9 => true,
-            10 => true,
-            11 => true,
-            12 => true,
-            13 => true,
-            14 => true,
-            15 => true,
-            16 => true,
-            17 => true,
-            18 => true,
-            19 => true,
-            20 => true,
-            21 => true,
-            22 => true,
-            23 => true,
-            24 => true,
-            25 => true,
-            26 => true,
-            27 => true,
-            28 => true,
-            29 => true,
-            30 => true,
-            31 => true,
-            32 => true,
-            33 => true,
-            34 => true,
-            35 => true,
-            36 => true,
-            37 => true,
-            38 => true,
-            39 => true,
-            40 => true,
-            41 => true,
-            42 => true,
-            43 => true,
-            44 => true,
-            45 => true,
-            46 => true,
-            47 => true,
-            48 => true,
-            49 => true,
-            50 => true,
-            51 => true,
-            52 => true,
-            53 => true,
-            54 => true,
-            55 => true,
-            56 => true,
-            57 => true,
-            58 => true,
-            59 => true,
-            60 => true,
-            61 => true,
-            62 => true,
-            63 => true,
-            64 => true,
-            65 => true,
-            66 => true,
-            67 => true,
-            68 => true,
-            69 => true,
-            70 => true,
-            71 => true,
-            72 => true,
-            73 => true,
-            74 => true,
-            75 => true,
-            76 => true,
-            77 => true,
-            78 => true,
-            79 => true,
-            80 => true,
-            81 => true,
-            82 => true,
-            83 => true,
-            84 => true,
-            85 => true,
-            86 => true,
-            87 => true,
-            88 => true,
-            89 => true,
-            90 => true,
-            91 => true,
-            92 => true,
-            93 => true,
-            94 => true,
-            95 => true,
-            96 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            9i64 => true,
+            10i64 => true,
+            11i64 => true,
+            12i64 => true,
+            13i64 => true,
+            14i64 => true,
+            15i64 => true,
+            16i64 => true,
+            17i64 => true,
+            18i64 => true,
+            19i64 => true,
+            20i64 => true,
+            21i64 => true,
+            22i64 => true,
+            23i64 => true,
+            24i64 => true,
+            25i64 => true,
+            26i64 => true,
+            27i64 => true,
+            28i64 => true,
+            29i64 => true,
+            30i64 => true,
+            31i64 => true,
+            32i64 => true,
+            33i64 => true,
+            34i64 => true,
+            35i64 => true,
+            36i64 => true,
+            37i64 => true,
+            38i64 => true,
+            39i64 => true,
+            40i64 => true,
+            41i64 => true,
+            42i64 => true,
+            43i64 => true,
+            44i64 => true,
+            45i64 => true,
+            46i64 => true,
+            47i64 => true,
+            48i64 => true,
+            49i64 => true,
+            50i64 => true,
+            51i64 => true,
+            52i64 => true,
+            53i64 => true,
+            54i64 => true,
+            55i64 => true,
+            56i64 => true,
+            57i64 => true,
+            58i64 => true,
+            59i64 => true,
+            60i64 => true,
+            61i64 => true,
+            62i64 => true,
+            63i64 => true,
+            64i64 => true,
+            65i64 => true,
+            66i64 => true,
+            67i64 => true,
+            68i64 => true,
+            69i64 => true,
+            70i64 => true,
+            71i64 => true,
+            72i64 => true,
+            73i64 => true,
+            74i64 => true,
+            75i64 => true,
+            76i64 => true,
+            77i64 => true,
+            78i64 => true,
+            79i64 => true,
+            80i64 => true,
+            81i64 => true,
+            82i64 => true,
+            83i64 => true,
+            84i64 => true,
+            85i64 => true,
+            86i64 => true,
+            87i64 => true,
+            88i64 => true,
+            89i64 => true,
+            90i64 => true,
+            91i64 => true,
+            92i64 => true,
+            93i64 => true,
+            94i64 => true,
+            95i64 => true,
+            96i64 => true,
             _ => false,
         }
     }
@@ -16465,7 +17252,7 @@ impl fmt::Display for ExdDescriptors {
             ExdDescriptors::AmbientPressure => write!(f, "ambient_pressure"),
             ExdDescriptors::Pressure => write!(f, "pressure"),
             ExdDescriptors::Vam => write!(f, "vam"),
-            ExdDescriptors::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            ExdDescriptors::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -16600,13 +17387,13 @@ pub enum AutoActivityDetect {
 impl AutoActivityDetect {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            4 => true,
-            8 => true,
-            32 => true,
-            1024 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            4i64 => true,
+            8i64 => true,
+            32i64 => true,
+            1024i64 => true,
             _ => false,
         }
     }
@@ -16685,14 +17472,14 @@ pub enum SupportedExdScreenLayouts {
 impl SupportedExdScreenLayouts {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            1 => true,
-            2 => true,
-            4 => true,
-            8 => true,
-            16 => true,
-            32 => true,
-            64 => true,
-            128 => true,
+            1i64 => true,
+            2i64 => true,
+            4i64 => true,
+            8i64 => true,
+            16i64 => true,
+            32i64 => true,
+            64i64 => true,
+            128i64 => true,
             _ => false,
         }
     }
@@ -16791,23 +17578,23 @@ pub enum FitBaseType {
 impl FitBaseType {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            7 => true,
-            10 => true,
-            13 => true,
-            131 => true,
-            132 => true,
-            133 => true,
-            134 => true,
-            136 => true,
-            137 => true,
-            139 => true,
-            140 => true,
-            142 => true,
-            143 => true,
-            144 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            7i64 => true,
+            10i64 => true,
+            13i64 => true,
+            131i64 => true,
+            132i64 => true,
+            133i64 => true,
+            134i64 => true,
+            136i64 => true,
+            137i64 => true,
+            139i64 => true,
+            140i64 => true,
+            142i64 => true,
+            143i64 => true,
+            144i64 => true,
             _ => false,
         }
     }
@@ -16946,44 +17733,44 @@ pub enum TurnType {
 impl TurnType {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            9 => true,
-            10 => true,
-            11 => true,
-            12 => true,
-            13 => true,
-            14 => true,
-            15 => true,
-            16 => true,
-            17 => true,
-            18 => true,
-            19 => true,
-            20 => true,
-            21 => true,
-            22 => true,
-            23 => true,
-            24 => true,
-            25 => true,
-            26 => true,
-            27 => true,
-            28 => true,
-            29 => true,
-            30 => true,
-            31 => true,
-            32 => true,
-            33 => true,
-            34 => true,
-            35 => true,
-            36 => true,
-            37 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            9i64 => true,
+            10i64 => true,
+            11i64 => true,
+            12i64 => true,
+            13i64 => true,
+            14i64 => true,
+            15i64 => true,
+            16i64 => true,
+            17i64 => true,
+            18i64 => true,
+            19i64 => true,
+            20i64 => true,
+            21i64 => true,
+            22i64 => true,
+            23i64 => true,
+            24i64 => true,
+            25i64 => true,
+            26i64 => true,
+            27i64 => true,
+            28i64 => true,
+            29i64 => true,
+            30i64 => true,
+            31i64 => true,
+            32i64 => true,
+            33i64 => true,
+            34i64 => true,
+            35i64 => true,
+            36i64 => true,
+            37i64 => true,
             _ => false,
         }
     }
@@ -17075,7 +17862,7 @@ impl fmt::Display for TurnType {
             TurnType::UturnRightIdx => write!(f, "uturn_right_idx"),
             TurnType::IconInvIdx => write!(f, "icon_inv_idx"),
             TurnType::IconIdxCnt => write!(f, "icon_idx_cnt"),
-            TurnType::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            TurnType::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -17146,8 +17933,8 @@ pub enum BikeLightBeamAngleMode {
 impl BikeLightBeamAngleMode {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
+            0i64 => true,
+            1i64 => true,
             _ => false,
         }
     }
@@ -17206,9 +17993,9 @@ pub enum FitBaseUnit {
 impl FitBaseUnit {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
             _ => false,
         }
     }
@@ -17269,8 +18056,8 @@ pub enum SetType {
 impl SetType {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
+            0i64 => true,
+            1i64 => true,
             _ => false,
         }
     }
@@ -17328,8 +18115,8 @@ pub enum MaxMetCategory {
 impl MaxMetCategory {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
+            0i64 => true,
+            1i64 => true,
             _ => false,
         }
     }
@@ -17349,7 +18136,7 @@ impl fmt::Display for MaxMetCategory {
         match &self {
             MaxMetCategory::Generic => write!(f, "generic"),
             MaxMetCategory::Cycling => write!(f, "cycling"),
-            MaxMetCategory::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            MaxMetCategory::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -17416,40 +18203,40 @@ pub enum ExerciseCategory {
 impl ExerciseCategory {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            9 => true,
-            10 => true,
-            11 => true,
-            12 => true,
-            13 => true,
-            14 => true,
-            15 => true,
-            16 => true,
-            17 => true,
-            18 => true,
-            19 => true,
-            20 => true,
-            21 => true,
-            22 => true,
-            23 => true,
-            24 => true,
-            25 => true,
-            26 => true,
-            27 => true,
-            28 => true,
-            29 => true,
-            30 => true,
-            31 => true,
-            32 => true,
-            65534 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            9i64 => true,
+            10i64 => true,
+            11i64 => true,
+            12i64 => true,
+            13i64 => true,
+            14i64 => true,
+            15i64 => true,
+            16i64 => true,
+            17i64 => true,
+            18i64 => true,
+            19i64 => true,
+            20i64 => true,
+            21i64 => true,
+            22i64 => true,
+            23i64 => true,
+            24i64 => true,
+            25i64 => true,
+            26i64 => true,
+            27i64 => true,
+            28i64 => true,
+            29i64 => true,
+            30i64 => true,
+            31i64 => true,
+            32i64 => true,
+            65534i64 => true,
             _ => false,
         }
     }
@@ -17628,33 +18415,33 @@ pub enum BenchPressExerciseName {
 impl BenchPressExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            9 => true,
-            10 => true,
-            11 => true,
-            12 => true,
-            13 => true,
-            14 => true,
-            15 => true,
-            16 => true,
-            17 => true,
-            18 => true,
-            19 => true,
-            20 => true,
-            21 => true,
-            22 => true,
-            23 => true,
-            24 => true,
-            25 => true,
-            26 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            9i64 => true,
+            10i64 => true,
+            11i64 => true,
+            12i64 => true,
+            13i64 => true,
+            14i64 => true,
+            15i64 => true,
+            16i64 => true,
+            17i64 => true,
+            18i64 => true,
+            19i64 => true,
+            20i64 => true,
+            21i64 => true,
+            22i64 => true,
+            23i64 => true,
+            24i64 => true,
+            25i64 => true,
+            26i64 => true,
             _ => false,
         }
     }
@@ -17846,27 +18633,27 @@ pub enum CalfRaiseExerciseName {
 impl CalfRaiseExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            9 => true,
-            10 => true,
-            11 => true,
-            12 => true,
-            13 => true,
-            14 => true,
-            15 => true,
-            16 => true,
-            17 => true,
-            18 => true,
-            19 => true,
-            20 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            9i64 => true,
+            10i64 => true,
+            11i64 => true,
+            12i64 => true,
+            13i64 => true,
+            14i64 => true,
+            15i64 => true,
+            16i64 => true,
+            17i64 => true,
+            18i64 => true,
+            19i64 => true,
+            20i64 => true,
             _ => false,
         }
     }
@@ -18033,28 +18820,28 @@ pub enum CardioExerciseName {
 impl CardioExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            9 => true,
-            10 => true,
-            11 => true,
-            12 => true,
-            13 => true,
-            14 => true,
-            15 => true,
-            16 => true,
-            17 => true,
-            18 => true,
-            19 => true,
-            20 => true,
-            21 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            9i64 => true,
+            10i64 => true,
+            11i64 => true,
+            12i64 => true,
+            13i64 => true,
+            14i64 => true,
+            15i64 => true,
+            16i64 => true,
+            17i64 => true,
+            18i64 => true,
+            19i64 => true,
+            20i64 => true,
+            21i64 => true,
             _ => false,
         }
     }
@@ -18179,11 +18966,11 @@ pub enum CarryExerciseName {
 impl CarryExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
             _ => false,
         }
     }
@@ -18271,29 +19058,29 @@ pub enum ChopExerciseName {
 impl ChopExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            9 => true,
-            10 => true,
-            11 => true,
-            12 => true,
-            13 => true,
-            14 => true,
-            15 => true,
-            16 => true,
-            17 => true,
-            18 => true,
-            19 => true,
-            20 => true,
-            21 => true,
-            22 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            9i64 => true,
+            10i64 => true,
+            11i64 => true,
+            12i64 => true,
+            13i64 => true,
+            14i64 => true,
+            15i64 => true,
+            16i64 => true,
+            17i64 => true,
+            18i64 => true,
+            19i64 => true,
+            20i64 => true,
+            21i64 => true,
+            22i64 => true,
             _ => false,
         }
     }
@@ -18472,7 +19259,7 @@ pub enum CoreExerciseName {
     Inchworm,
     WeightedModifiedFrontLever,
     RussianTwist,
-    /// Deprecated do not use
+    #[doc = "Deprecated do not use"]
     AbdominalLegRotations,
     ArmAndLegExtensionOnKnees,
     Bicycle,
@@ -18480,7 +19267,7 @@ pub enum CoreExerciseName {
     CatCow,
     Corkscrew,
     CrissCross,
-    /// Deprecated do not use
+    #[doc = "Deprecated do not use"]
     CrissCrossWithBall,
     DoubleLegStretch,
     KneeFolds,
@@ -18495,7 +19282,7 @@ pub enum CoreExerciseName {
     Scissors,
     SingleLegCircles,
     SingleLegStretch,
-    /// Deprecated do not use
+    #[doc = "Deprecated do not use"]
     SnakeTwist1And2,
     Swan,
     Swimming,
@@ -18506,79 +19293,79 @@ pub enum CoreExerciseName {
 impl CoreExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            9 => true,
-            10 => true,
-            11 => true,
-            12 => true,
-            13 => true,
-            14 => true,
-            15 => true,
-            16 => true,
-            17 => true,
-            18 => true,
-            19 => true,
-            20 => true,
-            21 => true,
-            22 => true,
-            23 => true,
-            24 => true,
-            25 => true,
-            26 => true,
-            27 => true,
-            28 => true,
-            29 => true,
-            30 => true,
-            31 => true,
-            32 => true,
-            33 => true,
-            34 => true,
-            35 => true,
-            36 => true,
-            37 => true,
-            38 => true,
-            39 => true,
-            40 => true,
-            41 => true,
-            42 => true,
-            43 => true,
-            44 => true,
-            45 => true,
-            46 => true,
-            47 => true,
-            48 => true,
-            49 => true,
-            50 => true,
-            51 => true,
-            52 => true,
-            53 => true,
-            54 => true,
-            55 => true,
-            56 => true,
-            57 => true,
-            58 => true,
-            59 => true,
-            60 => true,
-            61 => true,
-            62 => true,
-            63 => true,
-            64 => true,
-            65 => true,
-            66 => true,
-            67 => true,
-            68 => true,
-            69 => true,
-            70 => true,
-            71 => true,
-            72 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            9i64 => true,
+            10i64 => true,
+            11i64 => true,
+            12i64 => true,
+            13i64 => true,
+            14i64 => true,
+            15i64 => true,
+            16i64 => true,
+            17i64 => true,
+            18i64 => true,
+            19i64 => true,
+            20i64 => true,
+            21i64 => true,
+            22i64 => true,
+            23i64 => true,
+            24i64 => true,
+            25i64 => true,
+            26i64 => true,
+            27i64 => true,
+            28i64 => true,
+            29i64 => true,
+            30i64 => true,
+            31i64 => true,
+            32i64 => true,
+            33i64 => true,
+            34i64 => true,
+            35i64 => true,
+            36i64 => true,
+            37i64 => true,
+            38i64 => true,
+            39i64 => true,
+            40i64 => true,
+            41i64 => true,
+            42i64 => true,
+            43i64 => true,
+            44i64 => true,
+            45i64 => true,
+            46i64 => true,
+            47i64 => true,
+            48i64 => true,
+            49i64 => true,
+            50i64 => true,
+            51i64 => true,
+            52i64 => true,
+            53i64 => true,
+            54i64 => true,
+            55i64 => true,
+            56i64 => true,
+            57i64 => true,
+            58i64 => true,
+            59i64 => true,
+            60i64 => true,
+            61i64 => true,
+            62i64 => true,
+            63i64 => true,
+            64i64 => true,
+            65i64 => true,
+            66i64 => true,
+            67i64 => true,
+            68i64 => true,
+            69i64 => true,
+            70i64 => true,
+            71i64 => true,
+            72i64 => true,
             _ => false,
         }
     }
@@ -18950,91 +19737,91 @@ pub enum CrunchExerciseName {
 impl CrunchExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            9 => true,
-            10 => true,
-            11 => true,
-            12 => true,
-            13 => true,
-            14 => true,
-            15 => true,
-            16 => true,
-            17 => true,
-            18 => true,
-            19 => true,
-            20 => true,
-            21 => true,
-            22 => true,
-            23 => true,
-            24 => true,
-            25 => true,
-            26 => true,
-            27 => true,
-            28 => true,
-            29 => true,
-            30 => true,
-            31 => true,
-            32 => true,
-            33 => true,
-            34 => true,
-            35 => true,
-            36 => true,
-            37 => true,
-            38 => true,
-            39 => true,
-            40 => true,
-            41 => true,
-            42 => true,
-            43 => true,
-            44 => true,
-            45 => true,
-            46 => true,
-            47 => true,
-            48 => true,
-            49 => true,
-            50 => true,
-            51 => true,
-            52 => true,
-            53 => true,
-            54 => true,
-            55 => true,
-            56 => true,
-            57 => true,
-            58 => true,
-            59 => true,
-            60 => true,
-            61 => true,
-            62 => true,
-            63 => true,
-            64 => true,
-            65 => true,
-            66 => true,
-            67 => true,
-            68 => true,
-            69 => true,
-            70 => true,
-            71 => true,
-            72 => true,
-            73 => true,
-            74 => true,
-            75 => true,
-            76 => true,
-            77 => true,
-            78 => true,
-            79 => true,
-            80 => true,
-            81 => true,
-            82 => true,
-            83 => true,
-            84 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            9i64 => true,
+            10i64 => true,
+            11i64 => true,
+            12i64 => true,
+            13i64 => true,
+            14i64 => true,
+            15i64 => true,
+            16i64 => true,
+            17i64 => true,
+            18i64 => true,
+            19i64 => true,
+            20i64 => true,
+            21i64 => true,
+            22i64 => true,
+            23i64 => true,
+            24i64 => true,
+            25i64 => true,
+            26i64 => true,
+            27i64 => true,
+            28i64 => true,
+            29i64 => true,
+            30i64 => true,
+            31i64 => true,
+            32i64 => true,
+            33i64 => true,
+            34i64 => true,
+            35i64 => true,
+            36i64 => true,
+            37i64 => true,
+            38i64 => true,
+            39i64 => true,
+            40i64 => true,
+            41i64 => true,
+            42i64 => true,
+            43i64 => true,
+            44i64 => true,
+            45i64 => true,
+            46i64 => true,
+            47i64 => true,
+            48i64 => true,
+            49i64 => true,
+            50i64 => true,
+            51i64 => true,
+            52i64 => true,
+            53i64 => true,
+            54i64 => true,
+            55i64 => true,
+            56i64 => true,
+            57i64 => true,
+            58i64 => true,
+            59i64 => true,
+            60i64 => true,
+            61i64 => true,
+            62i64 => true,
+            63i64 => true,
+            64i64 => true,
+            65i64 => true,
+            66i64 => true,
+            67i64 => true,
+            68i64 => true,
+            69i64 => true,
+            70i64 => true,
+            71i64 => true,
+            72i64 => true,
+            73i64 => true,
+            74i64 => true,
+            75i64 => true,
+            76i64 => true,
+            77i64 => true,
+            78i64 => true,
+            79i64 => true,
+            80i64 => true,
+            81i64 => true,
+            82i64 => true,
+            83i64 => true,
+            84i64 => true,
             _ => false,
         }
     }
@@ -19443,50 +20230,50 @@ pub enum CurlExerciseName {
 impl CurlExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            9 => true,
-            10 => true,
-            11 => true,
-            12 => true,
-            13 => true,
-            14 => true,
-            15 => true,
-            16 => true,
-            17 => true,
-            18 => true,
-            19 => true,
-            20 => true,
-            21 => true,
-            22 => true,
-            23 => true,
-            24 => true,
-            25 => true,
-            26 => true,
-            27 => true,
-            28 => true,
-            29 => true,
-            30 => true,
-            31 => true,
-            32 => true,
-            33 => true,
-            34 => true,
-            35 => true,
-            36 => true,
-            37 => true,
-            38 => true,
-            39 => true,
-            40 => true,
-            41 => true,
-            42 => true,
-            43 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            9i64 => true,
+            10i64 => true,
+            11i64 => true,
+            12i64 => true,
+            13i64 => true,
+            14i64 => true,
+            15i64 => true,
+            16i64 => true,
+            17i64 => true,
+            18i64 => true,
+            19i64 => true,
+            20i64 => true,
+            21i64 => true,
+            22i64 => true,
+            23i64 => true,
+            24i64 => true,
+            25i64 => true,
+            26i64 => true,
+            27i64 => true,
+            28i64 => true,
+            29i64 => true,
+            30i64 => true,
+            31i64 => true,
+            32i64 => true,
+            33i64 => true,
+            34i64 => true,
+            35i64 => true,
+            36i64 => true,
+            37i64 => true,
+            38i64 => true,
+            39i64 => true,
+            40i64 => true,
+            41i64 => true,
+            42i64 => true,
+            43i64 => true,
             _ => false,
         }
     }
@@ -19729,25 +20516,25 @@ pub enum DeadliftExerciseName {
 impl DeadliftExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            9 => true,
-            10 => true,
-            11 => true,
-            12 => true,
-            13 => true,
-            14 => true,
-            15 => true,
-            16 => true,
-            17 => true,
-            18 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            9i64 => true,
+            10i64 => true,
+            11i64 => true,
+            12i64 => true,
+            13i64 => true,
+            14i64 => true,
+            15i64 => true,
+            16i64 => true,
+            17i64 => true,
+            18i64 => true,
             _ => false,
         }
     }
@@ -19882,16 +20669,16 @@ pub enum FlyeExerciseName {
 impl FlyeExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            9 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            9i64 => true,
             _ => false,
         }
     }
@@ -20013,9 +20800,9 @@ pub enum HipRaiseExerciseName {
     WeightedClamBridge,
     SingleLegSwissBallHipRaiseAndLegCurl,
     Clams,
-    /// Deprecated do not use
+    #[doc = "Deprecated do not use"]
     InnerThighCircles,
-    /// Deprecated do not use
+    #[doc = "Deprecated do not use"]
     InnerThighSideLift,
     LegCircles,
     LegLift,
@@ -20025,56 +20812,56 @@ pub enum HipRaiseExerciseName {
 impl HipRaiseExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            9 => true,
-            10 => true,
-            11 => true,
-            12 => true,
-            13 => true,
-            14 => true,
-            15 => true,
-            16 => true,
-            17 => true,
-            18 => true,
-            19 => true,
-            20 => true,
-            21 => true,
-            22 => true,
-            23 => true,
-            24 => true,
-            25 => true,
-            26 => true,
-            27 => true,
-            28 => true,
-            29 => true,
-            30 => true,
-            31 => true,
-            32 => true,
-            33 => true,
-            34 => true,
-            35 => true,
-            36 => true,
-            37 => true,
-            38 => true,
-            39 => true,
-            40 => true,
-            41 => true,
-            42 => true,
-            43 => true,
-            44 => true,
-            45 => true,
-            46 => true,
-            47 => true,
-            48 => true,
-            49 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            9i64 => true,
+            10i64 => true,
+            11i64 => true,
+            12i64 => true,
+            13i64 => true,
+            14i64 => true,
+            15i64 => true,
+            16i64 => true,
+            17i64 => true,
+            18i64 => true,
+            19i64 => true,
+            20i64 => true,
+            21i64 => true,
+            22i64 => true,
+            23i64 => true,
+            24i64 => true,
+            25i64 => true,
+            26i64 => true,
+            27i64 => true,
+            28i64 => true,
+            29i64 => true,
+            30i64 => true,
+            31i64 => true,
+            32i64 => true,
+            33i64 => true,
+            34i64 => true,
+            35i64 => true,
+            36i64 => true,
+            37i64 => true,
+            38i64 => true,
+            39i64 => true,
+            40i64 => true,
+            41i64 => true,
+            42i64 => true,
+            43i64 => true,
+            44i64 => true,
+            45i64 => true,
+            46i64 => true,
+            47i64 => true,
+            48i64 => true,
+            49i64 => true,
             _ => false,
         }
     }
@@ -20377,40 +21164,40 @@ pub enum HipStabilityExerciseName {
 impl HipStabilityExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            9 => true,
-            10 => true,
-            11 => true,
-            12 => true,
-            13 => true,
-            14 => true,
-            15 => true,
-            16 => true,
-            17 => true,
-            18 => true,
-            19 => true,
-            20 => true,
-            21 => true,
-            22 => true,
-            23 => true,
-            24 => true,
-            25 => true,
-            26 => true,
-            27 => true,
-            28 => true,
-            29 => true,
-            30 => true,
-            31 => true,
-            32 => true,
-            33 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            9i64 => true,
+            10i64 => true,
+            11i64 => true,
+            12i64 => true,
+            13i64 => true,
+            14i64 => true,
+            15i64 => true,
+            16i64 => true,
+            17i64 => true,
+            18i64 => true,
+            19i64 => true,
+            20i64 => true,
+            21i64 => true,
+            22i64 => true,
+            23i64 => true,
+            24i64 => true,
+            25i64 => true,
+            26i64 => true,
+            27i64 => true,
+            28i64 => true,
+            29i64 => true,
+            30i64 => true,
+            31i64 => true,
+            32i64 => true,
+            33i64 => true,
             _ => false,
         }
     }
@@ -20601,9 +21388,9 @@ pub enum HipSwingExerciseName {
 impl HipSwingExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
             _ => false,
         }
     }
@@ -20698,53 +21485,53 @@ pub enum HyperextensionExerciseName {
     WeightedSwissBallOppositeArmAndLegLift,
     SupermanOnSwissBall,
     Cobra,
-    /// Deprecated do not use
+    #[doc = "Deprecated do not use"]
     SupineFloorBarre,
     Value(u16),
 }
 impl HyperextensionExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            9 => true,
-            10 => true,
-            11 => true,
-            12 => true,
-            13 => true,
-            14 => true,
-            15 => true,
-            16 => true,
-            17 => true,
-            18 => true,
-            19 => true,
-            20 => true,
-            21 => true,
-            22 => true,
-            23 => true,
-            24 => true,
-            25 => true,
-            26 => true,
-            27 => true,
-            28 => true,
-            29 => true,
-            30 => true,
-            31 => true,
-            32 => true,
-            33 => true,
-            34 => true,
-            35 => true,
-            36 => true,
-            37 => true,
-            38 => true,
-            39 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            9i64 => true,
+            10i64 => true,
+            11i64 => true,
+            12i64 => true,
+            13i64 => true,
+            14i64 => true,
+            15i64 => true,
+            16i64 => true,
+            17i64 => true,
+            18i64 => true,
+            19i64 => true,
+            20i64 => true,
+            21i64 => true,
+            22i64 => true,
+            23i64 => true,
+            24i64 => true,
+            25i64 => true,
+            26i64 => true,
+            27i64 => true,
+            28i64 => true,
+            29i64 => true,
+            30i64 => true,
+            31i64 => true,
+            32i64 => true,
+            33i64 => true,
+            34i64 => true,
+            35i64 => true,
+            36i64 => true,
+            37i64 => true,
+            38i64 => true,
+            39i64 => true,
             _ => false,
         }
     }
@@ -20990,40 +21777,40 @@ pub enum LateralRaiseExerciseName {
 impl LateralRaiseExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            9 => true,
-            10 => true,
-            11 => true,
-            12 => true,
-            13 => true,
-            14 => true,
-            15 => true,
-            16 => true,
-            17 => true,
-            18 => true,
-            19 => true,
-            20 => true,
-            21 => true,
-            22 => true,
-            23 => true,
-            24 => true,
-            25 => true,
-            26 => true,
-            27 => true,
-            28 => true,
-            29 => true,
-            30 => true,
-            31 => true,
-            32 => true,
-            33 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            9i64 => true,
+            10i64 => true,
+            11i64 => true,
+            12i64 => true,
+            13i64 => true,
+            14i64 => true,
+            15i64 => true,
+            16i64 => true,
+            17i64 => true,
+            18i64 => true,
+            19i64 => true,
+            20i64 => true,
+            21i64 => true,
+            22i64 => true,
+            23i64 => true,
+            24i64 => true,
+            25i64 => true,
+            26i64 => true,
+            27i64 => true,
+            28i64 => true,
+            29i64 => true,
+            30i64 => true,
+            31i64 => true,
+            32i64 => true,
+            33i64 => true,
             _ => false,
         }
     }
@@ -21203,18 +21990,18 @@ pub enum LegCurlExerciseName {
 impl LegCurlExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            9 => true,
-            10 => true,
-            11 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            9i64 => true,
+            10i64 => true,
+            11i64 => true,
             _ => false,
         }
     }
@@ -21332,28 +22119,28 @@ pub enum LegRaiseExerciseName {
 impl LegRaiseExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            9 => true,
-            10 => true,
-            11 => true,
-            12 => true,
-            13 => true,
-            14 => true,
-            15 => true,
-            16 => true,
-            17 => true,
-            18 => true,
-            19 => true,
-            20 => true,
-            21 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            9i64 => true,
+            10i64 => true,
+            11i64 => true,
+            12i64 => true,
+            13i64 => true,
+            14i64 => true,
+            15i64 => true,
+            16i64 => true,
+            17i64 => true,
+            18i64 => true,
+            19i64 => true,
+            20i64 => true,
+            21i64 => true,
             _ => false,
         }
     }
@@ -21570,87 +22357,87 @@ pub enum LungeExerciseName {
 impl LungeExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            9 => true,
-            10 => true,
-            11 => true,
-            12 => true,
-            13 => true,
-            14 => true,
-            15 => true,
-            16 => true,
-            17 => true,
-            18 => true,
-            19 => true,
-            20 => true,
-            21 => true,
-            22 => true,
-            23 => true,
-            24 => true,
-            25 => true,
-            26 => true,
-            27 => true,
-            28 => true,
-            29 => true,
-            30 => true,
-            31 => true,
-            32 => true,
-            33 => true,
-            34 => true,
-            35 => true,
-            36 => true,
-            37 => true,
-            38 => true,
-            39 => true,
-            40 => true,
-            41 => true,
-            42 => true,
-            43 => true,
-            44 => true,
-            45 => true,
-            46 => true,
-            47 => true,
-            48 => true,
-            49 => true,
-            50 => true,
-            51 => true,
-            52 => true,
-            53 => true,
-            54 => true,
-            55 => true,
-            56 => true,
-            57 => true,
-            58 => true,
-            59 => true,
-            60 => true,
-            61 => true,
-            62 => true,
-            63 => true,
-            64 => true,
-            65 => true,
-            66 => true,
-            67 => true,
-            68 => true,
-            69 => true,
-            70 => true,
-            71 => true,
-            72 => true,
-            73 => true,
-            74 => true,
-            75 => true,
-            76 => true,
-            77 => true,
-            78 => true,
-            79 => true,
-            80 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            9i64 => true,
+            10i64 => true,
+            11i64 => true,
+            12i64 => true,
+            13i64 => true,
+            14i64 => true,
+            15i64 => true,
+            16i64 => true,
+            17i64 => true,
+            18i64 => true,
+            19i64 => true,
+            20i64 => true,
+            21i64 => true,
+            22i64 => true,
+            23i64 => true,
+            24i64 => true,
+            25i64 => true,
+            26i64 => true,
+            27i64 => true,
+            28i64 => true,
+            29i64 => true,
+            30i64 => true,
+            31i64 => true,
+            32i64 => true,
+            33i64 => true,
+            34i64 => true,
+            35i64 => true,
+            36i64 => true,
+            37i64 => true,
+            38i64 => true,
+            39i64 => true,
+            40i64 => true,
+            41i64 => true,
+            42i64 => true,
+            43i64 => true,
+            44i64 => true,
+            45i64 => true,
+            46i64 => true,
+            47i64 => true,
+            48i64 => true,
+            49i64 => true,
+            50i64 => true,
+            51i64 => true,
+            52i64 => true,
+            53i64 => true,
+            54i64 => true,
+            55i64 => true,
+            56i64 => true,
+            57i64 => true,
+            58i64 => true,
+            59i64 => true,
+            60i64 => true,
+            61i64 => true,
+            62i64 => true,
+            63i64 => true,
+            64i64 => true,
+            65i64 => true,
+            66i64 => true,
+            67i64 => true,
+            68i64 => true,
+            69i64 => true,
+            70i64 => true,
+            71i64 => true,
+            72i64 => true,
+            73i64 => true,
+            74i64 => true,
+            75i64 => true,
+            76i64 => true,
+            77i64 => true,
+            78i64 => true,
+            79i64 => true,
+            80i64 => true,
             _ => false,
         }
     }
@@ -22024,27 +22811,27 @@ pub enum OlympicLiftExerciseName {
 impl OlympicLiftExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            9 => true,
-            10 => true,
-            11 => true,
-            12 => true,
-            13 => true,
-            14 => true,
-            15 => true,
-            16 => true,
-            17 => true,
-            18 => true,
-            19 => true,
-            20 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            9i64 => true,
+            10i64 => true,
+            11i64 => true,
+            12i64 => true,
+            13i64 => true,
+            14i64 => true,
+            15i64 => true,
+            16i64 => true,
+            17i64 => true,
+            18i64 => true,
+            19i64 => true,
+            20i64 => true,
             _ => false,
         }
     }
@@ -22300,141 +23087,141 @@ pub enum PlankExerciseName {
 impl PlankExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            9 => true,
-            10 => true,
-            11 => true,
-            12 => true,
-            13 => true,
-            14 => true,
-            15 => true,
-            16 => true,
-            17 => true,
-            18 => true,
-            19 => true,
-            20 => true,
-            21 => true,
-            22 => true,
-            23 => true,
-            24 => true,
-            25 => true,
-            26 => true,
-            27 => true,
-            28 => true,
-            29 => true,
-            30 => true,
-            31 => true,
-            32 => true,
-            33 => true,
-            34 => true,
-            35 => true,
-            36 => true,
-            37 => true,
-            38 => true,
-            39 => true,
-            40 => true,
-            41 => true,
-            42 => true,
-            43 => true,
-            44 => true,
-            45 => true,
-            46 => true,
-            47 => true,
-            48 => true,
-            49 => true,
-            50 => true,
-            51 => true,
-            52 => true,
-            53 => true,
-            54 => true,
-            55 => true,
-            56 => true,
-            57 => true,
-            58 => true,
-            59 => true,
-            60 => true,
-            61 => true,
-            62 => true,
-            63 => true,
-            64 => true,
-            65 => true,
-            66 => true,
-            67 => true,
-            68 => true,
-            69 => true,
-            70 => true,
-            71 => true,
-            72 => true,
-            73 => true,
-            74 => true,
-            75 => true,
-            76 => true,
-            77 => true,
-            78 => true,
-            79 => true,
-            80 => true,
-            81 => true,
-            82 => true,
-            83 => true,
-            84 => true,
-            85 => true,
-            86 => true,
-            87 => true,
-            88 => true,
-            89 => true,
-            90 => true,
-            91 => true,
-            92 => true,
-            93 => true,
-            94 => true,
-            95 => true,
-            96 => true,
-            97 => true,
-            98 => true,
-            99 => true,
-            100 => true,
-            101 => true,
-            102 => true,
-            103 => true,
-            104 => true,
-            105 => true,
-            106 => true,
-            107 => true,
-            108 => true,
-            109 => true,
-            110 => true,
-            111 => true,
-            112 => true,
-            113 => true,
-            114 => true,
-            115 => true,
-            116 => true,
-            117 => true,
-            118 => true,
-            119 => true,
-            120 => true,
-            121 => true,
-            122 => true,
-            123 => true,
-            124 => true,
-            125 => true,
-            126 => true,
-            127 => true,
-            128 => true,
-            129 => true,
-            130 => true,
-            131 => true,
-            132 => true,
-            133 => true,
-            134 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            9i64 => true,
+            10i64 => true,
+            11i64 => true,
+            12i64 => true,
+            13i64 => true,
+            14i64 => true,
+            15i64 => true,
+            16i64 => true,
+            17i64 => true,
+            18i64 => true,
+            19i64 => true,
+            20i64 => true,
+            21i64 => true,
+            22i64 => true,
+            23i64 => true,
+            24i64 => true,
+            25i64 => true,
+            26i64 => true,
+            27i64 => true,
+            28i64 => true,
+            29i64 => true,
+            30i64 => true,
+            31i64 => true,
+            32i64 => true,
+            33i64 => true,
+            34i64 => true,
+            35i64 => true,
+            36i64 => true,
+            37i64 => true,
+            38i64 => true,
+            39i64 => true,
+            40i64 => true,
+            41i64 => true,
+            42i64 => true,
+            43i64 => true,
+            44i64 => true,
+            45i64 => true,
+            46i64 => true,
+            47i64 => true,
+            48i64 => true,
+            49i64 => true,
+            50i64 => true,
+            51i64 => true,
+            52i64 => true,
+            53i64 => true,
+            54i64 => true,
+            55i64 => true,
+            56i64 => true,
+            57i64 => true,
+            58i64 => true,
+            59i64 => true,
+            60i64 => true,
+            61i64 => true,
+            62i64 => true,
+            63i64 => true,
+            64i64 => true,
+            65i64 => true,
+            66i64 => true,
+            67i64 => true,
+            68i64 => true,
+            69i64 => true,
+            70i64 => true,
+            71i64 => true,
+            72i64 => true,
+            73i64 => true,
+            74i64 => true,
+            75i64 => true,
+            76i64 => true,
+            77i64 => true,
+            78i64 => true,
+            79i64 => true,
+            80i64 => true,
+            81i64 => true,
+            82i64 => true,
+            83i64 => true,
+            84i64 => true,
+            85i64 => true,
+            86i64 => true,
+            87i64 => true,
+            88i64 => true,
+            89i64 => true,
+            90i64 => true,
+            91i64 => true,
+            92i64 => true,
+            93i64 => true,
+            94i64 => true,
+            95i64 => true,
+            96i64 => true,
+            97i64 => true,
+            98i64 => true,
+            99i64 => true,
+            100i64 => true,
+            101i64 => true,
+            102i64 => true,
+            103i64 => true,
+            104i64 => true,
+            105i64 => true,
+            106i64 => true,
+            107i64 => true,
+            108i64 => true,
+            109i64 => true,
+            110i64 => true,
+            111i64 => true,
+            112i64 => true,
+            113i64 => true,
+            114i64 => true,
+            115i64 => true,
+            116i64 => true,
+            117i64 => true,
+            118i64 => true,
+            119i64 => true,
+            120i64 => true,
+            121i64 => true,
+            122i64 => true,
+            123i64 => true,
+            124i64 => true,
+            125i64 => true,
+            126i64 => true,
+            127i64 => true,
+            128i64 => true,
+            129i64 => true,
+            130i64 => true,
+            131i64 => true,
+            132i64 => true,
+            133i64 => true,
+            134i64 => true,
             _ => false,
         }
     }
@@ -23047,39 +23834,39 @@ pub enum PlyoExerciseName {
 impl PlyoExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            9 => true,
-            10 => true,
-            11 => true,
-            12 => true,
-            13 => true,
-            14 => true,
-            15 => true,
-            16 => true,
-            17 => true,
-            18 => true,
-            19 => true,
-            20 => true,
-            21 => true,
-            22 => true,
-            23 => true,
-            24 => true,
-            25 => true,
-            26 => true,
-            27 => true,
-            28 => true,
-            29 => true,
-            30 => true,
-            31 => true,
-            32 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            9i64 => true,
+            10i64 => true,
+            11i64 => true,
+            12i64 => true,
+            13i64 => true,
+            14i64 => true,
+            15i64 => true,
+            16i64 => true,
+            17i64 => true,
+            18i64 => true,
+            19i64 => true,
+            20i64 => true,
+            21i64 => true,
+            22i64 => true,
+            23i64 => true,
+            24i64 => true,
+            25i64 => true,
+            26i64 => true,
+            27i64 => true,
+            28i64 => true,
+            29i64 => true,
+            30i64 => true,
+            31i64 => true,
+            32i64 => true,
             _ => false,
         }
     }
@@ -23285,45 +24072,45 @@ pub enum PullUpExerciseName {
 impl PullUpExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            9 => true,
-            10 => true,
-            11 => true,
-            12 => true,
-            13 => true,
-            14 => true,
-            15 => true,
-            16 => true,
-            17 => true,
-            18 => true,
-            19 => true,
-            20 => true,
-            21 => true,
-            22 => true,
-            23 => true,
-            24 => true,
-            25 => true,
-            26 => true,
-            27 => true,
-            28 => true,
-            29 => true,
-            30 => true,
-            31 => true,
-            32 => true,
-            33 => true,
-            34 => true,
-            35 => true,
-            36 => true,
-            37 => true,
-            38 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            9i64 => true,
+            10i64 => true,
+            11i64 => true,
+            12i64 => true,
+            13i64 => true,
+            14i64 => true,
+            15i64 => true,
+            16i64 => true,
+            17i64 => true,
+            18i64 => true,
+            19i64 => true,
+            20i64 => true,
+            21i64 => true,
+            22i64 => true,
+            23i64 => true,
+            24i64 => true,
+            25i64 => true,
+            26i64 => true,
+            27i64 => true,
+            28i64 => true,
+            29i64 => true,
+            30i64 => true,
+            31i64 => true,
+            32i64 => true,
+            33i64 => true,
+            34i64 => true,
+            35i64 => true,
+            36i64 => true,
+            37i64 => true,
+            38i64 => true,
             _ => false,
         }
     }
@@ -23571,85 +24358,85 @@ pub enum PushUpExerciseName {
 impl PushUpExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            9 => true,
-            10 => true,
-            11 => true,
-            12 => true,
-            13 => true,
-            14 => true,
-            15 => true,
-            16 => true,
-            17 => true,
-            18 => true,
-            19 => true,
-            20 => true,
-            21 => true,
-            22 => true,
-            23 => true,
-            24 => true,
-            25 => true,
-            26 => true,
-            27 => true,
-            28 => true,
-            29 => true,
-            30 => true,
-            31 => true,
-            32 => true,
-            33 => true,
-            34 => true,
-            35 => true,
-            36 => true,
-            37 => true,
-            38 => true,
-            39 => true,
-            40 => true,
-            41 => true,
-            42 => true,
-            43 => true,
-            44 => true,
-            45 => true,
-            46 => true,
-            47 => true,
-            48 => true,
-            49 => true,
-            50 => true,
-            51 => true,
-            52 => true,
-            53 => true,
-            54 => true,
-            55 => true,
-            56 => true,
-            57 => true,
-            58 => true,
-            59 => true,
-            60 => true,
-            61 => true,
-            62 => true,
-            63 => true,
-            64 => true,
-            65 => true,
-            66 => true,
-            67 => true,
-            68 => true,
-            69 => true,
-            70 => true,
-            71 => true,
-            72 => true,
-            73 => true,
-            74 => true,
-            75 => true,
-            76 => true,
-            77 => true,
-            78 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            9i64 => true,
+            10i64 => true,
+            11i64 => true,
+            12i64 => true,
+            13i64 => true,
+            14i64 => true,
+            15i64 => true,
+            16i64 => true,
+            17i64 => true,
+            18i64 => true,
+            19i64 => true,
+            20i64 => true,
+            21i64 => true,
+            22i64 => true,
+            23i64 => true,
+            24i64 => true,
+            25i64 => true,
+            26i64 => true,
+            27i64 => true,
+            28i64 => true,
+            29i64 => true,
+            30i64 => true,
+            31i64 => true,
+            32i64 => true,
+            33i64 => true,
+            34i64 => true,
+            35i64 => true,
+            36i64 => true,
+            37i64 => true,
+            38i64 => true,
+            39i64 => true,
+            40i64 => true,
+            41i64 => true,
+            42i64 => true,
+            43i64 => true,
+            44i64 => true,
+            45i64 => true,
+            46i64 => true,
+            47i64 => true,
+            48i64 => true,
+            49i64 => true,
+            50i64 => true,
+            51i64 => true,
+            52i64 => true,
+            53i64 => true,
+            54i64 => true,
+            55i64 => true,
+            56i64 => true,
+            57i64 => true,
+            58i64 => true,
+            59i64 => true,
+            60i64 => true,
+            61i64 => true,
+            62i64 => true,
+            63i64 => true,
+            64i64 => true,
+            65i64 => true,
+            66i64 => true,
+            67i64 => true,
+            68i64 => true,
+            69i64 => true,
+            70i64 => true,
+            71i64 => true,
+            72i64 => true,
+            73i64 => true,
+            74i64 => true,
+            75i64 => true,
+            76i64 => true,
+            77i64 => true,
+            78i64 => true,
             _ => false,
         }
     }
@@ -24026,40 +24813,40 @@ pub enum RowExerciseName {
 impl RowExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            9 => true,
-            10 => true,
-            11 => true,
-            12 => true,
-            13 => true,
-            14 => true,
-            15 => true,
-            16 => true,
-            17 => true,
-            18 => true,
-            19 => true,
-            20 => true,
-            21 => true,
-            22 => true,
-            23 => true,
-            24 => true,
-            25 => true,
-            26 => true,
-            27 => true,
-            28 => true,
-            29 => true,
-            30 => true,
-            31 => true,
-            32 => true,
-            33 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            9i64 => true,
+            10i64 => true,
+            11i64 => true,
+            12i64 => true,
+            13i64 => true,
+            14i64 => true,
+            15i64 => true,
+            16i64 => true,
+            17i64 => true,
+            18i64 => true,
+            19i64 => true,
+            20i64 => true,
+            21i64 => true,
+            22i64 => true,
+            23i64 => true,
+            24i64 => true,
+            25i64 => true,
+            26i64 => true,
+            27i64 => true,
+            28i64 => true,
+            29i64 => true,
+            30i64 => true,
+            31i64 => true,
+            32i64 => true,
+            33i64 => true,
             _ => false,
         }
     }
@@ -24261,30 +25048,30 @@ pub enum ShoulderPressExerciseName {
 impl ShoulderPressExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            9 => true,
-            10 => true,
-            11 => true,
-            12 => true,
-            13 => true,
-            14 => true,
-            15 => true,
-            16 => true,
-            17 => true,
-            18 => true,
-            19 => true,
-            20 => true,
-            21 => true,
-            22 => true,
-            23 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            9i64 => true,
+            10i64 => true,
+            11i64 => true,
+            12i64 => true,
+            13i64 => true,
+            14i64 => true,
+            15i64 => true,
+            16i64 => true,
+            17i64 => true,
+            18i64 => true,
+            19i64 => true,
+            20i64 => true,
+            21i64 => true,
+            22i64 => true,
+            23i64 => true,
             _ => false,
         }
     }
@@ -24473,39 +25260,39 @@ pub enum ShoulderStabilityExerciseName {
 impl ShoulderStabilityExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            9 => true,
-            10 => true,
-            11 => true,
-            12 => true,
-            13 => true,
-            14 => true,
-            15 => true,
-            16 => true,
-            17 => true,
-            18 => true,
-            19 => true,
-            20 => true,
-            21 => true,
-            22 => true,
-            23 => true,
-            24 => true,
-            25 => true,
-            26 => true,
-            27 => true,
-            28 => true,
-            29 => true,
-            30 => true,
-            31 => true,
-            32 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            9i64 => true,
+            10i64 => true,
+            11i64 => true,
+            12i64 => true,
+            13i64 => true,
+            14i64 => true,
+            15i64 => true,
+            16i64 => true,
+            17i64 => true,
+            18i64 => true,
+            19i64 => true,
+            20i64 => true,
+            21i64 => true,
+            22i64 => true,
+            23i64 => true,
+            24i64 => true,
+            25i64 => true,
+            26i64 => true,
+            27i64 => true,
+            28i64 => true,
+            29i64 => true,
+            30i64 => true,
+            31i64 => true,
+            32i64 => true,
             _ => false,
         }
     }
@@ -24711,23 +25498,23 @@ pub enum ShrugExerciseName {
 impl ShrugExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            9 => true,
-            10 => true,
-            11 => true,
-            12 => true,
-            13 => true,
-            14 => true,
-            15 => true,
-            16 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            9i64 => true,
+            10i64 => true,
+            11i64 => true,
+            12i64 => true,
+            13i64 => true,
+            14i64 => true,
+            15i64 => true,
+            16i64 => true,
             _ => false,
         }
     }
@@ -24870,44 +25657,44 @@ pub enum SitUpExerciseName {
 impl SitUpExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            9 => true,
-            10 => true,
-            11 => true,
-            12 => true,
-            13 => true,
-            14 => true,
-            15 => true,
-            16 => true,
-            17 => true,
-            18 => true,
-            19 => true,
-            20 => true,
-            21 => true,
-            22 => true,
-            23 => true,
-            24 => true,
-            25 => true,
-            26 => true,
-            27 => true,
-            28 => true,
-            29 => true,
-            30 => true,
-            31 => true,
-            32 => true,
-            33 => true,
-            34 => true,
-            35 => true,
-            36 => true,
-            37 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            9i64 => true,
+            10i64 => true,
+            11i64 => true,
+            12i64 => true,
+            13i64 => true,
+            14i64 => true,
+            15i64 => true,
+            16i64 => true,
+            17i64 => true,
+            18i64 => true,
+            19i64 => true,
+            20i64 => true,
+            21i64 => true,
+            22i64 => true,
+            23i64 => true,
+            24i64 => true,
+            25i64 => true,
+            26i64 => true,
+            27i64 => true,
+            28i64 => true,
+            29i64 => true,
+            30i64 => true,
+            31i64 => true,
+            32i64 => true,
+            33i64 => true,
+            34i64 => true,
+            35i64 => true,
+            36i64 => true,
+            37i64 => true,
             _ => false,
         }
     }
@@ -25167,7 +25954,7 @@ pub enum SquatExerciseName {
     WideStanceBarbellSquat,
     WideStanceGobletSquat,
     ZercherSquat,
-    /// Deprecated do not use
+    #[doc = "Deprecated do not use"]
     KbsOverhead,
     SquatAndSideKick,
     SquatJumpsInNOut,
@@ -25178,98 +25965,98 @@ pub enum SquatExerciseName {
 impl SquatExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            9 => true,
-            10 => true,
-            11 => true,
-            12 => true,
-            13 => true,
-            14 => true,
-            15 => true,
-            16 => true,
-            17 => true,
-            18 => true,
-            19 => true,
-            20 => true,
-            21 => true,
-            22 => true,
-            23 => true,
-            24 => true,
-            25 => true,
-            26 => true,
-            27 => true,
-            28 => true,
-            29 => true,
-            30 => true,
-            31 => true,
-            32 => true,
-            33 => true,
-            34 => true,
-            35 => true,
-            36 => true,
-            37 => true,
-            38 => true,
-            39 => true,
-            40 => true,
-            41 => true,
-            42 => true,
-            43 => true,
-            44 => true,
-            45 => true,
-            46 => true,
-            47 => true,
-            48 => true,
-            49 => true,
-            50 => true,
-            51 => true,
-            52 => true,
-            53 => true,
-            54 => true,
-            55 => true,
-            56 => true,
-            57 => true,
-            58 => true,
-            59 => true,
-            60 => true,
-            61 => true,
-            62 => true,
-            63 => true,
-            64 => true,
-            65 => true,
-            66 => true,
-            67 => true,
-            68 => true,
-            69 => true,
-            70 => true,
-            71 => true,
-            72 => true,
-            73 => true,
-            74 => true,
-            75 => true,
-            76 => true,
-            77 => true,
-            78 => true,
-            79 => true,
-            80 => true,
-            81 => true,
-            82 => true,
-            83 => true,
-            84 => true,
-            85 => true,
-            86 => true,
-            87 => true,
-            88 => true,
-            89 => true,
-            90 => true,
-            91 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            9i64 => true,
+            10i64 => true,
+            11i64 => true,
+            12i64 => true,
+            13i64 => true,
+            14i64 => true,
+            15i64 => true,
+            16i64 => true,
+            17i64 => true,
+            18i64 => true,
+            19i64 => true,
+            20i64 => true,
+            21i64 => true,
+            22i64 => true,
+            23i64 => true,
+            24i64 => true,
+            25i64 => true,
+            26i64 => true,
+            27i64 => true,
+            28i64 => true,
+            29i64 => true,
+            30i64 => true,
+            31i64 => true,
+            32i64 => true,
+            33i64 => true,
+            34i64 => true,
+            35i64 => true,
+            36i64 => true,
+            37i64 => true,
+            38i64 => true,
+            39i64 => true,
+            40i64 => true,
+            41i64 => true,
+            42i64 => true,
+            43i64 => true,
+            44i64 => true,
+            45i64 => true,
+            46i64 => true,
+            47i64 => true,
+            48i64 => true,
+            49i64 => true,
+            50i64 => true,
+            51i64 => true,
+            52i64 => true,
+            53i64 => true,
+            54i64 => true,
+            55i64 => true,
+            56i64 => true,
+            57i64 => true,
+            58i64 => true,
+            59i64 => true,
+            60i64 => true,
+            61i64 => true,
+            62i64 => true,
+            63i64 => true,
+            64i64 => true,
+            65i64 => true,
+            66i64 => true,
+            67i64 => true,
+            68i64 => true,
+            69i64 => true,
+            70i64 => true,
+            71i64 => true,
+            72i64 => true,
+            73i64 => true,
+            74i64 => true,
+            75i64 => true,
+            76i64 => true,
+            77i64 => true,
+            78i64 => true,
+            79i64 => true,
+            80i64 => true,
+            81i64 => true,
+            82i64 => true,
+            83i64 => true,
+            84i64 => true,
+            85i64 => true,
+            86i64 => true,
+            87i64 => true,
+            88i64 => true,
+            89i64 => true,
+            90i64 => true,
+            91i64 => true,
             _ => false,
         }
     }
@@ -25645,19 +26432,19 @@ pub enum TotalBodyExerciseName {
 impl TotalBodyExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            9 => true,
-            10 => true,
-            11 => true,
-            12 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            9i64 => true,
+            10i64 => true,
+            11i64 => true,
+            12i64 => true,
             _ => false,
         }
     }
@@ -25793,47 +26580,47 @@ pub enum TricepsExtensionExerciseName {
 impl TricepsExtensionExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            9 => true,
-            10 => true,
-            11 => true,
-            12 => true,
-            13 => true,
-            14 => true,
-            15 => true,
-            16 => true,
-            17 => true,
-            18 => true,
-            19 => true,
-            20 => true,
-            21 => true,
-            22 => true,
-            23 => true,
-            24 => true,
-            25 => true,
-            26 => true,
-            27 => true,
-            28 => true,
-            29 => true,
-            30 => true,
-            31 => true,
-            32 => true,
-            33 => true,
-            34 => true,
-            35 => true,
-            36 => true,
-            37 => true,
-            38 => true,
-            39 => true,
-            40 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            9i64 => true,
+            10i64 => true,
+            11i64 => true,
+            12i64 => true,
+            13i64 => true,
+            14i64 => true,
+            15i64 => true,
+            16i64 => true,
+            17i64 => true,
+            18i64 => true,
+            19i64 => true,
+            20i64 => true,
+            21i64 => true,
+            22i64 => true,
+            23i64 => true,
+            24i64 => true,
+            25i64 => true,
+            26i64 => true,
+            27i64 => true,
+            28i64 => true,
+            29i64 => true,
+            30i64 => true,
+            31i64 => true,
+            32i64 => true,
+            33i64 => true,
+            34i64 => true,
+            35i64 => true,
+            36i64 => true,
+            37i64 => true,
+            38i64 => true,
+            39i64 => true,
+            40i64 => true,
             _ => false,
         }
     }
@@ -26071,7 +26858,7 @@ pub enum WarmUpExerciseName {
     NeckRotations,
     OppositeArmAndLegBalance,
     ReachRollAndLift,
-    /// Deprecated do not use
+    #[doc = "Deprecated do not use"]
     Scorpion,
     ShoulderCircles,
     SideToSideLegSwings,
@@ -26092,37 +26879,37 @@ pub enum WarmUpExerciseName {
 impl WarmUpExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            9 => true,
-            10 => true,
-            11 => true,
-            12 => true,
-            13 => true,
-            14 => true,
-            15 => true,
-            16 => true,
-            17 => true,
-            18 => true,
-            19 => true,
-            20 => true,
-            21 => true,
-            22 => true,
-            23 => true,
-            24 => true,
-            25 => true,
-            26 => true,
-            27 => true,
-            28 => true,
-            29 => true,
-            30 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            9i64 => true,
+            10i64 => true,
+            11i64 => true,
+            12i64 => true,
+            13i64 => true,
+            14i64 => true,
+            15i64 => true,
+            16i64 => true,
+            17i64 => true,
+            18i64 => true,
+            19i64 => true,
+            20i64 => true,
+            21i64 => true,
+            22i64 => true,
+            23i64 => true,
+            24i64 => true,
+            25i64 => true,
+            26i64 => true,
+            27i64 => true,
+            28i64 => true,
+            29i64 => true,
+            30i64 => true,
             _ => false,
         }
     }
@@ -26281,10 +27068,10 @@ pub enum RunExerciseName {
 impl RunExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
             _ => false,
         }
     }
@@ -26350,10 +27137,10 @@ pub enum WaterType {
 impl WaterType {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
             _ => false,
         }
     }
@@ -26377,7 +27164,7 @@ impl fmt::Display for WaterType {
             WaterType::Salt => write!(f, "salt"),
             WaterType::En13319 => write!(f, "en13319"),
             WaterType::Custom => write!(f, "custom"),
-            WaterType::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            WaterType::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -26407,14 +27194,14 @@ impl Serialize for WaterType {
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum TissueModelType {
-    /// Buhlmann's decompression algorithm, version C
+    #[doc = "Buhlmann's decompression algorithm, version C"]
     Zhl16c,
     UnknownVariant(u8),
 }
 impl TissueModelType {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
+            0i64 => true,
             _ => false,
         }
     }
@@ -26432,7 +27219,7 @@ impl fmt::Display for TissueModelType {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
             TissueModelType::Zhl16c => write!(f, "zhl_16c"),
-            TissueModelType::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            TissueModelType::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -26467,9 +27254,9 @@ pub enum DiveGasStatus {
 impl DiveGasStatus {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
             _ => false,
         }
     }
@@ -26491,7 +27278,7 @@ impl fmt::Display for DiveGasStatus {
             DiveGasStatus::Disabled => write!(f, "disabled"),
             DiveGasStatus::Enabled => write!(f, "enabled"),
             DiveGasStatus::BackupOnly => write!(f, "backup_only"),
-            DiveGasStatus::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            DiveGasStatus::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -26552,64 +27339,64 @@ pub enum DiveAlert {
     SwitchedToOpenCircuit,
     SwitchedToClosedCircuit,
     TankBatteryLow,
-    /// ccr diluent has low po2
+    #[doc = "ccr diluent has low po2"]
     Po2CcrDilLow,
-    /// a deco stop has been cleared
+    #[doc = "a deco stop has been cleared"]
     DecoStopCleared,
-    /// Target Depth Apnea Alarm triggered
+    #[doc = "Target Depth Apnea Alarm triggered"]
     ApneaNeutralBuoyancy,
-    /// Neutral Buoyance Apnea Alarm triggered
+    #[doc = "Neutral Buoyance Apnea Alarm triggered"]
     ApneaTargetDepth,
-    /// Surface Apnea Alarm triggered
+    #[doc = "Surface Apnea Alarm triggered"]
     ApneaSurface,
-    /// High Speed Apnea Alarm triggered
+    #[doc = "High Speed Apnea Alarm triggered"]
     ApneaHighSpeed,
-    /// Low Speed Apnea Alarm triggered
+    #[doc = "Low Speed Apnea Alarm triggered"]
     ApneaLowSpeed,
     UnknownVariant(u8),
 }
 impl DiveAlert {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            9 => true,
-            10 => true,
-            11 => true,
-            12 => true,
-            13 => true,
-            14 => true,
-            15 => true,
-            16 => true,
-            17 => true,
-            18 => true,
-            19 => true,
-            20 => true,
-            21 => true,
-            22 => true,
-            23 => true,
-            24 => true,
-            25 => true,
-            26 => true,
-            27 => true,
-            28 => true,
-            29 => true,
-            30 => true,
-            32 => true,
-            33 => true,
-            34 => true,
-            35 => true,
-            36 => true,
-            37 => true,
-            38 => true,
-            39 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            9i64 => true,
+            10i64 => true,
+            11i64 => true,
+            12i64 => true,
+            13i64 => true,
+            14i64 => true,
+            15i64 => true,
+            16i64 => true,
+            17i64 => true,
+            18i64 => true,
+            19i64 => true,
+            20i64 => true,
+            21i64 => true,
+            22i64 => true,
+            23i64 => true,
+            24i64 => true,
+            25i64 => true,
+            26i64 => true,
+            27i64 => true,
+            28i64 => true,
+            29i64 => true,
+            30i64 => true,
+            32i64 => true,
+            33i64 => true,
+            34i64 => true,
+            35i64 => true,
+            36i64 => true,
+            37i64 => true,
+            38i64 => true,
+            39i64 => true,
             _ => false,
         }
     }
@@ -26703,7 +27490,7 @@ impl fmt::Display for DiveAlert {
             DiveAlert::ApneaSurface => write!(f, "apnea_surface"),
             DiveAlert::ApneaHighSpeed => write!(f, "apnea_high_speed"),
             DiveAlert::ApneaLowSpeed => write!(f, "apnea_low_speed"),
-            DiveAlert::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            DiveAlert::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -26768,20 +27555,20 @@ impl Serialize for DiveAlert {
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum DiveAlarmType {
-    /// Alarm when a certain depth is crossed
+    #[doc = "Alarm when a certain depth is crossed"]
     Depth,
-    /// Alarm when a certain time has transpired
+    #[doc = "Alarm when a certain time has transpired"]
     Time,
-    /// Alarm when a certain ascent or descent rate is exceeded
+    #[doc = "Alarm when a certain ascent or descent rate is exceeded"]
     Speed,
     UnknownVariant(u8),
 }
 impl DiveAlarmType {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
             _ => false,
         }
     }
@@ -26803,7 +27590,7 @@ impl fmt::Display for DiveAlarmType {
             DiveAlarmType::Depth => write!(f, "depth"),
             DiveAlarmType::Time => write!(f, "time"),
             DiveAlarmType::Speed => write!(f, "speed"),
-            DiveAlarmType::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            DiveAlarmType::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -26839,8 +27626,8 @@ pub enum DiveBacklightMode {
 impl DiveBacklightMode {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
+            0i64 => true,
+            1i64 => true,
             _ => false,
         }
     }
@@ -26860,7 +27647,7 @@ impl fmt::Display for DiveBacklightMode {
         match &self {
             DiveBacklightMode::AtDepth => write!(f, "at_depth"),
             DiveBacklightMode::AlwaysOn => write!(f, "always_on"),
-            DiveBacklightMode::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            DiveBacklightMode::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -26898,11 +27685,11 @@ pub enum SleepLevel {
 impl SleepLevel {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
             _ => false,
         }
     }
@@ -26928,7 +27715,7 @@ impl fmt::Display for SleepLevel {
             SleepLevel::Light => write!(f, "light"),
             SleepLevel::Deep => write!(f, "deep"),
             SleepLevel::Rem => write!(f, "rem"),
-            SleepLevel::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            SleepLevel::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -26968,10 +27755,10 @@ pub enum Spo2MeasurementType {
 impl Spo2MeasurementType {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
             _ => false,
         }
     }
@@ -26995,7 +27782,7 @@ impl fmt::Display for Spo2MeasurementType {
             Spo2MeasurementType::SpotCheck => write!(f, "spot_check"),
             Spo2MeasurementType::ContinuousCheck => write!(f, "continuous_check"),
             Spo2MeasurementType::Periodic => write!(f, "periodic"),
-            Spo2MeasurementType::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            Spo2MeasurementType::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -27025,17 +27812,17 @@ impl Serialize for Spo2MeasurementType {
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum CcrSetpointSwitchMode {
-    /// User switches setpoints manually
+    #[doc = "User switches setpoints manually"]
     Manual,
-    /// Switch automatically based on depth
+    #[doc = "Switch automatically based on depth"]
     Automatic,
     UnknownVariant(u8),
 }
 impl CcrSetpointSwitchMode {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
+            0i64 => true,
+            1i64 => true,
             _ => false,
         }
     }
@@ -27055,7 +27842,7 @@ impl fmt::Display for CcrSetpointSwitchMode {
         match &self {
             CcrSetpointSwitchMode::Manual => write!(f, "manual"),
             CcrSetpointSwitchMode::Automatic => write!(f, "automatic"),
-            CcrSetpointSwitchMode::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            CcrSetpointSwitchMode::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -27090,8 +27877,8 @@ pub enum DiveGasMode {
 impl DiveGasMode {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
+            0i64 => true,
+            1i64 => true,
             _ => false,
         }
     }
@@ -27111,7 +27898,7 @@ impl fmt::Display for DiveGasMode {
         match &self {
             DiveGasMode::OpenCircuit => write!(f, "open_circuit"),
             DiveGasMode::ClosedCircuitDiluent => write!(f, "closed_circuit_diluent"),
-            DiveGasMode::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            DiveGasMode::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -27139,29 +27926,29 @@ impl Serialize for DiveGasMode {
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum ProjectileType {
-    /// Arrow projectile type
+    #[doc = "Arrow projectile type"]
     Arrow,
-    /// Rifle cartridge projectile type
+    #[doc = "Rifle cartridge projectile type"]
     RifleCartridge,
-    /// Pistol cartridge projectile type
+    #[doc = "Pistol cartridge projectile type"]
     PistolCartridge,
-    /// Shotshell projectile type
+    #[doc = "Shotshell projectile type"]
     Shotshell,
-    /// Air rifle pellet projectile type
+    #[doc = "Air rifle pellet projectile type"]
     AirRiflePellet,
-    /// Other projectile type
+    #[doc = "Other projectile type"]
     Other,
     UnknownVariant(u8),
 }
 impl ProjectileType {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
             _ => false,
         }
     }
@@ -27189,7 +27976,7 @@ impl fmt::Display for ProjectileType {
             ProjectileType::Shotshell => write!(f, "shotshell"),
             ProjectileType::AirRiflePellet => write!(f, "air_rifle_pellet"),
             ProjectileType::Other => write!(f, "other"),
-            ProjectileType::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            ProjectileType::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -27228,8 +28015,8 @@ pub enum FaveroProduct {
 impl FaveroProduct {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            10 => true,
-            12 => true,
+            10i64 => true,
+            12i64 => true,
             _ => false,
         }
     }
@@ -27294,14 +28081,14 @@ pub enum SplitType {
     RunActive,
     RunRest,
     WorkoutRound,
-    /// run/walk detection running
+    #[doc = "run/walk detection running"]
     RwdRun,
-    /// run/walk detection walking
+    #[doc = "run/walk detection walking"]
     RwdWalk,
     WindsurfActive,
-    /// run/walk detection standing
+    #[doc = "run/walk detection standing"]
     RwdStand,
-    /// Marks the time going from ascent_split to descent_split/used in backcountry ski
+    #[doc = "Marks the time going from ascent_split to descent_split/used in backcountry ski"]
     Transition,
     SkiLiftSplit,
     SkiRunSplit,
@@ -27310,27 +28097,27 @@ pub enum SplitType {
 impl SplitType {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
-            5 => true,
-            6 => true,
-            7 => true,
-            8 => true,
-            9 => true,
-            10 => true,
-            11 => true,
-            12 => true,
-            13 => true,
-            14 => true,
-            17 => true,
-            18 => true,
-            21 => true,
-            22 => true,
-            23 => true,
-            28 => true,
-            29 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
+            5i64 => true,
+            6i64 => true,
+            7i64 => true,
+            8i64 => true,
+            9i64 => true,
+            10i64 => true,
+            11i64 => true,
+            12i64 => true,
+            13i64 => true,
+            14i64 => true,
+            17i64 => true,
+            18i64 => true,
+            21i64 => true,
+            22i64 => true,
+            23i64 => true,
+            28i64 => true,
+            29i64 => true,
             _ => false,
         }
     }
@@ -27388,7 +28175,7 @@ impl fmt::Display for SplitType {
             SplitType::Transition => write!(f, "transition"),
             SplitType::SkiLiftSplit => write!(f, "ski_lift_split"),
             SplitType::SkiRunSplit => write!(f, "ski_run_split"),
-            SplitType::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            SplitType::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -27443,9 +28230,9 @@ pub enum ClimbProEvent {
 impl ClimbProEvent {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
             _ => false,
         }
     }
@@ -27467,7 +28254,7 @@ impl fmt::Display for ClimbProEvent {
             ClimbProEvent::Approach => write!(f, "approach"),
             ClimbProEvent::Start => write!(f, "start"),
             ClimbProEvent::Complete => write!(f, "complete"),
-            ClimbProEvent::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            ClimbProEvent::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -27496,20 +28283,20 @@ impl Serialize for ClimbProEvent {
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum GasConsumptionRateType {
-    /// Pressure-based Surface Air Consumption
+    #[doc = "Pressure-based Surface Air Consumption"]
     PressureSac,
-    /// Volumetric Surface Air Consumption
+    #[doc = "Volumetric Surface Air Consumption"]
     VolumeSac,
-    /// Respiratory Minute Volume
+    #[doc = "Respiratory Minute Volume"]
     Rmv,
     UnknownVariant(u8),
 }
 impl GasConsumptionRateType {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
             _ => false,
         }
     }
@@ -27531,9 +28318,7 @@ impl fmt::Display for GasConsumptionRateType {
             GasConsumptionRateType::PressureSac => write!(f, "pressure_sac"),
             GasConsumptionRateType::VolumeSac => write!(f, "volume_sac"),
             GasConsumptionRateType::Rmv => write!(f, "rmv"),
-            GasConsumptionRateType::UnknownVariant(value) => {
-                write!(f, "unknown_variant_{}", *value)
-            }
+            GasConsumptionRateType::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -27570,9 +28355,9 @@ pub enum TapSensitivity {
 impl TapSensitivity {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
             _ => false,
         }
     }
@@ -27594,7 +28379,7 @@ impl fmt::Display for TapSensitivity {
             TapSensitivity::High => write!(f, "high"),
             TapSensitivity::Medium => write!(f, "medium"),
             TapSensitivity::Low => write!(f, "low"),
-            TapSensitivity::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            TapSensitivity::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -27632,10 +28417,10 @@ pub enum RadarThreatLevelType {
 impl RadarThreatLevelType {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
             _ => false,
         }
     }
@@ -27659,7 +28444,7 @@ impl fmt::Display for RadarThreatLevelType {
             RadarThreatLevelType::ThreatNone => write!(f, "threat_none"),
             RadarThreatLevelType::ThreatApproaching => write!(f, "threat_approaching"),
             RadarThreatLevelType::ThreatApproachingFast => write!(f, "threat_approaching_fast"),
-            RadarThreatLevelType::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            RadarThreatLevelType::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -27697,9 +28482,9 @@ pub enum MaxMetSpeedSource {
 impl MaxMetSpeedSource {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
             _ => false,
         }
     }
@@ -27721,7 +28506,7 @@ impl fmt::Display for MaxMetSpeedSource {
             MaxMetSpeedSource::OnboardGps => write!(f, "onboard_gps"),
             MaxMetSpeedSource::ConnectedGps => write!(f, "connected_gps"),
             MaxMetSpeedSource::Cadence => write!(f, "cadence"),
-            MaxMetSpeedSource::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            MaxMetSpeedSource::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -27750,17 +28535,17 @@ impl Serialize for MaxMetSpeedSource {
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum MaxMetHeartRateSource {
-    /// Wrist Heart Rate Monitor
+    #[doc = "Wrist Heart Rate Monitor"]
     Whr,
-    /// Chest Strap Heart Rate Monitor
+    #[doc = "Chest Strap Heart Rate Monitor"]
     Hrm,
     UnknownVariant(u8),
 }
 impl MaxMetHeartRateSource {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
+            0i64 => true,
+            1i64 => true,
             _ => false,
         }
     }
@@ -27780,7 +28565,7 @@ impl fmt::Display for MaxMetHeartRateSource {
         match &self {
             MaxMetHeartRateSource::Whr => write!(f, "whr"),
             MaxMetHeartRateSource::Hrm => write!(f, "hrm"),
-            MaxMetHeartRateSource::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            MaxMetHeartRateSource::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -27818,11 +28603,11 @@ pub enum HrvStatus {
 impl HrvStatus {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
-            2 => true,
-            3 => true,
-            4 => true,
+            0i64 => true,
+            1i64 => true,
+            2i64 => true,
+            3i64 => true,
+            4i64 => true,
             _ => false,
         }
     }
@@ -27848,7 +28633,7 @@ impl fmt::Display for HrvStatus {
             HrvStatus::Low => write!(f, "low"),
             HrvStatus::Unbalanced => write!(f, "unbalanced"),
             HrvStatus::Balanced => write!(f, "balanced"),
-            HrvStatus::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            HrvStatus::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -27879,17 +28664,17 @@ impl Serialize for HrvStatus {
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum NoFlyTimeMode {
-    /// Standard Diver Alert Network no-fly guidance
+    #[doc = "Standard Diver Alert Network no-fly guidance"]
     Standard,
-    /// Flat 24 hour no-fly guidance
+    #[doc = "Flat 24 hour no-fly guidance"]
     Flat24Hours,
     UnknownVariant(u8),
 }
 impl NoFlyTimeMode {
     pub fn is_named_variant(value: i64) -> bool {
         match value {
-            0 => true,
-            1 => true,
+            0i64 => true,
+            1i64 => true,
             _ => false,
         }
     }
@@ -27909,7 +28694,7 @@ impl fmt::Display for NoFlyTimeMode {
         match &self {
             NoFlyTimeMode::Standard => write!(f, "standard"),
             NoFlyTimeMode::Flat24Hours => write!(f, "flat_24_hours"),
-            NoFlyTimeMode::UnknownVariant(value) => write!(f, "unknown_variant_{}", *value),
+            NoFlyTimeMode::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
 }
@@ -27933,799 +28718,5 @@ impl Serialize for NoFlyTimeMode {
         S: Serializer,
     {
         serializer.serialize_str(&self.to_string())
-    }
-}
-
-/// Describe all possible data types of a field
-///
-/// The Enum type's value is actually an enum of enums.
-#[derive(Clone, Copy, Debug)]
-pub enum FieldDataType {
-    Bool,
-    SInt8,
-    UInt8,
-    SInt16,
-    UInt16,
-    SInt32,
-    UInt32,
-    String,
-    Float32,
-    Float64,
-    UInt8z,
-    UInt16z,
-    UInt32z,
-    Byte,
-    SInt64,
-    UInt64,
-    UInt64z,
-    File,
-    MesgNum,
-    Checksum,
-    FileFlags,
-    MesgCount,
-    DateTime,
-    LocalDateTime,
-    MessageIndex,
-    DeviceIndex,
-    Gender,
-    Language,
-    LanguageBits0,
-    LanguageBits1,
-    LanguageBits2,
-    LanguageBits3,
-    LanguageBits4,
-    TimeZone,
-    DisplayMeasure,
-    DisplayHeart,
-    DisplayPower,
-    DisplayPosition,
-    Switch,
-    Sport,
-    SportBits0,
-    SportBits1,
-    SportBits2,
-    SportBits3,
-    SportBits4,
-    SportBits5,
-    SportBits6,
-    SubSport,
-    SportEvent,
-    Activity,
-    Intensity,
-    SessionTrigger,
-    AutolapTrigger,
-    LapTrigger,
-    TimeMode,
-    BacklightMode,
-    DateMode,
-    BacklightTimeout,
-    Event,
-    EventType,
-    TimerTrigger,
-    FitnessEquipmentState,
-    Tone,
-    Autoscroll,
-    ActivityClass,
-    HrZoneCalc,
-    PwrZoneCalc,
-    WktStepDuration,
-    WktStepTarget,
-    Goal,
-    GoalRecurrence,
-    GoalSource,
-    Schedule,
-    CoursePoint,
-    Manufacturer,
-    GarminProduct,
-    AntplusDeviceType,
-    AntNetwork,
-    WorkoutCapabilities,
-    BatteryStatus,
-    HrType,
-    CourseCapabilities,
-    Weight,
-    WorkoutHr,
-    WorkoutPower,
-    BpStatus,
-    UserLocalId,
-    SwimStroke,
-    ActivityType,
-    ActivitySubtype,
-    ActivityLevel,
-    Side,
-    LeftRightBalance,
-    LeftRightBalance100,
-    LengthType,
-    DayOfWeek,
-    ConnectivityCapabilities,
-    WeatherReport,
-    WeatherStatus,
-    WeatherSeverity,
-    WeatherSevereType,
-    TimeIntoDay,
-    LocaltimeIntoDay,
-    StrokeType,
-    BodyLocation,
-    SegmentLapStatus,
-    SegmentLeaderboardType,
-    SegmentDeleteStatus,
-    SegmentSelectionType,
-    SourceType,
-    LocalDeviceType,
-    BleDeviceType,
-    AntChannelId,
-    DisplayOrientation,
-    WorkoutEquipment,
-    WatchfaceMode,
-    DigitalWatchfaceLayout,
-    AnalogWatchfaceLayout,
-    RiderPositionType,
-    PowerPhaseType,
-    CameraEventType,
-    SensorType,
-    BikeLightNetworkConfigType,
-    CommTimeoutType,
-    CameraOrientationType,
-    AttitudeStage,
-    AttitudeValidity,
-    AutoSyncFrequency,
-    ExdLayout,
-    ExdDisplayType,
-    ExdDataUnits,
-    ExdQualifiers,
-    ExdDescriptors,
-    AutoActivityDetect,
-    SupportedExdScreenLayouts,
-    FitBaseType,
-    TurnType,
-    BikeLightBeamAngleMode,
-    FitBaseUnit,
-    SetType,
-    MaxMetCategory,
-    ExerciseCategory,
-    BenchPressExerciseName,
-    CalfRaiseExerciseName,
-    CardioExerciseName,
-    CarryExerciseName,
-    ChopExerciseName,
-    CoreExerciseName,
-    CrunchExerciseName,
-    CurlExerciseName,
-    DeadliftExerciseName,
-    FlyeExerciseName,
-    HipRaiseExerciseName,
-    HipStabilityExerciseName,
-    HipSwingExerciseName,
-    HyperextensionExerciseName,
-    LateralRaiseExerciseName,
-    LegCurlExerciseName,
-    LegRaiseExerciseName,
-    LungeExerciseName,
-    OlympicLiftExerciseName,
-    PlankExerciseName,
-    PlyoExerciseName,
-    PullUpExerciseName,
-    PushUpExerciseName,
-    RowExerciseName,
-    ShoulderPressExerciseName,
-    ShoulderStabilityExerciseName,
-    ShrugExerciseName,
-    SitUpExerciseName,
-    SquatExerciseName,
-    TotalBodyExerciseName,
-    TricepsExtensionExerciseName,
-    WarmUpExerciseName,
-    RunExerciseName,
-    WaterType,
-    TissueModelType,
-    DiveGasStatus,
-    DiveAlert,
-    DiveAlarmType,
-    DiveBacklightMode,
-    SleepLevel,
-    Spo2MeasurementType,
-    CcrSetpointSwitchMode,
-    DiveGasMode,
-    ProjectileType,
-    FaveroProduct,
-    SplitType,
-    ClimbProEvent,
-    GasConsumptionRateType,
-    TapSensitivity,
-    RadarThreatLevelType,
-    MaxMetSpeedSource,
-    MaxMetHeartRateSource,
-    HrvStatus,
-    NoFlyTimeMode,
-}
-impl FieldDataType {
-    #[allow(clippy::match_like_matches_macro)]
-    pub fn is_enum_type(self) -> bool {
-        match self {
-            FieldDataType::File => true,
-            FieldDataType::MesgNum => true,
-            FieldDataType::Checksum => true,
-            FieldDataType::FileFlags => true,
-            FieldDataType::MesgCount => true,
-            FieldDataType::MessageIndex => true,
-            FieldDataType::DeviceIndex => true,
-            FieldDataType::Gender => true,
-            FieldDataType::Language => true,
-            FieldDataType::LanguageBits0 => true,
-            FieldDataType::LanguageBits1 => true,
-            FieldDataType::LanguageBits2 => true,
-            FieldDataType::LanguageBits3 => true,
-            FieldDataType::LanguageBits4 => true,
-            FieldDataType::TimeZone => true,
-            FieldDataType::DisplayMeasure => true,
-            FieldDataType::DisplayHeart => true,
-            FieldDataType::DisplayPower => true,
-            FieldDataType::DisplayPosition => true,
-            FieldDataType::Switch => true,
-            FieldDataType::Sport => true,
-            FieldDataType::SportBits0 => true,
-            FieldDataType::SportBits1 => true,
-            FieldDataType::SportBits2 => true,
-            FieldDataType::SportBits3 => true,
-            FieldDataType::SportBits4 => true,
-            FieldDataType::SportBits5 => true,
-            FieldDataType::SportBits6 => true,
-            FieldDataType::SubSport => true,
-            FieldDataType::SportEvent => true,
-            FieldDataType::Activity => true,
-            FieldDataType::Intensity => true,
-            FieldDataType::SessionTrigger => true,
-            FieldDataType::AutolapTrigger => true,
-            FieldDataType::LapTrigger => true,
-            FieldDataType::TimeMode => true,
-            FieldDataType::BacklightMode => true,
-            FieldDataType::DateMode => true,
-            FieldDataType::BacklightTimeout => true,
-            FieldDataType::Event => true,
-            FieldDataType::EventType => true,
-            FieldDataType::TimerTrigger => true,
-            FieldDataType::FitnessEquipmentState => true,
-            FieldDataType::Tone => true,
-            FieldDataType::Autoscroll => true,
-            FieldDataType::ActivityClass => true,
-            FieldDataType::HrZoneCalc => true,
-            FieldDataType::PwrZoneCalc => true,
-            FieldDataType::WktStepDuration => true,
-            FieldDataType::WktStepTarget => true,
-            FieldDataType::Goal => true,
-            FieldDataType::GoalRecurrence => true,
-            FieldDataType::GoalSource => true,
-            FieldDataType::Schedule => true,
-            FieldDataType::CoursePoint => true,
-            FieldDataType::Manufacturer => true,
-            FieldDataType::GarminProduct => true,
-            FieldDataType::AntplusDeviceType => true,
-            FieldDataType::AntNetwork => true,
-            FieldDataType::WorkoutCapabilities => true,
-            FieldDataType::BatteryStatus => true,
-            FieldDataType::HrType => true,
-            FieldDataType::CourseCapabilities => true,
-            FieldDataType::Weight => true,
-            FieldDataType::WorkoutHr => true,
-            FieldDataType::WorkoutPower => true,
-            FieldDataType::BpStatus => true,
-            FieldDataType::UserLocalId => true,
-            FieldDataType::SwimStroke => true,
-            FieldDataType::ActivityType => true,
-            FieldDataType::ActivitySubtype => true,
-            FieldDataType::ActivityLevel => true,
-            FieldDataType::Side => true,
-            FieldDataType::LeftRightBalance => true,
-            FieldDataType::LeftRightBalance100 => true,
-            FieldDataType::LengthType => true,
-            FieldDataType::DayOfWeek => true,
-            FieldDataType::ConnectivityCapabilities => true,
-            FieldDataType::WeatherReport => true,
-            FieldDataType::WeatherStatus => true,
-            FieldDataType::WeatherSeverity => true,
-            FieldDataType::WeatherSevereType => true,
-            FieldDataType::StrokeType => true,
-            FieldDataType::BodyLocation => true,
-            FieldDataType::SegmentLapStatus => true,
-            FieldDataType::SegmentLeaderboardType => true,
-            FieldDataType::SegmentDeleteStatus => true,
-            FieldDataType::SegmentSelectionType => true,
-            FieldDataType::SourceType => true,
-            FieldDataType::LocalDeviceType => true,
-            FieldDataType::BleDeviceType => true,
-            FieldDataType::AntChannelId => true,
-            FieldDataType::DisplayOrientation => true,
-            FieldDataType::WorkoutEquipment => true,
-            FieldDataType::WatchfaceMode => true,
-            FieldDataType::DigitalWatchfaceLayout => true,
-            FieldDataType::AnalogWatchfaceLayout => true,
-            FieldDataType::RiderPositionType => true,
-            FieldDataType::PowerPhaseType => true,
-            FieldDataType::CameraEventType => true,
-            FieldDataType::SensorType => true,
-            FieldDataType::BikeLightNetworkConfigType => true,
-            FieldDataType::CommTimeoutType => true,
-            FieldDataType::CameraOrientationType => true,
-            FieldDataType::AttitudeStage => true,
-            FieldDataType::AttitudeValidity => true,
-            FieldDataType::AutoSyncFrequency => true,
-            FieldDataType::ExdLayout => true,
-            FieldDataType::ExdDisplayType => true,
-            FieldDataType::ExdDataUnits => true,
-            FieldDataType::ExdQualifiers => true,
-            FieldDataType::ExdDescriptors => true,
-            FieldDataType::AutoActivityDetect => true,
-            FieldDataType::SupportedExdScreenLayouts => true,
-            FieldDataType::FitBaseType => true,
-            FieldDataType::TurnType => true,
-            FieldDataType::BikeLightBeamAngleMode => true,
-            FieldDataType::FitBaseUnit => true,
-            FieldDataType::SetType => true,
-            FieldDataType::MaxMetCategory => true,
-            FieldDataType::ExerciseCategory => true,
-            FieldDataType::BenchPressExerciseName => true,
-            FieldDataType::CalfRaiseExerciseName => true,
-            FieldDataType::CardioExerciseName => true,
-            FieldDataType::CarryExerciseName => true,
-            FieldDataType::ChopExerciseName => true,
-            FieldDataType::CoreExerciseName => true,
-            FieldDataType::CrunchExerciseName => true,
-            FieldDataType::CurlExerciseName => true,
-            FieldDataType::DeadliftExerciseName => true,
-            FieldDataType::FlyeExerciseName => true,
-            FieldDataType::HipRaiseExerciseName => true,
-            FieldDataType::HipStabilityExerciseName => true,
-            FieldDataType::HipSwingExerciseName => true,
-            FieldDataType::HyperextensionExerciseName => true,
-            FieldDataType::LateralRaiseExerciseName => true,
-            FieldDataType::LegCurlExerciseName => true,
-            FieldDataType::LegRaiseExerciseName => true,
-            FieldDataType::LungeExerciseName => true,
-            FieldDataType::OlympicLiftExerciseName => true,
-            FieldDataType::PlankExerciseName => true,
-            FieldDataType::PlyoExerciseName => true,
-            FieldDataType::PullUpExerciseName => true,
-            FieldDataType::PushUpExerciseName => true,
-            FieldDataType::RowExerciseName => true,
-            FieldDataType::ShoulderPressExerciseName => true,
-            FieldDataType::ShoulderStabilityExerciseName => true,
-            FieldDataType::ShrugExerciseName => true,
-            FieldDataType::SitUpExerciseName => true,
-            FieldDataType::SquatExerciseName => true,
-            FieldDataType::TotalBodyExerciseName => true,
-            FieldDataType::TricepsExtensionExerciseName => true,
-            FieldDataType::WarmUpExerciseName => true,
-            FieldDataType::RunExerciseName => true,
-            FieldDataType::WaterType => true,
-            FieldDataType::TissueModelType => true,
-            FieldDataType::DiveGasStatus => true,
-            FieldDataType::DiveAlert => true,
-            FieldDataType::DiveAlarmType => true,
-            FieldDataType::DiveBacklightMode => true,
-            FieldDataType::SleepLevel => true,
-            FieldDataType::Spo2MeasurementType => true,
-            FieldDataType::CcrSetpointSwitchMode => true,
-            FieldDataType::DiveGasMode => true,
-            FieldDataType::ProjectileType => true,
-            FieldDataType::FaveroProduct => true,
-            FieldDataType::SplitType => true,
-            FieldDataType::ClimbProEvent => true,
-            FieldDataType::GasConsumptionRateType => true,
-            FieldDataType::TapSensitivity => true,
-            FieldDataType::RadarThreatLevelType => true,
-            FieldDataType::MaxMetSpeedSource => true,
-            FieldDataType::MaxMetHeartRateSource => true,
-            FieldDataType::HrvStatus => true,
-            FieldDataType::NoFlyTimeMode => true,
-            _ => false,
-        }
-    }
-    pub fn is_named_variant(self, value: i64) -> bool {
-        match self {
-            FieldDataType::File => File::is_named_variant(value),
-            FieldDataType::MesgNum => MesgNum::is_named_variant(value),
-            FieldDataType::Checksum => Checksum::is_named_variant(value),
-            FieldDataType::FileFlags => FileFlags::is_named_variant(value),
-            FieldDataType::MesgCount => MesgCount::is_named_variant(value),
-            FieldDataType::MessageIndex => MessageIndex::is_named_variant(value),
-            FieldDataType::DeviceIndex => DeviceIndex::is_named_variant(value),
-            FieldDataType::Gender => Gender::is_named_variant(value),
-            FieldDataType::Language => Language::is_named_variant(value),
-            FieldDataType::LanguageBits0 => LanguageBits0::is_named_variant(value),
-            FieldDataType::LanguageBits1 => LanguageBits1::is_named_variant(value),
-            FieldDataType::LanguageBits2 => LanguageBits2::is_named_variant(value),
-            FieldDataType::LanguageBits3 => LanguageBits3::is_named_variant(value),
-            FieldDataType::LanguageBits4 => LanguageBits4::is_named_variant(value),
-            FieldDataType::TimeZone => TimeZone::is_named_variant(value),
-            FieldDataType::DisplayMeasure => DisplayMeasure::is_named_variant(value),
-            FieldDataType::DisplayHeart => DisplayHeart::is_named_variant(value),
-            FieldDataType::DisplayPower => DisplayPower::is_named_variant(value),
-            FieldDataType::DisplayPosition => DisplayPosition::is_named_variant(value),
-            FieldDataType::Switch => Switch::is_named_variant(value),
-            FieldDataType::Sport => Sport::is_named_variant(value),
-            FieldDataType::SportBits0 => SportBits0::is_named_variant(value),
-            FieldDataType::SportBits1 => SportBits1::is_named_variant(value),
-            FieldDataType::SportBits2 => SportBits2::is_named_variant(value),
-            FieldDataType::SportBits3 => SportBits3::is_named_variant(value),
-            FieldDataType::SportBits4 => SportBits4::is_named_variant(value),
-            FieldDataType::SportBits5 => SportBits5::is_named_variant(value),
-            FieldDataType::SportBits6 => SportBits6::is_named_variant(value),
-            FieldDataType::SubSport => SubSport::is_named_variant(value),
-            FieldDataType::SportEvent => SportEvent::is_named_variant(value),
-            FieldDataType::Activity => Activity::is_named_variant(value),
-            FieldDataType::Intensity => Intensity::is_named_variant(value),
-            FieldDataType::SessionTrigger => SessionTrigger::is_named_variant(value),
-            FieldDataType::AutolapTrigger => AutolapTrigger::is_named_variant(value),
-            FieldDataType::LapTrigger => LapTrigger::is_named_variant(value),
-            FieldDataType::TimeMode => TimeMode::is_named_variant(value),
-            FieldDataType::BacklightMode => BacklightMode::is_named_variant(value),
-            FieldDataType::DateMode => DateMode::is_named_variant(value),
-            FieldDataType::BacklightTimeout => BacklightTimeout::is_named_variant(value),
-            FieldDataType::Event => Event::is_named_variant(value),
-            FieldDataType::EventType => EventType::is_named_variant(value),
-            FieldDataType::TimerTrigger => TimerTrigger::is_named_variant(value),
-            FieldDataType::FitnessEquipmentState => FitnessEquipmentState::is_named_variant(value),
-            FieldDataType::Tone => Tone::is_named_variant(value),
-            FieldDataType::Autoscroll => Autoscroll::is_named_variant(value),
-            FieldDataType::ActivityClass => ActivityClass::is_named_variant(value),
-            FieldDataType::HrZoneCalc => HrZoneCalc::is_named_variant(value),
-            FieldDataType::PwrZoneCalc => PwrZoneCalc::is_named_variant(value),
-            FieldDataType::WktStepDuration => WktStepDuration::is_named_variant(value),
-            FieldDataType::WktStepTarget => WktStepTarget::is_named_variant(value),
-            FieldDataType::Goal => Goal::is_named_variant(value),
-            FieldDataType::GoalRecurrence => GoalRecurrence::is_named_variant(value),
-            FieldDataType::GoalSource => GoalSource::is_named_variant(value),
-            FieldDataType::Schedule => Schedule::is_named_variant(value),
-            FieldDataType::CoursePoint => CoursePoint::is_named_variant(value),
-            FieldDataType::Manufacturer => Manufacturer::is_named_variant(value),
-            FieldDataType::GarminProduct => GarminProduct::is_named_variant(value),
-            FieldDataType::AntplusDeviceType => AntplusDeviceType::is_named_variant(value),
-            FieldDataType::AntNetwork => AntNetwork::is_named_variant(value),
-            FieldDataType::WorkoutCapabilities => WorkoutCapabilities::is_named_variant(value),
-            FieldDataType::BatteryStatus => BatteryStatus::is_named_variant(value),
-            FieldDataType::HrType => HrType::is_named_variant(value),
-            FieldDataType::CourseCapabilities => CourseCapabilities::is_named_variant(value),
-            FieldDataType::Weight => Weight::is_named_variant(value),
-            FieldDataType::WorkoutHr => WorkoutHr::is_named_variant(value),
-            FieldDataType::WorkoutPower => WorkoutPower::is_named_variant(value),
-            FieldDataType::BpStatus => BpStatus::is_named_variant(value),
-            FieldDataType::UserLocalId => UserLocalId::is_named_variant(value),
-            FieldDataType::SwimStroke => SwimStroke::is_named_variant(value),
-            FieldDataType::ActivityType => ActivityType::is_named_variant(value),
-            FieldDataType::ActivitySubtype => ActivitySubtype::is_named_variant(value),
-            FieldDataType::ActivityLevel => ActivityLevel::is_named_variant(value),
-            FieldDataType::Side => Side::is_named_variant(value),
-            FieldDataType::LeftRightBalance => LeftRightBalance::is_named_variant(value),
-            FieldDataType::LeftRightBalance100 => LeftRightBalance100::is_named_variant(value),
-            FieldDataType::LengthType => LengthType::is_named_variant(value),
-            FieldDataType::DayOfWeek => DayOfWeek::is_named_variant(value),
-            FieldDataType::ConnectivityCapabilities => {
-                ConnectivityCapabilities::is_named_variant(value)
-            }
-            FieldDataType::WeatherReport => WeatherReport::is_named_variant(value),
-            FieldDataType::WeatherStatus => WeatherStatus::is_named_variant(value),
-            FieldDataType::WeatherSeverity => WeatherSeverity::is_named_variant(value),
-            FieldDataType::WeatherSevereType => WeatherSevereType::is_named_variant(value),
-            FieldDataType::StrokeType => StrokeType::is_named_variant(value),
-            FieldDataType::BodyLocation => BodyLocation::is_named_variant(value),
-            FieldDataType::SegmentLapStatus => SegmentLapStatus::is_named_variant(value),
-            FieldDataType::SegmentLeaderboardType => {
-                SegmentLeaderboardType::is_named_variant(value)
-            }
-            FieldDataType::SegmentDeleteStatus => SegmentDeleteStatus::is_named_variant(value),
-            FieldDataType::SegmentSelectionType => SegmentSelectionType::is_named_variant(value),
-            FieldDataType::SourceType => SourceType::is_named_variant(value),
-            FieldDataType::LocalDeviceType => LocalDeviceType::is_named_variant(value),
-            FieldDataType::BleDeviceType => BleDeviceType::is_named_variant(value),
-            FieldDataType::AntChannelId => AntChannelId::is_named_variant(value),
-            FieldDataType::DisplayOrientation => DisplayOrientation::is_named_variant(value),
-            FieldDataType::WorkoutEquipment => WorkoutEquipment::is_named_variant(value),
-            FieldDataType::WatchfaceMode => WatchfaceMode::is_named_variant(value),
-            FieldDataType::DigitalWatchfaceLayout => {
-                DigitalWatchfaceLayout::is_named_variant(value)
-            }
-            FieldDataType::AnalogWatchfaceLayout => AnalogWatchfaceLayout::is_named_variant(value),
-            FieldDataType::RiderPositionType => RiderPositionType::is_named_variant(value),
-            FieldDataType::PowerPhaseType => PowerPhaseType::is_named_variant(value),
-            FieldDataType::CameraEventType => CameraEventType::is_named_variant(value),
-            FieldDataType::SensorType => SensorType::is_named_variant(value),
-            FieldDataType::BikeLightNetworkConfigType => {
-                BikeLightNetworkConfigType::is_named_variant(value)
-            }
-            FieldDataType::CommTimeoutType => CommTimeoutType::is_named_variant(value),
-            FieldDataType::CameraOrientationType => CameraOrientationType::is_named_variant(value),
-            FieldDataType::AttitudeStage => AttitudeStage::is_named_variant(value),
-            FieldDataType::AttitudeValidity => AttitudeValidity::is_named_variant(value),
-            FieldDataType::AutoSyncFrequency => AutoSyncFrequency::is_named_variant(value),
-            FieldDataType::ExdLayout => ExdLayout::is_named_variant(value),
-            FieldDataType::ExdDisplayType => ExdDisplayType::is_named_variant(value),
-            FieldDataType::ExdDataUnits => ExdDataUnits::is_named_variant(value),
-            FieldDataType::ExdQualifiers => ExdQualifiers::is_named_variant(value),
-            FieldDataType::ExdDescriptors => ExdDescriptors::is_named_variant(value),
-            FieldDataType::AutoActivityDetect => AutoActivityDetect::is_named_variant(value),
-            FieldDataType::SupportedExdScreenLayouts => {
-                SupportedExdScreenLayouts::is_named_variant(value)
-            }
-            FieldDataType::FitBaseType => FitBaseType::is_named_variant(value),
-            FieldDataType::TurnType => TurnType::is_named_variant(value),
-            FieldDataType::BikeLightBeamAngleMode => {
-                BikeLightBeamAngleMode::is_named_variant(value)
-            }
-            FieldDataType::FitBaseUnit => FitBaseUnit::is_named_variant(value),
-            FieldDataType::SetType => SetType::is_named_variant(value),
-            FieldDataType::MaxMetCategory => MaxMetCategory::is_named_variant(value),
-            FieldDataType::ExerciseCategory => ExerciseCategory::is_named_variant(value),
-            FieldDataType::BenchPressExerciseName => {
-                BenchPressExerciseName::is_named_variant(value)
-            }
-            FieldDataType::CalfRaiseExerciseName => CalfRaiseExerciseName::is_named_variant(value),
-            FieldDataType::CardioExerciseName => CardioExerciseName::is_named_variant(value),
-            FieldDataType::CarryExerciseName => CarryExerciseName::is_named_variant(value),
-            FieldDataType::ChopExerciseName => ChopExerciseName::is_named_variant(value),
-            FieldDataType::CoreExerciseName => CoreExerciseName::is_named_variant(value),
-            FieldDataType::CrunchExerciseName => CrunchExerciseName::is_named_variant(value),
-            FieldDataType::CurlExerciseName => CurlExerciseName::is_named_variant(value),
-            FieldDataType::DeadliftExerciseName => DeadliftExerciseName::is_named_variant(value),
-            FieldDataType::FlyeExerciseName => FlyeExerciseName::is_named_variant(value),
-            FieldDataType::HipRaiseExerciseName => HipRaiseExerciseName::is_named_variant(value),
-            FieldDataType::HipStabilityExerciseName => {
-                HipStabilityExerciseName::is_named_variant(value)
-            }
-            FieldDataType::HipSwingExerciseName => HipSwingExerciseName::is_named_variant(value),
-            FieldDataType::HyperextensionExerciseName => {
-                HyperextensionExerciseName::is_named_variant(value)
-            }
-            FieldDataType::LateralRaiseExerciseName => {
-                LateralRaiseExerciseName::is_named_variant(value)
-            }
-            FieldDataType::LegCurlExerciseName => LegCurlExerciseName::is_named_variant(value),
-            FieldDataType::LegRaiseExerciseName => LegRaiseExerciseName::is_named_variant(value),
-            FieldDataType::LungeExerciseName => LungeExerciseName::is_named_variant(value),
-            FieldDataType::OlympicLiftExerciseName => {
-                OlympicLiftExerciseName::is_named_variant(value)
-            }
-            FieldDataType::PlankExerciseName => PlankExerciseName::is_named_variant(value),
-            FieldDataType::PlyoExerciseName => PlyoExerciseName::is_named_variant(value),
-            FieldDataType::PullUpExerciseName => PullUpExerciseName::is_named_variant(value),
-            FieldDataType::PushUpExerciseName => PushUpExerciseName::is_named_variant(value),
-            FieldDataType::RowExerciseName => RowExerciseName::is_named_variant(value),
-            FieldDataType::ShoulderPressExerciseName => {
-                ShoulderPressExerciseName::is_named_variant(value)
-            }
-            FieldDataType::ShoulderStabilityExerciseName => {
-                ShoulderStabilityExerciseName::is_named_variant(value)
-            }
-            FieldDataType::ShrugExerciseName => ShrugExerciseName::is_named_variant(value),
-            FieldDataType::SitUpExerciseName => SitUpExerciseName::is_named_variant(value),
-            FieldDataType::SquatExerciseName => SquatExerciseName::is_named_variant(value),
-            FieldDataType::TotalBodyExerciseName => TotalBodyExerciseName::is_named_variant(value),
-            FieldDataType::TricepsExtensionExerciseName => {
-                TricepsExtensionExerciseName::is_named_variant(value)
-            }
-            FieldDataType::WarmUpExerciseName => WarmUpExerciseName::is_named_variant(value),
-            FieldDataType::RunExerciseName => RunExerciseName::is_named_variant(value),
-            FieldDataType::WaterType => WaterType::is_named_variant(value),
-            FieldDataType::TissueModelType => TissueModelType::is_named_variant(value),
-            FieldDataType::DiveGasStatus => DiveGasStatus::is_named_variant(value),
-            FieldDataType::DiveAlert => DiveAlert::is_named_variant(value),
-            FieldDataType::DiveAlarmType => DiveAlarmType::is_named_variant(value),
-            FieldDataType::DiveBacklightMode => DiveBacklightMode::is_named_variant(value),
-            FieldDataType::SleepLevel => SleepLevel::is_named_variant(value),
-            FieldDataType::Spo2MeasurementType => Spo2MeasurementType::is_named_variant(value),
-            FieldDataType::CcrSetpointSwitchMode => CcrSetpointSwitchMode::is_named_variant(value),
-            FieldDataType::DiveGasMode => DiveGasMode::is_named_variant(value),
-            FieldDataType::ProjectileType => ProjectileType::is_named_variant(value),
-            FieldDataType::FaveroProduct => FaveroProduct::is_named_variant(value),
-            FieldDataType::SplitType => SplitType::is_named_variant(value),
-            FieldDataType::ClimbProEvent => ClimbProEvent::is_named_variant(value),
-            FieldDataType::GasConsumptionRateType => {
-                GasConsumptionRateType::is_named_variant(value)
-            }
-            FieldDataType::TapSensitivity => TapSensitivity::is_named_variant(value),
-            FieldDataType::RadarThreatLevelType => RadarThreatLevelType::is_named_variant(value),
-            FieldDataType::MaxMetSpeedSource => MaxMetSpeedSource::is_named_variant(value),
-            FieldDataType::MaxMetHeartRateSource => MaxMetHeartRateSource::is_named_variant(value),
-            FieldDataType::HrvStatus => HrvStatus::is_named_variant(value),
-            FieldDataType::NoFlyTimeMode => NoFlyTimeMode::is_named_variant(value),
-            _ => false,
-        }
-    }
-}
-pub fn get_field_variant_as_string(field_type: FieldDataType, value: i64) -> String {
-    match field_type {
-        FieldDataType::File => File::from(value).to_string(),
-        FieldDataType::MesgNum => MesgNum::from(value).to_string(),
-        FieldDataType::Checksum => Checksum::from(value).to_string(),
-        FieldDataType::FileFlags => FileFlags::from(value).to_string(),
-        FieldDataType::MesgCount => MesgCount::from(value).to_string(),
-        FieldDataType::MessageIndex => MessageIndex::from(value).to_string(),
-        FieldDataType::DeviceIndex => DeviceIndex::from(value).to_string(),
-        FieldDataType::Gender => Gender::from(value).to_string(),
-        FieldDataType::Language => Language::from(value).to_string(),
-        FieldDataType::LanguageBits0 => LanguageBits0::from(value).to_string(),
-        FieldDataType::LanguageBits1 => LanguageBits1::from(value).to_string(),
-        FieldDataType::LanguageBits2 => LanguageBits2::from(value).to_string(),
-        FieldDataType::LanguageBits3 => LanguageBits3::from(value).to_string(),
-        FieldDataType::LanguageBits4 => LanguageBits4::from(value).to_string(),
-        FieldDataType::TimeZone => TimeZone::from(value).to_string(),
-        FieldDataType::DisplayMeasure => DisplayMeasure::from(value).to_string(),
-        FieldDataType::DisplayHeart => DisplayHeart::from(value).to_string(),
-        FieldDataType::DisplayPower => DisplayPower::from(value).to_string(),
-        FieldDataType::DisplayPosition => DisplayPosition::from(value).to_string(),
-        FieldDataType::Switch => Switch::from(value).to_string(),
-        FieldDataType::Sport => Sport::from(value).to_string(),
-        FieldDataType::SportBits0 => SportBits0::from(value).to_string(),
-        FieldDataType::SportBits1 => SportBits1::from(value).to_string(),
-        FieldDataType::SportBits2 => SportBits2::from(value).to_string(),
-        FieldDataType::SportBits3 => SportBits3::from(value).to_string(),
-        FieldDataType::SportBits4 => SportBits4::from(value).to_string(),
-        FieldDataType::SportBits5 => SportBits5::from(value).to_string(),
-        FieldDataType::SportBits6 => SportBits6::from(value).to_string(),
-        FieldDataType::SubSport => SubSport::from(value).to_string(),
-        FieldDataType::SportEvent => SportEvent::from(value).to_string(),
-        FieldDataType::Activity => Activity::from(value).to_string(),
-        FieldDataType::Intensity => Intensity::from(value).to_string(),
-        FieldDataType::SessionTrigger => SessionTrigger::from(value).to_string(),
-        FieldDataType::AutolapTrigger => AutolapTrigger::from(value).to_string(),
-        FieldDataType::LapTrigger => LapTrigger::from(value).to_string(),
-        FieldDataType::TimeMode => TimeMode::from(value).to_string(),
-        FieldDataType::BacklightMode => BacklightMode::from(value).to_string(),
-        FieldDataType::DateMode => DateMode::from(value).to_string(),
-        FieldDataType::BacklightTimeout => BacklightTimeout::from(value).to_string(),
-        FieldDataType::Event => Event::from(value).to_string(),
-        FieldDataType::EventType => EventType::from(value).to_string(),
-        FieldDataType::TimerTrigger => TimerTrigger::from(value).to_string(),
-        FieldDataType::FitnessEquipmentState => FitnessEquipmentState::from(value).to_string(),
-        FieldDataType::Tone => Tone::from(value).to_string(),
-        FieldDataType::Autoscroll => Autoscroll::from(value).to_string(),
-        FieldDataType::ActivityClass => ActivityClass::from(value).to_string(),
-        FieldDataType::HrZoneCalc => HrZoneCalc::from(value).to_string(),
-        FieldDataType::PwrZoneCalc => PwrZoneCalc::from(value).to_string(),
-        FieldDataType::WktStepDuration => WktStepDuration::from(value).to_string(),
-        FieldDataType::WktStepTarget => WktStepTarget::from(value).to_string(),
-        FieldDataType::Goal => Goal::from(value).to_string(),
-        FieldDataType::GoalRecurrence => GoalRecurrence::from(value).to_string(),
-        FieldDataType::GoalSource => GoalSource::from(value).to_string(),
-        FieldDataType::Schedule => Schedule::from(value).to_string(),
-        FieldDataType::CoursePoint => CoursePoint::from(value).to_string(),
-        FieldDataType::Manufacturer => Manufacturer::from(value).to_string(),
-        FieldDataType::GarminProduct => GarminProduct::from(value).to_string(),
-        FieldDataType::AntplusDeviceType => AntplusDeviceType::from(value).to_string(),
-        FieldDataType::AntNetwork => AntNetwork::from(value).to_string(),
-        FieldDataType::WorkoutCapabilities => WorkoutCapabilities::from(value).to_string(),
-        FieldDataType::BatteryStatus => BatteryStatus::from(value).to_string(),
-        FieldDataType::HrType => HrType::from(value).to_string(),
-        FieldDataType::CourseCapabilities => CourseCapabilities::from(value).to_string(),
-        FieldDataType::Weight => Weight::from(value).to_string(),
-        FieldDataType::WorkoutHr => WorkoutHr::from(value).to_string(),
-        FieldDataType::WorkoutPower => WorkoutPower::from(value).to_string(),
-        FieldDataType::BpStatus => BpStatus::from(value).to_string(),
-        FieldDataType::UserLocalId => UserLocalId::from(value).to_string(),
-        FieldDataType::SwimStroke => SwimStroke::from(value).to_string(),
-        FieldDataType::ActivityType => ActivityType::from(value).to_string(),
-        FieldDataType::ActivitySubtype => ActivitySubtype::from(value).to_string(),
-        FieldDataType::ActivityLevel => ActivityLevel::from(value).to_string(),
-        FieldDataType::Side => Side::from(value).to_string(),
-        FieldDataType::LeftRightBalance => LeftRightBalance::from(value).to_string(),
-        FieldDataType::LeftRightBalance100 => LeftRightBalance100::from(value).to_string(),
-        FieldDataType::LengthType => LengthType::from(value).to_string(),
-        FieldDataType::DayOfWeek => DayOfWeek::from(value).to_string(),
-        FieldDataType::ConnectivityCapabilities => {
-            ConnectivityCapabilities::from(value).to_string()
-        }
-        FieldDataType::WeatherReport => WeatherReport::from(value).to_string(),
-        FieldDataType::WeatherStatus => WeatherStatus::from(value).to_string(),
-        FieldDataType::WeatherSeverity => WeatherSeverity::from(value).to_string(),
-        FieldDataType::WeatherSevereType => WeatherSevereType::from(value).to_string(),
-        FieldDataType::StrokeType => StrokeType::from(value).to_string(),
-        FieldDataType::BodyLocation => BodyLocation::from(value).to_string(),
-        FieldDataType::SegmentLapStatus => SegmentLapStatus::from(value).to_string(),
-        FieldDataType::SegmentLeaderboardType => SegmentLeaderboardType::from(value).to_string(),
-        FieldDataType::SegmentDeleteStatus => SegmentDeleteStatus::from(value).to_string(),
-        FieldDataType::SegmentSelectionType => SegmentSelectionType::from(value).to_string(),
-        FieldDataType::SourceType => SourceType::from(value).to_string(),
-        FieldDataType::LocalDeviceType => LocalDeviceType::from(value).to_string(),
-        FieldDataType::BleDeviceType => BleDeviceType::from(value).to_string(),
-        FieldDataType::AntChannelId => AntChannelId::from(value).to_string(),
-        FieldDataType::DisplayOrientation => DisplayOrientation::from(value).to_string(),
-        FieldDataType::WorkoutEquipment => WorkoutEquipment::from(value).to_string(),
-        FieldDataType::WatchfaceMode => WatchfaceMode::from(value).to_string(),
-        FieldDataType::DigitalWatchfaceLayout => DigitalWatchfaceLayout::from(value).to_string(),
-        FieldDataType::AnalogWatchfaceLayout => AnalogWatchfaceLayout::from(value).to_string(),
-        FieldDataType::RiderPositionType => RiderPositionType::from(value).to_string(),
-        FieldDataType::PowerPhaseType => PowerPhaseType::from(value).to_string(),
-        FieldDataType::CameraEventType => CameraEventType::from(value).to_string(),
-        FieldDataType::SensorType => SensorType::from(value).to_string(),
-        FieldDataType::BikeLightNetworkConfigType => {
-            BikeLightNetworkConfigType::from(value).to_string()
-        }
-        FieldDataType::CommTimeoutType => CommTimeoutType::from(value).to_string(),
-        FieldDataType::CameraOrientationType => CameraOrientationType::from(value).to_string(),
-        FieldDataType::AttitudeStage => AttitudeStage::from(value).to_string(),
-        FieldDataType::AttitudeValidity => AttitudeValidity::from(value).to_string(),
-        FieldDataType::AutoSyncFrequency => AutoSyncFrequency::from(value).to_string(),
-        FieldDataType::ExdLayout => ExdLayout::from(value).to_string(),
-        FieldDataType::ExdDisplayType => ExdDisplayType::from(value).to_string(),
-        FieldDataType::ExdDataUnits => ExdDataUnits::from(value).to_string(),
-        FieldDataType::ExdQualifiers => ExdQualifiers::from(value).to_string(),
-        FieldDataType::ExdDescriptors => ExdDescriptors::from(value).to_string(),
-        FieldDataType::AutoActivityDetect => AutoActivityDetect::from(value).to_string(),
-        FieldDataType::SupportedExdScreenLayouts => {
-            SupportedExdScreenLayouts::from(value).to_string()
-        }
-        FieldDataType::FitBaseType => FitBaseType::from(value).to_string(),
-        FieldDataType::TurnType => TurnType::from(value).to_string(),
-        FieldDataType::BikeLightBeamAngleMode => BikeLightBeamAngleMode::from(value).to_string(),
-        FieldDataType::FitBaseUnit => FitBaseUnit::from(value).to_string(),
-        FieldDataType::SetType => SetType::from(value).to_string(),
-        FieldDataType::MaxMetCategory => MaxMetCategory::from(value).to_string(),
-        FieldDataType::ExerciseCategory => ExerciseCategory::from(value).to_string(),
-        FieldDataType::BenchPressExerciseName => BenchPressExerciseName::from(value).to_string(),
-        FieldDataType::CalfRaiseExerciseName => CalfRaiseExerciseName::from(value).to_string(),
-        FieldDataType::CardioExerciseName => CardioExerciseName::from(value).to_string(),
-        FieldDataType::CarryExerciseName => CarryExerciseName::from(value).to_string(),
-        FieldDataType::ChopExerciseName => ChopExerciseName::from(value).to_string(),
-        FieldDataType::CoreExerciseName => CoreExerciseName::from(value).to_string(),
-        FieldDataType::CrunchExerciseName => CrunchExerciseName::from(value).to_string(),
-        FieldDataType::CurlExerciseName => CurlExerciseName::from(value).to_string(),
-        FieldDataType::DeadliftExerciseName => DeadliftExerciseName::from(value).to_string(),
-        FieldDataType::FlyeExerciseName => FlyeExerciseName::from(value).to_string(),
-        FieldDataType::HipRaiseExerciseName => HipRaiseExerciseName::from(value).to_string(),
-        FieldDataType::HipStabilityExerciseName => {
-            HipStabilityExerciseName::from(value).to_string()
-        }
-        FieldDataType::HipSwingExerciseName => HipSwingExerciseName::from(value).to_string(),
-        FieldDataType::HyperextensionExerciseName => {
-            HyperextensionExerciseName::from(value).to_string()
-        }
-        FieldDataType::LateralRaiseExerciseName => {
-            LateralRaiseExerciseName::from(value).to_string()
-        }
-        FieldDataType::LegCurlExerciseName => LegCurlExerciseName::from(value).to_string(),
-        FieldDataType::LegRaiseExerciseName => LegRaiseExerciseName::from(value).to_string(),
-        FieldDataType::LungeExerciseName => LungeExerciseName::from(value).to_string(),
-        FieldDataType::OlympicLiftExerciseName => OlympicLiftExerciseName::from(value).to_string(),
-        FieldDataType::PlankExerciseName => PlankExerciseName::from(value).to_string(),
-        FieldDataType::PlyoExerciseName => PlyoExerciseName::from(value).to_string(),
-        FieldDataType::PullUpExerciseName => PullUpExerciseName::from(value).to_string(),
-        FieldDataType::PushUpExerciseName => PushUpExerciseName::from(value).to_string(),
-        FieldDataType::RowExerciseName => RowExerciseName::from(value).to_string(),
-        FieldDataType::ShoulderPressExerciseName => {
-            ShoulderPressExerciseName::from(value).to_string()
-        }
-        FieldDataType::ShoulderStabilityExerciseName => {
-            ShoulderStabilityExerciseName::from(value).to_string()
-        }
-        FieldDataType::ShrugExerciseName => ShrugExerciseName::from(value).to_string(),
-        FieldDataType::SitUpExerciseName => SitUpExerciseName::from(value).to_string(),
-        FieldDataType::SquatExerciseName => SquatExerciseName::from(value).to_string(),
-        FieldDataType::TotalBodyExerciseName => TotalBodyExerciseName::from(value).to_string(),
-        FieldDataType::TricepsExtensionExerciseName => {
-            TricepsExtensionExerciseName::from(value).to_string()
-        }
-        FieldDataType::WarmUpExerciseName => WarmUpExerciseName::from(value).to_string(),
-        FieldDataType::RunExerciseName => RunExerciseName::from(value).to_string(),
-        FieldDataType::WaterType => WaterType::from(value).to_string(),
-        FieldDataType::TissueModelType => TissueModelType::from(value).to_string(),
-        FieldDataType::DiveGasStatus => DiveGasStatus::from(value).to_string(),
-        FieldDataType::DiveAlert => DiveAlert::from(value).to_string(),
-        FieldDataType::DiveAlarmType => DiveAlarmType::from(value).to_string(),
-        FieldDataType::DiveBacklightMode => DiveBacklightMode::from(value).to_string(),
-        FieldDataType::SleepLevel => SleepLevel::from(value).to_string(),
-        FieldDataType::Spo2MeasurementType => Spo2MeasurementType::from(value).to_string(),
-        FieldDataType::CcrSetpointSwitchMode => CcrSetpointSwitchMode::from(value).to_string(),
-        FieldDataType::DiveGasMode => DiveGasMode::from(value).to_string(),
-        FieldDataType::ProjectileType => ProjectileType::from(value).to_string(),
-        FieldDataType::FaveroProduct => FaveroProduct::from(value).to_string(),
-        FieldDataType::SplitType => SplitType::from(value).to_string(),
-        FieldDataType::ClimbProEvent => ClimbProEvent::from(value).to_string(),
-        FieldDataType::GasConsumptionRateType => GasConsumptionRateType::from(value).to_string(),
-        FieldDataType::TapSensitivity => TapSensitivity::from(value).to_string(),
-        FieldDataType::RadarThreatLevelType => RadarThreatLevelType::from(value).to_string(),
-        FieldDataType::MaxMetSpeedSource => MaxMetSpeedSource::from(value).to_string(),
-        FieldDataType::MaxMetHeartRateSource => MaxMetHeartRateSource::from(value).to_string(),
-        FieldDataType::HrvStatus => HrvStatus::from(value).to_string(),
-        FieldDataType::NoFlyTimeMode => NoFlyTimeMode::from(value).to_string(),
-        _ => format!("Undefined{}", value),
     }
 }
