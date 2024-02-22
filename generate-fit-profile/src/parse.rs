@@ -1,5 +1,7 @@
 //! Code used to parse the Profile.xlsx file into useful data structures
 use calamine::{open_workbook, DataType, Range, Reader, Xlsx};
+use proc_macro2::Ident;
+use quote::format_ident;
 use std::collections::{BTreeMap, HashMap};
 use std::path::PathBuf;
 
@@ -28,6 +30,7 @@ impl FitProfile {
 #[derive(Clone, Debug)]
 pub struct FieldTypeDefintion {
     name: String,
+    ident: Ident,
     titlized_name: String,
     base_type: &'static str,
     is_true_enum: bool,
@@ -39,10 +42,12 @@ impl FieldTypeDefintion {
     fn new(name: &str, base_type: &'static str, comment: Option<String>) -> Self {
         let is_true_enum = base_type == "enum";
         let base_type = if is_true_enum { "u8" } else { base_type };
+        let titlized = titlecase_string(name);
 
         Self {
             name: name.to_string(),
-            titlized_name: titlecase_string(name),
+            ident: format_ident!("{}", &titlized),
+            titlized_name: titlized,
             base_type,
             is_true_enum,
             comment,
@@ -52,6 +57,10 @@ impl FieldTypeDefintion {
 
     pub fn name(&self) -> &str {
         &self.name
+    }
+
+    pub fn ident(&self) -> &Ident {
+        &self.ident
     }
 
     pub fn titlized_name(&self) -> &str {
@@ -86,6 +95,7 @@ impl FieldTypeDefintion {
 #[derive(Clone, Debug)]
 pub struct FieldTypeVariant {
     name: String,
+    ident: Ident,
     titlized_name: String,
     value: i64,
     comment: Option<String>,
@@ -102,6 +112,7 @@ impl FieldTypeVariant {
 
         Self {
             name,
+            ident: format_ident!("{}", &titlized_name),
             titlized_name,
             value,
             comment,
@@ -110,6 +121,10 @@ impl FieldTypeVariant {
 
     pub fn name(&self) -> &str {
         &self.name
+    }
+
+    pub fn ident(&self) -> &Ident {
+        &self.ident
     }
 
     pub fn titlized_name(&self) -> &str {
