@@ -48,7 +48,7 @@ pub use de::{from_bytes, from_reader};
 pub use error::{Error, ErrorKind, Result};
 
 /// Defines a set of data derived from a FIT Data message.
-#[derive(Clone, Debug, Serialize)]
+#[derive(Clone, Debug, PartialEq, PartialOrd, Serialize)]
 pub struct FitDataRecord {
     /// The kind of message the data came from, the FIT profile defines several messages and
     /// custom messages can be defined by altering the profile
@@ -93,7 +93,7 @@ impl FitDataRecord {
 }
 
 /// Stores a value and it's defined units which are set by the FIT profile during decoding
-#[derive(Clone, Debug, Serialize)]
+#[derive(Clone, Debug, PartialEq, PartialOrd, Serialize)]
 pub struct FitDataField {
     name: String,
     number: u8,
@@ -357,7 +357,7 @@ impl fmt::Display for ValueWithUnits {
 
 #[cfg(test)]
 mod tests {
-    use super::profile::{MesgNum, Message, MessageParseOptions};
+    use super::profile::{MesgNum, Message};
     use super::*;
     use std::collections::HashSet;
 
@@ -367,7 +367,8 @@ mod tests {
         let fit_data = from_bytes(&data).unwrap();
         assert_eq!(fit_data.len(), 22);
         for record in fit_data {
-            assert!(Message::parse(record).is_ok());
+            let message = Message::parse(record).unwrap();
+            assert!(message.unknown_fields().is_empty());
         }
     }
 
@@ -377,7 +378,8 @@ mod tests {
         let fit_data = from_bytes(&data).unwrap();
         assert_eq!(fit_data.len(), 6);
         for record in fit_data {
-            assert!(Message::parse(record).is_ok());
+            let message = Message::parse(record).unwrap();
+            assert!(message.unknown_fields().is_empty());
         }
     }
 
@@ -387,7 +389,8 @@ mod tests {
         let fit_data = from_bytes(&data).unwrap();
         assert_eq!(fit_data.len(), 355);
         for record in fit_data {
-            assert!(Message::parse(record).is_ok());
+            let message = Message::parse(record).unwrap();
+            assert!(message.unknown_fields().is_empty());
         }
     }
 
@@ -397,7 +400,8 @@ mod tests {
         let fit_data = from_bytes(&data).unwrap();
         assert_eq!(fit_data.len(), 3);
         for record in fit_data {
-            assert!(Message::parse(record).is_ok());
+            let message = Message::parse(record).unwrap();
+            assert!(message.unknown_fields().is_empty());
         }
     }
 
@@ -407,7 +411,8 @@ mod tests {
         let fit_data = from_bytes(&data).unwrap();
         assert_eq!(fit_data.len(), 7);
         for record in fit_data {
-            assert!(Message::parse(record).is_ok());
+            let message = Message::parse(record).unwrap();
+            assert!(message.unknown_fields().is_empty());
         }
     }
 
@@ -417,7 +422,8 @@ mod tests {
         let fit_data = from_bytes(&data).unwrap();
         assert_eq!(fit_data.len(), 6);
         for record in fit_data {
-            assert!(Message::parse(record).is_ok());
+            let message = Message::parse(record).unwrap();
+            assert!(message.unknown_fields().is_empty());
         }
     }
 
@@ -427,7 +433,8 @@ mod tests {
         let fit_data = from_bytes(&data).unwrap();
         assert_eq!(fit_data.len(), 6);
         for record in fit_data {
-            assert!(Message::parse(record).is_ok());
+            let message = Message::parse(record).unwrap();
+            assert!(message.unknown_fields().is_empty());
         }
     }
 
@@ -437,7 +444,8 @@ mod tests {
         let fit_data = from_bytes(&data).unwrap();
         assert_eq!(fit_data.len(), 6);
         for record in fit_data {
-            assert!(Message::parse(record).is_ok());
+            let message = Message::parse(record).unwrap();
+            assert!(message.unknown_fields().is_empty());
         }
     }
 
@@ -447,7 +455,8 @@ mod tests {
         let fit_data = from_bytes(&data).unwrap();
         assert_eq!(fit_data.len(), 7);
         for record in fit_data {
-            assert!(Message::parse(record).is_ok());
+            let message = Message::parse(record).unwrap();
+            assert!(message.unknown_fields().is_empty());
         }
     }
 
@@ -457,7 +466,8 @@ mod tests {
         let fit_data = from_bytes(&data).unwrap();
         assert_eq!(fit_data.len(), 7);
         for record in fit_data {
-            assert!(Message::parse(record).is_ok());
+            let message = Message::parse(record).unwrap();
+            assert!(message.unknown_fields().is_empty());
         }
     }
 
@@ -468,11 +478,9 @@ mod tests {
         let data = include_bytes!("../tests/fixtures/garmin-fenix-5-bike.fit").to_vec();
         let fit_data = from_bytes(&data).unwrap();
         assert_eq!(fit_data.len(), 143);
-        let mut options = MessageParseOptions::default();
-        options.ignore_unexpected_fields = true;
         for record in fit_data {
             if MesgNum::is_named_variant(record.kind().as_i64()) {
-                assert!(Message::parse_with_options(record, options).is_ok());
+                assert!(Message::parse(record).is_ok());
             }
         }
     }
@@ -483,11 +491,9 @@ mod tests {
         let data = include_bytes!("../tests/fixtures/sample_mulitple_header.fit").to_vec();
         let fit_data = from_bytes(&data).unwrap();
         assert_eq!(fit_data.len(), 3023);
-        let mut options = MessageParseOptions::default();
-        options.ignore_unexpected_fields = true;
         for record in fit_data {
             if MesgNum::is_named_variant(record.kind().as_i64()) {
-                assert!(Message::parse_with_options(record, options).is_ok());
+                assert!(Message::parse(record).is_ok());
             }
         }
     }

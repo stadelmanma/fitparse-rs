@@ -1,8 +1,8 @@
 #![allow(missing_docs)]
 #![doc = "Auto generated profile messages from FIT SDK Release: 21.133.00"]
 use crate::{
-    profile::{FitMessage, MesgNum, MessageParseOptions, TryFromRecordError},
-    FitDataRecord, Value,
+    profile::{FitMessage, MesgNum, TryFromRecordError},
+    FitDataField, FitDataRecord, Value,
 };
 use serde::Serialize;
 #[doc = r" All supported message types."]
@@ -128,299 +128,294 @@ pub enum Message {
     SleepAssessment(SleepAssessment),
 }
 impl Message {
-    #[doc = r" Parse a message from a [`FitDataRecord`][] using the default options."]
+    #[doc = r" Parse a message from a [`FitDataRecord`][]."]
     pub fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
-        Self::parse_with_options(record, Default::default())
-    }
-    #[doc = r" Parse a message from a [`FitDataRecord`][] using the given options."]
-    pub fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
         match record.kind() {
-            FileId::KIND => FileId::parse_with_options(record, options).map(Self::FileId),
-            FileCreator::KIND => {
-                FileCreator::parse_with_options(record, options).map(Self::FileCreator)
+            FileId::KIND => FileId::parse(record).map(Self::FileId),
+            FileCreator::KIND => FileCreator::parse(record).map(Self::FileCreator),
+            TimestampCorrelation::KIND => {
+                TimestampCorrelation::parse(record).map(Self::TimestampCorrelation)
             }
-            TimestampCorrelation::KIND => TimestampCorrelation::parse_with_options(record, options)
-                .map(Self::TimestampCorrelation),
-            Software::KIND => Software::parse_with_options(record, options).map(Self::Software),
-            SlaveDevice::KIND => {
-                SlaveDevice::parse_with_options(record, options).map(Self::SlaveDevice)
-            }
-            Capabilities::KIND => {
-                Capabilities::parse_with_options(record, options).map(Self::Capabilities)
-            }
-            FileCapabilities::KIND => {
-                FileCapabilities::parse_with_options(record, options).map(Self::FileCapabilities)
-            }
-            MesgCapabilities::KIND => {
-                MesgCapabilities::parse_with_options(record, options).map(Self::MesgCapabilities)
-            }
+            Software::KIND => Software::parse(record).map(Self::Software),
+            SlaveDevice::KIND => SlaveDevice::parse(record).map(Self::SlaveDevice),
+            Capabilities::KIND => Capabilities::parse(record).map(Self::Capabilities),
+            FileCapabilities::KIND => FileCapabilities::parse(record).map(Self::FileCapabilities),
+            MesgCapabilities::KIND => MesgCapabilities::parse(record).map(Self::MesgCapabilities),
             FieldCapabilities::KIND => {
-                FieldCapabilities::parse_with_options(record, options).map(Self::FieldCapabilities)
+                FieldCapabilities::parse(record).map(Self::FieldCapabilities)
             }
-            DeviceSettings::KIND => {
-                DeviceSettings::parse_with_options(record, options).map(Self::DeviceSettings)
-            }
-            UserProfile::KIND => {
-                UserProfile::parse_with_options(record, options).map(Self::UserProfile)
-            }
-            HrmProfile::KIND => {
-                HrmProfile::parse_with_options(record, options).map(Self::HrmProfile)
-            }
-            SdmProfile::KIND => {
-                SdmProfile::parse_with_options(record, options).map(Self::SdmProfile)
-            }
-            BikeProfile::KIND => {
-                BikeProfile::parse_with_options(record, options).map(Self::BikeProfile)
-            }
-            Connectivity::KIND => {
-                Connectivity::parse_with_options(record, options).map(Self::Connectivity)
-            }
+            DeviceSettings::KIND => DeviceSettings::parse(record).map(Self::DeviceSettings),
+            UserProfile::KIND => UserProfile::parse(record).map(Self::UserProfile),
+            HrmProfile::KIND => HrmProfile::parse(record).map(Self::HrmProfile),
+            SdmProfile::KIND => SdmProfile::parse(record).map(Self::SdmProfile),
+            BikeProfile::KIND => BikeProfile::parse(record).map(Self::BikeProfile),
+            Connectivity::KIND => Connectivity::parse(record).map(Self::Connectivity),
             WatchfaceSettings::KIND => {
-                WatchfaceSettings::parse_with_options(record, options).map(Self::WatchfaceSettings)
+                WatchfaceSettings::parse(record).map(Self::WatchfaceSettings)
             }
-            OhrSettings::KIND => {
-                OhrSettings::parse_with_options(record, options).map(Self::OhrSettings)
+            OhrSettings::KIND => OhrSettings::parse(record).map(Self::OhrSettings),
+            TimeInZone::KIND => TimeInZone::parse(record).map(Self::TimeInZone),
+            ZonesTarget::KIND => ZonesTarget::parse(record).map(Self::ZonesTarget),
+            Sport::KIND => Sport::parse(record).map(Self::Sport),
+            HrZone::KIND => HrZone::parse(record).map(Self::HrZone),
+            SpeedZone::KIND => SpeedZone::parse(record).map(Self::SpeedZone),
+            CadenceZone::KIND => CadenceZone::parse(record).map(Self::CadenceZone),
+            PowerZone::KIND => PowerZone::parse(record).map(Self::PowerZone),
+            MetZone::KIND => MetZone::parse(record).map(Self::MetZone),
+            DiveSettings::KIND => DiveSettings::parse(record).map(Self::DiveSettings),
+            DiveAlarm::KIND => DiveAlarm::parse(record).map(Self::DiveAlarm),
+            DiveApneaAlarm::KIND => DiveApneaAlarm::parse(record).map(Self::DiveApneaAlarm),
+            DiveGas::KIND => DiveGas::parse(record).map(Self::DiveGas),
+            Goal::KIND => Goal::parse(record).map(Self::Goal),
+            Activity::KIND => Activity::parse(record).map(Self::Activity),
+            Session::KIND => Session::parse(record).map(Self::Session),
+            Lap::KIND => Lap::parse(record).map(Self::Lap),
+            Length::KIND => Length::parse(record).map(Self::Length),
+            Record::KIND => Record::parse(record).map(Self::Record),
+            Event::KIND => Event::parse(record).map(Self::Event),
+            DeviceInfo::KIND => DeviceInfo::parse(record).map(Self::DeviceInfo),
+            DeviceAuxBatteryInfo::KIND => {
+                DeviceAuxBatteryInfo::parse(record).map(Self::DeviceAuxBatteryInfo)
             }
-            TimeInZone::KIND => {
-                TimeInZone::parse_with_options(record, options).map(Self::TimeInZone)
-            }
-            ZonesTarget::KIND => {
-                ZonesTarget::parse_with_options(record, options).map(Self::ZonesTarget)
-            }
-            Sport::KIND => Sport::parse_with_options(record, options).map(Self::Sport),
-            HrZone::KIND => HrZone::parse_with_options(record, options).map(Self::HrZone),
-            SpeedZone::KIND => SpeedZone::parse_with_options(record, options).map(Self::SpeedZone),
-            CadenceZone::KIND => {
-                CadenceZone::parse_with_options(record, options).map(Self::CadenceZone)
-            }
-            PowerZone::KIND => PowerZone::parse_with_options(record, options).map(Self::PowerZone),
-            MetZone::KIND => MetZone::parse_with_options(record, options).map(Self::MetZone),
-            DiveSettings::KIND => {
-                DiveSettings::parse_with_options(record, options).map(Self::DiveSettings)
-            }
-            DiveAlarm::KIND => DiveAlarm::parse_with_options(record, options).map(Self::DiveAlarm),
-            DiveApneaAlarm::KIND => {
-                DiveApneaAlarm::parse_with_options(record, options).map(Self::DiveApneaAlarm)
-            }
-            DiveGas::KIND => DiveGas::parse_with_options(record, options).map(Self::DiveGas),
-            Goal::KIND => Goal::parse_with_options(record, options).map(Self::Goal),
-            Activity::KIND => Activity::parse_with_options(record, options).map(Self::Activity),
-            Session::KIND => Session::parse_with_options(record, options).map(Self::Session),
-            Lap::KIND => Lap::parse_with_options(record, options).map(Self::Lap),
-            Length::KIND => Length::parse_with_options(record, options).map(Self::Length),
-            Record::KIND => Record::parse_with_options(record, options).map(Self::Record),
-            Event::KIND => Event::parse_with_options(record, options).map(Self::Event),
-            DeviceInfo::KIND => {
-                DeviceInfo::parse_with_options(record, options).map(Self::DeviceInfo)
-            }
-            DeviceAuxBatteryInfo::KIND => DeviceAuxBatteryInfo::parse_with_options(record, options)
-                .map(Self::DeviceAuxBatteryInfo),
-            TrainingFile::KIND => {
-                TrainingFile::parse_with_options(record, options).map(Self::TrainingFile)
-            }
+            TrainingFile::KIND => TrainingFile::parse(record).map(Self::TrainingFile),
             WeatherConditions::KIND => {
-                WeatherConditions::parse_with_options(record, options).map(Self::WeatherConditions)
+                WeatherConditions::parse(record).map(Self::WeatherConditions)
             }
-            WeatherAlert::KIND => {
-                WeatherAlert::parse_with_options(record, options).map(Self::WeatherAlert)
-            }
-            GpsMetadata::KIND => {
-                GpsMetadata::parse_with_options(record, options).map(Self::GpsMetadata)
-            }
-            CameraEvent::KIND => {
-                CameraEvent::parse_with_options(record, options).map(Self::CameraEvent)
-            }
-            GyroscopeData::KIND => {
-                GyroscopeData::parse_with_options(record, options).map(Self::GyroscopeData)
-            }
+            WeatherAlert::KIND => WeatherAlert::parse(record).map(Self::WeatherAlert),
+            GpsMetadata::KIND => GpsMetadata::parse(record).map(Self::GpsMetadata),
+            CameraEvent::KIND => CameraEvent::parse(record).map(Self::CameraEvent),
+            GyroscopeData::KIND => GyroscopeData::parse(record).map(Self::GyroscopeData),
             AccelerometerData::KIND => {
-                AccelerometerData::parse_with_options(record, options).map(Self::AccelerometerData)
+                AccelerometerData::parse(record).map(Self::AccelerometerData)
             }
-            MagnetometerData::KIND => {
-                MagnetometerData::parse_with_options(record, options).map(Self::MagnetometerData)
-            }
-            BarometerData::KIND => {
-                BarometerData::parse_with_options(record, options).map(Self::BarometerData)
-            }
+            MagnetometerData::KIND => MagnetometerData::parse(record).map(Self::MagnetometerData),
+            BarometerData::KIND => BarometerData::parse(record).map(Self::BarometerData),
             ThreeDSensorCalibration::KIND => {
-                ThreeDSensorCalibration::parse_with_options(record, options)
-                    .map(Self::ThreeDSensorCalibration)
+                ThreeDSensorCalibration::parse(record).map(Self::ThreeDSensorCalibration)
             }
             OneDSensorCalibration::KIND => {
-                OneDSensorCalibration::parse_with_options(record, options)
-                    .map(Self::OneDSensorCalibration)
+                OneDSensorCalibration::parse(record).map(Self::OneDSensorCalibration)
             }
-            VideoFrame::KIND => {
-                VideoFrame::parse_with_options(record, options).map(Self::VideoFrame)
-            }
-            ObdiiData::KIND => ObdiiData::parse_with_options(record, options).map(Self::ObdiiData),
-            NmeaSentence::KIND => {
-                NmeaSentence::parse_with_options(record, options).map(Self::NmeaSentence)
-            }
-            AviationAttitude::KIND => {
-                AviationAttitude::parse_with_options(record, options).map(Self::AviationAttitude)
-            }
-            Video::KIND => Video::parse_with_options(record, options).map(Self::Video),
-            VideoTitle::KIND => {
-                VideoTitle::parse_with_options(record, options).map(Self::VideoTitle)
-            }
-            VideoDescription::KIND => {
-                VideoDescription::parse_with_options(record, options).map(Self::VideoDescription)
-            }
-            VideoClip::KIND => VideoClip::parse_with_options(record, options).map(Self::VideoClip),
-            Set::KIND => Set::parse_with_options(record, options).map(Self::Set),
-            Jump::KIND => Jump::parse_with_options(record, options).map(Self::Jump),
-            Split::KIND => Split::parse_with_options(record, options).map(Self::Split),
-            SplitSummary::KIND => {
-                SplitSummary::parse_with_options(record, options).map(Self::SplitSummary)
-            }
-            ClimbPro::KIND => ClimbPro::parse_with_options(record, options).map(Self::ClimbPro),
-            FieldDescription::KIND => {
-                FieldDescription::parse_with_options(record, options).map(Self::FieldDescription)
-            }
-            DeveloperDataId::KIND => {
-                DeveloperDataId::parse_with_options(record, options).map(Self::DeveloperDataId)
-            }
-            Course::KIND => Course::parse_with_options(record, options).map(Self::Course),
-            CoursePoint::KIND => {
-                CoursePoint::parse_with_options(record, options).map(Self::CoursePoint)
-            }
-            SegmentId::KIND => SegmentId::parse_with_options(record, options).map(Self::SegmentId),
+            VideoFrame::KIND => VideoFrame::parse(record).map(Self::VideoFrame),
+            ObdiiData::KIND => ObdiiData::parse(record).map(Self::ObdiiData),
+            NmeaSentence::KIND => NmeaSentence::parse(record).map(Self::NmeaSentence),
+            AviationAttitude::KIND => AviationAttitude::parse(record).map(Self::AviationAttitude),
+            Video::KIND => Video::parse(record).map(Self::Video),
+            VideoTitle::KIND => VideoTitle::parse(record).map(Self::VideoTitle),
+            VideoDescription::KIND => VideoDescription::parse(record).map(Self::VideoDescription),
+            VideoClip::KIND => VideoClip::parse(record).map(Self::VideoClip),
+            Set::KIND => Set::parse(record).map(Self::Set),
+            Jump::KIND => Jump::parse(record).map(Self::Jump),
+            Split::KIND => Split::parse(record).map(Self::Split),
+            SplitSummary::KIND => SplitSummary::parse(record).map(Self::SplitSummary),
+            ClimbPro::KIND => ClimbPro::parse(record).map(Self::ClimbPro),
+            FieldDescription::KIND => FieldDescription::parse(record).map(Self::FieldDescription),
+            DeveloperDataId::KIND => DeveloperDataId::parse(record).map(Self::DeveloperDataId),
+            Course::KIND => Course::parse(record).map(Self::Course),
+            CoursePoint::KIND => CoursePoint::parse(record).map(Self::CoursePoint),
+            SegmentId::KIND => SegmentId::parse(record).map(Self::SegmentId),
             SegmentLeaderboardEntry::KIND => {
-                SegmentLeaderboardEntry::parse_with_options(record, options)
-                    .map(Self::SegmentLeaderboardEntry)
+                SegmentLeaderboardEntry::parse(record).map(Self::SegmentLeaderboardEntry)
             }
-            SegmentPoint::KIND => {
-                SegmentPoint::parse_with_options(record, options).map(Self::SegmentPoint)
+            SegmentPoint::KIND => SegmentPoint::parse(record).map(Self::SegmentPoint),
+            SegmentLap::KIND => SegmentLap::parse(record).map(Self::SegmentLap),
+            SegmentFile::KIND => SegmentFile::parse(record).map(Self::SegmentFile),
+            Workout::KIND => Workout::parse(record).map(Self::Workout),
+            WorkoutSession::KIND => WorkoutSession::parse(record).map(Self::WorkoutSession),
+            WorkoutStep::KIND => WorkoutStep::parse(record).map(Self::WorkoutStep),
+            ExerciseTitle::KIND => ExerciseTitle::parse(record).map(Self::ExerciseTitle),
+            Schedule::KIND => Schedule::parse(record).map(Self::Schedule),
+            Totals::KIND => Totals::parse(record).map(Self::Totals),
+            WeightScale::KIND => WeightScale::parse(record).map(Self::WeightScale),
+            BloodPressure::KIND => BloodPressure::parse(record).map(Self::BloodPressure),
+            MonitoringInfo::KIND => MonitoringInfo::parse(record).map(Self::MonitoringInfo),
+            Monitoring::KIND => Monitoring::parse(record).map(Self::Monitoring),
+            MonitoringHrData::KIND => MonitoringHrData::parse(record).map(Self::MonitoringHrData),
+            Spo2Data::KIND => Spo2Data::parse(record).map(Self::Spo2Data),
+            Hr::KIND => Hr::parse(record).map(Self::Hr),
+            StressLevel::KIND => StressLevel::parse(record).map(Self::StressLevel),
+            MaxMetData::KIND => MaxMetData::parse(record).map(Self::MaxMetData),
+            HsaBodyBatteryData::KIND => {
+                HsaBodyBatteryData::parse(record).map(Self::HsaBodyBatteryData)
             }
-            SegmentLap::KIND => {
-                SegmentLap::parse_with_options(record, options).map(Self::SegmentLap)
+            HsaEvent::KIND => HsaEvent::parse(record).map(Self::HsaEvent),
+            HsaAccelerometerData::KIND => {
+                HsaAccelerometerData::parse(record).map(Self::HsaAccelerometerData)
             }
-            SegmentFile::KIND => {
-                SegmentFile::parse_with_options(record, options).map(Self::SegmentFile)
+            HsaGyroscopeData::KIND => HsaGyroscopeData::parse(record).map(Self::HsaGyroscopeData),
+            HsaStepData::KIND => HsaStepData::parse(record).map(Self::HsaStepData),
+            HsaSpo2Data::KIND => HsaSpo2Data::parse(record).map(Self::HsaSpo2Data),
+            HsaStressData::KIND => HsaStressData::parse(record).map(Self::HsaStressData),
+            HsaRespirationData::KIND => {
+                HsaRespirationData::parse(record).map(Self::HsaRespirationData)
             }
-            Workout::KIND => Workout::parse_with_options(record, options).map(Self::Workout),
-            WorkoutSession::KIND => {
-                WorkoutSession::parse_with_options(record, options).map(Self::WorkoutSession)
+            HsaHeartRateData::KIND => HsaHeartRateData::parse(record).map(Self::HsaHeartRateData),
+            HsaConfigurationData::KIND => {
+                HsaConfigurationData::parse(record).map(Self::HsaConfigurationData)
             }
-            WorkoutStep::KIND => {
-                WorkoutStep::parse_with_options(record, options).map(Self::WorkoutStep)
-            }
-            ExerciseTitle::KIND => {
-                ExerciseTitle::parse_with_options(record, options).map(Self::ExerciseTitle)
-            }
-            Schedule::KIND => Schedule::parse_with_options(record, options).map(Self::Schedule),
-            Totals::KIND => Totals::parse_with_options(record, options).map(Self::Totals),
-            WeightScale::KIND => {
-                WeightScale::parse_with_options(record, options).map(Self::WeightScale)
-            }
-            BloodPressure::KIND => {
-                BloodPressure::parse_with_options(record, options).map(Self::BloodPressure)
-            }
-            MonitoringInfo::KIND => {
-                MonitoringInfo::parse_with_options(record, options).map(Self::MonitoringInfo)
-            }
-            Monitoring::KIND => {
-                Monitoring::parse_with_options(record, options).map(Self::Monitoring)
-            }
-            MonitoringHrData::KIND => {
-                MonitoringHrData::parse_with_options(record, options).map(Self::MonitoringHrData)
-            }
-            Spo2Data::KIND => Spo2Data::parse_with_options(record, options).map(Self::Spo2Data),
-            Hr::KIND => Hr::parse_with_options(record, options).map(Self::Hr),
-            StressLevel::KIND => {
-                StressLevel::parse_with_options(record, options).map(Self::StressLevel)
-            }
-            MaxMetData::KIND => {
-                MaxMetData::parse_with_options(record, options).map(Self::MaxMetData)
-            }
-            HsaBodyBatteryData::KIND => HsaBodyBatteryData::parse_with_options(record, options)
-                .map(Self::HsaBodyBatteryData),
-            HsaEvent::KIND => HsaEvent::parse_with_options(record, options).map(Self::HsaEvent),
-            HsaAccelerometerData::KIND => HsaAccelerometerData::parse_with_options(record, options)
-                .map(Self::HsaAccelerometerData),
-            HsaGyroscopeData::KIND => {
-                HsaGyroscopeData::parse_with_options(record, options).map(Self::HsaGyroscopeData)
-            }
-            HsaStepData::KIND => {
-                HsaStepData::parse_with_options(record, options).map(Self::HsaStepData)
-            }
-            HsaSpo2Data::KIND => {
-                HsaSpo2Data::parse_with_options(record, options).map(Self::HsaSpo2Data)
-            }
-            HsaStressData::KIND => {
-                HsaStressData::parse_with_options(record, options).map(Self::HsaStressData)
-            }
-            HsaRespirationData::KIND => HsaRespirationData::parse_with_options(record, options)
-                .map(Self::HsaRespirationData),
-            HsaHeartRateData::KIND => {
-                HsaHeartRateData::parse_with_options(record, options).map(Self::HsaHeartRateData)
-            }
-            HsaConfigurationData::KIND => HsaConfigurationData::parse_with_options(record, options)
-                .map(Self::HsaConfigurationData),
             HsaWristTemperatureData::KIND => {
-                HsaWristTemperatureData::parse_with_options(record, options)
-                    .map(Self::HsaWristTemperatureData)
+                HsaWristTemperatureData::parse(record).map(Self::HsaWristTemperatureData)
             }
-            MemoGlob::KIND => MemoGlob::parse_with_options(record, options).map(Self::MemoGlob),
-            SleepLevel::KIND => {
-                SleepLevel::parse_with_options(record, options).map(Self::SleepLevel)
-            }
-            AntChannelId::KIND => {
-                AntChannelId::parse_with_options(record, options).map(Self::AntChannelId)
-            }
-            AntRx::KIND => AntRx::parse_with_options(record, options).map(Self::AntRx),
-            AntTx::KIND => AntTx::parse_with_options(record, options).map(Self::AntTx),
+            MemoGlob::KIND => MemoGlob::parse(record).map(Self::MemoGlob),
+            SleepLevel::KIND => SleepLevel::parse(record).map(Self::SleepLevel),
+            AntChannelId::KIND => AntChannelId::parse(record).map(Self::AntChannelId),
+            AntRx::KIND => AntRx::parse(record).map(Self::AntRx),
+            AntTx::KIND => AntTx::parse(record).map(Self::AntTx),
             ExdScreenConfiguration::KIND => {
-                ExdScreenConfiguration::parse_with_options(record, options)
-                    .map(Self::ExdScreenConfiguration)
+                ExdScreenConfiguration::parse(record).map(Self::ExdScreenConfiguration)
             }
             ExdDataFieldConfiguration::KIND => {
-                ExdDataFieldConfiguration::parse_with_options(record, options)
-                    .map(Self::ExdDataFieldConfiguration)
+                ExdDataFieldConfiguration::parse(record).map(Self::ExdDataFieldConfiguration)
             }
             ExdDataConceptConfiguration::KIND => {
-                ExdDataConceptConfiguration::parse_with_options(record, options)
-                    .map(Self::ExdDataConceptConfiguration)
+                ExdDataConceptConfiguration::parse(record).map(Self::ExdDataConceptConfiguration)
             }
-            DiveSummary::KIND => {
-                DiveSummary::parse_with_options(record, options).map(Self::DiveSummary)
-            }
-            AadAccelFeatures::KIND => {
-                AadAccelFeatures::parse_with_options(record, options).map(Self::AadAccelFeatures)
-            }
-            Hrv::KIND => Hrv::parse_with_options(record, options).map(Self::Hrv),
-            BeatIntervals::KIND => {
-                BeatIntervals::parse_with_options(record, options).map(Self::BeatIntervals)
-            }
-            HrvStatusSummary::KIND => {
-                HrvStatusSummary::parse_with_options(record, options).map(Self::HrvStatusSummary)
-            }
-            HrvValue::KIND => HrvValue::parse_with_options(record, options).map(Self::HrvValue),
-            RawBbi::KIND => RawBbi::parse_with_options(record, options).map(Self::RawBbi),
-            RespirationRate::KIND => {
-                RespirationRate::parse_with_options(record, options).map(Self::RespirationRate)
-            }
+            DiveSummary::KIND => DiveSummary::parse(record).map(Self::DiveSummary),
+            AadAccelFeatures::KIND => AadAccelFeatures::parse(record).map(Self::AadAccelFeatures),
+            Hrv::KIND => Hrv::parse(record).map(Self::Hrv),
+            BeatIntervals::KIND => BeatIntervals::parse(record).map(Self::BeatIntervals),
+            HrvStatusSummary::KIND => HrvStatusSummary::parse(record).map(Self::HrvStatusSummary),
+            HrvValue::KIND => HrvValue::parse(record).map(Self::HrvValue),
+            RawBbi::KIND => RawBbi::parse(record).map(Self::RawBbi),
+            RespirationRate::KIND => RespirationRate::parse(record).map(Self::RespirationRate),
             ChronoShotSession::KIND => {
-                ChronoShotSession::parse_with_options(record, options).map(Self::ChronoShotSession)
+                ChronoShotSession::parse(record).map(Self::ChronoShotSession)
             }
-            ChronoShotData::KIND => {
-                ChronoShotData::parse_with_options(record, options).map(Self::ChronoShotData)
-            }
-            TankUpdate::KIND => {
-                TankUpdate::parse_with_options(record, options).map(Self::TankUpdate)
-            }
-            TankSummary::KIND => {
-                TankSummary::parse_with_options(record, options).map(Self::TankSummary)
-            }
-            SleepAssessment::KIND => {
-                SleepAssessment::parse_with_options(record, options).map(Self::SleepAssessment)
-            }
+            ChronoShotData::KIND => ChronoShotData::parse(record).map(Self::ChronoShotData),
+            TankUpdate::KIND => TankUpdate::parse(record).map(Self::TankUpdate),
+            TankSummary::KIND => TankSummary::parse(record).map(Self::TankSummary),
+            SleepAssessment::KIND => SleepAssessment::parse(record).map(Self::SleepAssessment),
             kind => Err(TryFromRecordError::UnsupportedMessageKind(kind)),
         }
+    }
+    #[doc = r" Return all fields of the message that are not defined by the profile."]
+    pub fn unknown_fields(&self) -> &[FitDataField] {
+        match self {
+            Self::FileId(message) => &message.unknown_fields,
+            Self::FileCreator(message) => &message.unknown_fields,
+            Self::TimestampCorrelation(message) => &message.unknown_fields,
+            Self::Software(message) => &message.unknown_fields,
+            Self::SlaveDevice(message) => &message.unknown_fields,
+            Self::Capabilities(message) => &message.unknown_fields,
+            Self::FileCapabilities(message) => &message.unknown_fields,
+            Self::MesgCapabilities(message) => &message.unknown_fields,
+            Self::FieldCapabilities(message) => &message.unknown_fields,
+            Self::DeviceSettings(message) => &message.unknown_fields,
+            Self::UserProfile(message) => &message.unknown_fields,
+            Self::HrmProfile(message) => &message.unknown_fields,
+            Self::SdmProfile(message) => &message.unknown_fields,
+            Self::BikeProfile(message) => &message.unknown_fields,
+            Self::Connectivity(message) => &message.unknown_fields,
+            Self::WatchfaceSettings(message) => &message.unknown_fields,
+            Self::OhrSettings(message) => &message.unknown_fields,
+            Self::TimeInZone(message) => &message.unknown_fields,
+            Self::ZonesTarget(message) => &message.unknown_fields,
+            Self::Sport(message) => &message.unknown_fields,
+            Self::HrZone(message) => &message.unknown_fields,
+            Self::SpeedZone(message) => &message.unknown_fields,
+            Self::CadenceZone(message) => &message.unknown_fields,
+            Self::PowerZone(message) => &message.unknown_fields,
+            Self::MetZone(message) => &message.unknown_fields,
+            Self::DiveSettings(message) => &message.unknown_fields,
+            Self::DiveAlarm(message) => &message.unknown_fields,
+            Self::DiveApneaAlarm(message) => &message.unknown_fields,
+            Self::DiveGas(message) => &message.unknown_fields,
+            Self::Goal(message) => &message.unknown_fields,
+            Self::Activity(message) => &message.unknown_fields,
+            Self::Session(message) => &message.unknown_fields,
+            Self::Lap(message) => &message.unknown_fields,
+            Self::Length(message) => &message.unknown_fields,
+            Self::Record(message) => &message.unknown_fields,
+            Self::Event(message) => &message.unknown_fields,
+            Self::DeviceInfo(message) => &message.unknown_fields,
+            Self::DeviceAuxBatteryInfo(message) => &message.unknown_fields,
+            Self::TrainingFile(message) => &message.unknown_fields,
+            Self::WeatherConditions(message) => &message.unknown_fields,
+            Self::WeatherAlert(message) => &message.unknown_fields,
+            Self::GpsMetadata(message) => &message.unknown_fields,
+            Self::CameraEvent(message) => &message.unknown_fields,
+            Self::GyroscopeData(message) => &message.unknown_fields,
+            Self::AccelerometerData(message) => &message.unknown_fields,
+            Self::MagnetometerData(message) => &message.unknown_fields,
+            Self::BarometerData(message) => &message.unknown_fields,
+            Self::ThreeDSensorCalibration(message) => &message.unknown_fields,
+            Self::OneDSensorCalibration(message) => &message.unknown_fields,
+            Self::VideoFrame(message) => &message.unknown_fields,
+            Self::ObdiiData(message) => &message.unknown_fields,
+            Self::NmeaSentence(message) => &message.unknown_fields,
+            Self::AviationAttitude(message) => &message.unknown_fields,
+            Self::Video(message) => &message.unknown_fields,
+            Self::VideoTitle(message) => &message.unknown_fields,
+            Self::VideoDescription(message) => &message.unknown_fields,
+            Self::VideoClip(message) => &message.unknown_fields,
+            Self::Set(message) => &message.unknown_fields,
+            Self::Jump(message) => &message.unknown_fields,
+            Self::Split(message) => &message.unknown_fields,
+            Self::SplitSummary(message) => &message.unknown_fields,
+            Self::ClimbPro(message) => &message.unknown_fields,
+            Self::FieldDescription(message) => &message.unknown_fields,
+            Self::DeveloperDataId(message) => &message.unknown_fields,
+            Self::Course(message) => &message.unknown_fields,
+            Self::CoursePoint(message) => &message.unknown_fields,
+            Self::SegmentId(message) => &message.unknown_fields,
+            Self::SegmentLeaderboardEntry(message) => &message.unknown_fields,
+            Self::SegmentPoint(message) => &message.unknown_fields,
+            Self::SegmentLap(message) => &message.unknown_fields,
+            Self::SegmentFile(message) => &message.unknown_fields,
+            Self::Workout(message) => &message.unknown_fields,
+            Self::WorkoutSession(message) => &message.unknown_fields,
+            Self::WorkoutStep(message) => &message.unknown_fields,
+            Self::ExerciseTitle(message) => &message.unknown_fields,
+            Self::Schedule(message) => &message.unknown_fields,
+            Self::Totals(message) => &message.unknown_fields,
+            Self::WeightScale(message) => &message.unknown_fields,
+            Self::BloodPressure(message) => &message.unknown_fields,
+            Self::MonitoringInfo(message) => &message.unknown_fields,
+            Self::Monitoring(message) => &message.unknown_fields,
+            Self::MonitoringHrData(message) => &message.unknown_fields,
+            Self::Spo2Data(message) => &message.unknown_fields,
+            Self::Hr(message) => &message.unknown_fields,
+            Self::StressLevel(message) => &message.unknown_fields,
+            Self::MaxMetData(message) => &message.unknown_fields,
+            Self::HsaBodyBatteryData(message) => &message.unknown_fields,
+            Self::HsaEvent(message) => &message.unknown_fields,
+            Self::HsaAccelerometerData(message) => &message.unknown_fields,
+            Self::HsaGyroscopeData(message) => &message.unknown_fields,
+            Self::HsaStepData(message) => &message.unknown_fields,
+            Self::HsaSpo2Data(message) => &message.unknown_fields,
+            Self::HsaStressData(message) => &message.unknown_fields,
+            Self::HsaRespirationData(message) => &message.unknown_fields,
+            Self::HsaHeartRateData(message) => &message.unknown_fields,
+            Self::HsaConfigurationData(message) => &message.unknown_fields,
+            Self::HsaWristTemperatureData(message) => &message.unknown_fields,
+            Self::MemoGlob(message) => &message.unknown_fields,
+            Self::SleepLevel(message) => &message.unknown_fields,
+            Self::AntChannelId(message) => &message.unknown_fields,
+            Self::AntRx(message) => &message.unknown_fields,
+            Self::AntTx(message) => &message.unknown_fields,
+            Self::ExdScreenConfiguration(message) => &message.unknown_fields,
+            Self::ExdDataFieldConfiguration(message) => &message.unknown_fields,
+            Self::ExdDataConceptConfiguration(message) => &message.unknown_fields,
+            Self::DiveSummary(message) => &message.unknown_fields,
+            Self::AadAccelFeatures(message) => &message.unknown_fields,
+            Self::Hrv(message) => &message.unknown_fields,
+            Self::BeatIntervals(message) => &message.unknown_fields,
+            Self::HrvStatusSummary(message) => &message.unknown_fields,
+            Self::HrvValue(message) => &message.unknown_fields,
+            Self::RawBbi(message) => &message.unknown_fields,
+            Self::RespirationRate(message) => &message.unknown_fields,
+            Self::ChronoShotSession(message) => &message.unknown_fields,
+            Self::ChronoShotData(message) => &message.unknown_fields,
+            Self::TankUpdate(message) => &message.unknown_fields,
+            Self::TankSummary(message) => &message.unknown_fields,
+            Self::SleepAssessment(message) => &message.unknown_fields,
+        }
+    }
+}
+impl TryFrom<FitDataRecord> for Message {
+    type Error = TryFromRecordError;
+    fn try_from(record: FitDataRecord) -> Result<Self, Self::Error> {
+        Self::parse(record)
     }
 }
 #[doc = "Must be first message in file."]
@@ -433,14 +428,13 @@ pub struct FileId {
     pub r#time_created: Option<Value>,
     pub r#number: Option<Value>,
     pub r#product_name: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for FileId {
     const NAME: &'static str = "FileId";
     const KIND: MesgNum = MesgNum::FileId;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -451,6 +445,7 @@ impl FitMessage for FileId {
         let mut r#time_created = None;
         let mut r#number = None;
         let mut r#product_name = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -475,9 +470,7 @@ impl FitMessage for FileId {
                     r#product_name = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -489,6 +482,7 @@ impl FitMessage for FileId {
             r#time_created,
             r#number,
             r#product_name,
+            unknown_fields,
         })
     }
 }
@@ -502,19 +496,19 @@ impl TryFrom<FitDataRecord> for FileId {
 pub struct FileCreator {
     pub r#software_version: Option<Value>,
     pub r#hardware_version: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for FileCreator {
     const NAME: &'static str = "FileCreator";
     const KIND: MesgNum = MesgNum::FileCreator;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
         let mut r#software_version = None;
         let mut r#hardware_version = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -524,15 +518,14 @@ impl FitMessage for FileCreator {
                     r#hardware_version = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
         Ok(Self {
             r#software_version,
             r#hardware_version,
+            unknown_fields,
         })
     }
 }
@@ -551,14 +544,13 @@ pub struct TimestampCorrelation {
     pub r#timestamp_ms: Option<Value>,
     pub r#system_timestamp_ms: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for TimestampCorrelation {
     const NAME: &'static str = "TimestampCorrelation";
     const KIND: MesgNum = MesgNum::TimestampCorrelation;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -569,6 +561,7 @@ impl FitMessage for TimestampCorrelation {
         let mut r#timestamp_ms = None;
         let mut r#system_timestamp_ms = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -593,9 +586,7 @@ impl FitMessage for TimestampCorrelation {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -607,6 +598,7 @@ impl FitMessage for TimestampCorrelation {
             r#timestamp_ms,
             r#system_timestamp_ms,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -621,20 +613,20 @@ pub struct Software {
     pub r#version: Option<Value>,
     pub r#part_number: Option<Value>,
     pub r#message_index: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for Software {
     const NAME: &'static str = "Software";
     const KIND: MesgNum = MesgNum::Software;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
         let mut r#version = None;
         let mut r#part_number = None;
         let mut r#message_index = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 3u8 => {
@@ -647,9 +639,7 @@ impl FitMessage for Software {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -657,6 +647,7 @@ impl FitMessage for Software {
             r#version,
             r#part_number,
             r#message_index,
+            unknown_fields,
         })
     }
 }
@@ -670,19 +661,19 @@ impl TryFrom<FitDataRecord> for Software {
 pub struct SlaveDevice {
     pub r#manufacturer: Option<Value>,
     pub r#product: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for SlaveDevice {
     const NAME: &'static str = "SlaveDevice";
     const KIND: MesgNum = MesgNum::SlaveDevice;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
         let mut r#manufacturer = None;
         let mut r#product = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -692,15 +683,14 @@ impl FitMessage for SlaveDevice {
                     r#product = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
         Ok(Self {
             r#manufacturer,
             r#product,
+            unknown_fields,
         })
     }
 }
@@ -716,14 +706,13 @@ pub struct Capabilities {
     pub r#sports: Option<Value>,
     pub r#workouts_supported: Option<Value>,
     pub r#connectivity_supported: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for Capabilities {
     const NAME: &'static str = "Capabilities";
     const KIND: MesgNum = MesgNum::Capabilities;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -731,6 +720,7 @@ impl FitMessage for Capabilities {
         let mut r#sports = None;
         let mut r#workouts_supported = None;
         let mut r#connectivity_supported = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -746,9 +736,7 @@ impl FitMessage for Capabilities {
                     r#connectivity_supported = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -757,6 +745,7 @@ impl FitMessage for Capabilities {
             r#sports,
             r#workouts_supported,
             r#connectivity_supported,
+            unknown_fields,
         })
     }
 }
@@ -774,14 +763,13 @@ pub struct FileCapabilities {
     pub r#max_count: Option<Value>,
     pub r#max_size: Option<Value>,
     pub r#message_index: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for FileCapabilities {
     const NAME: &'static str = "FileCapabilities";
     const KIND: MesgNum = MesgNum::FileCapabilities;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -791,6 +779,7 @@ impl FitMessage for FileCapabilities {
         let mut r#max_count = None;
         let mut r#max_size = None;
         let mut r#message_index = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -812,9 +801,7 @@ impl FitMessage for FileCapabilities {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -825,6 +812,7 @@ impl FitMessage for FileCapabilities {
             r#max_count,
             r#max_size,
             r#message_index,
+            unknown_fields,
         })
     }
 }
@@ -841,14 +829,13 @@ pub struct MesgCapabilities {
     pub r#count_type: Option<Value>,
     pub r#count: Option<Value>,
     pub r#message_index: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for MesgCapabilities {
     const NAME: &'static str = "MesgCapabilities";
     const KIND: MesgNum = MesgNum::MesgCapabilities;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -857,6 +844,7 @@ impl FitMessage for MesgCapabilities {
         let mut r#count_type = None;
         let mut r#count = None;
         let mut r#message_index = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -875,9 +863,7 @@ impl FitMessage for MesgCapabilities {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -887,6 +873,7 @@ impl FitMessage for MesgCapabilities {
             r#count_type,
             r#count,
             r#message_index,
+            unknown_fields,
         })
     }
 }
@@ -903,14 +890,13 @@ pub struct FieldCapabilities {
     pub r#field_num: Option<Value>,
     pub r#count: Option<Value>,
     pub r#message_index: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for FieldCapabilities {
     const NAME: &'static str = "FieldCapabilities";
     const KIND: MesgNum = MesgNum::FieldCapabilities;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -919,6 +905,7 @@ impl FitMessage for FieldCapabilities {
         let mut r#field_num = None;
         let mut r#count = None;
         let mut r#message_index = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -937,9 +924,7 @@ impl FitMessage for FieldCapabilities {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -949,6 +934,7 @@ impl FitMessage for FieldCapabilities {
             r#field_num,
             r#count,
             r#message_index,
+            unknown_fields,
         })
     }
 }
@@ -984,14 +970,13 @@ pub struct DeviceSettings {
     pub r#smart_notification_display_orientation: Option<Value>,
     pub r#tap_interface: Option<Value>,
     pub r#tap_sensitivity: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for DeviceSettings {
     const NAME: &'static str = "DeviceSettings";
     const KIND: MesgNum = MesgNum::DeviceSettings;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -1019,6 +1004,7 @@ impl FitMessage for DeviceSettings {
         let mut r#smart_notification_display_orientation = None;
         let mut r#tap_interface = None;
         let mut r#tap_sensitivity = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -1094,9 +1080,7 @@ impl FitMessage for DeviceSettings {
                     r#tap_sensitivity = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -1125,6 +1109,7 @@ impl FitMessage for DeviceSettings {
             r#smart_notification_display_orientation,
             r#tap_interface,
             r#tap_sensitivity,
+            unknown_fields,
         })
     }
 }
@@ -1165,14 +1150,13 @@ pub struct UserProfile {
     pub r#depth_setting: Option<Value>,
     pub r#dive_count: Option<Value>,
     pub r#message_index: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for UserProfile {
     const NAME: &'static str = "UserProfile";
     const KIND: MesgNum = MesgNum::UserProfile;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -1205,6 +1189,7 @@ impl FitMessage for UserProfile {
         let mut r#depth_setting = None;
         let mut r#dive_count = None;
         let mut r#message_index = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -1295,9 +1280,7 @@ impl FitMessage for UserProfile {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -1331,6 +1314,7 @@ impl FitMessage for UserProfile {
             r#depth_setting,
             r#dive_count,
             r#message_index,
+            unknown_fields,
         })
     }
 }
@@ -1347,14 +1331,13 @@ pub struct HrmProfile {
     pub r#log_hrv: Option<Value>,
     pub r#hrm_ant_id_trans_type: Option<Value>,
     pub r#message_index: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for HrmProfile {
     const NAME: &'static str = "HrmProfile";
     const KIND: MesgNum = MesgNum::HrmProfile;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -1363,6 +1346,7 @@ impl FitMessage for HrmProfile {
         let mut r#log_hrv = None;
         let mut r#hrm_ant_id_trans_type = None;
         let mut r#message_index = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -1381,9 +1365,7 @@ impl FitMessage for HrmProfile {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -1393,6 +1375,7 @@ impl FitMessage for HrmProfile {
             r#log_hrv,
             r#hrm_ant_id_trans_type,
             r#message_index,
+            unknown_fields,
         })
     }
 }
@@ -1412,14 +1395,13 @@ pub struct SdmProfile {
     pub r#sdm_ant_id_trans_type: Option<Value>,
     pub r#odometer_rollover: Option<Value>,
     pub r#message_index: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for SdmProfile {
     const NAME: &'static str = "SdmProfile";
     const KIND: MesgNum = MesgNum::SdmProfile;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -1431,6 +1413,7 @@ impl FitMessage for SdmProfile {
         let mut r#sdm_ant_id_trans_type = None;
         let mut r#odometer_rollover = None;
         let mut r#message_index = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -1458,9 +1441,7 @@ impl FitMessage for SdmProfile {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -1473,6 +1454,7 @@ impl FitMessage for SdmProfile {
             r#sdm_ant_id_trans_type,
             r#odometer_rollover,
             r#message_index,
+            unknown_fields,
         })
     }
 }
@@ -1516,14 +1498,13 @@ pub struct BikeProfile {
     pub r#rear_gear: Option<Value>,
     pub r#shimano_di2_enabled: Option<Value>,
     pub r#message_index: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for BikeProfile {
     const NAME: &'static str = "BikeProfile";
     const KIND: MesgNum = MesgNum::BikeProfile;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -1559,6 +1540,7 @@ impl FitMessage for BikeProfile {
         let mut r#rear_gear = None;
         let mut r#shimano_di2_enabled = None;
         let mut r#message_index = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -1658,9 +1640,7 @@ impl FitMessage for BikeProfile {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -1697,6 +1677,7 @@ impl FitMessage for BikeProfile {
             r#rear_gear,
             r#shimano_di2_enabled,
             r#message_index,
+            unknown_fields,
         })
     }
 }
@@ -1721,14 +1702,13 @@ pub struct Connectivity {
     pub r#gps_ephemeris_download_enabled: Option<Value>,
     pub r#incident_detection_enabled: Option<Value>,
     pub r#grouptrack_enabled: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for Connectivity {
     const NAME: &'static str = "Connectivity";
     const KIND: MesgNum = MesgNum::Connectivity;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -1745,6 +1725,7 @@ impl FitMessage for Connectivity {
         let mut r#gps_ephemeris_download_enabled = None;
         let mut r#incident_detection_enabled = None;
         let mut r#grouptrack_enabled = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -1787,9 +1768,7 @@ impl FitMessage for Connectivity {
                     r#grouptrack_enabled = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -1807,6 +1786,7 @@ impl FitMessage for Connectivity {
             r#gps_ephemeris_download_enabled,
             r#incident_detection_enabled,
             r#grouptrack_enabled,
+            unknown_fields,
         })
     }
 }
@@ -1821,20 +1801,20 @@ pub struct WatchfaceSettings {
     pub r#mode: Option<Value>,
     pub r#layout: Option<Value>,
     pub r#message_index: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for WatchfaceSettings {
     const NAME: &'static str = "WatchfaceSettings";
     const KIND: MesgNum = MesgNum::WatchfaceSettings;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
         let mut r#mode = None;
         let mut r#layout = None;
         let mut r#message_index = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -1847,9 +1827,7 @@ impl FitMessage for WatchfaceSettings {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -1857,6 +1835,7 @@ impl FitMessage for WatchfaceSettings {
             r#mode,
             r#layout,
             r#message_index,
+            unknown_fields,
         })
     }
 }
@@ -1870,19 +1849,19 @@ impl TryFrom<FitDataRecord> for WatchfaceSettings {
 pub struct OhrSettings {
     pub r#enabled: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for OhrSettings {
     const NAME: &'static str = "OhrSettings";
     const KIND: MesgNum = MesgNum::OhrSettings;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
         let mut r#enabled = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -1892,15 +1871,14 @@ impl FitMessage for OhrSettings {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
         Ok(Self {
             r#enabled,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -1929,14 +1907,13 @@ pub struct TimeInZone {
     pub r#pwr_calc_type: Option<Value>,
     pub r#functional_threshold_power: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for TimeInZone {
     const NAME: &'static str = "TimeInZone";
     const KIND: MesgNum = MesgNum::TimeInZone;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -1957,6 +1934,7 @@ impl FitMessage for TimeInZone {
         let mut r#pwr_calc_type = None;
         let mut r#functional_threshold_power = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -2011,9 +1989,7 @@ impl FitMessage for TimeInZone {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -2035,6 +2011,7 @@ impl FitMessage for TimeInZone {
             r#pwr_calc_type,
             r#functional_threshold_power,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -2051,14 +2028,13 @@ pub struct ZonesTarget {
     pub r#functional_threshold_power: Option<Value>,
     pub r#hr_calc_type: Option<Value>,
     pub r#pwr_calc_type: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for ZonesTarget {
     const NAME: &'static str = "ZonesTarget";
     const KIND: MesgNum = MesgNum::ZonesTarget;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -2067,6 +2043,7 @@ impl FitMessage for ZonesTarget {
         let mut r#functional_threshold_power = None;
         let mut r#hr_calc_type = None;
         let mut r#pwr_calc_type = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 1u8 => {
@@ -2085,9 +2062,7 @@ impl FitMessage for ZonesTarget {
                     r#pwr_calc_type = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -2097,6 +2072,7 @@ impl FitMessage for ZonesTarget {
             r#functional_threshold_power,
             r#hr_calc_type,
             r#pwr_calc_type,
+            unknown_fields,
         })
     }
 }
@@ -2111,20 +2087,20 @@ pub struct Sport {
     pub r#sport: Option<Value>,
     pub r#sub_sport: Option<Value>,
     pub r#name: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for Sport {
     const NAME: &'static str = "Sport";
     const KIND: MesgNum = MesgNum::Sport;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
         let mut r#sport = None;
         let mut r#sub_sport = None;
         let mut r#name = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -2137,9 +2113,7 @@ impl FitMessage for Sport {
                     r#name = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -2147,6 +2121,7 @@ impl FitMessage for Sport {
             r#sport,
             r#sub_sport,
             r#name,
+            unknown_fields,
         })
     }
 }
@@ -2161,20 +2136,20 @@ pub struct HrZone {
     pub r#high_bpm: Option<Value>,
     pub r#name: Option<Value>,
     pub r#message_index: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for HrZone {
     const NAME: &'static str = "HrZone";
     const KIND: MesgNum = MesgNum::HrZone;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
         let mut r#high_bpm = None;
         let mut r#name = None;
         let mut r#message_index = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 1u8 => {
@@ -2187,9 +2162,7 @@ impl FitMessage for HrZone {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -2197,6 +2170,7 @@ impl FitMessage for HrZone {
             r#high_bpm,
             r#name,
             r#message_index,
+            unknown_fields,
         })
     }
 }
@@ -2211,20 +2185,20 @@ pub struct SpeedZone {
     pub r#high_value: Option<Value>,
     pub r#name: Option<Value>,
     pub r#message_index: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for SpeedZone {
     const NAME: &'static str = "SpeedZone";
     const KIND: MesgNum = MesgNum::SpeedZone;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
         let mut r#high_value = None;
         let mut r#name = None;
         let mut r#message_index = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -2237,9 +2211,7 @@ impl FitMessage for SpeedZone {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -2247,6 +2219,7 @@ impl FitMessage for SpeedZone {
             r#high_value,
             r#name,
             r#message_index,
+            unknown_fields,
         })
     }
 }
@@ -2261,20 +2234,20 @@ pub struct CadenceZone {
     pub r#high_value: Option<Value>,
     pub r#name: Option<Value>,
     pub r#message_index: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for CadenceZone {
     const NAME: &'static str = "CadenceZone";
     const KIND: MesgNum = MesgNum::CadenceZone;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
         let mut r#high_value = None;
         let mut r#name = None;
         let mut r#message_index = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -2287,9 +2260,7 @@ impl FitMessage for CadenceZone {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -2297,6 +2268,7 @@ impl FitMessage for CadenceZone {
             r#high_value,
             r#name,
             r#message_index,
+            unknown_fields,
         })
     }
 }
@@ -2311,20 +2283,20 @@ pub struct PowerZone {
     pub r#high_value: Option<Value>,
     pub r#name: Option<Value>,
     pub r#message_index: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for PowerZone {
     const NAME: &'static str = "PowerZone";
     const KIND: MesgNum = MesgNum::PowerZone;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
         let mut r#high_value = None;
         let mut r#name = None;
         let mut r#message_index = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 1u8 => {
@@ -2337,9 +2309,7 @@ impl FitMessage for PowerZone {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -2347,6 +2317,7 @@ impl FitMessage for PowerZone {
             r#high_value,
             r#name,
             r#message_index,
+            unknown_fields,
         })
     }
 }
@@ -2362,14 +2333,13 @@ pub struct MetZone {
     pub r#calories: Option<Value>,
     pub r#fat_calories: Option<Value>,
     pub r#message_index: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for MetZone {
     const NAME: &'static str = "MetZone";
     const KIND: MesgNum = MesgNum::MetZone;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -2377,6 +2347,7 @@ impl FitMessage for MetZone {
         let mut r#calories = None;
         let mut r#fat_calories = None;
         let mut r#message_index = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 1u8 => {
@@ -2392,9 +2363,7 @@ impl FitMessage for MetZone {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -2403,6 +2372,7 @@ impl FitMessage for MetZone {
             r#calories,
             r#fat_calories,
             r#message_index,
+            unknown_fields,
         })
     }
 }
@@ -2449,14 +2419,13 @@ pub struct DiveSettings {
     pub r#no_fly_time_mode: Option<Value>,
     pub r#timestamp: Option<Value>,
     pub r#message_index: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for DiveSettings {
     const NAME: &'static str = "DiveSettings";
     const KIND: MesgNum = MesgNum::DiveSettings;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -2495,6 +2464,7 @@ impl FitMessage for DiveSettings {
         let mut r#no_fly_time_mode = None;
         let mut r#timestamp = None;
         let mut r#message_index = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -2603,9 +2573,7 @@ impl FitMessage for DiveSettings {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -2645,6 +2613,7 @@ impl FitMessage for DiveSettings {
             r#no_fly_time_mode,
             r#timestamp,
             r#message_index,
+            unknown_fields,
         })
     }
 }
@@ -2669,14 +2638,13 @@ pub struct DiveAlarm {
     pub r#repeating: Option<Value>,
     pub r#speed: Option<Value>,
     pub r#message_index: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for DiveAlarm {
     const NAME: &'static str = "DiveAlarm";
     const KIND: MesgNum = MesgNum::DiveAlarm;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -2693,6 +2661,7 @@ impl FitMessage for DiveAlarm {
         let mut r#repeating = None;
         let mut r#speed = None;
         let mut r#message_index = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -2735,9 +2704,7 @@ impl FitMessage for DiveAlarm {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -2755,6 +2722,7 @@ impl FitMessage for DiveAlarm {
             r#repeating,
             r#speed,
             r#message_index,
+            unknown_fields,
         })
     }
 }
@@ -2779,14 +2747,13 @@ pub struct DiveApneaAlarm {
     pub r#repeating: Option<Value>,
     pub r#speed: Option<Value>,
     pub r#message_index: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for DiveApneaAlarm {
     const NAME: &'static str = "DiveApneaAlarm";
     const KIND: MesgNum = MesgNum::DiveApneaAlarm;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -2803,6 +2770,7 @@ impl FitMessage for DiveApneaAlarm {
         let mut r#repeating = None;
         let mut r#speed = None;
         let mut r#message_index = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -2845,9 +2813,7 @@ impl FitMessage for DiveApneaAlarm {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -2865,6 +2831,7 @@ impl FitMessage for DiveApneaAlarm {
             r#repeating,
             r#speed,
             r#message_index,
+            unknown_fields,
         })
     }
 }
@@ -2881,14 +2848,13 @@ pub struct DiveGas {
     pub r#status: Option<Value>,
     pub r#mode: Option<Value>,
     pub r#message_index: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for DiveGas {
     const NAME: &'static str = "DiveGas";
     const KIND: MesgNum = MesgNum::DiveGas;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -2897,6 +2863,7 @@ impl FitMessage for DiveGas {
         let mut r#status = None;
         let mut r#mode = None;
         let mut r#message_index = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -2915,9 +2882,7 @@ impl FitMessage for DiveGas {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -2927,6 +2892,7 @@ impl FitMessage for DiveGas {
             r#status,
             r#mode,
             r#message_index,
+            unknown_fields,
         })
     }
 }
@@ -2951,14 +2917,13 @@ pub struct Goal {
     pub r#enabled: Option<Value>,
     pub r#source: Option<Value>,
     pub r#message_index: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for Goal {
     const NAME: &'static str = "Goal";
     const KIND: MesgNum = MesgNum::Goal;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -2975,6 +2940,7 @@ impl FitMessage for Goal {
         let mut r#enabled = None;
         let mut r#source = None;
         let mut r#message_index = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -3017,9 +2983,7 @@ impl FitMessage for Goal {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -3037,6 +3001,7 @@ impl FitMessage for Goal {
             r#enabled,
             r#source,
             r#message_index,
+            unknown_fields,
         })
     }
 }
@@ -3056,14 +3021,13 @@ pub struct Activity {
     pub r#local_timestamp: Option<Value>,
     pub r#event_group: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for Activity {
     const NAME: &'static str = "Activity";
     const KIND: MesgNum = MesgNum::Activity;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -3075,6 +3039,7 @@ impl FitMessage for Activity {
         let mut r#local_timestamp = None;
         let mut r#event_group = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -3102,9 +3067,7 @@ impl FitMessage for Activity {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -3117,6 +3080,7 @@ impl FitMessage for Activity {
             r#local_timestamp,
             r#event_group,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -3282,14 +3246,13 @@ pub struct Session {
     pub r#max_core_temperature: Option<Value>,
     pub r#timestamp: Option<Value>,
     pub r#message_index: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for Session {
     const NAME: &'static str = "Session";
     const KIND: MesgNum = MesgNum::Session;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -3447,6 +3410,7 @@ impl FitMessage for Session {
         let mut r#max_core_temperature = None;
         let mut r#timestamp = None;
         let mut r#message_index = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -3912,9 +3876,7 @@ impl FitMessage for Session {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -4073,6 +4035,7 @@ impl FitMessage for Session {
             r#max_core_temperature,
             r#timestamp,
             r#message_index,
+            unknown_fields,
         })
     }
 }
@@ -4207,14 +4170,13 @@ pub struct Lap {
     pub r#max_core_temperature: Option<Value>,
     pub r#timestamp: Option<Value>,
     pub r#message_index: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for Lap {
     const NAME: &'static str = "Lap";
     const KIND: MesgNum = MesgNum::Lap;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -4341,6 +4303,7 @@ impl FitMessage for Lap {
         let mut r#max_core_temperature = None;
         let mut r#timestamp = None;
         let mut r#message_index = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -4713,9 +4676,7 @@ impl FitMessage for Lap {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -4843,6 +4804,7 @@ impl FitMessage for Lap {
             r#max_core_temperature,
             r#timestamp,
             r#message_index,
+            unknown_fields,
         })
     }
 }
@@ -4876,14 +4838,13 @@ pub struct Length {
     pub r#max_respiration_rate: Option<Value>,
     pub r#timestamp: Option<Value>,
     pub r#message_index: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for Length {
     const NAME: &'static str = "Length";
     const KIND: MesgNum = MesgNum::Length;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -4909,6 +4870,7 @@ impl FitMessage for Length {
         let mut r#max_respiration_rate = None;
         let mut r#timestamp = None;
         let mut r#message_index = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -4978,9 +4940,7 @@ impl FitMessage for Length {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -5007,6 +4967,7 @@ impl FitMessage for Length {
             r#max_respiration_rate,
             r#timestamp,
             r#message_index,
+            unknown_fields,
         })
     }
 }
@@ -5102,14 +5063,13 @@ pub struct Record {
     pub r#po2: Option<Value>,
     pub r#core_temperature: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for Record {
     const NAME: &'static str = "Record";
     const KIND: MesgNum = MesgNum::Record;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -5197,6 +5157,7 @@ impl FitMessage for Record {
         let mut r#po2 = None;
         let mut r#core_temperature = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -5452,9 +5413,7 @@ impl FitMessage for Record {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -5543,6 +5502,7 @@ impl FitMessage for Record {
             r#po2,
             r#core_temperature,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -5573,14 +5533,13 @@ pub struct Event {
     pub r#radar_threat_avg_approach_speed: Option<Value>,
     pub r#radar_threat_max_approach_speed: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for Event {
     const NAME: &'static str = "Event";
     const KIND: MesgNum = MesgNum::Event;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -5603,6 +5562,7 @@ impl FitMessage for Event {
         let mut r#radar_threat_avg_approach_speed = None;
         let mut r#radar_threat_max_approach_speed = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -5663,9 +5623,7 @@ impl FitMessage for Event {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -5689,6 +5647,7 @@ impl FitMessage for Event {
             r#radar_threat_avg_approach_speed,
             r#radar_threat_max_approach_speed,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -5719,14 +5678,13 @@ pub struct DeviceInfo {
     pub r#product_name: Option<Value>,
     pub r#battery_level: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for DeviceInfo {
     const NAME: &'static str = "DeviceInfo";
     const KIND: MesgNum = MesgNum::DeviceInfo;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -5749,6 +5707,7 @@ impl FitMessage for DeviceInfo {
         let mut r#product_name = None;
         let mut r#battery_level = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -5809,9 +5768,7 @@ impl FitMessage for DeviceInfo {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -5835,6 +5792,7 @@ impl FitMessage for DeviceInfo {
             r#product_name,
             r#battery_level,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -5851,14 +5809,13 @@ pub struct DeviceAuxBatteryInfo {
     pub r#battery_status: Option<Value>,
     pub r#battery_identifier: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for DeviceAuxBatteryInfo {
     const NAME: &'static str = "DeviceAuxBatteryInfo";
     const KIND: MesgNum = MesgNum::DeviceAuxBatteryInfo;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -5867,6 +5824,7 @@ impl FitMessage for DeviceAuxBatteryInfo {
         let mut r#battery_status = None;
         let mut r#battery_identifier = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -5885,9 +5843,7 @@ impl FitMessage for DeviceAuxBatteryInfo {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -5897,6 +5853,7 @@ impl FitMessage for DeviceAuxBatteryInfo {
             r#battery_status,
             r#battery_identifier,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -5915,14 +5872,13 @@ pub struct TrainingFile {
     pub r#serial_number: Option<Value>,
     pub r#time_created: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for TrainingFile {
     const NAME: &'static str = "TrainingFile";
     const KIND: MesgNum = MesgNum::TrainingFile;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -5932,6 +5888,7 @@ impl FitMessage for TrainingFile {
         let mut r#serial_number = None;
         let mut r#time_created = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -5953,9 +5910,7 @@ impl FitMessage for TrainingFile {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -5966,6 +5921,7 @@ impl FitMessage for TrainingFile {
             r#serial_number,
             r#time_created,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -5993,14 +5949,13 @@ pub struct WeatherConditions {
     pub r#high_temperature: Option<Value>,
     pub r#low_temperature: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for WeatherConditions {
     const NAME: &'static str = "WeatherConditions";
     const KIND: MesgNum = MesgNum::WeatherConditions;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -6020,6 +5975,7 @@ impl FitMessage for WeatherConditions {
         let mut r#high_temperature = None;
         let mut r#low_temperature = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -6071,9 +6027,7 @@ impl FitMessage for WeatherConditions {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -6094,6 +6048,7 @@ impl FitMessage for WeatherConditions {
             r#high_temperature,
             r#low_temperature,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -6111,14 +6066,13 @@ pub struct WeatherAlert {
     pub r#severity: Option<Value>,
     pub r#type: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for WeatherAlert {
     const NAME: &'static str = "WeatherAlert";
     const KIND: MesgNum = MesgNum::WeatherAlert;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -6128,6 +6082,7 @@ impl FitMessage for WeatherAlert {
         let mut r#severity = None;
         let mut r#type = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -6149,9 +6104,7 @@ impl FitMessage for WeatherAlert {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -6162,6 +6115,7 @@ impl FitMessage for WeatherAlert {
             r#severity,
             r#type,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -6182,14 +6136,13 @@ pub struct GpsMetadata {
     pub r#utc_timestamp: Option<Value>,
     pub r#velocity: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for GpsMetadata {
     const NAME: &'static str = "GpsMetadata";
     const KIND: MesgNum = MesgNum::GpsMetadata;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -6202,6 +6155,7 @@ impl FitMessage for GpsMetadata {
         let mut r#utc_timestamp = None;
         let mut r#velocity = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -6232,9 +6186,7 @@ impl FitMessage for GpsMetadata {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -6248,6 +6200,7 @@ impl FitMessage for GpsMetadata {
             r#utc_timestamp,
             r#velocity,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -6264,14 +6217,13 @@ pub struct CameraEvent {
     pub r#camera_file_uuid: Option<Value>,
     pub r#camera_orientation: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for CameraEvent {
     const NAME: &'static str = "CameraEvent";
     const KIND: MesgNum = MesgNum::CameraEvent;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -6280,6 +6232,7 @@ impl FitMessage for CameraEvent {
         let mut r#camera_file_uuid = None;
         let mut r#camera_orientation = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -6298,9 +6251,7 @@ impl FitMessage for CameraEvent {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -6310,6 +6261,7 @@ impl FitMessage for CameraEvent {
             r#camera_file_uuid,
             r#camera_orientation,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -6330,14 +6282,13 @@ pub struct GyroscopeData {
     pub r#calibrated_gyro_y: Option<Value>,
     pub r#calibrated_gyro_z: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for GyroscopeData {
     const NAME: &'static str = "GyroscopeData";
     const KIND: MesgNum = MesgNum::GyroscopeData;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -6350,6 +6301,7 @@ impl FitMessage for GyroscopeData {
         let mut r#calibrated_gyro_y = None;
         let mut r#calibrated_gyro_z = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -6380,9 +6332,7 @@ impl FitMessage for GyroscopeData {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -6396,6 +6346,7 @@ impl FitMessage for GyroscopeData {
             r#calibrated_gyro_y,
             r#calibrated_gyro_z,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -6419,14 +6370,13 @@ pub struct AccelerometerData {
     pub r#compressed_calibrated_accel_y: Option<Value>,
     pub r#compressed_calibrated_accel_z: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for AccelerometerData {
     const NAME: &'static str = "AccelerometerData";
     const KIND: MesgNum = MesgNum::AccelerometerData;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -6442,6 +6392,7 @@ impl FitMessage for AccelerometerData {
         let mut r#compressed_calibrated_accel_y = None;
         let mut r#compressed_calibrated_accel_z = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -6481,9 +6432,7 @@ impl FitMessage for AccelerometerData {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -6500,6 +6449,7 @@ impl FitMessage for AccelerometerData {
             r#compressed_calibrated_accel_y,
             r#compressed_calibrated_accel_z,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -6520,14 +6470,13 @@ pub struct MagnetometerData {
     pub r#calibrated_mag_y: Option<Value>,
     pub r#calibrated_mag_z: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for MagnetometerData {
     const NAME: &'static str = "MagnetometerData";
     const KIND: MesgNum = MesgNum::MagnetometerData;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -6540,6 +6489,7 @@ impl FitMessage for MagnetometerData {
         let mut r#calibrated_mag_y = None;
         let mut r#calibrated_mag_z = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -6570,9 +6520,7 @@ impl FitMessage for MagnetometerData {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -6586,6 +6534,7 @@ impl FitMessage for MagnetometerData {
             r#calibrated_mag_y,
             r#calibrated_mag_z,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -6601,14 +6550,13 @@ pub struct BarometerData {
     pub r#sample_time_offset: Option<Value>,
     pub r#baro_pres: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for BarometerData {
     const NAME: &'static str = "BarometerData";
     const KIND: MesgNum = MesgNum::BarometerData;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -6616,6 +6564,7 @@ impl FitMessage for BarometerData {
         let mut r#sample_time_offset = None;
         let mut r#baro_pres = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -6631,9 +6580,7 @@ impl FitMessage for BarometerData {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -6642,6 +6589,7 @@ impl FitMessage for BarometerData {
             r#sample_time_offset,
             r#baro_pres,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -6660,14 +6608,13 @@ pub struct ThreeDSensorCalibration {
     pub r#offset_cal: Option<Value>,
     pub r#orientation_matrix: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for ThreeDSensorCalibration {
     const NAME: &'static str = "ThreeDSensorCalibration";
     const KIND: MesgNum = MesgNum::ThreeDSensorCalibration;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -6678,6 +6625,7 @@ impl FitMessage for ThreeDSensorCalibration {
         let mut r#offset_cal = None;
         let mut r#orientation_matrix = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -6702,9 +6650,7 @@ impl FitMessage for ThreeDSensorCalibration {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -6716,6 +6662,7 @@ impl FitMessage for ThreeDSensorCalibration {
             r#offset_cal,
             r#orientation_matrix,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -6733,14 +6680,13 @@ pub struct OneDSensorCalibration {
     pub r#level_shift: Option<Value>,
     pub r#offset_cal: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for OneDSensorCalibration {
     const NAME: &'static str = "OneDSensorCalibration";
     const KIND: MesgNum = MesgNum::OneDSensorCalibration;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -6750,6 +6696,7 @@ impl FitMessage for OneDSensorCalibration {
         let mut r#level_shift = None;
         let mut r#offset_cal = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -6771,9 +6718,7 @@ impl FitMessage for OneDSensorCalibration {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -6784,6 +6729,7 @@ impl FitMessage for OneDSensorCalibration {
             r#level_shift,
             r#offset_cal,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -6798,20 +6744,20 @@ pub struct VideoFrame {
     pub r#timestamp_ms: Option<Value>,
     pub r#frame_number: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for VideoFrame {
     const NAME: &'static str = "VideoFrame";
     const KIND: MesgNum = MesgNum::VideoFrame;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
         let mut r#timestamp_ms = None;
         let mut r#frame_number = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -6824,9 +6770,7 @@ impl FitMessage for VideoFrame {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -6834,6 +6778,7 @@ impl FitMessage for VideoFrame {
             r#timestamp_ms,
             r#frame_number,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -6854,14 +6799,13 @@ pub struct ObdiiData {
     pub r#start_timestamp: Option<Value>,
     pub r#start_timestamp_ms: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for ObdiiData {
     const NAME: &'static str = "ObdiiData";
     const KIND: MesgNum = MesgNum::ObdiiData;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -6874,6 +6818,7 @@ impl FitMessage for ObdiiData {
         let mut r#start_timestamp = None;
         let mut r#start_timestamp_ms = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -6904,9 +6849,7 @@ impl FitMessage for ObdiiData {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -6920,6 +6863,7 @@ impl FitMessage for ObdiiData {
             r#start_timestamp,
             r#start_timestamp_ms,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -6934,20 +6878,20 @@ pub struct NmeaSentence {
     pub r#timestamp_ms: Option<Value>,
     pub r#sentence: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for NmeaSentence {
     const NAME: &'static str = "NmeaSentence";
     const KIND: MesgNum = MesgNum::NmeaSentence;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
         let mut r#timestamp_ms = None;
         let mut r#sentence = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -6960,9 +6904,7 @@ impl FitMessage for NmeaSentence {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -6970,6 +6912,7 @@ impl FitMessage for NmeaSentence {
             r#timestamp_ms,
             r#sentence,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -6993,14 +6936,13 @@ pub struct AviationAttitude {
     pub r#track: Option<Value>,
     pub r#validity: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for AviationAttitude {
     const NAME: &'static str = "AviationAttitude";
     const KIND: MesgNum = MesgNum::AviationAttitude;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -7016,6 +6958,7 @@ impl FitMessage for AviationAttitude {
         let mut r#track = None;
         let mut r#validity = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -7055,9 +6998,7 @@ impl FitMessage for AviationAttitude {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -7074,6 +7015,7 @@ impl FitMessage for AviationAttitude {
             r#track,
             r#validity,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -7088,20 +7030,20 @@ pub struct Video {
     pub r#url: Option<Value>,
     pub r#hosting_provider: Option<Value>,
     pub r#duration: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for Video {
     const NAME: &'static str = "Video";
     const KIND: MesgNum = MesgNum::Video;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
         let mut r#url = None;
         let mut r#hosting_provider = None;
         let mut r#duration = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -7114,9 +7056,7 @@ impl FitMessage for Video {
                     r#duration = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -7124,6 +7064,7 @@ impl FitMessage for Video {
             r#url,
             r#hosting_provider,
             r#duration,
+            unknown_fields,
         })
     }
 }
@@ -7138,20 +7079,20 @@ pub struct VideoTitle {
     pub r#message_count: Option<Value>,
     pub r#text: Option<Value>,
     pub r#message_index: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for VideoTitle {
     const NAME: &'static str = "VideoTitle";
     const KIND: MesgNum = MesgNum::VideoTitle;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
         let mut r#message_count = None;
         let mut r#text = None;
         let mut r#message_index = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -7164,9 +7105,7 @@ impl FitMessage for VideoTitle {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -7174,6 +7113,7 @@ impl FitMessage for VideoTitle {
             r#message_count,
             r#text,
             r#message_index,
+            unknown_fields,
         })
     }
 }
@@ -7188,20 +7128,20 @@ pub struct VideoDescription {
     pub r#message_count: Option<Value>,
     pub r#text: Option<Value>,
     pub r#message_index: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for VideoDescription {
     const NAME: &'static str = "VideoDescription";
     const KIND: MesgNum = MesgNum::VideoDescription;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
         let mut r#message_count = None;
         let mut r#text = None;
         let mut r#message_index = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -7214,9 +7154,7 @@ impl FitMessage for VideoDescription {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -7224,6 +7162,7 @@ impl FitMessage for VideoDescription {
             r#message_count,
             r#text,
             r#message_index,
+            unknown_fields,
         })
     }
 }
@@ -7242,14 +7181,13 @@ pub struct VideoClip {
     pub r#end_timestamp_ms: Option<Value>,
     pub r#clip_start: Option<Value>,
     pub r#clip_end: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for VideoClip {
     const NAME: &'static str = "VideoClip";
     const KIND: MesgNum = MesgNum::VideoClip;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -7260,6 +7198,7 @@ impl FitMessage for VideoClip {
         let mut r#end_timestamp_ms = None;
         let mut r#clip_start = None;
         let mut r#clip_end = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -7284,9 +7223,7 @@ impl FitMessage for VideoClip {
                     r#clip_end = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -7298,6 +7235,7 @@ impl FitMessage for VideoClip {
             r#end_timestamp_ms,
             r#clip_start,
             r#clip_end,
+            unknown_fields,
         })
     }
 }
@@ -7320,14 +7258,13 @@ pub struct Set {
     pub r#message_index: Option<Value>,
     pub r#wkt_step_index: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for Set {
     const NAME: &'static str = "Set";
     const KIND: MesgNum = MesgNum::Set;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -7342,6 +7279,7 @@ impl FitMessage for Set {
         let mut r#message_index = None;
         let mut r#wkt_step_index = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -7378,9 +7316,7 @@ impl FitMessage for Set {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -7396,6 +7332,7 @@ impl FitMessage for Set {
             r#message_index,
             r#wkt_step_index,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -7417,14 +7354,13 @@ pub struct Jump {
     pub r#speed: Option<Value>,
     pub r#enhanced_speed: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for Jump {
     const NAME: &'static str = "Jump";
     const KIND: MesgNum = MesgNum::Jump;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -7438,6 +7374,7 @@ impl FitMessage for Jump {
         let mut r#speed = None;
         let mut r#enhanced_speed = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -7471,9 +7408,7 @@ impl FitMessage for Jump {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -7488,6 +7423,7 @@ impl FitMessage for Jump {
             r#speed,
             r#enhanced_speed,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -7518,14 +7454,13 @@ pub struct Split {
     pub r#start_elevation: Option<Value>,
     pub r#total_moving_time: Option<Value>,
     pub r#message_index: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for Split {
     const NAME: &'static str = "Split";
     const KIND: MesgNum = MesgNum::Split;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -7548,6 +7483,7 @@ impl FitMessage for Split {
         let mut r#start_elevation = None;
         let mut r#total_moving_time = None;
         let mut r#message_index = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -7608,9 +7544,7 @@ impl FitMessage for Split {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -7634,6 +7568,7 @@ impl FitMessage for Split {
             r#start_elevation,
             r#total_moving_time,
             r#message_index,
+            unknown_fields,
         })
     }
 }
@@ -7659,14 +7594,13 @@ pub struct SplitSummary {
     pub r#total_calories: Option<Value>,
     pub r#total_moving_time: Option<Value>,
     pub r#message_index: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for SplitSummary {
     const NAME: &'static str = "SplitSummary";
     const KIND: MesgNum = MesgNum::SplitSummary;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -7684,6 +7618,7 @@ impl FitMessage for SplitSummary {
         let mut r#total_calories = None;
         let mut r#total_moving_time = None;
         let mut r#message_index = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -7729,9 +7664,7 @@ impl FitMessage for SplitSummary {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -7750,6 +7683,7 @@ impl FitMessage for SplitSummary {
             r#total_calories,
             r#total_moving_time,
             r#message_index,
+            unknown_fields,
         })
     }
 }
@@ -7768,14 +7702,13 @@ pub struct ClimbPro {
     pub r#climb_category: Option<Value>,
     pub r#current_dist: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for ClimbPro {
     const NAME: &'static str = "ClimbPro";
     const KIND: MesgNum = MesgNum::ClimbPro;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -7786,6 +7719,7 @@ impl FitMessage for ClimbPro {
         let mut r#climb_category = None;
         let mut r#current_dist = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -7810,9 +7744,7 @@ impl FitMessage for ClimbPro {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -7824,6 +7756,7 @@ impl FitMessage for ClimbPro {
             r#climb_category,
             r#current_dist,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -7850,14 +7783,13 @@ pub struct FieldDescription {
     pub r#fit_base_unit_id: Option<Value>,
     pub r#native_mesg_num: Option<Value>,
     pub r#native_field_num: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for FieldDescription {
     const NAME: &'static str = "FieldDescription";
     const KIND: MesgNum = MesgNum::FieldDescription;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -7875,6 +7807,7 @@ impl FitMessage for FieldDescription {
         let mut r#fit_base_unit_id = None;
         let mut r#native_mesg_num = None;
         let mut r#native_field_num = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -7920,9 +7853,7 @@ impl FitMessage for FieldDescription {
                     r#native_field_num = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -7941,6 +7872,7 @@ impl FitMessage for FieldDescription {
             r#fit_base_unit_id,
             r#native_mesg_num,
             r#native_field_num,
+            unknown_fields,
         })
     }
 }
@@ -7958,14 +7890,13 @@ pub struct DeveloperDataId {
     pub r#manufacturer_id: Option<Value>,
     pub r#developer_data_index: Option<Value>,
     pub r#application_version: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for DeveloperDataId {
     const NAME: &'static str = "DeveloperDataId";
     const KIND: MesgNum = MesgNum::DeveloperDataId;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -7974,6 +7905,7 @@ impl FitMessage for DeveloperDataId {
         let mut r#manufacturer_id = None;
         let mut r#developer_data_index = None;
         let mut r#application_version = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -7992,9 +7924,7 @@ impl FitMessage for DeveloperDataId {
                     r#application_version = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -8004,6 +7934,7 @@ impl FitMessage for DeveloperDataId {
             r#manufacturer_id,
             r#developer_data_index,
             r#application_version,
+            unknown_fields,
         })
     }
 }
@@ -8019,14 +7950,13 @@ pub struct Course {
     pub r#name: Option<Value>,
     pub r#capabilities: Option<Value>,
     pub r#sub_sport: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for Course {
     const NAME: &'static str = "Course";
     const KIND: MesgNum = MesgNum::Course;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -8034,6 +7964,7 @@ impl FitMessage for Course {
         let mut r#name = None;
         let mut r#capabilities = None;
         let mut r#sub_sport = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 4u8 => {
@@ -8049,9 +7980,7 @@ impl FitMessage for Course {
                     r#sub_sport = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -8060,6 +7989,7 @@ impl FitMessage for Course {
             r#name,
             r#capabilities,
             r#sub_sport,
+            unknown_fields,
         })
     }
 }
@@ -8079,14 +8009,13 @@ pub struct CoursePoint {
     pub r#name: Option<Value>,
     pub r#favorite: Option<Value>,
     pub r#message_index: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for CoursePoint {
     const NAME: &'static str = "CoursePoint";
     const KIND: MesgNum = MesgNum::CoursePoint;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -8098,6 +8027,7 @@ impl FitMessage for CoursePoint {
         let mut r#name = None;
         let mut r#favorite = None;
         let mut r#message_index = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 1u8 => {
@@ -8125,9 +8055,7 @@ impl FitMessage for CoursePoint {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -8140,6 +8068,7 @@ impl FitMessage for CoursePoint {
             r#name,
             r#favorite,
             r#message_index,
+            unknown_fields,
         })
     }
 }
@@ -8161,14 +8090,13 @@ pub struct SegmentId {
     pub r#default_race_leader: Option<Value>,
     pub r#delete_status: Option<Value>,
     pub r#selection_type: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for SegmentId {
     const NAME: &'static str = "SegmentId";
     const KIND: MesgNum = MesgNum::SegmentId;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -8181,6 +8109,7 @@ impl FitMessage for SegmentId {
         let mut r#default_race_leader = None;
         let mut r#delete_status = None;
         let mut r#selection_type = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -8211,9 +8140,7 @@ impl FitMessage for SegmentId {
                     r#selection_type = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -8227,6 +8154,7 @@ impl FitMessage for SegmentId {
             r#default_race_leader,
             r#delete_status,
             r#selection_type,
+            unknown_fields,
         })
     }
 }
@@ -8246,14 +8174,13 @@ pub struct SegmentLeaderboardEntry {
     pub r#segment_time: Option<Value>,
     pub r#activity_id_string: Option<Value>,
     pub r#message_index: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for SegmentLeaderboardEntry {
     const NAME: &'static str = "SegmentLeaderboardEntry";
     const KIND: MesgNum = MesgNum::SegmentLeaderboardEntry;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -8264,6 +8191,7 @@ impl FitMessage for SegmentLeaderboardEntry {
         let mut r#segment_time = None;
         let mut r#activity_id_string = None;
         let mut r#message_index = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -8288,9 +8216,7 @@ impl FitMessage for SegmentLeaderboardEntry {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -8302,6 +8228,7 @@ impl FitMessage for SegmentLeaderboardEntry {
             r#segment_time,
             r#activity_id_string,
             r#message_index,
+            unknown_fields,
         })
     }
 }
@@ -8321,14 +8248,13 @@ pub struct SegmentPoint {
     pub r#leader_time: Option<Value>,
     pub r#enhanced_altitude: Option<Value>,
     pub r#message_index: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for SegmentPoint {
     const NAME: &'static str = "SegmentPoint";
     const KIND: MesgNum = MesgNum::SegmentPoint;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -8339,6 +8265,7 @@ impl FitMessage for SegmentPoint {
         let mut r#leader_time = None;
         let mut r#enhanced_altitude = None;
         let mut r#message_index = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 1u8 => {
@@ -8363,9 +8290,7 @@ impl FitMessage for SegmentPoint {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -8377,6 +8302,7 @@ impl FitMessage for SegmentPoint {
             r#leader_time,
             r#enhanced_altitude,
             r#message_index,
+            unknown_fields,
         })
     }
 }
@@ -8483,14 +8409,13 @@ pub struct SegmentLap {
     pub r#enhanced_min_altitude: Option<Value>,
     pub r#timestamp: Option<Value>,
     pub r#message_index: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for SegmentLap {
     const NAME: &'static str = "SegmentLap";
     const KIND: MesgNum = MesgNum::SegmentLap;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -8589,6 +8514,7 @@ impl FitMessage for SegmentLap {
         let mut r#enhanced_min_altitude = None;
         let mut r#timestamp = None;
         let mut r#message_index = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -8877,9 +8803,7 @@ impl FitMessage for SegmentLap {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -8979,6 +8903,7 @@ impl FitMessage for SegmentLap {
             r#enhanced_min_altitude,
             r#timestamp,
             r#message_index,
+            unknown_fields,
         })
     }
 }
@@ -9000,14 +8925,13 @@ pub struct SegmentFile {
     pub r#leader_activity_id_string: Option<Value>,
     pub r#default_race_leader: Option<Value>,
     pub r#message_index: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for SegmentFile {
     const NAME: &'static str = "SegmentFile";
     const KIND: MesgNum = MesgNum::SegmentFile;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -9020,6 +8944,7 @@ impl FitMessage for SegmentFile {
         let mut r#leader_activity_id_string = None;
         let mut r#default_race_leader = None;
         let mut r#message_index = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 1u8 => {
@@ -9050,9 +8975,7 @@ impl FitMessage for SegmentFile {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -9066,6 +8989,7 @@ impl FitMessage for SegmentFile {
             r#leader_activity_id_string,
             r#default_race_leader,
             r#message_index,
+            unknown_fields,
         })
     }
 }
@@ -9085,14 +9009,13 @@ pub struct Workout {
     pub r#pool_length: Option<Value>,
     pub r#pool_length_unit: Option<Value>,
     pub r#message_index: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for Workout {
     const NAME: &'static str = "Workout";
     const KIND: MesgNum = MesgNum::Workout;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -9104,6 +9027,7 @@ impl FitMessage for Workout {
         let mut r#pool_length = None;
         let mut r#pool_length_unit = None;
         let mut r#message_index = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 4u8 => {
@@ -9131,9 +9055,7 @@ impl FitMessage for Workout {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -9146,6 +9068,7 @@ impl FitMessage for Workout {
             r#pool_length,
             r#pool_length_unit,
             r#message_index,
+            unknown_fields,
         })
     }
 }
@@ -9164,14 +9087,13 @@ pub struct WorkoutSession {
     pub r#pool_length: Option<Value>,
     pub r#pool_length_unit: Option<Value>,
     pub r#message_index: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for WorkoutSession {
     const NAME: &'static str = "WorkoutSession";
     const KIND: MesgNum = MesgNum::WorkoutSession;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -9182,6 +9104,7 @@ impl FitMessage for WorkoutSession {
         let mut r#pool_length = None;
         let mut r#pool_length_unit = None;
         let mut r#message_index = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -9206,9 +9129,7 @@ impl FitMessage for WorkoutSession {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -9220,6 +9141,7 @@ impl FitMessage for WorkoutSession {
             r#pool_length,
             r#pool_length_unit,
             r#message_index,
+            unknown_fields,
         })
     }
 }
@@ -9250,14 +9172,13 @@ pub struct WorkoutStep {
     pub r#secondary_custom_target_value_low: Option<Value>,
     pub r#secondary_custom_target_value_high: Option<Value>,
     pub r#message_index: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for WorkoutStep {
     const NAME: &'static str = "WorkoutStep";
     const KIND: MesgNum = MesgNum::WorkoutStep;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -9280,6 +9201,7 @@ impl FitMessage for WorkoutStep {
         let mut r#secondary_custom_target_value_low = None;
         let mut r#secondary_custom_target_value_high = None;
         let mut r#message_index = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -9340,9 +9262,7 @@ impl FitMessage for WorkoutStep {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -9366,6 +9286,7 @@ impl FitMessage for WorkoutStep {
             r#secondary_custom_target_value_low,
             r#secondary_custom_target_value_high,
             r#message_index,
+            unknown_fields,
         })
     }
 }
@@ -9381,14 +9302,13 @@ pub struct ExerciseTitle {
     pub r#exercise_name: Option<Value>,
     pub r#wkt_step_name: Option<Value>,
     pub r#message_index: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for ExerciseTitle {
     const NAME: &'static str = "ExerciseTitle";
     const KIND: MesgNum = MesgNum::ExerciseTitle;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -9396,6 +9316,7 @@ impl FitMessage for ExerciseTitle {
         let mut r#exercise_name = None;
         let mut r#wkt_step_name = None;
         let mut r#message_index = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -9411,9 +9332,7 @@ impl FitMessage for ExerciseTitle {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -9422,6 +9341,7 @@ impl FitMessage for ExerciseTitle {
             r#exercise_name,
             r#wkt_step_name,
             r#message_index,
+            unknown_fields,
         })
     }
 }
@@ -9440,14 +9360,13 @@ pub struct Schedule {
     pub r#completed: Option<Value>,
     pub r#type: Option<Value>,
     pub r#scheduled_time: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for Schedule {
     const NAME: &'static str = "Schedule";
     const KIND: MesgNum = MesgNum::Schedule;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -9458,6 +9377,7 @@ impl FitMessage for Schedule {
         let mut r#completed = None;
         let mut r#type = None;
         let mut r#scheduled_time = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -9482,9 +9402,7 @@ impl FitMessage for Schedule {
                     r#scheduled_time = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -9496,6 +9414,7 @@ impl FitMessage for Schedule {
             r#completed,
             r#type,
             r#scheduled_time,
+            unknown_fields,
         })
     }
 }
@@ -9517,14 +9436,13 @@ pub struct Totals {
     pub r#sport_index: Option<Value>,
     pub r#timestamp: Option<Value>,
     pub r#message_index: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for Totals {
     const NAME: &'static str = "Totals";
     const KIND: MesgNum = MesgNum::Totals;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -9538,6 +9456,7 @@ impl FitMessage for Totals {
         let mut r#sport_index = None;
         let mut r#timestamp = None;
         let mut r#message_index = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -9571,9 +9490,7 @@ impl FitMessage for Totals {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -9588,6 +9505,7 @@ impl FitMessage for Totals {
             r#sport_index,
             r#timestamp,
             r#message_index,
+            unknown_fields,
         })
     }
 }
@@ -9613,14 +9531,13 @@ pub struct WeightScale {
     pub r#user_profile_index: Option<Value>,
     pub r#bmi: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for WeightScale {
     const NAME: &'static str = "WeightScale";
     const KIND: MesgNum = MesgNum::WeightScale;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -9638,6 +9555,7 @@ impl FitMessage for WeightScale {
         let mut r#user_profile_index = None;
         let mut r#bmi = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -9683,9 +9601,7 @@ impl FitMessage for WeightScale {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -9704,6 +9620,7 @@ impl FitMessage for WeightScale {
             r#user_profile_index,
             r#bmi,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -9726,14 +9643,13 @@ pub struct BloodPressure {
     pub r#status: Option<Value>,
     pub r#user_profile_index: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for BloodPressure {
     const NAME: &'static str = "BloodPressure";
     const KIND: MesgNum = MesgNum::BloodPressure;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -9748,6 +9664,7 @@ impl FitMessage for BloodPressure {
         let mut r#status = None;
         let mut r#user_profile_index = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -9784,9 +9701,7 @@ impl FitMessage for BloodPressure {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -9802,6 +9717,7 @@ impl FitMessage for BloodPressure {
             r#status,
             r#user_profile_index,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -9819,14 +9735,13 @@ pub struct MonitoringInfo {
     pub r#cycles_to_calories: Option<Value>,
     pub r#resting_metabolic_rate: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for MonitoringInfo {
     const NAME: &'static str = "MonitoringInfo";
     const KIND: MesgNum = MesgNum::MonitoringInfo;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -9836,6 +9751,7 @@ impl FitMessage for MonitoringInfo {
         let mut r#cycles_to_calories = None;
         let mut r#resting_metabolic_rate = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -9857,9 +9773,7 @@ impl FitMessage for MonitoringInfo {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -9870,6 +9784,7 @@ impl FitMessage for MonitoringInfo {
             r#cycles_to_calories,
             r#resting_metabolic_rate,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -9910,14 +9825,13 @@ pub struct Monitoring {
     pub r#moderate_activity_minutes: Option<Value>,
     pub r#vigorous_activity_minutes: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for Monitoring {
     const NAME: &'static str = "Monitoring";
     const KIND: MesgNum = MesgNum::Monitoring;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -9950,6 +9864,7 @@ impl FitMessage for Monitoring {
         let mut r#moderate_activity_minutes = None;
         let mut r#vigorous_activity_minutes = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -10040,9 +9955,7 @@ impl FitMessage for Monitoring {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -10076,6 +9989,7 @@ impl FitMessage for Monitoring {
             r#moderate_activity_minutes,
             r#vigorous_activity_minutes,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -10090,20 +10004,20 @@ pub struct MonitoringHrData {
     pub r#resting_heart_rate: Option<Value>,
     pub r#current_day_resting_heart_rate: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for MonitoringHrData {
     const NAME: &'static str = "MonitoringHrData";
     const KIND: MesgNum = MesgNum::MonitoringHrData;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
         let mut r#resting_heart_rate = None;
         let mut r#current_day_resting_heart_rate = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -10116,9 +10030,7 @@ impl FitMessage for MonitoringHrData {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -10126,6 +10038,7 @@ impl FitMessage for MonitoringHrData {
             r#resting_heart_rate,
             r#current_day_resting_heart_rate,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -10141,14 +10054,13 @@ pub struct Spo2Data {
     pub r#reading_confidence: Option<Value>,
     pub r#mode: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for Spo2Data {
     const NAME: &'static str = "Spo2Data";
     const KIND: MesgNum = MesgNum::Spo2Data;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -10156,6 +10068,7 @@ impl FitMessage for Spo2Data {
         let mut r#reading_confidence = None;
         let mut r#mode = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -10171,9 +10084,7 @@ impl FitMessage for Spo2Data {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -10182,6 +10093,7 @@ impl FitMessage for Spo2Data {
             r#reading_confidence,
             r#mode,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -10199,14 +10111,13 @@ pub struct Hr {
     pub r#event_timestamp: Option<Value>,
     pub r#event_timestamp_12: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for Hr {
     const NAME: &'static str = "Hr";
     const KIND: MesgNum = MesgNum::Hr;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -10216,6 +10127,7 @@ impl FitMessage for Hr {
         let mut r#event_timestamp = None;
         let mut r#event_timestamp_12 = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -10237,9 +10149,7 @@ impl FitMessage for Hr {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -10250,6 +10160,7 @@ impl FitMessage for Hr {
             r#event_timestamp,
             r#event_timestamp_12,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -10264,19 +10175,19 @@ impl TryFrom<FitDataRecord> for Hr {
 pub struct StressLevel {
     pub r#stress_level_value: Option<Value>,
     pub r#stress_level_time: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for StressLevel {
     const NAME: &'static str = "StressLevel";
     const KIND: MesgNum = MesgNum::StressLevel;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
         let mut r#stress_level_value = None;
         let mut r#stress_level_time = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -10286,15 +10197,14 @@ impl FitMessage for StressLevel {
                     r#stress_level_time = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
         Ok(Self {
             r#stress_level_value,
             r#stress_level_time,
+            unknown_fields,
         })
     }
 }
@@ -10314,14 +10224,13 @@ pub struct MaxMetData {
     pub r#calibrated_data: Option<Value>,
     pub r#hr_source: Option<Value>,
     pub r#speed_source: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for MaxMetData {
     const NAME: &'static str = "MaxMetData";
     const KIND: MesgNum = MesgNum::MaxMetData;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -10333,6 +10242,7 @@ impl FitMessage for MaxMetData {
         let mut r#calibrated_data = None;
         let mut r#hr_source = None;
         let mut r#speed_source = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -10360,9 +10270,7 @@ impl FitMessage for MaxMetData {
                     r#speed_source = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -10375,6 +10283,7 @@ impl FitMessage for MaxMetData {
             r#calibrated_data,
             r#hr_source,
             r#speed_source,
+            unknown_fields,
         })
     }
 }
@@ -10392,14 +10301,13 @@ pub struct HsaBodyBatteryData {
     pub r#charged: Option<Value>,
     pub r#uncharged: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for HsaBodyBatteryData {
     const NAME: &'static str = "HsaBodyBatteryData";
     const KIND: MesgNum = MesgNum::HsaBodyBatteryData;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -10408,6 +10316,7 @@ impl FitMessage for HsaBodyBatteryData {
         let mut r#charged = None;
         let mut r#uncharged = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -10426,9 +10335,7 @@ impl FitMessage for HsaBodyBatteryData {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -10438,6 +10345,7 @@ impl FitMessage for HsaBodyBatteryData {
             r#charged,
             r#uncharged,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -10452,19 +10360,19 @@ impl TryFrom<FitDataRecord> for HsaBodyBatteryData {
 pub struct HsaEvent {
     pub r#event_id: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for HsaEvent {
     const NAME: &'static str = "HsaEvent";
     const KIND: MesgNum = MesgNum::HsaEvent;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
         let mut r#event_id = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -10474,15 +10382,14 @@ impl FitMessage for HsaEvent {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
         Ok(Self {
             r#event_id,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -10502,14 +10409,13 @@ pub struct HsaAccelerometerData {
     pub r#accel_z: Option<Value>,
     pub r#timestamp_32k: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for HsaAccelerometerData {
     const NAME: &'static str = "HsaAccelerometerData";
     const KIND: MesgNum = MesgNum::HsaAccelerometerData;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -10520,6 +10426,7 @@ impl FitMessage for HsaAccelerometerData {
         let mut r#accel_z = None;
         let mut r#timestamp_32k = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -10544,9 +10451,7 @@ impl FitMessage for HsaAccelerometerData {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -10558,6 +10463,7 @@ impl FitMessage for HsaAccelerometerData {
             r#accel_z,
             r#timestamp_32k,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -10576,14 +10482,13 @@ pub struct HsaGyroscopeData {
     pub r#gyro_z: Option<Value>,
     pub r#timestamp_32k: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for HsaGyroscopeData {
     const NAME: &'static str = "HsaGyroscopeData";
     const KIND: MesgNum = MesgNum::HsaGyroscopeData;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -10594,6 +10499,7 @@ impl FitMessage for HsaGyroscopeData {
         let mut r#gyro_z = None;
         let mut r#timestamp_32k = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -10618,9 +10524,7 @@ impl FitMessage for HsaGyroscopeData {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -10632,6 +10536,7 @@ impl FitMessage for HsaGyroscopeData {
             r#gyro_z,
             r#timestamp_32k,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -10647,20 +10552,20 @@ pub struct HsaStepData {
     pub r#processing_interval: Option<Value>,
     pub r#steps: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for HsaStepData {
     const NAME: &'static str = "HsaStepData";
     const KIND: MesgNum = MesgNum::HsaStepData;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
         let mut r#processing_interval = None;
         let mut r#steps = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -10673,9 +10578,7 @@ impl FitMessage for HsaStepData {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -10683,6 +10586,7 @@ impl FitMessage for HsaStepData {
             r#processing_interval,
             r#steps,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -10699,14 +10603,13 @@ pub struct HsaSpo2Data {
     pub r#reading_spo2: Option<Value>,
     pub r#confidence: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for HsaSpo2Data {
     const NAME: &'static str = "HsaSpo2Data";
     const KIND: MesgNum = MesgNum::HsaSpo2Data;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -10714,6 +10617,7 @@ impl FitMessage for HsaSpo2Data {
         let mut r#reading_spo2 = None;
         let mut r#confidence = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -10729,9 +10633,7 @@ impl FitMessage for HsaSpo2Data {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -10740,6 +10642,7 @@ impl FitMessage for HsaSpo2Data {
             r#reading_spo2,
             r#confidence,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -10755,20 +10658,20 @@ pub struct HsaStressData {
     pub r#processing_interval: Option<Value>,
     pub r#stress_level: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for HsaStressData {
     const NAME: &'static str = "HsaStressData";
     const KIND: MesgNum = MesgNum::HsaStressData;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
         let mut r#processing_interval = None;
         let mut r#stress_level = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -10781,9 +10684,7 @@ impl FitMessage for HsaStressData {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -10791,6 +10692,7 @@ impl FitMessage for HsaStressData {
             r#processing_interval,
             r#stress_level,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -10806,20 +10708,20 @@ pub struct HsaRespirationData {
     pub r#processing_interval: Option<Value>,
     pub r#respiration_rate: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for HsaRespirationData {
     const NAME: &'static str = "HsaRespirationData";
     const KIND: MesgNum = MesgNum::HsaRespirationData;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
         let mut r#processing_interval = None;
         let mut r#respiration_rate = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -10832,9 +10734,7 @@ impl FitMessage for HsaRespirationData {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -10842,6 +10742,7 @@ impl FitMessage for HsaRespirationData {
             r#processing_interval,
             r#respiration_rate,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -10858,14 +10759,13 @@ pub struct HsaHeartRateData {
     pub r#status: Option<Value>,
     pub r#heart_rate: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for HsaHeartRateData {
     const NAME: &'static str = "HsaHeartRateData";
     const KIND: MesgNum = MesgNum::HsaHeartRateData;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -10873,6 +10773,7 @@ impl FitMessage for HsaHeartRateData {
         let mut r#status = None;
         let mut r#heart_rate = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -10888,9 +10789,7 @@ impl FitMessage for HsaHeartRateData {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -10899,6 +10798,7 @@ impl FitMessage for HsaHeartRateData {
             r#status,
             r#heart_rate,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -10914,20 +10814,20 @@ pub struct HsaConfigurationData {
     pub r#data: Option<Value>,
     pub r#data_size: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for HsaConfigurationData {
     const NAME: &'static str = "HsaConfigurationData";
     const KIND: MesgNum = MesgNum::HsaConfigurationData;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
         let mut r#data = None;
         let mut r#data_size = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -10940,9 +10840,7 @@ impl FitMessage for HsaConfigurationData {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -10950,6 +10848,7 @@ impl FitMessage for HsaConfigurationData {
             r#data,
             r#data_size,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -10965,20 +10864,20 @@ pub struct HsaWristTemperatureData {
     pub r#processing_interval: Option<Value>,
     pub r#value: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for HsaWristTemperatureData {
     const NAME: &'static str = "HsaWristTemperatureData";
     const KIND: MesgNum = MesgNum::HsaWristTemperatureData;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
         let mut r#processing_interval = None;
         let mut r#value = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -10991,9 +10890,7 @@ impl FitMessage for HsaWristTemperatureData {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -11001,6 +10898,7 @@ impl FitMessage for HsaWristTemperatureData {
             r#processing_interval,
             r#value,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -11018,14 +10916,13 @@ pub struct MemoGlob {
     pub r#field_num: Option<Value>,
     pub r#data: Option<Value>,
     pub r#part_index: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for MemoGlob {
     const NAME: &'static str = "MemoGlob";
     const KIND: MesgNum = MesgNum::MemoGlob;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -11035,6 +10932,7 @@ impl FitMessage for MemoGlob {
         let mut r#field_num = None;
         let mut r#data = None;
         let mut r#part_index = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -11056,9 +10954,7 @@ impl FitMessage for MemoGlob {
                     r#part_index = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -11069,6 +10965,7 @@ impl FitMessage for MemoGlob {
             r#field_num,
             r#data,
             r#part_index,
+            unknown_fields,
         })
     }
 }
@@ -11082,19 +10979,19 @@ impl TryFrom<FitDataRecord> for MemoGlob {
 pub struct SleepLevel {
     pub r#sleep_level: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for SleepLevel {
     const NAME: &'static str = "SleepLevel";
     const KIND: MesgNum = MesgNum::SleepLevel;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
         let mut r#sleep_level = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -11104,15 +11001,14 @@ impl FitMessage for SleepLevel {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
         Ok(Self {
             r#sleep_level,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -11129,14 +11025,13 @@ pub struct AntChannelId {
     pub r#device_number: Option<Value>,
     pub r#transmission_type: Option<Value>,
     pub r#device_index: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for AntChannelId {
     const NAME: &'static str = "AntChannelId";
     const KIND: MesgNum = MesgNum::AntChannelId;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -11145,6 +11040,7 @@ impl FitMessage for AntChannelId {
         let mut r#device_number = None;
         let mut r#transmission_type = None;
         let mut r#device_index = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -11163,9 +11059,7 @@ impl FitMessage for AntChannelId {
                     r#device_index = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -11175,6 +11069,7 @@ impl FitMessage for AntChannelId {
             r#device_number,
             r#transmission_type,
             r#device_index,
+            unknown_fields,
         })
     }
 }
@@ -11192,14 +11087,13 @@ pub struct AntRx {
     pub r#channel_number: Option<Value>,
     pub r#data: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for AntRx {
     const NAME: &'static str = "AntRx";
     const KIND: MesgNum = MesgNum::AntRx;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -11209,6 +11103,7 @@ impl FitMessage for AntRx {
         let mut r#channel_number = None;
         let mut r#data = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -11230,9 +11125,7 @@ impl FitMessage for AntRx {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -11243,6 +11136,7 @@ impl FitMessage for AntRx {
             r#channel_number,
             r#data,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -11260,14 +11154,13 @@ pub struct AntTx {
     pub r#channel_number: Option<Value>,
     pub r#data: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for AntTx {
     const NAME: &'static str = "AntTx";
     const KIND: MesgNum = MesgNum::AntTx;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -11277,6 +11170,7 @@ impl FitMessage for AntTx {
         let mut r#channel_number = None;
         let mut r#data = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -11298,9 +11192,7 @@ impl FitMessage for AntTx {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -11311,6 +11203,7 @@ impl FitMessage for AntTx {
             r#channel_number,
             r#data,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -11326,14 +11219,13 @@ pub struct ExdScreenConfiguration {
     pub r#field_count: Option<Value>,
     pub r#layout: Option<Value>,
     pub r#screen_enabled: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for ExdScreenConfiguration {
     const NAME: &'static str = "ExdScreenConfiguration";
     const KIND: MesgNum = MesgNum::ExdScreenConfiguration;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -11341,6 +11233,7 @@ impl FitMessage for ExdScreenConfiguration {
         let mut r#field_count = None;
         let mut r#layout = None;
         let mut r#screen_enabled = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -11356,9 +11249,7 @@ impl FitMessage for ExdScreenConfiguration {
                     r#screen_enabled = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -11367,6 +11258,7 @@ impl FitMessage for ExdScreenConfiguration {
             r#field_count,
             r#layout,
             r#screen_enabled,
+            unknown_fields,
         })
     }
 }
@@ -11384,14 +11276,13 @@ pub struct ExdDataFieldConfiguration {
     pub r#concept_count: Option<Value>,
     pub r#display_type: Option<Value>,
     pub r#title: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for ExdDataFieldConfiguration {
     const NAME: &'static str = "ExdDataFieldConfiguration";
     const KIND: MesgNum = MesgNum::ExdDataFieldConfiguration;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -11401,6 +11292,7 @@ impl FitMessage for ExdDataFieldConfiguration {
         let mut r#concept_count = None;
         let mut r#display_type = None;
         let mut r#title = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -11422,9 +11314,7 @@ impl FitMessage for ExdDataFieldConfiguration {
                     r#title = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -11435,6 +11325,7 @@ impl FitMessage for ExdDataFieldConfiguration {
             r#concept_count,
             r#display_type,
             r#title,
+            unknown_fields,
         })
     }
 }
@@ -11457,14 +11348,13 @@ pub struct ExdDataConceptConfiguration {
     pub r#qualifier: Option<Value>,
     pub r#descriptor: Option<Value>,
     pub r#is_signed: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for ExdDataConceptConfiguration {
     const NAME: &'static str = "ExdDataConceptConfiguration";
     const KIND: MesgNum = MesgNum::ExdDataConceptConfiguration;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -11479,6 +11369,7 @@ impl FitMessage for ExdDataConceptConfiguration {
         let mut r#qualifier = None;
         let mut r#descriptor = None;
         let mut r#is_signed = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -11515,9 +11406,7 @@ impl FitMessage for ExdDataConceptConfiguration {
                     r#is_signed = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -11533,6 +11422,7 @@ impl FitMessage for ExdDataConceptConfiguration {
             r#qualifier,
             r#descriptor,
             r#is_signed,
+            unknown_fields,
         })
     }
 }
@@ -11567,14 +11457,13 @@ pub struct DiveSummary {
     pub r#max_descent_rate: Option<Value>,
     pub r#hang_time: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for DiveSummary {
     const NAME: &'static str = "DiveSummary";
     const KIND: MesgNum = MesgNum::DiveSummary;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -11601,6 +11490,7 @@ impl FitMessage for DiveSummary {
         let mut r#max_descent_rate = None;
         let mut r#hang_time = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -11673,9 +11563,7 @@ impl FitMessage for DiveSummary {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -11703,6 +11591,7 @@ impl FitMessage for DiveSummary {
             r#max_descent_rate,
             r#hang_time,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -11721,14 +11610,13 @@ pub struct AadAccelFeatures {
     pub r#instance: Option<Value>,
     pub r#time_above_threshold: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for AadAccelFeatures {
     const NAME: &'static str = "AadAccelFeatures";
     const KIND: MesgNum = MesgNum::AadAccelFeatures;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -11738,6 +11626,7 @@ impl FitMessage for AadAccelFeatures {
         let mut r#instance = None;
         let mut r#time_above_threshold = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -11759,9 +11648,7 @@ impl FitMessage for AadAccelFeatures {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -11772,6 +11659,7 @@ impl FitMessage for AadAccelFeatures {
             r#instance,
             r#time_above_threshold,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -11785,31 +11673,32 @@ impl TryFrom<FitDataRecord> for AadAccelFeatures {
 #[derive(Clone, Debug, PartialEq, PartialOrd, Serialize)]
 pub struct Hrv {
     pub r#time: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for Hrv {
     const NAME: &'static str = "Hrv";
     const KIND: MesgNum = MesgNum::Hrv;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
         let mut r#time = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
                     r#time = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
-        Ok(Self { r#time })
+        Ok(Self {
+            r#time,
+            unknown_fields,
+        })
     }
 }
 impl TryFrom<FitDataRecord> for Hrv {
@@ -11824,20 +11713,20 @@ pub struct BeatIntervals {
     pub r#timestamp_ms: Option<Value>,
     pub r#time: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for BeatIntervals {
     const NAME: &'static str = "BeatIntervals";
     const KIND: MesgNum = MesgNum::BeatIntervals;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
         let mut r#timestamp_ms = None;
         let mut r#time = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -11850,9 +11739,7 @@ impl FitMessage for BeatIntervals {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -11860,6 +11747,7 @@ impl FitMessage for BeatIntervals {
             r#timestamp_ms,
             r#time,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -11879,14 +11767,13 @@ pub struct HrvStatusSummary {
     pub r#baseline_balanced_upper: Option<Value>,
     pub r#status: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for HrvStatusSummary {
     const NAME: &'static str = "HrvStatusSummary";
     const KIND: MesgNum = MesgNum::HrvStatusSummary;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -11898,6 +11785,7 @@ impl FitMessage for HrvStatusSummary {
         let mut r#baseline_balanced_upper = None;
         let mut r#status = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -11925,9 +11813,7 @@ impl FitMessage for HrvStatusSummary {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -11940,6 +11826,7 @@ impl FitMessage for HrvStatusSummary {
             r#baseline_balanced_upper,
             r#status,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -11953,19 +11840,19 @@ impl TryFrom<FitDataRecord> for HrvStatusSummary {
 pub struct HrvValue {
     pub r#value: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for HrvValue {
     const NAME: &'static str = "HrvValue";
     const KIND: MesgNum = MesgNum::HrvValue;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
         let mut r#value = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -11975,15 +11862,14 @@ impl FitMessage for HrvValue {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
         Ok(Self {
             r#value,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -12002,14 +11888,13 @@ pub struct RawBbi {
     pub r#quality: Option<Value>,
     pub r#gap: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for RawBbi {
     const NAME: &'static str = "RawBbi";
     const KIND: MesgNum = MesgNum::RawBbi;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -12019,6 +11904,7 @@ impl FitMessage for RawBbi {
         let mut r#quality = None;
         let mut r#gap = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -12040,9 +11926,7 @@ impl FitMessage for RawBbi {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -12053,6 +11937,7 @@ impl FitMessage for RawBbi {
             r#quality,
             r#gap,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -12066,19 +11951,19 @@ impl TryFrom<FitDataRecord> for RawBbi {
 pub struct RespirationRate {
     pub r#respiration_rate: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for RespirationRate {
     const NAME: &'static str = "RespirationRate";
     const KIND: MesgNum = MesgNum::RespirationRate;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
         let mut r#respiration_rate = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -12088,15 +11973,14 @@ impl FitMessage for RespirationRate {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
         Ok(Self {
             r#respiration_rate,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -12116,14 +12000,13 @@ pub struct ChronoShotSession {
     pub r#projectile_type: Option<Value>,
     pub r#grain_weight: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for ChronoShotSession {
     const NAME: &'static str = "ChronoShotSession";
     const KIND: MesgNum = MesgNum::ChronoShotSession;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -12134,6 +12017,7 @@ impl FitMessage for ChronoShotSession {
         let mut r#projectile_type = None;
         let mut r#grain_weight = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -12158,9 +12042,7 @@ impl FitMessage for ChronoShotSession {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -12172,6 +12054,7 @@ impl FitMessage for ChronoShotSession {
             r#projectile_type,
             r#grain_weight,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -12187,20 +12070,20 @@ pub struct ChronoShotData {
     pub r#shot_speed: Option<Value>,
     pub r#shot_num: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for ChronoShotData {
     const NAME: &'static str = "ChronoShotData";
     const KIND: MesgNum = MesgNum::ChronoShotData;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
         let mut r#shot_speed = None;
         let mut r#shot_num = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -12213,9 +12096,7 @@ impl FitMessage for ChronoShotData {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -12223,6 +12104,7 @@ impl FitMessage for ChronoShotData {
             r#shot_speed,
             r#shot_num,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -12237,20 +12119,20 @@ pub struct TankUpdate {
     pub r#sensor: Option<Value>,
     pub r#pressure: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for TankUpdate {
     const NAME: &'static str = "TankUpdate";
     const KIND: MesgNum = MesgNum::TankUpdate;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
         let mut r#sensor = None;
         let mut r#pressure = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -12263,9 +12145,7 @@ impl FitMessage for TankUpdate {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -12273,6 +12153,7 @@ impl FitMessage for TankUpdate {
             r#sensor,
             r#pressure,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -12289,14 +12170,13 @@ pub struct TankSummary {
     pub r#end_pressure: Option<Value>,
     pub r#volume_used: Option<Value>,
     pub r#timestamp: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for TankSummary {
     const NAME: &'static str = "TankSummary";
     const KIND: MesgNum = MesgNum::TankSummary;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -12305,6 +12185,7 @@ impl FitMessage for TankSummary {
         let mut r#end_pressure = None;
         let mut r#volume_used = None;
         let mut r#timestamp = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -12323,9 +12204,7 @@ impl FitMessage for TankSummary {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -12335,6 +12214,7 @@ impl FitMessage for TankSummary {
             r#end_pressure,
             r#volume_used,
             r#timestamp,
+            unknown_fields,
         })
     }
 }
@@ -12360,14 +12240,13 @@ pub struct SleepAssessment {
     pub r#awakenings_count: Option<Value>,
     pub r#interruptions_score: Option<Value>,
     pub r#average_stress_during_sleep: Option<Value>,
+    #[doc = r" All fields that are not defined in the profile."]
+    pub unknown_fields: Vec<FitDataField>,
 }
 impl FitMessage for SleepAssessment {
     const NAME: &'static str = "SleepAssessment";
     const KIND: MesgNum = MesgNum::SleepAssessment;
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError> {
+    fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
         if record.kind() != Self::KIND {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
@@ -12385,6 +12264,7 @@ impl FitMessage for SleepAssessment {
         let mut r#awakenings_count = None;
         let mut r#interruptions_score = None;
         let mut r#average_stress_during_sleep = None;
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -12430,9 +12310,7 @@ impl FitMessage for SleepAssessment {
                     r#average_stress_during_sleep = Some(field.into_value());
                 }
                 _ => {
-                    if !options.ignore_unexpected_fields {
-                        return Err(TryFromRecordError::unexpected_field(&field));
-                    }
+                    unknown_fields.push(field);
                 }
             }
         }
@@ -12451,6 +12329,7 @@ impl FitMessage for SleepAssessment {
             r#awakenings_count,
             r#interruptions_score,
             r#average_stress_during_sleep,
+            unknown_fields,
         })
     }
 }

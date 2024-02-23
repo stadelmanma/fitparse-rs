@@ -42,16 +42,18 @@ fn message_parse_impl(message: &MessageDefinition) -> TokenStream {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
         #( #field_variables )*
+        let mut unknown_fields = Vec::new();
         for field in record.into_vec() {
             match field.number() {
                 #( #field_match_cases )*
-                _ => if !options.ignore_unexpected_fields {
-                    return Err(TryFromRecordError::unexpected_field(&field));
+                _ => {
+                    unknown_fields.push(field);
                 }
             }
         }
         Ok(Self {
-            #( #field_idents ),*
+            #( #field_idents ),*,
+            unknown_fields,
         })
     }
 }
@@ -69,16 +71,15 @@ fn message_struct(message: &MessageDefinition) -> TokenStream {
         #[derive(Clone, Debug, PartialEq, PartialOrd, Serialize)]
         pub struct #ident {
             #( #struct_fields )*
+            /// All fields that are not defined in the profile.
+            pub unknown_fields: Vec<FitDataField>,
         }
 
         impl FitMessage for #ident {
             const NAME: &'static str = #name;
             const KIND: MesgNum = MesgNum::#ident;
 
-            fn parse_with_options(
-                record: FitDataRecord,
-                options: MessageParseOptions,
-            ) -> Result<Self, TryFromRecordError> {
+            fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
                 #parse_impl
             }
         }
@@ -107,20 +108,27 @@ fn message_enum(messages: &[MessageDefinition]) -> TokenStream {
         }
 
         impl Message {
-            /// Parse a message from a [`FitDataRecord`][] using the default options.
+            /// Parse a message from a [`FitDataRecord`][].
             pub fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError> {
-                Self::parse_with_options(record, Default::default())
-            }
-
-            /// Parse a message from a [`FitDataRecord`][] using the given options.
-            pub fn parse_with_options(
-                record: FitDataRecord,
-                options: MessageParseOptions,
-            ) -> Result<Self, TryFromRecordError> {
                 match record.kind() {
-                    #( #idents::KIND => #idents::parse_with_options(record, options).map(Self::#idents), )*
+                    #( #idents::KIND => #idents::parse(record).map(Self::#idents), )*
                     kind => Err(TryFromRecordError::UnsupportedMessageKind(kind)),
                 }
+            }
+
+            /// Return all fields of the message that are not defined by the profile.
+            pub fn unknown_fields(&self) -> &[FitDataField] {
+                match self {
+                    #( Self::#idents(message) => &message.unknown_fields, )*
+                }
+            }
+        }
+
+        impl TryFrom<FitDataRecord> for Message {
+            type Error = TryFromRecordError;
+
+            fn try_from(record: FitDataRecord) -> Result<Self, Self::Error> {
+                Self::parse(record)
             }
         }
     }
@@ -137,7 +145,7 @@ pub fn write_messages_file(profile: &FitProfile, out: &mut File) -> Result<(), E
         #![allow(missing_docs)]
         #![doc = #comment]
 
-        use crate::{FitDataRecord, Value, profile::{FitMessage, MessageParseOptions, MesgNum, TryFromRecordError}};
+        use crate::{FitDataField, FitDataRecord, Value, profile::{FitMessage, MesgNum, TryFromRecordError}};
         use serde::Serialize;
 
         #message_enum
