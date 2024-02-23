@@ -1,6 +1,6 @@
 //! Functions to generate the field-types in Rust from the fit profile.
 use crate::parse::{FieldTypeDefintion, FieldTypeVariant, FitProfile};
-use proc_macro2::TokenStream;
+use proc_macro2::{Ident, Literal, Span, TokenStream};
 use quote::{format_ident, quote};
 use std::collections::HashSet;
 use std::{
@@ -17,16 +17,12 @@ fn doc_comment(comment: Option<&str>) -> TokenStream {
 }
 
 /// convert a string like "u8" into a u8 type token
-fn type_str_as_type(type_str: &str) -> syn::Type {
-    syn::parse_str(type_str).expect("Unable to parse type")
+fn type_str_as_type(type_str: &str) -> Ident {
+    Ident::new(type_str, Span::call_site())
 }
 
-/// A hacky way to get quote to output numeric literals without
-/// a type suffix since we store everything parsed as i64
-/// we use parse instead of from in case this hits a negative number.
-/// As of now I don't think negative values are present in enums.
-fn bare_number_literal(value: i64) -> syn::Index {
-    syn::parse_str(&format!("{}", value)).expect("Could not parse number as index")
+fn bare_number_literal(value: i64) -> Literal {
+    Literal::i64_unsuffixed(value)
 }
 
 fn field_type_enum_is_named_variant(field_type: &FieldTypeDefintion) -> TokenStream {
