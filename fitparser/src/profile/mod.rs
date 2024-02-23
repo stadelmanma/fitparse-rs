@@ -2,13 +2,14 @@
 //! interpreted without using the FIT profile.
 use crate::de::DecodeOption;
 use crate::error::{ErrorKind, Result};
-use crate::{FitDataField, FitDataRecord, Value};
+use crate::{FitDataField, FitDataRecord, Value, ValueWithUnits};
 use chrono::{DateTime, Duration, Local, NaiveDate, TimeZone};
-use std::collections::{HashMap, HashSet};
+use std::collections::{BTreeMap, HashMap, HashSet};
 use std::convert::TryInto;
 use std::error::Error;
 use std::f64::EPSILON;
 use std::fmt;
+use std::str::FromStr;
 
 pub mod field_types;
 pub use field_types::{get_field_variant_as_string, FieldDataType, MesgNum};
@@ -294,6 +295,31 @@ fn apply_scale_and_offset(value: Value, scale: f64, offset: f64) -> Result<Value
     }
 }
 
+trait FromValue: Sized {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits>;
+
+    fn from_value(value: Value) -> Result<Self, ValueWithUnits> {
+        Self::from_value_with_units(ValueWithUnits::new(value, String::new()))
+    }
+}
+
+impl FromValue for ValueWithUnits {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        Ok(value)
+    }
+}
+
+fn parse_enum<T: From<i64> + FromStr>(value: ValueWithUnits) -> Result<T, ValueWithUnits> {
+    // TODO: how to handle units for int-based enums like Weight or Timestamp?
+    if let Ok(i) = TryInto::<i64>::try_into(&value.value) {
+        Ok(i.into())
+    } else if let Value::String(s) = &value.value {
+        s.parse().map_err(|_| value)
+    } else {
+        Err(value)
+    }
+}
+
 /// A message type.
 pub trait FitMessage {
     /// The name of this message type.
@@ -316,6 +342,9 @@ pub trait FitMessage {
     ) -> Result<Self, TryFromRecordError>
     where
         Self: Sized;
+
+    /// Return all invalid fields in this message.
+    fn invalid_fields(&self) -> &BTreeMap<&'static str, ValueWithUnits>;
 }
 
 /// Options for [`FitMessage::parse_with_options`][].
@@ -382,3 +411,15 @@ impl fmt::Display for TryFromRecordError {
 }
 
 impl Error for TryFromRecordError {}
+
+/// An error when parsing an enum variant from a string.
+#[derive(Debug)]
+pub struct EnumFromStrError;
+
+impl fmt::Display for EnumFromStrError {
+    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(fmt, "failed to parse enum: no such variant")
+    }
+}
+
+impl Error for EnumFromStrError {}

@@ -1,6 +1,6 @@
 //! Functions to generate the message structs in Rust from the fit profile.
 
-use crate::parse::{FitProfile, MessageDefinition, MessageFieldDefinition};
+use crate::parse::{FitProfile, MessageDefinition, MessageFieldDefinition, MessageFieldType};
 use proc_macro2::TokenStream;
 use quote::quote;
 use std::{
@@ -8,10 +8,22 @@ use std::{
     io::{Error, Write},
 };
 
+fn converted_field_type(field: &MessageFieldDefinition) -> Option<TokenStream> {
+    if field.is_array() {
+        None
+    } else {
+        match field.field_type() {
+            MessageFieldType::Enum(ident) => Some(quote! { field_types::#ident }),
+            MessageFieldType::Raw(_) => None,
+        }
+    }
+}
+
 fn message_struct_field(field: &MessageFieldDefinition) -> TokenStream {
     let ident = field.field_ident();
+    let ty = converted_field_type(field).unwrap_or_else(|| quote! { ValueWithUnits });
     quote! {
-        pub #ident: Option<Value>,
+        pub #ident: Option<#ty>,
     }
 }
 
@@ -24,10 +36,16 @@ fn field_variable(field: &MessageFieldDefinition) -> TokenStream {
 
 fn field_match_case(field: &MessageFieldDefinition) -> TokenStream {
     let number = field.def_number();
+    let name = field.name();
     let ident = field.field_ident();
     quote! {
-        #number => {
-            #ident = Some(field.into_value());
+        #number => match FromValue::from_value_with_units(field.into()) {
+            Ok(_value) => {
+                #ident = Some(_value);
+            }
+            Err(value) => {
+                invalid_fields.insert(#name, value);
+            }
         }
     }
 }
@@ -42,6 +60,8 @@ fn message_parse_impl(message: &MessageDefinition) -> TokenStream {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
         #( #field_variables )*
+        #[allow(unused_mut)]
+        let mut invalid_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 #( #field_match_cases )*
@@ -51,7 +71,8 @@ fn message_parse_impl(message: &MessageDefinition) -> TokenStream {
             }
         }
         Ok(Self {
-            #( #field_idents ),*
+            #( #field_idents, )*
+            invalid_fields,
         })
     }
 }
@@ -61,7 +82,7 @@ fn message_struct(message: &MessageDefinition) -> TokenStream {
     let ident = message.struct_ident();
     let comment = message.comment().into_iter();
 
-    let struct_fields = message.field_map().values().map(message_struct_field);
+    let struct_fields = message.fields().map(message_struct_field);
     let parse_impl = message_parse_impl(message);
 
     quote! {
@@ -69,6 +90,7 @@ fn message_struct(message: &MessageDefinition) -> TokenStream {
         #[derive(Clone, Debug, PartialEq, PartialOrd, Serialize)]
         pub struct #ident {
             #( #struct_fields )*
+            pub invalid_fields: BTreeMap<&'static str, ValueWithUnits>,
         }
 
         impl FitMessage for #ident {
@@ -80,6 +102,10 @@ fn message_struct(message: &MessageDefinition) -> TokenStream {
                 options: MessageParseOptions,
             ) -> Result<Self, TryFromRecordError> {
                 #parse_impl
+            }
+
+            fn invalid_fields(&self) -> &BTreeMap<&'static str, ValueWithUnits> {
+                &self.invalid_fields
             }
         }
 
@@ -122,6 +148,13 @@ fn message_enum(messages: &[MessageDefinition]) -> TokenStream {
                     kind => Err(TryFromRecordError::UnsupportedMessageKind(kind)),
                 }
             }
+
+            /// Return all invalid fields in this message.
+            pub fn invalid_fields(&self) -> &BTreeMap<&'static str, ValueWithUnits> {
+                match self {
+                    #( Self::#idents(message) => message.invalid_fields(), )*
+                }
+            }
         }
     }
 }
@@ -137,8 +170,12 @@ pub fn write_messages_file(profile: &FitProfile, out: &mut File) -> Result<(), E
         #![allow(missing_docs)]
         #![doc = #comment]
 
-        use crate::{FitDataRecord, Value, profile::{FitMessage, MessageParseOptions, MesgNum, TryFromRecordError}};
+        use crate::{
+            FitDataRecord, ValueWithUnits,
+            profile::{FitMessage, FromValue, MessageParseOptions, MesgNum, TryFromRecordError, field_types},
+        };
         use serde::Serialize;
+        use std::collections::BTreeMap;
 
         #message_enum
 
