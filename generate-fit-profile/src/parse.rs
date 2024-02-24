@@ -3,6 +3,7 @@ use calamine::{open_workbook, DataType, Range, Reader, Xlsx};
 use proc_macro2::Ident;
 use quote::format_ident;
 use std::collections::{BTreeMap, HashMap};
+use std::fmt;
 use std::path::PathBuf;
 
 // the fields in these structs are mostly duplicated from code in src/profile/parser.rs
@@ -186,7 +187,7 @@ pub struct MessageFieldDefinition {
     def_number: u8,
     name: String,
     field_ident: Ident,
-    field_type: String,
+    field_type: MessageFieldType,
     is_array: bool,
     scale: f64,
     offset: f64,
@@ -204,7 +205,7 @@ impl MessageFieldDefinition {
     fn new(
         def_number: u8,
         name: &str,
-        field_type: &str,
+        field_type: MessageFieldType,
         is_array: bool,
         scale: f64,
         offset: f64,
@@ -217,7 +218,7 @@ impl MessageFieldDefinition {
             def_number,
             name: name.to_string(),
             field_ident: format_ident!("r#{}", name),
-            field_type: field_type_str_to_field_type(field_type),
+            field_type,
             is_array,
             scale,
             offset,
@@ -243,7 +244,7 @@ impl MessageFieldDefinition {
         &self.field_ident
     }
 
-    pub fn field_type(&self) -> &str {
+    pub fn field_type(&self) -> &MessageFieldType {
         &self.field_type
     }
 
@@ -297,6 +298,51 @@ impl MessageFieldDefinition {
 }
 
 #[derive(Clone, Debug)]
+pub enum MessageFieldType {
+    Enum(Ident),
+    Raw(String),
+}
+
+impl MessageFieldType {
+    fn new(fields: &[FieldTypeDefintion], field_type: &str) -> Self {
+        if let Some(field) = fields.iter().find(|field| field.name() == field_type) {
+            if !field.variant_map().is_empty() {
+                return Self::Enum(format_ident!("{}", field.titlized_name()));
+            }
+        }
+        let raw = match field_type {
+            "sint8" => "SInt8".to_string(),
+            "uint8" => "UInt8".to_string(),
+            "sint16" => "SInt16".to_string(),
+            "uint16" => "UInt16".to_string(),
+            "sint32" => "SInt32".to_string(),
+            "uint32" => "UInt32".to_string(),
+            "string" => "String".to_string(),
+            "float32" => "Float32".to_string(),
+            "float64" => "Float64".to_string(),
+            "uint8z" => "UInt8z".to_string(),
+            "uint16z" => "UInt16z".to_string(),
+            "uint32z" => "UInt32z".to_string(),
+            "byte" => "Byte".to_string(),
+            "sint64" => "SInt64".to_string(),
+            "uint64" => "UInt64".to_string(),
+            "uint64z" => "UInt64z".to_string(),
+            _ => titlecase_string(field_type),
+        };
+        Self::Raw(raw)
+    }
+}
+
+impl fmt::Display for MessageFieldType {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Self::Enum(ident) => ident.fmt(f),
+            Self::Raw(raw) => raw.fmt(f),
+        }
+    }
+}
+
+#[derive(Clone, Debug)]
 pub struct MessageFieldComponent {
     name: String,
     scale: f64,
@@ -345,29 +391,6 @@ fn base_type_to_rust_type(base_type_str: &str) -> &'static str {
         "sint32" => "i32",
         "uint32" | "uint32z" => "u32",
         _ => panic!("unsupported base_type for enum field: {base_type_str}"),
-    }
-}
-
-/// match the field type string to a simple type or an enum
-fn field_type_str_to_field_type(field_type_str: &str) -> String {
-    match field_type_str {
-        "sint8" => "SInt8".to_string(),
-        "uint8" => "UInt8".to_string(),
-        "sint16" => "SInt16".to_string(),
-        "uint16" => "UInt16".to_string(),
-        "sint32" => "SInt32".to_string(),
-        "uint32" => "UInt32".to_string(),
-        "string" => "String".to_string(),
-        "float32" => "Float32".to_string(),
-        "float64" => "Float64".to_string(),
-        "uint8z" => "UInt8z".to_string(),
-        "uint16z" => "UInt16z".to_string(),
-        "uint32z" => "UInt32z".to_string(),
-        "byte" => "Byte".to_string(),
-        "sint64" => "SInt64".to_string(),
-        "uint64" => "UInt64".to_string(),
-        "uint64z" => "UInt64z".to_string(),
-        _ => titlecase_string(field_type_str),
     }
 }
 
@@ -549,7 +572,10 @@ fn process_components(
 }
 
 #[allow(clippy::cast_possible_truncation, clippy::cast_sign_loss)]
-fn new_message_field_definition(row: &[DataType]) -> MessageFieldDefinition {
+fn new_message_field_definition(
+    fields: &[FieldTypeDefintion],
+    row: &[DataType],
+) -> MessageFieldDefinition {
     let def_number = match row[1] {
         DataType::Float(v) => v as u8,
         DataType::Int(v) => v as u8,
@@ -561,14 +587,15 @@ fn new_message_field_definition(row: &[DataType]) -> MessageFieldDefinition {
     let ftype = row[3]
         .get_string()
         .unwrap_or_else(|| panic!("Field type must be a string, row={row:?}."));
+    let field_type = MessageFieldType::new(fields, ftype);
     let components = parse_message_field_components(row);
     let comment = row[13].get_string().map(std::string::ToString::to_string);
 
     MessageFieldDefinition::new(
         def_number,
         name,
-        ftype,
-        row[4].is_empty(),
+        field_type,
+        !row[4].is_empty(),
         row[6].get_float().unwrap_or(1.0),
         row[7].get_float().unwrap_or(0.0),
         row[8].get_string().unwrap_or(""),
@@ -578,7 +605,10 @@ fn new_message_field_definition(row: &[DataType]) -> MessageFieldDefinition {
     )
 }
 
-fn process_messages(sheet: &Range<DataType>) -> Vec<MessageDefinition> {
+fn process_messages(
+    fields: &[FieldTypeDefintion],
+    sheet: &Range<DataType>,
+) -> Vec<MessageDefinition> {
     let mut rows = sheet.rows().skip(1);
     let mut messages: Vec<MessageDefinition> = Vec::new();
     let mut msg: MessageDefinition;
@@ -613,7 +643,7 @@ fn process_messages(sheet: &Range<DataType>) -> Vec<MessageDefinition> {
                 panic!("Message name must be a string row={row:?}.");
             }
         } else if !row[1].is_empty() {
-            field = new_message_field_definition(row);
+            field = new_message_field_definition(fields, row);
             last_def_number = field.def_number;
             msg.field_map.insert(field.def_number, field);
         } else if !row[2].is_empty() {
@@ -624,7 +654,7 @@ fn process_messages(sheet: &Range<DataType>) -> Vec<MessageDefinition> {
                 .expect("No parent field defined for subfield!");
             let mut temp_row: Vec<DataType> = Vec::from(row);
             temp_row[1] = DataType::Int(i64::from(last_def_number));
-            field = new_message_field_definition(&temp_row);
+            field = new_message_field_definition(fields, &temp_row);
             // store subfield ref_field, ref_field_value and defintion, if multiple values can
             // trigger this subfield we simply duplicate them
             let ref_field_names = row[11].get_string().expect("No reference field name(s)");
@@ -661,7 +691,7 @@ pub fn parse_profile(
 
     // process Messages sheet
     let messages = if let Some(Ok(sheet)) = excel.worksheet_range("Messages") {
-        process_messages(&sheet)
+        process_messages(&field_types, &sheet)
     } else {
         panic!("Could not access workbook sheet 'Messages'");
     };

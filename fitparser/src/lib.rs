@@ -136,6 +136,11 @@ impl FitDataField {
     pub fn into_value(self) -> Value {
         self.value
     }
+
+    /// Consume the field and return the value with associated units
+    pub fn into_value_with_units(self) -> ValueWithUnits {
+        ValueWithUnits::new(self.value, self.units)
+    }
 }
 
 impl fmt::Display for FitDataField {
@@ -326,7 +331,7 @@ impl convert::TryInto<i64> for &Value {
 /// Describes a field value along with its defined units (if any), this struct is useful for
 /// serializing data in a key-value store where the key is either the name or definition number
 /// since it can be created from a `FitDataField` with minimal data cloning.
-#[derive(Clone, Debug, Serialize)]
+#[derive(Clone, Debug, PartialEq, PartialOrd, Serialize)]
 pub struct ValueWithUnits {
     value: Value,
     units: String,
@@ -336,6 +341,16 @@ impl ValueWithUnits {
     /// Create a new value with the given information
     pub fn new(value: Value, units: String) -> Self {
         ValueWithUnits { value, units }
+    }
+
+    /// Return a reference to the stored value
+    pub fn value(&self) -> &Value {
+        &self.value
+    }
+
+    /// Return units associated with the value
+    pub fn units(&self) -> &str {
+        &self.units
     }
 }
 
@@ -361,14 +376,32 @@ mod tests {
     use super::*;
     use std::collections::HashSet;
 
+    fn validate_records(records: Vec<FitDataRecord>, ignore_unexpected_fields: bool) {
+        let mut options = MessageParseOptions::default();
+        options.ignore_unexpected_fields = ignore_unexpected_fields;
+        for record in records {
+            validate_record(record, options);
+        }
+    }
+
+    fn validate_record(record: FitDataRecord, options: MessageParseOptions) {
+        if !MesgNum::is_named_variant(record.kind().as_i64()) {
+            return;
+        }
+        let message = Message::parse_with_options(record, options).unwrap();
+        assert!(
+            message.invalid_fields().is_empty(),
+            "{:?}",
+            message.invalid_fields()
+        );
+    }
+
     #[test]
     fn parse_activity() {
         let data = include_bytes!("../tests/fixtures/Activity.fit").to_vec();
         let fit_data = from_bytes(&data).unwrap();
         assert_eq!(fit_data.len(), 22);
-        for record in fit_data {
-            assert!(Message::parse(record).is_ok());
-        }
+        validate_records(fit_data, false);
     }
 
     #[test]
@@ -376,9 +409,7 @@ mod tests {
         let data = include_bytes!("../tests/fixtures/DeveloperData.fit").to_vec();
         let fit_data = from_bytes(&data).unwrap();
         assert_eq!(fit_data.len(), 6);
-        for record in fit_data {
-            assert!(Message::parse(record).is_ok());
-        }
+        validate_records(fit_data, false);
     }
 
     #[test]
@@ -386,9 +417,7 @@ mod tests {
         let data = include_bytes!("../tests/fixtures/MonitoringFile.fit").to_vec();
         let fit_data = from_bytes(&data).unwrap();
         assert_eq!(fit_data.len(), 355);
-        for record in fit_data {
-            assert!(Message::parse(record).is_ok());
-        }
+        validate_records(fit_data, false);
     }
 
     #[test]
@@ -396,9 +425,7 @@ mod tests {
         let data = include_bytes!("../tests/fixtures/Settings.fit").to_vec();
         let fit_data = from_bytes(&data).unwrap();
         assert_eq!(fit_data.len(), 3);
-        for record in fit_data {
-            assert!(Message::parse(record).is_ok());
-        }
+        validate_records(fit_data, false);
     }
 
     #[test]
@@ -406,9 +433,7 @@ mod tests {
         let data = include_bytes!("../tests/fixtures/WeightScaleMultiUser.fit").to_vec();
         let fit_data = from_bytes(&data).unwrap();
         assert_eq!(fit_data.len(), 7);
-        for record in fit_data {
-            assert!(Message::parse(record).is_ok());
-        }
+        validate_records(fit_data, false);
     }
 
     #[test]
@@ -416,9 +441,7 @@ mod tests {
         let data = include_bytes!("../tests/fixtures/WeightScaleSingleUser.fit").to_vec();
         let fit_data = from_bytes(&data).unwrap();
         assert_eq!(fit_data.len(), 6);
-        for record in fit_data {
-            assert!(Message::parse(record).is_ok());
-        }
+        validate_records(fit_data, false);
     }
 
     #[test]
@@ -426,9 +449,7 @@ mod tests {
         let data = include_bytes!("../tests/fixtures/WorkoutCustomTargetValues.fit").to_vec();
         let fit_data = from_bytes(&data).unwrap();
         assert_eq!(fit_data.len(), 6);
-        for record in fit_data {
-            assert!(Message::parse(record).is_ok());
-        }
+        validate_records(fit_data, false);
     }
 
     #[test]
@@ -436,9 +457,7 @@ mod tests {
         let data = include_bytes!("../tests/fixtures/WorkoutIndividualSteps.fit").to_vec();
         let fit_data = from_bytes(&data).unwrap();
         assert_eq!(fit_data.len(), 6);
-        for record in fit_data {
-            assert!(Message::parse(record).is_ok());
-        }
+        validate_records(fit_data, false);
     }
 
     #[test]
@@ -446,9 +465,7 @@ mod tests {
         let data = include_bytes!("../tests/fixtures/WorkoutRepeatGreaterThanStep.fit").to_vec();
         let fit_data = from_bytes(&data).unwrap();
         assert_eq!(fit_data.len(), 7);
-        for record in fit_data {
-            assert!(Message::parse(record).is_ok());
-        }
+        validate_records(fit_data, false);
     }
 
     #[test]
@@ -456,9 +473,7 @@ mod tests {
         let data = include_bytes!("../tests/fixtures/WorkoutRepeatSteps.fit").to_vec();
         let fit_data = from_bytes(&data).unwrap();
         assert_eq!(fit_data.len(), 7);
-        for record in fit_data {
-            assert!(Message::parse(record).is_ok());
-        }
+        validate_records(fit_data, false);
     }
 
     #[test]
@@ -468,13 +483,7 @@ mod tests {
         let data = include_bytes!("../tests/fixtures/garmin-fenix-5-bike.fit").to_vec();
         let fit_data = from_bytes(&data).unwrap();
         assert_eq!(fit_data.len(), 143);
-        let mut options = MessageParseOptions::default();
-        options.ignore_unexpected_fields = true;
-        for record in fit_data {
-            if MesgNum::is_named_variant(record.kind().as_i64()) {
-                assert!(Message::parse_with_options(record, options).is_ok());
-            }
-        }
+        validate_records(fit_data, true);
     }
 
     #[test]
@@ -483,13 +492,7 @@ mod tests {
         let data = include_bytes!("../tests/fixtures/sample_mulitple_header.fit").to_vec();
         let fit_data = from_bytes(&data).unwrap();
         assert_eq!(fit_data.len(), 3023);
-        let mut options = MessageParseOptions::default();
-        options.ignore_unexpected_fields = true;
-        for record in fit_data {
-            if MesgNum::is_named_variant(record.kind().as_i64()) {
-                assert!(Message::parse_with_options(record, options).is_ok());
-            }
-        }
+        validate_records(fit_data, true);
     }
 
     #[test]

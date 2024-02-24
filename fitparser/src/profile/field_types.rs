@@ -3,10 +3,13 @@
 #![allow(missing_docs)]
 #![allow(dead_code)]
 #![allow(clippy::unreadable_literal)]
+use super::{EnumFromStrError, FromValue};
+use crate::ValueWithUnits;
 use serde::ser::Serializer;
 use serde::Serialize;
 use std::convert;
 use std::fmt;
+use std::str::FromStr;
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum File {
     /// Read only, single file. Must be in root directory.
@@ -170,6 +173,39 @@ impl Serialize for File {
         S: Serializer,
     {
         serializer.serialize_str(&self.to_string())
+    }
+}
+impl FromStr for File {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "device" => Ok(Self::Device),
+            "settings" => Ok(Self::Settings),
+            "sport" => Ok(Self::Sport),
+            "activity" => Ok(Self::Activity),
+            "workout" => Ok(Self::Workout),
+            "course" => Ok(Self::Course),
+            "schedules" => Ok(Self::Schedules),
+            "weight" => Ok(Self::Weight),
+            "totals" => Ok(Self::Totals),
+            "goals" => Ok(Self::Goals),
+            "blood_pressure" => Ok(Self::BloodPressure),
+            "monitoring_a" => Ok(Self::MonitoringA),
+            "activity_summary" => Ok(Self::ActivitySummary),
+            "monitoring_daily" => Ok(Self::MonitoringDaily),
+            "monitoring_b" => Ok(Self::MonitoringB),
+            "segment" => Ok(Self::Segment),
+            "segment_list" => Ok(Self::SegmentList),
+            "exd_configuration" => Ok(Self::ExdConfiguration),
+            "mfg_range_min" => Ok(Self::MfgRangeMin),
+            "mfg_range_max" => Ok(Self::MfgRangeMax),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for File {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -829,6 +865,140 @@ impl Serialize for MesgNum {
         }
     }
 }
+impl FromStr for MesgNum {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "file_id" => Ok(Self::FileId),
+            "capabilities" => Ok(Self::Capabilities),
+            "device_settings" => Ok(Self::DeviceSettings),
+            "user_profile" => Ok(Self::UserProfile),
+            "hrm_profile" => Ok(Self::HrmProfile),
+            "sdm_profile" => Ok(Self::SdmProfile),
+            "bike_profile" => Ok(Self::BikeProfile),
+            "zones_target" => Ok(Self::ZonesTarget),
+            "hr_zone" => Ok(Self::HrZone),
+            "power_zone" => Ok(Self::PowerZone),
+            "met_zone" => Ok(Self::MetZone),
+            "sport" => Ok(Self::Sport),
+            "goal" => Ok(Self::Goal),
+            "session" => Ok(Self::Session),
+            "lap" => Ok(Self::Lap),
+            "record" => Ok(Self::Record),
+            "event" => Ok(Self::Event),
+            "device_info" => Ok(Self::DeviceInfo),
+            "workout" => Ok(Self::Workout),
+            "workout_step" => Ok(Self::WorkoutStep),
+            "schedule" => Ok(Self::Schedule),
+            "weight_scale" => Ok(Self::WeightScale),
+            "course" => Ok(Self::Course),
+            "course_point" => Ok(Self::CoursePoint),
+            "totals" => Ok(Self::Totals),
+            "activity" => Ok(Self::Activity),
+            "software" => Ok(Self::Software),
+            "file_capabilities" => Ok(Self::FileCapabilities),
+            "mesg_capabilities" => Ok(Self::MesgCapabilities),
+            "field_capabilities" => Ok(Self::FieldCapabilities),
+            "file_creator" => Ok(Self::FileCreator),
+            "blood_pressure" => Ok(Self::BloodPressure),
+            "speed_zone" => Ok(Self::SpeedZone),
+            "monitoring" => Ok(Self::Monitoring),
+            "training_file" => Ok(Self::TrainingFile),
+            "hrv" => Ok(Self::Hrv),
+            "ant_rx" => Ok(Self::AntRx),
+            "ant_tx" => Ok(Self::AntTx),
+            "ant_channel_id" => Ok(Self::AntChannelId),
+            "length" => Ok(Self::Length),
+            "monitoring_info" => Ok(Self::MonitoringInfo),
+            "pad" => Ok(Self::Pad),
+            "slave_device" => Ok(Self::SlaveDevice),
+            "connectivity" => Ok(Self::Connectivity),
+            "weather_conditions" => Ok(Self::WeatherConditions),
+            "weather_alert" => Ok(Self::WeatherAlert),
+            "cadence_zone" => Ok(Self::CadenceZone),
+            "hr" => Ok(Self::Hr),
+            "segment_lap" => Ok(Self::SegmentLap),
+            "memo_glob" => Ok(Self::MemoGlob),
+            "segment_id" => Ok(Self::SegmentId),
+            "segment_leaderboard_entry" => Ok(Self::SegmentLeaderboardEntry),
+            "segment_point" => Ok(Self::SegmentPoint),
+            "segment_file" => Ok(Self::SegmentFile),
+            "workout_session" => Ok(Self::WorkoutSession),
+            "watchface_settings" => Ok(Self::WatchfaceSettings),
+            "gps_metadata" => Ok(Self::GpsMetadata),
+            "camera_event" => Ok(Self::CameraEvent),
+            "timestamp_correlation" => Ok(Self::TimestampCorrelation),
+            "gyroscope_data" => Ok(Self::GyroscopeData),
+            "accelerometer_data" => Ok(Self::AccelerometerData),
+            "three_d_sensor_calibration" => Ok(Self::ThreeDSensorCalibration),
+            "video_frame" => Ok(Self::VideoFrame),
+            "obdii_data" => Ok(Self::ObdiiData),
+            "nmea_sentence" => Ok(Self::NmeaSentence),
+            "aviation_attitude" => Ok(Self::AviationAttitude),
+            "video" => Ok(Self::Video),
+            "video_title" => Ok(Self::VideoTitle),
+            "video_description" => Ok(Self::VideoDescription),
+            "video_clip" => Ok(Self::VideoClip),
+            "ohr_settings" => Ok(Self::OhrSettings),
+            "exd_screen_configuration" => Ok(Self::ExdScreenConfiguration),
+            "exd_data_field_configuration" => Ok(Self::ExdDataFieldConfiguration),
+            "exd_data_concept_configuration" => Ok(Self::ExdDataConceptConfiguration),
+            "field_description" => Ok(Self::FieldDescription),
+            "developer_data_id" => Ok(Self::DeveloperDataId),
+            "magnetometer_data" => Ok(Self::MagnetometerData),
+            "barometer_data" => Ok(Self::BarometerData),
+            "one_d_sensor_calibration" => Ok(Self::OneDSensorCalibration),
+            "monitoring_hr_data" => Ok(Self::MonitoringHrData),
+            "time_in_zone" => Ok(Self::TimeInZone),
+            "set" => Ok(Self::Set),
+            "stress_level" => Ok(Self::StressLevel),
+            "max_met_data" => Ok(Self::MaxMetData),
+            "dive_settings" => Ok(Self::DiveSettings),
+            "dive_gas" => Ok(Self::DiveGas),
+            "dive_alarm" => Ok(Self::DiveAlarm),
+            "exercise_title" => Ok(Self::ExerciseTitle),
+            "dive_summary" => Ok(Self::DiveSummary),
+            "spo2_data" => Ok(Self::Spo2Data),
+            "sleep_level" => Ok(Self::SleepLevel),
+            "jump" => Ok(Self::Jump),
+            "aad_accel_features" => Ok(Self::AadAccelFeatures),
+            "beat_intervals" => Ok(Self::BeatIntervals),
+            "respiration_rate" => Ok(Self::RespirationRate),
+            "hsa_accelerometer_data" => Ok(Self::HsaAccelerometerData),
+            "hsa_step_data" => Ok(Self::HsaStepData),
+            "hsa_spo2_data" => Ok(Self::HsaSpo2Data),
+            "hsa_stress_data" => Ok(Self::HsaStressData),
+            "hsa_respiration_data" => Ok(Self::HsaRespirationData),
+            "hsa_heart_rate_data" => Ok(Self::HsaHeartRateData),
+            "split" => Ok(Self::Split),
+            "split_summary" => Ok(Self::SplitSummary),
+            "hsa_body_battery_data" => Ok(Self::HsaBodyBatteryData),
+            "hsa_event" => Ok(Self::HsaEvent),
+            "climb_pro" => Ok(Self::ClimbPro),
+            "tank_update" => Ok(Self::TankUpdate),
+            "tank_summary" => Ok(Self::TankSummary),
+            "sleep_assessment" => Ok(Self::SleepAssessment),
+            "hrv_status_summary" => Ok(Self::HrvStatusSummary),
+            "hrv_value" => Ok(Self::HrvValue),
+            "raw_bbi" => Ok(Self::RawBbi),
+            "device_aux_battery_info" => Ok(Self::DeviceAuxBatteryInfo),
+            "hsa_gyroscope_data" => Ok(Self::HsaGyroscopeData),
+            "chrono_shot_session" => Ok(Self::ChronoShotSession),
+            "chrono_shot_data" => Ok(Self::ChronoShotData),
+            "hsa_configuration_data" => Ok(Self::HsaConfigurationData),
+            "dive_apnea_alarm" => Ok(Self::DiveApneaAlarm),
+            "hsa_wrist_temperature_data" => Ok(Self::HsaWristTemperatureData),
+            "mfg_range_min" => Ok(Self::MfgRangeMin),
+            "mfg_range_max" => Ok(Self::MfgRangeMax),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for MesgNum {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum Checksum {
     /// Allows clear of checksum for flash memory where can only write 1 to 0 without erasing sector.
@@ -888,6 +1058,21 @@ impl Serialize for Checksum {
             Checksum::Value(value) => serializer.serialize_u8(*value),
             _ => serializer.serialize_str(&self.to_string()),
         }
+    }
+}
+impl FromStr for Checksum {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "clear" => Ok(Self::Clear),
+            "ok" => Ok(Self::Ok),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for Checksum {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -954,6 +1139,22 @@ impl Serialize for FileFlags {
         }
     }
 }
+impl FromStr for FileFlags {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "read" => Ok(Self::Read),
+            "write" => Ok(Self::Write),
+            "erase" => Ok(Self::Erase),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for FileFlags {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum MesgCount {
     NumPerFile,
@@ -1015,6 +1216,22 @@ impl Serialize for MesgCount {
         serializer.serialize_str(&self.to_string())
     }
 }
+impl FromStr for MesgCount {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "num_per_file" => Ok(Self::NumPerFile),
+            "max_per_file" => Ok(Self::MaxPerFile),
+            "max_per_file_type" => Ok(Self::MaxPerFileType),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for MesgCount {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 /// seconds since UTC 00:00 Dec 31 1989
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum DateTime {
@@ -1071,6 +1288,20 @@ impl Serialize for DateTime {
         }
     }
 }
+impl FromStr for DateTime {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "min" => Ok(Self::Min),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for DateTime {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 /// seconds since 00:00 Dec 31 1989 in local time zone
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum LocalDateTime {
@@ -1125,6 +1356,20 @@ impl Serialize for LocalDateTime {
             LocalDateTime::Value(value) => serializer.serialize_u32(*value),
             _ => serializer.serialize_str(&self.to_string()),
         }
+    }
+}
+impl FromStr for LocalDateTime {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "min" => Ok(Self::Min),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for LocalDateTime {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -1194,6 +1439,22 @@ impl Serialize for MessageIndex {
         }
     }
 }
+impl FromStr for MessageIndex {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "mask" => Ok(Self::Mask),
+            "reserved" => Ok(Self::Reserved),
+            "selected" => Ok(Self::Selected),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for MessageIndex {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum DeviceIndex {
     /// Creator of the file is always device index 0.
@@ -1247,6 +1508,20 @@ impl Serialize for DeviceIndex {
             DeviceIndex::Value(value) => serializer.serialize_u8(*value),
             _ => serializer.serialize_str(&self.to_string()),
         }
+    }
+}
+impl FromStr for DeviceIndex {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "creator" => Ok(Self::Creator),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for DeviceIndex {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -1303,6 +1578,21 @@ impl Serialize for Gender {
         S: Serializer,
     {
         serializer.serialize_str(&self.to_string())
+    }
+}
+impl FromStr for Gender {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "female" => Ok(Self::Female),
+            "male" => Ok(Self::Male),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for Gender {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -1546,6 +1836,58 @@ impl Serialize for Language {
         serializer.serialize_str(&self.to_string())
     }
 }
+impl FromStr for Language {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "english" => Ok(Self::English),
+            "french" => Ok(Self::French),
+            "italian" => Ok(Self::Italian),
+            "german" => Ok(Self::German),
+            "spanish" => Ok(Self::Spanish),
+            "croatian" => Ok(Self::Croatian),
+            "czech" => Ok(Self::Czech),
+            "danish" => Ok(Self::Danish),
+            "dutch" => Ok(Self::Dutch),
+            "finnish" => Ok(Self::Finnish),
+            "greek" => Ok(Self::Greek),
+            "hungarian" => Ok(Self::Hungarian),
+            "norwegian" => Ok(Self::Norwegian),
+            "polish" => Ok(Self::Polish),
+            "portuguese" => Ok(Self::Portuguese),
+            "slovakian" => Ok(Self::Slovakian),
+            "slovenian" => Ok(Self::Slovenian),
+            "swedish" => Ok(Self::Swedish),
+            "russian" => Ok(Self::Russian),
+            "turkish" => Ok(Self::Turkish),
+            "latvian" => Ok(Self::Latvian),
+            "ukrainian" => Ok(Self::Ukrainian),
+            "arabic" => Ok(Self::Arabic),
+            "farsi" => Ok(Self::Farsi),
+            "bulgarian" => Ok(Self::Bulgarian),
+            "romanian" => Ok(Self::Romanian),
+            "chinese" => Ok(Self::Chinese),
+            "japanese" => Ok(Self::Japanese),
+            "korean" => Ok(Self::Korean),
+            "taiwanese" => Ok(Self::Taiwanese),
+            "thai" => Ok(Self::Thai),
+            "hebrew" => Ok(Self::Hebrew),
+            "brazilian_portuguese" => Ok(Self::BrazilianPortuguese),
+            "indonesian" => Ok(Self::Indonesian),
+            "malaysian" => Ok(Self::Malaysian),
+            "vietnamese" => Ok(Self::Vietnamese),
+            "burmese" => Ok(Self::Burmese),
+            "mongolian" => Ok(Self::Mongolian),
+            "custom" => Ok(Self::Custom),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for Language {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 /// Bit field corresponding to language enum type (1 << language).
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum LanguageBits0 {
@@ -1634,6 +1976,27 @@ impl Serialize for LanguageBits0 {
             LanguageBits0::Value(value) => serializer.serialize_u8(*value),
             _ => serializer.serialize_str(&self.to_string()),
         }
+    }
+}
+impl FromStr for LanguageBits0 {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "english" => Ok(Self::English),
+            "french" => Ok(Self::French),
+            "italian" => Ok(Self::Italian),
+            "german" => Ok(Self::German),
+            "spanish" => Ok(Self::Spanish),
+            "croatian" => Ok(Self::Croatian),
+            "czech" => Ok(Self::Czech),
+            "danish" => Ok(Self::Danish),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for LanguageBits0 {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -1725,6 +2088,27 @@ impl Serialize for LanguageBits1 {
         }
     }
 }
+impl FromStr for LanguageBits1 {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "dutch" => Ok(Self::Dutch),
+            "finnish" => Ok(Self::Finnish),
+            "greek" => Ok(Self::Greek),
+            "hungarian" => Ok(Self::Hungarian),
+            "norwegian" => Ok(Self::Norwegian),
+            "polish" => Ok(Self::Polish),
+            "portuguese" => Ok(Self::Portuguese),
+            "slovakian" => Ok(Self::Slovakian),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for LanguageBits1 {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum LanguageBits2 {
     Slovenian,
@@ -1812,6 +2196,27 @@ impl Serialize for LanguageBits2 {
             LanguageBits2::Value(value) => serializer.serialize_u8(*value),
             _ => serializer.serialize_str(&self.to_string()),
         }
+    }
+}
+impl FromStr for LanguageBits2 {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "slovenian" => Ok(Self::Slovenian),
+            "swedish" => Ok(Self::Swedish),
+            "russian" => Ok(Self::Russian),
+            "turkish" => Ok(Self::Turkish),
+            "latvian" => Ok(Self::Latvian),
+            "ukrainian" => Ok(Self::Ukrainian),
+            "arabic" => Ok(Self::Arabic),
+            "farsi" => Ok(Self::Farsi),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for LanguageBits2 {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -1903,6 +2308,27 @@ impl Serialize for LanguageBits3 {
         }
     }
 }
+impl FromStr for LanguageBits3 {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "bulgarian" => Ok(Self::Bulgarian),
+            "romanian" => Ok(Self::Romanian),
+            "chinese" => Ok(Self::Chinese),
+            "japanese" => Ok(Self::Japanese),
+            "korean" => Ok(Self::Korean),
+            "taiwanese" => Ok(Self::Taiwanese),
+            "thai" => Ok(Self::Thai),
+            "hebrew" => Ok(Self::Hebrew),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for LanguageBits3 {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum LanguageBits4 {
     BrazilianPortuguese,
@@ -1980,6 +2406,25 @@ impl Serialize for LanguageBits4 {
             LanguageBits4::Value(value) => serializer.serialize_u8(*value),
             _ => serializer.serialize_str(&self.to_string()),
         }
+    }
+}
+impl FromStr for LanguageBits4 {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "brazilian_portuguese" => Ok(Self::BrazilianPortuguese),
+            "indonesian" => Ok(Self::Indonesian),
+            "malaysian" => Ok(Self::Malaysian),
+            "vietnamese" => Ok(Self::Vietnamese),
+            "burmese" => Ok(Self::Burmese),
+            "mongolian" => Ok(Self::Mongolian),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for LanguageBits4 {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -2558,6 +3003,125 @@ impl Serialize for TimeZone {
         serializer.serialize_str(&self.to_string())
     }
 }
+impl FromStr for TimeZone {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "almaty" => Ok(Self::Almaty),
+            "bangkok" => Ok(Self::Bangkok),
+            "bombay" => Ok(Self::Bombay),
+            "brasilia" => Ok(Self::Brasilia),
+            "cairo" => Ok(Self::Cairo),
+            "cape_verde_is" => Ok(Self::CapeVerdeIs),
+            "darwin" => Ok(Self::Darwin),
+            "eniwetok" => Ok(Self::Eniwetok),
+            "fiji" => Ok(Self::Fiji),
+            "hong_kong" => Ok(Self::HongKong),
+            "islamabad" => Ok(Self::Islamabad),
+            "kabul" => Ok(Self::Kabul),
+            "magadan" => Ok(Self::Magadan),
+            "mid_atlantic" => Ok(Self::MidAtlantic),
+            "moscow" => Ok(Self::Moscow),
+            "muscat" => Ok(Self::Muscat),
+            "newfoundland" => Ok(Self::Newfoundland),
+            "samoa" => Ok(Self::Samoa),
+            "sydney" => Ok(Self::Sydney),
+            "tehran" => Ok(Self::Tehran),
+            "tokyo" => Ok(Self::Tokyo),
+            "us_alaska" => Ok(Self::UsAlaska),
+            "us_atlantic" => Ok(Self::UsAtlantic),
+            "us_central" => Ok(Self::UsCentral),
+            "us_eastern" => Ok(Self::UsEastern),
+            "us_hawaii" => Ok(Self::UsHawaii),
+            "us_mountain" => Ok(Self::UsMountain),
+            "us_pacific" => Ok(Self::UsPacific),
+            "other" => Ok(Self::Other),
+            "auckland" => Ok(Self::Auckland),
+            "kathmandu" => Ok(Self::Kathmandu),
+            "europe_western_wet" => Ok(Self::EuropeWesternWet),
+            "europe_central_cet" => Ok(Self::EuropeCentralCet),
+            "europe_eastern_eet" => Ok(Self::EuropeEasternEet),
+            "jakarta" => Ok(Self::Jakarta),
+            "perth" => Ok(Self::Perth),
+            "adelaide" => Ok(Self::Adelaide),
+            "brisbane" => Ok(Self::Brisbane),
+            "tasmania" => Ok(Self::Tasmania),
+            "iceland" => Ok(Self::Iceland),
+            "amsterdam" => Ok(Self::Amsterdam),
+            "athens" => Ok(Self::Athens),
+            "barcelona" => Ok(Self::Barcelona),
+            "berlin" => Ok(Self::Berlin),
+            "brussels" => Ok(Self::Brussels),
+            "budapest" => Ok(Self::Budapest),
+            "copenhagen" => Ok(Self::Copenhagen),
+            "dublin" => Ok(Self::Dublin),
+            "helsinki" => Ok(Self::Helsinki),
+            "lisbon" => Ok(Self::Lisbon),
+            "london" => Ok(Self::London),
+            "madrid" => Ok(Self::Madrid),
+            "munich" => Ok(Self::Munich),
+            "oslo" => Ok(Self::Oslo),
+            "paris" => Ok(Self::Paris),
+            "prague" => Ok(Self::Prague),
+            "reykjavik" => Ok(Self::Reykjavik),
+            "rome" => Ok(Self::Rome),
+            "stockholm" => Ok(Self::Stockholm),
+            "vienna" => Ok(Self::Vienna),
+            "warsaw" => Ok(Self::Warsaw),
+            "zurich" => Ok(Self::Zurich),
+            "quebec" => Ok(Self::Quebec),
+            "ontario" => Ok(Self::Ontario),
+            "manitoba" => Ok(Self::Manitoba),
+            "saskatchewan" => Ok(Self::Saskatchewan),
+            "alberta" => Ok(Self::Alberta),
+            "british_columbia" => Ok(Self::BritishColumbia),
+            "boise" => Ok(Self::Boise),
+            "boston" => Ok(Self::Boston),
+            "chicago" => Ok(Self::Chicago),
+            "dallas" => Ok(Self::Dallas),
+            "denver" => Ok(Self::Denver),
+            "kansas_city" => Ok(Self::KansasCity),
+            "las_vegas" => Ok(Self::LasVegas),
+            "los_angeles" => Ok(Self::LosAngeles),
+            "miami" => Ok(Self::Miami),
+            "minneapolis" => Ok(Self::Minneapolis),
+            "new_york" => Ok(Self::NewYork),
+            "new_orleans" => Ok(Self::NewOrleans),
+            "phoenix" => Ok(Self::Phoenix),
+            "santa_fe" => Ok(Self::SantaFe),
+            "seattle" => Ok(Self::Seattle),
+            "washington_dc" => Ok(Self::WashingtonDc),
+            "us_arizona" => Ok(Self::UsArizona),
+            "chita" => Ok(Self::Chita),
+            "ekaterinburg" => Ok(Self::Ekaterinburg),
+            "irkutsk" => Ok(Self::Irkutsk),
+            "kaliningrad" => Ok(Self::Kaliningrad),
+            "krasnoyarsk" => Ok(Self::Krasnoyarsk),
+            "novosibirsk" => Ok(Self::Novosibirsk),
+            "petropavlovsk_kamchatskiy" => Ok(Self::PetropavlovskKamchatskiy),
+            "samara" => Ok(Self::Samara),
+            "vladivostok" => Ok(Self::Vladivostok),
+            "mexico_central" => Ok(Self::MexicoCentral),
+            "mexico_mountain" => Ok(Self::MexicoMountain),
+            "mexico_pacific" => Ok(Self::MexicoPacific),
+            "cape_town" => Ok(Self::CapeTown),
+            "winkhoek" => Ok(Self::Winkhoek),
+            "lagos" => Ok(Self::Lagos),
+            "riyahd" => Ok(Self::Riyahd),
+            "venezuela" => Ok(Self::Venezuela),
+            "australia_lh" => Ok(Self::AustraliaLh),
+            "santiago" => Ok(Self::Santiago),
+            "manual" => Ok(Self::Manual),
+            "automatic" => Ok(Self::Automatic),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for TimeZone {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum DisplayMeasure {
     Metric,
@@ -2617,6 +3181,22 @@ impl Serialize for DisplayMeasure {
         S: Serializer,
     {
         serializer.serialize_str(&self.to_string())
+    }
+}
+impl FromStr for DisplayMeasure {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "metric" => Ok(Self::Metric),
+            "statute" => Ok(Self::Statute),
+            "nautical" => Ok(Self::Nautical),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for DisplayMeasure {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -2680,6 +3260,22 @@ impl Serialize for DisplayHeart {
         serializer.serialize_str(&self.to_string())
     }
 }
+impl FromStr for DisplayHeart {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "bpm" => Ok(Self::Bpm),
+            "max" => Ok(Self::Max),
+            "reserve" => Ok(Self::Reserve),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for DisplayHeart {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum DisplayPower {
     Watts,
@@ -2734,6 +3330,21 @@ impl Serialize for DisplayPower {
         S: Serializer,
     {
         serializer.serialize_str(&self.to_string())
+    }
+}
+impl FromStr for DisplayPower {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "watts" => Ok(Self::Watts),
+            "percent_ftp" => Ok(Self::PercentFtp),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for DisplayPower {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -3034,6 +3645,61 @@ impl Serialize for DisplayPosition {
         serializer.serialize_str(&self.to_string())
     }
 }
+impl FromStr for DisplayPosition {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "degree" => Ok(Self::Degree),
+            "degree_minute" => Ok(Self::DegreeMinute),
+            "degree_minute_second" => Ok(Self::DegreeMinuteSecond),
+            "austrian_grid" => Ok(Self::AustrianGrid),
+            "british_grid" => Ok(Self::BritishGrid),
+            "dutch_grid" => Ok(Self::DutchGrid),
+            "hungarian_grid" => Ok(Self::HungarianGrid),
+            "finnish_grid" => Ok(Self::FinnishGrid),
+            "german_grid" => Ok(Self::GermanGrid),
+            "icelandic_grid" => Ok(Self::IcelandicGrid),
+            "indonesian_equatorial" => Ok(Self::IndonesianEquatorial),
+            "indonesian_irian" => Ok(Self::IndonesianIrian),
+            "indonesian_southern" => Ok(Self::IndonesianSouthern),
+            "india_zone_0" => Ok(Self::IndiaZone0),
+            "india_zone_IA" => Ok(Self::IndiaZoneIA),
+            "india_zone_IB" => Ok(Self::IndiaZoneIB),
+            "india_zone_IIA" => Ok(Self::IndiaZoneIIA),
+            "india_zone_IIB" => Ok(Self::IndiaZoneIIB),
+            "india_zone_IIIA" => Ok(Self::IndiaZoneIIIA),
+            "india_zone_IIIB" => Ok(Self::IndiaZoneIIIB),
+            "india_zone_IVA" => Ok(Self::IndiaZoneIVA),
+            "india_zone_IVB" => Ok(Self::IndiaZoneIVB),
+            "irish_transverse" => Ok(Self::IrishTransverse),
+            "irish_grid" => Ok(Self::IrishGrid),
+            "loran" => Ok(Self::Loran),
+            "maidenhead_grid" => Ok(Self::MaidenheadGrid),
+            "mgrs_grid" => Ok(Self::MgrsGrid),
+            "new_zealand_grid" => Ok(Self::NewZealandGrid),
+            "new_zealand_transverse" => Ok(Self::NewZealandTransverse),
+            "qatar_grid" => Ok(Self::QatarGrid),
+            "modified_swedish_grid" => Ok(Self::ModifiedSwedishGrid),
+            "swedish_grid" => Ok(Self::SwedishGrid),
+            "south_african_grid" => Ok(Self::SouthAfricanGrid),
+            "swiss_grid" => Ok(Self::SwissGrid),
+            "taiwan_grid" => Ok(Self::TaiwanGrid),
+            "united_states_grid" => Ok(Self::UnitedStatesGrid),
+            "utm_ups_grid" => Ok(Self::UtmUpsGrid),
+            "west_malayan" => Ok(Self::WestMalayan),
+            "borneo_rso" => Ok(Self::BorneoRso),
+            "estonian_grid" => Ok(Self::EstonianGrid),
+            "latvian_grid" => Ok(Self::LatvianGrid),
+            "swedish_ref_99_grid" => Ok(Self::SwedishRef99Grid),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for DisplayPosition {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum Switch {
     Off,
@@ -3093,6 +3759,22 @@ impl Serialize for Switch {
         S: Serializer,
     {
         serializer.serialize_str(&self.to_string())
+    }
+}
+impl FromStr for Switch {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "off" => Ok(Self::Off),
+            "on" => Ok(Self::On),
+            "auto" => Ok(Self::Auto),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for Switch {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -3488,6 +4170,88 @@ impl Serialize for Sport {
         serializer.serialize_str(&self.to_string())
     }
 }
+impl FromStr for Sport {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "generic" => Ok(Self::Generic),
+            "running" => Ok(Self::Running),
+            "cycling" => Ok(Self::Cycling),
+            "transition" => Ok(Self::Transition),
+            "fitness_equipment" => Ok(Self::FitnessEquipment),
+            "swimming" => Ok(Self::Swimming),
+            "basketball" => Ok(Self::Basketball),
+            "soccer" => Ok(Self::Soccer),
+            "tennis" => Ok(Self::Tennis),
+            "american_football" => Ok(Self::AmericanFootball),
+            "training" => Ok(Self::Training),
+            "walking" => Ok(Self::Walking),
+            "cross_country_skiing" => Ok(Self::CrossCountrySkiing),
+            "alpine_skiing" => Ok(Self::AlpineSkiing),
+            "snowboarding" => Ok(Self::Snowboarding),
+            "rowing" => Ok(Self::Rowing),
+            "mountaineering" => Ok(Self::Mountaineering),
+            "hiking" => Ok(Self::Hiking),
+            "multisport" => Ok(Self::Multisport),
+            "paddling" => Ok(Self::Paddling),
+            "flying" => Ok(Self::Flying),
+            "e_biking" => Ok(Self::EBiking),
+            "motorcycling" => Ok(Self::Motorcycling),
+            "boating" => Ok(Self::Boating),
+            "driving" => Ok(Self::Driving),
+            "golf" => Ok(Self::Golf),
+            "hang_gliding" => Ok(Self::HangGliding),
+            "horseback_riding" => Ok(Self::HorsebackRiding),
+            "hunting" => Ok(Self::Hunting),
+            "fishing" => Ok(Self::Fishing),
+            "inline_skating" => Ok(Self::InlineSkating),
+            "rock_climbing" => Ok(Self::RockClimbing),
+            "sailing" => Ok(Self::Sailing),
+            "ice_skating" => Ok(Self::IceSkating),
+            "sky_diving" => Ok(Self::SkyDiving),
+            "snowshoeing" => Ok(Self::Snowshoeing),
+            "snowmobiling" => Ok(Self::Snowmobiling),
+            "stand_up_paddleboarding" => Ok(Self::StandUpPaddleboarding),
+            "surfing" => Ok(Self::Surfing),
+            "wakeboarding" => Ok(Self::Wakeboarding),
+            "water_skiing" => Ok(Self::WaterSkiing),
+            "kayaking" => Ok(Self::Kayaking),
+            "rafting" => Ok(Self::Rafting),
+            "windsurfing" => Ok(Self::Windsurfing),
+            "kitesurfing" => Ok(Self::Kitesurfing),
+            "tactical" => Ok(Self::Tactical),
+            "jumpmaster" => Ok(Self::Jumpmaster),
+            "boxing" => Ok(Self::Boxing),
+            "floor_climbing" => Ok(Self::FloorClimbing),
+            "baseball" => Ok(Self::Baseball),
+            "diving" => Ok(Self::Diving),
+            "hiit" => Ok(Self::Hiit),
+            "racket" => Ok(Self::Racket),
+            "wheelchair_push_walk" => Ok(Self::WheelchairPushWalk),
+            "wheelchair_push_run" => Ok(Self::WheelchairPushRun),
+            "meditation" => Ok(Self::Meditation),
+            "disc_golf" => Ok(Self::DiscGolf),
+            "cricket" => Ok(Self::Cricket),
+            "rugby" => Ok(Self::Rugby),
+            "hockey" => Ok(Self::Hockey),
+            "lacrosse" => Ok(Self::Lacrosse),
+            "volleyball" => Ok(Self::Volleyball),
+            "water_tubing" => Ok(Self::WaterTubing),
+            "wakesurfing" => Ok(Self::Wakesurfing),
+            "mixed_martial_arts" => Ok(Self::MixedMartialArts),
+            "snorkeling" => Ok(Self::Snorkeling),
+            "dance" => Ok(Self::Dance),
+            "jump_rope" => Ok(Self::JumpRope),
+            "all" => Ok(Self::All),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for Sport {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 /// Bit field corresponding to sport enum type (1 << sport).
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SportBits0 {
@@ -3577,6 +4341,27 @@ impl Serialize for SportBits0 {
             SportBits0::Value(value) => serializer.serialize_u8(*value),
             _ => serializer.serialize_str(&self.to_string()),
         }
+    }
+}
+impl FromStr for SportBits0 {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "generic" => Ok(Self::Generic),
+            "running" => Ok(Self::Running),
+            "cycling" => Ok(Self::Cycling),
+            "transition" => Ok(Self::Transition),
+            "fitness_equipment" => Ok(Self::FitnessEquipment),
+            "swimming" => Ok(Self::Swimming),
+            "basketball" => Ok(Self::Basketball),
+            "soccer" => Ok(Self::Soccer),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for SportBits0 {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 /// Bit field corresponding to sport enum type (1 << (sport-8)).
@@ -3669,6 +4454,27 @@ impl Serialize for SportBits1 {
         }
     }
 }
+impl FromStr for SportBits1 {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "tennis" => Ok(Self::Tennis),
+            "american_football" => Ok(Self::AmericanFootball),
+            "training" => Ok(Self::Training),
+            "walking" => Ok(Self::Walking),
+            "cross_country_skiing" => Ok(Self::CrossCountrySkiing),
+            "alpine_skiing" => Ok(Self::AlpineSkiing),
+            "snowboarding" => Ok(Self::Snowboarding),
+            "rowing" => Ok(Self::Rowing),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for SportBits1 {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 /// Bit field corresponding to sport enum type (1 << (sport-16)).
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SportBits2 {
@@ -3757,6 +4563,27 @@ impl Serialize for SportBits2 {
             SportBits2::Value(value) => serializer.serialize_u8(*value),
             _ => serializer.serialize_str(&self.to_string()),
         }
+    }
+}
+impl FromStr for SportBits2 {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "mountaineering" => Ok(Self::Mountaineering),
+            "hiking" => Ok(Self::Hiking),
+            "multisport" => Ok(Self::Multisport),
+            "paddling" => Ok(Self::Paddling),
+            "flying" => Ok(Self::Flying),
+            "e_biking" => Ok(Self::EBiking),
+            "motorcycling" => Ok(Self::Motorcycling),
+            "boating" => Ok(Self::Boating),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for SportBits2 {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 /// Bit field corresponding to sport enum type (1 << (sport-24)).
@@ -3849,6 +4676,27 @@ impl Serialize for SportBits3 {
         }
     }
 }
+impl FromStr for SportBits3 {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "driving" => Ok(Self::Driving),
+            "golf" => Ok(Self::Golf),
+            "hang_gliding" => Ok(Self::HangGliding),
+            "horseback_riding" => Ok(Self::HorsebackRiding),
+            "hunting" => Ok(Self::Hunting),
+            "fishing" => Ok(Self::Fishing),
+            "inline_skating" => Ok(Self::InlineSkating),
+            "rock_climbing" => Ok(Self::RockClimbing),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for SportBits3 {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 /// Bit field corresponding to sport enum type (1 << (sport-32)).
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SportBits4 {
@@ -3937,6 +4785,27 @@ impl Serialize for SportBits4 {
             SportBits4::Value(value) => serializer.serialize_u8(*value),
             _ => serializer.serialize_str(&self.to_string()),
         }
+    }
+}
+impl FromStr for SportBits4 {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "sailing" => Ok(Self::Sailing),
+            "ice_skating" => Ok(Self::IceSkating),
+            "sky_diving" => Ok(Self::SkyDiving),
+            "snowshoeing" => Ok(Self::Snowshoeing),
+            "snowmobiling" => Ok(Self::Snowmobiling),
+            "stand_up_paddleboarding" => Ok(Self::StandUpPaddleboarding),
+            "surfing" => Ok(Self::Surfing),
+            "wakeboarding" => Ok(Self::Wakeboarding),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for SportBits4 {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 /// Bit field corresponding to sport enum type (1 << (sport-40)).
@@ -4029,6 +4898,27 @@ impl Serialize for SportBits5 {
         }
     }
 }
+impl FromStr for SportBits5 {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "water_skiing" => Ok(Self::WaterSkiing),
+            "kayaking" => Ok(Self::Kayaking),
+            "rafting" => Ok(Self::Rafting),
+            "windsurfing" => Ok(Self::Windsurfing),
+            "kitesurfing" => Ok(Self::Kitesurfing),
+            "tactical" => Ok(Self::Tactical),
+            "jumpmaster" => Ok(Self::Jumpmaster),
+            "boxing" => Ok(Self::Boxing),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for SportBits5 {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 /// Bit field corresponding to sport enum type (1 << (sport-48)).
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SportBits6 {
@@ -4082,6 +4972,20 @@ impl Serialize for SportBits6 {
             SportBits6::Value(value) => serializer.serialize_u8(*value),
             _ => serializer.serialize_str(&self.to_string()),
         }
+    }
+}
+impl FromStr for SportBits6 {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "floor_climbing" => Ok(Self::FloorClimbing),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for SportBits6 {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -4649,6 +5553,108 @@ impl Serialize for SubSport {
         serializer.serialize_str(&self.to_string())
     }
 }
+impl FromStr for SubSport {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "generic" => Ok(Self::Generic),
+            "treadmill" => Ok(Self::Treadmill),
+            "street" => Ok(Self::Street),
+            "trail" => Ok(Self::Trail),
+            "track" => Ok(Self::Track),
+            "spin" => Ok(Self::Spin),
+            "indoor_cycling" => Ok(Self::IndoorCycling),
+            "road" => Ok(Self::Road),
+            "mountain" => Ok(Self::Mountain),
+            "downhill" => Ok(Self::Downhill),
+            "recumbent" => Ok(Self::Recumbent),
+            "cyclocross" => Ok(Self::Cyclocross),
+            "hand_cycling" => Ok(Self::HandCycling),
+            "track_cycling" => Ok(Self::TrackCycling),
+            "indoor_rowing" => Ok(Self::IndoorRowing),
+            "elliptical" => Ok(Self::Elliptical),
+            "stair_climbing" => Ok(Self::StairClimbing),
+            "lap_swimming" => Ok(Self::LapSwimming),
+            "open_water" => Ok(Self::OpenWater),
+            "flexibility_training" => Ok(Self::FlexibilityTraining),
+            "strength_training" => Ok(Self::StrengthTraining),
+            "warm_up" => Ok(Self::WarmUp),
+            "match" => Ok(Self::Match),
+            "exercise" => Ok(Self::Exercise),
+            "challenge" => Ok(Self::Challenge),
+            "indoor_skiing" => Ok(Self::IndoorSkiing),
+            "cardio_training" => Ok(Self::CardioTraining),
+            "indoor_walking" => Ok(Self::IndoorWalking),
+            "e_bike_fitness" => Ok(Self::EBikeFitness),
+            "bmx" => Ok(Self::Bmx),
+            "casual_walking" => Ok(Self::CasualWalking),
+            "speed_walking" => Ok(Self::SpeedWalking),
+            "bike_to_run_transition" => Ok(Self::BikeToRunTransition),
+            "run_to_bike_transition" => Ok(Self::RunToBikeTransition),
+            "swim_to_bike_transition" => Ok(Self::SwimToBikeTransition),
+            "atv" => Ok(Self::Atv),
+            "motocross" => Ok(Self::Motocross),
+            "backcountry" => Ok(Self::Backcountry),
+            "resort" => Ok(Self::Resort),
+            "rc_drone" => Ok(Self::RcDrone),
+            "wingsuit" => Ok(Self::Wingsuit),
+            "whitewater" => Ok(Self::Whitewater),
+            "skate_skiing" => Ok(Self::SkateSkiing),
+            "yoga" => Ok(Self::Yoga),
+            "pilates" => Ok(Self::Pilates),
+            "indoor_running" => Ok(Self::IndoorRunning),
+            "gravel_cycling" => Ok(Self::GravelCycling),
+            "e_bike_mountain" => Ok(Self::EBikeMountain),
+            "commuting" => Ok(Self::Commuting),
+            "mixed_surface" => Ok(Self::MixedSurface),
+            "navigate" => Ok(Self::Navigate),
+            "track_me" => Ok(Self::TrackMe),
+            "map" => Ok(Self::Map),
+            "single_gas_diving" => Ok(Self::SingleGasDiving),
+            "multi_gas_diving" => Ok(Self::MultiGasDiving),
+            "gauge_diving" => Ok(Self::GaugeDiving),
+            "apnea_diving" => Ok(Self::ApneaDiving),
+            "apnea_hunting" => Ok(Self::ApneaHunting),
+            "virtual_activity" => Ok(Self::VirtualActivity),
+            "obstacle" => Ok(Self::Obstacle),
+            "breathing" => Ok(Self::Breathing),
+            "sail_race" => Ok(Self::SailRace),
+            "ultra" => Ok(Self::Ultra),
+            "indoor_climbing" => Ok(Self::IndoorClimbing),
+            "bouldering" => Ok(Self::Bouldering),
+            "hiit" => Ok(Self::Hiit),
+            "amrap" => Ok(Self::Amrap),
+            "emom" => Ok(Self::Emom),
+            "tabata" => Ok(Self::Tabata),
+            "pickleball" => Ok(Self::Pickleball),
+            "padel" => Ok(Self::Padel),
+            "indoor_wheelchair_walk" => Ok(Self::IndoorWheelchairWalk),
+            "indoor_wheelchair_run" => Ok(Self::IndoorWheelchairRun),
+            "indoor_hand_cycling" => Ok(Self::IndoorHandCycling),
+            "squash" => Ok(Self::Squash),
+            "badminton" => Ok(Self::Badminton),
+            "racquetball" => Ok(Self::Racquetball),
+            "table_tennis" => Ok(Self::TableTennis),
+            "fly_canopy" => Ok(Self::FlyCanopy),
+            "fly_paraglide" => Ok(Self::FlyParaglide),
+            "fly_paramotor" => Ok(Self::FlyParamotor),
+            "fly_pressurized" => Ok(Self::FlyPressurized),
+            "fly_navigate" => Ok(Self::FlyNavigate),
+            "fly_timer" => Ok(Self::FlyTimer),
+            "fly_altimeter" => Ok(Self::FlyAltimeter),
+            "fly_wx" => Ok(Self::FlyWx),
+            "fly_vfr" => Ok(Self::FlyVfr),
+            "fly_ifr" => Ok(Self::FlyIfr),
+            "all" => Ok(Self::All),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for SubSport {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SportEvent {
     Uncategorized,
@@ -4740,6 +5746,28 @@ impl Serialize for SportEvent {
         serializer.serialize_str(&self.to_string())
     }
 }
+impl FromStr for SportEvent {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "uncategorized" => Ok(Self::Uncategorized),
+            "geocaching" => Ok(Self::Geocaching),
+            "fitness" => Ok(Self::Fitness),
+            "recreation" => Ok(Self::Recreation),
+            "race" => Ok(Self::Race),
+            "special_event" => Ok(Self::SpecialEvent),
+            "training" => Ok(Self::Training),
+            "transportation" => Ok(Self::Transportation),
+            "touring" => Ok(Self::Touring),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for SportEvent {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum Activity {
     Manual,
@@ -4794,6 +5822,21 @@ impl Serialize for Activity {
         S: Serializer,
     {
         serializer.serialize_str(&self.to_string())
+    }
+}
+impl FromStr for Activity {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "manual" => Ok(Self::Manual),
+            "auto_multi_sport" => Ok(Self::AutoMultiSport),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for Activity {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -4877,6 +5920,26 @@ impl Serialize for Intensity {
         serializer.serialize_str(&self.to_string())
     }
 }
+impl FromStr for Intensity {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "active" => Ok(Self::Active),
+            "rest" => Ok(Self::Rest),
+            "warmup" => Ok(Self::Warmup),
+            "cooldown" => Ok(Self::Cooldown),
+            "recovery" => Ok(Self::Recovery),
+            "interval" => Ok(Self::Interval),
+            "other" => Ok(Self::Other),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for Intensity {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SessionTrigger {
     ActivityEnd,
@@ -4944,6 +6007,23 @@ impl Serialize for SessionTrigger {
         S: Serializer,
     {
         serializer.serialize_str(&self.to_string())
+    }
+}
+impl FromStr for SessionTrigger {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "activity_end" => Ok(Self::ActivityEnd),
+            "manual" => Ok(Self::Manual),
+            "auto_multi_sport" => Ok(Self::AutoMultiSport),
+            "fitness_equipment" => Ok(Self::FitnessEquipment),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for SessionTrigger {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -5025,6 +6105,26 @@ impl Serialize for AutolapTrigger {
         S: Serializer,
     {
         serializer.serialize_str(&self.to_string())
+    }
+}
+impl FromStr for AutolapTrigger {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "time" => Ok(Self::Time),
+            "distance" => Ok(Self::Distance),
+            "position_start" => Ok(Self::PositionStart),
+            "position_lap" => Ok(Self::PositionLap),
+            "position_waypoint" => Ok(Self::PositionWaypoint),
+            "position_marked" => Ok(Self::PositionMarked),
+            "off" => Ok(Self::Off),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for AutolapTrigger {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -5118,6 +6218,28 @@ impl Serialize for LapTrigger {
         serializer.serialize_str(&self.to_string())
     }
 }
+impl FromStr for LapTrigger {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "manual" => Ok(Self::Manual),
+            "time" => Ok(Self::Time),
+            "distance" => Ok(Self::Distance),
+            "position_start" => Ok(Self::PositionStart),
+            "position_lap" => Ok(Self::PositionLap),
+            "position_waypoint" => Ok(Self::PositionWaypoint),
+            "position_marked" => Ok(Self::PositionMarked),
+            "session_end" => Ok(Self::SessionEnd),
+            "fitness_equipment" => Ok(Self::FitnessEquipment),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for LapTrigger {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum TimeMode {
     Hour12,
@@ -5194,6 +6316,25 @@ impl Serialize for TimeMode {
         S: Serializer,
     {
         serializer.serialize_str(&self.to_string())
+    }
+}
+impl FromStr for TimeMode {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "hour12" => Ok(Self::Hour12),
+            "hour24" => Ok(Self::Hour24),
+            "military" => Ok(Self::Military),
+            "hour_12_with_seconds" => Ok(Self::Hour12WithSeconds),
+            "hour_24_with_seconds" => Ok(Self::Hour24WithSeconds),
+            "utc" => Ok(Self::Utc),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for TimeMode {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -5279,6 +6420,28 @@ impl Serialize for BacklightMode {
         serializer.serialize_str(&self.to_string())
     }
 }
+impl FromStr for BacklightMode {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "off" => Ok(Self::Off),
+            "manual" => Ok(Self::Manual),
+            "key_and_messages" => Ok(Self::KeyAndMessages),
+            "auto_brightness" => Ok(Self::AutoBrightness),
+            "smart_notifications" => Ok(Self::SmartNotifications),
+            "key_and_messages_night" => Ok(Self::KeyAndMessagesNight),
+            "key_and_messages_and_smart_notifications" => {
+                Ok(Self::KeyAndMessagesAndSmartNotifications)
+            }
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for BacklightMode {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum DateMode {
     DayMonth,
@@ -5335,6 +6498,21 @@ impl Serialize for DateMode {
         serializer.serialize_str(&self.to_string())
     }
 }
+impl FromStr for DateMode {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "day_month" => Ok(Self::DayMonth),
+            "month_day" => Ok(Self::MonthDay),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for DateMode {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 /// Timeout in seconds.
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum BacklightTimeout {
@@ -5389,6 +6567,20 @@ impl Serialize for BacklightTimeout {
             BacklightTimeout::Value(value) => serializer.serialize_u8(*value),
             _ => serializer.serialize_str(&self.to_string()),
         }
+    }
+}
+impl FromStr for BacklightTimeout {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "infinite" => Ok(Self::Infinite),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for BacklightTimeout {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -5713,6 +6905,65 @@ impl Serialize for Event {
         serializer.serialize_str(&self.to_string())
     }
 }
+impl FromStr for Event {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "timer" => Ok(Self::Timer),
+            "workout" => Ok(Self::Workout),
+            "workout_step" => Ok(Self::WorkoutStep),
+            "power_down" => Ok(Self::PowerDown),
+            "power_up" => Ok(Self::PowerUp),
+            "off_course" => Ok(Self::OffCourse),
+            "session" => Ok(Self::Session),
+            "lap" => Ok(Self::Lap),
+            "course_point" => Ok(Self::CoursePoint),
+            "battery" => Ok(Self::Battery),
+            "virtual_partner_pace" => Ok(Self::VirtualPartnerPace),
+            "hr_high_alert" => Ok(Self::HrHighAlert),
+            "hr_low_alert" => Ok(Self::HrLowAlert),
+            "speed_high_alert" => Ok(Self::SpeedHighAlert),
+            "speed_low_alert" => Ok(Self::SpeedLowAlert),
+            "cad_high_alert" => Ok(Self::CadHighAlert),
+            "cad_low_alert" => Ok(Self::CadLowAlert),
+            "power_high_alert" => Ok(Self::PowerHighAlert),
+            "power_low_alert" => Ok(Self::PowerLowAlert),
+            "recovery_hr" => Ok(Self::RecoveryHr),
+            "battery_low" => Ok(Self::BatteryLow),
+            "time_duration_alert" => Ok(Self::TimeDurationAlert),
+            "distance_duration_alert" => Ok(Self::DistanceDurationAlert),
+            "calorie_duration_alert" => Ok(Self::CalorieDurationAlert),
+            "activity" => Ok(Self::Activity),
+            "fitness_equipment" => Ok(Self::FitnessEquipment),
+            "length" => Ok(Self::Length),
+            "user_marker" => Ok(Self::UserMarker),
+            "sport_point" => Ok(Self::SportPoint),
+            "calibration" => Ok(Self::Calibration),
+            "front_gear_change" => Ok(Self::FrontGearChange),
+            "rear_gear_change" => Ok(Self::RearGearChange),
+            "rider_position_change" => Ok(Self::RiderPositionChange),
+            "elev_high_alert" => Ok(Self::ElevHighAlert),
+            "elev_low_alert" => Ok(Self::ElevLowAlert),
+            "comm_timeout" => Ok(Self::CommTimeout),
+            "auto_activity_detect" => Ok(Self::AutoActivityDetect),
+            "dive_alert" => Ok(Self::DiveAlert),
+            "dive_gas_switched" => Ok(Self::DiveGasSwitched),
+            "tank_pressure_reserve" => Ok(Self::TankPressureReserve),
+            "tank_pressure_critical" => Ok(Self::TankPressureCritical),
+            "tank_lost" => Ok(Self::TankLost),
+            "radar_threat_alert" => Ok(Self::RadarThreatAlert),
+            "tank_battery_low" => Ok(Self::TankBatteryLow),
+            "tank_pod_connected" => Ok(Self::TankPodConnected),
+            "tank_pod_disconnected" => Ok(Self::TankPodDisconnected),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for Event {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum EventType {
     Start,
@@ -5809,6 +7060,29 @@ impl Serialize for EventType {
         serializer.serialize_str(&self.to_string())
     }
 }
+impl FromStr for EventType {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "start" => Ok(Self::Start),
+            "stop" => Ok(Self::Stop),
+            "consecutive_depreciated" => Ok(Self::ConsecutiveDepreciated),
+            "marker" => Ok(Self::Marker),
+            "stop_all" => Ok(Self::StopAll),
+            "begin_depreciated" => Ok(Self::BeginDepreciated),
+            "end_depreciated" => Ok(Self::EndDepreciated),
+            "end_all_depreciated" => Ok(Self::EndAllDepreciated),
+            "stop_disable" => Ok(Self::StopDisable),
+            "stop_disable_all" => Ok(Self::StopDisableAll),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for EventType {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 /// timer event data
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum TimerTrigger {
@@ -5869,6 +7143,22 @@ impl Serialize for TimerTrigger {
         S: Serializer,
     {
         serializer.serialize_str(&self.to_string())
+    }
+}
+impl FromStr for TimerTrigger {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "manual" => Ok(Self::Manual),
+            "auto" => Ok(Self::Auto),
+            "fitness_equipment" => Ok(Self::FitnessEquipment),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for TimerTrigger {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 /// fitness equipment event data
@@ -5939,6 +7229,23 @@ impl Serialize for FitnessEquipmentState {
         serializer.serialize_str(&self.to_string())
     }
 }
+impl FromStr for FitnessEquipmentState {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "ready" => Ok(Self::Ready),
+            "in_use" => Ok(Self::InUse),
+            "paused" => Ok(Self::Paused),
+            "unknown" => Ok(Self::Unknown),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for FitnessEquipmentState {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum Tone {
     Off,
@@ -6003,6 +7310,23 @@ impl Serialize for Tone {
         S: Serializer,
     {
         serializer.serialize_str(&self.to_string())
+    }
+}
+impl FromStr for Tone {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "off" => Ok(Self::Off),
+            "tone" => Ok(Self::Tone),
+            "vibrate" => Ok(Self::Vibrate),
+            "tone_and_vibrate" => Ok(Self::ToneAndVibrate),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for Tone {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -6071,6 +7395,23 @@ impl Serialize for Autoscroll {
         serializer.serialize_str(&self.to_string())
     }
 }
+impl FromStr for Autoscroll {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "none" => Ok(Self::None),
+            "slow" => Ok(Self::Slow),
+            "medium" => Ok(Self::Medium),
+            "fast" => Ok(Self::Fast),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for Autoscroll {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum ActivityClass {
     LevelMax,
@@ -6131,6 +7472,22 @@ impl Serialize for ActivityClass {
         S: Serializer,
     {
         serializer.serialize_str(&self.to_string())
+    }
+}
+impl FromStr for ActivityClass {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "level_max" => Ok(Self::LevelMax),
+            "level" => Ok(Self::Level),
+            "athlete" => Ok(Self::Athlete),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for ActivityClass {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -6199,6 +7556,23 @@ impl Serialize for HrZoneCalc {
         serializer.serialize_str(&self.to_string())
     }
 }
+impl FromStr for HrZoneCalc {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "custom" => Ok(Self::Custom),
+            "percent_max_hr" => Ok(Self::PercentMaxHr),
+            "percent_hrr" => Ok(Self::PercentHrr),
+            "percent_lthr" => Ok(Self::PercentLthr),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for HrZoneCalc {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum PwrZoneCalc {
     Custom,
@@ -6253,6 +7627,21 @@ impl Serialize for PwrZoneCalc {
         S: Serializer,
     {
         serializer.serialize_str(&self.to_string())
+    }
+}
+impl FromStr for PwrZoneCalc {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "custom" => Ok(Self::Custom),
+            "percent_ftp" => Ok(Self::PercentFtp),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for PwrZoneCalc {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -6464,6 +7853,52 @@ impl Serialize for WktStepDuration {
         serializer.serialize_str(&self.to_string())
     }
 }
+impl FromStr for WktStepDuration {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "time" => Ok(Self::Time),
+            "distance" => Ok(Self::Distance),
+            "hr_less_than" => Ok(Self::HrLessThan),
+            "hr_greater_than" => Ok(Self::HrGreaterThan),
+            "calories" => Ok(Self::Calories),
+            "open" => Ok(Self::Open),
+            "repeat_until_steps_cmplt" => Ok(Self::RepeatUntilStepsCmplt),
+            "repeat_until_time" => Ok(Self::RepeatUntilTime),
+            "repeat_until_distance" => Ok(Self::RepeatUntilDistance),
+            "repeat_until_calories" => Ok(Self::RepeatUntilCalories),
+            "repeat_until_hr_less_than" => Ok(Self::RepeatUntilHrLessThan),
+            "repeat_until_hr_greater_than" => Ok(Self::RepeatUntilHrGreaterThan),
+            "repeat_until_power_less_than" => Ok(Self::RepeatUntilPowerLessThan),
+            "repeat_until_power_greater_than" => Ok(Self::RepeatUntilPowerGreaterThan),
+            "power_less_than" => Ok(Self::PowerLessThan),
+            "power_greater_than" => Ok(Self::PowerGreaterThan),
+            "training_peaks_tss" => Ok(Self::TrainingPeaksTss),
+            "repeat_until_power_last_lap_less_than" => Ok(Self::RepeatUntilPowerLastLapLessThan),
+            "repeat_until_max_power_last_lap_less_than" => {
+                Ok(Self::RepeatUntilMaxPowerLastLapLessThan)
+            }
+            "power_3s_less_than" => Ok(Self::Power3sLessThan),
+            "power_10s_less_than" => Ok(Self::Power10sLessThan),
+            "power_30s_less_than" => Ok(Self::Power30sLessThan),
+            "power_3s_greater_than" => Ok(Self::Power3sGreaterThan),
+            "power_10s_greater_than" => Ok(Self::Power10sGreaterThan),
+            "power_30s_greater_than" => Ok(Self::Power30sGreaterThan),
+            "power_lap_less_than" => Ok(Self::PowerLapLessThan),
+            "power_lap_greater_than" => Ok(Self::PowerLapGreaterThan),
+            "repeat_until_training_peaks_tss" => Ok(Self::RepeatUntilTrainingPeaksTss),
+            "repetition_time" => Ok(Self::RepetitionTime),
+            "reps" => Ok(Self::Reps),
+            "time_only" => Ok(Self::TimeOnly),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for WktStepDuration {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum WktStepTarget {
     Speed,
@@ -6580,6 +8015,33 @@ impl Serialize for WktStepTarget {
         serializer.serialize_str(&self.to_string())
     }
 }
+impl FromStr for WktStepTarget {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "speed" => Ok(Self::Speed),
+            "heart_rate" => Ok(Self::HeartRate),
+            "open" => Ok(Self::Open),
+            "cadence" => Ok(Self::Cadence),
+            "power" => Ok(Self::Power),
+            "grade" => Ok(Self::Grade),
+            "resistance" => Ok(Self::Resistance),
+            "power_3s" => Ok(Self::Power3s),
+            "power_10s" => Ok(Self::Power10s),
+            "power_30s" => Ok(Self::Power30s),
+            "power_lap" => Ok(Self::PowerLap),
+            "swim_stroke" => Ok(Self::SwimStroke),
+            "speed_lap" => Ok(Self::SpeedLap),
+            "heart_rate_lap" => Ok(Self::HeartRateLap),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for WktStepTarget {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum Goal {
     Time,
@@ -6661,6 +8123,26 @@ impl Serialize for Goal {
         serializer.serialize_str(&self.to_string())
     }
 }
+impl FromStr for Goal {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "time" => Ok(Self::Time),
+            "distance" => Ok(Self::Distance),
+            "calories" => Ok(Self::Calories),
+            "frequency" => Ok(Self::Frequency),
+            "steps" => Ok(Self::Steps),
+            "ascent" => Ok(Self::Ascent),
+            "active_minutes" => Ok(Self::ActiveMinutes),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for Goal {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum GoalRecurrence {
     Off,
@@ -6737,6 +8219,25 @@ impl Serialize for GoalRecurrence {
         serializer.serialize_str(&self.to_string())
     }
 }
+impl FromStr for GoalRecurrence {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "off" => Ok(Self::Off),
+            "daily" => Ok(Self::Daily),
+            "weekly" => Ok(Self::Weekly),
+            "monthly" => Ok(Self::Monthly),
+            "yearly" => Ok(Self::Yearly),
+            "custom" => Ok(Self::Custom),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for GoalRecurrence {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum GoalSource {
     /// Device generated
@@ -6801,6 +8302,22 @@ impl Serialize for GoalSource {
         serializer.serialize_str(&self.to_string())
     }
 }
+impl FromStr for GoalSource {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "auto" => Ok(Self::Auto),
+            "community" => Ok(Self::Community),
+            "user" => Ok(Self::User),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for GoalSource {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum Schedule {
     Workout,
@@ -6855,6 +8372,21 @@ impl Serialize for Schedule {
         S: Serializer,
     {
         serializer.serialize_str(&self.to_string())
+    }
+}
+impl FromStr for Schedule {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "workout" => Ok(Self::Workout),
+            "course" => Ok(Self::Course),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for Schedule {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -7167,6 +8699,72 @@ impl Serialize for CoursePoint {
         S: Serializer,
     {
         serializer.serialize_str(&self.to_string())
+    }
+}
+impl FromStr for CoursePoint {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "generic" => Ok(Self::Generic),
+            "summit" => Ok(Self::Summit),
+            "valley" => Ok(Self::Valley),
+            "water" => Ok(Self::Water),
+            "food" => Ok(Self::Food),
+            "danger" => Ok(Self::Danger),
+            "left" => Ok(Self::Left),
+            "right" => Ok(Self::Right),
+            "straight" => Ok(Self::Straight),
+            "first_aid" => Ok(Self::FirstAid),
+            "fourth_category" => Ok(Self::FourthCategory),
+            "third_category" => Ok(Self::ThirdCategory),
+            "second_category" => Ok(Self::SecondCategory),
+            "first_category" => Ok(Self::FirstCategory),
+            "hors_category" => Ok(Self::HorsCategory),
+            "sprint" => Ok(Self::Sprint),
+            "left_fork" => Ok(Self::LeftFork),
+            "right_fork" => Ok(Self::RightFork),
+            "middle_fork" => Ok(Self::MiddleFork),
+            "slight_left" => Ok(Self::SlightLeft),
+            "sharp_left" => Ok(Self::SharpLeft),
+            "slight_right" => Ok(Self::SlightRight),
+            "sharp_right" => Ok(Self::SharpRight),
+            "u_turn" => Ok(Self::UTurn),
+            "segment_start" => Ok(Self::SegmentStart),
+            "segment_end" => Ok(Self::SegmentEnd),
+            "campsite" => Ok(Self::Campsite),
+            "aid_station" => Ok(Self::AidStation),
+            "rest_area" => Ok(Self::RestArea),
+            "general_distance" => Ok(Self::GeneralDistance),
+            "service" => Ok(Self::Service),
+            "energy_gel" => Ok(Self::EnergyGel),
+            "sports_drink" => Ok(Self::SportsDrink),
+            "mile_marker" => Ok(Self::MileMarker),
+            "checkpoint" => Ok(Self::Checkpoint),
+            "shelter" => Ok(Self::Shelter),
+            "meeting_spot" => Ok(Self::MeetingSpot),
+            "overlook" => Ok(Self::Overlook),
+            "toilet" => Ok(Self::Toilet),
+            "shower" => Ok(Self::Shower),
+            "gear" => Ok(Self::Gear),
+            "sharp_curve" => Ok(Self::SharpCurve),
+            "steep_incline" => Ok(Self::SteepIncline),
+            "tunnel" => Ok(Self::Tunnel),
+            "bridge" => Ok(Self::Bridge),
+            "obstacle" => Ok(Self::Obstacle),
+            "crossing" => Ok(Self::Crossing),
+            "store" => Ok(Self::Store),
+            "transition" => Ok(Self::Transition),
+            "navaid" => Ok(Self::Navaid),
+            "transport" => Ok(Self::Transport),
+            "alert" => Ok(Self::Alert),
+            "info" => Ok(Self::Info),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for CoursePoint {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -8336,6 +9934,241 @@ impl Serialize for Manufacturer {
             Manufacturer::Value(value) => serializer.serialize_u16(*value),
             _ => serializer.serialize_str(&self.to_string()),
         }
+    }
+}
+impl FromStr for Manufacturer {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "garmin" => Ok(Self::Garmin),
+            "garmin_fr405_antfs" => Ok(Self::GarminFr405Antfs),
+            "zephyr" => Ok(Self::Zephyr),
+            "dayton" => Ok(Self::Dayton),
+            "idt" => Ok(Self::Idt),
+            "srm" => Ok(Self::Srm),
+            "quarq" => Ok(Self::Quarq),
+            "ibike" => Ok(Self::Ibike),
+            "saris" => Ok(Self::Saris),
+            "spark_hk" => Ok(Self::SparkHk),
+            "tanita" => Ok(Self::Tanita),
+            "echowell" => Ok(Self::Echowell),
+            "dynastream_oem" => Ok(Self::DynastreamOem),
+            "nautilus" => Ok(Self::Nautilus),
+            "dynastream" => Ok(Self::Dynastream),
+            "timex" => Ok(Self::Timex),
+            "metrigear" => Ok(Self::Metrigear),
+            "xelic" => Ok(Self::Xelic),
+            "beurer" => Ok(Self::Beurer),
+            "cardiosport" => Ok(Self::Cardiosport),
+            "a_and_d" => Ok(Self::AAndD),
+            "hmm" => Ok(Self::Hmm),
+            "suunto" => Ok(Self::Suunto),
+            "thita_elektronik" => Ok(Self::ThitaElektronik),
+            "gpulse" => Ok(Self::Gpulse),
+            "clean_mobile" => Ok(Self::CleanMobile),
+            "pedal_brain" => Ok(Self::PedalBrain),
+            "peaksware" => Ok(Self::Peaksware),
+            "saxonar" => Ok(Self::Saxonar),
+            "lemond_fitness" => Ok(Self::LemondFitness),
+            "dexcom" => Ok(Self::Dexcom),
+            "wahoo_fitness" => Ok(Self::WahooFitness),
+            "octane_fitness" => Ok(Self::OctaneFitness),
+            "archinoetics" => Ok(Self::Archinoetics),
+            "the_hurt_box" => Ok(Self::TheHurtBox),
+            "citizen_systems" => Ok(Self::CitizenSystems),
+            "magellan" => Ok(Self::Magellan),
+            "osynce" => Ok(Self::Osynce),
+            "holux" => Ok(Self::Holux),
+            "concept2" => Ok(Self::Concept2),
+            "shimano" => Ok(Self::Shimano),
+            "one_giant_leap" => Ok(Self::OneGiantLeap),
+            "ace_sensor" => Ok(Self::AceSensor),
+            "brim_brothers" => Ok(Self::BrimBrothers),
+            "xplova" => Ok(Self::Xplova),
+            "perception_digital" => Ok(Self::PerceptionDigital),
+            "bf1systems" => Ok(Self::Bf1systems),
+            "pioneer" => Ok(Self::Pioneer),
+            "spantec" => Ok(Self::Spantec),
+            "metalogics" => Ok(Self::Metalogics),
+            "4iiiis" => Ok(Self::Name4iiiis),
+            "seiko_epson" => Ok(Self::SeikoEpson),
+            "seiko_epson_oem" => Ok(Self::SeikoEpsonOem),
+            "ifor_powell" => Ok(Self::IforPowell),
+            "maxwell_guider" => Ok(Self::MaxwellGuider),
+            "star_trac" => Ok(Self::StarTrac),
+            "breakaway" => Ok(Self::Breakaway),
+            "alatech_technology_ltd" => Ok(Self::AlatechTechnologyLtd),
+            "mio_technology_europe" => Ok(Self::MioTechnologyEurope),
+            "rotor" => Ok(Self::Rotor),
+            "geonaute" => Ok(Self::Geonaute),
+            "id_bike" => Ok(Self::IdBike),
+            "specialized" => Ok(Self::Specialized),
+            "wtek" => Ok(Self::Wtek),
+            "physical_enterprises" => Ok(Self::PhysicalEnterprises),
+            "north_pole_engineering" => Ok(Self::NorthPoleEngineering),
+            "bkool" => Ok(Self::Bkool),
+            "cateye" => Ok(Self::Cateye),
+            "stages_cycling" => Ok(Self::StagesCycling),
+            "sigmasport" => Ok(Self::Sigmasport),
+            "tomtom" => Ok(Self::Tomtom),
+            "peripedal" => Ok(Self::Peripedal),
+            "wattbike" => Ok(Self::Wattbike),
+            "moxy" => Ok(Self::Moxy),
+            "ciclosport" => Ok(Self::Ciclosport),
+            "powerbahn" => Ok(Self::Powerbahn),
+            "acorn_projects_aps" => Ok(Self::AcornProjectsAps),
+            "lifebeam" => Ok(Self::Lifebeam),
+            "bontrager" => Ok(Self::Bontrager),
+            "wellgo" => Ok(Self::Wellgo),
+            "scosche" => Ok(Self::Scosche),
+            "magura" => Ok(Self::Magura),
+            "woodway" => Ok(Self::Woodway),
+            "elite" => Ok(Self::Elite),
+            "nielsen_kellerman" => Ok(Self::NielsenKellerman),
+            "dk_city" => Ok(Self::DkCity),
+            "tacx" => Ok(Self::Tacx),
+            "direction_technology" => Ok(Self::DirectionTechnology),
+            "magtonic" => Ok(Self::Magtonic),
+            "1partcarbon" => Ok(Self::Name1partcarbon),
+            "inside_ride_technologies" => Ok(Self::InsideRideTechnologies),
+            "sound_of_motion" => Ok(Self::SoundOfMotion),
+            "stryd" => Ok(Self::Stryd),
+            "icg" => Ok(Self::Icg),
+            "MiPulse" => Ok(Self::MiPulse),
+            "bsx_athletics" => Ok(Self::BsxAthletics),
+            "look" => Ok(Self::Look),
+            "campagnolo_srl" => Ok(Self::CampagnoloSrl),
+            "body_bike_smart" => Ok(Self::BodyBikeSmart),
+            "praxisworks" => Ok(Self::Praxisworks),
+            "limits_technology" => Ok(Self::LimitsTechnology),
+            "topaction_technology" => Ok(Self::TopactionTechnology),
+            "cosinuss" => Ok(Self::Cosinuss),
+            "fitcare" => Ok(Self::Fitcare),
+            "magene" => Ok(Self::Magene),
+            "giant_manufacturing_co" => Ok(Self::GiantManufacturingCo),
+            "tigrasport" => Ok(Self::Tigrasport),
+            "salutron" => Ok(Self::Salutron),
+            "technogym" => Ok(Self::Technogym),
+            "bryton_sensors" => Ok(Self::BrytonSensors),
+            "latitude_limited" => Ok(Self::LatitudeLimited),
+            "soaring_technology" => Ok(Self::SoaringTechnology),
+            "igpsport" => Ok(Self::Igpsport),
+            "thinkrider" => Ok(Self::Thinkrider),
+            "gopher_sport" => Ok(Self::GopherSport),
+            "waterrower" => Ok(Self::Waterrower),
+            "orangetheory" => Ok(Self::Orangetheory),
+            "inpeak" => Ok(Self::Inpeak),
+            "kinetic" => Ok(Self::Kinetic),
+            "johnson_health_tech" => Ok(Self::JohnsonHealthTech),
+            "polar_electro" => Ok(Self::PolarElectro),
+            "seesense" => Ok(Self::Seesense),
+            "nci_technology" => Ok(Self::NciTechnology),
+            "iqsquare" => Ok(Self::Iqsquare),
+            "leomo" => Ok(Self::Leomo),
+            "ifit_com" => Ok(Self::IfitCom),
+            "coros_byte" => Ok(Self::CorosByte),
+            "versa_design" => Ok(Self::VersaDesign),
+            "chileaf" => Ok(Self::Chileaf),
+            "cycplus" => Ok(Self::Cycplus),
+            "gravaa_byte" => Ok(Self::GravaaByte),
+            "sigeyi" => Ok(Self::Sigeyi),
+            "coospo" => Ok(Self::Coospo),
+            "geoid" => Ok(Self::Geoid),
+            "bosch" => Ok(Self::Bosch),
+            "kyto" => Ok(Self::Kyto),
+            "kinetic_sports" => Ok(Self::KineticSports),
+            "decathlon_byte" => Ok(Self::DecathlonByte),
+            "tq_systems" => Ok(Self::TqSystems),
+            "tag_heuer" => Ok(Self::TagHeuer),
+            "keiser_fitness" => Ok(Self::KeiserFitness),
+            "zwift_byte" => Ok(Self::ZwiftByte),
+            "porsche_ep" => Ok(Self::PorscheEp),
+            "blackbird" => Ok(Self::Blackbird),
+            "meilan_byte" => Ok(Self::MeilanByte),
+            "ezon" => Ok(Self::Ezon),
+            "laisi" => Ok(Self::Laisi),
+            "myzone" => Ok(Self::Myzone),
+            "development" => Ok(Self::Development),
+            "healthandlife" => Ok(Self::Healthandlife),
+            "lezyne" => Ok(Self::Lezyne),
+            "scribe_labs" => Ok(Self::ScribeLabs),
+            "zwift" => Ok(Self::Zwift),
+            "watteam" => Ok(Self::Watteam),
+            "recon" => Ok(Self::Recon),
+            "favero_electronics" => Ok(Self::FaveroElectronics),
+            "dynovelo" => Ok(Self::Dynovelo),
+            "strava" => Ok(Self::Strava),
+            "precor" => Ok(Self::Precor),
+            "bryton" => Ok(Self::Bryton),
+            "sram" => Ok(Self::Sram),
+            "navman" => Ok(Self::Navman),
+            "cobi" => Ok(Self::Cobi),
+            "spivi" => Ok(Self::Spivi),
+            "mio_magellan" => Ok(Self::MioMagellan),
+            "evesports" => Ok(Self::Evesports),
+            "sensitivus_gauge" => Ok(Self::SensitivusGauge),
+            "podoon" => Ok(Self::Podoon),
+            "life_time_fitness" => Ok(Self::LifeTimeFitness),
+            "falco_e_motors" => Ok(Self::FalcoEMotors),
+            "minoura" => Ok(Self::Minoura),
+            "cycliq" => Ok(Self::Cycliq),
+            "luxottica" => Ok(Self::Luxottica),
+            "trainer_road" => Ok(Self::TrainerRoad),
+            "the_sufferfest" => Ok(Self::TheSufferfest),
+            "fullspeedahead" => Ok(Self::Fullspeedahead),
+            "virtualtraining" => Ok(Self::Virtualtraining),
+            "feedbacksports" => Ok(Self::Feedbacksports),
+            "omata" => Ok(Self::Omata),
+            "vdo" => Ok(Self::Vdo),
+            "magneticdays" => Ok(Self::Magneticdays),
+            "hammerhead" => Ok(Self::Hammerhead),
+            "kinetic_by_kurt" => Ok(Self::KineticByKurt),
+            "shapelog" => Ok(Self::Shapelog),
+            "dabuziduo" => Ok(Self::Dabuziduo),
+            "jetblack" => Ok(Self::Jetblack),
+            "coros" => Ok(Self::Coros),
+            "virtugo" => Ok(Self::Virtugo),
+            "velosense" => Ok(Self::Velosense),
+            "cycligentinc" => Ok(Self::Cycligentinc),
+            "trailforks" => Ok(Self::Trailforks),
+            "mahle_ebikemotion" => Ok(Self::MahleEbikemotion),
+            "nurvv" => Ok(Self::Nurvv),
+            "microprogram" => Ok(Self::Microprogram),
+            "zone5cloud" => Ok(Self::Zone5cloud),
+            "greenteg" => Ok(Self::Greenteg),
+            "yamaha_motors" => Ok(Self::YamahaMotors),
+            "whoop" => Ok(Self::Whoop),
+            "gravaa" => Ok(Self::Gravaa),
+            "onelap" => Ok(Self::Onelap),
+            "monark_exercise" => Ok(Self::MonarkExercise),
+            "form" => Ok(Self::Form),
+            "decathlon" => Ok(Self::Decathlon),
+            "syncros" => Ok(Self::Syncros),
+            "heatup" => Ok(Self::Heatup),
+            "cannondale" => Ok(Self::Cannondale),
+            "true_fitness" => Ok(Self::TrueFitness),
+            "RGT_cycling" => Ok(Self::RGTCycling),
+            "vasa" => Ok(Self::Vasa),
+            "race_republic" => Ok(Self::RaceRepublic),
+            "fazua" => Ok(Self::Fazua),
+            "oreka_training" => Ok(Self::OrekaTraining),
+            "lsec" => Ok(Self::Lsec),
+            "lululemon_studio" => Ok(Self::LululemonStudio),
+            "shanyue" => Ok(Self::Shanyue),
+            "spinning_mda" => Ok(Self::SpinningMda),
+            "hilldating" => Ok(Self::Hilldating),
+            "aero_sensor" => Ok(Self::AeroSensor),
+            "nike" => Ok(Self::Nike),
+            "magicshine" => Ok(Self::Magicshine),
+            "ictrainer" => Ok(Self::Ictrainer),
+            "actigraphcorp" => Ok(Self::Actigraphcorp),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for Manufacturer {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -10590,6 +12423,450 @@ impl Serialize for GarminProduct {
         }
     }
 }
+impl FromStr for GarminProduct {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "approach_g12_asia" => Ok(Self::ApproachG12Asia),
+            "axh01" => Ok(Self::Axh01),
+            "axb01" => Ok(Self::Axb01),
+            "axb02" => Ok(Self::Axb02),
+            "hrm2ss" => Ok(Self::Hrm2ss),
+            "dsi_alf02" => Ok(Self::DsiAlf02),
+            "hrm3ss" => Ok(Self::Hrm3ss),
+            "hrm_run_single_byte_product_id" => Ok(Self::HrmRunSingleByteProductId),
+            "bsm" => Ok(Self::Bsm),
+            "bcm" => Ok(Self::Bcm),
+            "axs01" => Ok(Self::Axs01),
+            "hrm_tri_single_byte_product_id" => Ok(Self::HrmTriSingleByteProductId),
+            "hrm4_run_single_byte_product_id" => Ok(Self::Hrm4RunSingleByteProductId),
+            "fr225_single_byte_product_id" => Ok(Self::Fr225SingleByteProductId),
+            "gen3_bsm_single_byte_product_id" => Ok(Self::Gen3BsmSingleByteProductId),
+            "gen3_bcm_single_byte_product_id" => Ok(Self::Gen3BcmSingleByteProductId),
+            "hrm_fit_single_byte_product_id" => Ok(Self::HrmFitSingleByteProductId),
+            "OHR" => Ok(Self::OHR),
+            "fr301_china" => Ok(Self::Fr301China),
+            "fr301_japan" => Ok(Self::Fr301Japan),
+            "fr301_korea" => Ok(Self::Fr301Korea),
+            "fr301_taiwan" => Ok(Self::Fr301Taiwan),
+            "fr405" => Ok(Self::Fr405),
+            "fr50" => Ok(Self::Fr50),
+            "fr405_japan" => Ok(Self::Fr405Japan),
+            "fr60" => Ok(Self::Fr60),
+            "dsi_alf01" => Ok(Self::DsiAlf01),
+            "fr310xt" => Ok(Self::Fr310xt),
+            "edge500" => Ok(Self::Edge500),
+            "fr110" => Ok(Self::Fr110),
+            "edge800" => Ok(Self::Edge800),
+            "edge500_taiwan" => Ok(Self::Edge500Taiwan),
+            "edge500_japan" => Ok(Self::Edge500Japan),
+            "chirp" => Ok(Self::Chirp),
+            "fr110_japan" => Ok(Self::Fr110Japan),
+            "edge200" => Ok(Self::Edge200),
+            "fr910xt" => Ok(Self::Fr910xt),
+            "edge800_taiwan" => Ok(Self::Edge800Taiwan),
+            "edge800_japan" => Ok(Self::Edge800Japan),
+            "alf04" => Ok(Self::Alf04),
+            "fr610" => Ok(Self::Fr610),
+            "fr210_japan" => Ok(Self::Fr210Japan),
+            "vector_ss" => Ok(Self::VectorSs),
+            "vector_cp" => Ok(Self::VectorCp),
+            "edge800_china" => Ok(Self::Edge800China),
+            "edge500_china" => Ok(Self::Edge500China),
+            "approach_g10" => Ok(Self::ApproachG10),
+            "fr610_japan" => Ok(Self::Fr610Japan),
+            "edge500_korea" => Ok(Self::Edge500Korea),
+            "fr70" => Ok(Self::Fr70),
+            "fr310xt_4t" => Ok(Self::Fr310xt4t),
+            "amx" => Ok(Self::Amx),
+            "fr10" => Ok(Self::Fr10),
+            "edge800_korea" => Ok(Self::Edge800Korea),
+            "swim" => Ok(Self::Swim),
+            "fr910xt_china" => Ok(Self::Fr910xtChina),
+            "fenix" => Ok(Self::Fenix),
+            "edge200_taiwan" => Ok(Self::Edge200Taiwan),
+            "edge510" => Ok(Self::Edge510),
+            "edge810" => Ok(Self::Edge810),
+            "tempe" => Ok(Self::Tempe),
+            "fr910xt_japan" => Ok(Self::Fr910xtJapan),
+            "fr620" => Ok(Self::Fr620),
+            "fr220" => Ok(Self::Fr220),
+            "fr910xt_korea" => Ok(Self::Fr910xtKorea),
+            "fr10_japan" => Ok(Self::Fr10Japan),
+            "edge810_japan" => Ok(Self::Edge810Japan),
+            "virb_elite" => Ok(Self::VirbElite),
+            "edge_touring" => Ok(Self::EdgeTouring),
+            "edge510_japan" => Ok(Self::Edge510Japan),
+            "hrm_tri" => Ok(Self::HrmTri),
+            "hrm_run" => Ok(Self::HrmRun),
+            "fr920xt" => Ok(Self::Fr920xt),
+            "edge510_asia" => Ok(Self::Edge510Asia),
+            "edge810_china" => Ok(Self::Edge810China),
+            "edge810_taiwan" => Ok(Self::Edge810Taiwan),
+            "edge1000" => Ok(Self::Edge1000),
+            "vivo_fit" => Ok(Self::VivoFit),
+            "virb_remote" => Ok(Self::VirbRemote),
+            "vivo_ki" => Ok(Self::VivoKi),
+            "fr15" => Ok(Self::Fr15),
+            "vivo_active" => Ok(Self::VivoActive),
+            "edge510_korea" => Ok(Self::Edge510Korea),
+            "fr620_japan" => Ok(Self::Fr620Japan),
+            "fr620_china" => Ok(Self::Fr620China),
+            "fr220_japan" => Ok(Self::Fr220Japan),
+            "fr220_china" => Ok(Self::Fr220China),
+            "approach_s6" => Ok(Self::ApproachS6),
+            "vivo_smart" => Ok(Self::VivoSmart),
+            "fenix2" => Ok(Self::Fenix2),
+            "epix" => Ok(Self::Epix),
+            "fenix3" => Ok(Self::Fenix3),
+            "edge1000_taiwan" => Ok(Self::Edge1000Taiwan),
+            "edge1000_japan" => Ok(Self::Edge1000Japan),
+            "fr15_japan" => Ok(Self::Fr15Japan),
+            "edge520" => Ok(Self::Edge520),
+            "edge1000_china" => Ok(Self::Edge1000China),
+            "fr620_russia" => Ok(Self::Fr620Russia),
+            "fr220_russia" => Ok(Self::Fr220Russia),
+            "vector_s" => Ok(Self::VectorS),
+            "edge1000_korea" => Ok(Self::Edge1000Korea),
+            "fr920xt_taiwan" => Ok(Self::Fr920xtTaiwan),
+            "fr920xt_china" => Ok(Self::Fr920xtChina),
+            "fr920xt_japan" => Ok(Self::Fr920xtJapan),
+            "virbx" => Ok(Self::Virbx),
+            "vivo_smart_apac" => Ok(Self::VivoSmartApac),
+            "etrex_touch" => Ok(Self::EtrexTouch),
+            "edge25" => Ok(Self::Edge25),
+            "fr25" => Ok(Self::Fr25),
+            "vivo_fit2" => Ok(Self::VivoFit2),
+            "fr225" => Ok(Self::Fr225),
+            "fr630" => Ok(Self::Fr630),
+            "fr230" => Ok(Self::Fr230),
+            "fr735xt" => Ok(Self::Fr735xt),
+            "vivo_active_apac" => Ok(Self::VivoActiveApac),
+            "vector_2" => Ok(Self::Vector2),
+            "vector_2s" => Ok(Self::Vector2s),
+            "virbxe" => Ok(Self::Virbxe),
+            "fr620_taiwan" => Ok(Self::Fr620Taiwan),
+            "fr220_taiwan" => Ok(Self::Fr220Taiwan),
+            "truswing" => Ok(Self::Truswing),
+            "d2airvenu" => Ok(Self::D2airvenu),
+            "fenix3_china" => Ok(Self::Fenix3China),
+            "fenix3_twn" => Ok(Self::Fenix3Twn),
+            "varia_headlight" => Ok(Self::VariaHeadlight),
+            "varia_taillight_old" => Ok(Self::VariaTaillightOld),
+            "edge_explore_1000" => Ok(Self::EdgeExplore1000),
+            "fr225_asia" => Ok(Self::Fr225Asia),
+            "varia_radar_taillight" => Ok(Self::VariaRadarTaillight),
+            "varia_radar_display" => Ok(Self::VariaRadarDisplay),
+            "edge20" => Ok(Self::Edge20),
+            "edge520_asia" => Ok(Self::Edge520Asia),
+            "edge520_japan" => Ok(Self::Edge520Japan),
+            "d2_bravo" => Ok(Self::D2Bravo),
+            "approach_s20" => Ok(Self::ApproachS20),
+            "vivo_smart2" => Ok(Self::VivoSmart2),
+            "edge1000_thai" => Ok(Self::Edge1000Thai),
+            "varia_remote" => Ok(Self::VariaRemote),
+            "edge25_asia" => Ok(Self::Edge25Asia),
+            "edge25_jpn" => Ok(Self::Edge25Jpn),
+            "edge20_asia" => Ok(Self::Edge20Asia),
+            "approach_x40" => Ok(Self::ApproachX40),
+            "fenix3_japan" => Ok(Self::Fenix3Japan),
+            "vivo_smart_emea" => Ok(Self::VivoSmartEmea),
+            "fr630_asia" => Ok(Self::Fr630Asia),
+            "fr630_jpn" => Ok(Self::Fr630Jpn),
+            "fr230_jpn" => Ok(Self::Fr230Jpn),
+            "hrm4_run" => Ok(Self::Hrm4Run),
+            "epix_japan" => Ok(Self::EpixJapan),
+            "vivo_active_hr" => Ok(Self::VivoActiveHr),
+            "approach_g12" => Ok(Self::ApproachG12),
+            "vivo_smart_gps_hr" => Ok(Self::VivoSmartGpsHr),
+            "vivo_smart_hr" => Ok(Self::VivoSmartHr),
+            "vivo_smart_hr_asia" => Ok(Self::VivoSmartHrAsia),
+            "vivo_smart_gps_hr_asia" => Ok(Self::VivoSmartGpsHrAsia),
+            "vivo_move" => Ok(Self::VivoMove),
+            "varia_taillight" => Ok(Self::VariaTaillight),
+            "fr235_asia" => Ok(Self::Fr235Asia),
+            "fr235_japan" => Ok(Self::Fr235Japan),
+            "varia_vision" => Ok(Self::VariaVision),
+            "vivo_fit3" => Ok(Self::VivoFit3),
+            "fenix3_korea" => Ok(Self::Fenix3Korea),
+            "fenix3_sea" => Ok(Self::Fenix3Sea),
+            "fenix3_hr" => Ok(Self::Fenix3Hr),
+            "virb_ultra_30" => Ok(Self::VirbUltra30),
+            "index_smart_scale" => Ok(Self::IndexSmartScale),
+            "fr235" => Ok(Self::Fr235),
+            "fenix3_chronos" => Ok(Self::Fenix3Chronos),
+            "oregon7xx" => Ok(Self::Oregon7xx),
+            "rino7xx" => Ok(Self::Rino7xx),
+            "epix_korea" => Ok(Self::EpixKorea),
+            "fenix3_hr_chn" => Ok(Self::Fenix3HrChn),
+            "fenix3_hr_twn" => Ok(Self::Fenix3HrTwn),
+            "fenix3_hr_jpn" => Ok(Self::Fenix3HrJpn),
+            "fenix3_hr_sea" => Ok(Self::Fenix3HrSea),
+            "fenix3_hr_kor" => Ok(Self::Fenix3HrKor),
+            "nautix" => Ok(Self::Nautix),
+            "vivo_active_hr_apac" => Ok(Self::VivoActiveHrApac),
+            "fr35" => Ok(Self::Fr35),
+            "oregon7xx_ww" => Ok(Self::Oregon7xxWw),
+            "edge_820" => Ok(Self::Edge820),
+            "edge_explore_820" => Ok(Self::EdgeExplore820),
+            "fr735xt_apac" => Ok(Self::Fr735xtApac),
+            "fr735xt_japan" => Ok(Self::Fr735xtJapan),
+            "fenix5s" => Ok(Self::Fenix5s),
+            "d2_bravo_titanium" => Ok(Self::D2BravoTitanium),
+            "varia_ut800" => Ok(Self::VariaUt800),
+            "running_dynamics_pod" => Ok(Self::RunningDynamicsPod),
+            "edge_820_china" => Ok(Self::Edge820China),
+            "edge_820_japan" => Ok(Self::Edge820Japan),
+            "fenix5x" => Ok(Self::Fenix5x),
+            "vivo_fit_jr" => Ok(Self::VivoFitJr),
+            "vivo_smart3" => Ok(Self::VivoSmart3),
+            "vivo_sport" => Ok(Self::VivoSport),
+            "edge_820_taiwan" => Ok(Self::Edge820Taiwan),
+            "edge_820_korea" => Ok(Self::Edge820Korea),
+            "edge_820_sea" => Ok(Self::Edge820Sea),
+            "fr35_hebrew" => Ok(Self::Fr35Hebrew),
+            "approach_s60" => Ok(Self::ApproachS60),
+            "fr35_apac" => Ok(Self::Fr35Apac),
+            "fr35_japan" => Ok(Self::Fr35Japan),
+            "fenix3_chronos_asia" => Ok(Self::Fenix3ChronosAsia),
+            "virb_360" => Ok(Self::Virb360),
+            "fr935" => Ok(Self::Fr935),
+            "fenix5" => Ok(Self::Fenix5),
+            "vivoactive3" => Ok(Self::Vivoactive3),
+            "edge_1030" => Ok(Self::Edge1030),
+            "fr35_sea" => Ok(Self::Fr35Sea),
+            "fr235_china_nfc" => Ok(Self::Fr235ChinaNfc),
+            "foretrex_601_701" => Ok(Self::Foretrex601701),
+            "vivo_move_hr" => Ok(Self::VivoMoveHr),
+            "vector_3" => Ok(Self::Vector3),
+            "fenix5_asia" => Ok(Self::Fenix5Asia),
+            "fenix5s_asia" => Ok(Self::Fenix5sAsia),
+            "fenix5x_asia" => Ok(Self::Fenix5xAsia),
+            "approach_z80" => Ok(Self::ApproachZ80),
+            "fr35_korea" => Ok(Self::Fr35Korea),
+            "d2charlie" => Ok(Self::D2charlie),
+            "vivo_smart3_apac" => Ok(Self::VivoSmart3Apac),
+            "vivo_sport_apac" => Ok(Self::VivoSportApac),
+            "fr935_asia" => Ok(Self::Fr935Asia),
+            "descent" => Ok(Self::Descent),
+            "vivo_fit4" => Ok(Self::VivoFit4),
+            "fr645" => Ok(Self::Fr645),
+            "fr645m" => Ok(Self::Fr645m),
+            "fr30" => Ok(Self::Fr30),
+            "fenix5s_plus" => Ok(Self::Fenix5sPlus),
+            "Edge_130" => Ok(Self::Edge130),
+            "edge_1030_asia" => Ok(Self::Edge1030Asia),
+            "vivosmart_4" => Ok(Self::Vivosmart4),
+            "vivo_move_hr_asia" => Ok(Self::VivoMoveHrAsia),
+            "approach_x10" => Ok(Self::ApproachX10),
+            "fr30_asia" => Ok(Self::Fr30Asia),
+            "vivoactive3m_w" => Ok(Self::Vivoactive3mW),
+            "fr645_asia" => Ok(Self::Fr645Asia),
+            "fr645m_asia" => Ok(Self::Fr645mAsia),
+            "edge_explore" => Ok(Self::EdgeExplore),
+            "gpsmap66" => Ok(Self::Gpsmap66),
+            "approach_s10" => Ok(Self::ApproachS10),
+            "vivoactive3m_l" => Ok(Self::Vivoactive3mL),
+            "approach_g80" => Ok(Self::ApproachG80),
+            "edge_130_asia" => Ok(Self::Edge130Asia),
+            "edge_1030_bontrager" => Ok(Self::Edge1030Bontrager),
+            "fenix5_plus" => Ok(Self::Fenix5Plus),
+            "fenix5x_plus" => Ok(Self::Fenix5xPlus),
+            "edge_520_plus" => Ok(Self::Edge520Plus),
+            "fr945" => Ok(Self::Fr945),
+            "edge_530" => Ok(Self::Edge530),
+            "edge_830" => Ok(Self::Edge830),
+            "instinct_esports" => Ok(Self::InstinctEsports),
+            "fenix5s_plus_apac" => Ok(Self::Fenix5sPlusApac),
+            "fenix5x_plus_apac" => Ok(Self::Fenix5xPlusApac),
+            "edge_520_plus_apac" => Ok(Self::Edge520PlusApac),
+            "descent_t1" => Ok(Self::DescentT1),
+            "fr235l_asia" => Ok(Self::Fr235lAsia),
+            "fr245_asia" => Ok(Self::Fr245Asia),
+            "vivo_active3m_apac" => Ok(Self::VivoActive3mApac),
+            "gen3_bsm" => Ok(Self::Gen3Bsm),
+            "gen3_bcm" => Ok(Self::Gen3Bcm),
+            "vivo_smart4_asia" => Ok(Self::VivoSmart4Asia),
+            "vivoactive4_small" => Ok(Self::Vivoactive4Small),
+            "vivoactive4_large" => Ok(Self::Vivoactive4Large),
+            "venu" => Ok(Self::Venu),
+            "marq_driver" => Ok(Self::MarqDriver),
+            "marq_aviator" => Ok(Self::MarqAviator),
+            "marq_captain" => Ok(Self::MarqCaptain),
+            "marq_commander" => Ok(Self::MarqCommander),
+            "marq_expedition" => Ok(Self::MarqExpedition),
+            "marq_athlete" => Ok(Self::MarqAthlete),
+            "descent_mk2" => Ok(Self::DescentMk2),
+            "gpsmap66i" => Ok(Self::Gpsmap66i),
+            "fenix6S_sport" => Ok(Self::Fenix6SSport),
+            "fenix6S" => Ok(Self::Fenix6S),
+            "fenix6_sport" => Ok(Self::Fenix6Sport),
+            "fenix6" => Ok(Self::Fenix6),
+            "fenix6x" => Ok(Self::Fenix6x),
+            "hrm_dual" => Ok(Self::HrmDual),
+            "hrm_pro" => Ok(Self::HrmPro),
+            "vivo_move3_premium" => Ok(Self::VivoMove3Premium),
+            "approach_s40" => Ok(Self::ApproachS40),
+            "fr245m_asia" => Ok(Self::Fr245mAsia),
+            "edge_530_apac" => Ok(Self::Edge530Apac),
+            "edge_830_apac" => Ok(Self::Edge830Apac),
+            "vivo_move3" => Ok(Self::VivoMove3),
+            "vivo_active4_small_asia" => Ok(Self::VivoActive4SmallAsia),
+            "vivo_active4_large_asia" => Ok(Self::VivoActive4LargeAsia),
+            "vivo_active4_oled_asia" => Ok(Self::VivoActive4OledAsia),
+            "swim2" => Ok(Self::Swim2),
+            "marq_driver_asia" => Ok(Self::MarqDriverAsia),
+            "marq_aviator_asia" => Ok(Self::MarqAviatorAsia),
+            "vivo_move3_asia" => Ok(Self::VivoMove3Asia),
+            "fr945_asia" => Ok(Self::Fr945Asia),
+            "vivo_active3t_chn" => Ok(Self::VivoActive3tChn),
+            "marq_captain_asia" => Ok(Self::MarqCaptainAsia),
+            "marq_commander_asia" => Ok(Self::MarqCommanderAsia),
+            "marq_expedition_asia" => Ok(Self::MarqExpeditionAsia),
+            "marq_athlete_asia" => Ok(Self::MarqAthleteAsia),
+            "instinct_solar" => Ok(Self::InstinctSolar),
+            "fr45_asia" => Ok(Self::Fr45Asia),
+            "vivoactive3_daimler" => Ok(Self::Vivoactive3Daimler),
+            "legacy_rey" => Ok(Self::LegacyRey),
+            "legacy_darth_vader" => Ok(Self::LegacyDarthVader),
+            "legacy_captain_marvel" => Ok(Self::LegacyCaptainMarvel),
+            "legacy_first_avenger" => Ok(Self::LegacyFirstAvenger),
+            "fenix6s_sport_asia" => Ok(Self::Fenix6sSportAsia),
+            "fenix6s_asia" => Ok(Self::Fenix6sAsia),
+            "fenix6_sport_asia" => Ok(Self::Fenix6SportAsia),
+            "fenix6_asia" => Ok(Self::Fenix6Asia),
+            "fenix6x_asia" => Ok(Self::Fenix6xAsia),
+            "legacy_captain_marvel_asia" => Ok(Self::LegacyCaptainMarvelAsia),
+            "legacy_first_avenger_asia" => Ok(Self::LegacyFirstAvengerAsia),
+            "legacy_rey_asia" => Ok(Self::LegacyReyAsia),
+            "legacy_darth_vader_asia" => Ok(Self::LegacyDarthVaderAsia),
+            "descent_mk2s" => Ok(Self::DescentMk2s),
+            "edge_130_plus" => Ok(Self::Edge130Plus),
+            "edge_1030_plus" => Ok(Self::Edge1030Plus),
+            "rally_200" => Ok(Self::Rally200),
+            "fr745" => Ok(Self::Fr745),
+            "venusq" => Ok(Self::Venusq),
+            "lily" => Ok(Self::Lily),
+            "marq_adventurer" => Ok(Self::MarqAdventurer),
+            "enduro" => Ok(Self::Enduro),
+            "swim2_apac" => Ok(Self::Swim2Apac),
+            "marq_adventurer_asia" => Ok(Self::MarqAdventurerAsia),
+            "fr945_lte" => Ok(Self::Fr945Lte),
+            "descent_mk2_asia" => Ok(Self::DescentMk2Asia),
+            "venu2" => Ok(Self::Venu2),
+            "venu2s" => Ok(Self::Venu2s),
+            "venu_daimler_asia" => Ok(Self::VenuDaimlerAsia),
+            "marq_golfer" => Ok(Self::MarqGolfer),
+            "venu_daimler" => Ok(Self::VenuDaimler),
+            "fr745_asia" => Ok(Self::Fr745Asia),
+            "varia_rct715" => Ok(Self::VariaRct715),
+            "lily_asia" => Ok(Self::LilyAsia),
+            "edge_1030_plus_asia" => Ok(Self::Edge1030PlusAsia),
+            "edge_130_plus_asia" => Ok(Self::Edge130PlusAsia),
+            "approach_s12" => Ok(Self::ApproachS12),
+            "venusq_asia" => Ok(Self::VenusqAsia),
+            "edge_1040" => Ok(Self::Edge1040),
+            "marq_golfer_asia" => Ok(Self::MarqGolferAsia),
+            "venu2_plus" => Ok(Self::Venu2Plus),
+            "gnss" => Ok(Self::Gnss),
+            "fr55" => Ok(Self::Fr55),
+            "enduro_asia" => Ok(Self::EnduroAsia),
+            "instinct_2" => Ok(Self::Instinct2),
+            "fenix7s" => Ok(Self::Fenix7s),
+            "fenix7" => Ok(Self::Fenix7),
+            "fenix7x" => Ok(Self::Fenix7x),
+            "fenix7s_apac" => Ok(Self::Fenix7sApac),
+            "fenix7_apac" => Ok(Self::Fenix7Apac),
+            "fenix7x_apac" => Ok(Self::Fenix7xApac),
+            "descent_mk2s_asia" => Ok(Self::DescentMk2sAsia),
+            "approach_s42" => Ok(Self::ApproachS42),
+            "epix_gen2" => Ok(Self::EpixGen2),
+            "epix_gen2_apac" => Ok(Self::EpixGen2Apac),
+            "venu2s_asia" => Ok(Self::Venu2sAsia),
+            "venu2_asia" => Ok(Self::Venu2Asia),
+            "fr945_lte_asia" => Ok(Self::Fr945LteAsia),
+            "vivo_move_sport" => Ok(Self::VivoMoveSport),
+            "vivomove_trend" => Ok(Self::VivomoveTrend),
+            "approach_S12_asia" => Ok(Self::ApproachS12Asia),
+            "fr255_music" => Ok(Self::Fr255Music),
+            "fr255_small_music" => Ok(Self::Fr255SmallMusic),
+            "fr255" => Ok(Self::Fr255),
+            "fr255_small" => Ok(Self::Fr255Small),
+            "approach_s42_asia" => Ok(Self::ApproachS42Asia),
+            "descent_g1" => Ok(Self::DescentG1),
+            "venu2_plus_asia" => Ok(Self::Venu2PlusAsia),
+            "fr955" => Ok(Self::Fr955),
+            "fr55_asia" => Ok(Self::Fr55Asia),
+            "edge_540" => Ok(Self::Edge540),
+            "edge_840" => Ok(Self::Edge840),
+            "vivosmart_5" => Ok(Self::Vivosmart5),
+            "instinct_2_asia" => Ok(Self::Instinct2Asia),
+            "marq_gen2" => Ok(Self::MarqGen2),
+            "venusq2" => Ok(Self::Venusq2),
+            "venusq2music" => Ok(Self::Venusq2music),
+            "marq_gen2_aviator" => Ok(Self::MarqGen2Aviator),
+            "d2_air_x10" => Ok(Self::D2AirX10),
+            "hrm_pro_plus" => Ok(Self::HrmProPlus),
+            "descent_g1_asia" => Ok(Self::DescentG1Asia),
+            "tactix7" => Ok(Self::Tactix7),
+            "instinct_crossover" => Ok(Self::InstinctCrossover),
+            "edge_explore2" => Ok(Self::EdgeExplore2),
+            "descent_mk3" => Ok(Self::DescentMk3),
+            "descent_mk3i" => Ok(Self::DescentMk3i),
+            "approach_s70" => Ok(Self::ApproachS70),
+            "fr265_large" => Ok(Self::Fr265Large),
+            "fr265_small" => Ok(Self::Fr265Small),
+            "venu3" => Ok(Self::Venu3),
+            "venu3s" => Ok(Self::Venu3s),
+            "tacx_neo_smart" => Ok(Self::TacxNeoSmart),
+            "tacx_neo2_smart" => Ok(Self::TacxNeo2Smart),
+            "tacx_neo2_t_smart" => Ok(Self::TacxNeo2TSmart),
+            "tacx_neo_smart_bike" => Ok(Self::TacxNeoSmartBike),
+            "tacx_satori_smart" => Ok(Self::TacxSatoriSmart),
+            "tacx_flow_smart" => Ok(Self::TacxFlowSmart),
+            "tacx_vortex_smart" => Ok(Self::TacxVortexSmart),
+            "tacx_bushido_smart" => Ok(Self::TacxBushidoSmart),
+            "tacx_genius_smart" => Ok(Self::TacxGeniusSmart),
+            "tacx_flux_flux_s_smart" => Ok(Self::TacxFluxFluxSSmart),
+            "tacx_flux2_smart" => Ok(Self::TacxFlux2Smart),
+            "tacx_magnum" => Ok(Self::TacxMagnum),
+            "edge_1040_asia" => Ok(Self::Edge1040Asia),
+            "epix_gen2_pro_42" => Ok(Self::EpixGen2Pro42),
+            "epix_gen2_pro_47" => Ok(Self::EpixGen2Pro47),
+            "epix_gen2_pro_51" => Ok(Self::EpixGen2Pro51),
+            "fr965" => Ok(Self::Fr965),
+            "enduro2" => Ok(Self::Enduro2),
+            "fenix7s_pro_solar" => Ok(Self::Fenix7sProSolar),
+            "fenix7_pro_solar" => Ok(Self::Fenix7ProSolar),
+            "fenix7x_pro_solar" => Ok(Self::Fenix7xProSolar),
+            "lily2" => Ok(Self::Lily2),
+            "instinct_2x" => Ok(Self::Instinct2x),
+            "vivoactive5" => Ok(Self::Vivoactive5),
+            "descent_t2" => Ok(Self::DescentT2),
+            "hrm_fit" => Ok(Self::HrmFit),
+            "marq_gen2_commander" => Ok(Self::MarqGen2Commander),
+            "d2_mach1_pro" => Ok(Self::D2Mach1Pro),
+            "sdm4" => Ok(Self::Sdm4),
+            "edge_remote" => Ok(Self::EdgeRemote),
+            "training_center" => Ok(Self::TrainingCenter),
+            "tacx_training_app_win" => Ok(Self::TacxTrainingAppWin),
+            "tacx_training_app_mac" => Ok(Self::TacxTrainingAppMac),
+            "tacx_training_app_mac_catalyst" => Ok(Self::TacxTrainingAppMacCatalyst),
+            "tacx_training_app_android" => Ok(Self::TacxTrainingAppAndroid),
+            "tacx_training_app_ios" => Ok(Self::TacxTrainingAppIos),
+            "tacx_training_app_legacy" => Ok(Self::TacxTrainingAppLegacy),
+            "connectiq_simulator" => Ok(Self::ConnectiqSimulator),
+            "android_antplus_plugin" => Ok(Self::AndroidAntplusPlugin),
+            "connect" => Ok(Self::Connect),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for GarminProduct {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum AntplusDeviceType {
     Antfs,
@@ -10764,6 +13041,44 @@ impl Serialize for AntplusDeviceType {
         }
     }
 }
+impl FromStr for AntplusDeviceType {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "antfs" => Ok(Self::Antfs),
+            "bike_power" => Ok(Self::BikePower),
+            "environment_sensor_legacy" => Ok(Self::EnvironmentSensorLegacy),
+            "multi_sport_speed_distance" => Ok(Self::MultiSportSpeedDistance),
+            "control" => Ok(Self::Control),
+            "fitness_equipment" => Ok(Self::FitnessEquipment),
+            "blood_pressure" => Ok(Self::BloodPressure),
+            "geocache_node" => Ok(Self::GeocacheNode),
+            "light_electric_vehicle" => Ok(Self::LightElectricVehicle),
+            "env_sensor" => Ok(Self::EnvSensor),
+            "racquet" => Ok(Self::Racquet),
+            "control_hub" => Ok(Self::ControlHub),
+            "muscle_oxygen" => Ok(Self::MuscleOxygen),
+            "shifting" => Ok(Self::Shifting),
+            "bike_light_main" => Ok(Self::BikeLightMain),
+            "bike_light_shared" => Ok(Self::BikeLightShared),
+            "exd" => Ok(Self::Exd),
+            "bike_radar" => Ok(Self::BikeRadar),
+            "bike_aero" => Ok(Self::BikeAero),
+            "weight_scale" => Ok(Self::WeightScale),
+            "heart_rate" => Ok(Self::HeartRate),
+            "bike_speed_cadence" => Ok(Self::BikeSpeedCadence),
+            "bike_cadence" => Ok(Self::BikeCadence),
+            "bike_speed" => Ok(Self::BikeSpeed),
+            "stride_speed_distance" => Ok(Self::StrideSpeedDistance),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for AntplusDeviceType {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum AntNetwork {
     Public,
@@ -10828,6 +13143,23 @@ impl Serialize for AntNetwork {
         S: Serializer,
     {
         serializer.serialize_str(&self.to_string())
+    }
+}
+impl FromStr for AntNetwork {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "public" => Ok(Self::Public),
+            "antplus" => Ok(Self::Antplus),
+            "antfs" => Ok(Self::Antfs),
+            "private" => Ok(Self::Private),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for AntNetwork {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -10957,6 +13289,33 @@ impl Serialize for WorkoutCapabilities {
         }
     }
 }
+impl FromStr for WorkoutCapabilities {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "interval" => Ok(Self::Interval),
+            "custom" => Ok(Self::Custom),
+            "fitness_equipment" => Ok(Self::FitnessEquipment),
+            "firstbeat" => Ok(Self::Firstbeat),
+            "new_leaf" => Ok(Self::NewLeaf),
+            "tcx" => Ok(Self::Tcx),
+            "speed" => Ok(Self::Speed),
+            "heart_rate" => Ok(Self::HeartRate),
+            "distance" => Ok(Self::Distance),
+            "cadence" => Ok(Self::Cadence),
+            "power" => Ok(Self::Power),
+            "grade" => Ok(Self::Grade),
+            "resistance" => Ok(Self::Resistance),
+            "protected" => Ok(Self::Protected),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for WorkoutCapabilities {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum BatteryStatus {
     New,
@@ -11041,6 +13400,26 @@ impl Serialize for BatteryStatus {
         }
     }
 }
+impl FromStr for BatteryStatus {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "new" => Ok(Self::New),
+            "good" => Ok(Self::Good),
+            "ok" => Ok(Self::Ok),
+            "low" => Ok(Self::Low),
+            "critical" => Ok(Self::Critical),
+            "charging" => Ok(Self::Charging),
+            "unknown" => Ok(Self::Unknown),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for BatteryStatus {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum HrType {
     Normal,
@@ -11095,6 +13474,21 @@ impl Serialize for HrType {
         S: Serializer,
     {
         serializer.serialize_str(&self.to_string())
+    }
+}
+impl FromStr for HrType {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "normal" => Ok(Self::Normal),
+            "irregular" => Ok(Self::Irregular),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for HrType {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -11207,6 +13601,31 @@ impl Serialize for CourseCapabilities {
         }
     }
 }
+impl FromStr for CourseCapabilities {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "processed" => Ok(Self::Processed),
+            "valid" => Ok(Self::Valid),
+            "time" => Ok(Self::Time),
+            "distance" => Ok(Self::Distance),
+            "position" => Ok(Self::Position),
+            "heart_rate" => Ok(Self::HeartRate),
+            "power" => Ok(Self::Power),
+            "cadence" => Ok(Self::Cadence),
+            "training" => Ok(Self::Training),
+            "navigation" => Ok(Self::Navigation),
+            "bikeway" => Ok(Self::Bikeway),
+            "aviation" => Ok(Self::Aviation),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for CourseCapabilities {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum Weight {
     Calculating,
@@ -11259,6 +13678,20 @@ impl Serialize for Weight {
             Weight::Value(value) => serializer.serialize_u16(*value),
             _ => serializer.serialize_str(&self.to_string()),
         }
+    }
+}
+impl FromStr for Weight {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "calculating" => Ok(Self::Calculating),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for Weight {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 /// 0 - 100 indicates% of max hr; >100 indicates bpm (255 max) plus 100
@@ -11316,6 +13749,20 @@ impl Serialize for WorkoutHr {
         }
     }
 }
+impl FromStr for WorkoutHr {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "bpm_offset" => Ok(Self::BpmOffset),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for WorkoutHr {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 /// 0 - 1000 indicates % of functional threshold power; >1000 indicates watts plus 1000.
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum WorkoutPower {
@@ -11369,6 +13816,20 @@ impl Serialize for WorkoutPower {
             WorkoutPower::Value(value) => serializer.serialize_u32(*value),
             _ => serializer.serialize_str(&self.to_string()),
         }
+    }
+}
+impl FromStr for WorkoutPower {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "watts_offset" => Ok(Self::WattsOffset),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for WorkoutPower {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -11440,6 +13901,24 @@ impl Serialize for BpStatus {
         S: Serializer,
     {
         serializer.serialize_str(&self.to_string())
+    }
+}
+impl FromStr for BpStatus {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "no_error" => Ok(Self::NoError),
+            "error_incomplete_data" => Ok(Self::ErrorIncompleteData),
+            "error_no_measurement" => Ok(Self::ErrorNoMeasurement),
+            "error_data_out_of_range" => Ok(Self::ErrorDataOutOfRange),
+            "error_irregular_heart_rate" => Ok(Self::ErrorIrregularHeartRate),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for BpStatus {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -11519,6 +13998,25 @@ impl Serialize for UserLocalId {
             UserLocalId::Value(value) => serializer.serialize_u16(*value),
             _ => serializer.serialize_str(&self.to_string()),
         }
+    }
+}
+impl FromStr for UserLocalId {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "local_min" => Ok(Self::LocalMin),
+            "local_max" => Ok(Self::LocalMax),
+            "stationary_min" => Ok(Self::StationaryMin),
+            "stationary_max" => Ok(Self::StationaryMax),
+            "portable_min" => Ok(Self::PortableMin),
+            "portable_max" => Ok(Self::PortableMax),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for UserLocalId {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -11601,6 +14099,26 @@ impl Serialize for SwimStroke {
         S: Serializer,
     {
         serializer.serialize_str(&self.to_string())
+    }
+}
+impl FromStr for SwimStroke {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "freestyle" => Ok(Self::Freestyle),
+            "backstroke" => Ok(Self::Backstroke),
+            "breaststroke" => Ok(Self::Breaststroke),
+            "butterfly" => Ok(Self::Butterfly),
+            "drill" => Ok(Self::Drill),
+            "mixed" => Ok(Self::Mixed),
+            "im" => Ok(Self::Im),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for SwimStroke {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -11694,6 +14212,28 @@ impl Serialize for ActivityType {
         S: Serializer,
     {
         serializer.serialize_str(&self.to_string())
+    }
+}
+impl FromStr for ActivityType {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "generic" => Ok(Self::Generic),
+            "running" => Ok(Self::Running),
+            "cycling" => Ok(Self::Cycling),
+            "transition" => Ok(Self::Transition),
+            "fitness_equipment" => Ok(Self::FitnessEquipment),
+            "swimming" => Ok(Self::Swimming),
+            "walking" => Ok(Self::Walking),
+            "sedentary" => Ok(Self::Sedentary),
+            "all" => Ok(Self::All),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for ActivityType {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -11860,6 +14400,39 @@ impl Serialize for ActivitySubtype {
         serializer.serialize_str(&self.to_string())
     }
 }
+impl FromStr for ActivitySubtype {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "generic" => Ok(Self::Generic),
+            "treadmill" => Ok(Self::Treadmill),
+            "street" => Ok(Self::Street),
+            "trail" => Ok(Self::Trail),
+            "track" => Ok(Self::Track),
+            "spin" => Ok(Self::Spin),
+            "indoor_cycling" => Ok(Self::IndoorCycling),
+            "road" => Ok(Self::Road),
+            "mountain" => Ok(Self::Mountain),
+            "downhill" => Ok(Self::Downhill),
+            "recumbent" => Ok(Self::Recumbent),
+            "cyclocross" => Ok(Self::Cyclocross),
+            "hand_cycling" => Ok(Self::HandCycling),
+            "track_cycling" => Ok(Self::TrackCycling),
+            "indoor_rowing" => Ok(Self::IndoorRowing),
+            "elliptical" => Ok(Self::Elliptical),
+            "stair_climbing" => Ok(Self::StairClimbing),
+            "lap_swimming" => Ok(Self::LapSwimming),
+            "open_water" => Ok(Self::OpenWater),
+            "all" => Ok(Self::All),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for ActivitySubtype {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum ActivityLevel {
     Low,
@@ -11921,6 +14494,22 @@ impl Serialize for ActivityLevel {
         serializer.serialize_str(&self.to_string())
     }
 }
+impl FromStr for ActivityLevel {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "low" => Ok(Self::Low),
+            "medium" => Ok(Self::Medium),
+            "high" => Ok(Self::High),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for ActivityLevel {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum Side {
     Right,
@@ -11975,6 +14564,21 @@ impl Serialize for Side {
         S: Serializer,
     {
         serializer.serialize_str(&self.to_string())
+    }
+}
+impl FromStr for Side {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "right" => Ok(Self::Right),
+            "left" => Ok(Self::Left),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for Side {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -12038,6 +14642,21 @@ impl Serialize for LeftRightBalance {
         }
     }
 }
+impl FromStr for LeftRightBalance {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "mask" => Ok(Self::Mask),
+            "right" => Ok(Self::Right),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for LeftRightBalance {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum LeftRightBalance100 {
     /// % contribution scaled by 100
@@ -12099,6 +14718,21 @@ impl Serialize for LeftRightBalance100 {
         }
     }
 }
+impl FromStr for LeftRightBalance100 {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "mask" => Ok(Self::Mask),
+            "right" => Ok(Self::Right),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for LeftRightBalance100 {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum LengthType {
     /// Rest period. Length with no strokes
@@ -12155,6 +14789,21 @@ impl Serialize for LengthType {
         S: Serializer,
     {
         serializer.serialize_str(&self.to_string())
+    }
+}
+impl FromStr for LengthType {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "idle" => Ok(Self::Idle),
+            "active" => Ok(Self::Active),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for LengthType {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -12236,6 +14885,26 @@ impl Serialize for DayOfWeek {
         S: Serializer,
     {
         serializer.serialize_str(&self.to_string())
+    }
+}
+impl FromStr for DayOfWeek {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "sunday" => Ok(Self::Sunday),
+            "monday" => Ok(Self::Monday),
+            "tuesday" => Ok(Self::Tuesday),
+            "wednesday" => Ok(Self::Wednesday),
+            "thursday" => Ok(Self::Thursday),
+            "friday" => Ok(Self::Friday),
+            "saturday" => Ok(Self::Saturday),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for DayOfWeek {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -12468,6 +15137,51 @@ impl Serialize for ConnectivityCapabilities {
         }
     }
 }
+impl FromStr for ConnectivityCapabilities {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "bluetooth" => Ok(Self::Bluetooth),
+            "bluetooth_le" => Ok(Self::BluetoothLe),
+            "ant" => Ok(Self::Ant),
+            "activity_upload" => Ok(Self::ActivityUpload),
+            "course_download" => Ok(Self::CourseDownload),
+            "workout_download" => Ok(Self::WorkoutDownload),
+            "live_track" => Ok(Self::LiveTrack),
+            "weather_conditions" => Ok(Self::WeatherConditions),
+            "weather_alerts" => Ok(Self::WeatherAlerts),
+            "gps_ephemeris_download" => Ok(Self::GpsEphemerisDownload),
+            "explicit_archive" => Ok(Self::ExplicitArchive),
+            "setup_incomplete" => Ok(Self::SetupIncomplete),
+            "continue_sync_after_software_update" => Ok(Self::ContinueSyncAfterSoftwareUpdate),
+            "connect_iq_app_download" => Ok(Self::ConnectIqAppDownload),
+            "golf_course_download" => Ok(Self::GolfCourseDownload),
+            "device_initiates_sync" => Ok(Self::DeviceInitiatesSync),
+            "connect_iq_watch_app_download" => Ok(Self::ConnectIqWatchAppDownload),
+            "connect_iq_widget_download" => Ok(Self::ConnectIqWidgetDownload),
+            "connect_iq_watch_face_download" => Ok(Self::ConnectIqWatchFaceDownload),
+            "connect_iq_data_field_download" => Ok(Self::ConnectIqDataFieldDownload),
+            "connect_iq_app_managment" => Ok(Self::ConnectIqAppManagment),
+            "swing_sensor" => Ok(Self::SwingSensor),
+            "swing_sensor_remote" => Ok(Self::SwingSensorRemote),
+            "incident_detection" => Ok(Self::IncidentDetection),
+            "audio_prompts" => Ok(Self::AudioPrompts),
+            "wifi_verification" => Ok(Self::WifiVerification),
+            "true_up" => Ok(Self::TrueUp),
+            "find_my_watch" => Ok(Self::FindMyWatch),
+            "remote_manual_sync" => Ok(Self::RemoteManualSync),
+            "live_track_auto_start" => Ok(Self::LiveTrackAutoStart),
+            "live_track_messaging" => Ok(Self::LiveTrackMessaging),
+            "instant_input" => Ok(Self::InstantInput),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for ConnectivityCapabilities {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum WeatherReport {
     Current,
@@ -12527,6 +15241,22 @@ impl Serialize for WeatherReport {
         S: Serializer,
     {
         serializer.serialize_str(&self.to_string())
+    }
+}
+impl FromStr for WeatherReport {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "current" => Ok(Self::Current),
+            "hourly_forecast" => Ok(Self::HourlyForecast),
+            "daily_forecast" => Ok(Self::DailyForecast),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for WeatherReport {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -12680,6 +15410,40 @@ impl Serialize for WeatherStatus {
         serializer.serialize_str(&self.to_string())
     }
 }
+impl FromStr for WeatherStatus {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "clear" => Ok(Self::Clear),
+            "partly_cloudy" => Ok(Self::PartlyCloudy),
+            "mostly_cloudy" => Ok(Self::MostlyCloudy),
+            "rain" => Ok(Self::Rain),
+            "snow" => Ok(Self::Snow),
+            "windy" => Ok(Self::Windy),
+            "thunderstorms" => Ok(Self::Thunderstorms),
+            "wintry_mix" => Ok(Self::WintryMix),
+            "fog" => Ok(Self::Fog),
+            "hazy" => Ok(Self::Hazy),
+            "hail" => Ok(Self::Hail),
+            "scattered_showers" => Ok(Self::ScatteredShowers),
+            "scattered_thunderstorms" => Ok(Self::ScatteredThunderstorms),
+            "unknown_precipitation" => Ok(Self::UnknownPrecipitation),
+            "light_rain" => Ok(Self::LightRain),
+            "heavy_rain" => Ok(Self::HeavyRain),
+            "light_snow" => Ok(Self::LightSnow),
+            "heavy_snow" => Ok(Self::HeavySnow),
+            "light_rain_snow" => Ok(Self::LightRainSnow),
+            "heavy_rain_snow" => Ok(Self::HeavyRainSnow),
+            "cloudy" => Ok(Self::Cloudy),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for WeatherStatus {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum WeatherSeverity {
     Unknown,
@@ -12749,6 +15513,24 @@ impl Serialize for WeatherSeverity {
         S: Serializer,
     {
         serializer.serialize_str(&self.to_string())
+    }
+}
+impl FromStr for WeatherSeverity {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "unknown" => Ok(Self::Unknown),
+            "warning" => Ok(Self::Warning),
+            "watch" => Ok(Self::Watch),
+            "advisory" => Ok(Self::Advisory),
+            "statement" => Ok(Self::Statement),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for WeatherSeverity {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -13222,6 +16004,104 @@ impl Serialize for WeatherSevereType {
         serializer.serialize_str(&self.to_string())
     }
 }
+impl FromStr for WeatherSevereType {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "unspecified" => Ok(Self::Unspecified),
+            "tornado" => Ok(Self::Tornado),
+            "tsunami" => Ok(Self::Tsunami),
+            "hurricane" => Ok(Self::Hurricane),
+            "extreme_wind" => Ok(Self::ExtremeWind),
+            "typhoon" => Ok(Self::Typhoon),
+            "inland_hurricane" => Ok(Self::InlandHurricane),
+            "hurricane_force_wind" => Ok(Self::HurricaneForceWind),
+            "waterspout" => Ok(Self::Waterspout),
+            "severe_thunderstorm" => Ok(Self::SevereThunderstorm),
+            "wreckhouse_winds" => Ok(Self::WreckhouseWinds),
+            "les_suetes_wind" => Ok(Self::LesSuetesWind),
+            "avalanche" => Ok(Self::Avalanche),
+            "flash_flood" => Ok(Self::FlashFlood),
+            "tropical_storm" => Ok(Self::TropicalStorm),
+            "inland_tropical_storm" => Ok(Self::InlandTropicalStorm),
+            "blizzard" => Ok(Self::Blizzard),
+            "ice_storm" => Ok(Self::IceStorm),
+            "freezing_rain" => Ok(Self::FreezingRain),
+            "debris_flow" => Ok(Self::DebrisFlow),
+            "flash_freeze" => Ok(Self::FlashFreeze),
+            "dust_storm" => Ok(Self::DustStorm),
+            "high_wind" => Ok(Self::HighWind),
+            "winter_storm" => Ok(Self::WinterStorm),
+            "heavy_freezing_spray" => Ok(Self::HeavyFreezingSpray),
+            "extreme_cold" => Ok(Self::ExtremeCold),
+            "wind_chill" => Ok(Self::WindChill),
+            "cold_wave" => Ok(Self::ColdWave),
+            "heavy_snow_alert" => Ok(Self::HeavySnowAlert),
+            "lake_effect_blowing_snow" => Ok(Self::LakeEffectBlowingSnow),
+            "snow_squall" => Ok(Self::SnowSquall),
+            "lake_effect_snow" => Ok(Self::LakeEffectSnow),
+            "winter_weather" => Ok(Self::WinterWeather),
+            "sleet" => Ok(Self::Sleet),
+            "snowfall" => Ok(Self::Snowfall),
+            "snow_and_blowing_snow" => Ok(Self::SnowAndBlowingSnow),
+            "blowing_snow" => Ok(Self::BlowingSnow),
+            "snow_alert" => Ok(Self::SnowAlert),
+            "arctic_outflow" => Ok(Self::ArcticOutflow),
+            "freezing_drizzle" => Ok(Self::FreezingDrizzle),
+            "storm" => Ok(Self::Storm),
+            "storm_surge" => Ok(Self::StormSurge),
+            "rainfall" => Ok(Self::Rainfall),
+            "areal_flood" => Ok(Self::ArealFlood),
+            "coastal_flood" => Ok(Self::CoastalFlood),
+            "lakeshore_flood" => Ok(Self::LakeshoreFlood),
+            "excessive_heat" => Ok(Self::ExcessiveHeat),
+            "heat" => Ok(Self::Heat),
+            "weather" => Ok(Self::Weather),
+            "high_heat_and_humidity" => Ok(Self::HighHeatAndHumidity),
+            "humidex_and_health" => Ok(Self::HumidexAndHealth),
+            "humidex" => Ok(Self::Humidex),
+            "gale" => Ok(Self::Gale),
+            "freezing_spray" => Ok(Self::FreezingSpray),
+            "special_marine" => Ok(Self::SpecialMarine),
+            "squall" => Ok(Self::Squall),
+            "strong_wind" => Ok(Self::StrongWind),
+            "lake_wind" => Ok(Self::LakeWind),
+            "marine_weather" => Ok(Self::MarineWeather),
+            "wind" => Ok(Self::Wind),
+            "small_craft_hazardous_seas" => Ok(Self::SmallCraftHazardousSeas),
+            "hazardous_seas" => Ok(Self::HazardousSeas),
+            "small_craft" => Ok(Self::SmallCraft),
+            "small_craft_winds" => Ok(Self::SmallCraftWinds),
+            "small_craft_rough_bar" => Ok(Self::SmallCraftRoughBar),
+            "high_water_level" => Ok(Self::HighWaterLevel),
+            "ashfall" => Ok(Self::Ashfall),
+            "freezing_fog" => Ok(Self::FreezingFog),
+            "dense_fog" => Ok(Self::DenseFog),
+            "dense_smoke" => Ok(Self::DenseSmoke),
+            "blowing_dust" => Ok(Self::BlowingDust),
+            "hard_freeze" => Ok(Self::HardFreeze),
+            "freeze" => Ok(Self::Freeze),
+            "frost" => Ok(Self::Frost),
+            "fire_weather" => Ok(Self::FireWeather),
+            "flood" => Ok(Self::Flood),
+            "rip_tide" => Ok(Self::RipTide),
+            "high_surf" => Ok(Self::HighSurf),
+            "smog" => Ok(Self::Smog),
+            "air_quality" => Ok(Self::AirQuality),
+            "brisk_wind" => Ok(Self::BriskWind),
+            "air_stagnation" => Ok(Self::AirStagnation),
+            "low_water" => Ok(Self::LowWater),
+            "hydrological" => Ok(Self::Hydrological),
+            "special_weather" => Ok(Self::SpecialWeather),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for WeatherSevereType {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum StrokeType {
     NoEvent,
@@ -13297,6 +16177,25 @@ impl Serialize for StrokeType {
         S: Serializer,
     {
         serializer.serialize_str(&self.to_string())
+    }
+}
+impl FromStr for StrokeType {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "no_event" => Ok(Self::NoEvent),
+            "other" => Ok(Self::Other),
+            "serve" => Ok(Self::Serve),
+            "forehand" => Ok(Self::Forehand),
+            "backhand" => Ok(Self::Backhand),
+            "smash" => Ok(Self::Smash),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for StrokeType {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -13549,6 +16448,59 @@ impl Serialize for BodyLocation {
         serializer.serialize_str(&self.to_string())
     }
 }
+impl FromStr for BodyLocation {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "left_leg" => Ok(Self::LeftLeg),
+            "left_calf" => Ok(Self::LeftCalf),
+            "left_shin" => Ok(Self::LeftShin),
+            "left_hamstring" => Ok(Self::LeftHamstring),
+            "left_quad" => Ok(Self::LeftQuad),
+            "left_glute" => Ok(Self::LeftGlute),
+            "right_leg" => Ok(Self::RightLeg),
+            "right_calf" => Ok(Self::RightCalf),
+            "right_shin" => Ok(Self::RightShin),
+            "right_hamstring" => Ok(Self::RightHamstring),
+            "right_quad" => Ok(Self::RightQuad),
+            "right_glute" => Ok(Self::RightGlute),
+            "torso_back" => Ok(Self::TorsoBack),
+            "left_lower_back" => Ok(Self::LeftLowerBack),
+            "left_upper_back" => Ok(Self::LeftUpperBack),
+            "right_lower_back" => Ok(Self::RightLowerBack),
+            "right_upper_back" => Ok(Self::RightUpperBack),
+            "torso_front" => Ok(Self::TorsoFront),
+            "left_abdomen" => Ok(Self::LeftAbdomen),
+            "left_chest" => Ok(Self::LeftChest),
+            "right_abdomen" => Ok(Self::RightAbdomen),
+            "right_chest" => Ok(Self::RightChest),
+            "left_arm" => Ok(Self::LeftArm),
+            "left_shoulder" => Ok(Self::LeftShoulder),
+            "left_bicep" => Ok(Self::LeftBicep),
+            "left_tricep" => Ok(Self::LeftTricep),
+            "left_brachioradialis" => Ok(Self::LeftBrachioradialis),
+            "left_forearm_extensors" => Ok(Self::LeftForearmExtensors),
+            "right_arm" => Ok(Self::RightArm),
+            "right_shoulder" => Ok(Self::RightShoulder),
+            "right_bicep" => Ok(Self::RightBicep),
+            "right_tricep" => Ok(Self::RightTricep),
+            "right_brachioradialis" => Ok(Self::RightBrachioradialis),
+            "right_forearm_extensors" => Ok(Self::RightForearmExtensors),
+            "neck" => Ok(Self::Neck),
+            "throat" => Ok(Self::Throat),
+            "waist_mid_back" => Ok(Self::WaistMidBack),
+            "waist_front" => Ok(Self::WaistFront),
+            "waist_left" => Ok(Self::WaistLeft),
+            "waist_right" => Ok(Self::WaistRight),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for BodyLocation {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SegmentLapStatus {
     End,
@@ -13603,6 +16555,21 @@ impl Serialize for SegmentLapStatus {
         S: Serializer,
     {
         serializer.serialize_str(&self.to_string())
+    }
+}
+impl FromStr for SegmentLapStatus {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "end" => Ok(Self::End),
+            "fail" => Ok(Self::Fail),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for SegmentLapStatus {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -13708,6 +16675,30 @@ impl Serialize for SegmentLeaderboardType {
         serializer.serialize_str(&self.to_string())
     }
 }
+impl FromStr for SegmentLeaderboardType {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "overall" => Ok(Self::Overall),
+            "personal_best" => Ok(Self::PersonalBest),
+            "connections" => Ok(Self::Connections),
+            "group" => Ok(Self::Group),
+            "challenger" => Ok(Self::Challenger),
+            "kom" => Ok(Self::Kom),
+            "qom" => Ok(Self::Qom),
+            "pr" => Ok(Self::Pr),
+            "goal" => Ok(Self::Goal),
+            "rival" => Ok(Self::Rival),
+            "club_leader" => Ok(Self::ClubLeader),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for SegmentLeaderboardType {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SegmentDeleteStatus {
     DoNotDelete,
@@ -13769,6 +16760,22 @@ impl Serialize for SegmentDeleteStatus {
         serializer.serialize_str(&self.to_string())
     }
 }
+impl FromStr for SegmentDeleteStatus {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "do_not_delete" => Ok(Self::DoNotDelete),
+            "delete_one" => Ok(Self::DeleteOne),
+            "delete_all" => Ok(Self::DeleteAll),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for SegmentDeleteStatus {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SegmentSelectionType {
     Starred,
@@ -13823,6 +16830,21 @@ impl Serialize for SegmentSelectionType {
         S: Serializer,
     {
         serializer.serialize_str(&self.to_string())
+    }
+}
+impl FromStr for SegmentSelectionType {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "starred" => Ok(Self::Starred),
+            "suggested" => Ok(Self::Suggested),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for SegmentSelectionType {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -13905,6 +16927,25 @@ impl Serialize for SourceType {
         S: Serializer,
     {
         serializer.serialize_str(&self.to_string())
+    }
+}
+impl FromStr for SourceType {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "ant" => Ok(Self::Ant),
+            "antplus" => Ok(Self::Antplus),
+            "bluetooth" => Ok(Self::Bluetooth),
+            "bluetooth_low_energy" => Ok(Self::BluetoothLowEnergy),
+            "wifi" => Ok(Self::Wifi),
+            "local" => Ok(Self::Local),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for SourceType {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -14004,6 +17045,27 @@ impl Serialize for LocalDeviceType {
         }
     }
 }
+impl FromStr for LocalDeviceType {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "gps" => Ok(Self::Gps),
+            "glonass" => Ok(Self::Glonass),
+            "gps_glonass" => Ok(Self::GpsGlonass),
+            "accelerometer" => Ok(Self::Accelerometer),
+            "barometer" => Ok(Self::Barometer),
+            "temperature" => Ok(Self::Temperature),
+            "whr" => Ok(Self::Whr),
+            "sensor_hub" => Ok(Self::SensorHub),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for LocalDeviceType {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum BleDeviceType {
     /// GPS that is provided over a proprietary bluetooth service
@@ -14095,6 +17157,27 @@ impl Serialize for BleDeviceType {
         }
     }
 }
+impl FromStr for BleDeviceType {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "connected_gps" => Ok(Self::ConnectedGps),
+            "heart_rate" => Ok(Self::HeartRate),
+            "bike_power" => Ok(Self::BikePower),
+            "bike_speed_cadence" => Ok(Self::BikeSpeedCadence),
+            "bike_speed" => Ok(Self::BikeSpeed),
+            "bike_cadence" => Ok(Self::BikeCadence),
+            "footpod" => Ok(Self::Footpod),
+            "bike_trainer" => Ok(Self::BikeTrainer),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for BleDeviceType {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum AntChannelId {
     AntDeviceNumber,
@@ -14166,6 +17249,25 @@ impl Serialize for AntChannelId {
             AntChannelId::Value(value) => serializer.serialize_u32(*value),
             _ => serializer.serialize_str(&self.to_string()),
         }
+    }
+}
+impl FromStr for AntChannelId {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "ant_device_number" => Ok(Self::AntDeviceNumber),
+            "ant_device_type" => Ok(Self::AntDeviceType),
+            "ant_transmission_type_lower_nibble" => Ok(Self::AntTransmissionTypeLowerNibble),
+            "ant_extended_device_number_upper_nibble" => {
+                Ok(Self::AntExtendedDeviceNumberUpperNibble)
+            }
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for AntChannelId {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -14240,6 +17342,24 @@ impl Serialize for DisplayOrientation {
         S: Serializer,
     {
         serializer.serialize_str(&self.to_string())
+    }
+}
+impl FromStr for DisplayOrientation {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "auto" => Ok(Self::Auto),
+            "portrait" => Ok(Self::Portrait),
+            "landscape" => Ok(Self::Landscape),
+            "portrait_flipped" => Ok(Self::PortraitFlipped),
+            "landscape_flipped" => Ok(Self::LandscapeFlipped),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for DisplayOrientation {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -14318,6 +17438,25 @@ impl Serialize for WorkoutEquipment {
         serializer.serialize_str(&self.to_string())
     }
 }
+impl FromStr for WorkoutEquipment {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "none" => Ok(Self::None),
+            "swim_fins" => Ok(Self::SwimFins),
+            "swim_kickboard" => Ok(Self::SwimKickboard),
+            "swim_paddles" => Ok(Self::SwimPaddles),
+            "swim_pull_buoy" => Ok(Self::SwimPullBuoy),
+            "swim_snorkel" => Ok(Self::SwimSnorkel),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for WorkoutEquipment {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum WatchfaceMode {
     Digital,
@@ -14384,6 +17523,23 @@ impl Serialize for WatchfaceMode {
         serializer.serialize_str(&self.to_string())
     }
 }
+impl FromStr for WatchfaceMode {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "digital" => Ok(Self::Digital),
+            "analog" => Ok(Self::Analog),
+            "connect_iq" => Ok(Self::ConnectIq),
+            "disabled" => Ok(Self::Disabled),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for WatchfaceMode {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum DigitalWatchfaceLayout {
     Traditional,
@@ -14447,6 +17603,22 @@ impl Serialize for DigitalWatchfaceLayout {
         serializer.serialize_str(&self.to_string())
     }
 }
+impl FromStr for DigitalWatchfaceLayout {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "traditional" => Ok(Self::Traditional),
+            "modern" => Ok(Self::Modern),
+            "bold" => Ok(Self::Bold),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for DigitalWatchfaceLayout {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum AnalogWatchfaceLayout {
     Minimal,
@@ -14506,6 +17678,22 @@ impl Serialize for AnalogWatchfaceLayout {
         S: Serializer,
     {
         serializer.serialize_str(&self.to_string())
+    }
+}
+impl FromStr for AnalogWatchfaceLayout {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "minimal" => Ok(Self::Minimal),
+            "traditional" => Ok(Self::Traditional),
+            "modern" => Ok(Self::Modern),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for AnalogWatchfaceLayout {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -14574,6 +17762,23 @@ impl Serialize for RiderPositionType {
         serializer.serialize_str(&self.to_string())
     }
 }
+impl FromStr for RiderPositionType {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "seated" => Ok(Self::Seated),
+            "standing" => Ok(Self::Standing),
+            "transition_to_seated" => Ok(Self::TransitionToSeated),
+            "transition_to_standing" => Ok(Self::TransitionToStanding),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for RiderPositionType {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum PowerPhaseType {
     PowerPhaseStartAngle,
@@ -14638,6 +17843,23 @@ impl Serialize for PowerPhaseType {
         S: Serializer,
     {
         serializer.serialize_str(&self.to_string())
+    }
+}
+impl FromStr for PowerPhaseType {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "power_phase_start_angle" => Ok(Self::PowerPhaseStartAngle),
+            "power_phase_end_angle" => Ok(Self::PowerPhaseEndAngle),
+            "power_phase_arc_length" => Ok(Self::PowerPhaseArcLength),
+            "power_phase_center" => Ok(Self::PowerPhaseCenter),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for PowerPhaseType {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -14760,6 +17982,32 @@ impl Serialize for CameraEventType {
         serializer.serialize_str(&self.to_string())
     }
 }
+impl FromStr for CameraEventType {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "video_start" => Ok(Self::VideoStart),
+            "video_split" => Ok(Self::VideoSplit),
+            "video_end" => Ok(Self::VideoEnd),
+            "photo_taken" => Ok(Self::PhotoTaken),
+            "video_second_stream_start" => Ok(Self::VideoSecondStreamStart),
+            "video_second_stream_split" => Ok(Self::VideoSecondStreamSplit),
+            "video_second_stream_end" => Ok(Self::VideoSecondStreamEnd),
+            "video_split_start" => Ok(Self::VideoSplitStart),
+            "video_second_stream_split_start" => Ok(Self::VideoSecondStreamSplitStart),
+            "video_pause" => Ok(Self::VideoPause),
+            "video_second_stream_pause" => Ok(Self::VideoSecondStreamPause),
+            "video_resume" => Ok(Self::VideoResume),
+            "video_second_stream_resume" => Ok(Self::VideoSecondStreamResume),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for CameraEventType {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SensorType {
     Accelerometer,
@@ -14825,6 +18073,23 @@ impl Serialize for SensorType {
         S: Serializer,
     {
         serializer.serialize_str(&self.to_string())
+    }
+}
+impl FromStr for SensorType {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "accelerometer" => Ok(Self::Accelerometer),
+            "gyroscope" => Ok(Self::Gyroscope),
+            "compass" => Ok(Self::Compass),
+            "barometer" => Ok(Self::Barometer),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for SensorType {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -14893,6 +18158,23 @@ impl Serialize for BikeLightNetworkConfigType {
         S: Serializer,
     {
         serializer.serialize_str(&self.to_string())
+    }
+}
+impl FromStr for BikeLightNetworkConfigType {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "auto" => Ok(Self::Auto),
+            "individual" => Ok(Self::Individual),
+            "high_visibility" => Ok(Self::HighVisibility),
+            "trail" => Ok(Self::Trail),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for BikeLightNetworkConfigType {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -14968,6 +18250,23 @@ impl Serialize for CommTimeoutType {
         }
     }
 }
+impl FromStr for CommTimeoutType {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "wildcard_pairing_timeout" => Ok(Self::WildcardPairingTimeout),
+            "pairing_timeout" => Ok(Self::PairingTimeout),
+            "connection_lost" => Ok(Self::ConnectionLost),
+            "connection_timeout" => Ok(Self::ConnectionTimeout),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for CommTimeoutType {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum CameraOrientationType {
     CameraOrientation0,
@@ -15034,6 +18333,23 @@ impl Serialize for CameraOrientationType {
         serializer.serialize_str(&self.to_string())
     }
 }
+impl FromStr for CameraOrientationType {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "camera_orientation_0" => Ok(Self::CameraOrientation0),
+            "camera_orientation_90" => Ok(Self::CameraOrientation90),
+            "camera_orientation_180" => Ok(Self::CameraOrientation180),
+            "camera_orientation_270" => Ok(Self::CameraOrientation270),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for CameraOrientationType {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum AttitudeStage {
     Failed,
@@ -15098,6 +18414,23 @@ impl Serialize for AttitudeStage {
         S: Serializer,
     {
         serializer.serialize_str(&self.to_string())
+    }
+}
+impl FromStr for AttitudeStage {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "failed" => Ok(Self::Failed),
+            "aligning" => Ok(Self::Aligning),
+            "degraded" => Ok(Self::Degraded),
+            "valid" => Ok(Self::Valid),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for AttitudeStage {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -15214,6 +18547,32 @@ impl Serialize for AttitudeValidity {
         }
     }
 }
+impl FromStr for AttitudeValidity {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "track_angle_heading_valid" => Ok(Self::TrackAngleHeadingValid),
+            "pitch_valid" => Ok(Self::PitchValid),
+            "roll_valid" => Ok(Self::RollValid),
+            "lateral_body_accel_valid" => Ok(Self::LateralBodyAccelValid),
+            "normal_body_accel_valid" => Ok(Self::NormalBodyAccelValid),
+            "turn_rate_valid" => Ok(Self::TurnRateValid),
+            "hw_fail" => Ok(Self::HwFail),
+            "mag_invalid" => Ok(Self::MagInvalid),
+            "no_gps" => Ok(Self::NoGps),
+            "gps_invalid" => Ok(Self::GpsInvalid),
+            "solution_coasting" => Ok(Self::SolutionCoasting),
+            "true_track_angle" => Ok(Self::TrueTrackAngle),
+            "magnetic_heading" => Ok(Self::MagneticHeading),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for AttitudeValidity {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum AutoSyncFrequency {
     Never,
@@ -15283,6 +18642,24 @@ impl Serialize for AutoSyncFrequency {
         S: Serializer,
     {
         serializer.serialize_str(&self.to_string())
+    }
+}
+impl FromStr for AutoSyncFrequency {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "never" => Ok(Self::Never),
+            "occasionally" => Ok(Self::Occasionally),
+            "frequent" => Ok(Self::Frequent),
+            "once_a_day" => Ok(Self::OnceADay),
+            "remote" => Ok(Self::Remote),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for AutoSyncFrequency {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -15375,6 +18752,28 @@ impl Serialize for ExdLayout {
         S: Serializer,
     {
         serializer.serialize_str(&self.to_string())
+    }
+}
+impl FromStr for ExdLayout {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "full_screen" => Ok(Self::FullScreen),
+            "half_vertical" => Ok(Self::HalfVertical),
+            "half_horizontal" => Ok(Self::HalfHorizontal),
+            "half_vertical_right_split" => Ok(Self::HalfVerticalRightSplit),
+            "half_horizontal_bottom_split" => Ok(Self::HalfHorizontalBottomSplit),
+            "full_quarter_split" => Ok(Self::FullQuarterSplit),
+            "half_vertical_left_split" => Ok(Self::HalfVerticalLeftSplit),
+            "half_horizontal_top_split" => Ok(Self::HalfHorizontalTopSplit),
+            "dynamic" => Ok(Self::Dynamic),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for ExdLayout {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -15476,6 +18875,30 @@ impl Serialize for ExdDisplayType {
         S: Serializer,
     {
         serializer.serialize_str(&self.to_string())
+    }
+}
+impl FromStr for ExdDisplayType {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "numerical" => Ok(Self::Numerical),
+            "simple" => Ok(Self::Simple),
+            "graph" => Ok(Self::Graph),
+            "bar" => Ok(Self::Bar),
+            "circle_graph" => Ok(Self::CircleGraph),
+            "virtual_partner" => Ok(Self::VirtualPartner),
+            "balance" => Ok(Self::Balance),
+            "string_list" => Ok(Self::StringList),
+            "string" => Ok(Self::String),
+            "simple_dynamic_icon" => Ok(Self::SimpleDynamicIcon),
+            "gauge" => Ok(Self::Gauge),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for ExdDisplayType {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -15778,6 +19201,69 @@ impl Serialize for ExdDataUnits {
         serializer.serialize_str(&self.to_string())
     }
 }
+impl FromStr for ExdDataUnits {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "no_units" => Ok(Self::NoUnits),
+            "laps" => Ok(Self::Laps),
+            "miles_per_hour" => Ok(Self::MilesPerHour),
+            "kilometers_per_hour" => Ok(Self::KilometersPerHour),
+            "feet_per_hour" => Ok(Self::FeetPerHour),
+            "meters_per_hour" => Ok(Self::MetersPerHour),
+            "degrees_celsius" => Ok(Self::DegreesCelsius),
+            "degrees_farenheit" => Ok(Self::DegreesFarenheit),
+            "zone" => Ok(Self::Zone),
+            "gear" => Ok(Self::Gear),
+            "rpm" => Ok(Self::Rpm),
+            "bpm" => Ok(Self::Bpm),
+            "degrees" => Ok(Self::Degrees),
+            "millimeters" => Ok(Self::Millimeters),
+            "meters" => Ok(Self::Meters),
+            "kilometers" => Ok(Self::Kilometers),
+            "feet" => Ok(Self::Feet),
+            "yards" => Ok(Self::Yards),
+            "kilofeet" => Ok(Self::Kilofeet),
+            "miles" => Ok(Self::Miles),
+            "time" => Ok(Self::Time),
+            "enum_turn_type" => Ok(Self::EnumTurnType),
+            "percent" => Ok(Self::Percent),
+            "watts" => Ok(Self::Watts),
+            "watts_per_kilogram" => Ok(Self::WattsPerKilogram),
+            "enum_battery_status" => Ok(Self::EnumBatteryStatus),
+            "enum_bike_light_beam_angle_mode" => Ok(Self::EnumBikeLightBeamAngleMode),
+            "enum_bike_light_battery_status" => Ok(Self::EnumBikeLightBatteryStatus),
+            "enum_bike_light_network_config_type" => Ok(Self::EnumBikeLightNetworkConfigType),
+            "lights" => Ok(Self::Lights),
+            "seconds" => Ok(Self::Seconds),
+            "minutes" => Ok(Self::Minutes),
+            "hours" => Ok(Self::Hours),
+            "calories" => Ok(Self::Calories),
+            "kilojoules" => Ok(Self::Kilojoules),
+            "milliseconds" => Ok(Self::Milliseconds),
+            "second_per_mile" => Ok(Self::SecondPerMile),
+            "second_per_kilometer" => Ok(Self::SecondPerKilometer),
+            "centimeter" => Ok(Self::Centimeter),
+            "enum_course_point" => Ok(Self::EnumCoursePoint),
+            "bradians" => Ok(Self::Bradians),
+            "enum_sport" => Ok(Self::EnumSport),
+            "inches_hg" => Ok(Self::InchesHg),
+            "mm_hg" => Ok(Self::MmHg),
+            "mbars" => Ok(Self::Mbars),
+            "hecto_pascals" => Ok(Self::HectoPascals),
+            "feet_per_min" => Ok(Self::FeetPerMin),
+            "meters_per_min" => Ok(Self::MetersPerMin),
+            "meters_per_sec" => Ok(Self::MetersPerSec),
+            "eight_cardinal" => Ok(Self::EightCardinal),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for ExdDataUnits {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum ExdQualifiers {
     NoQualifier,
@@ -16042,6 +19528,63 @@ impl Serialize for ExdQualifiers {
         S: Serializer,
     {
         serializer.serialize_str(&self.to_string())
+    }
+}
+impl FromStr for ExdQualifiers {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "no_qualifier" => Ok(Self::NoQualifier),
+            "instantaneous" => Ok(Self::Instantaneous),
+            "average" => Ok(Self::Average),
+            "lap" => Ok(Self::Lap),
+            "maximum" => Ok(Self::Maximum),
+            "maximum_average" => Ok(Self::MaximumAverage),
+            "maximum_lap" => Ok(Self::MaximumLap),
+            "last_lap" => Ok(Self::LastLap),
+            "average_lap" => Ok(Self::AverageLap),
+            "to_destination" => Ok(Self::ToDestination),
+            "to_go" => Ok(Self::ToGo),
+            "to_next" => Ok(Self::ToNext),
+            "next_course_point" => Ok(Self::NextCoursePoint),
+            "total" => Ok(Self::Total),
+            "three_second_average" => Ok(Self::ThreeSecondAverage),
+            "ten_second_average" => Ok(Self::TenSecondAverage),
+            "thirty_second_average" => Ok(Self::ThirtySecondAverage),
+            "percent_maximum" => Ok(Self::PercentMaximum),
+            "percent_maximum_average" => Ok(Self::PercentMaximumAverage),
+            "lap_percent_maximum" => Ok(Self::LapPercentMaximum),
+            "elapsed" => Ok(Self::Elapsed),
+            "sunrise" => Ok(Self::Sunrise),
+            "sunset" => Ok(Self::Sunset),
+            "compared_to_virtual_partner" => Ok(Self::ComparedToVirtualPartner),
+            "maximum_24h" => Ok(Self::Maximum24h),
+            "minimum_24h" => Ok(Self::Minimum24h),
+            "minimum" => Ok(Self::Minimum),
+            "first" => Ok(Self::First),
+            "second" => Ok(Self::Second),
+            "third" => Ok(Self::Third),
+            "shifter" => Ok(Self::Shifter),
+            "last_sport" => Ok(Self::LastSport),
+            "moving" => Ok(Self::Moving),
+            "stopped" => Ok(Self::Stopped),
+            "estimated_total" => Ok(Self::EstimatedTotal),
+            "zone_9" => Ok(Self::Zone9),
+            "zone_8" => Ok(Self::Zone8),
+            "zone_7" => Ok(Self::Zone7),
+            "zone_6" => Ok(Self::Zone6),
+            "zone_5" => Ok(Self::Zone5),
+            "zone_4" => Ok(Self::Zone4),
+            "zone_3" => Ok(Self::Zone3),
+            "zone_2" => Ok(Self::Zone2),
+            "zone_1" => Ok(Self::Zone1),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for ExdQualifiers {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -16586,6 +20129,116 @@ impl Serialize for ExdDescriptors {
         serializer.serialize_str(&self.to_string())
     }
 }
+impl FromStr for ExdDescriptors {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "bike_light_battery_status" => Ok(Self::BikeLightBatteryStatus),
+            "beam_angle_status" => Ok(Self::BeamAngleStatus),
+            "batery_level" => Ok(Self::BateryLevel),
+            "light_network_mode" => Ok(Self::LightNetworkMode),
+            "number_lights_connected" => Ok(Self::NumberLightsConnected),
+            "cadence" => Ok(Self::Cadence),
+            "distance" => Ok(Self::Distance),
+            "estimated_time_of_arrival" => Ok(Self::EstimatedTimeOfArrival),
+            "heading" => Ok(Self::Heading),
+            "time" => Ok(Self::Time),
+            "battery_level" => Ok(Self::BatteryLevel),
+            "trainer_resistance" => Ok(Self::TrainerResistance),
+            "trainer_target_power" => Ok(Self::TrainerTargetPower),
+            "time_seated" => Ok(Self::TimeSeated),
+            "time_standing" => Ok(Self::TimeStanding),
+            "elevation" => Ok(Self::Elevation),
+            "grade" => Ok(Self::Grade),
+            "ascent" => Ok(Self::Ascent),
+            "descent" => Ok(Self::Descent),
+            "vertical_speed" => Ok(Self::VerticalSpeed),
+            "di2_battery_level" => Ok(Self::Di2BatteryLevel),
+            "front_gear" => Ok(Self::FrontGear),
+            "rear_gear" => Ok(Self::RearGear),
+            "gear_ratio" => Ok(Self::GearRatio),
+            "heart_rate" => Ok(Self::HeartRate),
+            "heart_rate_zone" => Ok(Self::HeartRateZone),
+            "time_in_heart_rate_zone" => Ok(Self::TimeInHeartRateZone),
+            "heart_rate_reserve" => Ok(Self::HeartRateReserve),
+            "calories" => Ok(Self::Calories),
+            "gps_accuracy" => Ok(Self::GpsAccuracy),
+            "gps_signal_strength" => Ok(Self::GpsSignalStrength),
+            "temperature" => Ok(Self::Temperature),
+            "time_of_day" => Ok(Self::TimeOfDay),
+            "balance" => Ok(Self::Balance),
+            "pedal_smoothness" => Ok(Self::PedalSmoothness),
+            "power" => Ok(Self::Power),
+            "functional_threshold_power" => Ok(Self::FunctionalThresholdPower),
+            "intensity_factor" => Ok(Self::IntensityFactor),
+            "work" => Ok(Self::Work),
+            "power_ratio" => Ok(Self::PowerRatio),
+            "normalized_power" => Ok(Self::NormalizedPower),
+            "training_stress_Score" => Ok(Self::TrainingStressScore),
+            "time_on_zone" => Ok(Self::TimeOnZone),
+            "speed" => Ok(Self::Speed),
+            "laps" => Ok(Self::Laps),
+            "reps" => Ok(Self::Reps),
+            "workout_step" => Ok(Self::WorkoutStep),
+            "course_distance" => Ok(Self::CourseDistance),
+            "navigation_distance" => Ok(Self::NavigationDistance),
+            "course_estimated_time_of_arrival" => Ok(Self::CourseEstimatedTimeOfArrival),
+            "navigation_estimated_time_of_arrival" => Ok(Self::NavigationEstimatedTimeOfArrival),
+            "course_time" => Ok(Self::CourseTime),
+            "navigation_time" => Ok(Self::NavigationTime),
+            "course_heading" => Ok(Self::CourseHeading),
+            "navigation_heading" => Ok(Self::NavigationHeading),
+            "power_zone" => Ok(Self::PowerZone),
+            "torque_effectiveness" => Ok(Self::TorqueEffectiveness),
+            "timer_time" => Ok(Self::TimerTime),
+            "power_weight_ratio" => Ok(Self::PowerWeightRatio),
+            "left_platform_center_offset" => Ok(Self::LeftPlatformCenterOffset),
+            "right_platform_center_offset" => Ok(Self::RightPlatformCenterOffset),
+            "left_power_phase_start_angle" => Ok(Self::LeftPowerPhaseStartAngle),
+            "right_power_phase_start_angle" => Ok(Self::RightPowerPhaseStartAngle),
+            "left_power_phase_finish_angle" => Ok(Self::LeftPowerPhaseFinishAngle),
+            "right_power_phase_finish_angle" => Ok(Self::RightPowerPhaseFinishAngle),
+            "gears" => Ok(Self::Gears),
+            "pace" => Ok(Self::Pace),
+            "training_effect" => Ok(Self::TrainingEffect),
+            "vertical_oscillation" => Ok(Self::VerticalOscillation),
+            "vertical_ratio" => Ok(Self::VerticalRatio),
+            "ground_contact_time" => Ok(Self::GroundContactTime),
+            "left_ground_contact_time_balance" => Ok(Self::LeftGroundContactTimeBalance),
+            "right_ground_contact_time_balance" => Ok(Self::RightGroundContactTimeBalance),
+            "stride_length" => Ok(Self::StrideLength),
+            "running_cadence" => Ok(Self::RunningCadence),
+            "performance_condition" => Ok(Self::PerformanceCondition),
+            "course_type" => Ok(Self::CourseType),
+            "time_in_power_zone" => Ok(Self::TimeInPowerZone),
+            "navigation_turn" => Ok(Self::NavigationTurn),
+            "course_location" => Ok(Self::CourseLocation),
+            "navigation_location" => Ok(Self::NavigationLocation),
+            "compass" => Ok(Self::Compass),
+            "gear_combo" => Ok(Self::GearCombo),
+            "muscle_oxygen" => Ok(Self::MuscleOxygen),
+            "icon" => Ok(Self::Icon),
+            "compass_heading" => Ok(Self::CompassHeading),
+            "gps_heading" => Ok(Self::GpsHeading),
+            "gps_elevation" => Ok(Self::GpsElevation),
+            "anaerobic_training_effect" => Ok(Self::AnaerobicTrainingEffect),
+            "course" => Ok(Self::Course),
+            "off_course" => Ok(Self::OffCourse),
+            "glide_ratio" => Ok(Self::GlideRatio),
+            "vertical_distance" => Ok(Self::VerticalDistance),
+            "vmg" => Ok(Self::Vmg),
+            "ambient_pressure" => Ok(Self::AmbientPressure),
+            "pressure" => Ok(Self::Pressure),
+            "vam" => Ok(Self::Vam),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for ExdDescriptors {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum AutoActivityDetect {
     None,
@@ -16668,6 +20321,26 @@ impl Serialize for AutoActivityDetect {
             AutoActivityDetect::Value(value) => serializer.serialize_u32(*value),
             _ => serializer.serialize_str(&self.to_string()),
         }
+    }
+}
+impl FromStr for AutoActivityDetect {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "none" => Ok(Self::None),
+            "running" => Ok(Self::Running),
+            "cycling" => Ok(Self::Cycling),
+            "swimming" => Ok(Self::Swimming),
+            "walking" => Ok(Self::Walking),
+            "elliptical" => Ok(Self::Elliptical),
+            "sedentary" => Ok(Self::Sedentary),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for AutoActivityDetect {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -16765,6 +20438,27 @@ impl Serialize for SupportedExdScreenLayouts {
             SupportedExdScreenLayouts::Value(value) => serializer.serialize_u32(*value),
             _ => serializer.serialize_str(&self.to_string()),
         }
+    }
+}
+impl FromStr for SupportedExdScreenLayouts {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "full_screen" => Ok(Self::FullScreen),
+            "half_vertical" => Ok(Self::HalfVertical),
+            "half_horizontal" => Ok(Self::HalfHorizontal),
+            "half_vertical_right_split" => Ok(Self::HalfVerticalRightSplit),
+            "half_horizontal_bottom_split" => Ok(Self::HalfHorizontalBottomSplit),
+            "full_quarter_split" => Ok(Self::FullQuarterSplit),
+            "half_vertical_left_split" => Ok(Self::HalfVerticalLeftSplit),
+            "half_horizontal_top_split" => Ok(Self::HalfHorizontalTopSplit),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for SupportedExdScreenLayouts {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -16899,6 +20593,36 @@ impl Serialize for FitBaseType {
             FitBaseType::Value(value) => serializer.serialize_u8(*value),
             _ => serializer.serialize_str(&self.to_string()),
         }
+    }
+}
+impl FromStr for FitBaseType {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "enum" => Ok(Self::Enum),
+            "sint8" => Ok(Self::Sint8),
+            "uint8" => Ok(Self::Uint8),
+            "string" => Ok(Self::String),
+            "uint8z" => Ok(Self::Uint8z),
+            "byte" => Ok(Self::Byte),
+            "sint16" => Ok(Self::Sint16),
+            "uint16" => Ok(Self::Uint16),
+            "sint32" => Ok(Self::Sint32),
+            "uint32" => Ok(Self::Uint32),
+            "float32" => Ok(Self::Float32),
+            "float64" => Ok(Self::Float64),
+            "uint16z" => Ok(Self::Uint16z),
+            "uint32z" => Ok(Self::Uint32z),
+            "sint64" => Ok(Self::Sint64),
+            "uint64" => Ok(Self::Uint64),
+            "uint64z" => Ok(Self::Uint64z),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for FitBaseType {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -17137,6 +20861,57 @@ impl Serialize for TurnType {
         serializer.serialize_str(&self.to_string())
     }
 }
+impl FromStr for TurnType {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "arriving_idx" => Ok(Self::ArrivingIdx),
+            "arriving_left_idx" => Ok(Self::ArrivingLeftIdx),
+            "arriving_right_idx" => Ok(Self::ArrivingRightIdx),
+            "arriving_via_idx" => Ok(Self::ArrivingViaIdx),
+            "arriving_via_left_idx" => Ok(Self::ArrivingViaLeftIdx),
+            "arriving_via_right_idx" => Ok(Self::ArrivingViaRightIdx),
+            "bear_keep_left_idx" => Ok(Self::BearKeepLeftIdx),
+            "bear_keep_right_idx" => Ok(Self::BearKeepRightIdx),
+            "continue_idx" => Ok(Self::ContinueIdx),
+            "exit_left_idx" => Ok(Self::ExitLeftIdx),
+            "exit_right_idx" => Ok(Self::ExitRightIdx),
+            "ferry_idx" => Ok(Self::FerryIdx),
+            "roundabout_45_idx" => Ok(Self::Roundabout45Idx),
+            "roundabout_90_idx" => Ok(Self::Roundabout90Idx),
+            "roundabout_135_idx" => Ok(Self::Roundabout135Idx),
+            "roundabout_180_idx" => Ok(Self::Roundabout180Idx),
+            "roundabout_225_idx" => Ok(Self::Roundabout225Idx),
+            "roundabout_270_idx" => Ok(Self::Roundabout270Idx),
+            "roundabout_315_idx" => Ok(Self::Roundabout315Idx),
+            "roundabout_360_idx" => Ok(Self::Roundabout360Idx),
+            "roundabout_neg_45_idx" => Ok(Self::RoundaboutNeg45Idx),
+            "roundabout_neg_90_idx" => Ok(Self::RoundaboutNeg90Idx),
+            "roundabout_neg_135_idx" => Ok(Self::RoundaboutNeg135Idx),
+            "roundabout_neg_180_idx" => Ok(Self::RoundaboutNeg180Idx),
+            "roundabout_neg_225_idx" => Ok(Self::RoundaboutNeg225Idx),
+            "roundabout_neg_270_idx" => Ok(Self::RoundaboutNeg270Idx),
+            "roundabout_neg_315_idx" => Ok(Self::RoundaboutNeg315Idx),
+            "roundabout_neg_360_idx" => Ok(Self::RoundaboutNeg360Idx),
+            "roundabout_generic_idx" => Ok(Self::RoundaboutGenericIdx),
+            "roundabout_neg_generic_idx" => Ok(Self::RoundaboutNegGenericIdx),
+            "sharp_turn_left_idx" => Ok(Self::SharpTurnLeftIdx),
+            "sharp_turn_right_idx" => Ok(Self::SharpTurnRightIdx),
+            "turn_left_idx" => Ok(Self::TurnLeftIdx),
+            "turn_right_idx" => Ok(Self::TurnRightIdx),
+            "uturn_left_idx" => Ok(Self::UturnLeftIdx),
+            "uturn_right_idx" => Ok(Self::UturnRightIdx),
+            "icon_inv_idx" => Ok(Self::IconInvIdx),
+            "icon_idx_cnt" => Ok(Self::IconIdxCnt),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for TurnType {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum BikeLightBeamAngleMode {
     Manual,
@@ -17194,6 +20969,21 @@ impl Serialize for BikeLightBeamAngleMode {
             BikeLightBeamAngleMode::Value(value) => serializer.serialize_u8(*value),
             _ => serializer.serialize_str(&self.to_string()),
         }
+    }
+}
+impl FromStr for BikeLightBeamAngleMode {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "manual" => Ok(Self::Manual),
+            "auto" => Ok(Self::Auto),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for BikeLightBeamAngleMode {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -17260,6 +21050,22 @@ impl Serialize for FitBaseUnit {
         }
     }
 }
+impl FromStr for FitBaseUnit {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "other" => Ok(Self::Other),
+            "kilogram" => Ok(Self::Kilogram),
+            "pound" => Ok(Self::Pound),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for FitBaseUnit {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum SetType {
     Rest,
@@ -17319,6 +21125,21 @@ impl Serialize for SetType {
         }
     }
 }
+impl FromStr for SetType {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "rest" => Ok(Self::Rest),
+            "active" => Ok(Self::Active),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for SetType {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum MaxMetCategory {
     Generic,
@@ -17373,6 +21194,21 @@ impl Serialize for MaxMetCategory {
         S: Serializer,
     {
         serializer.serialize_str(&self.to_string())
+    }
+}
+impl FromStr for MaxMetCategory {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "generic" => Ok(Self::Generic),
+            "cycling" => Ok(Self::Cycling),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for MaxMetCategory {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -17592,6 +21428,53 @@ impl Serialize for ExerciseCategory {
             ExerciseCategory::Value(value) => serializer.serialize_u16(*value),
             _ => serializer.serialize_str(&self.to_string()),
         }
+    }
+}
+impl FromStr for ExerciseCategory {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "bench_press" => Ok(Self::BenchPress),
+            "calf_raise" => Ok(Self::CalfRaise),
+            "cardio" => Ok(Self::Cardio),
+            "carry" => Ok(Self::Carry),
+            "chop" => Ok(Self::Chop),
+            "core" => Ok(Self::Core),
+            "crunch" => Ok(Self::Crunch),
+            "curl" => Ok(Self::Curl),
+            "deadlift" => Ok(Self::Deadlift),
+            "flye" => Ok(Self::Flye),
+            "hip_raise" => Ok(Self::HipRaise),
+            "hip_stability" => Ok(Self::HipStability),
+            "hip_swing" => Ok(Self::HipSwing),
+            "hyperextension" => Ok(Self::Hyperextension),
+            "lateral_raise" => Ok(Self::LateralRaise),
+            "leg_curl" => Ok(Self::LegCurl),
+            "leg_raise" => Ok(Self::LegRaise),
+            "lunge" => Ok(Self::Lunge),
+            "olympic_lift" => Ok(Self::OlympicLift),
+            "plank" => Ok(Self::Plank),
+            "plyo" => Ok(Self::Plyo),
+            "pull_up" => Ok(Self::PullUp),
+            "push_up" => Ok(Self::PushUp),
+            "row" => Ok(Self::Row),
+            "shoulder_press" => Ok(Self::ShoulderPress),
+            "shoulder_stability" => Ok(Self::ShoulderStability),
+            "shrug" => Ok(Self::Shrug),
+            "sit_up" => Ok(Self::SitUp),
+            "squat" => Ok(Self::Squat),
+            "total_body" => Ok(Self::TotalBody),
+            "triceps_extension" => Ok(Self::TricepsExtension),
+            "warm_up" => Ok(Self::WarmUp),
+            "run" => Ok(Self::Run),
+            "unknown" => Ok(Self::Unknown),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for ExerciseCategory {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -17818,6 +21701,50 @@ impl Serialize for BenchPressExerciseName {
         }
     }
 }
+impl FromStr for BenchPressExerciseName {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "alternating_dumbbell_chest_press_on_swiss_ball" => {
+                Ok(Self::AlternatingDumbbellChestPressOnSwissBall)
+            }
+            "barbell_bench_press" => Ok(Self::BarbellBenchPress),
+            "barbell_board_bench_press" => Ok(Self::BarbellBoardBenchPress),
+            "barbell_floor_press" => Ok(Self::BarbellFloorPress),
+            "close_grip_barbell_bench_press" => Ok(Self::CloseGripBarbellBenchPress),
+            "decline_dumbbell_bench_press" => Ok(Self::DeclineDumbbellBenchPress),
+            "dumbbell_bench_press" => Ok(Self::DumbbellBenchPress),
+            "dumbbell_floor_press" => Ok(Self::DumbbellFloorPress),
+            "incline_barbell_bench_press" => Ok(Self::InclineBarbellBenchPress),
+            "incline_dumbbell_bench_press" => Ok(Self::InclineDumbbellBenchPress),
+            "incline_smith_machine_bench_press" => Ok(Self::InclineSmithMachineBenchPress),
+            "isometric_barbell_bench_press" => Ok(Self::IsometricBarbellBenchPress),
+            "kettlebell_chest_press" => Ok(Self::KettlebellChestPress),
+            "neutral_grip_dumbbell_bench_press" => Ok(Self::NeutralGripDumbbellBenchPress),
+            "neutral_grip_dumbbell_incline_bench_press" => {
+                Ok(Self::NeutralGripDumbbellInclineBenchPress)
+            }
+            "one_arm_floor_press" => Ok(Self::OneArmFloorPress),
+            "weighted_one_arm_floor_press" => Ok(Self::WeightedOneArmFloorPress),
+            "partial_lockout" => Ok(Self::PartialLockout),
+            "reverse_grip_barbell_bench_press" => Ok(Self::ReverseGripBarbellBenchPress),
+            "reverse_grip_incline_bench_press" => Ok(Self::ReverseGripInclineBenchPress),
+            "single_arm_cable_chest_press" => Ok(Self::SingleArmCableChestPress),
+            "single_arm_dumbbell_bench_press" => Ok(Self::SingleArmDumbbellBenchPress),
+            "smith_machine_bench_press" => Ok(Self::SmithMachineBenchPress),
+            "swiss_ball_dumbbell_chest_press" => Ok(Self::SwissBallDumbbellChestPress),
+            "triple_stop_barbell_bench_press" => Ok(Self::TripleStopBarbellBenchPress),
+            "wide_grip_barbell_bench_press" => Ok(Self::WideGripBarbellBenchPress),
+            "alternating_dumbbell_chest_press" => Ok(Self::AlternatingDumbbellChestPress),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for BenchPressExerciseName {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum CalfRaiseExerciseName {
     Name3WayCalfRaise,
@@ -18004,6 +21931,44 @@ impl Serialize for CalfRaiseExerciseName {
         }
     }
 }
+impl FromStr for CalfRaiseExerciseName {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "3_way_calf_raise" => Ok(Self::Name3WayCalfRaise),
+            "3_way_weighted_calf_raise" => Ok(Self::Name3WayWeightedCalfRaise),
+            "3_way_single_leg_calf_raise" => Ok(Self::Name3WaySingleLegCalfRaise),
+            "3_way_weighted_single_leg_calf_raise" => Ok(Self::Name3WayWeightedSingleLegCalfRaise),
+            "donkey_calf_raise" => Ok(Self::DonkeyCalfRaise),
+            "weighted_donkey_calf_raise" => Ok(Self::WeightedDonkeyCalfRaise),
+            "seated_calf_raise" => Ok(Self::SeatedCalfRaise),
+            "weighted_seated_calf_raise" => Ok(Self::WeightedSeatedCalfRaise),
+            "seated_dumbbell_toe_raise" => Ok(Self::SeatedDumbbellToeRaise),
+            "single_leg_bent_knee_calf_raise" => Ok(Self::SingleLegBentKneeCalfRaise),
+            "weighted_single_leg_bent_knee_calf_raise" => {
+                Ok(Self::WeightedSingleLegBentKneeCalfRaise)
+            }
+            "single_leg_decline_push_up" => Ok(Self::SingleLegDeclinePushUp),
+            "single_leg_donkey_calf_raise" => Ok(Self::SingleLegDonkeyCalfRaise),
+            "weighted_single_leg_donkey_calf_raise" => Ok(Self::WeightedSingleLegDonkeyCalfRaise),
+            "single_leg_hip_raise_with_knee_hold" => Ok(Self::SingleLegHipRaiseWithKneeHold),
+            "single_leg_standing_calf_raise" => Ok(Self::SingleLegStandingCalfRaise),
+            "single_leg_standing_dumbbell_calf_raise" => {
+                Ok(Self::SingleLegStandingDumbbellCalfRaise)
+            }
+            "standing_barbell_calf_raise" => Ok(Self::StandingBarbellCalfRaise),
+            "standing_calf_raise" => Ok(Self::StandingCalfRaise),
+            "weighted_standing_calf_raise" => Ok(Self::WeightedStandingCalfRaise),
+            "standing_dumbbell_calf_raise" => Ok(Self::StandingDumbbellCalfRaise),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for CalfRaiseExerciseName {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum CardioExerciseName {
     BobAndWeaveCircle,
@@ -18167,6 +22132,41 @@ impl Serialize for CardioExerciseName {
         }
     }
 }
+impl FromStr for CardioExerciseName {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "bob_and_weave_circle" => Ok(Self::BobAndWeaveCircle),
+            "weighted_bob_and_weave_circle" => Ok(Self::WeightedBobAndWeaveCircle),
+            "cardio_core_crawl" => Ok(Self::CardioCoreCrawl),
+            "weighted_cardio_core_crawl" => Ok(Self::WeightedCardioCoreCrawl),
+            "double_under" => Ok(Self::DoubleUnder),
+            "weighted_double_under" => Ok(Self::WeightedDoubleUnder),
+            "jump_rope" => Ok(Self::JumpRope),
+            "weighted_jump_rope" => Ok(Self::WeightedJumpRope),
+            "jump_rope_crossover" => Ok(Self::JumpRopeCrossover),
+            "weighted_jump_rope_crossover" => Ok(Self::WeightedJumpRopeCrossover),
+            "jump_rope_jog" => Ok(Self::JumpRopeJog),
+            "weighted_jump_rope_jog" => Ok(Self::WeightedJumpRopeJog),
+            "jumping_jacks" => Ok(Self::JumpingJacks),
+            "weighted_jumping_jacks" => Ok(Self::WeightedJumpingJacks),
+            "ski_moguls" => Ok(Self::SkiMoguls),
+            "weighted_ski_moguls" => Ok(Self::WeightedSkiMoguls),
+            "split_jacks" => Ok(Self::SplitJacks),
+            "weighted_split_jacks" => Ok(Self::WeightedSplitJacks),
+            "squat_jacks" => Ok(Self::SquatJacks),
+            "weighted_squat_jacks" => Ok(Self::WeightedSquatJacks),
+            "triple_under" => Ok(Self::TripleUnder),
+            "weighted_triple_under" => Ok(Self::WeightedTripleUnder),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for CardioExerciseName {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum CarryExerciseName {
     BarHolds,
@@ -18239,6 +22239,24 @@ impl Serialize for CarryExerciseName {
             CarryExerciseName::Value(value) => serializer.serialize_u16(*value),
             _ => serializer.serialize_str(&self.to_string()),
         }
+    }
+}
+impl FromStr for CarryExerciseName {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "bar_holds" => Ok(Self::BarHolds),
+            "farmers_walk" => Ok(Self::FarmersWalk),
+            "farmers_walk_on_toes" => Ok(Self::FarmersWalkOnToes),
+            "hex_dumbbell_hold" => Ok(Self::HexDumbbellHold),
+            "overhead_carry" => Ok(Self::OverheadCarry),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for CarryExerciseName {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -18421,6 +22439,44 @@ impl Serialize for ChopExerciseName {
             ChopExerciseName::Value(value) => serializer.serialize_u16(*value),
             _ => serializer.serialize_str(&self.to_string()),
         }
+    }
+}
+impl FromStr for ChopExerciseName {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "cable_pull_through" => Ok(Self::CablePullThrough),
+            "cable_rotational_lift" => Ok(Self::CableRotationalLift),
+            "cable_woodchop" => Ok(Self::CableWoodchop),
+            "cross_chop_to_knee" => Ok(Self::CrossChopToKnee),
+            "weighted_cross_chop_to_knee" => Ok(Self::WeightedCrossChopToKnee),
+            "dumbbell_chop" => Ok(Self::DumbbellChop),
+            "half_kneeling_rotation" => Ok(Self::HalfKneelingRotation),
+            "weighted_half_kneeling_rotation" => Ok(Self::WeightedHalfKneelingRotation),
+            "half_kneeling_rotational_chop" => Ok(Self::HalfKneelingRotationalChop),
+            "half_kneeling_rotational_reverse_chop" => Ok(Self::HalfKneelingRotationalReverseChop),
+            "half_kneeling_stability_chop" => Ok(Self::HalfKneelingStabilityChop),
+            "half_kneeling_stability_reverse_chop" => Ok(Self::HalfKneelingStabilityReverseChop),
+            "kneeling_rotational_chop" => Ok(Self::KneelingRotationalChop),
+            "kneeling_rotational_reverse_chop" => Ok(Self::KneelingRotationalReverseChop),
+            "kneeling_stability_chop" => Ok(Self::KneelingStabilityChop),
+            "kneeling_woodchopper" => Ok(Self::KneelingWoodchopper),
+            "medicine_ball_wood_chops" => Ok(Self::MedicineBallWoodChops),
+            "power_squat_chops" => Ok(Self::PowerSquatChops),
+            "weighted_power_squat_chops" => Ok(Self::WeightedPowerSquatChops),
+            "standing_rotational_chop" => Ok(Self::StandingRotationalChop),
+            "standing_split_rotational_chop" => Ok(Self::StandingSplitRotationalChop),
+            "standing_split_rotational_reverse_chop" => {
+                Ok(Self::StandingSplitRotationalReverseChop)
+            }
+            "standing_stability_reverse_chop" => Ok(Self::StandingStabilityReverseChop),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for ChopExerciseName {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -18856,6 +22912,92 @@ impl Serialize for CoreExerciseName {
             CoreExerciseName::Value(value) => serializer.serialize_u16(*value),
             _ => serializer.serialize_str(&self.to_string()),
         }
+    }
+}
+impl FromStr for CoreExerciseName {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "abs_jabs" => Ok(Self::AbsJabs),
+            "weighted_abs_jabs" => Ok(Self::WeightedAbsJabs),
+            "alternating_plate_reach" => Ok(Self::AlternatingPlateReach),
+            "barbell_rollout" => Ok(Self::BarbellRollout),
+            "weighted_barbell_rollout" => Ok(Self::WeightedBarbellRollout),
+            "body_bar_oblique_twist" => Ok(Self::BodyBarObliqueTwist),
+            "cable_core_press" => Ok(Self::CableCorePress),
+            "cable_side_bend" => Ok(Self::CableSideBend),
+            "side_bend" => Ok(Self::SideBend),
+            "weighted_side_bend" => Ok(Self::WeightedSideBend),
+            "crescent_circle" => Ok(Self::CrescentCircle),
+            "weighted_crescent_circle" => Ok(Self::WeightedCrescentCircle),
+            "cycling_russian_twist" => Ok(Self::CyclingRussianTwist),
+            "weighted_cycling_russian_twist" => Ok(Self::WeightedCyclingRussianTwist),
+            "elevated_feet_russian_twist" => Ok(Self::ElevatedFeetRussianTwist),
+            "weighted_elevated_feet_russian_twist" => Ok(Self::WeightedElevatedFeetRussianTwist),
+            "half_turkish_get_up" => Ok(Self::HalfTurkishGetUp),
+            "kettlebell_windmill" => Ok(Self::KettlebellWindmill),
+            "kneeling_ab_wheel" => Ok(Self::KneelingAbWheel),
+            "weighted_kneeling_ab_wheel" => Ok(Self::WeightedKneelingAbWheel),
+            "modified_front_lever" => Ok(Self::ModifiedFrontLever),
+            "open_knee_tucks" => Ok(Self::OpenKneeTucks),
+            "weighted_open_knee_tucks" => Ok(Self::WeightedOpenKneeTucks),
+            "side_abs_leg_lift" => Ok(Self::SideAbsLegLift),
+            "weighted_side_abs_leg_lift" => Ok(Self::WeightedSideAbsLegLift),
+            "swiss_ball_jackknife" => Ok(Self::SwissBallJackknife),
+            "weighted_swiss_ball_jackknife" => Ok(Self::WeightedSwissBallJackknife),
+            "swiss_ball_pike" => Ok(Self::SwissBallPike),
+            "weighted_swiss_ball_pike" => Ok(Self::WeightedSwissBallPike),
+            "swiss_ball_rollout" => Ok(Self::SwissBallRollout),
+            "weighted_swiss_ball_rollout" => Ok(Self::WeightedSwissBallRollout),
+            "triangle_hip_press" => Ok(Self::TriangleHipPress),
+            "weighted_triangle_hip_press" => Ok(Self::WeightedTriangleHipPress),
+            "trx_suspended_jackknife" => Ok(Self::TrxSuspendedJackknife),
+            "weighted_trx_suspended_jackknife" => Ok(Self::WeightedTrxSuspendedJackknife),
+            "u_boat" => Ok(Self::UBoat),
+            "weighted_u_boat" => Ok(Self::WeightedUBoat),
+            "windmill_switches" => Ok(Self::WindmillSwitches),
+            "weighted_windmill_switches" => Ok(Self::WeightedWindmillSwitches),
+            "alternating_slide_out" => Ok(Self::AlternatingSlideOut),
+            "weighted_alternating_slide_out" => Ok(Self::WeightedAlternatingSlideOut),
+            "ghd_back_extensions" => Ok(Self::GhdBackExtensions),
+            "weighted_ghd_back_extensions" => Ok(Self::WeightedGhdBackExtensions),
+            "overhead_walk" => Ok(Self::OverheadWalk),
+            "inchworm" => Ok(Self::Inchworm),
+            "weighted_modified_front_lever" => Ok(Self::WeightedModifiedFrontLever),
+            "russian_twist" => Ok(Self::RussianTwist),
+            "abdominal_leg_rotations" => Ok(Self::AbdominalLegRotations),
+            "arm_and_leg_extension_on_knees" => Ok(Self::ArmAndLegExtensionOnKnees),
+            "bicycle" => Ok(Self::Bicycle),
+            "bicep_curl_with_leg_extension" => Ok(Self::BicepCurlWithLegExtension),
+            "cat_cow" => Ok(Self::CatCow),
+            "corkscrew" => Ok(Self::Corkscrew),
+            "criss_cross" => Ok(Self::CrissCross),
+            "criss_cross_with_ball" => Ok(Self::CrissCrossWithBall),
+            "double_leg_stretch" => Ok(Self::DoubleLegStretch),
+            "knee_folds" => Ok(Self::KneeFolds),
+            "lower_lift" => Ok(Self::LowerLift),
+            "neck_pull" => Ok(Self::NeckPull),
+            "pelvic_clocks" => Ok(Self::PelvicClocks),
+            "roll_over" => Ok(Self::RollOver),
+            "roll_up" => Ok(Self::RollUp),
+            "rolling" => Ok(Self::Rolling),
+            "rowing_1" => Ok(Self::Rowing1),
+            "rowing_2" => Ok(Self::Rowing2),
+            "scissors" => Ok(Self::Scissors),
+            "single_leg_circles" => Ok(Self::SingleLegCircles),
+            "single_leg_stretch" => Ok(Self::SingleLegStretch),
+            "snake_twist_1_and_2" => Ok(Self::SnakeTwist1And2),
+            "swan" => Ok(Self::Swan),
+            "swimming" => Ok(Self::Swimming),
+            "teaser" => Ok(Self::Teaser),
+            "the_hundred" => Ok(Self::TheHundred),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for CoreExerciseName {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -19392,6 +23534,118 @@ impl Serialize for CrunchExerciseName {
         }
     }
 }
+impl FromStr for CrunchExerciseName {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "bicycle_crunch" => Ok(Self::BicycleCrunch),
+            "cable_crunch" => Ok(Self::CableCrunch),
+            "circular_arm_crunch" => Ok(Self::CircularArmCrunch),
+            "crossed_arms_crunch" => Ok(Self::CrossedArmsCrunch),
+            "weighted_crossed_arms_crunch" => Ok(Self::WeightedCrossedArmsCrunch),
+            "cross_leg_reverse_crunch" => Ok(Self::CrossLegReverseCrunch),
+            "weighted_cross_leg_reverse_crunch" => Ok(Self::WeightedCrossLegReverseCrunch),
+            "crunch_chop" => Ok(Self::CrunchChop),
+            "weighted_crunch_chop" => Ok(Self::WeightedCrunchChop),
+            "double_crunch" => Ok(Self::DoubleCrunch),
+            "weighted_double_crunch" => Ok(Self::WeightedDoubleCrunch),
+            "elbow_to_knee_crunch" => Ok(Self::ElbowToKneeCrunch),
+            "weighted_elbow_to_knee_crunch" => Ok(Self::WeightedElbowToKneeCrunch),
+            "flutter_kicks" => Ok(Self::FlutterKicks),
+            "weighted_flutter_kicks" => Ok(Self::WeightedFlutterKicks),
+            "foam_roller_reverse_crunch_on_bench" => Ok(Self::FoamRollerReverseCrunchOnBench),
+            "weighted_foam_roller_reverse_crunch_on_bench" => {
+                Ok(Self::WeightedFoamRollerReverseCrunchOnBench)
+            }
+            "foam_roller_reverse_crunch_with_dumbbell" => {
+                Ok(Self::FoamRollerReverseCrunchWithDumbbell)
+            }
+            "foam_roller_reverse_crunch_with_medicine_ball" => {
+                Ok(Self::FoamRollerReverseCrunchWithMedicineBall)
+            }
+            "frog_press" => Ok(Self::FrogPress),
+            "hanging_knee_raise_oblique_crunch" => Ok(Self::HangingKneeRaiseObliqueCrunch),
+            "weighted_hanging_knee_raise_oblique_crunch" => {
+                Ok(Self::WeightedHangingKneeRaiseObliqueCrunch)
+            }
+            "hip_crossover" => Ok(Self::HipCrossover),
+            "weighted_hip_crossover" => Ok(Self::WeightedHipCrossover),
+            "hollow_rock" => Ok(Self::HollowRock),
+            "weighted_hollow_rock" => Ok(Self::WeightedHollowRock),
+            "incline_reverse_crunch" => Ok(Self::InclineReverseCrunch),
+            "weighted_incline_reverse_crunch" => Ok(Self::WeightedInclineReverseCrunch),
+            "kneeling_cable_crunch" => Ok(Self::KneelingCableCrunch),
+            "kneeling_cross_crunch" => Ok(Self::KneelingCrossCrunch),
+            "weighted_kneeling_cross_crunch" => Ok(Self::WeightedKneelingCrossCrunch),
+            "kneeling_oblique_cable_crunch" => Ok(Self::KneelingObliqueCableCrunch),
+            "knees_to_elbow" => Ok(Self::KneesToElbow),
+            "leg_extensions" => Ok(Self::LegExtensions),
+            "weighted_leg_extensions" => Ok(Self::WeightedLegExtensions),
+            "leg_levers" => Ok(Self::LegLevers),
+            "mcgill_curl_up" => Ok(Self::McgillCurlUp),
+            "weighted_mcgill_curl_up" => Ok(Self::WeightedMcgillCurlUp),
+            "modified_pilates_roll_up_with_ball" => Ok(Self::ModifiedPilatesRollUpWithBall),
+            "weighted_modified_pilates_roll_up_with_ball" => {
+                Ok(Self::WeightedModifiedPilatesRollUpWithBall)
+            }
+            "pilates_crunch" => Ok(Self::PilatesCrunch),
+            "weighted_pilates_crunch" => Ok(Self::WeightedPilatesCrunch),
+            "pilates_roll_up_with_ball" => Ok(Self::PilatesRollUpWithBall),
+            "weighted_pilates_roll_up_with_ball" => Ok(Self::WeightedPilatesRollUpWithBall),
+            "raised_legs_crunch" => Ok(Self::RaisedLegsCrunch),
+            "weighted_raised_legs_crunch" => Ok(Self::WeightedRaisedLegsCrunch),
+            "reverse_crunch" => Ok(Self::ReverseCrunch),
+            "weighted_reverse_crunch" => Ok(Self::WeightedReverseCrunch),
+            "reverse_crunch_on_a_bench" => Ok(Self::ReverseCrunchOnABench),
+            "weighted_reverse_crunch_on_a_bench" => Ok(Self::WeightedReverseCrunchOnABench),
+            "reverse_curl_and_lift" => Ok(Self::ReverseCurlAndLift),
+            "weighted_reverse_curl_and_lift" => Ok(Self::WeightedReverseCurlAndLift),
+            "rotational_lift" => Ok(Self::RotationalLift),
+            "weighted_rotational_lift" => Ok(Self::WeightedRotationalLift),
+            "seated_alternating_reverse_crunch" => Ok(Self::SeatedAlternatingReverseCrunch),
+            "weighted_seated_alternating_reverse_crunch" => {
+                Ok(Self::WeightedSeatedAlternatingReverseCrunch)
+            }
+            "seated_leg_u" => Ok(Self::SeatedLegU),
+            "weighted_seated_leg_u" => Ok(Self::WeightedSeatedLegU),
+            "side_to_side_crunch_and_weave" => Ok(Self::SideToSideCrunchAndWeave),
+            "weighted_side_to_side_crunch_and_weave" => Ok(Self::WeightedSideToSideCrunchAndWeave),
+            "single_leg_reverse_crunch" => Ok(Self::SingleLegReverseCrunch),
+            "weighted_single_leg_reverse_crunch" => Ok(Self::WeightedSingleLegReverseCrunch),
+            "skater_crunch_cross" => Ok(Self::SkaterCrunchCross),
+            "weighted_skater_crunch_cross" => Ok(Self::WeightedSkaterCrunchCross),
+            "standing_cable_crunch" => Ok(Self::StandingCableCrunch),
+            "standing_side_crunch" => Ok(Self::StandingSideCrunch),
+            "step_climb" => Ok(Self::StepClimb),
+            "weighted_step_climb" => Ok(Self::WeightedStepClimb),
+            "swiss_ball_crunch" => Ok(Self::SwissBallCrunch),
+            "swiss_ball_reverse_crunch" => Ok(Self::SwissBallReverseCrunch),
+            "weighted_swiss_ball_reverse_crunch" => Ok(Self::WeightedSwissBallReverseCrunch),
+            "swiss_ball_russian_twist" => Ok(Self::SwissBallRussianTwist),
+            "weighted_swiss_ball_russian_twist" => Ok(Self::WeightedSwissBallRussianTwist),
+            "swiss_ball_side_crunch" => Ok(Self::SwissBallSideCrunch),
+            "weighted_swiss_ball_side_crunch" => Ok(Self::WeightedSwissBallSideCrunch),
+            "thoracic_crunches_on_foam_roller" => Ok(Self::ThoracicCrunchesOnFoamRoller),
+            "weighted_thoracic_crunches_on_foam_roller" => {
+                Ok(Self::WeightedThoracicCrunchesOnFoamRoller)
+            }
+            "triceps_crunch" => Ok(Self::TricepsCrunch),
+            "weighted_bicycle_crunch" => Ok(Self::WeightedBicycleCrunch),
+            "weighted_crunch" => Ok(Self::WeightedCrunch),
+            "weighted_swiss_ball_crunch" => Ok(Self::WeightedSwissBallCrunch),
+            "toes_to_bar" => Ok(Self::ToesToBar),
+            "weighted_toes_to_bar" => Ok(Self::WeightedToesToBar),
+            "crunch" => Ok(Self::Crunch),
+            "straight_leg_crunch_with_ball" => Ok(Self::StraightLegCrunchWithBall),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for CrunchExerciseName {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum CurlExerciseName {
     AlternatingDumbbellBicepsCurl,
@@ -19703,6 +23957,77 @@ impl Serialize for CurlExerciseName {
         }
     }
 }
+impl FromStr for CurlExerciseName {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "alternating_dumbbell_biceps_curl" => Ok(Self::AlternatingDumbbellBicepsCurl),
+            "alternating_dumbbell_biceps_curl_on_swiss_ball" => {
+                Ok(Self::AlternatingDumbbellBicepsCurlOnSwissBall)
+            }
+            "alternating_incline_dumbbell_biceps_curl" => {
+                Ok(Self::AlternatingInclineDumbbellBicepsCurl)
+            }
+            "barbell_biceps_curl" => Ok(Self::BarbellBicepsCurl),
+            "barbell_reverse_wrist_curl" => Ok(Self::BarbellReverseWristCurl),
+            "barbell_wrist_curl" => Ok(Self::BarbellWristCurl),
+            "behind_the_back_barbell_reverse_wrist_curl" => {
+                Ok(Self::BehindTheBackBarbellReverseWristCurl)
+            }
+            "behind_the_back_one_arm_cable_curl" => Ok(Self::BehindTheBackOneArmCableCurl),
+            "cable_biceps_curl" => Ok(Self::CableBicepsCurl),
+            "cable_hammer_curl" => Ok(Self::CableHammerCurl),
+            "cheating_barbell_biceps_curl" => Ok(Self::CheatingBarbellBicepsCurl),
+            "close_grip_ez_bar_biceps_curl" => Ok(Self::CloseGripEzBarBicepsCurl),
+            "cross_body_dumbbell_hammer_curl" => Ok(Self::CrossBodyDumbbellHammerCurl),
+            "dead_hang_biceps_curl" => Ok(Self::DeadHangBicepsCurl),
+            "decline_hammer_curl" => Ok(Self::DeclineHammerCurl),
+            "dumbbell_biceps_curl_with_static_hold" => Ok(Self::DumbbellBicepsCurlWithStaticHold),
+            "dumbbell_hammer_curl" => Ok(Self::DumbbellHammerCurl),
+            "dumbbell_reverse_wrist_curl" => Ok(Self::DumbbellReverseWristCurl),
+            "dumbbell_wrist_curl" => Ok(Self::DumbbellWristCurl),
+            "ez_bar_preacher_curl" => Ok(Self::EzBarPreacherCurl),
+            "forward_bend_biceps_curl" => Ok(Self::ForwardBendBicepsCurl),
+            "hammer_curl_to_press" => Ok(Self::HammerCurlToPress),
+            "incline_dumbbell_biceps_curl" => Ok(Self::InclineDumbbellBicepsCurl),
+            "incline_offset_thumb_dumbbell_curl" => Ok(Self::InclineOffsetThumbDumbbellCurl),
+            "kettlebell_biceps_curl" => Ok(Self::KettlebellBicepsCurl),
+            "lying_concentration_cable_curl" => Ok(Self::LyingConcentrationCableCurl),
+            "one_arm_preacher_curl" => Ok(Self::OneArmPreacherCurl),
+            "plate_pinch_curl" => Ok(Self::PlatePinchCurl),
+            "preacher_curl_with_cable" => Ok(Self::PreacherCurlWithCable),
+            "reverse_ez_bar_curl" => Ok(Self::ReverseEzBarCurl),
+            "reverse_grip_wrist_curl" => Ok(Self::ReverseGripWristCurl),
+            "reverse_grip_barbell_biceps_curl" => Ok(Self::ReverseGripBarbellBicepsCurl),
+            "seated_alternating_dumbbell_biceps_curl" => {
+                Ok(Self::SeatedAlternatingDumbbellBicepsCurl)
+            }
+            "seated_dumbbell_biceps_curl" => Ok(Self::SeatedDumbbellBicepsCurl),
+            "seated_reverse_dumbbell_curl" => Ok(Self::SeatedReverseDumbbellCurl),
+            "split_stance_offset_pinky_dumbbell_curl" => {
+                Ok(Self::SplitStanceOffsetPinkyDumbbellCurl)
+            }
+            "standing_alternating_dumbbell_curls" => Ok(Self::StandingAlternatingDumbbellCurls),
+            "standing_dumbbell_biceps_curl" => Ok(Self::StandingDumbbellBicepsCurl),
+            "standing_ez_bar_biceps_curl" => Ok(Self::StandingEzBarBicepsCurl),
+            "static_curl" => Ok(Self::StaticCurl),
+            "swiss_ball_dumbbell_overhead_triceps_extension" => {
+                Ok(Self::SwissBallDumbbellOverheadTricepsExtension)
+            }
+            "swiss_ball_ez_bar_preacher_curl" => Ok(Self::SwissBallEzBarPreacherCurl),
+            "twisting_standing_dumbbell_biceps_curl" => {
+                Ok(Self::TwistingStandingDumbbellBicepsCurl)
+            }
+            "wide_grip_ez_bar_biceps_curl" => Ok(Self::WideGripEzBarBicepsCurl),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for CurlExerciseName {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum DeadliftExerciseName {
     BarbellDeadlift,
@@ -19865,6 +24190,44 @@ impl Serialize for DeadliftExerciseName {
         }
     }
 }
+impl FromStr for DeadliftExerciseName {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "barbell_deadlift" => Ok(Self::BarbellDeadlift),
+            "barbell_straight_leg_deadlift" => Ok(Self::BarbellStraightLegDeadlift),
+            "dumbbell_deadlift" => Ok(Self::DumbbellDeadlift),
+            "dumbbell_single_leg_deadlift_to_row" => Ok(Self::DumbbellSingleLegDeadliftToRow),
+            "dumbbell_straight_leg_deadlift" => Ok(Self::DumbbellStraightLegDeadlift),
+            "kettlebell_floor_to_shelf" => Ok(Self::KettlebellFloorToShelf),
+            "one_arm_one_leg_deadlift" => Ok(Self::OneArmOneLegDeadlift),
+            "rack_pull" => Ok(Self::RackPull),
+            "rotational_dumbbell_straight_leg_deadlift" => {
+                Ok(Self::RotationalDumbbellStraightLegDeadlift)
+            }
+            "single_arm_deadlift" => Ok(Self::SingleArmDeadlift),
+            "single_leg_barbell_deadlift" => Ok(Self::SingleLegBarbellDeadlift),
+            "single_leg_barbell_straight_leg_deadlift" => {
+                Ok(Self::SingleLegBarbellStraightLegDeadlift)
+            }
+            "single_leg_deadlift_with_barbell" => Ok(Self::SingleLegDeadliftWithBarbell),
+            "single_leg_rdl_circuit" => Ok(Self::SingleLegRdlCircuit),
+            "single_leg_romanian_deadlift_with_dumbbell" => {
+                Ok(Self::SingleLegRomanianDeadliftWithDumbbell)
+            }
+            "sumo_deadlift" => Ok(Self::SumoDeadlift),
+            "sumo_deadlift_high_pull" => Ok(Self::SumoDeadliftHighPull),
+            "trap_bar_deadlift" => Ok(Self::TrapBarDeadlift),
+            "wide_grip_barbell_deadlift" => Ok(Self::WideGripBarbellDeadlift),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for DeadliftExerciseName {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum FlyeExerciseName {
     CableCrossover,
@@ -19964,6 +24327,29 @@ impl Serialize for FlyeExerciseName {
             FlyeExerciseName::Value(value) => serializer.serialize_u16(*value),
             _ => serializer.serialize_str(&self.to_string()),
         }
+    }
+}
+impl FromStr for FlyeExerciseName {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "cable_crossover" => Ok(Self::CableCrossover),
+            "decline_dumbbell_flye" => Ok(Self::DeclineDumbbellFlye),
+            "dumbbell_flye" => Ok(Self::DumbbellFlye),
+            "incline_dumbbell_flye" => Ok(Self::InclineDumbbellFlye),
+            "kettlebell_flye" => Ok(Self::KettlebellFlye),
+            "kneeling_rear_flye" => Ok(Self::KneelingRearFlye),
+            "single_arm_standing_cable_reverse_flye" => Ok(Self::SingleArmStandingCableReverseFlye),
+            "swiss_ball_dumbbell_flye" => Ok(Self::SwissBallDumbbellFlye),
+            "arm_rotations" => Ok(Self::ArmRotations),
+            "hug_a_tree" => Ok(Self::HugATree),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for FlyeExerciseName {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -20336,6 +24722,101 @@ impl Serialize for HipRaiseExerciseName {
         }
     }
 }
+impl FromStr for HipRaiseExerciseName {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "barbell_hip_thrust_on_floor" => Ok(Self::BarbellHipThrustOnFloor),
+            "barbell_hip_thrust_with_bench" => Ok(Self::BarbellHipThrustWithBench),
+            "bent_knee_swiss_ball_reverse_hip_raise" => Ok(Self::BentKneeSwissBallReverseHipRaise),
+            "weighted_bent_knee_swiss_ball_reverse_hip_raise" => {
+                Ok(Self::WeightedBentKneeSwissBallReverseHipRaise)
+            }
+            "bridge_with_leg_extension" => Ok(Self::BridgeWithLegExtension),
+            "weighted_bridge_with_leg_extension" => Ok(Self::WeightedBridgeWithLegExtension),
+            "clam_bridge" => Ok(Self::ClamBridge),
+            "front_kick_tabletop" => Ok(Self::FrontKickTabletop),
+            "weighted_front_kick_tabletop" => Ok(Self::WeightedFrontKickTabletop),
+            "hip_extension_and_cross" => Ok(Self::HipExtensionAndCross),
+            "weighted_hip_extension_and_cross" => Ok(Self::WeightedHipExtensionAndCross),
+            "hip_raise" => Ok(Self::HipRaise),
+            "weighted_hip_raise" => Ok(Self::WeightedHipRaise),
+            "hip_raise_with_feet_on_swiss_ball" => Ok(Self::HipRaiseWithFeetOnSwissBall),
+            "weighted_hip_raise_with_feet_on_swiss_ball" => {
+                Ok(Self::WeightedHipRaiseWithFeetOnSwissBall)
+            }
+            "hip_raise_with_head_on_bosu_ball" => Ok(Self::HipRaiseWithHeadOnBosuBall),
+            "weighted_hip_raise_with_head_on_bosu_ball" => {
+                Ok(Self::WeightedHipRaiseWithHeadOnBosuBall)
+            }
+            "hip_raise_with_head_on_swiss_ball" => Ok(Self::HipRaiseWithHeadOnSwissBall),
+            "weighted_hip_raise_with_head_on_swiss_ball" => {
+                Ok(Self::WeightedHipRaiseWithHeadOnSwissBall)
+            }
+            "hip_raise_with_knee_squeeze" => Ok(Self::HipRaiseWithKneeSqueeze),
+            "weighted_hip_raise_with_knee_squeeze" => Ok(Self::WeightedHipRaiseWithKneeSqueeze),
+            "incline_rear_leg_extension" => Ok(Self::InclineRearLegExtension),
+            "weighted_incline_rear_leg_extension" => Ok(Self::WeightedInclineRearLegExtension),
+            "kettlebell_swing" => Ok(Self::KettlebellSwing),
+            "marching_hip_raise" => Ok(Self::MarchingHipRaise),
+            "weighted_marching_hip_raise" => Ok(Self::WeightedMarchingHipRaise),
+            "marching_hip_raise_with_feet_on_a_swiss_ball" => {
+                Ok(Self::MarchingHipRaiseWithFeetOnASwissBall)
+            }
+            "weighted_marching_hip_raise_with_feet_on_a_swiss_ball" => {
+                Ok(Self::WeightedMarchingHipRaiseWithFeetOnASwissBall)
+            }
+            "reverse_hip_raise" => Ok(Self::ReverseHipRaise),
+            "weighted_reverse_hip_raise" => Ok(Self::WeightedReverseHipRaise),
+            "single_leg_hip_raise" => Ok(Self::SingleLegHipRaise),
+            "weighted_single_leg_hip_raise" => Ok(Self::WeightedSingleLegHipRaise),
+            "single_leg_hip_raise_with_foot_on_bench" => Ok(Self::SingleLegHipRaiseWithFootOnBench),
+            "weighted_single_leg_hip_raise_with_foot_on_bench" => {
+                Ok(Self::WeightedSingleLegHipRaiseWithFootOnBench)
+            }
+            "single_leg_hip_raise_with_foot_on_bosu_ball" => {
+                Ok(Self::SingleLegHipRaiseWithFootOnBosuBall)
+            }
+            "weighted_single_leg_hip_raise_with_foot_on_bosu_ball" => {
+                Ok(Self::WeightedSingleLegHipRaiseWithFootOnBosuBall)
+            }
+            "single_leg_hip_raise_with_foot_on_foam_roller" => {
+                Ok(Self::SingleLegHipRaiseWithFootOnFoamRoller)
+            }
+            "weighted_single_leg_hip_raise_with_foot_on_foam_roller" => {
+                Ok(Self::WeightedSingleLegHipRaiseWithFootOnFoamRoller)
+            }
+            "single_leg_hip_raise_with_foot_on_medicine_ball" => {
+                Ok(Self::SingleLegHipRaiseWithFootOnMedicineBall)
+            }
+            "weighted_single_leg_hip_raise_with_foot_on_medicine_ball" => {
+                Ok(Self::WeightedSingleLegHipRaiseWithFootOnMedicineBall)
+            }
+            "single_leg_hip_raise_with_head_on_bosu_ball" => {
+                Ok(Self::SingleLegHipRaiseWithHeadOnBosuBall)
+            }
+            "weighted_single_leg_hip_raise_with_head_on_bosu_ball" => {
+                Ok(Self::WeightedSingleLegHipRaiseWithHeadOnBosuBall)
+            }
+            "weighted_clam_bridge" => Ok(Self::WeightedClamBridge),
+            "single_leg_swiss_ball_hip_raise_and_leg_curl" => {
+                Ok(Self::SingleLegSwissBallHipRaiseAndLegCurl)
+            }
+            "clams" => Ok(Self::Clams),
+            "inner_thigh_circles" => Ok(Self::InnerThighCircles),
+            "inner_thigh_side_lift" => Ok(Self::InnerThighSideLift),
+            "leg_circles" => Ok(Self::LegCircles),
+            "leg_lift" => Ok(Self::LegLift),
+            "leg_lift_in_external_rotation" => Ok(Self::LegLiftInExternalRotation),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for HipRaiseExerciseName {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum HipStabilityExerciseName {
     BandSideLyingLegRaise,
@@ -20591,6 +25072,53 @@ impl Serialize for HipStabilityExerciseName {
         }
     }
 }
+impl FromStr for HipStabilityExerciseName {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "band_side_lying_leg_raise" => Ok(Self::BandSideLyingLegRaise),
+            "dead_bug" => Ok(Self::DeadBug),
+            "weighted_dead_bug" => Ok(Self::WeightedDeadBug),
+            "external_hip_raise" => Ok(Self::ExternalHipRaise),
+            "weighted_external_hip_raise" => Ok(Self::WeightedExternalHipRaise),
+            "fire_hydrant_kicks" => Ok(Self::FireHydrantKicks),
+            "weighted_fire_hydrant_kicks" => Ok(Self::WeightedFireHydrantKicks),
+            "hip_circles" => Ok(Self::HipCircles),
+            "weighted_hip_circles" => Ok(Self::WeightedHipCircles),
+            "inner_thigh_lift" => Ok(Self::InnerThighLift),
+            "weighted_inner_thigh_lift" => Ok(Self::WeightedInnerThighLift),
+            "lateral_walks_with_band_at_ankles" => Ok(Self::LateralWalksWithBandAtAnkles),
+            "pretzel_side_kick" => Ok(Self::PretzelSideKick),
+            "weighted_pretzel_side_kick" => Ok(Self::WeightedPretzelSideKick),
+            "prone_hip_internal_rotation" => Ok(Self::ProneHipInternalRotation),
+            "weighted_prone_hip_internal_rotation" => Ok(Self::WeightedProneHipInternalRotation),
+            "quadruped" => Ok(Self::Quadruped),
+            "quadruped_hip_extension" => Ok(Self::QuadrupedHipExtension),
+            "weighted_quadruped_hip_extension" => Ok(Self::WeightedQuadrupedHipExtension),
+            "quadruped_with_leg_lift" => Ok(Self::QuadrupedWithLegLift),
+            "weighted_quadruped_with_leg_lift" => Ok(Self::WeightedQuadrupedWithLegLift),
+            "side_lying_leg_raise" => Ok(Self::SideLyingLegRaise),
+            "weighted_side_lying_leg_raise" => Ok(Self::WeightedSideLyingLegRaise),
+            "sliding_hip_adduction" => Ok(Self::SlidingHipAdduction),
+            "weighted_sliding_hip_adduction" => Ok(Self::WeightedSlidingHipAdduction),
+            "standing_adduction" => Ok(Self::StandingAdduction),
+            "weighted_standing_adduction" => Ok(Self::WeightedStandingAdduction),
+            "standing_cable_hip_abduction" => Ok(Self::StandingCableHipAbduction),
+            "standing_hip_abduction" => Ok(Self::StandingHipAbduction),
+            "weighted_standing_hip_abduction" => Ok(Self::WeightedStandingHipAbduction),
+            "standing_rear_leg_raise" => Ok(Self::StandingRearLegRaise),
+            "weighted_standing_rear_leg_raise" => Ok(Self::WeightedStandingRearLegRaise),
+            "supine_hip_internal_rotation" => Ok(Self::SupineHipInternalRotation),
+            "weighted_supine_hip_internal_rotation" => Ok(Self::WeightedSupineHipInternalRotation),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for HipStabilityExerciseName {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum HipSwingExerciseName {
     SingleArmKettlebellSwing,
@@ -20655,6 +25183,22 @@ impl Serialize for HipSwingExerciseName {
             HipSwingExerciseName::Value(value) => serializer.serialize_u16(*value),
             _ => serializer.serialize_str(&self.to_string()),
         }
+    }
+}
+impl FromStr for HipSwingExerciseName {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "single_arm_kettlebell_swing" => Ok(Self::SingleArmKettlebellSwing),
+            "single_arm_dumbbell_swing" => Ok(Self::SingleArmDumbbellSwing),
+            "step_out_swing" => Ok(Self::StepOutSwing),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for HipSwingExerciseName {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -20949,6 +25493,67 @@ impl Serialize for HyperextensionExerciseName {
         }
     }
 }
+impl FromStr for HyperextensionExerciseName {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "back_extension_with_opposite_arm_and_leg_reach" => {
+                Ok(Self::BackExtensionWithOppositeArmAndLegReach)
+            }
+            "weighted_back_extension_with_opposite_arm_and_leg_reach" => {
+                Ok(Self::WeightedBackExtensionWithOppositeArmAndLegReach)
+            }
+            "base_rotations" => Ok(Self::BaseRotations),
+            "weighted_base_rotations" => Ok(Self::WeightedBaseRotations),
+            "bent_knee_reverse_hyperextension" => Ok(Self::BentKneeReverseHyperextension),
+            "weighted_bent_knee_reverse_hyperextension" => {
+                Ok(Self::WeightedBentKneeReverseHyperextension)
+            }
+            "hollow_hold_and_roll" => Ok(Self::HollowHoldAndRoll),
+            "weighted_hollow_hold_and_roll" => Ok(Self::WeightedHollowHoldAndRoll),
+            "kicks" => Ok(Self::Kicks),
+            "weighted_kicks" => Ok(Self::WeightedKicks),
+            "knee_raises" => Ok(Self::KneeRaises),
+            "weighted_knee_raises" => Ok(Self::WeightedKneeRaises),
+            "kneeling_superman" => Ok(Self::KneelingSuperman),
+            "weighted_kneeling_superman" => Ok(Self::WeightedKneelingSuperman),
+            "lat_pull_down_with_row" => Ok(Self::LatPullDownWithRow),
+            "medicine_ball_deadlift_to_reach" => Ok(Self::MedicineBallDeadliftToReach),
+            "one_arm_one_leg_row" => Ok(Self::OneArmOneLegRow),
+            "one_arm_row_with_band" => Ok(Self::OneArmRowWithBand),
+            "overhead_lunge_with_medicine_ball" => Ok(Self::OverheadLungeWithMedicineBall),
+            "plank_knee_tucks" => Ok(Self::PlankKneeTucks),
+            "weighted_plank_knee_tucks" => Ok(Self::WeightedPlankKneeTucks),
+            "side_step" => Ok(Self::SideStep),
+            "weighted_side_step" => Ok(Self::WeightedSideStep),
+            "single_leg_back_extension" => Ok(Self::SingleLegBackExtension),
+            "weighted_single_leg_back_extension" => Ok(Self::WeightedSingleLegBackExtension),
+            "spine_extension" => Ok(Self::SpineExtension),
+            "weighted_spine_extension" => Ok(Self::WeightedSpineExtension),
+            "static_back_extension" => Ok(Self::StaticBackExtension),
+            "weighted_static_back_extension" => Ok(Self::WeightedStaticBackExtension),
+            "superman_from_floor" => Ok(Self::SupermanFromFloor),
+            "weighted_superman_from_floor" => Ok(Self::WeightedSupermanFromFloor),
+            "swiss_ball_back_extension" => Ok(Self::SwissBallBackExtension),
+            "weighted_swiss_ball_back_extension" => Ok(Self::WeightedSwissBallBackExtension),
+            "swiss_ball_hyperextension" => Ok(Self::SwissBallHyperextension),
+            "weighted_swiss_ball_hyperextension" => Ok(Self::WeightedSwissBallHyperextension),
+            "swiss_ball_opposite_arm_and_leg_lift" => Ok(Self::SwissBallOppositeArmAndLegLift),
+            "weighted_swiss_ball_opposite_arm_and_leg_lift" => {
+                Ok(Self::WeightedSwissBallOppositeArmAndLegLift)
+            }
+            "superman_on_swiss_ball" => Ok(Self::SupermanOnSwissBall),
+            "cobra" => Ok(Self::Cobra),
+            "supine_floor_barre" => Ok(Self::SupineFloorBarre),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for HyperextensionExerciseName {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum LateralRaiseExerciseName {
     Name45DegreeCableExternalRotation,
@@ -21184,6 +25789,55 @@ impl Serialize for LateralRaiseExerciseName {
         }
     }
 }
+impl FromStr for LateralRaiseExerciseName {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "45_degree_cable_external_rotation" => Ok(Self::Name45DegreeCableExternalRotation),
+            "alternating_lateral_raise_with_static_hold" => {
+                Ok(Self::AlternatingLateralRaiseWithStaticHold)
+            }
+            "bar_muscle_up" => Ok(Self::BarMuscleUp),
+            "bent_over_lateral_raise" => Ok(Self::BentOverLateralRaise),
+            "cable_diagonal_raise" => Ok(Self::CableDiagonalRaise),
+            "cable_front_raise" => Ok(Self::CableFrontRaise),
+            "calorie_row" => Ok(Self::CalorieRow),
+            "combo_shoulder_raise" => Ok(Self::ComboShoulderRaise),
+            "dumbbell_diagonal_raise" => Ok(Self::DumbbellDiagonalRaise),
+            "dumbbell_v_raise" => Ok(Self::DumbbellVRaise),
+            "front_raise" => Ok(Self::FrontRaise),
+            "leaning_dumbbell_lateral_raise" => Ok(Self::LeaningDumbbellLateralRaise),
+            "lying_dumbbell_raise" => Ok(Self::LyingDumbbellRaise),
+            "muscle_up" => Ok(Self::MuscleUp),
+            "one_arm_cable_lateral_raise" => Ok(Self::OneArmCableLateralRaise),
+            "overhand_grip_rear_lateral_raise" => Ok(Self::OverhandGripRearLateralRaise),
+            "plate_raises" => Ok(Self::PlateRaises),
+            "ring_dip" => Ok(Self::RingDip),
+            "weighted_ring_dip" => Ok(Self::WeightedRingDip),
+            "ring_muscle_up" => Ok(Self::RingMuscleUp),
+            "weighted_ring_muscle_up" => Ok(Self::WeightedRingMuscleUp),
+            "rope_climb" => Ok(Self::RopeClimb),
+            "weighted_rope_climb" => Ok(Self::WeightedRopeClimb),
+            "scaption" => Ok(Self::Scaption),
+            "seated_lateral_raise" => Ok(Self::SeatedLateralRaise),
+            "seated_rear_lateral_raise" => Ok(Self::SeatedRearLateralRaise),
+            "side_lying_lateral_raise" => Ok(Self::SideLyingLateralRaise),
+            "standing_lift" => Ok(Self::StandingLift),
+            "suspended_row" => Ok(Self::SuspendedRow),
+            "underhand_grip_rear_lateral_raise" => Ok(Self::UnderhandGripRearLateralRaise),
+            "wall_slide" => Ok(Self::WallSlide),
+            "weighted_wall_slide" => Ok(Self::WeightedWallSlide),
+            "arm_circles" => Ok(Self::ArmCircles),
+            "shaving_the_head" => Ok(Self::ShavingTheHead),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for LateralRaiseExerciseName {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum LegCurlExerciseName {
     LegCurl,
@@ -21301,6 +25955,31 @@ impl Serialize for LegCurlExerciseName {
             LegCurlExerciseName::Value(value) => serializer.serialize_u16(*value),
             _ => serializer.serialize_str(&self.to_string()),
         }
+    }
+}
+impl FromStr for LegCurlExerciseName {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "leg_curl" => Ok(Self::LegCurl),
+            "weighted_leg_curl" => Ok(Self::WeightedLegCurl),
+            "good_morning" => Ok(Self::GoodMorning),
+            "seated_barbell_good_morning" => Ok(Self::SeatedBarbellGoodMorning),
+            "single_leg_barbell_good_morning" => Ok(Self::SingleLegBarbellGoodMorning),
+            "single_leg_sliding_leg_curl" => Ok(Self::SingleLegSlidingLegCurl),
+            "sliding_leg_curl" => Ok(Self::SlidingLegCurl),
+            "split_barbell_good_morning" => Ok(Self::SplitBarbellGoodMorning),
+            "split_stance_extension" => Ok(Self::SplitStanceExtension),
+            "staggered_stance_good_morning" => Ok(Self::StaggeredStanceGoodMorning),
+            "swiss_ball_hip_raise_and_leg_curl" => Ok(Self::SwissBallHipRaiseAndLegCurl),
+            "zercher_good_morning" => Ok(Self::ZercherGoodMorning),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for LegCurlExerciseName {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -21480,6 +26159,43 @@ impl Serialize for LegRaiseExerciseName {
             LegRaiseExerciseName::Value(value) => serializer.serialize_u16(*value),
             _ => serializer.serialize_str(&self.to_string()),
         }
+    }
+}
+impl FromStr for LegRaiseExerciseName {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "hanging_knee_raise" => Ok(Self::HangingKneeRaise),
+            "hanging_leg_raise" => Ok(Self::HangingLegRaise),
+            "weighted_hanging_leg_raise" => Ok(Self::WeightedHangingLegRaise),
+            "hanging_single_leg_raise" => Ok(Self::HangingSingleLegRaise),
+            "weighted_hanging_single_leg_raise" => Ok(Self::WeightedHangingSingleLegRaise),
+            "kettlebell_leg_raises" => Ok(Self::KettlebellLegRaises),
+            "leg_lowering_drill" => Ok(Self::LegLoweringDrill),
+            "weighted_leg_lowering_drill" => Ok(Self::WeightedLegLoweringDrill),
+            "lying_straight_leg_raise" => Ok(Self::LyingStraightLegRaise),
+            "weighted_lying_straight_leg_raise" => Ok(Self::WeightedLyingStraightLegRaise),
+            "medicine_ball_leg_drops" => Ok(Self::MedicineBallLegDrops),
+            "quadruped_leg_raise" => Ok(Self::QuadrupedLegRaise),
+            "weighted_quadruped_leg_raise" => Ok(Self::WeightedQuadrupedLegRaise),
+            "reverse_leg_raise" => Ok(Self::ReverseLegRaise),
+            "weighted_reverse_leg_raise" => Ok(Self::WeightedReverseLegRaise),
+            "reverse_leg_raise_on_swiss_ball" => Ok(Self::ReverseLegRaiseOnSwissBall),
+            "weighted_reverse_leg_raise_on_swiss_ball" => {
+                Ok(Self::WeightedReverseLegRaiseOnSwissBall)
+            }
+            "single_leg_lowering_drill" => Ok(Self::SingleLegLoweringDrill),
+            "weighted_single_leg_lowering_drill" => Ok(Self::WeightedSingleLegLoweringDrill),
+            "weighted_hanging_knee_raise" => Ok(Self::WeightedHangingKneeRaise),
+            "lateral_stepover" => Ok(Self::LateralStepover),
+            "weighted_lateral_stepover" => Ok(Self::WeightedLateralStepover),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for LegRaiseExerciseName {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -21996,6 +26712,114 @@ impl Serialize for LungeExerciseName {
         }
     }
 }
+impl FromStr for LungeExerciseName {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "overhead_lunge" => Ok(Self::OverheadLunge),
+            "lunge_matrix" => Ok(Self::LungeMatrix),
+            "weighted_lunge_matrix" => Ok(Self::WeightedLungeMatrix),
+            "alternating_barbell_forward_lunge" => Ok(Self::AlternatingBarbellForwardLunge),
+            "alternating_dumbbell_lunge_with_reach" => Ok(Self::AlternatingDumbbellLungeWithReach),
+            "back_foot_elevated_dumbbell_split_squat" => {
+                Ok(Self::BackFootElevatedDumbbellSplitSquat)
+            }
+            "barbell_box_lunge" => Ok(Self::BarbellBoxLunge),
+            "barbell_bulgarian_split_squat" => Ok(Self::BarbellBulgarianSplitSquat),
+            "barbell_crossover_lunge" => Ok(Self::BarbellCrossoverLunge),
+            "barbell_front_split_squat" => Ok(Self::BarbellFrontSplitSquat),
+            "barbell_lunge" => Ok(Self::BarbellLunge),
+            "barbell_reverse_lunge" => Ok(Self::BarbellReverseLunge),
+            "barbell_side_lunge" => Ok(Self::BarbellSideLunge),
+            "barbell_split_squat" => Ok(Self::BarbellSplitSquat),
+            "core_control_rear_lunge" => Ok(Self::CoreControlRearLunge),
+            "diagonal_lunge" => Ok(Self::DiagonalLunge),
+            "drop_lunge" => Ok(Self::DropLunge),
+            "dumbbell_box_lunge" => Ok(Self::DumbbellBoxLunge),
+            "dumbbell_bulgarian_split_squat" => Ok(Self::DumbbellBulgarianSplitSquat),
+            "dumbbell_crossover_lunge" => Ok(Self::DumbbellCrossoverLunge),
+            "dumbbell_diagonal_lunge" => Ok(Self::DumbbellDiagonalLunge),
+            "dumbbell_lunge" => Ok(Self::DumbbellLunge),
+            "dumbbell_lunge_and_rotation" => Ok(Self::DumbbellLungeAndRotation),
+            "dumbbell_overhead_bulgarian_split_squat" => {
+                Ok(Self::DumbbellOverheadBulgarianSplitSquat)
+            }
+            "dumbbell_reverse_lunge_to_high_knee_and_press" => {
+                Ok(Self::DumbbellReverseLungeToHighKneeAndPress)
+            }
+            "dumbbell_side_lunge" => Ok(Self::DumbbellSideLunge),
+            "elevated_front_foot_barbell_split_squat" => {
+                Ok(Self::ElevatedFrontFootBarbellSplitSquat)
+            }
+            "front_foot_elevated_dumbbell_split_squat" => {
+                Ok(Self::FrontFootElevatedDumbbellSplitSquat)
+            }
+            "gunslinger_lunge" => Ok(Self::GunslingerLunge),
+            "lawnmower_lunge" => Ok(Self::LawnmowerLunge),
+            "low_lunge_with_isometric_adduction" => Ok(Self::LowLungeWithIsometricAdduction),
+            "low_side_to_side_lunge" => Ok(Self::LowSideToSideLunge),
+            "lunge" => Ok(Self::Lunge),
+            "weighted_lunge" => Ok(Self::WeightedLunge),
+            "lunge_with_arm_reach" => Ok(Self::LungeWithArmReach),
+            "lunge_with_diagonal_reach" => Ok(Self::LungeWithDiagonalReach),
+            "lunge_with_side_bend" => Ok(Self::LungeWithSideBend),
+            "offset_dumbbell_lunge" => Ok(Self::OffsetDumbbellLunge),
+            "offset_dumbbell_reverse_lunge" => Ok(Self::OffsetDumbbellReverseLunge),
+            "overhead_bulgarian_split_squat" => Ok(Self::OverheadBulgarianSplitSquat),
+            "overhead_dumbbell_reverse_lunge" => Ok(Self::OverheadDumbbellReverseLunge),
+            "overhead_dumbbell_split_squat" => Ok(Self::OverheadDumbbellSplitSquat),
+            "overhead_lunge_with_rotation" => Ok(Self::OverheadLungeWithRotation),
+            "reverse_barbell_box_lunge" => Ok(Self::ReverseBarbellBoxLunge),
+            "reverse_box_lunge" => Ok(Self::ReverseBoxLunge),
+            "reverse_dumbbell_box_lunge" => Ok(Self::ReverseDumbbellBoxLunge),
+            "reverse_dumbbell_crossover_lunge" => Ok(Self::ReverseDumbbellCrossoverLunge),
+            "reverse_dumbbell_diagonal_lunge" => Ok(Self::ReverseDumbbellDiagonalLunge),
+            "reverse_lunge_with_reach_back" => Ok(Self::ReverseLungeWithReachBack),
+            "weighted_reverse_lunge_with_reach_back" => Ok(Self::WeightedReverseLungeWithReachBack),
+            "reverse_lunge_with_twist_and_overhead_reach" => {
+                Ok(Self::ReverseLungeWithTwistAndOverheadReach)
+            }
+            "weighted_reverse_lunge_with_twist_and_overhead_reach" => {
+                Ok(Self::WeightedReverseLungeWithTwistAndOverheadReach)
+            }
+            "reverse_sliding_box_lunge" => Ok(Self::ReverseSlidingBoxLunge),
+            "weighted_reverse_sliding_box_lunge" => Ok(Self::WeightedReverseSlidingBoxLunge),
+            "reverse_sliding_lunge" => Ok(Self::ReverseSlidingLunge),
+            "weighted_reverse_sliding_lunge" => Ok(Self::WeightedReverseSlidingLunge),
+            "runners_lunge_to_balance" => Ok(Self::RunnersLungeToBalance),
+            "weighted_runners_lunge_to_balance" => Ok(Self::WeightedRunnersLungeToBalance),
+            "shifting_side_lunge" => Ok(Self::ShiftingSideLunge),
+            "side_and_crossover_lunge" => Ok(Self::SideAndCrossoverLunge),
+            "weighted_side_and_crossover_lunge" => Ok(Self::WeightedSideAndCrossoverLunge),
+            "side_lunge" => Ok(Self::SideLunge),
+            "weighted_side_lunge" => Ok(Self::WeightedSideLunge),
+            "side_lunge_and_press" => Ok(Self::SideLungeAndPress),
+            "side_lunge_jump_off" => Ok(Self::SideLungeJumpOff),
+            "side_lunge_sweep" => Ok(Self::SideLungeSweep),
+            "weighted_side_lunge_sweep" => Ok(Self::WeightedSideLungeSweep),
+            "side_lunge_to_crossover_tap" => Ok(Self::SideLungeToCrossoverTap),
+            "weighted_side_lunge_to_crossover_tap" => Ok(Self::WeightedSideLungeToCrossoverTap),
+            "side_to_side_lunge_chops" => Ok(Self::SideToSideLungeChops),
+            "weighted_side_to_side_lunge_chops" => Ok(Self::WeightedSideToSideLungeChops),
+            "siff_jump_lunge" => Ok(Self::SiffJumpLunge),
+            "weighted_siff_jump_lunge" => Ok(Self::WeightedSiffJumpLunge),
+            "single_arm_reverse_lunge_and_press" => Ok(Self::SingleArmReverseLungeAndPress),
+            "sliding_lateral_lunge" => Ok(Self::SlidingLateralLunge),
+            "weighted_sliding_lateral_lunge" => Ok(Self::WeightedSlidingLateralLunge),
+            "walking_barbell_lunge" => Ok(Self::WalkingBarbellLunge),
+            "walking_dumbbell_lunge" => Ok(Self::WalkingDumbbellLunge),
+            "walking_lunge" => Ok(Self::WalkingLunge),
+            "weighted_walking_lunge" => Ok(Self::WeightedWalkingLunge),
+            "wide_grip_overhead_barbell_split_squat" => Ok(Self::WideGripOverheadBarbellSplitSquat),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for LungeExerciseName {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum OlympicLiftExerciseName {
     BarbellHangPowerClean,
@@ -22156,6 +26980,40 @@ impl Serialize for OlympicLiftExerciseName {
             OlympicLiftExerciseName::Value(value) => serializer.serialize_u16(*value),
             _ => serializer.serialize_str(&self.to_string()),
         }
+    }
+}
+impl FromStr for OlympicLiftExerciseName {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "barbell_hang_power_clean" => Ok(Self::BarbellHangPowerClean),
+            "barbell_hang_squat_clean" => Ok(Self::BarbellHangSquatClean),
+            "barbell_power_clean" => Ok(Self::BarbellPowerClean),
+            "barbell_power_snatch" => Ok(Self::BarbellPowerSnatch),
+            "barbell_squat_clean" => Ok(Self::BarbellSquatClean),
+            "clean_and_jerk" => Ok(Self::CleanAndJerk),
+            "barbell_hang_power_snatch" => Ok(Self::BarbellHangPowerSnatch),
+            "barbell_hang_pull" => Ok(Self::BarbellHangPull),
+            "barbell_high_pull" => Ok(Self::BarbellHighPull),
+            "barbell_snatch" => Ok(Self::BarbellSnatch),
+            "barbell_split_jerk" => Ok(Self::BarbellSplitJerk),
+            "clean" => Ok(Self::Clean),
+            "dumbbell_clean" => Ok(Self::DumbbellClean),
+            "dumbbell_hang_pull" => Ok(Self::DumbbellHangPull),
+            "one_hand_dumbbell_split_snatch" => Ok(Self::OneHandDumbbellSplitSnatch),
+            "push_jerk" => Ok(Self::PushJerk),
+            "single_arm_dumbbell_snatch" => Ok(Self::SingleArmDumbbellSnatch),
+            "single_arm_hang_snatch" => Ok(Self::SingleArmHangSnatch),
+            "single_arm_kettlebell_snatch" => Ok(Self::SingleArmKettlebellSnatch),
+            "split_jerk" => Ok(Self::SplitJerk),
+            "squat_clean_and_jerk" => Ok(Self::SquatCleanAndJerk),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for OlympicLiftExerciseName {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -23007,6 +27865,200 @@ impl Serialize for PlankExerciseName {
         }
     }
 }
+impl FromStr for PlankExerciseName {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "45_degree_plank" => Ok(Self::Name45DegreePlank),
+            "weighted_45_degree_plank" => Ok(Self::Weighted45DegreePlank),
+            "90_degree_static_hold" => Ok(Self::Name90DegreeStaticHold),
+            "weighted_90_degree_static_hold" => Ok(Self::Weighted90DegreeStaticHold),
+            "bear_crawl" => Ok(Self::BearCrawl),
+            "weighted_bear_crawl" => Ok(Self::WeightedBearCrawl),
+            "cross_body_mountain_climber" => Ok(Self::CrossBodyMountainClimber),
+            "weighted_cross_body_mountain_climber" => Ok(Self::WeightedCrossBodyMountainClimber),
+            "elbow_plank_pike_jacks" => Ok(Self::ElbowPlankPikeJacks),
+            "weighted_elbow_plank_pike_jacks" => Ok(Self::WeightedElbowPlankPikeJacks),
+            "elevated_feet_plank" => Ok(Self::ElevatedFeetPlank),
+            "weighted_elevated_feet_plank" => Ok(Self::WeightedElevatedFeetPlank),
+            "elevator_abs" => Ok(Self::ElevatorAbs),
+            "weighted_elevator_abs" => Ok(Self::WeightedElevatorAbs),
+            "extended_plank" => Ok(Self::ExtendedPlank),
+            "weighted_extended_plank" => Ok(Self::WeightedExtendedPlank),
+            "full_plank_passe_twist" => Ok(Self::FullPlankPasseTwist),
+            "weighted_full_plank_passe_twist" => Ok(Self::WeightedFullPlankPasseTwist),
+            "inching_elbow_plank" => Ok(Self::InchingElbowPlank),
+            "weighted_inching_elbow_plank" => Ok(Self::WeightedInchingElbowPlank),
+            "inchworm_to_side_plank" => Ok(Self::InchwormToSidePlank),
+            "weighted_inchworm_to_side_plank" => Ok(Self::WeightedInchwormToSidePlank),
+            "kneeling_plank" => Ok(Self::KneelingPlank),
+            "weighted_kneeling_plank" => Ok(Self::WeightedKneelingPlank),
+            "kneeling_side_plank_with_leg_lift" => Ok(Self::KneelingSidePlankWithLegLift),
+            "weighted_kneeling_side_plank_with_leg_lift" => {
+                Ok(Self::WeightedKneelingSidePlankWithLegLift)
+            }
+            "lateral_roll" => Ok(Self::LateralRoll),
+            "weighted_lateral_roll" => Ok(Self::WeightedLateralRoll),
+            "lying_reverse_plank" => Ok(Self::LyingReversePlank),
+            "weighted_lying_reverse_plank" => Ok(Self::WeightedLyingReversePlank),
+            "medicine_ball_mountain_climber" => Ok(Self::MedicineBallMountainClimber),
+            "weighted_medicine_ball_mountain_climber" => {
+                Ok(Self::WeightedMedicineBallMountainClimber)
+            }
+            "modified_mountain_climber_and_extension" => {
+                Ok(Self::ModifiedMountainClimberAndExtension)
+            }
+            "weighted_modified_mountain_climber_and_extension" => {
+                Ok(Self::WeightedModifiedMountainClimberAndExtension)
+            }
+            "mountain_climber" => Ok(Self::MountainClimber),
+            "weighted_mountain_climber" => Ok(Self::WeightedMountainClimber),
+            "mountain_climber_on_sliding_discs" => Ok(Self::MountainClimberOnSlidingDiscs),
+            "weighted_mountain_climber_on_sliding_discs" => {
+                Ok(Self::WeightedMountainClimberOnSlidingDiscs)
+            }
+            "mountain_climber_with_feet_on_bosu_ball" => {
+                Ok(Self::MountainClimberWithFeetOnBosuBall)
+            }
+            "weighted_mountain_climber_with_feet_on_bosu_ball" => {
+                Ok(Self::WeightedMountainClimberWithFeetOnBosuBall)
+            }
+            "mountain_climber_with_hands_on_bench" => Ok(Self::MountainClimberWithHandsOnBench),
+            "mountain_climber_with_hands_on_swiss_ball" => {
+                Ok(Self::MountainClimberWithHandsOnSwissBall)
+            }
+            "weighted_mountain_climber_with_hands_on_swiss_ball" => {
+                Ok(Self::WeightedMountainClimberWithHandsOnSwissBall)
+            }
+            "plank" => Ok(Self::Plank),
+            "plank_jacks_with_feet_on_sliding_discs" => Ok(Self::PlankJacksWithFeetOnSlidingDiscs),
+            "weighted_plank_jacks_with_feet_on_sliding_discs" => {
+                Ok(Self::WeightedPlankJacksWithFeetOnSlidingDiscs)
+            }
+            "plank_knee_twist" => Ok(Self::PlankKneeTwist),
+            "weighted_plank_knee_twist" => Ok(Self::WeightedPlankKneeTwist),
+            "plank_pike_jumps" => Ok(Self::PlankPikeJumps),
+            "weighted_plank_pike_jumps" => Ok(Self::WeightedPlankPikeJumps),
+            "plank_pikes" => Ok(Self::PlankPikes),
+            "weighted_plank_pikes" => Ok(Self::WeightedPlankPikes),
+            "plank_to_stand_up" => Ok(Self::PlankToStandUp),
+            "weighted_plank_to_stand_up" => Ok(Self::WeightedPlankToStandUp),
+            "plank_with_arm_raise" => Ok(Self::PlankWithArmRaise),
+            "weighted_plank_with_arm_raise" => Ok(Self::WeightedPlankWithArmRaise),
+            "plank_with_knee_to_elbow" => Ok(Self::PlankWithKneeToElbow),
+            "weighted_plank_with_knee_to_elbow" => Ok(Self::WeightedPlankWithKneeToElbow),
+            "plank_with_oblique_crunch" => Ok(Self::PlankWithObliqueCrunch),
+            "weighted_plank_with_oblique_crunch" => Ok(Self::WeightedPlankWithObliqueCrunch),
+            "plyometric_side_plank" => Ok(Self::PlyometricSidePlank),
+            "weighted_plyometric_side_plank" => Ok(Self::WeightedPlyometricSidePlank),
+            "rolling_side_plank" => Ok(Self::RollingSidePlank),
+            "weighted_rolling_side_plank" => Ok(Self::WeightedRollingSidePlank),
+            "side_kick_plank" => Ok(Self::SideKickPlank),
+            "weighted_side_kick_plank" => Ok(Self::WeightedSideKickPlank),
+            "side_plank" => Ok(Self::SidePlank),
+            "weighted_side_plank" => Ok(Self::WeightedSidePlank),
+            "side_plank_and_row" => Ok(Self::SidePlankAndRow),
+            "weighted_side_plank_and_row" => Ok(Self::WeightedSidePlankAndRow),
+            "side_plank_lift" => Ok(Self::SidePlankLift),
+            "weighted_side_plank_lift" => Ok(Self::WeightedSidePlankLift),
+            "side_plank_with_elbow_on_bosu_ball" => Ok(Self::SidePlankWithElbowOnBosuBall),
+            "weighted_side_plank_with_elbow_on_bosu_ball" => {
+                Ok(Self::WeightedSidePlankWithElbowOnBosuBall)
+            }
+            "side_plank_with_feet_on_bench" => Ok(Self::SidePlankWithFeetOnBench),
+            "weighted_side_plank_with_feet_on_bench" => Ok(Self::WeightedSidePlankWithFeetOnBench),
+            "side_plank_with_knee_circle" => Ok(Self::SidePlankWithKneeCircle),
+            "weighted_side_plank_with_knee_circle" => Ok(Self::WeightedSidePlankWithKneeCircle),
+            "side_plank_with_knee_tuck" => Ok(Self::SidePlankWithKneeTuck),
+            "weighted_side_plank_with_knee_tuck" => Ok(Self::WeightedSidePlankWithKneeTuck),
+            "side_plank_with_leg_lift" => Ok(Self::SidePlankWithLegLift),
+            "weighted_side_plank_with_leg_lift" => Ok(Self::WeightedSidePlankWithLegLift),
+            "side_plank_with_reach_under" => Ok(Self::SidePlankWithReachUnder),
+            "weighted_side_plank_with_reach_under" => Ok(Self::WeightedSidePlankWithReachUnder),
+            "single_leg_elevated_feet_plank" => Ok(Self::SingleLegElevatedFeetPlank),
+            "weighted_single_leg_elevated_feet_plank" => {
+                Ok(Self::WeightedSingleLegElevatedFeetPlank)
+            }
+            "single_leg_flex_and_extend" => Ok(Self::SingleLegFlexAndExtend),
+            "weighted_single_leg_flex_and_extend" => Ok(Self::WeightedSingleLegFlexAndExtend),
+            "single_leg_side_plank" => Ok(Self::SingleLegSidePlank),
+            "weighted_single_leg_side_plank" => Ok(Self::WeightedSingleLegSidePlank),
+            "spiderman_plank" => Ok(Self::SpidermanPlank),
+            "weighted_spiderman_plank" => Ok(Self::WeightedSpidermanPlank),
+            "straight_arm_plank" => Ok(Self::StraightArmPlank),
+            "weighted_straight_arm_plank" => Ok(Self::WeightedStraightArmPlank),
+            "straight_arm_plank_with_shoulder_touch" => Ok(Self::StraightArmPlankWithShoulderTouch),
+            "weighted_straight_arm_plank_with_shoulder_touch" => {
+                Ok(Self::WeightedStraightArmPlankWithShoulderTouch)
+            }
+            "swiss_ball_plank" => Ok(Self::SwissBallPlank),
+            "weighted_swiss_ball_plank" => Ok(Self::WeightedSwissBallPlank),
+            "swiss_ball_plank_leg_lift" => Ok(Self::SwissBallPlankLegLift),
+            "weighted_swiss_ball_plank_leg_lift" => Ok(Self::WeightedSwissBallPlankLegLift),
+            "swiss_ball_plank_leg_lift_and_hold" => Ok(Self::SwissBallPlankLegLiftAndHold),
+            "swiss_ball_plank_with_feet_on_bench" => Ok(Self::SwissBallPlankWithFeetOnBench),
+            "weighted_swiss_ball_plank_with_feet_on_bench" => {
+                Ok(Self::WeightedSwissBallPlankWithFeetOnBench)
+            }
+            "swiss_ball_prone_jackknife" => Ok(Self::SwissBallProneJackknife),
+            "weighted_swiss_ball_prone_jackknife" => Ok(Self::WeightedSwissBallProneJackknife),
+            "swiss_ball_side_plank" => Ok(Self::SwissBallSidePlank),
+            "weighted_swiss_ball_side_plank" => Ok(Self::WeightedSwissBallSidePlank),
+            "three_way_plank" => Ok(Self::ThreeWayPlank),
+            "weighted_three_way_plank" => Ok(Self::WeightedThreeWayPlank),
+            "towel_plank_and_knee_in" => Ok(Self::TowelPlankAndKneeIn),
+            "weighted_towel_plank_and_knee_in" => Ok(Self::WeightedTowelPlankAndKneeIn),
+            "t_stabilization" => Ok(Self::TStabilization),
+            "weighted_t_stabilization" => Ok(Self::WeightedTStabilization),
+            "turkish_get_up_to_side_plank" => Ok(Self::TurkishGetUpToSidePlank),
+            "weighted_turkish_get_up_to_side_plank" => Ok(Self::WeightedTurkishGetUpToSidePlank),
+            "two_point_plank" => Ok(Self::TwoPointPlank),
+            "weighted_two_point_plank" => Ok(Self::WeightedTwoPointPlank),
+            "weighted_plank" => Ok(Self::WeightedPlank),
+            "wide_stance_plank_with_diagonal_arm_lift" => {
+                Ok(Self::WideStancePlankWithDiagonalArmLift)
+            }
+            "weighted_wide_stance_plank_with_diagonal_arm_lift" => {
+                Ok(Self::WeightedWideStancePlankWithDiagonalArmLift)
+            }
+            "wide_stance_plank_with_diagonal_leg_lift" => {
+                Ok(Self::WideStancePlankWithDiagonalLegLift)
+            }
+            "weighted_wide_stance_plank_with_diagonal_leg_lift" => {
+                Ok(Self::WeightedWideStancePlankWithDiagonalLegLift)
+            }
+            "wide_stance_plank_with_leg_lift" => Ok(Self::WideStancePlankWithLegLift),
+            "weighted_wide_stance_plank_with_leg_lift" => {
+                Ok(Self::WeightedWideStancePlankWithLegLift)
+            }
+            "wide_stance_plank_with_opposite_arm_and_leg_lift" => {
+                Ok(Self::WideStancePlankWithOppositeArmAndLegLift)
+            }
+            "weighted_mountain_climber_with_hands_on_bench" => {
+                Ok(Self::WeightedMountainClimberWithHandsOnBench)
+            }
+            "weighted_swiss_ball_plank_leg_lift_and_hold" => {
+                Ok(Self::WeightedSwissBallPlankLegLiftAndHold)
+            }
+            "weighted_wide_stance_plank_with_opposite_arm_and_leg_lift" => {
+                Ok(Self::WeightedWideStancePlankWithOppositeArmAndLegLift)
+            }
+            "plank_with_feet_on_swiss_ball" => Ok(Self::PlankWithFeetOnSwissBall),
+            "side_plank_to_plank_with_reach_under" => Ok(Self::SidePlankToPlankWithReachUnder),
+            "bridge_with_glute_lower_lift" => Ok(Self::BridgeWithGluteLowerLift),
+            "bridge_one_leg_bridge" => Ok(Self::BridgeOneLegBridge),
+            "plank_with_arm_variations" => Ok(Self::PlankWithArmVariations),
+            "plank_with_leg_lift" => Ok(Self::PlankWithLegLift),
+            "reverse_plank_with_leg_pull" => Ok(Self::ReversePlankWithLegPull),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for PlankExerciseName {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum PlyoExerciseName {
     AlternatingJumpLunge,
@@ -23237,6 +28289,56 @@ impl Serialize for PlyoExerciseName {
             PlyoExerciseName::Value(value) => serializer.serialize_u16(*value),
             _ => serializer.serialize_str(&self.to_string()),
         }
+    }
+}
+impl FromStr for PlyoExerciseName {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "alternating_jump_lunge" => Ok(Self::AlternatingJumpLunge),
+            "weighted_alternating_jump_lunge" => Ok(Self::WeightedAlternatingJumpLunge),
+            "barbell_jump_squat" => Ok(Self::BarbellJumpSquat),
+            "body_weight_jump_squat" => Ok(Self::BodyWeightJumpSquat),
+            "weighted_jump_squat" => Ok(Self::WeightedJumpSquat),
+            "cross_knee_strike" => Ok(Self::CrossKneeStrike),
+            "weighted_cross_knee_strike" => Ok(Self::WeightedCrossKneeStrike),
+            "depth_jump" => Ok(Self::DepthJump),
+            "weighted_depth_jump" => Ok(Self::WeightedDepthJump),
+            "dumbbell_jump_squat" => Ok(Self::DumbbellJumpSquat),
+            "dumbbell_split_jump" => Ok(Self::DumbbellSplitJump),
+            "front_knee_strike" => Ok(Self::FrontKneeStrike),
+            "weighted_front_knee_strike" => Ok(Self::WeightedFrontKneeStrike),
+            "high_box_jump" => Ok(Self::HighBoxJump),
+            "weighted_high_box_jump" => Ok(Self::WeightedHighBoxJump),
+            "isometric_explosive_body_weight_jump_squat" => {
+                Ok(Self::IsometricExplosiveBodyWeightJumpSquat)
+            }
+            "weighted_isometric_explosive_jump_squat" => {
+                Ok(Self::WeightedIsometricExplosiveJumpSquat)
+            }
+            "lateral_leap_and_hop" => Ok(Self::LateralLeapAndHop),
+            "weighted_lateral_leap_and_hop" => Ok(Self::WeightedLateralLeapAndHop),
+            "lateral_plyo_squats" => Ok(Self::LateralPlyoSquats),
+            "weighted_lateral_plyo_squats" => Ok(Self::WeightedLateralPlyoSquats),
+            "lateral_slide" => Ok(Self::LateralSlide),
+            "weighted_lateral_slide" => Ok(Self::WeightedLateralSlide),
+            "medicine_ball_overhead_throws" => Ok(Self::MedicineBallOverheadThrows),
+            "medicine_ball_side_throw" => Ok(Self::MedicineBallSideThrow),
+            "medicine_ball_slam" => Ok(Self::MedicineBallSlam),
+            "side_to_side_medicine_ball_throws" => Ok(Self::SideToSideMedicineBallThrows),
+            "side_to_side_shuffle_jump" => Ok(Self::SideToSideShuffleJump),
+            "weighted_side_to_side_shuffle_jump" => Ok(Self::WeightedSideToSideShuffleJump),
+            "squat_jump_onto_box" => Ok(Self::SquatJumpOntoBox),
+            "weighted_squat_jump_onto_box" => Ok(Self::WeightedSquatJumpOntoBox),
+            "squat_jumps_in_and_out" => Ok(Self::SquatJumpsInAndOut),
+            "weighted_squat_jumps_in_and_out" => Ok(Self::WeightedSquatJumpsInAndOut),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for PlyoExerciseName {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -23483,6 +28585,58 @@ impl Serialize for PullUpExerciseName {
             PullUpExerciseName::Value(value) => serializer.serialize_u16(*value),
             _ => serializer.serialize_str(&self.to_string()),
         }
+    }
+}
+impl FromStr for PullUpExerciseName {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "banded_pull_ups" => Ok(Self::BandedPullUps),
+            "30_degree_lat_pulldown" => Ok(Self::Name30DegreeLatPulldown),
+            "band_assisted_chin_up" => Ok(Self::BandAssistedChinUp),
+            "close_grip_chin_up" => Ok(Self::CloseGripChinUp),
+            "weighted_close_grip_chin_up" => Ok(Self::WeightedCloseGripChinUp),
+            "close_grip_lat_pulldown" => Ok(Self::CloseGripLatPulldown),
+            "crossover_chin_up" => Ok(Self::CrossoverChinUp),
+            "weighted_crossover_chin_up" => Ok(Self::WeightedCrossoverChinUp),
+            "ez_bar_pullover" => Ok(Self::EzBarPullover),
+            "hanging_hurdle" => Ok(Self::HangingHurdle),
+            "weighted_hanging_hurdle" => Ok(Self::WeightedHangingHurdle),
+            "kneeling_lat_pulldown" => Ok(Self::KneelingLatPulldown),
+            "kneeling_underhand_grip_lat_pulldown" => Ok(Self::KneelingUnderhandGripLatPulldown),
+            "lat_pulldown" => Ok(Self::LatPulldown),
+            "mixed_grip_chin_up" => Ok(Self::MixedGripChinUp),
+            "weighted_mixed_grip_chin_up" => Ok(Self::WeightedMixedGripChinUp),
+            "mixed_grip_pull_up" => Ok(Self::MixedGripPullUp),
+            "weighted_mixed_grip_pull_up" => Ok(Self::WeightedMixedGripPullUp),
+            "reverse_grip_pulldown" => Ok(Self::ReverseGripPulldown),
+            "standing_cable_pullover" => Ok(Self::StandingCablePullover),
+            "straight_arm_pulldown" => Ok(Self::StraightArmPulldown),
+            "swiss_ball_ez_bar_pullover" => Ok(Self::SwissBallEzBarPullover),
+            "towel_pull_up" => Ok(Self::TowelPullUp),
+            "weighted_towel_pull_up" => Ok(Self::WeightedTowelPullUp),
+            "weighted_pull_up" => Ok(Self::WeightedPullUp),
+            "wide_grip_lat_pulldown" => Ok(Self::WideGripLatPulldown),
+            "wide_grip_pull_up" => Ok(Self::WideGripPullUp),
+            "weighted_wide_grip_pull_up" => Ok(Self::WeightedWideGripPullUp),
+            "burpee_pull_up" => Ok(Self::BurpeePullUp),
+            "weighted_burpee_pull_up" => Ok(Self::WeightedBurpeePullUp),
+            "jumping_pull_ups" => Ok(Self::JumpingPullUps),
+            "weighted_jumping_pull_ups" => Ok(Self::WeightedJumpingPullUps),
+            "kipping_pull_up" => Ok(Self::KippingPullUp),
+            "weighted_kipping_pull_up" => Ok(Self::WeightedKippingPullUp),
+            "l_pull_up" => Ok(Self::LPullUp),
+            "weighted_l_pull_up" => Ok(Self::WeightedLPullUp),
+            "suspended_chin_up" => Ok(Self::SuspendedChinUp),
+            "weighted_suspended_chin_up" => Ok(Self::WeightedSuspendedChinUp),
+            "pull_up" => Ok(Self::PullUp),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for PullUpExerciseName {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -23985,6 +29139,114 @@ impl Serialize for PushUpExerciseName {
         }
     }
 }
+impl FromStr for PushUpExerciseName {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "chest_press_with_band" => Ok(Self::ChestPressWithBand),
+            "alternating_staggered_push_up" => Ok(Self::AlternatingStaggeredPushUp),
+            "weighted_alternating_staggered_push_up" => {
+                Ok(Self::WeightedAlternatingStaggeredPushUp)
+            }
+            "alternating_hands_medicine_ball_push_up" => {
+                Ok(Self::AlternatingHandsMedicineBallPushUp)
+            }
+            "weighted_alternating_hands_medicine_ball_push_up" => {
+                Ok(Self::WeightedAlternatingHandsMedicineBallPushUp)
+            }
+            "bosu_ball_push_up" => Ok(Self::BosuBallPushUp),
+            "weighted_bosu_ball_push_up" => Ok(Self::WeightedBosuBallPushUp),
+            "clapping_push_up" => Ok(Self::ClappingPushUp),
+            "weighted_clapping_push_up" => Ok(Self::WeightedClappingPushUp),
+            "close_grip_medicine_ball_push_up" => Ok(Self::CloseGripMedicineBallPushUp),
+            "weighted_close_grip_medicine_ball_push_up" => {
+                Ok(Self::WeightedCloseGripMedicineBallPushUp)
+            }
+            "close_hands_push_up" => Ok(Self::CloseHandsPushUp),
+            "weighted_close_hands_push_up" => Ok(Self::WeightedCloseHandsPushUp),
+            "decline_push_up" => Ok(Self::DeclinePushUp),
+            "weighted_decline_push_up" => Ok(Self::WeightedDeclinePushUp),
+            "diamond_push_up" => Ok(Self::DiamondPushUp),
+            "weighted_diamond_push_up" => Ok(Self::WeightedDiamondPushUp),
+            "explosive_crossover_push_up" => Ok(Self::ExplosiveCrossoverPushUp),
+            "weighted_explosive_crossover_push_up" => Ok(Self::WeightedExplosiveCrossoverPushUp),
+            "explosive_push_up" => Ok(Self::ExplosivePushUp),
+            "weighted_explosive_push_up" => Ok(Self::WeightedExplosivePushUp),
+            "feet_elevated_side_to_side_push_up" => Ok(Self::FeetElevatedSideToSidePushUp),
+            "weighted_feet_elevated_side_to_side_push_up" => {
+                Ok(Self::WeightedFeetElevatedSideToSidePushUp)
+            }
+            "hand_release_push_up" => Ok(Self::HandReleasePushUp),
+            "weighted_hand_release_push_up" => Ok(Self::WeightedHandReleasePushUp),
+            "handstand_push_up" => Ok(Self::HandstandPushUp),
+            "weighted_handstand_push_up" => Ok(Self::WeightedHandstandPushUp),
+            "incline_push_up" => Ok(Self::InclinePushUp),
+            "weighted_incline_push_up" => Ok(Self::WeightedInclinePushUp),
+            "isometric_explosive_push_up" => Ok(Self::IsometricExplosivePushUp),
+            "weighted_isometric_explosive_push_up" => Ok(Self::WeightedIsometricExplosivePushUp),
+            "judo_push_up" => Ok(Self::JudoPushUp),
+            "weighted_judo_push_up" => Ok(Self::WeightedJudoPushUp),
+            "kneeling_push_up" => Ok(Self::KneelingPushUp),
+            "weighted_kneeling_push_up" => Ok(Self::WeightedKneelingPushUp),
+            "medicine_ball_chest_pass" => Ok(Self::MedicineBallChestPass),
+            "medicine_ball_push_up" => Ok(Self::MedicineBallPushUp),
+            "weighted_medicine_ball_push_up" => Ok(Self::WeightedMedicineBallPushUp),
+            "one_arm_push_up" => Ok(Self::OneArmPushUp),
+            "weighted_one_arm_push_up" => Ok(Self::WeightedOneArmPushUp),
+            "weighted_push_up" => Ok(Self::WeightedPushUp),
+            "push_up_and_row" => Ok(Self::PushUpAndRow),
+            "weighted_push_up_and_row" => Ok(Self::WeightedPushUpAndRow),
+            "push_up_plus" => Ok(Self::PushUpPlus),
+            "weighted_push_up_plus" => Ok(Self::WeightedPushUpPlus),
+            "push_up_with_feet_on_swiss_ball" => Ok(Self::PushUpWithFeetOnSwissBall),
+            "weighted_push_up_with_feet_on_swiss_ball" => {
+                Ok(Self::WeightedPushUpWithFeetOnSwissBall)
+            }
+            "push_up_with_one_hand_on_medicine_ball" => Ok(Self::PushUpWithOneHandOnMedicineBall),
+            "weighted_push_up_with_one_hand_on_medicine_ball" => {
+                Ok(Self::WeightedPushUpWithOneHandOnMedicineBall)
+            }
+            "shoulder_push_up" => Ok(Self::ShoulderPushUp),
+            "weighted_shoulder_push_up" => Ok(Self::WeightedShoulderPushUp),
+            "single_arm_medicine_ball_push_up" => Ok(Self::SingleArmMedicineBallPushUp),
+            "weighted_single_arm_medicine_ball_push_up" => {
+                Ok(Self::WeightedSingleArmMedicineBallPushUp)
+            }
+            "spiderman_push_up" => Ok(Self::SpidermanPushUp),
+            "weighted_spiderman_push_up" => Ok(Self::WeightedSpidermanPushUp),
+            "stacked_feet_push_up" => Ok(Self::StackedFeetPushUp),
+            "weighted_stacked_feet_push_up" => Ok(Self::WeightedStackedFeetPushUp),
+            "staggered_hands_push_up" => Ok(Self::StaggeredHandsPushUp),
+            "weighted_staggered_hands_push_up" => Ok(Self::WeightedStaggeredHandsPushUp),
+            "suspended_push_up" => Ok(Self::SuspendedPushUp),
+            "weighted_suspended_push_up" => Ok(Self::WeightedSuspendedPushUp),
+            "swiss_ball_push_up" => Ok(Self::SwissBallPushUp),
+            "weighted_swiss_ball_push_up" => Ok(Self::WeightedSwissBallPushUp),
+            "swiss_ball_push_up_plus" => Ok(Self::SwissBallPushUpPlus),
+            "weighted_swiss_ball_push_up_plus" => Ok(Self::WeightedSwissBallPushUpPlus),
+            "t_push_up" => Ok(Self::TPushUp),
+            "weighted_t_push_up" => Ok(Self::WeightedTPushUp),
+            "triple_stop_push_up" => Ok(Self::TripleStopPushUp),
+            "weighted_triple_stop_push_up" => Ok(Self::WeightedTripleStopPushUp),
+            "wide_hands_push_up" => Ok(Self::WideHandsPushUp),
+            "weighted_wide_hands_push_up" => Ok(Self::WeightedWideHandsPushUp),
+            "parallette_handstand_push_up" => Ok(Self::ParalletteHandstandPushUp),
+            "weighted_parallette_handstand_push_up" => Ok(Self::WeightedParalletteHandstandPushUp),
+            "ring_handstand_push_up" => Ok(Self::RingHandstandPushUp),
+            "weighted_ring_handstand_push_up" => Ok(Self::WeightedRingHandstandPushUp),
+            "ring_push_up" => Ok(Self::RingPushUp),
+            "weighted_ring_push_up" => Ok(Self::WeightedRingPushUp),
+            "push_up" => Ok(Self::PushUp),
+            "pilates_pushup" => Ok(Self::PilatesPushup),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for PushUpExerciseName {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum RowExerciseName {
     BarbellStraightLegDeadliftToRow,
@@ -24230,6 +29492,57 @@ impl Serialize for RowExerciseName {
         }
     }
 }
+impl FromStr for RowExerciseName {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "barbell_straight_leg_deadlift_to_row" => Ok(Self::BarbellStraightLegDeadliftToRow),
+            "cable_row_standing" => Ok(Self::CableRowStanding),
+            "dumbbell_row" => Ok(Self::DumbbellRow),
+            "elevated_feet_inverted_row" => Ok(Self::ElevatedFeetInvertedRow),
+            "weighted_elevated_feet_inverted_row" => Ok(Self::WeightedElevatedFeetInvertedRow),
+            "face_pull" => Ok(Self::FacePull),
+            "face_pull_with_external_rotation" => Ok(Self::FacePullWithExternalRotation),
+            "inverted_row_with_feet_on_swiss_ball" => Ok(Self::InvertedRowWithFeetOnSwissBall),
+            "weighted_inverted_row_with_feet_on_swiss_ball" => {
+                Ok(Self::WeightedInvertedRowWithFeetOnSwissBall)
+            }
+            "kettlebell_row" => Ok(Self::KettlebellRow),
+            "modified_inverted_row" => Ok(Self::ModifiedInvertedRow),
+            "weighted_modified_inverted_row" => Ok(Self::WeightedModifiedInvertedRow),
+            "neutral_grip_alternating_dumbbell_row" => Ok(Self::NeutralGripAlternatingDumbbellRow),
+            "one_arm_bent_over_row" => Ok(Self::OneArmBentOverRow),
+            "one_legged_dumbbell_row" => Ok(Self::OneLeggedDumbbellRow),
+            "renegade_row" => Ok(Self::RenegadeRow),
+            "reverse_grip_barbell_row" => Ok(Self::ReverseGripBarbellRow),
+            "rope_handle_cable_row" => Ok(Self::RopeHandleCableRow),
+            "seated_cable_row" => Ok(Self::SeatedCableRow),
+            "seated_dumbbell_row" => Ok(Self::SeatedDumbbellRow),
+            "single_arm_cable_row" => Ok(Self::SingleArmCableRow),
+            "single_arm_cable_row_and_rotation" => Ok(Self::SingleArmCableRowAndRotation),
+            "single_arm_inverted_row" => Ok(Self::SingleArmInvertedRow),
+            "weighted_single_arm_inverted_row" => Ok(Self::WeightedSingleArmInvertedRow),
+            "single_arm_neutral_grip_dumbbell_row" => Ok(Self::SingleArmNeutralGripDumbbellRow),
+            "single_arm_neutral_grip_dumbbell_row_and_rotation" => {
+                Ok(Self::SingleArmNeutralGripDumbbellRowAndRotation)
+            }
+            "suspended_inverted_row" => Ok(Self::SuspendedInvertedRow),
+            "weighted_suspended_inverted_row" => Ok(Self::WeightedSuspendedInvertedRow),
+            "t_bar_row" => Ok(Self::TBarRow),
+            "towel_grip_inverted_row" => Ok(Self::TowelGripInvertedRow),
+            "weighted_towel_grip_inverted_row" => Ok(Self::WeightedTowelGripInvertedRow),
+            "underhand_grip_cable_row" => Ok(Self::UnderhandGripCableRow),
+            "v_grip_cable_row" => Ok(Self::VGripCableRow),
+            "wide_grip_seated_cable_row" => Ok(Self::WideGripSeatedCableRow),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for RowExerciseName {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum ShoulderPressExerciseName {
     AlternatingDumbbellShoulderPress,
@@ -24431,6 +29744,47 @@ impl Serialize for ShoulderPressExerciseName {
             ShoulderPressExerciseName::Value(value) => serializer.serialize_u16(*value),
             _ => serializer.serialize_str(&self.to_string()),
         }
+    }
+}
+impl FromStr for ShoulderPressExerciseName {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "alternating_dumbbell_shoulder_press" => Ok(Self::AlternatingDumbbellShoulderPress),
+            "arnold_press" => Ok(Self::ArnoldPress),
+            "barbell_front_squat_to_push_press" => Ok(Self::BarbellFrontSquatToPushPress),
+            "barbell_push_press" => Ok(Self::BarbellPushPress),
+            "barbell_shoulder_press" => Ok(Self::BarbellShoulderPress),
+            "dead_curl_press" => Ok(Self::DeadCurlPress),
+            "dumbbell_alternating_shoulder_press_and_twist" => {
+                Ok(Self::DumbbellAlternatingShoulderPressAndTwist)
+            }
+            "dumbbell_hammer_curl_to_lunge_to_press" => Ok(Self::DumbbellHammerCurlToLungeToPress),
+            "dumbbell_push_press" => Ok(Self::DumbbellPushPress),
+            "floor_inverted_shoulder_press" => Ok(Self::FloorInvertedShoulderPress),
+            "weighted_floor_inverted_shoulder_press" => {
+                Ok(Self::WeightedFloorInvertedShoulderPress)
+            }
+            "inverted_shoulder_press" => Ok(Self::InvertedShoulderPress),
+            "weighted_inverted_shoulder_press" => Ok(Self::WeightedInvertedShoulderPress),
+            "one_arm_push_press" => Ok(Self::OneArmPushPress),
+            "overhead_barbell_press" => Ok(Self::OverheadBarbellPress),
+            "overhead_dumbbell_press" => Ok(Self::OverheadDumbbellPress),
+            "seated_barbell_shoulder_press" => Ok(Self::SeatedBarbellShoulderPress),
+            "seated_dumbbell_shoulder_press" => Ok(Self::SeatedDumbbellShoulderPress),
+            "single_arm_dumbbell_shoulder_press" => Ok(Self::SingleArmDumbbellShoulderPress),
+            "single_arm_step_up_and_press" => Ok(Self::SingleArmStepUpAndPress),
+            "smith_machine_overhead_press" => Ok(Self::SmithMachineOverheadPress),
+            "split_stance_hammer_curl_to_press" => Ok(Self::SplitStanceHammerCurlToPress),
+            "swiss_ball_dumbbell_shoulder_press" => Ok(Self::SwissBallDumbbellShoulderPress),
+            "weight_plate_front_raise" => Ok(Self::WeightPlateFrontRaise),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for ShoulderPressExerciseName {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -24687,6 +30041,56 @@ impl Serialize for ShoulderStabilityExerciseName {
         }
     }
 }
+impl FromStr for ShoulderStabilityExerciseName {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "90_degree_cable_external_rotation" => Ok(Self::Name90DegreeCableExternalRotation),
+            "band_external_rotation" => Ok(Self::BandExternalRotation),
+            "band_internal_rotation" => Ok(Self::BandInternalRotation),
+            "bent_arm_lateral_raise_and_external_rotation" => {
+                Ok(Self::BentArmLateralRaiseAndExternalRotation)
+            }
+            "cable_external_rotation" => Ok(Self::CableExternalRotation),
+            "dumbbell_face_pull_with_external_rotation" => {
+                Ok(Self::DumbbellFacePullWithExternalRotation)
+            }
+            "floor_i_raise" => Ok(Self::FloorIRaise),
+            "weighted_floor_i_raise" => Ok(Self::WeightedFloorIRaise),
+            "floor_t_raise" => Ok(Self::FloorTRaise),
+            "weighted_floor_t_raise" => Ok(Self::WeightedFloorTRaise),
+            "floor_y_raise" => Ok(Self::FloorYRaise),
+            "weighted_floor_y_raise" => Ok(Self::WeightedFloorYRaise),
+            "incline_i_raise" => Ok(Self::InclineIRaise),
+            "weighted_incline_i_raise" => Ok(Self::WeightedInclineIRaise),
+            "incline_l_raise" => Ok(Self::InclineLRaise),
+            "weighted_incline_l_raise" => Ok(Self::WeightedInclineLRaise),
+            "incline_t_raise" => Ok(Self::InclineTRaise),
+            "weighted_incline_t_raise" => Ok(Self::WeightedInclineTRaise),
+            "incline_w_raise" => Ok(Self::InclineWRaise),
+            "weighted_incline_w_raise" => Ok(Self::WeightedInclineWRaise),
+            "incline_y_raise" => Ok(Self::InclineYRaise),
+            "weighted_incline_y_raise" => Ok(Self::WeightedInclineYRaise),
+            "lying_external_rotation" => Ok(Self::LyingExternalRotation),
+            "seated_dumbbell_external_rotation" => Ok(Self::SeatedDumbbellExternalRotation),
+            "standing_l_raise" => Ok(Self::StandingLRaise),
+            "swiss_ball_i_raise" => Ok(Self::SwissBallIRaise),
+            "weighted_swiss_ball_i_raise" => Ok(Self::WeightedSwissBallIRaise),
+            "swiss_ball_t_raise" => Ok(Self::SwissBallTRaise),
+            "weighted_swiss_ball_t_raise" => Ok(Self::WeightedSwissBallTRaise),
+            "swiss_ball_w_raise" => Ok(Self::SwissBallWRaise),
+            "weighted_swiss_ball_w_raise" => Ok(Self::WeightedSwissBallWRaise),
+            "swiss_ball_y_raise" => Ok(Self::SwissBallYRaise),
+            "weighted_swiss_ball_y_raise" => Ok(Self::WeightedSwissBallYRaise),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for ShoulderStabilityExerciseName {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum ShrugExerciseName {
     BarbellJumpShrug,
@@ -24823,6 +30227,36 @@ impl Serialize for ShrugExerciseName {
             ShrugExerciseName::Value(value) => serializer.serialize_u16(*value),
             _ => serializer.serialize_str(&self.to_string()),
         }
+    }
+}
+impl FromStr for ShrugExerciseName {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "barbell_jump_shrug" => Ok(Self::BarbellJumpShrug),
+            "barbell_shrug" => Ok(Self::BarbellShrug),
+            "barbell_upright_row" => Ok(Self::BarbellUprightRow),
+            "behind_the_back_smith_machine_shrug" => Ok(Self::BehindTheBackSmithMachineShrug),
+            "dumbbell_jump_shrug" => Ok(Self::DumbbellJumpShrug),
+            "dumbbell_shrug" => Ok(Self::DumbbellShrug),
+            "dumbbell_upright_row" => Ok(Self::DumbbellUprightRow),
+            "incline_dumbbell_shrug" => Ok(Self::InclineDumbbellShrug),
+            "overhead_barbell_shrug" => Ok(Self::OverheadBarbellShrug),
+            "overhead_dumbbell_shrug" => Ok(Self::OverheadDumbbellShrug),
+            "scaption_and_shrug" => Ok(Self::ScaptionAndShrug),
+            "scapular_retraction" => Ok(Self::ScapularRetraction),
+            "serratus_chair_shrug" => Ok(Self::SerratusChairShrug),
+            "weighted_serratus_chair_shrug" => Ok(Self::WeightedSerratusChairShrug),
+            "serratus_shrug" => Ok(Self::SerratusShrug),
+            "weighted_serratus_shrug" => Ok(Self::WeightedSerratusShrug),
+            "wide_grip_jump_shrug" => Ok(Self::WideGripJumpShrug),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for ShrugExerciseName {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -25076,6 +30510,59 @@ impl Serialize for SitUpExerciseName {
             SitUpExerciseName::Value(value) => serializer.serialize_u16(*value),
             _ => serializer.serialize_str(&self.to_string()),
         }
+    }
+}
+impl FromStr for SitUpExerciseName {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "alternating_sit_up" => Ok(Self::AlternatingSitUp),
+            "weighted_alternating_sit_up" => Ok(Self::WeightedAlternatingSitUp),
+            "bent_knee_v_up" => Ok(Self::BentKneeVUp),
+            "weighted_bent_knee_v_up" => Ok(Self::WeightedBentKneeVUp),
+            "butterfly_sit_up" => Ok(Self::ButterflySitUp),
+            "weighted_butterfly_situp" => Ok(Self::WeightedButterflySitup),
+            "cross_punch_roll_up" => Ok(Self::CrossPunchRollUp),
+            "weighted_cross_punch_roll_up" => Ok(Self::WeightedCrossPunchRollUp),
+            "crossed_arms_sit_up" => Ok(Self::CrossedArmsSitUp),
+            "weighted_crossed_arms_sit_up" => Ok(Self::WeightedCrossedArmsSitUp),
+            "get_up_sit_up" => Ok(Self::GetUpSitUp),
+            "weighted_get_up_sit_up" => Ok(Self::WeightedGetUpSitUp),
+            "hovering_sit_up" => Ok(Self::HoveringSitUp),
+            "weighted_hovering_sit_up" => Ok(Self::WeightedHoveringSitUp),
+            "kettlebell_sit_up" => Ok(Self::KettlebellSitUp),
+            "medicine_ball_alternating_v_up" => Ok(Self::MedicineBallAlternatingVUp),
+            "medicine_ball_sit_up" => Ok(Self::MedicineBallSitUp),
+            "medicine_ball_v_up" => Ok(Self::MedicineBallVUp),
+            "modified_sit_up" => Ok(Self::ModifiedSitUp),
+            "negative_sit_up" => Ok(Self::NegativeSitUp),
+            "one_arm_full_sit_up" => Ok(Self::OneArmFullSitUp),
+            "reclining_circle" => Ok(Self::RecliningCircle),
+            "weighted_reclining_circle" => Ok(Self::WeightedRecliningCircle),
+            "reverse_curl_up" => Ok(Self::ReverseCurlUp),
+            "weighted_reverse_curl_up" => Ok(Self::WeightedReverseCurlUp),
+            "single_leg_swiss_ball_jackknife" => Ok(Self::SingleLegSwissBallJackknife),
+            "weighted_single_leg_swiss_ball_jackknife" => {
+                Ok(Self::WeightedSingleLegSwissBallJackknife)
+            }
+            "the_teaser" => Ok(Self::TheTeaser),
+            "the_teaser_weighted" => Ok(Self::TheTeaserWeighted),
+            "three_part_roll_down" => Ok(Self::ThreePartRollDown),
+            "weighted_three_part_roll_down" => Ok(Self::WeightedThreePartRollDown),
+            "v_up" => Ok(Self::VUp),
+            "weighted_v_up" => Ok(Self::WeightedVUp),
+            "weighted_russian_twist_on_swiss_ball" => Ok(Self::WeightedRussianTwistOnSwissBall),
+            "weighted_sit_up" => Ok(Self::WeightedSitUp),
+            "x_abs" => Ok(Self::XAbs),
+            "weighted_x_abs" => Ok(Self::WeightedXAbs),
+            "sit_up" => Ok(Self::SitUp),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for SitUpExerciseName {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -25625,6 +31112,119 @@ impl Serialize for SquatExerciseName {
         }
     }
 }
+impl FromStr for SquatExerciseName {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "leg_press" => Ok(Self::LegPress),
+            "back_squat_with_body_bar" => Ok(Self::BackSquatWithBodyBar),
+            "back_squats" => Ok(Self::BackSquats),
+            "weighted_back_squats" => Ok(Self::WeightedBackSquats),
+            "balancing_squat" => Ok(Self::BalancingSquat),
+            "weighted_balancing_squat" => Ok(Self::WeightedBalancingSquat),
+            "barbell_back_squat" => Ok(Self::BarbellBackSquat),
+            "barbell_box_squat" => Ok(Self::BarbellBoxSquat),
+            "barbell_front_squat" => Ok(Self::BarbellFrontSquat),
+            "barbell_hack_squat" => Ok(Self::BarbellHackSquat),
+            "barbell_hang_squat_snatch" => Ok(Self::BarbellHangSquatSnatch),
+            "barbell_lateral_step_up" => Ok(Self::BarbellLateralStepUp),
+            "barbell_quarter_squat" => Ok(Self::BarbellQuarterSquat),
+            "barbell_siff_squat" => Ok(Self::BarbellSiffSquat),
+            "barbell_squat_snatch" => Ok(Self::BarbellSquatSnatch),
+            "barbell_squat_with_heels_raised" => Ok(Self::BarbellSquatWithHeelsRaised),
+            "barbell_stepover" => Ok(Self::BarbellStepover),
+            "barbell_step_up" => Ok(Self::BarbellStepUp),
+            "bench_squat_with_rotational_chop" => Ok(Self::BenchSquatWithRotationalChop),
+            "weighted_bench_squat_with_rotational_chop" => {
+                Ok(Self::WeightedBenchSquatWithRotationalChop)
+            }
+            "body_weight_wall_squat" => Ok(Self::BodyWeightWallSquat),
+            "weighted_wall_squat" => Ok(Self::WeightedWallSquat),
+            "box_step_squat" => Ok(Self::BoxStepSquat),
+            "weighted_box_step_squat" => Ok(Self::WeightedBoxStepSquat),
+            "braced_squat" => Ok(Self::BracedSquat),
+            "crossed_arm_barbell_front_squat" => Ok(Self::CrossedArmBarbellFrontSquat),
+            "crossover_dumbbell_step_up" => Ok(Self::CrossoverDumbbellStepUp),
+            "dumbbell_front_squat" => Ok(Self::DumbbellFrontSquat),
+            "dumbbell_split_squat" => Ok(Self::DumbbellSplitSquat),
+            "dumbbell_squat" => Ok(Self::DumbbellSquat),
+            "dumbbell_squat_clean" => Ok(Self::DumbbellSquatClean),
+            "dumbbell_stepover" => Ok(Self::DumbbellStepover),
+            "dumbbell_step_up" => Ok(Self::DumbbellStepUp),
+            "elevated_single_leg_squat" => Ok(Self::ElevatedSingleLegSquat),
+            "weighted_elevated_single_leg_squat" => Ok(Self::WeightedElevatedSingleLegSquat),
+            "figure_four_squats" => Ok(Self::FigureFourSquats),
+            "weighted_figure_four_squats" => Ok(Self::WeightedFigureFourSquats),
+            "goblet_squat" => Ok(Self::GobletSquat),
+            "kettlebell_squat" => Ok(Self::KettlebellSquat),
+            "kettlebell_swing_overhead" => Ok(Self::KettlebellSwingOverhead),
+            "kettlebell_swing_with_flip_to_squat" => Ok(Self::KettlebellSwingWithFlipToSquat),
+            "lateral_dumbbell_step_up" => Ok(Self::LateralDumbbellStepUp),
+            "one_legged_squat" => Ok(Self::OneLeggedSquat),
+            "overhead_dumbbell_squat" => Ok(Self::OverheadDumbbellSquat),
+            "overhead_squat" => Ok(Self::OverheadSquat),
+            "partial_single_leg_squat" => Ok(Self::PartialSingleLegSquat),
+            "weighted_partial_single_leg_squat" => Ok(Self::WeightedPartialSingleLegSquat),
+            "pistol_squat" => Ok(Self::PistolSquat),
+            "weighted_pistol_squat" => Ok(Self::WeightedPistolSquat),
+            "plie_slides" => Ok(Self::PlieSlides),
+            "weighted_plie_slides" => Ok(Self::WeightedPlieSlides),
+            "plie_squat" => Ok(Self::PlieSquat),
+            "weighted_plie_squat" => Ok(Self::WeightedPlieSquat),
+            "prisoner_squat" => Ok(Self::PrisonerSquat),
+            "weighted_prisoner_squat" => Ok(Self::WeightedPrisonerSquat),
+            "single_leg_bench_get_up" => Ok(Self::SingleLegBenchGetUp),
+            "weighted_single_leg_bench_get_up" => Ok(Self::WeightedSingleLegBenchGetUp),
+            "single_leg_bench_squat" => Ok(Self::SingleLegBenchSquat),
+            "weighted_single_leg_bench_squat" => Ok(Self::WeightedSingleLegBenchSquat),
+            "single_leg_squat_on_swiss_ball" => Ok(Self::SingleLegSquatOnSwissBall),
+            "weighted_single_leg_squat_on_swiss_ball" => {
+                Ok(Self::WeightedSingleLegSquatOnSwissBall)
+            }
+            "squat" => Ok(Self::Squat),
+            "weighted_squat" => Ok(Self::WeightedSquat),
+            "squats_with_band" => Ok(Self::SquatsWithBand),
+            "staggered_squat" => Ok(Self::StaggeredSquat),
+            "weighted_staggered_squat" => Ok(Self::WeightedStaggeredSquat),
+            "step_up" => Ok(Self::StepUp),
+            "weighted_step_up" => Ok(Self::WeightedStepUp),
+            "suitcase_squats" => Ok(Self::SuitcaseSquats),
+            "sumo_squat" => Ok(Self::SumoSquat),
+            "sumo_squat_slide_in" => Ok(Self::SumoSquatSlideIn),
+            "weighted_sumo_squat_slide_in" => Ok(Self::WeightedSumoSquatSlideIn),
+            "sumo_squat_to_high_pull" => Ok(Self::SumoSquatToHighPull),
+            "sumo_squat_to_stand" => Ok(Self::SumoSquatToStand),
+            "weighted_sumo_squat_to_stand" => Ok(Self::WeightedSumoSquatToStand),
+            "sumo_squat_with_rotation" => Ok(Self::SumoSquatWithRotation),
+            "weighted_sumo_squat_with_rotation" => Ok(Self::WeightedSumoSquatWithRotation),
+            "swiss_ball_body_weight_wall_squat" => Ok(Self::SwissBallBodyWeightWallSquat),
+            "weighted_swiss_ball_wall_squat" => Ok(Self::WeightedSwissBallWallSquat),
+            "thrusters" => Ok(Self::Thrusters),
+            "uneven_squat" => Ok(Self::UnevenSquat),
+            "weighted_uneven_squat" => Ok(Self::WeightedUnevenSquat),
+            "waist_slimming_squat" => Ok(Self::WaistSlimmingSquat),
+            "wall_ball" => Ok(Self::WallBall),
+            "wide_stance_barbell_squat" => Ok(Self::WideStanceBarbellSquat),
+            "wide_stance_goblet_squat" => Ok(Self::WideStanceGobletSquat),
+            "zercher_squat" => Ok(Self::ZercherSquat),
+            "kbs_overhead" => Ok(Self::KbsOverhead),
+            "squat_and_side_kick" => Ok(Self::SquatAndSideKick),
+            "squat_jumps_in_n_out" => Ok(Self::SquatJumpsInNOut),
+            "pilates_plie_squats_parallel_turned_out_flat_and_heels" => {
+                Ok(Self::PilatesPlieSquatsParallelTurnedOutFlatAndHeels)
+            }
+            "releve_straight_leg_and_knee_bent_with_one_leg_variation" => {
+                Ok(Self::ReleveStraightLegAndKneeBentWithOneLegVariation)
+            }
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for SquatExerciseName {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum TotalBodyExerciseName {
     Burpee,
@@ -25743,6 +31343,32 @@ impl Serialize for TotalBodyExerciseName {
             TotalBodyExerciseName::Value(value) => serializer.serialize_u16(*value),
             _ => serializer.serialize_str(&self.to_string()),
         }
+    }
+}
+impl FromStr for TotalBodyExerciseName {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "burpee" => Ok(Self::Burpee),
+            "weighted_burpee" => Ok(Self::WeightedBurpee),
+            "burpee_box_jump" => Ok(Self::BurpeeBoxJump),
+            "weighted_burpee_box_jump" => Ok(Self::WeightedBurpeeBoxJump),
+            "high_pull_burpee" => Ok(Self::HighPullBurpee),
+            "man_makers" => Ok(Self::ManMakers),
+            "one_arm_burpee" => Ok(Self::OneArmBurpee),
+            "squat_thrusts" => Ok(Self::SquatThrusts),
+            "weighted_squat_thrusts" => Ok(Self::WeightedSquatThrusts),
+            "squat_plank_push_up" => Ok(Self::SquatPlankPushUp),
+            "weighted_squat_plank_push_up" => Ok(Self::WeightedSquatPlankPushUp),
+            "standing_t_rotation_balance" => Ok(Self::StandingTRotationBalance),
+            "weighted_standing_t_rotation_balance" => Ok(Self::WeightedStandingTRotationBalance),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for TotalBodyExerciseName {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -26053,6 +31679,80 @@ impl Serialize for TricepsExtensionExerciseName {
         }
     }
 }
+impl FromStr for TricepsExtensionExerciseName {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "bench_dip" => Ok(Self::BenchDip),
+            "weighted_bench_dip" => Ok(Self::WeightedBenchDip),
+            "body_weight_dip" => Ok(Self::BodyWeightDip),
+            "cable_kickback" => Ok(Self::CableKickback),
+            "cable_lying_triceps_extension" => Ok(Self::CableLyingTricepsExtension),
+            "cable_overhead_triceps_extension" => Ok(Self::CableOverheadTricepsExtension),
+            "dumbbell_kickback" => Ok(Self::DumbbellKickback),
+            "dumbbell_lying_triceps_extension" => Ok(Self::DumbbellLyingTricepsExtension),
+            "ez_bar_overhead_triceps_extension" => Ok(Self::EzBarOverheadTricepsExtension),
+            "incline_dip" => Ok(Self::InclineDip),
+            "weighted_incline_dip" => Ok(Self::WeightedInclineDip),
+            "incline_ez_bar_lying_triceps_extension" => Ok(Self::InclineEzBarLyingTricepsExtension),
+            "lying_dumbbell_pullover_to_extension" => Ok(Self::LyingDumbbellPulloverToExtension),
+            "lying_ez_bar_triceps_extension" => Ok(Self::LyingEzBarTricepsExtension),
+            "lying_triceps_extension_to_close_grip_bench_press" => {
+                Ok(Self::LyingTricepsExtensionToCloseGripBenchPress)
+            }
+            "overhead_dumbbell_triceps_extension" => Ok(Self::OverheadDumbbellTricepsExtension),
+            "reclining_triceps_press" => Ok(Self::RecliningTricepsPress),
+            "reverse_grip_pressdown" => Ok(Self::ReverseGripPressdown),
+            "reverse_grip_triceps_pressdown" => Ok(Self::ReverseGripTricepsPressdown),
+            "rope_pressdown" => Ok(Self::RopePressdown),
+            "seated_barbell_overhead_triceps_extension" => {
+                Ok(Self::SeatedBarbellOverheadTricepsExtension)
+            }
+            "seated_dumbbell_overhead_triceps_extension" => {
+                Ok(Self::SeatedDumbbellOverheadTricepsExtension)
+            }
+            "seated_ez_bar_overhead_triceps_extension" => {
+                Ok(Self::SeatedEzBarOverheadTricepsExtension)
+            }
+            "seated_single_arm_overhead_dumbbell_extension" => {
+                Ok(Self::SeatedSingleArmOverheadDumbbellExtension)
+            }
+            "single_arm_dumbbell_overhead_triceps_extension" => {
+                Ok(Self::SingleArmDumbbellOverheadTricepsExtension)
+            }
+            "single_dumbbell_seated_overhead_triceps_extension" => {
+                Ok(Self::SingleDumbbellSeatedOverheadTricepsExtension)
+            }
+            "single_leg_bench_dip_and_kick" => Ok(Self::SingleLegBenchDipAndKick),
+            "weighted_single_leg_bench_dip_and_kick" => Ok(Self::WeightedSingleLegBenchDipAndKick),
+            "single_leg_dip" => Ok(Self::SingleLegDip),
+            "weighted_single_leg_dip" => Ok(Self::WeightedSingleLegDip),
+            "static_lying_triceps_extension" => Ok(Self::StaticLyingTricepsExtension),
+            "suspended_dip" => Ok(Self::SuspendedDip),
+            "weighted_suspended_dip" => Ok(Self::WeightedSuspendedDip),
+            "swiss_ball_dumbbell_lying_triceps_extension" => {
+                Ok(Self::SwissBallDumbbellLyingTricepsExtension)
+            }
+            "swiss_ball_ez_bar_lying_triceps_extension" => {
+                Ok(Self::SwissBallEzBarLyingTricepsExtension)
+            }
+            "swiss_ball_ez_bar_overhead_triceps_extension" => {
+                Ok(Self::SwissBallEzBarOverheadTricepsExtension)
+            }
+            "tabletop_dip" => Ok(Self::TabletopDip),
+            "weighted_tabletop_dip" => Ok(Self::WeightedTabletopDip),
+            "triceps_extension_on_floor" => Ok(Self::TricepsExtensionOnFloor),
+            "triceps_pressdown" => Ok(Self::TricepsPressdown),
+            "weighted_dip" => Ok(Self::WeightedDip),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for TricepsExtensionExerciseName {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum WarmUpExerciseName {
     QuadrupedRocking,
@@ -26270,6 +31970,50 @@ impl Serialize for WarmUpExerciseName {
         }
     }
 }
+impl FromStr for WarmUpExerciseName {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "quadruped_rocking" => Ok(Self::QuadrupedRocking),
+            "neck_tilts" => Ok(Self::NeckTilts),
+            "ankle_circles" => Ok(Self::AnkleCircles),
+            "ankle_dorsiflexion_with_band" => Ok(Self::AnkleDorsiflexionWithBand),
+            "ankle_internal_rotation" => Ok(Self::AnkleInternalRotation),
+            "arm_circles" => Ok(Self::ArmCircles),
+            "bent_over_reach_to_sky" => Ok(Self::BentOverReachToSky),
+            "cat_camel" => Ok(Self::CatCamel),
+            "elbow_to_foot_lunge" => Ok(Self::ElbowToFootLunge),
+            "forward_and_backward_leg_swings" => Ok(Self::ForwardAndBackwardLegSwings),
+            "groiners" => Ok(Self::Groiners),
+            "inverted_hamstring_stretch" => Ok(Self::InvertedHamstringStretch),
+            "lateral_duck_under" => Ok(Self::LateralDuckUnder),
+            "neck_rotations" => Ok(Self::NeckRotations),
+            "opposite_arm_and_leg_balance" => Ok(Self::OppositeArmAndLegBalance),
+            "reach_roll_and_lift" => Ok(Self::ReachRollAndLift),
+            "scorpion" => Ok(Self::Scorpion),
+            "shoulder_circles" => Ok(Self::ShoulderCircles),
+            "side_to_side_leg_swings" => Ok(Self::SideToSideLegSwings),
+            "sleeper_stretch" => Ok(Self::SleeperStretch),
+            "slide_out" => Ok(Self::SlideOut),
+            "swiss_ball_hip_crossover" => Ok(Self::SwissBallHipCrossover),
+            "swiss_ball_reach_roll_and_lift" => Ok(Self::SwissBallReachRollAndLift),
+            "swiss_ball_windshield_wipers" => Ok(Self::SwissBallWindshieldWipers),
+            "thoracic_rotation" => Ok(Self::ThoracicRotation),
+            "walking_high_kicks" => Ok(Self::WalkingHighKicks),
+            "walking_high_knees" => Ok(Self::WalkingHighKnees),
+            "walking_knee_hugs" => Ok(Self::WalkingKneeHugs),
+            "walking_leg_cradles" => Ok(Self::WalkingLegCradles),
+            "walkout" => Ok(Self::Walkout),
+            "walkout_from_push_up_position" => Ok(Self::WalkoutFromPushUpPosition),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for WarmUpExerciseName {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum RunExerciseName {
     Run,
@@ -26339,6 +32083,23 @@ impl Serialize for RunExerciseName {
         }
     }
 }
+impl FromStr for RunExerciseName {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "run" => Ok(Self::Run),
+            "walk" => Ok(Self::Walk),
+            "jog" => Ok(Self::Jog),
+            "sprint" => Ok(Self::Sprint),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for RunExerciseName {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum WaterType {
     Fresh,
@@ -26405,6 +32166,23 @@ impl Serialize for WaterType {
         serializer.serialize_str(&self.to_string())
     }
 }
+impl FromStr for WaterType {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "fresh" => Ok(Self::Fresh),
+            "salt" => Ok(Self::Salt),
+            "en13319" => Ok(Self::En13319),
+            "custom" => Ok(Self::Custom),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for WaterType {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum TissueModelType {
     /// Buhlmann's decompression algorithm, version C
@@ -26455,6 +32233,20 @@ impl Serialize for TissueModelType {
         S: Serializer,
     {
         serializer.serialize_str(&self.to_string())
+    }
+}
+impl FromStr for TissueModelType {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "zhl_16c" => Ok(Self::Zhl16c),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for TissueModelType {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -26516,6 +32308,22 @@ impl Serialize for DiveGasStatus {
         S: Serializer,
     {
         serializer.serialize_str(&self.to_string())
+    }
+}
+impl FromStr for DiveGasStatus {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "disabled" => Ok(Self::Disabled),
+            "enabled" => Ok(Self::Enabled),
+            "backup_only" => Ok(Self::BackupOnly),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for DiveGasStatus {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -26766,6 +32574,58 @@ impl Serialize for DiveAlert {
         serializer.serialize_str(&self.to_string())
     }
 }
+impl FromStr for DiveAlert {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "ndl_reached" => Ok(Self::NdlReached),
+            "gas_switch_prompted" => Ok(Self::GasSwitchPrompted),
+            "near_surface" => Ok(Self::NearSurface),
+            "approaching_ndl" => Ok(Self::ApproachingNdl),
+            "po2_warn" => Ok(Self::Po2Warn),
+            "po2_crit_high" => Ok(Self::Po2CritHigh),
+            "po2_crit_low" => Ok(Self::Po2CritLow),
+            "time_alert" => Ok(Self::TimeAlert),
+            "depth_alert" => Ok(Self::DepthAlert),
+            "deco_ceiling_broken" => Ok(Self::DecoCeilingBroken),
+            "deco_complete" => Ok(Self::DecoComplete),
+            "safety_stop_broken" => Ok(Self::SafetyStopBroken),
+            "safety_stop_complete" => Ok(Self::SafetyStopComplete),
+            "cns_warning" => Ok(Self::CnsWarning),
+            "cns_critical" => Ok(Self::CnsCritical),
+            "otu_warning" => Ok(Self::OtuWarning),
+            "otu_critical" => Ok(Self::OtuCritical),
+            "ascent_critical" => Ok(Self::AscentCritical),
+            "alert_dismissed_by_key" => Ok(Self::AlertDismissedByKey),
+            "alert_dismissed_by_timeout" => Ok(Self::AlertDismissedByTimeout),
+            "battery_low" => Ok(Self::BatteryLow),
+            "battery_critical" => Ok(Self::BatteryCritical),
+            "safety_stop_started" => Ok(Self::SafetyStopStarted),
+            "approaching_first_deco_stop" => Ok(Self::ApproachingFirstDecoStop),
+            "setpoint_switch_auto_low" => Ok(Self::SetpointSwitchAutoLow),
+            "setpoint_switch_auto_high" => Ok(Self::SetpointSwitchAutoHigh),
+            "setpoint_switch_manual_low" => Ok(Self::SetpointSwitchManualLow),
+            "setpoint_switch_manual_high" => Ok(Self::SetpointSwitchManualHigh),
+            "auto_setpoint_switch_ignored" => Ok(Self::AutoSetpointSwitchIgnored),
+            "switched_to_open_circuit" => Ok(Self::SwitchedToOpenCircuit),
+            "switched_to_closed_circuit" => Ok(Self::SwitchedToClosedCircuit),
+            "tank_battery_low" => Ok(Self::TankBatteryLow),
+            "po2_ccr_dil_low" => Ok(Self::Po2CcrDilLow),
+            "deco_stop_cleared" => Ok(Self::DecoStopCleared),
+            "apnea_neutral_buoyancy" => Ok(Self::ApneaNeutralBuoyancy),
+            "apnea_target_depth" => Ok(Self::ApneaTargetDepth),
+            "apnea_surface" => Ok(Self::ApneaSurface),
+            "apnea_high_speed" => Ok(Self::ApneaHighSpeed),
+            "apnea_low_speed" => Ok(Self::ApneaLowSpeed),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for DiveAlert {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum DiveAlarmType {
     /// Alarm when a certain depth is crossed
@@ -26830,6 +32690,22 @@ impl Serialize for DiveAlarmType {
         serializer.serialize_str(&self.to_string())
     }
 }
+impl FromStr for DiveAlarmType {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "depth" => Ok(Self::Depth),
+            "time" => Ok(Self::Time),
+            "speed" => Ok(Self::Speed),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for DiveAlarmType {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum DiveBacklightMode {
     AtDepth,
@@ -26884,6 +32760,21 @@ impl Serialize for DiveBacklightMode {
         S: Serializer,
     {
         serializer.serialize_str(&self.to_string())
+    }
+}
+impl FromStr for DiveBacklightMode {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "at_depth" => Ok(Self::AtDepth),
+            "always_on" => Ok(Self::AlwaysOn),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for DiveBacklightMode {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -26957,6 +32848,24 @@ impl Serialize for SleepLevel {
         serializer.serialize_str(&self.to_string())
     }
 }
+impl FromStr for SleepLevel {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "unmeasurable" => Ok(Self::Unmeasurable),
+            "awake" => Ok(Self::Awake),
+            "light" => Ok(Self::Light),
+            "deep" => Ok(Self::Deep),
+            "rem" => Ok(Self::Rem),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for SleepLevel {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum Spo2MeasurementType {
     OffWrist,
@@ -27023,6 +32932,23 @@ impl Serialize for Spo2MeasurementType {
         serializer.serialize_str(&self.to_string())
     }
 }
+impl FromStr for Spo2MeasurementType {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "off_wrist" => Ok(Self::OffWrist),
+            "spot_check" => Ok(Self::SpotCheck),
+            "continuous_check" => Ok(Self::ContinuousCheck),
+            "periodic" => Ok(Self::Periodic),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for Spo2MeasurementType {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum CcrSetpointSwitchMode {
     /// User switches setpoints manually
@@ -27081,6 +33007,21 @@ impl Serialize for CcrSetpointSwitchMode {
         serializer.serialize_str(&self.to_string())
     }
 }
+impl FromStr for CcrSetpointSwitchMode {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "manual" => Ok(Self::Manual),
+            "automatic" => Ok(Self::Automatic),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for CcrSetpointSwitchMode {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum DiveGasMode {
     OpenCircuit,
@@ -27135,6 +33076,21 @@ impl Serialize for DiveGasMode {
         S: Serializer,
     {
         serializer.serialize_str(&self.to_string())
+    }
+}
+impl FromStr for DiveGasMode {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "open_circuit" => Ok(Self::OpenCircuit),
+            "closed_circuit_diluent" => Ok(Self::ClosedCircuitDiluent),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for DiveGasMode {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -27219,6 +33175,25 @@ impl Serialize for ProjectileType {
         serializer.serialize_str(&self.to_string())
     }
 }
+impl FromStr for ProjectileType {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "arrow" => Ok(Self::Arrow),
+            "rifle_cartridge" => Ok(Self::RifleCartridge),
+            "pistol_cartridge" => Ok(Self::PistolCartridge),
+            "shotshell" => Ok(Self::Shotshell),
+            "air_rifle_pellet" => Ok(Self::AirRiflePellet),
+            "other" => Ok(Self::Other),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for ProjectileType {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum FaveroProduct {
     AssiomaUno,
@@ -27276,6 +33251,21 @@ impl Serialize for FaveroProduct {
             FaveroProduct::Value(value) => serializer.serialize_u16(*value),
             _ => serializer.serialize_str(&self.to_string()),
         }
+    }
+}
+impl FromStr for FaveroProduct {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "assioma_uno" => Ok(Self::AssiomaUno),
+            "assioma_duo" => Ok(Self::AssiomaDuo),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for FaveroProduct {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -27433,6 +33423,40 @@ impl Serialize for SplitType {
         serializer.serialize_str(&self.to_string())
     }
 }
+impl FromStr for SplitType {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "ascent_split" => Ok(Self::AscentSplit),
+            "descent_split" => Ok(Self::DescentSplit),
+            "interval_active" => Ok(Self::IntervalActive),
+            "interval_rest" => Ok(Self::IntervalRest),
+            "interval_warmup" => Ok(Self::IntervalWarmup),
+            "interval_cooldown" => Ok(Self::IntervalCooldown),
+            "interval_recovery" => Ok(Self::IntervalRecovery),
+            "interval_other" => Ok(Self::IntervalOther),
+            "climb_active" => Ok(Self::ClimbActive),
+            "climb_rest" => Ok(Self::ClimbRest),
+            "surf_active" => Ok(Self::SurfActive),
+            "run_active" => Ok(Self::RunActive),
+            "run_rest" => Ok(Self::RunRest),
+            "workout_round" => Ok(Self::WorkoutRound),
+            "rwd_run" => Ok(Self::RwdRun),
+            "rwd_walk" => Ok(Self::RwdWalk),
+            "windsurf_active" => Ok(Self::WindsurfActive),
+            "rwd_stand" => Ok(Self::RwdStand),
+            "transition" => Ok(Self::Transition),
+            "ski_lift_split" => Ok(Self::SkiLiftSplit),
+            "ski_run_split" => Ok(Self::SkiRunSplit),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for SplitType {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum ClimbProEvent {
     Approach,
@@ -27492,6 +33516,22 @@ impl Serialize for ClimbProEvent {
         S: Serializer,
     {
         serializer.serialize_str(&self.to_string())
+    }
+}
+impl FromStr for ClimbProEvent {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "approach" => Ok(Self::Approach),
+            "start" => Ok(Self::Start),
+            "complete" => Ok(Self::Complete),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for ClimbProEvent {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -27560,6 +33600,22 @@ impl Serialize for GasConsumptionRateType {
         serializer.serialize_str(&self.to_string())
     }
 }
+impl FromStr for GasConsumptionRateType {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "pressure_sac" => Ok(Self::PressureSac),
+            "volume_sac" => Ok(Self::VolumeSac),
+            "rmv" => Ok(Self::Rmv),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for GasConsumptionRateType {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum TapSensitivity {
     High,
@@ -27619,6 +33675,22 @@ impl Serialize for TapSensitivity {
         S: Serializer,
     {
         serializer.serialize_str(&self.to_string())
+    }
+}
+impl FromStr for TapSensitivity {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "high" => Ok(Self::High),
+            "medium" => Ok(Self::Medium),
+            "low" => Ok(Self::Low),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for TapSensitivity {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -27687,6 +33759,23 @@ impl Serialize for RadarThreatLevelType {
         serializer.serialize_str(&self.to_string())
     }
 }
+impl FromStr for RadarThreatLevelType {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "threat_unknown" => Ok(Self::ThreatUnknown),
+            "threat_none" => Ok(Self::ThreatNone),
+            "threat_approaching" => Ok(Self::ThreatApproaching),
+            "threat_approaching_fast" => Ok(Self::ThreatApproachingFast),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for RadarThreatLevelType {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum MaxMetSpeedSource {
     OnboardGps,
@@ -27748,6 +33837,22 @@ impl Serialize for MaxMetSpeedSource {
         serializer.serialize_str(&self.to_string())
     }
 }
+impl FromStr for MaxMetSpeedSource {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "onboard_gps" => Ok(Self::OnboardGps),
+            "connected_gps" => Ok(Self::ConnectedGps),
+            "cadence" => Ok(Self::Cadence),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for MaxMetSpeedSource {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum MaxMetHeartRateSource {
     /// Wrist Heart Rate Monitor
@@ -27804,6 +33909,21 @@ impl Serialize for MaxMetHeartRateSource {
         S: Serializer,
     {
         serializer.serialize_str(&self.to_string())
+    }
+}
+impl FromStr for MaxMetHeartRateSource {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "whr" => Ok(Self::Whr),
+            "hrm" => Ok(Self::Hrm),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for MaxMetHeartRateSource {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -27877,6 +33997,24 @@ impl Serialize for HrvStatus {
         serializer.serialize_str(&self.to_string())
     }
 }
+impl FromStr for HrvStatus {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "none" => Ok(Self::None),
+            "poor" => Ok(Self::Poor),
+            "low" => Ok(Self::Low),
+            "unbalanced" => Ok(Self::Unbalanced),
+            "balanced" => Ok(Self::Balanced),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for HrvStatus {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
+    }
+}
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum NoFlyTimeMode {
     /// Standard Diver Alert Network no-fly guidance
@@ -27933,6 +34071,21 @@ impl Serialize for NoFlyTimeMode {
         S: Serializer,
     {
         serializer.serialize_str(&self.to_string())
+    }
+}
+impl FromStr for NoFlyTimeMode {
+    type Err = EnumFromStrError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "standard" => Ok(Self::Standard),
+            "flat_24_hours" => Ok(Self::Flat24Hours),
+            _ => Err(EnumFromStrError),
+        }
+    }
+}
+impl FromValue for NoFlyTimeMode {
+    fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {
+        super::parse_enum(value)
     }
 }
 

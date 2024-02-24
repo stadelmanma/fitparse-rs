@@ -171,6 +171,32 @@ impl FieldTypeDefintion {
         writeln!(out, "}}")?;
         writeln!(out, "}}")?;
 
+        writeln!(out, "impl FromStr for {} {{", self.titlized_name())?;
+        writeln!(out, "  type Err = EnumFromStrError;")?;
+        writeln!(out, "  fn from_str(s: &str) -> Result<Self, Self::Err> {{")?;
+        writeln!(out, "    match s {{")?;
+        for variant in self.variant_map().values() {
+            writeln!(
+                out,
+                "      \"{}\" => Ok(Self::{}),",
+                variant.name(),
+                variant.titlized_name()
+            )?;
+        }
+        writeln!(out, "      _ => Err(EnumFromStrError),")?;
+        writeln!(out, "    }}")?;
+        writeln!(out, "  }}")?;
+        writeln!(out, "}}")?;
+
+        writeln!(out, "impl FromValue for {} {{", self.titlized_name())?;
+        writeln!(
+            out,
+            "  fn from_value_with_units(value: ValueWithUnits) -> Result<Self, ValueWithUnits> {{"
+        )?;
+        writeln!(out, "    super::parse_enum(value)")?;
+        writeln!(out, "  }}")?;
+        writeln!(out, "}}")?;
+
         Ok(())
     }
 }
@@ -292,6 +318,9 @@ pub fn write_types_file(profile: &FitProfile, out: &mut File) -> Result<(), std:
     writeln!(out, "use serde::ser::Serializer;")?;
     writeln!(out, "use std::convert;")?;
     writeln!(out, "use std::fmt;")?;
+    writeln!(out, "use std::str::FromStr;")?;
+    writeln!(out, "use super::{{EnumFromStrError, FromValue}};")?;
+    writeln!(out, "use crate::ValueWithUnits;")?;
 
     // output enums and implementations
     for field_type in profile.field_types() {
