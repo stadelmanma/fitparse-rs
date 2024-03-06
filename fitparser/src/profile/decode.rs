@@ -10,6 +10,9 @@ use std::convert::TryInto;
 #[doc = "FIT SDK version used to generate profile decoder"]
 pub const VERSION: &str = "21.133.00";
 #[doc = "Must be first message in file."]
+#[doc = " * time_created: Only set for files that are can be created/erased."]
+#[doc = " * number: Only set for files that are not created/erased."]
+#[doc = " * product_name: Optional free form string to indicate the devices name or model"]
 fn file_id_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -566,6 +569,13 @@ fn file_creator_message_hardware_version_field(
         options,
     )
 }
+#[doc = " * fractional_timestamp: Fractional part of the UTC timestamp at the time the system timestamp was recorded."]
+#[doc = " * system_timestamp: Whole second part of the system timestamp"]
+#[doc = " * fractional_system_timestamp: Fractional part of the system timestamp"]
+#[doc = " * local_timestamp: timestamp epoch expressed in local time used to convert timestamps to local time"]
+#[doc = " * timestamp_ms: Millisecond part of the UTC timestamp at the time the system timestamp was recorded."]
+#[doc = " * system_timestamp_ms: Millisecond part of the system timestamp"]
+#[doc = " * timestamp: Whole second part of UTC timestamp at the time the system timestamp was recorded."]
 fn timestamp_correlation_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -1264,6 +1274,8 @@ fn slave_device_message_garmin_product_field(
         options,
     )
 }
+#[doc = " * languages: Use language_bits_x types where x is index of array."]
+#[doc = " * sports: Use sport_bits_x types where x is index of array."]
 fn capabilities_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -2296,6 +2308,27 @@ fn field_capabilities_message_message_index_field(
         options,
     )
 }
+#[doc = " * active_time_zone: Index into time zone arrays."]
+#[doc = " * utc_offset: Offset from system time. Required to convert timestamp from system time to UTC."]
+#[doc = " * time_offset: Offset from system time."]
+#[doc = " * time_mode: Display mode for the time"]
+#[doc = " * time_zone_offset: timezone offset in 1/4 hour increments"]
+#[doc = " * backlight_mode: Mode for backlight"]
+#[doc = " * activity_tracker_enabled: Enabled state of the activity tracker functionality"]
+#[doc = " * clock_time: UTC timestamp used to set the devices clock and date"]
+#[doc = " * pages_enabled: Bitfield to configure enabled screens for each supported loop"]
+#[doc = " * move_alert_enabled: Enabled state of the move alert"]
+#[doc = " * date_mode: Display mode for the date"]
+#[doc = " * default_page: Bitfield to indicate one page as default for each supported loop"]
+#[doc = " * autosync_min_steps: Minimum steps before an autosync can occur"]
+#[doc = " * autosync_min_time: Minimum minutes before an autosync can occur"]
+#[doc = " * lactate_threshold_autodetect_enabled: Enable auto-detect setting for the lactate threshold feature."]
+#[doc = " * ble_auto_upload_enabled: Automatically upload using BLE"]
+#[doc = " * auto_sync_frequency: Helps to conserve battery by changing modes"]
+#[doc = " * auto_activity_detect: Allows setting specific activities auto-activity detect enabled/disabled settings"]
+#[doc = " * number_of_screens: Number of screens configured to display"]
+#[doc = " * smart_notification_display_orientation: Smart Notification display orientation"]
+#[doc = " * tap_sensitivity: Used to hold the tap threshold setting"]
 fn device_settings_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -3280,6 +3313,11 @@ fn device_settings_message_tap_sensitivity_field(
         options,
     )
 }
+#[doc = " * friendly_name: Used for Morning Report greeting"]
+#[doc = " * wake_time: Typical wake time"]
+#[doc = " * sleep_time: Typical bed time"]
+#[doc = " * user_running_step_length: User defined running step length set to 0 for auto length"]
+#[doc = " * user_walking_step_length: User defined walking step length set to 0 for auto length"]
 fn user_profile_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -4680,6 +4718,8 @@ fn hrm_profile_message_message_index_field(
         options,
     )
 }
+#[doc = " * speed_source: Use footpod for speed source instead of GPS"]
+#[doc = " * odometer_rollover: Rollover counter that can be used to extend the odometer"]
 fn sdm_profile_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -5020,6 +5060,11 @@ fn sdm_profile_message_message_index_field(
         options,
     )
 }
+#[doc = " * odometer_rollover: Rollover counter that can be used to extend the odometer"]
+#[doc = " * front_gear_num: Number of front gears"]
+#[doc = " * front_gear: Number of teeth on each gear 0 is innermost"]
+#[doc = " * rear_gear_num: Number of rear gears"]
+#[doc = " * rear_gear: Number of teeth on each gear 0 is innermost"]
 fn bike_profile_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -6320,6 +6365,9 @@ fn bike_profile_message_message_index_field(
         options,
     )
 }
+#[doc = " * bluetooth_enabled: Use Bluetooth for connectivity features"]
+#[doc = " * bluetooth_le_enabled: Use Bluetooth Low Energy for connectivity features"]
+#[doc = " * ant_enabled: Use ANT for connectivity features"]
 fn connectivity_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -9002,6 +9050,23 @@ fn met_zone_message_message_index_field(
         options,
     )
 }
+#[doc = " * water_density: Fresh water is usually 1000; salt water is usually 1025"]
+#[doc = " * po2_warn: Typically 1.40"]
+#[doc = " * po2_critical: Typically 1.60"]
+#[doc = " * repeat_dive_interval: Time between surfacing and ending the activity"]
+#[doc = " * safety_stop_time: Time at safety stop (if enabled)"]
+#[doc = " * travel_gas: Index of travel dive_gas message"]
+#[doc = " * ccr_low_setpoint_switch_mode: If low PO2 should be switched to automatically"]
+#[doc = " * ccr_low_setpoint: Target PO2 when using low setpoint"]
+#[doc = " * ccr_low_setpoint_depth: Depth to switch to low setpoint in automatic mode"]
+#[doc = " * ccr_high_setpoint_switch_mode: If high PO2 should be switched to automatically"]
+#[doc = " * ccr_high_setpoint: Target PO2 when using high setpoint"]
+#[doc = " * ccr_high_setpoint_depth: Depth to switch to high setpoint in automatic mode"]
+#[doc = " * gas_consumption_display: Type of gas consumption rate to display. Some values are only valid if tank volume is known."]
+#[doc = " * up_key_enabled: Indicates whether the up key is enabled during dives"]
+#[doc = " * dive_sounds: Sounds and vibration enabled or disabled in-dive"]
+#[doc = " * last_stop_multiple: Usually 1.0/1.5/2.0 representing 3/4.5/6m or 10/15/20ft"]
+#[doc = " * no_fly_time_mode: Indicates which guidelines to use for no-fly surface interval."]
 fn dive_settings_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -10524,6 +10589,19 @@ fn dive_settings_message_message_index_field(
         options,
     )
 }
+#[doc = " * depth: Depth setting (m) for depth type alarms"]
+#[doc = " * time: Time setting (s) for time type alarms"]
+#[doc = " * enabled: Enablement flag"]
+#[doc = " * alarm_type: Alarm type setting"]
+#[doc = " * sound: Tone and Vibe setting for the alarm"]
+#[doc = " * dive_types: Dive types the alarm will trigger on"]
+#[doc = " * id: Alarm ID"]
+#[doc = " * popup_enabled: Show a visible pop-up for this alarm"]
+#[doc = " * trigger_on_descent: Trigger the alarm on descent"]
+#[doc = " * trigger_on_ascent: Trigger the alarm on ascent"]
+#[doc = " * repeating: Repeat alarm each time threshold is crossed?"]
+#[doc = " * speed: Ascent/descent rate (mps) setting for speed type alarms"]
+#[doc = " * message_index: Index of the alarm"]
 fn dive_alarm_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -11064,6 +11142,19 @@ fn dive_alarm_message_message_index_field(
         options,
     )
 }
+#[doc = " * depth: Depth setting (m) for depth type alarms"]
+#[doc = " * time: Time setting (s) for time type alarms"]
+#[doc = " * enabled: Enablement flag"]
+#[doc = " * alarm_type: Alarm type setting"]
+#[doc = " * sound: Tone and Vibe setting for the alarm."]
+#[doc = " * dive_types: Dive types the alarm will trigger on"]
+#[doc = " * id: Alarm ID"]
+#[doc = " * popup_enabled: Show a visible pop-up for this alarm"]
+#[doc = " * trigger_on_descent: Trigger the alarm on descent"]
+#[doc = " * trigger_on_ascent: Trigger the alarm on ascent"]
+#[doc = " * repeating: Repeat alarm each time threshold is crossed?"]
+#[doc = " * speed: Ascent/descent rate (mps) setting for speed type alarms"]
+#[doc = " * message_index: Index of the alarm"]
 fn dive_apnea_alarm_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -12364,6 +12455,8 @@ fn goal_message_message_index_field(
         options,
     )
 }
+#[doc = " * total_timer_time: Exclude pauses"]
+#[doc = " * local_timestamp: timestamp epoch expressed in local time, used to convert activity timestamps to local time"]
 fn activity_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -12704,6 +12797,63 @@ fn activity_message_timestamp_field(
         options,
     )
 }
+#[doc = " * event: session"]
+#[doc = " * event_type: stop"]
+#[doc = " * total_elapsed_time: Time (includes pauses)"]
+#[doc = " * total_timer_time: Timer Time (excludes pauses)"]
+#[doc = " * avg_speed: total_distance / total_timer_time"]
+#[doc = " * avg_heart_rate: average heart rate (excludes pause time)"]
+#[doc = " * avg_cadence: total_cycles / total_timer_time if non_zero_avg_cadence otherwise total_cycles / total_elapsed_time"]
+#[doc = " * avg_power: total_power / total_timer_time if non_zero_avg_power otherwise total_power / total_elapsed_time"]
+#[doc = " * nec_lat: North east corner latitude"]
+#[doc = " * nec_long: North east corner longitude"]
+#[doc = " * swc_lat: South west corner latitude"]
+#[doc = " * swc_long: South west corner longitude"]
+#[doc = " * num_lengths: # of lengths of swim pool"]
+#[doc = " * num_active_lengths: # of active lengths of swim pool"]
+#[doc = " * stroke_count: stroke_type enum used as the index"]
+#[doc = " * zone_count: zone number used as the index"]
+#[doc = " * avg_fractional_cadence: fractional part of the avg_cadence"]
+#[doc = " * max_fractional_cadence: fractional part of the max_cadence"]
+#[doc = " * total_fractional_cycles: fractional part of the total_cycles"]
+#[doc = " * avg_total_hemoglobin_conc: Avg saturated and unsaturated hemoglobin"]
+#[doc = " * min_total_hemoglobin_conc: Min saturated and unsaturated hemoglobin"]
+#[doc = " * max_total_hemoglobin_conc: Max saturated and unsaturated hemoglobin"]
+#[doc = " * avg_saturated_hemoglobin_percent: Avg percentage of hemoglobin saturated with oxygen"]
+#[doc = " * min_saturated_hemoglobin_percent: Min percentage of hemoglobin saturated with oxygen"]
+#[doc = " * max_saturated_hemoglobin_percent: Max percentage of hemoglobin saturated with oxygen"]
+#[doc = " * sport_profile_name: Sport name from associated sport mesg"]
+#[doc = " * time_standing: Total time spend in the standing position"]
+#[doc = " * stand_count: Number of transitions to the standing state"]
+#[doc = " * avg_left_pco: Average platform center offset Left"]
+#[doc = " * avg_right_pco: Average platform center offset Right"]
+#[doc = " * avg_left_power_phase: Average left power phase angles. Indexes defined by power_phase_type."]
+#[doc = " * avg_left_power_phase_peak: Average left power phase peak angles. Data value indexes defined by power_phase_type."]
+#[doc = " * avg_right_power_phase: Average right power phase angles. Data value indexes defined by power_phase_type."]
+#[doc = " * avg_right_power_phase_peak: Average right power phase peak angles data value indexes defined by power_phase_type."]
+#[doc = " * avg_power_position: Average power by position. Data value indexes defined by rider_position_type."]
+#[doc = " * max_power_position: Maximum power by position. Data value indexes defined by rider_position_type."]
+#[doc = " * avg_cadence_position: Average cadence by position. Data value indexes defined by rider_position_type."]
+#[doc = " * max_cadence_position: Maximum cadence by position. Data value indexes defined by rider_position_type."]
+#[doc = " * enhanced_avg_speed: total_distance / total_timer_time"]
+#[doc = " * avg_lev_motor_power: lev average motor power during session"]
+#[doc = " * max_lev_motor_power: lev maximum motor power during session"]
+#[doc = " * lev_battery_consumption: lev battery consumption during session"]
+#[doc = " * avg_depth: 0 if above water"]
+#[doc = " * max_depth: 0 if above water"]
+#[doc = " * surface_interval: Time since end of last dive"]
+#[doc = " * total_grit: The grit score estimates how challenging a route could be for a cyclist in terms of time spent going over sharp turns or large grade slopes."]
+#[doc = " * total_flow: The flow score estimates how long distance wise a cyclist deaccelerates over intervals where deacceleration is unnecessary such as smooth turns or small grade angle intervals."]
+#[doc = " * avg_grit: The grit score estimates how challenging a route could be for a cyclist in terms of time spent going over sharp turns or large grade slopes."]
+#[doc = " * avg_flow: The flow score estimates how long distance wise a cyclist deaccelerates over intervals where deacceleration is unnecessary such as smooth turns or small grade angle intervals."]
+#[doc = " * avg_spo2: Average SPO2 for the monitoring session"]
+#[doc = " * avg_stress: Average stress for the monitoring session"]
+#[doc = " * sdrr_hrv: Standard deviation of R-R interval (SDRR) - Heart rate variability measure most useful for wellness users."]
+#[doc = " * rmssd_hrv: Root mean square successive difference (RMSSD) - Heart rate variability measure most useful for athletes"]
+#[doc = " * total_fractional_ascent: fractional part of total_ascent"]
+#[doc = " * total_fractional_descent: fractional part of total_descent"]
+#[doc = " * timestamp: Sesson end time."]
+#[doc = " * message_index: Selected bit is set for the current session."]
 fn session_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -19296,6 +19446,48 @@ fn session_message_message_index_field(
         options,
     )
 }
+#[doc = " * total_elapsed_time: Time (includes pauses)"]
+#[doc = " * total_timer_time: Timer Time (excludes pauses)"]
+#[doc = " * total_fat_calories: If New Leaf"]
+#[doc = " * avg_cadence: total_cycles / total_timer_time if non_zero_avg_cadence otherwise total_cycles / total_elapsed_time"]
+#[doc = " * avg_power: total_power / total_timer_time if non_zero_avg_power otherwise total_power / total_elapsed_time"]
+#[doc = " * num_lengths: # of lengths of swim pool"]
+#[doc = " * num_active_lengths: # of active lengths of swim pool"]
+#[doc = " * stroke_count: stroke_type enum used as the index"]
+#[doc = " * zone_count: zone number used as the index"]
+#[doc = " * avg_fractional_cadence: fractional part of the avg_cadence"]
+#[doc = " * max_fractional_cadence: fractional part of the max_cadence"]
+#[doc = " * total_fractional_cycles: fractional part of the total_cycles"]
+#[doc = " * avg_total_hemoglobin_conc: Avg saturated and unsaturated hemoglobin"]
+#[doc = " * min_total_hemoglobin_conc: Min saturated and unsaturated hemoglobin"]
+#[doc = " * max_total_hemoglobin_conc: Max saturated and unsaturated hemoglobin"]
+#[doc = " * avg_saturated_hemoglobin_percent: Avg percentage of hemoglobin saturated with oxygen"]
+#[doc = " * min_saturated_hemoglobin_percent: Min percentage of hemoglobin saturated with oxygen"]
+#[doc = " * max_saturated_hemoglobin_percent: Max percentage of hemoglobin saturated with oxygen"]
+#[doc = " * time_standing: Total time spent in the standing position"]
+#[doc = " * stand_count: Number of transitions to the standing state"]
+#[doc = " * avg_left_pco: Average left platform center offset"]
+#[doc = " * avg_right_pco: Average right platform center offset"]
+#[doc = " * avg_left_power_phase: Average left power phase angles. Data value indexes defined by power_phase_type."]
+#[doc = " * avg_left_power_phase_peak: Average left power phase peak angles. Data value indexes defined by power_phase_type."]
+#[doc = " * avg_right_power_phase: Average right power phase angles. Data value indexes defined by power_phase_type."]
+#[doc = " * avg_right_power_phase_peak: Average right power phase peak angles. Data value indexes defined by power_phase_type."]
+#[doc = " * avg_power_position: Average power by position. Data value indexes defined by rider_position_type."]
+#[doc = " * max_power_position: Maximum power by position. Data value indexes defined by rider_position_type."]
+#[doc = " * avg_cadence_position: Average cadence by position. Data value indexes defined by rider_position_type."]
+#[doc = " * max_cadence_position: Maximum cadence by position. Data value indexes defined by rider_position_type."]
+#[doc = " * avg_lev_motor_power: lev average motor power during lap"]
+#[doc = " * max_lev_motor_power: lev maximum motor power during lap"]
+#[doc = " * lev_battery_consumption: lev battery consumption during lap"]
+#[doc = " * avg_depth: 0 if above water"]
+#[doc = " * max_depth: 0 if above water"]
+#[doc = " * total_grit: The grit score estimates how challenging a route could be for a cyclist in terms of time spent going over sharp turns or large grade slopes."]
+#[doc = " * total_flow: The flow score estimates how long distance wise a cyclist deaccelerates over intervals where deacceleration is unnecessary such as smooth turns or small grade angle intervals."]
+#[doc = " * avg_grit: The grit score estimates how challenging a route could be for a cyclist in terms of time spent going over sharp turns or large grade slopes."]
+#[doc = " * avg_flow: The flow score estimates how long distance wise a cyclist deaccelerates over intervals where deacceleration is unnecessary such as smooth turns or small grade angle intervals."]
+#[doc = " * total_fractional_ascent: fractional part of total_ascent"]
+#[doc = " * total_fractional_descent: fractional part of total_descent"]
+#[doc = " * timestamp: Lap end time."]
 fn lap_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -24631,6 +24823,8 @@ fn lap_message_message_index_field(
         options,
     )
 }
+#[doc = " * stroke_count: stroke_type enum used as the index"]
+#[doc = " * zone_count: zone number used as the index"]
 fn length_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -25565,6 +25759,34 @@ fn length_message_message_index_field(
         options,
     )
 }
+#[doc = " * resistance: Relative. 0 is none 254 is Max."]
+#[doc = " * speed_1s: Speed at 1s intervals. Timestamp field indicates time of last array element."]
+#[doc = " * cadence256: Log cadence and fractional cadence for backwards compatability"]
+#[doc = " * total_hemoglobin_conc: Total saturated and unsaturated hemoglobin"]
+#[doc = " * total_hemoglobin_conc_min: Min saturated and unsaturated hemoglobin"]
+#[doc = " * total_hemoglobin_conc_max: Max saturated and unsaturated hemoglobin"]
+#[doc = " * saturated_hemoglobin_percent: Percentage of hemoglobin saturated with oxygen"]
+#[doc = " * saturated_hemoglobin_percent_min: Min percentage of hemoglobin saturated with oxygen"]
+#[doc = " * saturated_hemoglobin_percent_max: Max percentage of hemoglobin saturated with oxygen"]
+#[doc = " * left_pco: Left platform center offset"]
+#[doc = " * right_pco: Right platform center offset"]
+#[doc = " * left_power_phase: Left power phase angles. Data value indexes defined by power_phase_type."]
+#[doc = " * left_power_phase_peak: Left power phase peak angles. Data value indexes defined by power_phase_type."]
+#[doc = " * right_power_phase: Right power phase angles. Data value indexes defined by power_phase_type."]
+#[doc = " * right_power_phase_peak: Right power phase peak angles. Data value indexes defined by power_phase_type."]
+#[doc = " * battery_soc: lev battery state of charge"]
+#[doc = " * motor_power: lev motor power"]
+#[doc = " * cycle_length16: Supports larger cycle sizes needed for paddlesports. Max cycle size: 655.35"]
+#[doc = " * absolute_pressure: Includes atmospheric pressure"]
+#[doc = " * depth: 0 if above water"]
+#[doc = " * next_stop_depth: 0 if above water"]
+#[doc = " * grit: The grit score estimates how challenging a route could be for a cyclist in terms of time spent going over sharp turns or large grade slopes."]
+#[doc = " * flow: The flow score estimates how long distance wise a cyclist deaccelerates over intervals where deacceleration is unnecessary such as smooth turns or small grade angle intervals."]
+#[doc = " * current_stress: Current Stress value"]
+#[doc = " * pressure_sac: Pressure-based surface air consumption"]
+#[doc = " * volume_sac: Volumetric surface air consumption"]
+#[doc = " * rmv: Respiratory minute volume"]
+#[doc = " * po2: Current partial pressure of oxygen"]
 fn record_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -29071,6 +29293,21 @@ fn record_message_timestamp_field(
         options,
     )
 }
+#[doc = " * rider_position: Indicates the rider position value."]
+#[doc = " * radar_threat_alert: The first byte is the radar_threat_level_max, the second byte is the radar_threat_count, third bytes is the average approach speed, and the 4th byte is the max approach speed"]
+#[doc = " * score: Do not populate directly. Autogenerated by decoder for sport_point subfield components"]
+#[doc = " * opponent_score: Do not populate directly. Autogenerated by decoder for sport_point subfield components"]
+#[doc = " * front_gear_num: Do not populate directly. Autogenerated by decoder for gear_change subfield components. Front gear number. 1 is innermost."]
+#[doc = " * front_gear: Do not populate directly. Autogenerated by decoder for gear_change subfield components. Number of front teeth."]
+#[doc = " * rear_gear_num: Do not populate directly. Autogenerated by decoder for gear_change subfield components. Rear gear number. 1 is innermost."]
+#[doc = " * rear_gear: Do not populate directly. Autogenerated by decoder for gear_change subfield components. Number of rear teeth."]
+#[doc = " * activity_type: Activity Type associated with an auto_activity_detect event"]
+#[doc = " * start_timestamp: Timestamp of when the event started"]
+#[doc = " * auto_activity_detect_start_timestamp: Auto Activity Detect Start Timestamp."]
+#[doc = " * radar_threat_level_max: Do not populate directly. Autogenerated by decoder for threat_alert subfield components."]
+#[doc = " * radar_threat_count: Do not populate directly. Autogenerated by decoder for threat_alert subfield components."]
+#[doc = " * radar_threat_avg_approach_speed: Do not populate directly. Autogenerated by decoder for radar_threat_alert subfield components"]
+#[doc = " * radar_threat_max_approach_speed: Do not populate directly. Autogenerated by decoder for radar_threat_alert subfield components"]
 fn event_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -31523,6 +31760,10 @@ fn event_message_timestamp_field(
         options,
     )
 }
+#[doc = " * cum_operating_time: Reset by new battery or charge."]
+#[doc = " * sensor_position: Indicates the location of the sensor"]
+#[doc = " * descriptor: Used to describe the sensor or location"]
+#[doc = " * product_name: Optional free form string to indicate the devices name or model"]
 fn device_info_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -33298,6 +33539,12 @@ fn training_file_message_timestamp_field(
         options,
     )
 }
+#[doc = " * weather_report: Current or forecast"]
+#[doc = " * condition: Corresponds to GSC Response weatherIcon field"]
+#[doc = " * precipitation_probability: range 0-100"]
+#[doc = " * temperature_feels_like: Heat Index if GCS heatIdx above or equal to 90F or wind chill if GCS windChill below or equal to 32F"]
+#[doc = " * location: string corresponding to GCS response location string"]
+#[doc = " * timestamp: time of update for current conditions, else forecast time"]
 fn weather_conditions_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -33958,6 +34205,11 @@ fn weather_conditions_message_timestamp_field(
         options,
     )
 }
+#[doc = " * report_id: Unique identifier from GCS report ID string, length is 12"]
+#[doc = " * issue_time: Time alert was issued"]
+#[doc = " * expire_time: Time alert expires"]
+#[doc = " * severity: Warning, Watch, Advisory, Statement"]
+#[doc = " * type: Tornado, Severe Thunderstorm, etc."]
 fn weather_alert_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -34218,6 +34470,10 @@ fn weather_alert_message_timestamp_field(
         options,
     )
 }
+#[doc = " * timestamp_ms: Millisecond part of the timestamp."]
+#[doc = " * utc_timestamp: Used to correlate UTC to system time if the timestamp of the message is in system time. This UTC time is derived from the GPS data."]
+#[doc = " * velocity: velocity[0] is lon velocity. Velocity[1] is lat velocity. Velocity[2] is altitude velocity."]
+#[doc = " * timestamp: Whole second part of the timestamp."]
 fn gps_metadata_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -34598,6 +34854,8 @@ fn gps_metadata_message_timestamp_field(
         options,
     )
 }
+#[doc = " * timestamp_ms: Millisecond part of the timestamp."]
+#[doc = " * timestamp: Whole second part of the timestamp."]
 fn camera_event_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -34818,6 +35076,15 @@ fn camera_event_message_timestamp_field(
         options,
     )
 }
+#[doc = " * timestamp_ms: Millisecond part of the timestamp."]
+#[doc = " * sample_time_offset: Each time in the array describes the time at which the gyro sample with the corrosponding index was taken. Limited to 30 samples in each message. The samples may span across seconds. Array size must match the number of samples in gyro_x and gyro_y and gyro_z"]
+#[doc = " * gyro_x: These are the raw ADC reading. Maximum number of samples is 30 in each message. The samples may span across seconds. A conversion will need to be done on this data once read."]
+#[doc = " * gyro_y: These are the raw ADC reading. Maximum number of samples is 30 in each message. The samples may span across seconds. A conversion will need to be done on this data once read."]
+#[doc = " * gyro_z: These are the raw ADC reading. Maximum number of samples is 30 in each message. The samples may span across seconds. A conversion will need to be done on this data once read."]
+#[doc = " * calibrated_gyro_x: Calibrated gyro reading"]
+#[doc = " * calibrated_gyro_y: Calibrated gyro reading"]
+#[doc = " * calibrated_gyro_z: Calibrated gyro reading"]
+#[doc = " * timestamp: Whole second part of the timestamp"]
 fn gyroscope_data_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -35198,6 +35465,18 @@ fn gyroscope_data_message_timestamp_field(
         options,
     )
 }
+#[doc = " * timestamp_ms: Millisecond part of the timestamp."]
+#[doc = " * sample_time_offset: Each time in the array describes the time at which the accelerometer sample with the corrosponding index was taken. Limited to 30 samples in each message. The samples may span across seconds. Array size must match the number of samples in accel_x and accel_y and accel_z"]
+#[doc = " * accel_x: These are the raw ADC reading. Maximum number of samples is 30 in each message. The samples may span across seconds. A conversion will need to be done on this data once read."]
+#[doc = " * accel_y: These are the raw ADC reading. Maximum number of samples is 30 in each message. The samples may span across seconds. A conversion will need to be done on this data once read."]
+#[doc = " * accel_z: These are the raw ADC reading. Maximum number of samples is 30 in each message. The samples may span across seconds. A conversion will need to be done on this data once read."]
+#[doc = " * calibrated_accel_x: Calibrated accel reading"]
+#[doc = " * calibrated_accel_y: Calibrated accel reading"]
+#[doc = " * calibrated_accel_z: Calibrated accel reading"]
+#[doc = " * compressed_calibrated_accel_x: Calibrated accel reading"]
+#[doc = " * compressed_calibrated_accel_y: Calibrated accel reading"]
+#[doc = " * compressed_calibrated_accel_z: Calibrated accel reading"]
+#[doc = " * timestamp: Whole second part of the timestamp"]
 fn accelerometer_data_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -35704,6 +35983,15 @@ fn accelerometer_data_message_timestamp_field(
         options,
     )
 }
+#[doc = " * timestamp_ms: Millisecond part of the timestamp."]
+#[doc = " * sample_time_offset: Each time in the array describes the time at which the compass sample with the corrosponding index was taken. Limited to 30 samples in each message. The samples may span across seconds. Array size must match the number of samples in cmps_x and cmps_y and cmps_z"]
+#[doc = " * mag_x: These are the raw ADC reading. Maximum number of samples is 30 in each message. The samples may span across seconds. A conversion will need to be done on this data once read."]
+#[doc = " * mag_y: These are the raw ADC reading. Maximum number of samples is 30 in each message. The samples may span across seconds. A conversion will need to be done on this data once read."]
+#[doc = " * mag_z: These are the raw ADC reading. Maximum number of samples is 30 in each message. The samples may span across seconds. A conversion will need to be done on this data once read."]
+#[doc = " * calibrated_mag_x: Calibrated Magnetometer reading"]
+#[doc = " * calibrated_mag_y: Calibrated Magnetometer reading"]
+#[doc = " * calibrated_mag_z: Calibrated Magnetometer reading"]
+#[doc = " * timestamp: Whole second part of the timestamp"]
 fn magnetometer_data_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -36084,6 +36372,10 @@ fn magnetometer_data_message_timestamp_field(
         options,
     )
 }
+#[doc = " * timestamp_ms: Millisecond part of the timestamp."]
+#[doc = " * sample_time_offset: Each time in the array describes the time at which the barometer sample with the corrosponding index was taken. The samples may span across seconds. Array size must match the number of samples in baro_cal"]
+#[doc = " * baro_pres: These are the raw ADC reading. The samples may span across seconds. A conversion will need to be done on this data once read."]
+#[doc = " * timestamp: Whole second part of the timestamp"]
 fn barometer_data_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -36264,6 +36556,15 @@ fn barometer_data_message_timestamp_field(
         options,
     )
 }
+#[doc = " * sensor_type: Indicates which sensor the calibration is for"]
+#[doc = " * calibration_factor: Calibration factor used to convert from raw ADC value to degrees, g, etc."]
+#[doc = " * accel_cal_factor: Accelerometer calibration factor"]
+#[doc = " * gyro_cal_factor: Gyro calibration factor"]
+#[doc = " * calibration_divisor: Calibration factor divisor"]
+#[doc = " * level_shift: Level shift value used to shift the ADC value back into range"]
+#[doc = " * offset_cal: Internal calibration factors, one for each: xy, yx, zx"]
+#[doc = " * orientation_matrix: 3 x 3 rotation matrix (row major)"]
+#[doc = " * timestamp: Whole second part of the timestamp"]
 fn three_d_sensor_calibration_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -36668,6 +36969,13 @@ fn three_d_sensor_calibration_message_timestamp_field(
         options,
     )
 }
+#[doc = " * sensor_type: Indicates which sensor the calibration is for"]
+#[doc = " * calibration_factor: Calibration factor used to convert from raw ADC value to degrees, g, etc."]
+#[doc = " * baro_cal_factor: Barometer calibration factor"]
+#[doc = " * calibration_divisor: Calibration factor divisor"]
+#[doc = " * level_shift: Level shift value used to shift the ADC value back into range"]
+#[doc = " * offset_cal: Internal Calibration factor"]
+#[doc = " * timestamp: Whole second part of the timestamp"]
 fn one_d_sensor_calibration_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -36980,6 +37288,9 @@ fn one_d_sensor_calibration_message_timestamp_field(
         options,
     )
 }
+#[doc = " * timestamp_ms: Millisecond part of the timestamp."]
+#[doc = " * frame_number: Number of the frame that the timestamp and timestamp_ms correlate to"]
+#[doc = " * timestamp: Whole second part of the timestamp"]
 fn video_frame_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -37120,6 +37431,15 @@ fn video_frame_message_timestamp_field(
         options,
     )
 }
+#[doc = " * timestamp_ms: Fractional part of timestamp, added to timestamp"]
+#[doc = " * time_offset: Offset of PID reading [i] from start_timestamp+start_timestamp_ms. Readings may span accross seconds."]
+#[doc = " * pid: Parameter ID"]
+#[doc = " * raw_data: Raw parameter data"]
+#[doc = " * pid_data_size: Optional, data size of PID[i]. If not specified refer to SAE J1979."]
+#[doc = " * system_time: System time associated with sample expressed in ms, can be used instead of time_offset. There will be a system_time value for each raw_data element. For multibyte pids the system_time is repeated."]
+#[doc = " * start_timestamp: Timestamp of first sample recorded in the message. Used with time_offset to generate time of each sample"]
+#[doc = " * start_timestamp_ms: Fractional part of start_timestamp"]
+#[doc = " * timestamp: Timestamp message was output"]
 fn obdii_data_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -37500,6 +37820,9 @@ fn obdii_data_message_timestamp_field(
         options,
     )
 }
+#[doc = " * timestamp_ms: Fractional part of timestamp, added to timestamp"]
+#[doc = " * sentence: NMEA sentence"]
+#[doc = " * timestamp: Timestamp message was output"]
 fn nmea_sentence_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -37640,6 +37963,16 @@ fn nmea_sentence_message_timestamp_field(
         options,
     )
 }
+#[doc = " * timestamp_ms: Fractional part of timestamp, added to timestamp"]
+#[doc = " * system_time: System time associated with sample expressed in ms."]
+#[doc = " * pitch: Range -PI/2 to +PI/2"]
+#[doc = " * roll: Range -PI to +PI"]
+#[doc = " * accel_lateral: Range -78.4 to +78.4 (-8 Gs to 8 Gs)"]
+#[doc = " * accel_normal: Range -78.4 to +78.4 (-8 Gs to 8 Gs)"]
+#[doc = " * turn_rate: Range -8.727 to +8.727 (-500 degs/sec to +500 degs/sec)"]
+#[doc = " * attitude_stage_complete: The percent complete of the current attitude stage. Set to 0 for attitude stages 0, 1 and 2 and to 100 for attitude stage 3 by AHRS modules that do not support it. Range - 100"]
+#[doc = " * track: Track Angle/Heading Range 0 - 2pi"]
+#[doc = " * timestamp: Timestamp message was output"]
 fn aviation_attitude_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -38140,6 +38473,7 @@ fn aviation_attitude_message_timestamp_field(
         options,
     )
 }
+#[doc = " * duration: Playback time of video"]
 fn video_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -38280,6 +38614,8 @@ fn video_message_duration_field(
         options,
     )
 }
+#[doc = " * message_count: Total number of title parts"]
+#[doc = " * message_index: Long titles will be split into multiple parts"]
 fn video_title_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -38420,6 +38756,8 @@ fn video_title_message_message_index_field(
         options,
     )
 }
+#[doc = " * message_count: Total number of description parts"]
+#[doc = " * message_index: Long descriptions will be split into multiple parts"]
 fn video_description_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -38560,6 +38898,8 @@ fn video_description_message_message_index_field(
         options,
     )
 }
+#[doc = " * clip_start: Start of clip in video time"]
+#[doc = " * clip_end: End of clip in video time"]
 fn video_clip_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -38860,6 +39200,11 @@ fn video_clip_message_clip_end_field(
         options,
     )
 }
+#[doc = " * repetitions: # of repitions of the movement"]
+#[doc = " * weight: Amount of weight applied for the set"]
+#[doc = " * start_time: Start time of the set"]
+#[doc = " * category_subtype: Based on the associated category, see [category]_exercise_names"]
+#[doc = " * timestamp: Timestamp of the set"]
 fn set_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -39320,6 +39665,7 @@ fn set_message_timestamp_field(
         options,
     )
 }
+#[doc = " * score: A score for a jump calculated based on hang time, rotations, and distance."]
 fn jump_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -42739,6 +43085,15 @@ fn course_point_message_message_index_field(
     )
 }
 #[doc = "Unique Identification data for a segment file"]
+#[doc = " * name: Friendly name assigned to segment"]
+#[doc = " * uuid: UUID of the segment"]
+#[doc = " * sport: Sport associated with the segment"]
+#[doc = " * enabled: Segment enabled for evaluation"]
+#[doc = " * user_profile_primary_key: Primary key of the user that created the segment"]
+#[doc = " * device_id: ID of the device that created the segment"]
+#[doc = " * default_race_leader: Index for the Leader Board entry selected as the default race participant"]
+#[doc = " * delete_status: Indicates if any segments should be deleted"]
+#[doc = " * selection_type: Indicates how the segment was selected to be sent to the device"]
 fn segment_id_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -43120,6 +43475,12 @@ fn segment_id_message_selection_type_field(
     )
 }
 #[doc = "Unique Identification data for an individual segment leader within a segment file"]
+#[doc = " * name: Friendly name assigned to leader"]
+#[doc = " * type: Leader classification"]
+#[doc = " * group_primary_key: Primary user ID of this leader"]
+#[doc = " * activity_id: ID of the activity associated with this leader time"]
+#[doc = " * segment_time: Segment Time (includes pauses)"]
+#[doc = " * activity_id_string: String version of the activity_id. 21 characters long, express in decimal"]
 fn segment_leaderboard_entry_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -43421,6 +43782,10 @@ fn segment_leaderboard_entry_message_message_index_field(
     )
 }
 #[doc = "Navigation and race evaluation point for a segment decribing a point along the segment path and time it took each segment leader to reach that point"]
+#[doc = " * distance: Accumulated distance along the segment at the described point"]
+#[doc = " * altitude: Accumulated altitude along the segment at the described point"]
+#[doc = " * leader_time: Accumualted time each leader board member required to reach the described point. This value is zero for all leader board members at the starting point of the segment."]
+#[doc = " * enhanced_altitude: Accumulated altitude along the segment at the described point"]
 fn segment_point_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -43737,6 +44102,38 @@ fn segment_point_message_message_index_field(
         options,
     )
 }
+#[doc = " * total_elapsed_time: Time (includes pauses)"]
+#[doc = " * total_timer_time: Timer Time (excludes pauses)"]
+#[doc = " * total_fat_calories: If New Leaf"]
+#[doc = " * avg_cadence: total_cycles / total_timer_time if non_zero_avg_cadence otherwise total_cycles / total_elapsed_time"]
+#[doc = " * avg_power: total_power / total_timer_time if non_zero_avg_power otherwise total_power / total_elapsed_time"]
+#[doc = " * nec_lat: North east corner latitude."]
+#[doc = " * nec_long: North east corner longitude."]
+#[doc = " * swc_lat: South west corner latitude."]
+#[doc = " * swc_long: South west corner latitude."]
+#[doc = " * avg_fractional_cadence: fractional part of the avg_cadence"]
+#[doc = " * max_fractional_cadence: fractional part of the max_cadence"]
+#[doc = " * total_fractional_cycles: fractional part of the total_cycles"]
+#[doc = " * time_standing: Total time spent in the standing position"]
+#[doc = " * stand_count: Number of transitions to the standing state"]
+#[doc = " * avg_left_pco: Average left platform center offset"]
+#[doc = " * avg_right_pco: Average right platform center offset"]
+#[doc = " * avg_left_power_phase: Average left power phase angles. Data value indexes defined by power_phase_type."]
+#[doc = " * avg_left_power_phase_peak: Average left power phase peak angles. Data value indexes defined by power_phase_type."]
+#[doc = " * avg_right_power_phase: Average right power phase angles. Data value indexes defined by power_phase_type."]
+#[doc = " * avg_right_power_phase_peak: Average right power phase peak angles. Data value indexes defined by power_phase_type."]
+#[doc = " * avg_power_position: Average power by position. Data value indexes defined by rider_position_type."]
+#[doc = " * max_power_position: Maximum power by position. Data value indexes defined by rider_position_type."]
+#[doc = " * avg_cadence_position: Average cadence by position. Data value indexes defined by rider_position_type."]
+#[doc = " * max_cadence_position: Maximum cadence by position. Data value indexes defined by rider_position_type."]
+#[doc = " * manufacturer: Manufacturer that produced the segment"]
+#[doc = " * total_grit: The grit score estimates how challenging a route could be for a cyclist in terms of time spent going over sharp turns or large grade slopes."]
+#[doc = " * total_flow: The flow score estimates how long distance wise a cyclist deaccelerates over intervals where deacceleration is unnecessary such as smooth turns or small grade angle intervals."]
+#[doc = " * avg_grit: The grit score estimates how challenging a route could be for a cyclist in terms of time spent going over sharp turns or large grade slopes."]
+#[doc = " * avg_flow: The flow score estimates how long distance wise a cyclist deaccelerates over intervals where deacceleration is unnecessary such as smooth turns or small grade angle intervals."]
+#[doc = " * total_fractional_ascent: fractional part of total_ascent"]
+#[doc = " * total_fractional_descent: fractional part of total_descent"]
+#[doc = " * timestamp: Lap end time."]
 fn segment_lap_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -47661,6 +48058,14 @@ fn segment_lap_message_message_index_field(
     )
 }
 #[doc = "Summary of the unique segment and leaderboard information associated with a segment file. This message is used to compile a segment list file describing all segment files on a device. The segment list file is used when refreshing the contents of a segment file with the latest available leaderboard information."]
+#[doc = " * file_uuid: UUID of the segment file"]
+#[doc = " * enabled: Enabled state of the segment file"]
+#[doc = " * user_profile_primary_key: Primary key of the user that created the segment file"]
+#[doc = " * leader_type: Leader type of each leader in the segment file"]
+#[doc = " * leader_group_primary_key: Group primary key of each leader in the segment file"]
+#[doc = " * leader_activity_id: Activity ID of each leader in the segment file"]
+#[doc = " * leader_activity_id_string: String version of the activity ID of each leader in the segment file. 21 characters long for each ID, express in decimal"]
+#[doc = " * default_race_leader: Index for the Leader Board entry selected as the default race participant"]
 fn segment_file_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -48041,6 +48446,7 @@ fn segment_file_message_message_index_field(
         options,
     )
 }
+#[doc = " * num_valid_steps: number of valid steps"]
 fn workout_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -48681,6 +49087,16 @@ fn workout_session_message_message_index_field(
         options,
     )
 }
+#[doc = " * duration_step: message_index of step to loop back to. Steps are assumed to be in the order by message_index. custom_name and intensity members are undefined for this duration type."]
+#[doc = " * target_speed_zone: speed zone (1-10);Custom =0;"]
+#[doc = " * target_hr_zone: hr zone (1-5);Custom =0;"]
+#[doc = " * target_cadence_zone: Zone (1-?); Custom = 0;"]
+#[doc = " * target_power_zone: Power Zone ( 1-7); Custom = 0;"]
+#[doc = " * repeat_steps: # of repetitions"]
+#[doc = " * secondary_target_speed_zone: speed zone (1-10);Custom =0;"]
+#[doc = " * secondary_target_hr_zone: hr zone (1-5);Custom =0;"]
+#[doc = " * secondary_target_cadence_zone: Zone (1-?); Custom = 0;"]
+#[doc = " * secondary_target_power_zone: Power Zone ( 1-7); Custom = 0;"]
 fn workout_step_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -51841,6 +52257,11 @@ fn exercise_title_message_message_index_field(
         options,
     )
 }
+#[doc = " * manufacturer: Corresponds to file_id of scheduled workout / course."]
+#[doc = " * product: Corresponds to file_id of scheduled workout / course."]
+#[doc = " * serial_number: Corresponds to file_id of scheduled workout / course."]
+#[doc = " * time_created: Corresponds to file_id of scheduled workout / course."]
+#[doc = " * completed: TRUE if this activity has been started"]
 fn schedule_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -52297,6 +52718,8 @@ fn schedule_message_scheduled_time_field(
         options,
     )
 }
+#[doc = " * timer_time: Excludes pauses"]
+#[doc = " * elapsed_time: Includes pauses"]
 fn totals_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -52717,6 +53140,8 @@ fn totals_message_message_index_field(
         options,
     )
 }
+#[doc = " * active_met: ~4kJ per kcal, 0.25 allows max 16384 kcal"]
+#[doc = " * user_profile_index: Associates this weight scale message to a user. This corresponds to the index of the user profile message in the weight scale file."]
 fn weight_scale_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -53297,6 +53722,7 @@ fn weight_scale_message_timestamp_field(
         options,
     )
 }
+#[doc = " * user_profile_index: Associates this blood pressure message to a user. This corresponds to the index of the user profile message in the blood pressure file."]
 fn blood_pressure_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -53757,6 +54183,9 @@ fn blood_pressure_message_timestamp_field(
         options,
     )
 }
+#[doc = " * local_timestamp: Use to convert activity timestamps to local time if device does not support time zone and daylight savings time correction."]
+#[doc = " * cycles_to_distance: Indexed by activity_type"]
+#[doc = " * cycles_to_calories: Indexed by activity_type"]
 fn monitoring_info_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -54017,6 +54446,17 @@ fn monitoring_info_message_timestamp_field(
         options,
     )
 }
+#[doc = " * device_index: Associates this data to device_info message. Not required for file with single device (sensor)."]
+#[doc = " * calories: Accumulated total calories. Maintained by MonitoringReader for each activity_type. See SDK documentation"]
+#[doc = " * distance: Accumulated distance. Maintained by MonitoringReader for each activity_type. See SDK documentation."]
+#[doc = " * cycles: Accumulated cycles. Maintained by MonitoringReader for each activity_type. See SDK documentation."]
+#[doc = " * local_timestamp: Must align to logging interval, for example, time must be 00:00:00 for daily log."]
+#[doc = " * temperature: Avg temperature during the logging interval ended at timestamp"]
+#[doc = " * temperature_min: Min temperature during the logging interval ended at timestamp"]
+#[doc = " * temperature_max: Max temperature during the logging interval ended at timestamp"]
+#[doc = " * activity_time: Indexed using minute_activity_level enum"]
+#[doc = " * current_activity_type_intensity: Indicates single type / intensity for duration since last monitoring message."]
+#[doc = " * timestamp: Must align to logging interval, for example, time must be 00:00:00 for daily log."]
 fn monitoring_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -55364,6 +55804,9 @@ fn monitoring_message_timestamp_field(
         options,
     )
 }
+#[doc = " * resting_heart_rate: 7-day rolling average"]
+#[doc = " * current_day_resting_heart_rate: RHR for today only. (Feeds into 7-day average)"]
+#[doc = " * timestamp: Must align to logging interval, for example, time must be 00:00:00 for daily log."]
 fn monitoring_hr_data_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -55506,6 +55949,7 @@ fn monitoring_hr_data_message_timestamp_field(
         options,
     )
 }
+#[doc = " * mode: Mode when data was captured"]
 fn spo2_data_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -56000,6 +56444,7 @@ fn hr_message_timestamp_field(
     )
 }
 #[doc = "Value from 1 to 100 calculated by FirstBeat"]
+#[doc = " * stress_level_time: Time stress score was calculated"]
 fn stress_level_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -56100,6 +56545,10 @@ fn stress_level_message_stress_level_time_field(
         options,
     )
 }
+#[doc = " * update_time: Time maxMET and vo2 were calculated"]
+#[doc = " * calibrated_data: Indicates if calibrated data was used in the calculation"]
+#[doc = " * hr_source: Indicates if the estimate was obtained using a chest strap or wrist heart rate"]
+#[doc = " * speed_source: Indidcates if the estimate was obtained using onboard GPS or connected GPS"]
 fn max_met_data_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -56441,6 +56890,10 @@ fn max_met_data_message_speed_source_field(
     )
 }
 #[doc = "Body battery data used for HSA custom data logging"]
+#[doc = " * processing_interval: Processing interval length in seconds"]
+#[doc = " * level: Body battery level"]
+#[doc = " * charged: Body battery charged value"]
+#[doc = " * uncharged: Body battery uncharged value"]
 fn hsa_body_battery_data_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -56662,6 +57115,7 @@ fn hsa_body_battery_data_message_timestamp_field(
     )
 }
 #[doc = "HSA events"]
+#[doc = " * event_id: Event ID"]
 fn hsa_event_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -56763,6 +57217,12 @@ fn hsa_event_message_timestamp_field(
     )
 }
 #[doc = "Raw accelerometer data used for HSA custom data logging"]
+#[doc = " * timestamp_ms: Millisecond resolution of the timestamp"]
+#[doc = " * sampling_interval: Sampling Interval in Milliseconds"]
+#[doc = " * accel_x: X-Axis Measurement"]
+#[doc = " * accel_y: Y-Axis Measurement"]
+#[doc = " * accel_z: Z-Axis Measurement"]
+#[doc = " * timestamp_32k: 32 kHz timestamp"]
 fn hsa_accelerometer_data_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -57063,6 +57523,12 @@ fn hsa_accelerometer_data_message_timestamp_field(
         options,
     )
 }
+#[doc = " * timestamp_ms: Millisecond resolution of the timestamp"]
+#[doc = " * sampling_interval: Sampling Interval in 32 kHz timescale"]
+#[doc = " * gyro_x: X-Axis Measurement"]
+#[doc = " * gyro_y: Y-Axis Measurement"]
+#[doc = " * gyro_z: Z-Axis Measurement"]
+#[doc = " * timestamp_32k: 32 kHz timestamp"]
 fn hsa_gyroscope_data_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -57364,6 +57830,8 @@ fn hsa_gyroscope_data_message_timestamp_field(
     )
 }
 #[doc = "User's current daily step data used for HSA custom data logging"]
+#[doc = " * processing_interval: Processing interval length in seconds"]
+#[doc = " * steps: Total step sum"]
 fn hsa_step_data_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -57505,6 +57973,9 @@ fn hsa_step_data_message_timestamp_field(
     )
 }
 #[doc = "User's current SpO2 data used for HSA custom data logging"]
+#[doc = " * processing_interval: Processing interval length in seconds"]
+#[doc = " * reading_spo2: SpO2 Reading"]
+#[doc = " * confidence: SpO2 Confidence"]
 fn hsa_spo2_data_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -57686,6 +58157,8 @@ fn hsa_spo2_data_message_timestamp_field(
     )
 }
 #[doc = "User's current stress data used for HSA custom data logging"]
+#[doc = " * processing_interval: Processing interval length in seconds"]
+#[doc = " * stress_level: Stress Level ( 0 - 100 ) -300 indicates invalid -200 indicates large motion -100 indicates off wrist"]
 fn hsa_stress_data_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -57827,6 +58300,8 @@ fn hsa_stress_data_message_timestamp_field(
     )
 }
 #[doc = "User's current respiration data used for HSA custom data logging"]
+#[doc = " * processing_interval: Processing interval length in seconds"]
+#[doc = " * respiration_rate: Breaths * 100 /min -300 indicates invalid -200 indicates large motion -100 indicates off wrist"]
 fn hsa_respiration_data_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -57968,6 +58443,9 @@ fn hsa_respiration_data_message_timestamp_field(
     )
 }
 #[doc = "User's current heart rate data used for HSA custom data logging"]
+#[doc = " * processing_interval: Processing interval length in seconds"]
+#[doc = " * status: Status of measurements in buffer - 0 indicates SEARCHING 1 indicates LOCKED"]
+#[doc = " * heart_rate: Beats / min"]
 fn hsa_heart_rate_data_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -58149,6 +58627,8 @@ fn hsa_heart_rate_data_message_timestamp_field(
     )
 }
 #[doc = "Configuration data for HSA custom data logging"]
+#[doc = " * data_size: Size in bytes of data field"]
+#[doc = " * timestamp: Encoded configuration data"]
 fn hsa_configuration_data_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -58290,6 +58770,8 @@ fn hsa_configuration_data_message_timestamp_field(
     )
 }
 #[doc = "Wrist temperature data used for HSA custom data logging"]
+#[doc = " * processing_interval: Processing interval length in seconds"]
+#[doc = " * value: Wrist temperature reading"]
 fn hsa_wrist_temperature_data_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -58432,6 +58914,12 @@ fn hsa_wrist_temperature_data_message_timestamp_field(
         options,
     )
 }
+#[doc = " * memo: Deprecated. Use data field."]
+#[doc = " * mesg_num: Message Number of the parent message"]
+#[doc = " * parent_index: Index of mesg that this glob is associated with."]
+#[doc = " * field_num: Field within the parent that this glob is associated with"]
+#[doc = " * data: Block of utf8 bytes. Note, mutltibyte characters may be split across adjoining memo_glob messages."]
+#[doc = " * part_index: Sequence number of memo blocks"]
 fn memo_glob_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -59610,6 +60098,7 @@ fn ant_tx_message_timestamp_field(
         options,
     )
 }
+#[doc = " * field_count: number of fields in screen"]
 fn exd_screen_configuration_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -60568,6 +61057,19 @@ fn exd_data_concept_configuration_message_is_signed_field(
         options,
     )
 }
+#[doc = " * avg_depth: 0 if above water"]
+#[doc = " * max_depth: 0 if above water"]
+#[doc = " * surface_interval: Time since end of last dive"]
+#[doc = " * avg_pressure_sac: Average pressure-based surface air consumption"]
+#[doc = " * avg_volume_sac: Average volumetric surface air consumption"]
+#[doc = " * avg_rmv: Average respiratory minute volume"]
+#[doc = " * descent_time: Time to reach deepest level stop"]
+#[doc = " * ascent_time: Time after leaving bottom until reaching surface"]
+#[doc = " * avg_ascent_rate: Average ascent rate, not including descents or stops"]
+#[doc = " * avg_descent_rate: Average descent rate, not including ascents or stops"]
+#[doc = " * max_ascent_rate: Maximum ascent rate"]
+#[doc = " * max_descent_rate: Maximum descent rate"]
+#[doc = " * hang_time: Time spent neither ascending nor descending"]
 fn dive_summary_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -61509,6 +62011,11 @@ fn dive_summary_message_timestamp_field(
     )
 }
 #[doc = "Number of acclerometer zero crossings summed over the specified time interval"]
+#[doc = " * time: Time interval length in seconds"]
+#[doc = " * energy_total: Total accelerometer energy in the interval"]
+#[doc = " * zero_cross_cnt: Count of zero crossings"]
+#[doc = " * instance: Instance ID of zero crossing algorithm"]
+#[doc = " * time_above_threshold: Total accelerometer time above threshold in the interval"]
 fn aad_accel_features_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -61770,6 +62277,7 @@ fn aad_accel_features_message_timestamp_field(
     )
 }
 #[doc = "Heart rate variability"]
+#[doc = " * time: Time between beats"]
 fn hrv_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -61831,6 +62339,8 @@ fn hrv_message_time_field(
     )
 }
 #[doc = "Array of heart beat intervals"]
+#[doc = " * timestamp_ms: Milliseconds past date_time"]
+#[doc = " * time: Array of millisecond times between beats"]
 fn beat_intervals_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -61971,6 +62481,12 @@ fn beat_intervals_message_timestamp_field(
         options,
     )
 }
+#[doc = " * weekly_average: 7 day RMSSD average over sleep"]
+#[doc = " * last_night_average: Last night RMSSD average over sleep"]
+#[doc = " * last_night_5_min_high: 5 minute high RMSSD value over sleep"]
+#[doc = " * baseline_low_upper: 3 week baseline, upper boundary of low HRV status"]
+#[doc = " * baseline_balanced_lower: 3 week baseline, lower boundary of balanced HRV status"]
+#[doc = " * baseline_balanced_upper: 3 week baseline, upper boundary of balanced HRV status"]
 fn hrv_status_summary_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -62311,6 +62827,7 @@ fn hrv_status_summary_message_timestamp_field(
         options,
     )
 }
+#[doc = " * value: 5 minute RMSSD"]
 fn hrv_value_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -62412,6 +62929,9 @@ fn hrv_value_message_timestamp_field(
     )
 }
 #[doc = "Raw Beat-to-Beat Interval values"]
+#[doc = " * timestamp_ms: ms since last overnight_raw_bbi message"]
+#[doc = " * data: 1 bit for gap indicator, 1 bit for quality indicator, and 14 bits for Beat-to-Beat interval values in whole-integer millisecond resolution"]
+#[doc = " * time: Array of millisecond times between beats"]
 fn raw_bbi_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -62769,6 +63289,7 @@ fn raw_bbi_message_timestamp_field(
         options,
     )
 }
+#[doc = " * respiration_rate: Breaths * 100 /min, -300 indicates invalid, -200 indicates large motion, -100 indicates off wrist"]
 fn respiration_rate_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -63671,6 +64192,20 @@ fn tank_summary_message_timestamp_field(
         options,
     )
 }
+#[doc = " * combined_awake_score: Average of awake_time_score and awakenings_count_score. If valid: 0 (worst) to 100 (best). If unknown: FIT_UINT8_INVALID."]
+#[doc = " * awake_time_score: Score that evaluates the total time spent awake between sleep. If valid: 0 (worst) to 100 (best). If unknown: FIT_UINT8_INVALID."]
+#[doc = " * awakenings_count_score: Score that evaluates the number of awakenings that interrupt sleep. If valid: 0 (worst) to 100 (best). If unknown: FIT_UINT8_INVALID."]
+#[doc = " * deep_sleep_score: Score that evaluates the amount of deep sleep. If valid: 0 (worst) to 100 (best). If unknown: FIT_UINT8_INVALID."]
+#[doc = " * sleep_duration_score: Score that evaluates the quality of sleep based on sleep stages, heart-rate variability and possible awakenings during the night. If valid: 0 (worst) to 100 (best). If unknown: FIT_UINT8_INVALID."]
+#[doc = " * light_sleep_score: Score that evaluates the amount of light sleep. If valid: 0 (worst) to 100 (best). If unknown: FIT_UINT8_INVALID."]
+#[doc = " * overall_sleep_score: Total score that summarizes the overall quality of sleep, combining sleep duration and quality. If valid: 0 (worst) to 100 (best). If unknown: FIT_UINT8_INVALID."]
+#[doc = " * sleep_quality_score: Score that evaluates the quality of sleep based on sleep stages, heart-rate variability and possible awakenings during the night. If valid: 0 (worst) to 100 (best). If unknown: FIT_UINT8_INVALID."]
+#[doc = " * sleep_recovery_score: Score that evaluates stress and recovery during sleep. If valid: 0 (worst) to 100 (best). If unknown: FIT_UINT8_INVALID."]
+#[doc = " * rem_sleep_score: Score that evaluates the amount of REM sleep. If valid: 0 (worst) to 100 (best). If unknown: FIT_UINT8_INVALID."]
+#[doc = " * sleep_restlessness_score: Score that evaluates the amount of restlessness during sleep. If valid: 0 (worst) to 100 (best). If unknown: FIT_UINT8_INVALID."]
+#[doc = " * awakenings_count: The number of awakenings during sleep."]
+#[doc = " * interruptions_score: Score that evaluates the sleep interruptions. If valid: 0 (worst) to 100 (best). If unknown: FIT_UINT8_INVALID."]
+#[doc = " * average_stress_during_sleep: Excludes stress during awake periods in the sleep window"]
 fn sleep_assessment_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
