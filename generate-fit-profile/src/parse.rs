@@ -31,7 +31,6 @@ impl FitProfile {
 pub struct FieldTypeDefintion {
     name: String,
     ident: Ident,
-    titlized_name: String,
     base_type: &'static str,
     is_true_enum: bool,
     comment: Option<String>,
@@ -42,12 +41,10 @@ impl FieldTypeDefintion {
     fn new(name: &str, base_type: &'static str, comment: Option<String>) -> Self {
         let is_true_enum = base_type == "enum";
         let base_type = if is_true_enum { "u8" } else { base_type };
-        let titlized = titlecase_string(name);
 
         Self {
             name: name.to_string(),
-            ident: format_ident!("{}", &titlized),
-            titlized_name: titlized,
+            ident: format_ident!("{}", titlecase_string(name)),
             base_type,
             is_true_enum,
             comment,
@@ -61,10 +58,6 @@ impl FieldTypeDefintion {
 
     pub fn ident(&self) -> &Ident {
         &self.ident
-    }
-
-    pub fn titlized_name(&self) -> &str {
-        &self.titlized_name
     }
 
     pub const fn base_type(&self) -> &'static str {
@@ -96,7 +89,6 @@ impl FieldTypeDefintion {
 pub struct FieldTypeVariant {
     name: String,
     ident: Ident,
-    titlized_name: String,
     value: i64,
     comment: Option<String>,
 }
@@ -112,8 +104,7 @@ impl FieldTypeVariant {
 
         Self {
             name,
-            ident: format_ident!("{}", &titlized_name),
-            titlized_name,
+            ident: format_ident!("{}", titlized_name),
             value,
             comment,
         }
@@ -125,10 +116,6 @@ impl FieldTypeVariant {
 
     pub fn ident(&self) -> &Ident {
         &self.ident
-    }
-
-    pub fn titlized_name(&self) -> &str {
-        &self.titlized_name
     }
 
     pub const fn value(&self) -> i64 {
@@ -143,16 +130,17 @@ impl FieldTypeVariant {
 #[derive(Clone, Debug)]
 pub struct MessageDefinition {
     name: String,
-    titlized_name: String,
+    struct_ident: Ident,
     comment: Option<String>,
     field_map: BTreeMap<u8, MessageFieldDefinition>,
 }
 
 impl MessageDefinition {
     fn new(name: &str, comment: Option<String>) -> Self {
+        let struct_ident = format_ident!("{}", titlecase_string(name));
         Self {
             name: name.to_string(),
-            titlized_name: titlecase_string(name),
+            struct_ident,
             comment,
             field_map: BTreeMap::new(),
         }
@@ -162,8 +150,8 @@ impl MessageDefinition {
         &self.name
     }
 
-    pub fn titlized_name(&self) -> &str {
-        &self.titlized_name
+    pub fn struct_ident(&self) -> &Ident {
+        &self.struct_ident
     }
 
     pub const fn field_map(&self) -> &BTreeMap<u8, MessageFieldDefinition> {
@@ -476,7 +464,7 @@ fn post_process_message(msg: MessageDefinition) -> MessageDefinition {
     // depending on how we get to the field
     let MessageDefinition {
         name,
-        titlized_name,
+        struct_ident,
         comment,
         field_map,
     } = msg;
@@ -503,7 +491,7 @@ fn post_process_message(msg: MessageDefinition) -> MessageDefinition {
 
     MessageDefinition {
         name,
-        titlized_name,
+        struct_ident,
         comment,
         field_map: updated_field_map,
     }
