@@ -1,5 +1,7 @@
 //! Functions to generate the message decoding functions from the fit profile.
 use crate::parse::{FitProfile, MessageDefinition, MessageFieldDefinition};
+use proc_macro2::{Ident, Literal, Span, TokenStream};
+use quote::{format_ident, quote, ToTokens};
 use std::collections::{HashMap, HashSet};
 use std::fs::File;
 use std::io::prelude::*;
@@ -8,100 +10,104 @@ use std::io::prelude::*;
 // not be part of the impl and just pass the field/message
 // in a parameter
 
+fn bare_number_literal(value: u8) -> Literal {
+    Literal::u8_unsuffixed(value)
+}
+
 impl MessageDefinition {
-    fn function_name(&self) -> String {
-        format!("{}_message", self.name())
+    fn function_name(&self) -> Ident {
+        format_ident!("{}_message", self.name())
     }
 
-    fn write_decode_function_def(&self, out: &mut File) -> Result<(), std::io::Error> {
-        if let Some(v) = self.comment() {
-            writeln!(out, "/// {v}")?;
-        }
-        writeln!(out, "fn {}(mesg_num: MesgNum, data_map: &mut HashMap<u8, Value>, accumlators: &mut HashMap<u32, Value>, options: &HashSet<DecodeOption>) -> Result<Vec<FitDataField>> {{", self.function_name())?;
-        writeln!(out, "let mut fields = Vec::new();")?;
-        writeln!(out, "let mut entries: VecDeque<(u8, Value)> = data_map.iter().map(|(k, v)| (*k, v.clone())).collect();")?;
-
-        writeln!(
-            out,
-            "while let Some((def_num, value)) = entries.pop_front() {{"
-        )?;
-        writeln!(out, "match def_num {{")?;
+    fn decode_function_def(&self) -> TokenStream {
+        let comment = self
+            .comment()
+            .map_or_else(|| TokenStream::new(), |v| quote!(#[doc = #v]));
+        let fn_name = self.function_name();
+        let match_arms = self
+            .field_map()
+            .values()
+            .map(|fld| {
+                (
+                    fld.def_number(),
+                    fld.field_decode_block(
+                        self,
+                        &Ident::new("value", Span::call_site()).to_token_stream(),
+                        None,
+                        None,
+                    ),
+                )
+            })
+            .map(|(dfn, expr)| quote!(#dfn => {#expr}));
+        let mut sub_field_fns = Vec::new();
         for field in self.field_map().values() {
-            writeln!(out, "{0} => {{", field.def_number())?;
-            field.write_field_decode_block(out, self, "value", None, None)?;
-            writeln!(out, "}}")?;
-        }
-        writeln!(out, "_ => {{")?;
-        writeln!(
-            out,
-            "if !options.contains(&DecodeOption::DropUnknownFields) {{"
-        )?;
-        writeln!(out, "fields.push(unknown_field(def_num, value));")?;
-        writeln!(out, "}}")?;
-        writeln!(out, "}}")?;
-
-        writeln!(out, "}}")?;
-        writeln!(out, "}}")?;
-
-        writeln!(out, "Ok(fields)")?;
-        writeln!(out, "}}")?;
-
-        for field in self.field_map().values() {
-            field.write_create_fn_def(out, self)?;
+            sub_field_fns.push(field.create_fn_def(self));
             let mut created_subfield_fns = HashSet::new();
             for (_, _, sub_field_info) in field.subfields() {
                 if !created_subfield_fns.contains(sub_field_info.name()) {
                     // only create the function once, even if multiple values reference
                     // the subfield
-                    sub_field_info.write_create_fn_def(out, self)?;
+                    sub_field_fns.push(sub_field_info.create_fn_def(self));
                 }
                 created_subfield_fns.insert(sub_field_info.name());
             }
         }
 
-        Ok(())
+        quote! {
+            #comment
+            fn #fn_name(mesg_num: MesgNum, data_map: &mut HashMap<u8, Value>, accumlators: &mut HashMap<u32, Value>, options: &HashSet<DecodeOption>) -> Result<Vec<FitDataField>> {
+                let mut fields = Vec::new();
+                let mut entries: VecDeque<(u8, Value)> = data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
+                while let Some((def_num, value)) = entries.pop_front() {
+                    match def_num {
+                        #(#match_arms)*
+                        _ => {
+                            if !options.contains(&DecodeOption::DropUnknownFields) {
+                                fields.push(unknown_field(def_num, value));
+                            }
+                        }
+                    }
+                }
+                Ok(fields)
+            }
+            #(#sub_field_fns)*
+        }
     }
 }
 
 impl MessageFieldDefinition {
-    fn write_field_decode_block(
+    fn field_decode_block(
         &self,
-        out: &mut File,
         mesg_def: &MessageDefinition,
-        val_str: &str,
+        val_str: &TokenStream,
         alt_scale: Option<f64>,
         alt_offset: Option<f64>,
-    ) -> Result<(), std::io::Error> {
-        if let Some(v) = self.comment() {
-            writeln!(out, "// {v}")?;
-        }
-        if !self.components().is_empty() {
-            self.write_component_exp(out, mesg_def, val_str, alt_scale, alt_offset)?;
+    ) -> TokenStream {
+        let body = if !self.components().is_empty() {
+            self.component_exp(mesg_def, val_str, alt_scale, alt_offset)
         } else if !self.subfields().is_empty() {
-            self.write_subfield_deref(out, mesg_def, val_str)?;
+            self.subfield_deref(mesg_def, val_str)
         } else {
-            writeln!(
-                out,
-                "fields.push({}?);",
-                self.generate_create_fn_call(mesg_def, val_str, alt_scale, alt_offset)
-            )?;
-        }
+            let fn_call = self.generate_create_fn_call(mesg_def, val_str, alt_scale, alt_offset);
+            quote!(fields.push(#fn_call?);)
+        };
 
-        Ok(())
+        quote! {
+            #body
+        }
     }
 
-    fn write_component_exp(
+    fn component_exp(
         &self,
-        out: &mut File,
         mesg_def: &MessageDefinition,
-        val_str: &str,
+        val_expr: &TokenStream,
         alt_scale: Option<f64>,
         alt_offset: Option<f64>,
-    ) -> Result<(), std::io::Error> {
+    ) -> TokenStream {
         // detect array fields so we can append a counter to variable name
         let mut array_flds = HashMap::new();
         for (_, fld) in self.components() {
-            *array_flds.entry(fld.def_number()).or_insert(0) += 1;
+            *array_flds.entry(fld.def_number()).or_insert(0u8) += 1;
         }
         array_flds = array_flds
             .into_iter()
@@ -114,7 +120,7 @@ impl MessageFieldDefinition {
         for (_, fld) in self.components() {
             if array_flds.contains_key(&fld.def_number()) {
                 array_flds.entry(fld.def_number()).and_modify(|v| *v += 1);
-                var_names.push(format!(
+                var_names.push(format_ident!(
                     "{}_{}",
                     fld.name(),
                     array_flds
@@ -122,45 +128,40 @@ impl MessageFieldDefinition {
                         .expect("array_flds should have entry")
                 ));
             } else {
-                var_names.push(fld.name().to_owned());
+                var_names.push(Ident::new(fld.name(), Span::call_site()));
             }
         }
 
-        // if the decode option is present add the parent field prior to expansion
-        writeln!(
-            out,
-            "if options.contains(&DecodeOption::KeepCompositeFields) {{"
-        )?;
-        writeln!(
-            out,
-            "fields.push({}?);",
-            self.generate_create_fn_call(
-                mesg_def,
-                &format!("{val_str}.clone()"),
-                alt_scale,
-                alt_offset
-            )
-        )?;
-        writeln!(out, "}}")?;
+        let keep_comp_fn_call = self.generate_create_fn_call(
+            mesg_def,
+            &quote!(#val_expr.clone()),
+            alt_scale,
+            alt_offset,
+        );
 
-        // convert value to byte array and extract out components
-        writeln!(out, "let input = {val_str}.to_ne_bytes();")?;
-        let mut inp_str = "&input";
-        let mut offset_str = "0usize";
-        for (vn, csize) in var_names
+        let name_and_size = var_names
             .iter()
-            .zip(self.components().iter().map(|(n, _)| n))
-        {
-            writeln!(
-                out,
-                "let ((input, offset), {vn}) = extract_component({inp_str}, {offset_str}, {csize});",
-            )?;
-            inp_str = "input";
-            offset_str = "offset";
+            .zip(self.components().iter().map(|(n, _)| n));
+        let mut comp_exp_chain = Vec::new();
+        // build component expansion calls
+        for (i, (vn, csize)) in name_and_size.enumerate() {
+            let csize = bare_number_literal(*csize);
+            if i == 0 {
+                comp_exp_chain.push(
+                    quote!(let ((input, offset), #vn) = extract_component(&input, 0usize, #csize);),
+                )
+            } else {
+                comp_exp_chain.push(
+                    quote!(let ((input, offset), #vn) = extract_component(input, offset, #csize);),
+                )
+            }
         }
 
         let mut comps_decoded = HashSet::new();
-        for (_, comp) in self.components().iter() {
+        let mut comp_decode_block = Vec::new();
+        for (_, comp) in self.components() {
+            let name = Ident::new(comp.name(), Span::call_site());
+            let def_num = comp.def_number();
             // array components show up more than once, but we collect those
             // into an array value above so we only want to decode it once
             if comps_decoded.contains(&comp.def_number()) {
@@ -169,27 +170,20 @@ impl MessageFieldDefinition {
 
             // generate a vec! macro to build the array field
             if array_flds.contains_key(&comp.def_number()) {
-                writeln!(
-                    out,
-                    "let {} = Value::Array(vec![{}]);",
-                    comp.name(),
-                    (0..*array_flds
-                        .get(&comp.def_number())
-                        .expect("array_flds should have entry"))
-                        .map(|i| format!("{}_{}", comp.name(), i + 1))
-                        .collect::<Vec<String>>()
-                        .join(",")
-                )?;
+                let vec_macro_vars = (0..*array_flds
+                    .get(&comp.def_number())
+                    .expect("array_flds should have entry"))
+                    .map(|i| format_ident!("{}_{}", comp.name(), i + 1))
+                    .collect::<Vec<Ident>>();
+                comp_decode_block
+                    .push(quote!(let #name = Value::Array(vec![#(#vec_macro_vars,)*]);));
             }
 
             // insert back into datamap for subfield look ups and then generate
             // a decode block incase the component has subfields/nested comps
-            writeln!(
-                out,
-                "data_map.insert({}, {}.clone());",
-                comp.def_number(),
-                comp.name()
-            )?;
+            comp_decode_block.push(quote! {
+                data_map.insert(#def_num, #name.clone());
+            });
 
             // When we are expanding to a field that has a single component
             // use the scale and offset defined here instead of what that
@@ -213,199 +207,193 @@ impl MessageFieldDefinition {
                 None
             };
 
-            comp.write_field_decode_block(out, mesg_def, comp.name(), alt_scale, alt_offset)?;
+            comp_decode_block.push(comp.field_decode_block(
+                mesg_def,
+                &name.to_token_stream(),
+                alt_scale,
+                alt_offset,
+            ));
             comps_decoded.insert(comp.def_number());
         }
 
-        Ok(())
+        quote! {
+            // if the decode option is present add the parent field prior to expansion
+            if options.contains(&DecodeOption::KeepCompositeFields) {
+                fields.push(#keep_comp_fn_call?);
+            }
+            let input = #val_expr.to_ne_bytes();
+            #(#comp_exp_chain)*
+            #(#comp_decode_block)*
+        }
     }
 
-    fn write_subfield_deref(
-        &self,
-        out: &mut File,
-        mesg_def: &MessageDefinition,
-        val_str: &str,
-    ) -> Result<(), std::io::Error> {
+    fn subfield_deref(&self, mesg_def: &MessageDefinition, val_expr: &TokenStream) -> TokenStream {
+        let mut deref_branches = Vec::new();
         for (idx, (ref_name, ref_val_str, sub_field_info)) in self.subfields().iter().enumerate() {
             let ref_field = mesg_def.get_field_by_name(ref_name);
-            if idx == 0 {
-                writeln!(out, "if")?;
+            let ref_field_ident = Ident::new(ref_field.field_type(), Span::call_site());
+            let ref_val_ident = Ident::new(ref_val_str, Span::call_site());
+            let ref_def_num = ref_field.def_number();
+            let elif = if idx == 0 {
+                quote!(if)
             } else {
-                writeln!(out, "else if")?;
-            }
-            writeln!(out, "{}::{}.as_i64() == data_map.get(&{}).map(|v| v.try_into().ok()).flatten().unwrap_or(-1i64) {{", ref_field.field_type(), ref_val_str, ref_field.def_number())?;
-
-            // if the field is "terminal", i.e. has no components generate a create_fn call
-            if sub_field_info.components().is_empty() {
-                writeln!(
-                    out,
-                    "fields.push({}?);",
-                    sub_field_info.generate_create_fn_call(mesg_def, val_str, None, None)
-                )?;
+                quote!(else if)
+            };
+            let body = if sub_field_info.components().is_empty() {
+                // if the field is "terminal", i.e. has no components generate a create_fn call
+                let fn_call =
+                    sub_field_info.generate_create_fn_call(mesg_def, val_expr, None, None);
+                quote!(fields.push(#fn_call?);)
             } else {
                 // generate a nested component expansion
-                sub_field_info.write_component_exp(out, mesg_def, val_str, None, None)?;
-            }
-            writeln!(out, "}}")?;
-        }
-        writeln!(out, "else {{")?;
-        writeln!(
-            out,
-            "fields.push({}?);",
-            self.generate_create_fn_call(mesg_def, val_str, None, None)
-        )?;
-        writeln!(out, "}}")?;
+                sub_field_info.component_exp(mesg_def, val_expr, None, None)
+            };
 
-        Ok(())
+            deref_branches.push(quote!{
+                #elif #ref_field_ident::#ref_val_ident.as_i64() == data_map.get(&#ref_def_num).map(|v| v.try_into().ok()).flatten().unwrap_or(-1i64) {
+                    #body
+                }
+            });
+        }
+        let else_fn_call = self.generate_create_fn_call(mesg_def, val_expr, None, None);
+        quote! {
+            #(#deref_branches)*
+            else {
+                fields.push(#else_fn_call?);
+            }
+        }
     }
 
-    fn write_create_fn_def(
-        &self,
-        out: &mut File,
-        mesg_def: &MessageDefinition,
-    ) -> Result<(), std::io::Error> {
-        writeln!(out,
-            "fn {}_{}_field(mesg_num: MesgNum, accumlators: &mut HashMap<u32, Value>, options: &HashSet<DecodeOption>, data_map: &HashMap<u8, Value>, accumulate: bool, scale: f64, offset: f64, units: &'static str, value: Value) -> Result<FitDataField> {{",
-            mesg_def.function_name(), self.name())?;
-
-        // generate acccumated field code
-        writeln!(out, "let value = if accumulate {{")?;
-        writeln!(
-            out,
-            "  calculate_cumulative_value(accumlators, mesg_num.as_u16(), {0}, value)?",
-            self.def_number()
-        )?;
-        writeln!(out, "}}")?;
-        writeln!(out, "else {{")?;
-        writeln!(out, "  value")?;
-        writeln!(out, "}};")?;
-
-        // generate field
-        if let Some(parent) = self.parent_field() {
-            writeln!(
-                out,
-                "let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {{"
-            )?;
-            writeln!(out, "\"{}\"", parent.name())?;
-            writeln!(out, "}}")?;
-            writeln!(out, "else {{")?;
-            writeln!(out, "\"{}\"", self.name())?;
-            writeln!(out, "}};")?;
-            writeln!(
-                out,
-                "data_field_with_info({}, name, FieldDataType::{}, scale, offset, units, value, options)",
-                self.def_number(),
-                self.field_type()
-            )?;
+    fn create_fn_def(&self, mesg_def: &MessageDefinition) -> TokenStream {
+        let def_number = self.def_number();
+        let name = self.name();
+        let fld_type_variant = Ident::new(self.field_type(), Span::call_site());
+        let fld_type = quote!(FieldDataType::#fld_type_variant);
+        let field_fn_name = format_ident!("{}_{}_field", mesg_def.function_name(), self.name());
+        // tokens to generate data field
+        let data_field_call = if let Some(parent) = self.parent_field() {
+            let parent_name = parent.name();
+            quote! {
+                let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+                    #parent_name
+                } else {
+                    #name
+                };
+                data_field_with_info(#def_number, name, #fld_type, scale, offset, units, value, options)
+            }
         } else {
-            writeln!(
-                out,
-                "data_field_with_info({0}, \"{1}\", FieldDataType::{2}, scale, offset, units, value, options)",
-                self.def_number(),
-                self.name(),
-                self.field_type()
-            )?;
+            quote! {
+                data_field_with_info(#def_number, #name, #fld_type, scale, offset, units, value, options)
+            }
+        };
+
+        quote! {
+            fn #field_fn_name(mesg_num: MesgNum,
+                accumlators: &mut HashMap<u32, Value>,
+                options: &HashSet<DecodeOption>,
+                data_map: &HashMap<u8, Value>,
+                accumulate: bool,
+                scale: f64,
+                offset: f64,
+                units: &'static str,
+                value: Value
+            ) -> Result<FitDataField> {
+                // accumlator field code
+                let value = if accumulate {
+                    calculate_cumulative_value(accumlators, mesg_num.as_u16(), #def_number, value)?
+                } else {
+                    value
+                };
+                #data_field_call
+            }
         }
-        //
-        writeln!(out, "}}")?;
-        Ok(())
     }
 
     fn generate_create_fn_call(
         &self,
         mesg_def: &MessageDefinition,
-        val_str: &str,
+        val_expr: &TokenStream,
         alt_scale: Option<f64>,
         alt_offset: Option<f64>,
-    ) -> String {
-        format!(
-            "{0}_{1}_field(mesg_num, accumlators, options, data_map, {2}, {3:.6}, {4:.6}, \"{5}\", {6})",
-            mesg_def.function_name(),
-            self.name(),
-            self.accumulate(),
-            alt_scale.unwrap_or_else(|| self.scale()),
-            alt_offset.unwrap_or_else(|| self.offset()),
-            self.units(),
-            val_str,
-        )
+    ) -> TokenStream {
+        let fn_name = format_ident!("{}_{}_field", mesg_def.function_name(), self.name());
+        let acc = self.accumulate();
+        let scale = alt_scale.unwrap_or_else(|| self.scale());
+        let offset = alt_offset.unwrap_or_else(|| self.offset());
+        let units = self.units();
+        quote! {
+            #fn_name(mesg_num, accumlators, options, data_map, #acc, #scale, #offset, #units, #val_expr)
+        }
     }
 }
 
-fn write_unknown_mesg_fn(out: &mut File) -> Result<(), std::io::Error> {
-    writeln!(
-        out,
-        "
+fn unknown_mesg_fn() -> TokenStream {
+    quote! {
         fn unknown_message(
-        data_map: &HashMap<u8, Value>,
-        options: &HashSet<DecodeOption>,
-    ) -> Result<Vec<FitDataField>> {{
-        // since it's an unknown message all the fields are unknown
-        if options.contains(&DecodeOption::DropUnknownFields) {{{{
-            return Ok(Vec::new());
-        }}}}
-        let fields = data_map.iter()
-            .map(|(k, v)| unknown_field(*k, v.clone()))
-            .collect();
-        Ok(fields)
-    }}
-    "
-    )
+            data_map: &HashMap<u8, Value>,
+            options: &HashSet<DecodeOption>,
+        ) -> Result<Vec<FitDataField>> {
+            // since it's an unknown message all the fields are unknown
+            if options.contains(&DecodeOption::DropUnknownFields) {
+                return Ok(Vec::new());
+            }
+            let fields = data_map.iter()
+                .map(|(k, v)| unknown_field(*k, v.clone()))
+                .collect();
+            Ok(fields)
+        }
+    }
 }
 
-fn create_mesg_num_to_mesg_decode_fn(
-    messages: &[MessageDefinition],
-    out: &mut File,
-) -> Result<(), std::io::Error> {
-    writeln!(out, "impl MesgNum {{")?;
-    writeln!(
-        out,
-        "  /// Decode the raw values from a FitDataMessage based on the Global Message Number"
-    )?;
-    writeln!(out, "  pub fn decode_message(self, data_map: &mut HashMap<u8, Value>, accumlators: &mut HashMap<u32, Value>, options: &HashSet<DecodeOption>) -> Result<Vec<FitDataField>> {{")?;
-    writeln!(out, "    match self {{")?;
-    for msg in messages {
-        writeln!(
-            out,
-            "MesgNum::{} => {}(self, data_map, accumlators, options),",
-            msg.titlized_name(),
-            msg.function_name()
-        )?;
+fn mesg_num_to_mesg_decode_fn(messages: &[MessageDefinition]) -> TokenStream {
+    let msg_variants = messages.iter().map(MessageDefinition::struct_ident);
+    let fn_names = messages.iter().map(MessageDefinition::function_name);
+    quote! {
+        impl MesgNum {
+            /// Decode the raw values from a FitDataMessage based on the Global Message Number
+            pub fn decode_message(self, data_map: &mut HashMap<u8, Value>, accumlators: &mut HashMap<u32, Value>, options: &HashSet<DecodeOption>) -> Result<Vec<FitDataField>> {
+                match self {
+                    #(MesgNum::#msg_variants => #fn_names(self, data_map, accumlators, options),)*
+                    _ => unknown_message(data_map, options)
+                }
+            }
+        }
     }
-    writeln!(out, "_ => unknown_message(data_map, options),")?;
-    writeln!(out, "    }}")?;
-    writeln!(out, "  }}")?;
-    writeln!(out, "}}")?;
-
-    Ok(())
 }
 
 pub fn write_decode_file(profile: &FitProfile, out: &mut File) -> Result<(), std::io::Error> {
-    writeln!(
-        out,
+    let version = profile.version();
+    let comment = format!(
         "//! Auto generated profile messages from FIT SDK Release: {}",
-        profile.version()
-    )?;
-    writeln!(out, "#![allow(unused_variables)]")?;
-    writeln!(out, "use std::collections::{{HashMap, HashSet, VecDeque}};")?;
-    writeln!(out, "use std::convert::TryInto;")?;
-    writeln!(out, "use crate::{{FitDataField, Value}};")?;
-    writeln!(out, "use crate::de::{{DecodeOption}};")?;
-    writeln!(out, "use crate::error::{{Result}};")?;
-    writeln!(
-        out,
-        "use super::{{calculate_cumulative_value, data_field_with_info, extract_component, unknown_field}};"
-    )?;
-    writeln!(out, "use super::field_types::*;")?;
-    writeln!(out, "/// FIT SDK version used to generate profile decoder")?;
-    writeln!(out, "pub const VERSION: &str = \"{}\";", profile.version())?;
-
+        version
+    );
     // output all message functions
-    for msg in profile.messages() {
-        msg.write_decode_function_def(out)?;
-    }
+    let decode_fn_defs = profile.messages().iter().map(|m| m.decode_function_def());
+    let unknown_fn = unknown_mesg_fn();
+    let main_decode_fn = mesg_num_to_mesg_decode_fn(profile.messages());
+    let output = quote! {
+        #![doc = #comment]
+        #![allow(unused_variables)]
+        use std::collections::{HashMap, HashSet, VecDeque};
+        use std::convert::TryInto;
+        use crate::{{FitDataField, Value}};
+        use crate::de::{{DecodeOption}};
+        use crate::error::{{Result}};
+        use super::{
+            calculate_cumulative_value,
+            data_field_with_info,
+            extract_component,
+            unknown_field
+        };
+        use super::field_types::*;
+        #[doc = "FIT SDK version used to generate profile decoder"]
+        pub const VERSION: &str = #version;
 
-    write_unknown_mesg_fn(out)?;
-    create_mesg_num_to_mesg_decode_fn(profile.messages(), out)?;
+        #(#decode_fn_defs)*
 
-    Ok(())
+        #unknown_fn
+        #main_decode_fn
+
+    };
+    write!(out, "{}", output)
 }
