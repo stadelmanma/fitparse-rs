@@ -8,14 +8,6 @@ use std::{
     io::{Error, Write},
 };
 
-fn doc_comment(comment: Option<&str>) -> TokenStream {
-    if let Some(v) = comment {
-        quote!(#[doc = #v])
-    } else {
-        TokenStream::new()
-    }
-}
-
 /// convert a string like "u8" into a u8 type token
 fn type_str_as_type(type_str: &str) -> Ident {
     Ident::new(type_str, Span::call_site())
@@ -152,7 +144,7 @@ fn field_type_enum_impl_serialize(field_type: &FieldTypeDefintion) -> TokenStrea
 }
 
 fn field_type_enum_variant_line(variant: &FieldTypeVariant) -> TokenStream {
-    let comment = doc_comment(variant.comment());
+    let comment = variant.comment();
     let ident = variant.ident();
     quote! {
         #comment
@@ -173,7 +165,7 @@ fn field_type_enum(field_type: &FieldTypeDefintion) -> TokenStream {
     if field_type.variant_map().is_empty() {
         return TokenStream::new();
     }
-    let comment = doc_comment(field_type.comment());
+    let comment = field_type.comment();
     let ident = field_type.ident();
     let variants = field_type
         .variant_map()

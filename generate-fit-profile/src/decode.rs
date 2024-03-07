@@ -20,9 +20,7 @@ impl MessageDefinition {
     }
 
     fn decode_function_def(&self) -> TokenStream {
-        let mut comments = self
-            .comment()
-            .map_or_else(|| vec![TokenStream::new()], |v| vec![quote!(#[doc = #v])]);
+        let mut comments = vec![self.comment()];
         // TODO: add field comments here as well?
         let fn_name = self.function_name();
         let match_arms = self
@@ -43,20 +41,14 @@ impl MessageDefinition {
         let mut sub_field_fns = Vec::new();
         for field in self.field_map().values() {
             sub_field_fns.push(field.create_fn_def(self));
-            if let Some(v) = field.comment() {
-                let comment = format!(" * {}: {}", field.name(), v);
-                comments.push(quote!(#[doc = #comment]));
-            }
+            comments.push(field.comment());
             let mut created_subfield_fns = HashSet::new();
             for (_, _, sub_field_info) in field.subfields() {
                 if !created_subfield_fns.contains(sub_field_info.name()) {
                     // only create the function once, even if multiple values reference
                     // the subfield
                     sub_field_fns.push(sub_field_info.create_fn_def(self));
-                    if let Some(v) = sub_field_info.comment() {
-                        let comment = format!(" * {}: {}", sub_field_info.name(), v);
-                        comments.push(quote!(#[doc = #comment]));
-                    }
+                    comments.push(sub_field_info.comment());
                 }
                 created_subfield_fns.insert(sub_field_info.name());
             }

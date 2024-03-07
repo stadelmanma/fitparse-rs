@@ -1,7 +1,7 @@
 //! Code used to parse the Profile.xlsx file into useful data structures
 use calamine::{open_workbook, DataType, Range, Reader, Xlsx};
-use proc_macro2::Ident;
-use quote::format_ident;
+use proc_macro2::{Ident, TokenStream};
+use quote::{format_ident, quote};
 use std::collections::{BTreeMap, HashMap};
 use std::path::PathBuf;
 
@@ -33,7 +33,7 @@ pub struct FieldTypeDefintion {
     ident: Ident,
     base_type: &'static str,
     is_true_enum: bool,
-    comment: Option<String>,
+    comment: TokenStream,
     variant_map: BTreeMap<i64, FieldTypeVariant>,
 }
 
@@ -47,7 +47,7 @@ impl FieldTypeDefintion {
             ident: format_ident!("{}", titlecase_string(name)),
             base_type,
             is_true_enum,
-            comment,
+            comment: doc_comment(comment),
             variant_map: BTreeMap::new(),
         }
     }
@@ -68,8 +68,8 @@ impl FieldTypeDefintion {
         self.is_true_enum
     }
 
-    pub fn comment(&self) -> Option<&str> {
-        self.comment.as_deref()
+    pub fn comment(&self) -> &TokenStream {
+        &self.comment
     }
 
     pub const fn variant_map(&self) -> &BTreeMap<i64, FieldTypeVariant> {
@@ -90,7 +90,7 @@ pub struct FieldTypeVariant {
     name: String,
     ident: Ident,
     value: i64,
-    comment: Option<String>,
+    comment: TokenStream,
 }
 
 impl FieldTypeVariant {
@@ -106,7 +106,7 @@ impl FieldTypeVariant {
             name,
             ident: format_ident!("{}", titlized_name),
             value,
-            comment,
+            comment: doc_comment(comment),
         }
     }
 
@@ -122,8 +122,8 @@ impl FieldTypeVariant {
         self.value
     }
 
-    pub fn comment(&self) -> Option<&str> {
-        self.comment.as_deref()
+    pub fn comment(&self) -> &TokenStream {
+        &self.comment
     }
 }
 
@@ -131,7 +131,7 @@ impl FieldTypeVariant {
 pub struct MessageDefinition {
     name: String,
     struct_ident: Ident,
-    comment: Option<String>,
+    comment: TokenStream,
     field_map: BTreeMap<u8, MessageFieldDefinition>,
 }
 
@@ -141,7 +141,7 @@ impl MessageDefinition {
         Self {
             name: name.to_string(),
             struct_ident,
-            comment,
+            comment: doc_comment(comment.or_else(|| Some(format!("{} message definition", name)))),
             field_map: BTreeMap::new(),
         }
     }
@@ -158,8 +158,8 @@ impl MessageDefinition {
         &self.field_map
     }
 
-    pub fn comment(&self) -> Option<&str> {
-        self.comment.as_deref()
+    pub fn comment(&self) -> &TokenStream {
+        &self.comment
     }
 
     pub fn get_field_by_name(&self, name: &str) -> &MessageFieldDefinition {
@@ -184,7 +184,7 @@ pub struct MessageFieldDefinition {
     subfields: Vec<(String, String, MessageFieldDefinition)>,
     components: Vec<(u8, MessageFieldDefinition)>,
     raw_components: Vec<MessageFieldComponent>,
-    comment: Option<String>,
+    comment: TokenStream,
 }
 
 impl MessageFieldDefinition {
@@ -214,7 +214,7 @@ impl MessageFieldDefinition {
             subfields: Vec::new(),
             components: Vec::new(),
             raw_components,
-            comment,
+            comment: doc_comment(comment.map(|v| format!(" * {}: {}", name, v))),
         }
     }
 
@@ -274,8 +274,8 @@ impl MessageFieldDefinition {
         &self.components
     }
 
-    pub fn comment(&self) -> Option<&str> {
-        self.comment.as_deref()
+    pub fn comment(&self) -> &TokenStream {
+        &self.comment
     }
 }
 
@@ -367,6 +367,14 @@ fn titlecase_string(value: &str) -> String {
     }
 
     words.join("")
+}
+
+fn doc_comment(comment: Option<String>) -> TokenStream {
+    if let Some(v) = comment {
+        quote!(#[doc = #v])
+    } else {
+        TokenStream::new()
+    }
 }
 
 #[allow(clippy::cast_possible_truncation)]
@@ -519,7 +527,7 @@ fn process_components(
             subfields: dest_field.subfields().to_vec(),
             components: process_components(dest_field, field_lookup),
             raw_components: Vec::new(),
-            comment: dest_field.comment().map(std::borrow::ToOwned::to_owned),
+            comment: dest_field.comment().clone(),
         };
         components.push((comp_info.bits(), comp_fld));
     }
