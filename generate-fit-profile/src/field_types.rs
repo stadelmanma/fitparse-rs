@@ -119,9 +119,9 @@ fn field_type_enum_impl_from(field_type: &FieldTypeDefintion) -> TokenStream {
     }
 }
 
-fn field_type_enum_impl_serialize(field_type: &FieldTypeDefintion) -> TokenStream {
+fn field_type_enum_impl_serialize_fn_body(field_type: &FieldTypeDefintion) -> TokenStream {
     let ident = field_type.ident();
-    let fn_body = if field_type.is_true_enum() {
+    if field_type.is_true_enum() {
         quote!(serializer.serialize_str(&self.to_string()))
     } else {
         let serialize_fn = format_ident!("serialize_{}", field_type.base_type());
@@ -132,7 +132,12 @@ fn field_type_enum_impl_serialize(field_type: &FieldTypeDefintion) -> TokenStrea
                 _ => serializer.serialize_str(&self.to_string())
             }
         }
-    };
+    }
+}
+
+fn field_type_enum_impl_serialize(field_type: &FieldTypeDefintion) -> TokenStream {
+    let ident = field_type.ident();
+    let fn_body = field_type_enum_impl_serialize_fn_body(field_type);
 
     quote! {
         impl Serialize for #ident {
