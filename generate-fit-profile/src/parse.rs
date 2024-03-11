@@ -558,7 +558,7 @@ fn new_message_field_definition(row: &[DataType]) -> MessageFieldDefinition {
         row[6].get_float().unwrap_or(1.0),
         row[7].get_float().unwrap_or(0.0),
         row[8].get_string().unwrap_or(""),
-        row[10].to_string() == "1",
+        row[10] == "1",
         components,
         comment,
     )
