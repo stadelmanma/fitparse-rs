@@ -301,41 +301,15 @@ pub trait FitMessage {
     /// The message kind used in [`FitDataRecord`][].
     const KIND: MesgNum;
 
-    /// Parse a message from a [`FitDataRecord`][] using the default options.
+    /// Parse a message from a [`FitDataRecord`][].
     fn parse(record: FitDataRecord) -> Result<Self, TryFromRecordError>
     where
-        Self: Sized,
-    {
-        Self::parse_with_options(record, Default::default())
-    }
-
-    /// Parse a message from a [`FitDataRecord`][] using the given options.
-    fn parse_with_options(
-        record: FitDataRecord,
-        options: MessageParseOptions,
-    ) -> Result<Self, TryFromRecordError>
-    where
         Self: Sized;
-}
-
-/// Options for [`FitMessage::parse_with_options`][].
-#[derive(Clone, Copy, Debug, Default)]
-#[non_exhaustive]
-pub struct MessageParseOptions {
-    /// Don’t return an error if the record contains an unexpected field.
-    pub ignore_unexpected_fields: bool,
 }
 
 /// An error when parsing a [`FitMessage`][] implementation from a [`FitDataRecord`][].
 #[derive(Debug)]
 pub enum TryFromRecordError {
-    /// The record contains an unexpected field.
-    UnexpectedField {
-        /// The name of the unexpected field.
-        name: String,
-        /// The number of the unexpected field.
-        number: u8,
-    },
     /// The record has an unexpected message kind.
     UnexpectedMessageKind {
         /// The expected message kind.
@@ -348,13 +322,6 @@ pub enum TryFromRecordError {
 }
 
 impl TryFromRecordError {
-    fn unexpected_field(field: &FitDataField) -> Self {
-        Self::UnexpectedField {
-            name: field.name().to_owned(),
-            number: field.number(),
-        }
-    }
-
     fn unexpected_message_kind<M: FitMessage>(record: &FitDataRecord) -> Self {
         Self::UnexpectedMessageKind {
             expected: M::KIND,
@@ -366,10 +333,6 @@ impl TryFromRecordError {
 impl fmt::Display for TryFromRecordError {
     fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
-            Self::UnexpectedField { name, number } => write!(
-                fmt,
-                "the record contains an unexpected field: {name} ({number})"
-            ),
             Self::UnexpectedMessageKind { expected, actual } => write!(
                 fmt,
                 "the record has an unexpected message kind: expected {expected}, got {actual}"
