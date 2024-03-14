@@ -136,6 +136,11 @@ impl FitDataField {
     pub fn into_value(self) -> Value {
         self.value
     }
+
+    /// Consume the field and return the value and the units
+    pub fn into_value_with_units(self) -> ValueWithUnits {
+        ValueWithUnits::new(self.value, self.units)
+    }
 }
 
 impl fmt::Display for FitDataField {
@@ -326,7 +331,7 @@ impl convert::TryInto<i64> for &Value {
 /// Describes a field value along with its defined units (if any), this struct is useful for
 /// serializing data in a key-value store where the key is either the name or definition number
 /// since it can be created from a `FitDataField` with minimal data cloning.
-#[derive(Clone, Debug, Serialize)]
+#[derive(Clone, Debug, PartialEq, PartialOrd, Serialize)]
 pub struct ValueWithUnits {
     value: Value,
     units: String,
@@ -336,6 +341,21 @@ impl ValueWithUnits {
     /// Create a new value with the given information
     pub fn new(value: Value, units: String) -> Self {
         ValueWithUnits { value, units }
+    }
+
+    /// Return a reference to the stored value
+    pub fn value(&self) -> &Value {
+        &self.value
+    }
+
+    /// Return units associated with the value
+    pub fn units(&self) -> &str {
+        &self.units
+    }
+
+    /// Consume and return the stored value and the associated units
+    pub fn into_value_and_units(self) -> (Value, String) {
+        (self.value, self.units)
     }
 }
 

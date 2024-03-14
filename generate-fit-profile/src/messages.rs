@@ -42,12 +42,12 @@ fn message_parse_impl(message: &MessageDefinition) -> TokenStream {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
         #( #field_variables )*
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 #( #field_match_cases )*
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -72,7 +72,7 @@ fn message_struct(message: &MessageDefinition) -> TokenStream {
         pub struct #ident {
             #( #struct_fields )*
             /// All fields that are not defined in the profile.
-            pub unknown_fields: Vec<FitDataField>,
+            pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
         }
 
         impl FitMessage for #ident {
@@ -117,7 +117,7 @@ fn message_enum(messages: &[MessageDefinition]) -> TokenStream {
             }
 
             /// Return all fields of the message that are not defined by the profile.
-            pub fn unknown_fields(&self) -> &[FitDataField] {
+            pub fn unknown_fields(&self) -> &BTreeMap<u8, ValueWithUnits> {
                 match self {
                     #( Self::#idents(message) => &message.unknown_fields, )*
                 }
@@ -145,7 +145,8 @@ pub fn write_messages_file(profile: &FitProfile, out: &mut File) -> Result<(), E
         #![allow(missing_docs)]
         #![doc = #comment]
 
-        use crate::{FitDataField, FitDataRecord, Value, profile::{FitMessage, MesgNum, TryFromRecordError}};
+        use std::collections::BTreeMap;
+        use crate::{FitDataRecord, Value, ValueWithUnits, profile::{FitMessage, MesgNum, TryFromRecordError}};
         use serde::Serialize;
 
         #message_enum

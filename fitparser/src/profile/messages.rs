@@ -2,9 +2,10 @@
 #![doc = "Auto generated profile messages from FIT SDK Release: 21.133.00"]
 use crate::{
     profile::{FitMessage, MesgNum, TryFromRecordError},
-    FitDataField, FitDataRecord, Value,
+    FitDataRecord, Value, ValueWithUnits,
 };
 use serde::Serialize;
+use std::collections::BTreeMap;
 #[doc = r" All supported message types."]
 #[derive(Clone, Debug, PartialEq, PartialOrd, Serialize)]
 pub enum Message {
@@ -289,7 +290,7 @@ impl Message {
         }
     }
     #[doc = r" Return all fields of the message that are not defined by the profile."]
-    pub fn unknown_fields(&self) -> &[FitDataField] {
+    pub fn unknown_fields(&self) -> &BTreeMap<u8, ValueWithUnits> {
         match self {
             Self::FileId(message) => &message.unknown_fields,
             Self::FileCreator(message) => &message.unknown_fields,
@@ -429,7 +430,7 @@ pub struct FileId {
     pub r#number: Option<Value>,
     pub r#product_name: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for FileId {
     const NAME: &'static str = "FileId";
@@ -445,7 +446,7 @@ impl FitMessage for FileId {
         let mut r#time_created = None;
         let mut r#number = None;
         let mut r#product_name = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -470,7 +471,7 @@ impl FitMessage for FileId {
                     r#product_name = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -497,7 +498,7 @@ pub struct FileCreator {
     pub r#software_version: Option<Value>,
     pub r#hardware_version: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for FileCreator {
     const NAME: &'static str = "FileCreator";
@@ -508,7 +509,7 @@ impl FitMessage for FileCreator {
         }
         let mut r#software_version = None;
         let mut r#hardware_version = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -518,7 +519,7 @@ impl FitMessage for FileCreator {
                     r#hardware_version = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -545,7 +546,7 @@ pub struct TimestampCorrelation {
     pub r#system_timestamp_ms: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for TimestampCorrelation {
     const NAME: &'static str = "TimestampCorrelation";
@@ -561,7 +562,7 @@ impl FitMessage for TimestampCorrelation {
         let mut r#timestamp_ms = None;
         let mut r#system_timestamp_ms = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -586,7 +587,7 @@ impl FitMessage for TimestampCorrelation {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -614,7 +615,7 @@ pub struct Software {
     pub r#part_number: Option<Value>,
     pub r#message_index: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for Software {
     const NAME: &'static str = "Software";
@@ -626,7 +627,7 @@ impl FitMessage for Software {
         let mut r#version = None;
         let mut r#part_number = None;
         let mut r#message_index = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 3u8 => {
@@ -639,7 +640,7 @@ impl FitMessage for Software {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -662,7 +663,7 @@ pub struct SlaveDevice {
     pub r#manufacturer: Option<Value>,
     pub r#product: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for SlaveDevice {
     const NAME: &'static str = "SlaveDevice";
@@ -673,7 +674,7 @@ impl FitMessage for SlaveDevice {
         }
         let mut r#manufacturer = None;
         let mut r#product = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -683,7 +684,7 @@ impl FitMessage for SlaveDevice {
                     r#product = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -707,7 +708,7 @@ pub struct Capabilities {
     pub r#workouts_supported: Option<Value>,
     pub r#connectivity_supported: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for Capabilities {
     const NAME: &'static str = "Capabilities";
@@ -720,7 +721,7 @@ impl FitMessage for Capabilities {
         let mut r#sports = None;
         let mut r#workouts_supported = None;
         let mut r#connectivity_supported = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -736,7 +737,7 @@ impl FitMessage for Capabilities {
                     r#connectivity_supported = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -764,7 +765,7 @@ pub struct FileCapabilities {
     pub r#max_size: Option<Value>,
     pub r#message_index: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for FileCapabilities {
     const NAME: &'static str = "FileCapabilities";
@@ -779,7 +780,7 @@ impl FitMessage for FileCapabilities {
         let mut r#max_count = None;
         let mut r#max_size = None;
         let mut r#message_index = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -801,7 +802,7 @@ impl FitMessage for FileCapabilities {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -830,7 +831,7 @@ pub struct MesgCapabilities {
     pub r#count: Option<Value>,
     pub r#message_index: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for MesgCapabilities {
     const NAME: &'static str = "MesgCapabilities";
@@ -844,7 +845,7 @@ impl FitMessage for MesgCapabilities {
         let mut r#count_type = None;
         let mut r#count = None;
         let mut r#message_index = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -863,7 +864,7 @@ impl FitMessage for MesgCapabilities {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -891,7 +892,7 @@ pub struct FieldCapabilities {
     pub r#count: Option<Value>,
     pub r#message_index: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for FieldCapabilities {
     const NAME: &'static str = "FieldCapabilities";
@@ -905,7 +906,7 @@ impl FitMessage for FieldCapabilities {
         let mut r#field_num = None;
         let mut r#count = None;
         let mut r#message_index = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -924,7 +925,7 @@ impl FitMessage for FieldCapabilities {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -971,7 +972,7 @@ pub struct DeviceSettings {
     pub r#tap_interface: Option<Value>,
     pub r#tap_sensitivity: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for DeviceSettings {
     const NAME: &'static str = "DeviceSettings";
@@ -1004,7 +1005,7 @@ impl FitMessage for DeviceSettings {
         let mut r#smart_notification_display_orientation = None;
         let mut r#tap_interface = None;
         let mut r#tap_sensitivity = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -1080,7 +1081,7 @@ impl FitMessage for DeviceSettings {
                     r#tap_sensitivity = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -1151,7 +1152,7 @@ pub struct UserProfile {
     pub r#dive_count: Option<Value>,
     pub r#message_index: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for UserProfile {
     const NAME: &'static str = "UserProfile";
@@ -1189,7 +1190,7 @@ impl FitMessage for UserProfile {
         let mut r#depth_setting = None;
         let mut r#dive_count = None;
         let mut r#message_index = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -1280,7 +1281,7 @@ impl FitMessage for UserProfile {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -1332,7 +1333,7 @@ pub struct HrmProfile {
     pub r#hrm_ant_id_trans_type: Option<Value>,
     pub r#message_index: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for HrmProfile {
     const NAME: &'static str = "HrmProfile";
@@ -1346,7 +1347,7 @@ impl FitMessage for HrmProfile {
         let mut r#log_hrv = None;
         let mut r#hrm_ant_id_trans_type = None;
         let mut r#message_index = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -1365,7 +1366,7 @@ impl FitMessage for HrmProfile {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -1396,7 +1397,7 @@ pub struct SdmProfile {
     pub r#odometer_rollover: Option<Value>,
     pub r#message_index: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for SdmProfile {
     const NAME: &'static str = "SdmProfile";
@@ -1413,7 +1414,7 @@ impl FitMessage for SdmProfile {
         let mut r#sdm_ant_id_trans_type = None;
         let mut r#odometer_rollover = None;
         let mut r#message_index = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -1441,7 +1442,7 @@ impl FitMessage for SdmProfile {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -1499,7 +1500,7 @@ pub struct BikeProfile {
     pub r#shimano_di2_enabled: Option<Value>,
     pub r#message_index: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for BikeProfile {
     const NAME: &'static str = "BikeProfile";
@@ -1540,7 +1541,7 @@ impl FitMessage for BikeProfile {
         let mut r#rear_gear = None;
         let mut r#shimano_di2_enabled = None;
         let mut r#message_index = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -1640,7 +1641,7 @@ impl FitMessage for BikeProfile {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -1703,7 +1704,7 @@ pub struct Connectivity {
     pub r#incident_detection_enabled: Option<Value>,
     pub r#grouptrack_enabled: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for Connectivity {
     const NAME: &'static str = "Connectivity";
@@ -1725,7 +1726,7 @@ impl FitMessage for Connectivity {
         let mut r#gps_ephemeris_download_enabled = None;
         let mut r#incident_detection_enabled = None;
         let mut r#grouptrack_enabled = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -1768,7 +1769,7 @@ impl FitMessage for Connectivity {
                     r#grouptrack_enabled = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -1802,7 +1803,7 @@ pub struct WatchfaceSettings {
     pub r#layout: Option<Value>,
     pub r#message_index: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for WatchfaceSettings {
     const NAME: &'static str = "WatchfaceSettings";
@@ -1814,7 +1815,7 @@ impl FitMessage for WatchfaceSettings {
         let mut r#mode = None;
         let mut r#layout = None;
         let mut r#message_index = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -1827,7 +1828,7 @@ impl FitMessage for WatchfaceSettings {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -1850,7 +1851,7 @@ pub struct OhrSettings {
     pub r#enabled: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for OhrSettings {
     const NAME: &'static str = "OhrSettings";
@@ -1861,7 +1862,7 @@ impl FitMessage for OhrSettings {
         }
         let mut r#enabled = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -1871,7 +1872,7 @@ impl FitMessage for OhrSettings {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -1908,7 +1909,7 @@ pub struct TimeInZone {
     pub r#functional_threshold_power: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for TimeInZone {
     const NAME: &'static str = "TimeInZone";
@@ -1934,7 +1935,7 @@ impl FitMessage for TimeInZone {
         let mut r#pwr_calc_type = None;
         let mut r#functional_threshold_power = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -1989,7 +1990,7 @@ impl FitMessage for TimeInZone {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -2029,7 +2030,7 @@ pub struct ZonesTarget {
     pub r#hr_calc_type: Option<Value>,
     pub r#pwr_calc_type: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for ZonesTarget {
     const NAME: &'static str = "ZonesTarget";
@@ -2043,7 +2044,7 @@ impl FitMessage for ZonesTarget {
         let mut r#functional_threshold_power = None;
         let mut r#hr_calc_type = None;
         let mut r#pwr_calc_type = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 1u8 => {
@@ -2062,7 +2063,7 @@ impl FitMessage for ZonesTarget {
                     r#pwr_calc_type = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -2088,7 +2089,7 @@ pub struct Sport {
     pub r#sub_sport: Option<Value>,
     pub r#name: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for Sport {
     const NAME: &'static str = "Sport";
@@ -2100,7 +2101,7 @@ impl FitMessage for Sport {
         let mut r#sport = None;
         let mut r#sub_sport = None;
         let mut r#name = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -2113,7 +2114,7 @@ impl FitMessage for Sport {
                     r#name = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -2137,7 +2138,7 @@ pub struct HrZone {
     pub r#name: Option<Value>,
     pub r#message_index: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for HrZone {
     const NAME: &'static str = "HrZone";
@@ -2149,7 +2150,7 @@ impl FitMessage for HrZone {
         let mut r#high_bpm = None;
         let mut r#name = None;
         let mut r#message_index = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 1u8 => {
@@ -2162,7 +2163,7 @@ impl FitMessage for HrZone {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -2186,7 +2187,7 @@ pub struct SpeedZone {
     pub r#name: Option<Value>,
     pub r#message_index: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for SpeedZone {
     const NAME: &'static str = "SpeedZone";
@@ -2198,7 +2199,7 @@ impl FitMessage for SpeedZone {
         let mut r#high_value = None;
         let mut r#name = None;
         let mut r#message_index = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -2211,7 +2212,7 @@ impl FitMessage for SpeedZone {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -2235,7 +2236,7 @@ pub struct CadenceZone {
     pub r#name: Option<Value>,
     pub r#message_index: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for CadenceZone {
     const NAME: &'static str = "CadenceZone";
@@ -2247,7 +2248,7 @@ impl FitMessage for CadenceZone {
         let mut r#high_value = None;
         let mut r#name = None;
         let mut r#message_index = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -2260,7 +2261,7 @@ impl FitMessage for CadenceZone {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -2284,7 +2285,7 @@ pub struct PowerZone {
     pub r#name: Option<Value>,
     pub r#message_index: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for PowerZone {
     const NAME: &'static str = "PowerZone";
@@ -2296,7 +2297,7 @@ impl FitMessage for PowerZone {
         let mut r#high_value = None;
         let mut r#name = None;
         let mut r#message_index = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 1u8 => {
@@ -2309,7 +2310,7 @@ impl FitMessage for PowerZone {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -2334,7 +2335,7 @@ pub struct MetZone {
     pub r#fat_calories: Option<Value>,
     pub r#message_index: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for MetZone {
     const NAME: &'static str = "MetZone";
@@ -2347,7 +2348,7 @@ impl FitMessage for MetZone {
         let mut r#calories = None;
         let mut r#fat_calories = None;
         let mut r#message_index = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 1u8 => {
@@ -2363,7 +2364,7 @@ impl FitMessage for MetZone {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -2420,7 +2421,7 @@ pub struct DiveSettings {
     pub r#timestamp: Option<Value>,
     pub r#message_index: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for DiveSettings {
     const NAME: &'static str = "DiveSettings";
@@ -2464,7 +2465,7 @@ impl FitMessage for DiveSettings {
         let mut r#no_fly_time_mode = None;
         let mut r#timestamp = None;
         let mut r#message_index = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -2573,7 +2574,7 @@ impl FitMessage for DiveSettings {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -2639,7 +2640,7 @@ pub struct DiveAlarm {
     pub r#speed: Option<Value>,
     pub r#message_index: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for DiveAlarm {
     const NAME: &'static str = "DiveAlarm";
@@ -2661,7 +2662,7 @@ impl FitMessage for DiveAlarm {
         let mut r#repeating = None;
         let mut r#speed = None;
         let mut r#message_index = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -2704,7 +2705,7 @@ impl FitMessage for DiveAlarm {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -2748,7 +2749,7 @@ pub struct DiveApneaAlarm {
     pub r#speed: Option<Value>,
     pub r#message_index: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for DiveApneaAlarm {
     const NAME: &'static str = "DiveApneaAlarm";
@@ -2770,7 +2771,7 @@ impl FitMessage for DiveApneaAlarm {
         let mut r#repeating = None;
         let mut r#speed = None;
         let mut r#message_index = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -2813,7 +2814,7 @@ impl FitMessage for DiveApneaAlarm {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -2849,7 +2850,7 @@ pub struct DiveGas {
     pub r#mode: Option<Value>,
     pub r#message_index: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for DiveGas {
     const NAME: &'static str = "DiveGas";
@@ -2863,7 +2864,7 @@ impl FitMessage for DiveGas {
         let mut r#status = None;
         let mut r#mode = None;
         let mut r#message_index = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -2882,7 +2883,7 @@ impl FitMessage for DiveGas {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -2918,7 +2919,7 @@ pub struct Goal {
     pub r#source: Option<Value>,
     pub r#message_index: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for Goal {
     const NAME: &'static str = "Goal";
@@ -2940,7 +2941,7 @@ impl FitMessage for Goal {
         let mut r#enabled = None;
         let mut r#source = None;
         let mut r#message_index = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -2983,7 +2984,7 @@ impl FitMessage for Goal {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -3022,7 +3023,7 @@ pub struct Activity {
     pub r#event_group: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for Activity {
     const NAME: &'static str = "Activity";
@@ -3039,7 +3040,7 @@ impl FitMessage for Activity {
         let mut r#local_timestamp = None;
         let mut r#event_group = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -3067,7 +3068,7 @@ impl FitMessage for Activity {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -3247,7 +3248,7 @@ pub struct Session {
     pub r#timestamp: Option<Value>,
     pub r#message_index: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for Session {
     const NAME: &'static str = "Session";
@@ -3410,7 +3411,7 @@ impl FitMessage for Session {
         let mut r#max_core_temperature = None;
         let mut r#timestamp = None;
         let mut r#message_index = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -3876,7 +3877,7 @@ impl FitMessage for Session {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -4171,7 +4172,7 @@ pub struct Lap {
     pub r#timestamp: Option<Value>,
     pub r#message_index: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for Lap {
     const NAME: &'static str = "Lap";
@@ -4303,7 +4304,7 @@ impl FitMessage for Lap {
         let mut r#max_core_temperature = None;
         let mut r#timestamp = None;
         let mut r#message_index = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -4676,7 +4677,7 @@ impl FitMessage for Lap {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -4839,7 +4840,7 @@ pub struct Length {
     pub r#timestamp: Option<Value>,
     pub r#message_index: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for Length {
     const NAME: &'static str = "Length";
@@ -4870,7 +4871,7 @@ impl FitMessage for Length {
         let mut r#max_respiration_rate = None;
         let mut r#timestamp = None;
         let mut r#message_index = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -4940,7 +4941,7 @@ impl FitMessage for Length {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -5064,7 +5065,7 @@ pub struct Record {
     pub r#core_temperature: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for Record {
     const NAME: &'static str = "Record";
@@ -5157,7 +5158,7 @@ impl FitMessage for Record {
         let mut r#po2 = None;
         let mut r#core_temperature = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -5413,7 +5414,7 @@ impl FitMessage for Record {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -5534,7 +5535,7 @@ pub struct Event {
     pub r#radar_threat_max_approach_speed: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for Event {
     const NAME: &'static str = "Event";
@@ -5562,7 +5563,7 @@ impl FitMessage for Event {
         let mut r#radar_threat_avg_approach_speed = None;
         let mut r#radar_threat_max_approach_speed = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -5623,7 +5624,7 @@ impl FitMessage for Event {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -5679,7 +5680,7 @@ pub struct DeviceInfo {
     pub r#battery_level: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for DeviceInfo {
     const NAME: &'static str = "DeviceInfo";
@@ -5707,7 +5708,7 @@ impl FitMessage for DeviceInfo {
         let mut r#product_name = None;
         let mut r#battery_level = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -5768,7 +5769,7 @@ impl FitMessage for DeviceInfo {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -5810,7 +5811,7 @@ pub struct DeviceAuxBatteryInfo {
     pub r#battery_identifier: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for DeviceAuxBatteryInfo {
     const NAME: &'static str = "DeviceAuxBatteryInfo";
@@ -5824,7 +5825,7 @@ impl FitMessage for DeviceAuxBatteryInfo {
         let mut r#battery_status = None;
         let mut r#battery_identifier = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -5843,7 +5844,7 @@ impl FitMessage for DeviceAuxBatteryInfo {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -5873,7 +5874,7 @@ pub struct TrainingFile {
     pub r#time_created: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for TrainingFile {
     const NAME: &'static str = "TrainingFile";
@@ -5888,7 +5889,7 @@ impl FitMessage for TrainingFile {
         let mut r#serial_number = None;
         let mut r#time_created = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -5910,7 +5911,7 @@ impl FitMessage for TrainingFile {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -5950,7 +5951,7 @@ pub struct WeatherConditions {
     pub r#low_temperature: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for WeatherConditions {
     const NAME: &'static str = "WeatherConditions";
@@ -5975,7 +5976,7 @@ impl FitMessage for WeatherConditions {
         let mut r#high_temperature = None;
         let mut r#low_temperature = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -6027,7 +6028,7 @@ impl FitMessage for WeatherConditions {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -6067,7 +6068,7 @@ pub struct WeatherAlert {
     pub r#type: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for WeatherAlert {
     const NAME: &'static str = "WeatherAlert";
@@ -6082,7 +6083,7 @@ impl FitMessage for WeatherAlert {
         let mut r#severity = None;
         let mut r#type = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -6104,7 +6105,7 @@ impl FitMessage for WeatherAlert {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -6137,7 +6138,7 @@ pub struct GpsMetadata {
     pub r#velocity: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for GpsMetadata {
     const NAME: &'static str = "GpsMetadata";
@@ -6155,7 +6156,7 @@ impl FitMessage for GpsMetadata {
         let mut r#utc_timestamp = None;
         let mut r#velocity = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -6186,7 +6187,7 @@ impl FitMessage for GpsMetadata {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -6218,7 +6219,7 @@ pub struct CameraEvent {
     pub r#camera_orientation: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for CameraEvent {
     const NAME: &'static str = "CameraEvent";
@@ -6232,7 +6233,7 @@ impl FitMessage for CameraEvent {
         let mut r#camera_file_uuid = None;
         let mut r#camera_orientation = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -6251,7 +6252,7 @@ impl FitMessage for CameraEvent {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -6283,7 +6284,7 @@ pub struct GyroscopeData {
     pub r#calibrated_gyro_z: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for GyroscopeData {
     const NAME: &'static str = "GyroscopeData";
@@ -6301,7 +6302,7 @@ impl FitMessage for GyroscopeData {
         let mut r#calibrated_gyro_y = None;
         let mut r#calibrated_gyro_z = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -6332,7 +6333,7 @@ impl FitMessage for GyroscopeData {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -6371,7 +6372,7 @@ pub struct AccelerometerData {
     pub r#compressed_calibrated_accel_z: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for AccelerometerData {
     const NAME: &'static str = "AccelerometerData";
@@ -6392,7 +6393,7 @@ impl FitMessage for AccelerometerData {
         let mut r#compressed_calibrated_accel_y = None;
         let mut r#compressed_calibrated_accel_z = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -6432,7 +6433,7 @@ impl FitMessage for AccelerometerData {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -6471,7 +6472,7 @@ pub struct MagnetometerData {
     pub r#calibrated_mag_z: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for MagnetometerData {
     const NAME: &'static str = "MagnetometerData";
@@ -6489,7 +6490,7 @@ impl FitMessage for MagnetometerData {
         let mut r#calibrated_mag_y = None;
         let mut r#calibrated_mag_z = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -6520,7 +6521,7 @@ impl FitMessage for MagnetometerData {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -6551,7 +6552,7 @@ pub struct BarometerData {
     pub r#baro_pres: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for BarometerData {
     const NAME: &'static str = "BarometerData";
@@ -6564,7 +6565,7 @@ impl FitMessage for BarometerData {
         let mut r#sample_time_offset = None;
         let mut r#baro_pres = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -6580,7 +6581,7 @@ impl FitMessage for BarometerData {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -6609,7 +6610,7 @@ pub struct ThreeDSensorCalibration {
     pub r#orientation_matrix: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for ThreeDSensorCalibration {
     const NAME: &'static str = "ThreeDSensorCalibration";
@@ -6625,7 +6626,7 @@ impl FitMessage for ThreeDSensorCalibration {
         let mut r#offset_cal = None;
         let mut r#orientation_matrix = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -6650,7 +6651,7 @@ impl FitMessage for ThreeDSensorCalibration {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -6681,7 +6682,7 @@ pub struct OneDSensorCalibration {
     pub r#offset_cal: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for OneDSensorCalibration {
     const NAME: &'static str = "OneDSensorCalibration";
@@ -6696,7 +6697,7 @@ impl FitMessage for OneDSensorCalibration {
         let mut r#level_shift = None;
         let mut r#offset_cal = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -6718,7 +6719,7 @@ impl FitMessage for OneDSensorCalibration {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -6745,7 +6746,7 @@ pub struct VideoFrame {
     pub r#frame_number: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for VideoFrame {
     const NAME: &'static str = "VideoFrame";
@@ -6757,7 +6758,7 @@ impl FitMessage for VideoFrame {
         let mut r#timestamp_ms = None;
         let mut r#frame_number = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -6770,7 +6771,7 @@ impl FitMessage for VideoFrame {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -6800,7 +6801,7 @@ pub struct ObdiiData {
     pub r#start_timestamp_ms: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for ObdiiData {
     const NAME: &'static str = "ObdiiData";
@@ -6818,7 +6819,7 @@ impl FitMessage for ObdiiData {
         let mut r#start_timestamp = None;
         let mut r#start_timestamp_ms = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -6849,7 +6850,7 @@ impl FitMessage for ObdiiData {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -6879,7 +6880,7 @@ pub struct NmeaSentence {
     pub r#sentence: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for NmeaSentence {
     const NAME: &'static str = "NmeaSentence";
@@ -6891,7 +6892,7 @@ impl FitMessage for NmeaSentence {
         let mut r#timestamp_ms = None;
         let mut r#sentence = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -6904,7 +6905,7 @@ impl FitMessage for NmeaSentence {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -6937,7 +6938,7 @@ pub struct AviationAttitude {
     pub r#validity: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for AviationAttitude {
     const NAME: &'static str = "AviationAttitude";
@@ -6958,7 +6959,7 @@ impl FitMessage for AviationAttitude {
         let mut r#track = None;
         let mut r#validity = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -6998,7 +6999,7 @@ impl FitMessage for AviationAttitude {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -7031,7 +7032,7 @@ pub struct Video {
     pub r#hosting_provider: Option<Value>,
     pub r#duration: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for Video {
     const NAME: &'static str = "Video";
@@ -7043,7 +7044,7 @@ impl FitMessage for Video {
         let mut r#url = None;
         let mut r#hosting_provider = None;
         let mut r#duration = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -7056,7 +7057,7 @@ impl FitMessage for Video {
                     r#duration = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -7080,7 +7081,7 @@ pub struct VideoTitle {
     pub r#text: Option<Value>,
     pub r#message_index: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for VideoTitle {
     const NAME: &'static str = "VideoTitle";
@@ -7092,7 +7093,7 @@ impl FitMessage for VideoTitle {
         let mut r#message_count = None;
         let mut r#text = None;
         let mut r#message_index = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -7105,7 +7106,7 @@ impl FitMessage for VideoTitle {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -7129,7 +7130,7 @@ pub struct VideoDescription {
     pub r#text: Option<Value>,
     pub r#message_index: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for VideoDescription {
     const NAME: &'static str = "VideoDescription";
@@ -7141,7 +7142,7 @@ impl FitMessage for VideoDescription {
         let mut r#message_count = None;
         let mut r#text = None;
         let mut r#message_index = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -7154,7 +7155,7 @@ impl FitMessage for VideoDescription {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -7182,7 +7183,7 @@ pub struct VideoClip {
     pub r#clip_start: Option<Value>,
     pub r#clip_end: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for VideoClip {
     const NAME: &'static str = "VideoClip";
@@ -7198,7 +7199,7 @@ impl FitMessage for VideoClip {
         let mut r#end_timestamp_ms = None;
         let mut r#clip_start = None;
         let mut r#clip_end = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -7223,7 +7224,7 @@ impl FitMessage for VideoClip {
                     r#clip_end = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -7259,7 +7260,7 @@ pub struct Set {
     pub r#wkt_step_index: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for Set {
     const NAME: &'static str = "Set";
@@ -7279,7 +7280,7 @@ impl FitMessage for Set {
         let mut r#message_index = None;
         let mut r#wkt_step_index = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -7316,7 +7317,7 @@ impl FitMessage for Set {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -7355,7 +7356,7 @@ pub struct Jump {
     pub r#enhanced_speed: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for Jump {
     const NAME: &'static str = "Jump";
@@ -7374,7 +7375,7 @@ impl FitMessage for Jump {
         let mut r#speed = None;
         let mut r#enhanced_speed = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -7408,7 +7409,7 @@ impl FitMessage for Jump {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -7455,7 +7456,7 @@ pub struct Split {
     pub r#total_moving_time: Option<Value>,
     pub r#message_index: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for Split {
     const NAME: &'static str = "Split";
@@ -7483,7 +7484,7 @@ impl FitMessage for Split {
         let mut r#start_elevation = None;
         let mut r#total_moving_time = None;
         let mut r#message_index = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -7544,7 +7545,7 @@ impl FitMessage for Split {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -7595,7 +7596,7 @@ pub struct SplitSummary {
     pub r#total_moving_time: Option<Value>,
     pub r#message_index: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for SplitSummary {
     const NAME: &'static str = "SplitSummary";
@@ -7618,7 +7619,7 @@ impl FitMessage for SplitSummary {
         let mut r#total_calories = None;
         let mut r#total_moving_time = None;
         let mut r#message_index = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -7664,7 +7665,7 @@ impl FitMessage for SplitSummary {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -7703,7 +7704,7 @@ pub struct ClimbPro {
     pub r#current_dist: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for ClimbPro {
     const NAME: &'static str = "ClimbPro";
@@ -7719,7 +7720,7 @@ impl FitMessage for ClimbPro {
         let mut r#climb_category = None;
         let mut r#current_dist = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -7744,7 +7745,7 @@ impl FitMessage for ClimbPro {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -7784,7 +7785,7 @@ pub struct FieldDescription {
     pub r#native_mesg_num: Option<Value>,
     pub r#native_field_num: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for FieldDescription {
     const NAME: &'static str = "FieldDescription";
@@ -7807,7 +7808,7 @@ impl FitMessage for FieldDescription {
         let mut r#fit_base_unit_id = None;
         let mut r#native_mesg_num = None;
         let mut r#native_field_num = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -7853,7 +7854,7 @@ impl FitMessage for FieldDescription {
                     r#native_field_num = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -7891,7 +7892,7 @@ pub struct DeveloperDataId {
     pub r#developer_data_index: Option<Value>,
     pub r#application_version: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for DeveloperDataId {
     const NAME: &'static str = "DeveloperDataId";
@@ -7905,7 +7906,7 @@ impl FitMessage for DeveloperDataId {
         let mut r#manufacturer_id = None;
         let mut r#developer_data_index = None;
         let mut r#application_version = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -7924,7 +7925,7 @@ impl FitMessage for DeveloperDataId {
                     r#application_version = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -7951,7 +7952,7 @@ pub struct Course {
     pub r#capabilities: Option<Value>,
     pub r#sub_sport: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for Course {
     const NAME: &'static str = "Course";
@@ -7964,7 +7965,7 @@ impl FitMessage for Course {
         let mut r#name = None;
         let mut r#capabilities = None;
         let mut r#sub_sport = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 4u8 => {
@@ -7980,7 +7981,7 @@ impl FitMessage for Course {
                     r#sub_sport = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -8010,7 +8011,7 @@ pub struct CoursePoint {
     pub r#favorite: Option<Value>,
     pub r#message_index: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for CoursePoint {
     const NAME: &'static str = "CoursePoint";
@@ -8027,7 +8028,7 @@ impl FitMessage for CoursePoint {
         let mut r#name = None;
         let mut r#favorite = None;
         let mut r#message_index = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 1u8 => {
@@ -8055,7 +8056,7 @@ impl FitMessage for CoursePoint {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -8091,7 +8092,7 @@ pub struct SegmentId {
     pub r#delete_status: Option<Value>,
     pub r#selection_type: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for SegmentId {
     const NAME: &'static str = "SegmentId";
@@ -8109,7 +8110,7 @@ impl FitMessage for SegmentId {
         let mut r#default_race_leader = None;
         let mut r#delete_status = None;
         let mut r#selection_type = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -8140,7 +8141,7 @@ impl FitMessage for SegmentId {
                     r#selection_type = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -8175,7 +8176,7 @@ pub struct SegmentLeaderboardEntry {
     pub r#activity_id_string: Option<Value>,
     pub r#message_index: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for SegmentLeaderboardEntry {
     const NAME: &'static str = "SegmentLeaderboardEntry";
@@ -8191,7 +8192,7 @@ impl FitMessage for SegmentLeaderboardEntry {
         let mut r#segment_time = None;
         let mut r#activity_id_string = None;
         let mut r#message_index = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -8216,7 +8217,7 @@ impl FitMessage for SegmentLeaderboardEntry {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -8249,7 +8250,7 @@ pub struct SegmentPoint {
     pub r#enhanced_altitude: Option<Value>,
     pub r#message_index: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for SegmentPoint {
     const NAME: &'static str = "SegmentPoint";
@@ -8265,7 +8266,7 @@ impl FitMessage for SegmentPoint {
         let mut r#leader_time = None;
         let mut r#enhanced_altitude = None;
         let mut r#message_index = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 1u8 => {
@@ -8290,7 +8291,7 @@ impl FitMessage for SegmentPoint {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -8410,7 +8411,7 @@ pub struct SegmentLap {
     pub r#timestamp: Option<Value>,
     pub r#message_index: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for SegmentLap {
     const NAME: &'static str = "SegmentLap";
@@ -8514,7 +8515,7 @@ impl FitMessage for SegmentLap {
         let mut r#enhanced_min_altitude = None;
         let mut r#timestamp = None;
         let mut r#message_index = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -8803,7 +8804,7 @@ impl FitMessage for SegmentLap {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -8926,7 +8927,7 @@ pub struct SegmentFile {
     pub r#default_race_leader: Option<Value>,
     pub r#message_index: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for SegmentFile {
     const NAME: &'static str = "SegmentFile";
@@ -8944,7 +8945,7 @@ impl FitMessage for SegmentFile {
         let mut r#leader_activity_id_string = None;
         let mut r#default_race_leader = None;
         let mut r#message_index = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 1u8 => {
@@ -8975,7 +8976,7 @@ impl FitMessage for SegmentFile {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -9010,7 +9011,7 @@ pub struct Workout {
     pub r#pool_length_unit: Option<Value>,
     pub r#message_index: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for Workout {
     const NAME: &'static str = "Workout";
@@ -9027,7 +9028,7 @@ impl FitMessage for Workout {
         let mut r#pool_length = None;
         let mut r#pool_length_unit = None;
         let mut r#message_index = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 4u8 => {
@@ -9055,7 +9056,7 @@ impl FitMessage for Workout {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -9088,7 +9089,7 @@ pub struct WorkoutSession {
     pub r#pool_length_unit: Option<Value>,
     pub r#message_index: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for WorkoutSession {
     const NAME: &'static str = "WorkoutSession";
@@ -9104,7 +9105,7 @@ impl FitMessage for WorkoutSession {
         let mut r#pool_length = None;
         let mut r#pool_length_unit = None;
         let mut r#message_index = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -9129,7 +9130,7 @@ impl FitMessage for WorkoutSession {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -9173,7 +9174,7 @@ pub struct WorkoutStep {
     pub r#secondary_custom_target_value_high: Option<Value>,
     pub r#message_index: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for WorkoutStep {
     const NAME: &'static str = "WorkoutStep";
@@ -9201,7 +9202,7 @@ impl FitMessage for WorkoutStep {
         let mut r#secondary_custom_target_value_low = None;
         let mut r#secondary_custom_target_value_high = None;
         let mut r#message_index = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -9262,7 +9263,7 @@ impl FitMessage for WorkoutStep {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -9303,7 +9304,7 @@ pub struct ExerciseTitle {
     pub r#wkt_step_name: Option<Value>,
     pub r#message_index: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for ExerciseTitle {
     const NAME: &'static str = "ExerciseTitle";
@@ -9316,7 +9317,7 @@ impl FitMessage for ExerciseTitle {
         let mut r#exercise_name = None;
         let mut r#wkt_step_name = None;
         let mut r#message_index = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -9332,7 +9333,7 @@ impl FitMessage for ExerciseTitle {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -9361,7 +9362,7 @@ pub struct Schedule {
     pub r#type: Option<Value>,
     pub r#scheduled_time: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for Schedule {
     const NAME: &'static str = "Schedule";
@@ -9377,7 +9378,7 @@ impl FitMessage for Schedule {
         let mut r#completed = None;
         let mut r#type = None;
         let mut r#scheduled_time = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -9402,7 +9403,7 @@ impl FitMessage for Schedule {
                     r#scheduled_time = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -9437,7 +9438,7 @@ pub struct Totals {
     pub r#timestamp: Option<Value>,
     pub r#message_index: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for Totals {
     const NAME: &'static str = "Totals";
@@ -9456,7 +9457,7 @@ impl FitMessage for Totals {
         let mut r#sport_index = None;
         let mut r#timestamp = None;
         let mut r#message_index = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -9490,7 +9491,7 @@ impl FitMessage for Totals {
                     r#message_index = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -9532,7 +9533,7 @@ pub struct WeightScale {
     pub r#bmi: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for WeightScale {
     const NAME: &'static str = "WeightScale";
@@ -9555,7 +9556,7 @@ impl FitMessage for WeightScale {
         let mut r#user_profile_index = None;
         let mut r#bmi = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -9601,7 +9602,7 @@ impl FitMessage for WeightScale {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -9644,7 +9645,7 @@ pub struct BloodPressure {
     pub r#user_profile_index: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for BloodPressure {
     const NAME: &'static str = "BloodPressure";
@@ -9664,7 +9665,7 @@ impl FitMessage for BloodPressure {
         let mut r#status = None;
         let mut r#user_profile_index = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -9701,7 +9702,7 @@ impl FitMessage for BloodPressure {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -9736,7 +9737,7 @@ pub struct MonitoringInfo {
     pub r#resting_metabolic_rate: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for MonitoringInfo {
     const NAME: &'static str = "MonitoringInfo";
@@ -9751,7 +9752,7 @@ impl FitMessage for MonitoringInfo {
         let mut r#cycles_to_calories = None;
         let mut r#resting_metabolic_rate = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -9773,7 +9774,7 @@ impl FitMessage for MonitoringInfo {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -9826,7 +9827,7 @@ pub struct Monitoring {
     pub r#vigorous_activity_minutes: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for Monitoring {
     const NAME: &'static str = "Monitoring";
@@ -9864,7 +9865,7 @@ impl FitMessage for Monitoring {
         let mut r#moderate_activity_minutes = None;
         let mut r#vigorous_activity_minutes = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -9955,7 +9956,7 @@ impl FitMessage for Monitoring {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -10005,7 +10006,7 @@ pub struct MonitoringHrData {
     pub r#current_day_resting_heart_rate: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for MonitoringHrData {
     const NAME: &'static str = "MonitoringHrData";
@@ -10017,7 +10018,7 @@ impl FitMessage for MonitoringHrData {
         let mut r#resting_heart_rate = None;
         let mut r#current_day_resting_heart_rate = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -10030,7 +10031,7 @@ impl FitMessage for MonitoringHrData {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -10055,7 +10056,7 @@ pub struct Spo2Data {
     pub r#mode: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for Spo2Data {
     const NAME: &'static str = "Spo2Data";
@@ -10068,7 +10069,7 @@ impl FitMessage for Spo2Data {
         let mut r#reading_confidence = None;
         let mut r#mode = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -10084,7 +10085,7 @@ impl FitMessage for Spo2Data {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -10112,7 +10113,7 @@ pub struct Hr {
     pub r#event_timestamp_12: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for Hr {
     const NAME: &'static str = "Hr";
@@ -10127,7 +10128,7 @@ impl FitMessage for Hr {
         let mut r#event_timestamp = None;
         let mut r#event_timestamp_12 = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -10149,7 +10150,7 @@ impl FitMessage for Hr {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -10176,7 +10177,7 @@ pub struct StressLevel {
     pub r#stress_level_value: Option<Value>,
     pub r#stress_level_time: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for StressLevel {
     const NAME: &'static str = "StressLevel";
@@ -10187,7 +10188,7 @@ impl FitMessage for StressLevel {
         }
         let mut r#stress_level_value = None;
         let mut r#stress_level_time = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -10197,7 +10198,7 @@ impl FitMessage for StressLevel {
                     r#stress_level_time = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -10225,7 +10226,7 @@ pub struct MaxMetData {
     pub r#hr_source: Option<Value>,
     pub r#speed_source: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for MaxMetData {
     const NAME: &'static str = "MaxMetData";
@@ -10242,7 +10243,7 @@ impl FitMessage for MaxMetData {
         let mut r#calibrated_data = None;
         let mut r#hr_source = None;
         let mut r#speed_source = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -10270,7 +10271,7 @@ impl FitMessage for MaxMetData {
                     r#speed_source = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -10302,7 +10303,7 @@ pub struct HsaBodyBatteryData {
     pub r#uncharged: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for HsaBodyBatteryData {
     const NAME: &'static str = "HsaBodyBatteryData";
@@ -10316,7 +10317,7 @@ impl FitMessage for HsaBodyBatteryData {
         let mut r#charged = None;
         let mut r#uncharged = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -10335,7 +10336,7 @@ impl FitMessage for HsaBodyBatteryData {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -10361,7 +10362,7 @@ pub struct HsaEvent {
     pub r#event_id: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for HsaEvent {
     const NAME: &'static str = "HsaEvent";
@@ -10372,7 +10373,7 @@ impl FitMessage for HsaEvent {
         }
         let mut r#event_id = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -10382,7 +10383,7 @@ impl FitMessage for HsaEvent {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -10410,7 +10411,7 @@ pub struct HsaAccelerometerData {
     pub r#timestamp_32k: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for HsaAccelerometerData {
     const NAME: &'static str = "HsaAccelerometerData";
@@ -10426,7 +10427,7 @@ impl FitMessage for HsaAccelerometerData {
         let mut r#accel_z = None;
         let mut r#timestamp_32k = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -10451,7 +10452,7 @@ impl FitMessage for HsaAccelerometerData {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -10483,7 +10484,7 @@ pub struct HsaGyroscopeData {
     pub r#timestamp_32k: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for HsaGyroscopeData {
     const NAME: &'static str = "HsaGyroscopeData";
@@ -10499,7 +10500,7 @@ impl FitMessage for HsaGyroscopeData {
         let mut r#gyro_z = None;
         let mut r#timestamp_32k = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -10524,7 +10525,7 @@ impl FitMessage for HsaGyroscopeData {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -10553,7 +10554,7 @@ pub struct HsaStepData {
     pub r#steps: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for HsaStepData {
     const NAME: &'static str = "HsaStepData";
@@ -10565,7 +10566,7 @@ impl FitMessage for HsaStepData {
         let mut r#processing_interval = None;
         let mut r#steps = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -10578,7 +10579,7 @@ impl FitMessage for HsaStepData {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -10604,7 +10605,7 @@ pub struct HsaSpo2Data {
     pub r#confidence: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for HsaSpo2Data {
     const NAME: &'static str = "HsaSpo2Data";
@@ -10617,7 +10618,7 @@ impl FitMessage for HsaSpo2Data {
         let mut r#reading_spo2 = None;
         let mut r#confidence = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -10633,7 +10634,7 @@ impl FitMessage for HsaSpo2Data {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -10659,7 +10660,7 @@ pub struct HsaStressData {
     pub r#stress_level: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for HsaStressData {
     const NAME: &'static str = "HsaStressData";
@@ -10671,7 +10672,7 @@ impl FitMessage for HsaStressData {
         let mut r#processing_interval = None;
         let mut r#stress_level = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -10684,7 +10685,7 @@ impl FitMessage for HsaStressData {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -10709,7 +10710,7 @@ pub struct HsaRespirationData {
     pub r#respiration_rate: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for HsaRespirationData {
     const NAME: &'static str = "HsaRespirationData";
@@ -10721,7 +10722,7 @@ impl FitMessage for HsaRespirationData {
         let mut r#processing_interval = None;
         let mut r#respiration_rate = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -10734,7 +10735,7 @@ impl FitMessage for HsaRespirationData {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -10760,7 +10761,7 @@ pub struct HsaHeartRateData {
     pub r#heart_rate: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for HsaHeartRateData {
     const NAME: &'static str = "HsaHeartRateData";
@@ -10773,7 +10774,7 @@ impl FitMessage for HsaHeartRateData {
         let mut r#status = None;
         let mut r#heart_rate = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -10789,7 +10790,7 @@ impl FitMessage for HsaHeartRateData {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -10815,7 +10816,7 @@ pub struct HsaConfigurationData {
     pub r#data_size: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for HsaConfigurationData {
     const NAME: &'static str = "HsaConfigurationData";
@@ -10827,7 +10828,7 @@ impl FitMessage for HsaConfigurationData {
         let mut r#data = None;
         let mut r#data_size = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -10840,7 +10841,7 @@ impl FitMessage for HsaConfigurationData {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -10865,7 +10866,7 @@ pub struct HsaWristTemperatureData {
     pub r#value: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for HsaWristTemperatureData {
     const NAME: &'static str = "HsaWristTemperatureData";
@@ -10877,7 +10878,7 @@ impl FitMessage for HsaWristTemperatureData {
         let mut r#processing_interval = None;
         let mut r#value = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -10890,7 +10891,7 @@ impl FitMessage for HsaWristTemperatureData {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -10917,7 +10918,7 @@ pub struct MemoGlob {
     pub r#data: Option<Value>,
     pub r#part_index: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for MemoGlob {
     const NAME: &'static str = "MemoGlob";
@@ -10932,7 +10933,7 @@ impl FitMessage for MemoGlob {
         let mut r#field_num = None;
         let mut r#data = None;
         let mut r#part_index = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -10954,7 +10955,7 @@ impl FitMessage for MemoGlob {
                     r#part_index = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -10980,7 +10981,7 @@ pub struct SleepLevel {
     pub r#sleep_level: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for SleepLevel {
     const NAME: &'static str = "SleepLevel";
@@ -10991,7 +10992,7 @@ impl FitMessage for SleepLevel {
         }
         let mut r#sleep_level = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -11001,7 +11002,7 @@ impl FitMessage for SleepLevel {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -11026,7 +11027,7 @@ pub struct AntChannelId {
     pub r#transmission_type: Option<Value>,
     pub r#device_index: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for AntChannelId {
     const NAME: &'static str = "AntChannelId";
@@ -11040,7 +11041,7 @@ impl FitMessage for AntChannelId {
         let mut r#device_number = None;
         let mut r#transmission_type = None;
         let mut r#device_index = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -11059,7 +11060,7 @@ impl FitMessage for AntChannelId {
                     r#device_index = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -11088,7 +11089,7 @@ pub struct AntRx {
     pub r#data: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for AntRx {
     const NAME: &'static str = "AntRx";
@@ -11103,7 +11104,7 @@ impl FitMessage for AntRx {
         let mut r#channel_number = None;
         let mut r#data = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -11125,7 +11126,7 @@ impl FitMessage for AntRx {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -11155,7 +11156,7 @@ pub struct AntTx {
     pub r#data: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for AntTx {
     const NAME: &'static str = "AntTx";
@@ -11170,7 +11171,7 @@ impl FitMessage for AntTx {
         let mut r#channel_number = None;
         let mut r#data = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -11192,7 +11193,7 @@ impl FitMessage for AntTx {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -11220,7 +11221,7 @@ pub struct ExdScreenConfiguration {
     pub r#layout: Option<Value>,
     pub r#screen_enabled: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for ExdScreenConfiguration {
     const NAME: &'static str = "ExdScreenConfiguration";
@@ -11233,7 +11234,7 @@ impl FitMessage for ExdScreenConfiguration {
         let mut r#field_count = None;
         let mut r#layout = None;
         let mut r#screen_enabled = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -11249,7 +11250,7 @@ impl FitMessage for ExdScreenConfiguration {
                     r#screen_enabled = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -11277,7 +11278,7 @@ pub struct ExdDataFieldConfiguration {
     pub r#display_type: Option<Value>,
     pub r#title: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for ExdDataFieldConfiguration {
     const NAME: &'static str = "ExdDataFieldConfiguration";
@@ -11292,7 +11293,7 @@ impl FitMessage for ExdDataFieldConfiguration {
         let mut r#concept_count = None;
         let mut r#display_type = None;
         let mut r#title = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -11314,7 +11315,7 @@ impl FitMessage for ExdDataFieldConfiguration {
                     r#title = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -11349,7 +11350,7 @@ pub struct ExdDataConceptConfiguration {
     pub r#descriptor: Option<Value>,
     pub r#is_signed: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for ExdDataConceptConfiguration {
     const NAME: &'static str = "ExdDataConceptConfiguration";
@@ -11369,7 +11370,7 @@ impl FitMessage for ExdDataConceptConfiguration {
         let mut r#qualifier = None;
         let mut r#descriptor = None;
         let mut r#is_signed = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -11406,7 +11407,7 @@ impl FitMessage for ExdDataConceptConfiguration {
                     r#is_signed = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -11458,7 +11459,7 @@ pub struct DiveSummary {
     pub r#hang_time: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for DiveSummary {
     const NAME: &'static str = "DiveSummary";
@@ -11490,7 +11491,7 @@ impl FitMessage for DiveSummary {
         let mut r#max_descent_rate = None;
         let mut r#hang_time = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -11563,7 +11564,7 @@ impl FitMessage for DiveSummary {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -11611,7 +11612,7 @@ pub struct AadAccelFeatures {
     pub r#time_above_threshold: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for AadAccelFeatures {
     const NAME: &'static str = "AadAccelFeatures";
@@ -11626,7 +11627,7 @@ impl FitMessage for AadAccelFeatures {
         let mut r#instance = None;
         let mut r#time_above_threshold = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -11648,7 +11649,7 @@ impl FitMessage for AadAccelFeatures {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -11674,7 +11675,7 @@ impl TryFrom<FitDataRecord> for AadAccelFeatures {
 pub struct Hrv {
     pub r#time: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for Hrv {
     const NAME: &'static str = "Hrv";
@@ -11684,14 +11685,14 @@ impl FitMessage for Hrv {
             return Err(TryFromRecordError::unexpected_message_kind::<Self>(&record));
         }
         let mut r#time = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
                     r#time = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -11714,7 +11715,7 @@ pub struct BeatIntervals {
     pub r#time: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for BeatIntervals {
     const NAME: &'static str = "BeatIntervals";
@@ -11726,7 +11727,7 @@ impl FitMessage for BeatIntervals {
         let mut r#timestamp_ms = None;
         let mut r#time = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -11739,7 +11740,7 @@ impl FitMessage for BeatIntervals {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -11768,7 +11769,7 @@ pub struct HrvStatusSummary {
     pub r#status: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for HrvStatusSummary {
     const NAME: &'static str = "HrvStatusSummary";
@@ -11785,7 +11786,7 @@ impl FitMessage for HrvStatusSummary {
         let mut r#baseline_balanced_upper = None;
         let mut r#status = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -11813,7 +11814,7 @@ impl FitMessage for HrvStatusSummary {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -11841,7 +11842,7 @@ pub struct HrvValue {
     pub r#value: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for HrvValue {
     const NAME: &'static str = "HrvValue";
@@ -11852,7 +11853,7 @@ impl FitMessage for HrvValue {
         }
         let mut r#value = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -11862,7 +11863,7 @@ impl FitMessage for HrvValue {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -11889,7 +11890,7 @@ pub struct RawBbi {
     pub r#gap: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for RawBbi {
     const NAME: &'static str = "RawBbi";
@@ -11904,7 +11905,7 @@ impl FitMessage for RawBbi {
         let mut r#quality = None;
         let mut r#gap = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -11926,7 +11927,7 @@ impl FitMessage for RawBbi {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -11952,7 +11953,7 @@ pub struct RespirationRate {
     pub r#respiration_rate: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for RespirationRate {
     const NAME: &'static str = "RespirationRate";
@@ -11963,7 +11964,7 @@ impl FitMessage for RespirationRate {
         }
         let mut r#respiration_rate = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -11973,7 +11974,7 @@ impl FitMessage for RespirationRate {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -12001,7 +12002,7 @@ pub struct ChronoShotSession {
     pub r#grain_weight: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for ChronoShotSession {
     const NAME: &'static str = "ChronoShotSession";
@@ -12017,7 +12018,7 @@ impl FitMessage for ChronoShotSession {
         let mut r#projectile_type = None;
         let mut r#grain_weight = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -12042,7 +12043,7 @@ impl FitMessage for ChronoShotSession {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -12071,7 +12072,7 @@ pub struct ChronoShotData {
     pub r#shot_num: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for ChronoShotData {
     const NAME: &'static str = "ChronoShotData";
@@ -12083,7 +12084,7 @@ impl FitMessage for ChronoShotData {
         let mut r#shot_speed = None;
         let mut r#shot_num = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -12096,7 +12097,7 @@ impl FitMessage for ChronoShotData {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -12120,7 +12121,7 @@ pub struct TankUpdate {
     pub r#pressure: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for TankUpdate {
     const NAME: &'static str = "TankUpdate";
@@ -12132,7 +12133,7 @@ impl FitMessage for TankUpdate {
         let mut r#sensor = None;
         let mut r#pressure = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -12145,7 +12146,7 @@ impl FitMessage for TankUpdate {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -12171,7 +12172,7 @@ pub struct TankSummary {
     pub r#volume_used: Option<Value>,
     pub r#timestamp: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for TankSummary {
     const NAME: &'static str = "TankSummary";
@@ -12185,7 +12186,7 @@ impl FitMessage for TankSummary {
         let mut r#end_pressure = None;
         let mut r#volume_used = None;
         let mut r#timestamp = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -12204,7 +12205,7 @@ impl FitMessage for TankSummary {
                     r#timestamp = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
@@ -12241,7 +12242,7 @@ pub struct SleepAssessment {
     pub r#interruptions_score: Option<Value>,
     pub r#average_stress_during_sleep: Option<Value>,
     #[doc = r" All fields that are not defined in the profile."]
-    pub unknown_fields: Vec<FitDataField>,
+    pub unknown_fields: BTreeMap<u8, ValueWithUnits>,
 }
 impl FitMessage for SleepAssessment {
     const NAME: &'static str = "SleepAssessment";
@@ -12264,7 +12265,7 @@ impl FitMessage for SleepAssessment {
         let mut r#awakenings_count = None;
         let mut r#interruptions_score = None;
         let mut r#average_stress_during_sleep = None;
-        let mut unknown_fields = Vec::new();
+        let mut unknown_fields = BTreeMap::new();
         for field in record.into_vec() {
             match field.number() {
                 0u8 => {
@@ -12310,7 +12311,7 @@ impl FitMessage for SleepAssessment {
                     r#average_stress_during_sleep = Some(field.into_value());
                 }
                 _ => {
-                    unknown_fields.push(field);
+                    unknown_fields.insert(field.number(), field.into_value_with_units());
                 }
             }
         }
