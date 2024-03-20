@@ -10,10 +10,6 @@ use std::io::prelude::*;
 // not be part of the impl and just pass the field/message
 // in a parameter
 
-fn bare_number_literal(value: u8) -> Literal {
-    Literal::u8_unsuffixed(value)
-}
-
 impl MessageDefinition {
     fn function_name(&self) -> Ident {
         format_ident!("{}_message", self.name())
@@ -146,7 +142,7 @@ impl MessageFieldDefinition {
         let mut comp_exp_chain = Vec::new();
         // build component expansion calls
         for (i, (vn, csize)) in name_and_size.enumerate() {
-            let csize = bare_number_literal(*csize);
+            let csize = Literal::u8_unsuffixed(*csize);
             if i == 0 {
                 comp_exp_chain.push(
                     quote!(let ((input, offset), #vn) = extract_component(&input, 0usize, #csize);),
@@ -232,7 +228,7 @@ impl MessageFieldDefinition {
         let mut deref_branches = Vec::new();
         for (idx, (ref_name, ref_val_str, sub_field_info)) in self.subfields().iter().enumerate() {
             let ref_field = mesg_def.get_field_by_name(ref_name);
-            let ref_field_ident = Ident::new(ref_field.field_type(), Span::call_site());
+            let ref_field_ident = ref_field.field_type();
             let ref_val_ident = Ident::new(ref_val_str, Span::call_site());
             let ref_def_num = ref_field.def_number();
             let elif = if idx == 0 {
@@ -268,7 +264,7 @@ impl MessageFieldDefinition {
     fn create_fn_def(&self, mesg_def: &MessageDefinition) -> TokenStream {
         let def_number = self.def_number();
         let name = self.name();
-        let fld_type_variant = Ident::new(self.field_type(), Span::call_site());
+        let fld_type_variant = self.field_type();
         let fld_type = quote!(FieldDataType::#fld_type_variant);
         let field_fn_name = format_ident!("{}_{}_field", mesg_def.function_name(), self.name());
         // tokens to generate data field
