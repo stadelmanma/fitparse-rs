@@ -3,6 +3,7 @@
 ## HEAD
 * Bump packaged FIT SDK version to 21.133.00 (robinkrahl)
 * Remove dead code files in generate-fit-profile (robinkrahl)
+* Rework profile generation code to leverage the quote crate
 
 ## v0.6.1
 * Bump packaged FIT SDK version to 21.115.00
