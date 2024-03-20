@@ -1,6 +1,6 @@
 //! Code used to parse the Profile.xlsx file into useful data structures
 use calamine::{open_workbook, DataType, Range, Reader, Xlsx};
-use proc_macro2::{Ident, TokenStream};
+use proc_macro2::{Ident, Literal, Span, TokenStream};
 use quote::{format_ident, quote};
 use std::collections::{BTreeMap, HashMap};
 use std::path::PathBuf;
@@ -31,9 +31,10 @@ impl FitProfile {
 pub struct FieldTypeDefintion {
     name: String,
     ident: Ident,
-    base_type: &'static str,
+    base_type: Ident,
     is_true_enum: bool,
     comment: TokenStream,
+    other_value_field_name: Ident,
     variant_map: BTreeMap<i64, FieldTypeVariant>,
 }
 
@@ -41,13 +42,19 @@ impl FieldTypeDefintion {
     fn new(name: &str, base_type: &'static str, comment: Option<String>) -> Self {
         let is_true_enum = base_type == "enum";
         let base_type = if is_true_enum { "u8" } else { base_type };
+        let other_fname = if is_true_enum {
+            Ident::new("UnknownVariant", Span::call_site())
+        } else {
+            Ident::new("Value", Span::call_site())
+        };
 
         Self {
             name: name.to_string(),
             ident: format_ident!("{}", titlecase_string(name)),
-            base_type,
+            base_type: Ident::new(base_type, Span::call_site()),
             is_true_enum,
             comment: doc_comment(comment),
+            other_value_field_name: other_fname,
             variant_map: BTreeMap::new(),
         }
     }
@@ -60,8 +67,8 @@ impl FieldTypeDefintion {
         &self.ident
     }
 
-    pub const fn base_type(&self) -> &'static str {
-        self.base_type
+    pub const fn base_type(&self) -> &Ident {
+        &self.base_type
     }
 
     pub const fn is_true_enum(&self) -> bool {
@@ -76,12 +83,8 @@ impl FieldTypeDefintion {
         &self.variant_map
     }
 
-    pub const fn other_value_field_name(&self) -> &'static str {
-        if self.is_true_enum() {
-            "UnknownVariant"
-        } else {
-            "Value"
-        }
+    pub const fn other_value_field_name(&self) -> &Ident {
+        &self.other_value_field_name
     }
 }
 
@@ -89,7 +92,7 @@ impl FieldTypeDefintion {
 pub struct FieldTypeVariant {
     name: String,
     ident: Ident,
-    value: i64,
+    value: Literal,
     comment: TokenStream,
 }
 
@@ -105,7 +108,7 @@ impl FieldTypeVariant {
         Self {
             name,
             ident: format_ident!("{}", titlized_name),
-            value,
+            value: bare_number_literal(value),
             comment: doc_comment(comment),
         }
     }
@@ -118,8 +121,8 @@ impl FieldTypeVariant {
         &self.ident
     }
 
-    pub const fn value(&self) -> i64 {
-        self.value
+    pub const fn value(&self) -> &Literal {
+        &self.value
     }
 
     pub fn comment(&self) -> &TokenStream {
@@ -174,7 +177,7 @@ impl MessageDefinition {
 pub struct MessageFieldDefinition {
     def_number: u8,
     name: String,
-    field_type: String,
+    field_type: Ident,
     is_array: bool,
     scale: f64,
     offset: f64,
@@ -226,7 +229,7 @@ impl MessageFieldDefinition {
         &self.name
     }
 
-    pub fn field_type(&self) -> &str {
+    pub fn field_type(&self) -> &Ident {
         &self.field_type
     }
 
@@ -332,8 +335,8 @@ fn base_type_to_rust_type(base_type_str: &str) -> &'static str {
 }
 
 /// match the field type string to a simple type or an enum
-fn field_type_str_to_field_type(field_type_str: &str) -> String {
-    match field_type_str {
+fn field_type_str_to_field_type(field_type_str: &str) -> Ident {
+    let typ_str = match field_type_str {
         "sint8" => "SInt8".to_string(),
         "uint8" => "UInt8".to_string(),
         "sint16" => "SInt16".to_string(),
@@ -351,7 +354,8 @@ fn field_type_str_to_field_type(field_type_str: &str) -> String {
         "uint64" => "UInt64".to_string(),
         "uint64z" => "UInt64z".to_string(),
         _ => titlecase_string(field_type_str),
-    }
+    };
+    Ident::new(&typ_str, Span::call_site())
 }
 
 fn titlecase_string(value: &str) -> String {
@@ -367,6 +371,10 @@ fn titlecase_string(value: &str) -> String {
     }
 
     words.join("")
+}
+
+fn bare_number_literal(value: i64) -> Literal {
+    Literal::i64_unsuffixed(value)
 }
 
 fn doc_comment(comment: Option<String>) -> TokenStream {
@@ -558,7 +566,7 @@ fn new_message_field_definition(row: &[DataType]) -> MessageFieldDefinition {
         row[6].get_float().unwrap_or(1.0),
         row[7].get_float().unwrap_or(0.0),
         row[8].get_string().unwrap_or(""),
-        row[10] == "1",
+        row[10].as_string().map_or(false, |v| v == "1"),
         components,
         comment,
     )

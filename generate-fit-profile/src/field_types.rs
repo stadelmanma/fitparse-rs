@@ -1,21 +1,12 @@
 //! Functions to generate the field-types in Rust from the fit profile.
 use crate::parse::{FieldTypeDefintion, FieldTypeVariant, FitProfile};
-use proc_macro2::{Ident, Literal, Span, TokenStream};
+use proc_macro2::TokenStream;
 use quote::{format_ident, quote};
 use std::collections::HashSet;
 use std::{
     fs::File,
     io::{Error, Write},
 };
-
-/// convert a string like "u8" into a u8 type token
-fn type_str_as_type(type_str: &str) -> Ident {
-    Ident::new(type_str, Span::call_site())
-}
-
-fn bare_number_literal(value: i64) -> Literal {
-    Literal::i64_unsuffixed(value)
-}
 
 fn field_type_enum_is_named_variant(field_type: &FieldTypeDefintion) -> TokenStream {
     let variant_values = field_type.variant_map().keys();
@@ -32,13 +23,13 @@ fn field_type_enum_is_named_variant(field_type: &FieldTypeDefintion) -> TokenStr
 fn field_type_enum_as_type(field_type: &FieldTypeDefintion) -> TokenStream {
     let ident = field_type.ident();
     let fn_ident = format_ident!("as_{}", field_type.base_type());
-    let rtype = type_str_as_type(field_type.base_type());
+    let rtype = field_type.base_type();
     let variant_idents = field_type.variant_map().values().map(|v| v.ident());
     let variant_values = field_type
         .variant_map()
         .values()
-        .map(|v| bare_number_literal(v.value()));
-    let other_value_ident = format_ident!("{}", field_type.other_value_field_name());
+        .map(FieldTypeVariant::value);
+    let other_value_ident = field_type.other_value_field_name();
 
     quote! {
         pub fn #fn_ident(self) -> #rtype {
@@ -72,7 +63,7 @@ fn field_type_enum_impl_display(field_type: &FieldTypeDefintion) -> TokenStream 
     let ident = field_type.ident();
     let variant_idents = field_type.variant_map().values().map(|v| v.ident());
     let variant_names = field_type.variant_map().values().map(|v| v.name());
-    let other_val_ident = format_ident!("{}", field_type.other_value_field_name());
+    let other_val_ident = field_type.other_value_field_name();
     let other_match_arm = if field_type.is_true_enum() {
         quote!(#ident::#other_val_ident(value) => write!(f, "unknown_variant_{}", value))
     } else {
@@ -93,13 +84,13 @@ fn field_type_enum_impl_display(field_type: &FieldTypeDefintion) -> TokenStream 
 
 fn field_type_enum_impl_from(field_type: &FieldTypeDefintion) -> TokenStream {
     let ident = field_type.ident();
-    let base_type = type_str_as_type(field_type.base_type());
+    let base_type = field_type.base_type();
     let variant_idents = field_type.variant_map().values().map(|v| v.ident());
     let variant_values = field_type
         .variant_map()
         .values()
-        .map(|v| bare_number_literal(v.value()));
-    let other_val_ident = format_ident!("{}", field_type.other_value_field_name());
+        .map(FieldTypeVariant::value);
+    let other_val_ident = field_type.other_value_field_name();
 
     quote! {
             impl convert::From<#base_type> for #ident {
@@ -125,7 +116,7 @@ fn field_type_enum_impl_serialize_fn_body(field_type: &FieldTypeDefintion) -> To
         quote!(serializer.serialize_str(&self.to_string()))
     } else {
         let serialize_fn = format_ident!("serialize_{}", field_type.base_type());
-        let other_val_ident = format_ident!("{}", field_type.other_value_field_name());
+        let other_val_ident = field_type.other_value_field_name();
         quote! {
             match &self {
                 #ident::#other_val_ident(value) => serializer.#serialize_fn(*value),
@@ -158,8 +149,8 @@ fn field_type_enum_variant_line(variant: &FieldTypeVariant) -> TokenStream {
 }
 
 fn field_type_enum_other_value(field_type: &FieldTypeDefintion) -> TokenStream {
-    let ident = format_ident!("{}", field_type.other_value_field_name());
-    let base_type = format_ident!("{}", field_type.base_type());
+    let ident = field_type.other_value_field_name();
+    let base_type = field_type.base_type();
 
     quote! {
         #ident(#base_type)
