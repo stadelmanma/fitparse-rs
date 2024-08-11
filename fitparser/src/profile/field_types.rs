@@ -1748,7 +1748,7 @@ pub enum MesgCount {
 }
 impl MesgCount {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64 | 1i64 | 2i64)
+        matches!(value, 0i64..=2i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -3291,7 +3291,7 @@ pub enum DisplayMeasure {
 }
 impl DisplayMeasure {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64 | 1i64 | 2i64)
+        matches!(value, 0i64..=2i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -3347,7 +3347,7 @@ pub enum DisplayHeart {
 }
 impl DisplayHeart {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64 | 1i64 | 2i64)
+        matches!(value, 0i64..=2i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -3536,50 +3536,7 @@ pub enum DisplayPosition {
 }
 impl DisplayPosition {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(
-            value,
-            0i64 | 1i64
-                | 2i64
-                | 3i64
-                | 4i64
-                | 5i64
-                | 6i64
-                | 7i64
-                | 8i64
-                | 9i64
-                | 10i64
-                | 11i64
-                | 12i64
-                | 13i64
-                | 14i64
-                | 15i64
-                | 16i64
-                | 17i64
-                | 18i64
-                | 19i64
-                | 20i64
-                | 21i64
-                | 22i64
-                | 23i64
-                | 24i64
-                | 25i64
-                | 26i64
-                | 27i64
-                | 28i64
-                | 29i64
-                | 30i64
-                | 31i64
-                | 32i64
-                | 33i64
-                | 34i64
-                | 35i64
-                | 36i64
-                | 37i64
-                | 38i64
-                | 39i64
-                | 40i64
-                | 41i64
-        )
+        matches!(value, 0i64..=41i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -3752,7 +3709,7 @@ pub enum Switch {
 }
 impl Switch {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64 | 1i64 | 2i64)
+        matches!(value, 0i64..=2i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -5321,10 +5278,7 @@ pub enum SportEvent {
 }
 impl SportEvent {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(
-            value,
-            0i64 | 1i64 | 2i64 | 3i64 | 4i64 | 5i64 | 6i64 | 7i64 | 8i64
-        )
+        matches!(value, 0i64..=8i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -5454,7 +5408,7 @@ pub enum Intensity {
 }
 impl Intensity {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64 | 1i64 | 2i64 | 3i64 | 4i64 | 5i64 | 6i64)
+        matches!(value, 0i64..=6i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -5526,7 +5480,7 @@ pub enum SessionTrigger {
 }
 impl SessionTrigger {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64 | 1i64 | 2i64 | 3i64)
+        matches!(value, 0i64..=3i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -5589,7 +5543,7 @@ pub enum AutolapTrigger {
 }
 impl AutolapTrigger {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64 | 1i64 | 2i64 | 3i64 | 4i64 | 5i64 | 6i64)
+        matches!(value, 0i64..=6i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -5663,10 +5617,7 @@ pub enum LapTrigger {
 }
 impl LapTrigger {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(
-            value,
-            0i64 | 1i64 | 2i64 | 3i64 | 4i64 | 5i64 | 6i64 | 7i64 | 8i64
-        )
+        matches!(value, 0i64..=8i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -5745,7 +5696,7 @@ pub enum TimeMode {
 }
 impl TimeMode {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64 | 1i64 | 2i64 | 3i64 | 4i64 | 5i64)
+        matches!(value, 0i64..=5i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -5814,7 +5765,7 @@ pub enum BacklightMode {
 }
 impl BacklightMode {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64 | 1i64 | 2i64 | 3i64 | 4i64 | 5i64 | 6i64)
+        matches!(value, 0i64..=6i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -6317,10 +6268,7 @@ pub enum EventType {
 }
 impl EventType {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(
-            value,
-            0i64 | 1i64 | 2i64 | 3i64 | 4i64 | 5i64 | 6i64 | 7i64 | 8i64 | 9i64
-        )
+        matches!(value, 0i64..=9i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -6398,7 +6346,7 @@ pub enum TimerTrigger {
 }
 impl TimerTrigger {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64 | 1i64 | 2i64)
+        matches!(value, 0i64..=2i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -6457,7 +6405,7 @@ pub enum FitnessEquipmentState {
 }
 impl FitnessEquipmentState {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64 | 1i64 | 2i64 | 3i64)
+        matches!(value, 0i64..=3i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -6517,7 +6465,7 @@ pub enum Tone {
 }
 impl Tone {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64 | 1i64 | 2i64 | 3i64)
+        matches!(value, 0i64..=3i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -6577,7 +6525,7 @@ pub enum Autoscroll {
 }
 impl Autoscroll {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64 | 1i64 | 2i64 | 3i64)
+        matches!(value, 0i64..=3i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -6694,7 +6642,7 @@ pub enum HrZoneCalc {
 }
 impl HrZoneCalc {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64 | 1i64 | 2i64 | 3i64)
+        matches!(value, 0i64..=3i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -7024,22 +6972,7 @@ pub enum WktStepTarget {
 }
 impl WktStepTarget {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(
-            value,
-            0i64 | 1i64
-                | 2i64
-                | 3i64
-                | 4i64
-                | 5i64
-                | 6i64
-                | 7i64
-                | 8i64
-                | 9i64
-                | 10i64
-                | 11i64
-                | 12i64
-                | 13i64
-        )
+        matches!(value, 0i64..=13i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -7132,7 +7065,7 @@ pub enum Goal {
 }
 impl Goal {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64 | 1i64 | 2i64 | 3i64 | 4i64 | 5i64 | 6i64)
+        matches!(value, 0i64..=6i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -7203,7 +7136,7 @@ pub enum GoalRecurrence {
 }
 impl GoalRecurrence {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64 | 1i64 | 2i64 | 3i64 | 4i64 | 5i64)
+        matches!(value, 0i64..=5i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -7271,7 +7204,7 @@ pub enum GoalSource {
 }
 impl GoalSource {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64 | 1i64 | 2i64)
+        matches!(value, 0i64..=2i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -11298,7 +11231,7 @@ pub enum AntNetwork {
 }
 impl AntNetwork {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64 | 1i64 | 2i64 | 3i64)
+        matches!(value, 0i64..=3i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -11487,7 +11420,7 @@ pub enum BatteryStatus {
 }
 impl BatteryStatus {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 1i64 | 2i64 | 3i64 | 4i64 | 5i64 | 6i64 | 7i64)
+        matches!(value, 1i64..=7i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -11876,7 +11809,7 @@ pub enum BpStatus {
 }
 impl BpStatus {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64 | 1i64 | 2i64 | 3i64 | 4i64)
+        matches!(value, 0i64..=4i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -12014,7 +11947,7 @@ pub enum SwimStroke {
 }
 impl SwimStroke {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64 | 1i64 | 2i64 | 3i64 | 4i64 | 5i64 | 6i64)
+        matches!(value, 0i64..=6i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -12330,7 +12263,7 @@ pub enum ActivityLevel {
 }
 impl ActivityLevel {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64 | 1i64 | 2i64)
+        matches!(value, 0i64..=2i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -12610,7 +12543,7 @@ pub enum DayOfWeek {
 }
 impl DayOfWeek {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64 | 1i64 | 2i64 | 3i64 | 4i64 | 5i64 | 6i64)
+        matches!(value, 0i64..=6i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -12907,7 +12840,7 @@ pub enum WeatherReport {
 }
 impl WeatherReport {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64 | 1i64 | 2i64)
+        matches!(value, 0i64..=2i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -13115,7 +13048,7 @@ pub enum WeatherSeverity {
 }
 impl WeatherSeverity {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64 | 1i64 | 2i64 | 3i64 | 4i64)
+        matches!(value, 0i64..=4i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -13259,93 +13192,7 @@ pub enum WeatherSevereType {
 }
 impl WeatherSevereType {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(
-            value,
-            0i64 | 1i64
-                | 2i64
-                | 3i64
-                | 4i64
-                | 5i64
-                | 6i64
-                | 7i64
-                | 8i64
-                | 9i64
-                | 10i64
-                | 11i64
-                | 12i64
-                | 13i64
-                | 14i64
-                | 15i64
-                | 16i64
-                | 17i64
-                | 18i64
-                | 19i64
-                | 20i64
-                | 21i64
-                | 22i64
-                | 23i64
-                | 24i64
-                | 25i64
-                | 26i64
-                | 27i64
-                | 28i64
-                | 29i64
-                | 30i64
-                | 31i64
-                | 32i64
-                | 33i64
-                | 34i64
-                | 35i64
-                | 36i64
-                | 37i64
-                | 38i64
-                | 39i64
-                | 40i64
-                | 41i64
-                | 42i64
-                | 43i64
-                | 44i64
-                | 45i64
-                | 46i64
-                | 47i64
-                | 48i64
-                | 49i64
-                | 50i64
-                | 51i64
-                | 52i64
-                | 53i64
-                | 54i64
-                | 55i64
-                | 56i64
-                | 57i64
-                | 58i64
-                | 59i64
-                | 60i64
-                | 61i64
-                | 62i64
-                | 63i64
-                | 64i64
-                | 65i64
-                | 66i64
-                | 67i64
-                | 68i64
-                | 69i64
-                | 70i64
-                | 71i64
-                | 72i64
-                | 73i64
-                | 74i64
-                | 75i64
-                | 76i64
-                | 77i64
-                | 78i64
-                | 79i64
-                | 80i64
-                | 81i64
-                | 82i64
-                | 83i64
-                | 84i64
-        )
+        matches!(value, 0i64..=84i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -13651,7 +13498,7 @@ pub enum StrokeType {
 }
 impl StrokeType {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64 | 1i64 | 2i64 | 3i64 | 4i64 | 5i64)
+        matches!(value, 0i64..=5i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -13757,48 +13604,7 @@ pub enum BodyLocation {
 }
 impl BodyLocation {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(
-            value,
-            0i64 | 1i64
-                | 2i64
-                | 3i64
-                | 4i64
-                | 5i64
-                | 6i64
-                | 7i64
-                | 8i64
-                | 9i64
-                | 10i64
-                | 11i64
-                | 12i64
-                | 13i64
-                | 14i64
-                | 15i64
-                | 16i64
-                | 17i64
-                | 18i64
-                | 19i64
-                | 20i64
-                | 21i64
-                | 22i64
-                | 23i64
-                | 24i64
-                | 25i64
-                | 26i64
-                | 27i64
-                | 28i64
-                | 29i64
-                | 30i64
-                | 31i64
-                | 32i64
-                | 33i64
-                | 34i64
-                | 35i64
-                | 36i64
-                | 37i64
-                | 38i64
-                | 39i64
-        )
+        matches!(value, 0i64..=39i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -14029,23 +13835,7 @@ pub enum SegmentLeaderboardType {
 }
 impl SegmentLeaderboardType {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(
-            value,
-            0i64 | 1i64
-                | 2i64
-                | 3i64
-                | 4i64
-                | 5i64
-                | 6i64
-                | 7i64
-                | 8i64
-                | 9i64
-                | 10i64
-                | 11i64
-                | 12i64
-                | 13i64
-                | 14i64
-        )
+        matches!(value, 0i64..=14i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -14137,7 +13927,7 @@ pub enum SegmentDeleteStatus {
 }
 impl SegmentDeleteStatus {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64 | 1i64 | 2i64)
+        matches!(value, 0i64..=2i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -14254,7 +14044,7 @@ pub enum SourceType {
 }
 impl SourceType {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64 | 1i64 | 2i64 | 3i64 | 4i64 | 5i64)
+        matches!(value, 0i64..=5i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -14416,7 +14206,7 @@ pub enum BleDeviceType {
 }
 impl BleDeviceType {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64 | 1i64 | 2i64 | 3i64 | 4i64 | 5i64 | 6i64 | 7i64)
+        matches!(value, 0i64..=7i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -14562,7 +14352,7 @@ pub enum DisplayOrientation {
 }
 impl DisplayOrientation {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64 | 1i64 | 2i64 | 3i64 | 4i64)
+        matches!(value, 0i64..=4i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -14627,7 +14417,7 @@ pub enum WorkoutEquipment {
 }
 impl WorkoutEquipment {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64 | 1i64 | 2i64 | 3i64 | 4i64 | 5i64)
+        matches!(value, 0i64..=5i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -14693,7 +14483,7 @@ pub enum WatchfaceMode {
 }
 impl WatchfaceMode {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64 | 1i64 | 2i64 | 3i64)
+        matches!(value, 0i64..=3i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -14752,7 +14542,7 @@ pub enum DigitalWatchfaceLayout {
 }
 impl DigitalWatchfaceLayout {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64 | 1i64 | 2i64)
+        matches!(value, 0i64..=2i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -14808,7 +14598,7 @@ pub enum AnalogWatchfaceLayout {
 }
 impl AnalogWatchfaceLayout {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64 | 1i64 | 2i64)
+        matches!(value, 0i64..=2i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -14865,7 +14655,7 @@ pub enum RiderPositionType {
 }
 impl RiderPositionType {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64 | 1i64 | 2i64 | 3i64)
+        matches!(value, 0i64..=3i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -14925,7 +14715,7 @@ pub enum PowerPhaseType {
 }
 impl PowerPhaseType {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64 | 1i64 | 2i64 | 3i64)
+        matches!(value, 0i64..=3i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -15105,7 +14895,7 @@ pub enum SensorType {
 }
 impl SensorType {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64 | 1i64 | 2i64 | 3i64)
+        matches!(value, 0i64..=3i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -15231,7 +15021,7 @@ pub enum CommTimeoutType {
 }
 impl CommTimeoutType {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64 | 1i64 | 2i64 | 3i64)
+        matches!(value, 0i64..=3i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -15294,7 +15084,7 @@ pub enum CameraOrientationType {
 }
 impl CameraOrientationType {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64 | 1i64 | 2i64 | 3i64)
+        matches!(value, 0i64..=3i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -15354,7 +15144,7 @@ pub enum AttitudeStage {
 }
 impl AttitudeStage {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64 | 1i64 | 2i64 | 3i64)
+        matches!(value, 0i64..=3i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -15528,7 +15318,7 @@ pub enum AutoSyncFrequency {
 }
 impl AutoSyncFrequency {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64 | 1i64 | 2i64 | 3i64 | 4i64)
+        matches!(value, 0i64..=4i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -15597,10 +15387,7 @@ pub enum ExdLayout {
 }
 impl ExdLayout {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(
-            value,
-            0i64 | 1i64 | 2i64 | 3i64 | 4i64 | 5i64 | 6i64 | 7i64 | 8i64
-        )
+        matches!(value, 0i64..=8i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -15682,10 +15469,7 @@ pub enum ExdDisplayType {
 }
 impl ExdDisplayType {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(
-            value,
-            0i64 | 1i64 | 2i64 | 3i64 | 4i64 | 5i64 | 6i64 | 7i64 | 8i64 | 9i64 | 10i64
-        )
+        matches!(value, 0i64..=10i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -15812,58 +15596,7 @@ pub enum ExdDataUnits {
 }
 impl ExdDataUnits {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(
-            value,
-            0i64 | 1i64
-                | 2i64
-                | 3i64
-                | 4i64
-                | 5i64
-                | 6i64
-                | 7i64
-                | 8i64
-                | 9i64
-                | 10i64
-                | 11i64
-                | 12i64
-                | 13i64
-                | 14i64
-                | 15i64
-                | 16i64
-                | 17i64
-                | 18i64
-                | 19i64
-                | 20i64
-                | 21i64
-                | 22i64
-                | 23i64
-                | 24i64
-                | 25i64
-                | 26i64
-                | 27i64
-                | 28i64
-                | 29i64
-                | 30i64
-                | 31i64
-                | 32i64
-                | 33i64
-                | 34i64
-                | 35i64
-                | 36i64
-                | 37i64
-                | 38i64
-                | 39i64
-                | 40i64
-                | 41i64
-                | 42i64
-                | 43i64
-                | 44i64
-                | 45i64
-                | 46i64
-                | 47i64
-                | 48i64
-                | 49i64
-        )
+        matches!(value, 0i64..=49i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -16424,105 +16157,7 @@ pub enum ExdDescriptors {
 }
 impl ExdDescriptors {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(
-            value,
-            0i64 | 1i64
-                | 2i64
-                | 3i64
-                | 4i64
-                | 5i64
-                | 6i64
-                | 7i64
-                | 8i64
-                | 9i64
-                | 10i64
-                | 11i64
-                | 12i64
-                | 13i64
-                | 14i64
-                | 15i64
-                | 16i64
-                | 17i64
-                | 18i64
-                | 19i64
-                | 20i64
-                | 21i64
-                | 22i64
-                | 23i64
-                | 24i64
-                | 25i64
-                | 26i64
-                | 27i64
-                | 28i64
-                | 29i64
-                | 30i64
-                | 31i64
-                | 32i64
-                | 33i64
-                | 34i64
-                | 35i64
-                | 36i64
-                | 37i64
-                | 38i64
-                | 39i64
-                | 40i64
-                | 41i64
-                | 42i64
-                | 43i64
-                | 44i64
-                | 45i64
-                | 46i64
-                | 47i64
-                | 48i64
-                | 49i64
-                | 50i64
-                | 51i64
-                | 52i64
-                | 53i64
-                | 54i64
-                | 55i64
-                | 56i64
-                | 57i64
-                | 58i64
-                | 59i64
-                | 60i64
-                | 61i64
-                | 62i64
-                | 63i64
-                | 64i64
-                | 65i64
-                | 66i64
-                | 67i64
-                | 68i64
-                | 69i64
-                | 70i64
-                | 71i64
-                | 72i64
-                | 73i64
-                | 74i64
-                | 75i64
-                | 76i64
-                | 77i64
-                | 78i64
-                | 79i64
-                | 80i64
-                | 81i64
-                | 82i64
-                | 83i64
-                | 84i64
-                | 85i64
-                | 86i64
-                | 87i64
-                | 88i64
-                | 89i64
-                | 90i64
-                | 91i64
-                | 92i64
-                | 93i64
-                | 94i64
-                | 95i64
-                | 96i64
-        )
+        matches!(value, 0i64..=96i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -17203,46 +16838,7 @@ pub enum TurnType {
 }
 impl TurnType {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(
-            value,
-            0i64 | 1i64
-                | 2i64
-                | 3i64
-                | 4i64
-                | 5i64
-                | 6i64
-                | 7i64
-                | 8i64
-                | 9i64
-                | 10i64
-                | 11i64
-                | 12i64
-                | 13i64
-                | 14i64
-                | 15i64
-                | 16i64
-                | 17i64
-                | 18i64
-                | 19i64
-                | 20i64
-                | 21i64
-                | 22i64
-                | 23i64
-                | 24i64
-                | 25i64
-                | 26i64
-                | 27i64
-                | 28i64
-                | 29i64
-                | 30i64
-                | 31i64
-                | 32i64
-                | 33i64
-                | 34i64
-                | 35i64
-                | 36i64
-                | 37i64
-        )
+        matches!(value, 0i64..=37i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -17458,7 +17054,7 @@ pub enum FitBaseUnit {
 }
 impl FitBaseUnit {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64 | 1i64 | 2i64)
+        matches!(value, 0i64..=2i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -17866,35 +17462,7 @@ pub enum BenchPressExerciseName {
 }
 impl BenchPressExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(
-            value,
-            0i64 | 1i64
-                | 2i64
-                | 3i64
-                | 4i64
-                | 5i64
-                | 6i64
-                | 7i64
-                | 8i64
-                | 9i64
-                | 10i64
-                | 11i64
-                | 12i64
-                | 13i64
-                | 14i64
-                | 15i64
-                | 16i64
-                | 17i64
-                | 18i64
-                | 19i64
-                | 20i64
-                | 21i64
-                | 22i64
-                | 23i64
-                | 24i64
-                | 25i64
-                | 26i64
-        )
+        matches!(value, 0i64..=26i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -18083,29 +17651,7 @@ pub enum CalfRaiseExerciseName {
 }
 impl CalfRaiseExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(
-            value,
-            0i64 | 1i64
-                | 2i64
-                | 3i64
-                | 4i64
-                | 5i64
-                | 6i64
-                | 7i64
-                | 8i64
-                | 9i64
-                | 10i64
-                | 11i64
-                | 12i64
-                | 13i64
-                | 14i64
-                | 15i64
-                | 16i64
-                | 17i64
-                | 18i64
-                | 19i64
-                | 20i64
-        )
+        matches!(value, 0i64..=20i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -18269,30 +17815,7 @@ pub enum CardioExerciseName {
 }
 impl CardioExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(
-            value,
-            0i64 | 1i64
-                | 2i64
-                | 3i64
-                | 4i64
-                | 5i64
-                | 6i64
-                | 7i64
-                | 8i64
-                | 9i64
-                | 10i64
-                | 11i64
-                | 12i64
-                | 13i64
-                | 14i64
-                | 15i64
-                | 16i64
-                | 17i64
-                | 18i64
-                | 19i64
-                | 20i64
-                | 21i64
-        )
+        matches!(value, 0i64..=21i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -18414,7 +17937,7 @@ pub enum CarryExerciseName {
 }
 impl CarryExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64 | 1i64 | 2i64 | 3i64 | 4i64)
+        matches!(value, 0i64..=4i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -18499,31 +18022,7 @@ pub enum ChopExerciseName {
 }
 impl ChopExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(
-            value,
-            0i64 | 1i64
-                | 2i64
-                | 3i64
-                | 4i64
-                | 5i64
-                | 6i64
-                | 7i64
-                | 8i64
-                | 9i64
-                | 10i64
-                | 11i64
-                | 12i64
-                | 13i64
-                | 14i64
-                | 15i64
-                | 16i64
-                | 17i64
-                | 18i64
-                | 19i64
-                | 20i64
-                | 21i64
-                | 22i64
-        )
+        matches!(value, 0i64..=22i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -18733,81 +18232,7 @@ pub enum CoreExerciseName {
 }
 impl CoreExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(
-            value,
-            0i64 | 1i64
-                | 2i64
-                | 3i64
-                | 4i64
-                | 5i64
-                | 6i64
-                | 7i64
-                | 8i64
-                | 9i64
-                | 10i64
-                | 11i64
-                | 12i64
-                | 13i64
-                | 14i64
-                | 15i64
-                | 16i64
-                | 17i64
-                | 18i64
-                | 19i64
-                | 20i64
-                | 21i64
-                | 22i64
-                | 23i64
-                | 24i64
-                | 25i64
-                | 26i64
-                | 27i64
-                | 28i64
-                | 29i64
-                | 30i64
-                | 31i64
-                | 32i64
-                | 33i64
-                | 34i64
-                | 35i64
-                | 36i64
-                | 37i64
-                | 38i64
-                | 39i64
-                | 40i64
-                | 41i64
-                | 42i64
-                | 43i64
-                | 44i64
-                | 45i64
-                | 46i64
-                | 47i64
-                | 48i64
-                | 49i64
-                | 50i64
-                | 51i64
-                | 52i64
-                | 53i64
-                | 54i64
-                | 55i64
-                | 56i64
-                | 57i64
-                | 58i64
-                | 59i64
-                | 60i64
-                | 61i64
-                | 62i64
-                | 63i64
-                | 64i64
-                | 65i64
-                | 66i64
-                | 67i64
-                | 68i64
-                | 69i64
-                | 70i64
-                | 71i64
-                | 72i64
-        )
+        matches!(value, 0i64..=72i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -19176,93 +18601,7 @@ pub enum CrunchExerciseName {
 }
 impl CrunchExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(
-            value,
-            0i64 | 1i64
-                | 2i64
-                | 3i64
-                | 4i64
-                | 5i64
-                | 6i64
-                | 7i64
-                | 8i64
-                | 9i64
-                | 10i64
-                | 11i64
-                | 12i64
-                | 13i64
-                | 14i64
-                | 15i64
-                | 16i64
-                | 17i64
-                | 18i64
-                | 19i64
-                | 20i64
-                | 21i64
-                | 22i64
-                | 23i64
-                | 24i64
-                | 25i64
-                | 26i64
-                | 27i64
-                | 28i64
-                | 29i64
-                | 30i64
-                | 31i64
-                | 32i64
-                | 33i64
-                | 34i64
-                | 35i64
-                | 36i64
-                | 37i64
-                | 38i64
-                | 39i64
-                | 40i64
-                | 41i64
-                | 42i64
-                | 43i64
-                | 44i64
-                | 45i64
-                | 46i64
-                | 47i64
-                | 48i64
-                | 49i64
-                | 50i64
-                | 51i64
-                | 52i64
-                | 53i64
-                | 54i64
-                | 55i64
-                | 56i64
-                | 57i64
-                | 58i64
-                | 59i64
-                | 60i64
-                | 61i64
-                | 62i64
-                | 63i64
-                | 64i64
-                | 65i64
-                | 66i64
-                | 67i64
-                | 68i64
-                | 69i64
-                | 70i64
-                | 71i64
-                | 72i64
-                | 73i64
-                | 74i64
-                | 75i64
-                | 76i64
-                | 77i64
-                | 78i64
-                | 79i64
-                | 80i64
-                | 81i64
-                | 82i64
-                | 83i64
-                | 84i64
-        )
+        matches!(value, 0i64..=84i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -19668,52 +19007,7 @@ pub enum CurlExerciseName {
 }
 impl CurlExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(
-            value,
-            0i64 | 1i64
-                | 2i64
-                | 3i64
-                | 4i64
-                | 5i64
-                | 6i64
-                | 7i64
-                | 8i64
-                | 9i64
-                | 10i64
-                | 11i64
-                | 12i64
-                | 13i64
-                | 14i64
-                | 15i64
-                | 16i64
-                | 17i64
-                | 18i64
-                | 19i64
-                | 20i64
-                | 21i64
-                | 22i64
-                | 23i64
-                | 24i64
-                | 25i64
-                | 26i64
-                | 27i64
-                | 28i64
-                | 29i64
-                | 30i64
-                | 31i64
-                | 32i64
-                | 33i64
-                | 34i64
-                | 35i64
-                | 36i64
-                | 37i64
-                | 38i64
-                | 39i64
-                | 40i64
-                | 41i64
-                | 42i64
-                | 43i64
-        )
+        matches!(value, 0i64..=43i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -19953,27 +19247,7 @@ pub enum DeadliftExerciseName {
 }
 impl DeadliftExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(
-            value,
-            0i64 | 1i64
-                | 2i64
-                | 3i64
-                | 4i64
-                | 5i64
-                | 6i64
-                | 7i64
-                | 8i64
-                | 9i64
-                | 10i64
-                | 11i64
-                | 12i64
-                | 13i64
-                | 14i64
-                | 15i64
-                | 16i64
-                | 17i64
-                | 18i64
-        )
+        matches!(value, 0i64..=18i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -20105,10 +19379,7 @@ pub enum FlyeExerciseName {
 }
 impl FlyeExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(
-            value,
-            0i64 | 1i64 | 2i64 | 3i64 | 4i64 | 5i64 | 6i64 | 7i64 | 8i64 | 9i64
-        )
+        matches!(value, 0i64..=9i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -20239,58 +19510,7 @@ pub enum HipRaiseExerciseName {
 }
 impl HipRaiseExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(
-            value,
-            0i64 | 1i64
-                | 2i64
-                | 3i64
-                | 4i64
-                | 5i64
-                | 6i64
-                | 7i64
-                | 8i64
-                | 9i64
-                | 10i64
-                | 11i64
-                | 12i64
-                | 13i64
-                | 14i64
-                | 15i64
-                | 16i64
-                | 17i64
-                | 18i64
-                | 19i64
-                | 20i64
-                | 21i64
-                | 22i64
-                | 23i64
-                | 24i64
-                | 25i64
-                | 26i64
-                | 27i64
-                | 28i64
-                | 29i64
-                | 30i64
-                | 31i64
-                | 32i64
-                | 33i64
-                | 34i64
-                | 35i64
-                | 36i64
-                | 37i64
-                | 38i64
-                | 39i64
-                | 40i64
-                | 41i64
-                | 42i64
-                | 43i64
-                | 44i64
-                | 45i64
-                | 46i64
-                | 47i64
-                | 48i64
-                | 49i64
-        )
+        matches!(value, 0i64..=49i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -20590,42 +19810,7 @@ pub enum HipStabilityExerciseName {
 }
 impl HipStabilityExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(
-            value,
-            0i64 | 1i64
-                | 2i64
-                | 3i64
-                | 4i64
-                | 5i64
-                | 6i64
-                | 7i64
-                | 8i64
-                | 9i64
-                | 10i64
-                | 11i64
-                | 12i64
-                | 13i64
-                | 14i64
-                | 15i64
-                | 16i64
-                | 17i64
-                | 18i64
-                | 19i64
-                | 20i64
-                | 21i64
-                | 22i64
-                | 23i64
-                | 24i64
-                | 25i64
-                | 26i64
-                | 27i64
-                | 28i64
-                | 29i64
-                | 30i64
-                | 31i64
-                | 32i64
-                | 33i64
-        )
+        matches!(value, 0i64..=33i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -20813,7 +19998,7 @@ pub enum HipSwingExerciseName {
 }
 impl HipSwingExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64 | 1i64 | 2i64)
+        matches!(value, 0i64..=2i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -20912,48 +20097,7 @@ pub enum HyperextensionExerciseName {
 }
 impl HyperextensionExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(
-            value,
-            0i64 | 1i64
-                | 2i64
-                | 3i64
-                | 4i64
-                | 5i64
-                | 6i64
-                | 7i64
-                | 8i64
-                | 9i64
-                | 10i64
-                | 11i64
-                | 12i64
-                | 13i64
-                | 14i64
-                | 15i64
-                | 16i64
-                | 17i64
-                | 18i64
-                | 19i64
-                | 20i64
-                | 21i64
-                | 22i64
-                | 23i64
-                | 24i64
-                | 25i64
-                | 26i64
-                | 27i64
-                | 28i64
-                | 29i64
-                | 30i64
-                | 31i64
-                | 32i64
-                | 33i64
-                | 34i64
-                | 35i64
-                | 36i64
-                | 37i64
-                | 38i64
-                | 39i64
-        )
+        matches!(value, 0i64..=39i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -21196,42 +20340,7 @@ pub enum LateralRaiseExerciseName {
 }
 impl LateralRaiseExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(
-            value,
-            0i64 | 1i64
-                | 2i64
-                | 3i64
-                | 4i64
-                | 5i64
-                | 6i64
-                | 7i64
-                | 8i64
-                | 9i64
-                | 10i64
-                | 11i64
-                | 12i64
-                | 13i64
-                | 14i64
-                | 15i64
-                | 16i64
-                | 17i64
-                | 18i64
-                | 19i64
-                | 20i64
-                | 21i64
-                | 22i64
-                | 23i64
-                | 24i64
-                | 25i64
-                | 26i64
-                | 27i64
-                | 28i64
-                | 29i64
-                | 30i64
-                | 31i64
-                | 32i64
-                | 33i64
-        )
+        matches!(value, 0i64..=33i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -21408,10 +20517,7 @@ pub enum LegCurlExerciseName {
 }
 impl LegCurlExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(
-            value,
-            0i64 | 1i64 | 2i64 | 3i64 | 4i64 | 5i64 | 6i64 | 7i64 | 8i64 | 9i64 | 10i64 | 11i64
-        )
+        matches!(value, 0i64..=11i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -21526,30 +20632,7 @@ pub enum LegRaiseExerciseName {
 }
 impl LegRaiseExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(
-            value,
-            0i64 | 1i64
-                | 2i64
-                | 3i64
-                | 4i64
-                | 5i64
-                | 6i64
-                | 7i64
-                | 8i64
-                | 9i64
-                | 10i64
-                | 11i64
-                | 12i64
-                | 13i64
-                | 14i64
-                | 15i64
-                | 16i64
-                | 17i64
-                | 18i64
-                | 19i64
-                | 20i64
-                | 21i64
-        )
+        matches!(value, 0i64..=21i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -21763,89 +20846,7 @@ pub enum LungeExerciseName {
 }
 impl LungeExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(
-            value,
-            0i64 | 1i64
-                | 2i64
-                | 3i64
-                | 4i64
-                | 5i64
-                | 6i64
-                | 7i64
-                | 8i64
-                | 9i64
-                | 10i64
-                | 11i64
-                | 12i64
-                | 13i64
-                | 14i64
-                | 15i64
-                | 16i64
-                | 17i64
-                | 18i64
-                | 19i64
-                | 20i64
-                | 21i64
-                | 22i64
-                | 23i64
-                | 24i64
-                | 25i64
-                | 26i64
-                | 27i64
-                | 28i64
-                | 29i64
-                | 30i64
-                | 31i64
-                | 32i64
-                | 33i64
-                | 34i64
-                | 35i64
-                | 36i64
-                | 37i64
-                | 38i64
-                | 39i64
-                | 40i64
-                | 41i64
-                | 42i64
-                | 43i64
-                | 44i64
-                | 45i64
-                | 46i64
-                | 47i64
-                | 48i64
-                | 49i64
-                | 50i64
-                | 51i64
-                | 52i64
-                | 53i64
-                | 54i64
-                | 55i64
-                | 56i64
-                | 57i64
-                | 58i64
-                | 59i64
-                | 60i64
-                | 61i64
-                | 62i64
-                | 63i64
-                | 64i64
-                | 65i64
-                | 66i64
-                | 67i64
-                | 68i64
-                | 69i64
-                | 70i64
-                | 71i64
-                | 72i64
-                | 73i64
-                | 74i64
-                | 75i64
-                | 76i64
-                | 77i64
-                | 78i64
-                | 79i64
-                | 80i64
-        )
+        matches!(value, 0i64..=80i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -22216,29 +21217,7 @@ pub enum OlympicLiftExerciseName {
 }
 impl OlympicLiftExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(
-            value,
-            0i64 | 1i64
-                | 2i64
-                | 3i64
-                | 4i64
-                | 5i64
-                | 6i64
-                | 7i64
-                | 8i64
-                | 9i64
-                | 10i64
-                | 11i64
-                | 12i64
-                | 13i64
-                | 14i64
-                | 15i64
-                | 16i64
-                | 17i64
-                | 18i64
-                | 19i64
-                | 20i64
-        )
+        matches!(value, 0i64..=20i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -22491,143 +21470,7 @@ pub enum PlankExerciseName {
 }
 impl PlankExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(
-            value,
-            0i64 | 1i64
-                | 2i64
-                | 3i64
-                | 4i64
-                | 5i64
-                | 6i64
-                | 7i64
-                | 8i64
-                | 9i64
-                | 10i64
-                | 11i64
-                | 12i64
-                | 13i64
-                | 14i64
-                | 15i64
-                | 16i64
-                | 17i64
-                | 18i64
-                | 19i64
-                | 20i64
-                | 21i64
-                | 22i64
-                | 23i64
-                | 24i64
-                | 25i64
-                | 26i64
-                | 27i64
-                | 28i64
-                | 29i64
-                | 30i64
-                | 31i64
-                | 32i64
-                | 33i64
-                | 34i64
-                | 35i64
-                | 36i64
-                | 37i64
-                | 38i64
-                | 39i64
-                | 40i64
-                | 41i64
-                | 42i64
-                | 43i64
-                | 44i64
-                | 45i64
-                | 46i64
-                | 47i64
-                | 48i64
-                | 49i64
-                | 50i64
-                | 51i64
-                | 52i64
-                | 53i64
-                | 54i64
-                | 55i64
-                | 56i64
-                | 57i64
-                | 58i64
-                | 59i64
-                | 60i64
-                | 61i64
-                | 62i64
-                | 63i64
-                | 64i64
-                | 65i64
-                | 66i64
-                | 67i64
-                | 68i64
-                | 69i64
-                | 70i64
-                | 71i64
-                | 72i64
-                | 73i64
-                | 74i64
-                | 75i64
-                | 76i64
-                | 77i64
-                | 78i64
-                | 79i64
-                | 80i64
-                | 81i64
-                | 82i64
-                | 83i64
-                | 84i64
-                | 85i64
-                | 86i64
-                | 87i64
-                | 88i64
-                | 89i64
-                | 90i64
-                | 91i64
-                | 92i64
-                | 93i64
-                | 94i64
-                | 95i64
-                | 96i64
-                | 97i64
-                | 98i64
-                | 99i64
-                | 100i64
-                | 101i64
-                | 102i64
-                | 103i64
-                | 104i64
-                | 105i64
-                | 106i64
-                | 107i64
-                | 108i64
-                | 109i64
-                | 110i64
-                | 111i64
-                | 112i64
-                | 113i64
-                | 114i64
-                | 115i64
-                | 116i64
-                | 117i64
-                | 118i64
-                | 119i64
-                | 120i64
-                | 121i64
-                | 122i64
-                | 123i64
-                | 124i64
-                | 125i64
-                | 126i64
-                | 127i64
-                | 128i64
-                | 129i64
-                | 130i64
-                | 131i64
-                | 132i64
-                | 133i64
-                | 134i64
-        )
+        matches!(value, 0i64..=134i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -23237,41 +22080,7 @@ pub enum PlyoExerciseName {
 }
 impl PlyoExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(
-            value,
-            0i64 | 1i64
-                | 2i64
-                | 3i64
-                | 4i64
-                | 5i64
-                | 6i64
-                | 7i64
-                | 8i64
-                | 9i64
-                | 10i64
-                | 11i64
-                | 12i64
-                | 13i64
-                | 14i64
-                | 15i64
-                | 16i64
-                | 17i64
-                | 18i64
-                | 19i64
-                | 20i64
-                | 21i64
-                | 22i64
-                | 23i64
-                | 24i64
-                | 25i64
-                | 26i64
-                | 27i64
-                | 28i64
-                | 29i64
-                | 30i64
-                | 31i64
-                | 32i64
-        )
+        matches!(value, 0i64..=32i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -23474,47 +22283,7 @@ pub enum PullUpExerciseName {
 }
 impl PullUpExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(
-            value,
-            0i64 | 1i64
-                | 2i64
-                | 3i64
-                | 4i64
-                | 5i64
-                | 6i64
-                | 7i64
-                | 8i64
-                | 9i64
-                | 10i64
-                | 11i64
-                | 12i64
-                | 13i64
-                | 14i64
-                | 15i64
-                | 16i64
-                | 17i64
-                | 18i64
-                | 19i64
-                | 20i64
-                | 21i64
-                | 22i64
-                | 23i64
-                | 24i64
-                | 25i64
-                | 26i64
-                | 27i64
-                | 28i64
-                | 29i64
-                | 30i64
-                | 31i64
-                | 32i64
-                | 33i64
-                | 34i64
-                | 35i64
-                | 36i64
-                | 37i64
-                | 38i64
-        )
+        matches!(value, 0i64..=38i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -23759,87 +22528,7 @@ pub enum PushUpExerciseName {
 }
 impl PushUpExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(
-            value,
-            0i64 | 1i64
-                | 2i64
-                | 3i64
-                | 4i64
-                | 5i64
-                | 6i64
-                | 7i64
-                | 8i64
-                | 9i64
-                | 10i64
-                | 11i64
-                | 12i64
-                | 13i64
-                | 14i64
-                | 15i64
-                | 16i64
-                | 17i64
-                | 18i64
-                | 19i64
-                | 20i64
-                | 21i64
-                | 22i64
-                | 23i64
-                | 24i64
-                | 25i64
-                | 26i64
-                | 27i64
-                | 28i64
-                | 29i64
-                | 30i64
-                | 31i64
-                | 32i64
-                | 33i64
-                | 34i64
-                | 35i64
-                | 36i64
-                | 37i64
-                | 38i64
-                | 39i64
-                | 40i64
-                | 41i64
-                | 42i64
-                | 43i64
-                | 44i64
-                | 45i64
-                | 46i64
-                | 47i64
-                | 48i64
-                | 49i64
-                | 50i64
-                | 51i64
-                | 52i64
-                | 53i64
-                | 54i64
-                | 55i64
-                | 56i64
-                | 57i64
-                | 58i64
-                | 59i64
-                | 60i64
-                | 61i64
-                | 62i64
-                | 63i64
-                | 64i64
-                | 65i64
-                | 66i64
-                | 67i64
-                | 68i64
-                | 69i64
-                | 70i64
-                | 71i64
-                | 72i64
-                | 73i64
-                | 74i64
-                | 75i64
-                | 76i64
-                | 77i64
-                | 78i64
-        )
+        matches!(value, 0i64..=78i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -24213,42 +22902,7 @@ pub enum RowExerciseName {
 }
 impl RowExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(
-            value,
-            0i64 | 1i64
-                | 2i64
-                | 3i64
-                | 4i64
-                | 5i64
-                | 6i64
-                | 7i64
-                | 8i64
-                | 9i64
-                | 10i64
-                | 11i64
-                | 12i64
-                | 13i64
-                | 14i64
-                | 15i64
-                | 16i64
-                | 17i64
-                | 18i64
-                | 19i64
-                | 20i64
-                | 21i64
-                | 22i64
-                | 23i64
-                | 24i64
-                | 25i64
-                | 26i64
-                | 27i64
-                | 28i64
-                | 29i64
-                | 30i64
-                | 31i64
-                | 32i64
-                | 33i64
-        )
+        matches!(value, 0i64..=33i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -24447,32 +23101,7 @@ pub enum ShoulderPressExerciseName {
 }
 impl ShoulderPressExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(
-            value,
-            0i64 | 1i64
-                | 2i64
-                | 3i64
-                | 4i64
-                | 5i64
-                | 6i64
-                | 7i64
-                | 8i64
-                | 9i64
-                | 10i64
-                | 11i64
-                | 12i64
-                | 13i64
-                | 14i64
-                | 15i64
-                | 16i64
-                | 17i64
-                | 18i64
-                | 19i64
-                | 20i64
-                | 21i64
-                | 22i64
-                | 23i64
-        )
+        matches!(value, 0i64..=23i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -24658,41 +23287,7 @@ pub enum ShoulderStabilityExerciseName {
 }
 impl ShoulderStabilityExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(
-            value,
-            0i64 | 1i64
-                | 2i64
-                | 3i64
-                | 4i64
-                | 5i64
-                | 6i64
-                | 7i64
-                | 8i64
-                | 9i64
-                | 10i64
-                | 11i64
-                | 12i64
-                | 13i64
-                | 14i64
-                | 15i64
-                | 16i64
-                | 17i64
-                | 18i64
-                | 19i64
-                | 20i64
-                | 21i64
-                | 22i64
-                | 23i64
-                | 24i64
-                | 25i64
-                | 26i64
-                | 27i64
-                | 28i64
-                | 29i64
-                | 30i64
-                | 31i64
-                | 32i64
-        )
+        matches!(value, 0i64..=32i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -24895,25 +23490,7 @@ pub enum ShrugExerciseName {
 }
 impl ShrugExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(
-            value,
-            0i64 | 1i64
-                | 2i64
-                | 3i64
-                | 4i64
-                | 5i64
-                | 6i64
-                | 7i64
-                | 8i64
-                | 9i64
-                | 10i64
-                | 11i64
-                | 12i64
-                | 13i64
-                | 14i64
-                | 15i64
-                | 16i64
-        )
+        matches!(value, 0i64..=16i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -25053,46 +23630,7 @@ pub enum SitUpExerciseName {
 }
 impl SitUpExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(
-            value,
-            0i64 | 1i64
-                | 2i64
-                | 3i64
-                | 4i64
-                | 5i64
-                | 6i64
-                | 7i64
-                | 8i64
-                | 9i64
-                | 10i64
-                | 11i64
-                | 12i64
-                | 13i64
-                | 14i64
-                | 15i64
-                | 16i64
-                | 17i64
-                | 18i64
-                | 19i64
-                | 20i64
-                | 21i64
-                | 22i64
-                | 23i64
-                | 24i64
-                | 25i64
-                | 26i64
-                | 27i64
-                | 28i64
-                | 29i64
-                | 30i64
-                | 31i64
-                | 32i64
-                | 33i64
-                | 34i64
-                | 35i64
-                | 36i64
-                | 37i64
-        )
+        matches!(value, 0i64..=37i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -25360,100 +23898,7 @@ pub enum SquatExerciseName {
 }
 impl SquatExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(
-            value,
-            0i64 | 1i64
-                | 2i64
-                | 3i64
-                | 4i64
-                | 5i64
-                | 6i64
-                | 7i64
-                | 8i64
-                | 9i64
-                | 10i64
-                | 11i64
-                | 12i64
-                | 13i64
-                | 14i64
-                | 15i64
-                | 16i64
-                | 17i64
-                | 18i64
-                | 19i64
-                | 20i64
-                | 21i64
-                | 22i64
-                | 23i64
-                | 24i64
-                | 25i64
-                | 26i64
-                | 27i64
-                | 28i64
-                | 29i64
-                | 30i64
-                | 31i64
-                | 32i64
-                | 33i64
-                | 34i64
-                | 35i64
-                | 36i64
-                | 37i64
-                | 38i64
-                | 39i64
-                | 40i64
-                | 41i64
-                | 42i64
-                | 43i64
-                | 44i64
-                | 45i64
-                | 46i64
-                | 47i64
-                | 48i64
-                | 49i64
-                | 50i64
-                | 51i64
-                | 52i64
-                | 53i64
-                | 54i64
-                | 55i64
-                | 56i64
-                | 57i64
-                | 58i64
-                | 59i64
-                | 60i64
-                | 61i64
-                | 62i64
-                | 63i64
-                | 64i64
-                | 65i64
-                | 66i64
-                | 67i64
-                | 68i64
-                | 69i64
-                | 70i64
-                | 71i64
-                | 72i64
-                | 73i64
-                | 74i64
-                | 75i64
-                | 76i64
-                | 77i64
-                | 78i64
-                | 79i64
-                | 80i64
-                | 81i64
-                | 82i64
-                | 83i64
-                | 84i64
-                | 85i64
-                | 86i64
-                | 87i64
-                | 88i64
-                | 89i64
-                | 90i64
-                | 91i64
-        )
+        matches!(value, 0i64..=91i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -25826,21 +24271,7 @@ pub enum TotalBodyExerciseName {
 }
 impl TotalBodyExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(
-            value,
-            0i64 | 1i64
-                | 2i64
-                | 3i64
-                | 4i64
-                | 5i64
-                | 6i64
-                | 7i64
-                | 8i64
-                | 9i64
-                | 10i64
-                | 11i64
-                | 12i64
-        )
+        matches!(value, 0i64..=12i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -25973,49 +24404,7 @@ pub enum TricepsExtensionExerciseName {
 }
 impl TricepsExtensionExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(
-            value,
-            0i64 | 1i64
-                | 2i64
-                | 3i64
-                | 4i64
-                | 5i64
-                | 6i64
-                | 7i64
-                | 8i64
-                | 9i64
-                | 10i64
-                | 11i64
-                | 12i64
-                | 13i64
-                | 14i64
-                | 15i64
-                | 16i64
-                | 17i64
-                | 18i64
-                | 19i64
-                | 20i64
-                | 21i64
-                | 22i64
-                | 23i64
-                | 24i64
-                | 25i64
-                | 26i64
-                | 27i64
-                | 28i64
-                | 29i64
-                | 30i64
-                | 31i64
-                | 32i64
-                | 33i64
-                | 34i64
-                | 35i64
-                | 36i64
-                | 37i64
-                | 38i64
-                | 39i64
-                | 40i64
-        )
+        matches!(value, 0i64..=40i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -26271,39 +24660,7 @@ pub enum WarmUpExerciseName {
 }
 impl WarmUpExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(
-            value,
-            0i64 | 1i64
-                | 2i64
-                | 3i64
-                | 4i64
-                | 5i64
-                | 6i64
-                | 7i64
-                | 8i64
-                | 9i64
-                | 10i64
-                | 11i64
-                | 12i64
-                | 13i64
-                | 14i64
-                | 15i64
-                | 16i64
-                | 17i64
-                | 18i64
-                | 19i64
-                | 20i64
-                | 21i64
-                | 22i64
-                | 23i64
-                | 24i64
-                | 25i64
-                | 26i64
-                | 27i64
-                | 28i64
-                | 29i64
-                | 30i64
-        )
+        matches!(value, 0i64..=30i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -26459,7 +24816,7 @@ pub enum RunExerciseName {
 }
 impl RunExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64 | 1i64 | 2i64 | 3i64)
+        matches!(value, 0i64..=3i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -26522,7 +24879,7 @@ pub enum WaterType {
 }
 impl WaterType {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64 | 1i64 | 2i64 | 3i64)
+        matches!(value, 0i64..=3i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -26630,7 +24987,7 @@ pub enum DiveGasStatus {
 }
 impl DiveGasStatus {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64 | 1i64 | 2i64)
+        matches!(value, 0i64..=2i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -26936,7 +25293,7 @@ pub enum DiveAlarmType {
 }
 impl DiveAlarmType {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64 | 1i64 | 2i64)
+        matches!(value, 0i64..=2i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -27046,7 +25403,7 @@ pub enum SleepLevel {
 }
 impl SleepLevel {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64 | 1i64 | 2i64 | 3i64 | 4i64)
+        matches!(value, 0i64..=4i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -27109,7 +25466,7 @@ pub enum Spo2MeasurementType {
 }
 impl Spo2MeasurementType {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64 | 1i64 | 2i64 | 3i64)
+        matches!(value, 0i64..=3i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -27283,7 +25640,7 @@ pub enum ProjectileType {
 }
 impl ProjectileType {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64 | 1i64 | 2i64 | 3i64 | 4i64 | 5i64)
+        matches!(value, 0i64..=5i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -27557,7 +25914,7 @@ pub enum ClimbProEvent {
 }
 impl ClimbProEvent {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64 | 1i64 | 2i64)
+        matches!(value, 0i64..=2i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -27616,7 +25973,7 @@ pub enum GasConsumptionRateType {
 }
 impl GasConsumptionRateType {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64 | 1i64 | 2i64)
+        matches!(value, 0i64..=2i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -27672,7 +26029,7 @@ pub enum TapSensitivity {
 }
 impl TapSensitivity {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64 | 1i64 | 2i64)
+        matches!(value, 0i64..=2i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -27729,7 +26086,7 @@ pub enum RadarThreatLevelType {
 }
 impl RadarThreatLevelType {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64 | 1i64 | 2i64 | 3i64)
+        matches!(value, 0i64..=3i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -27788,7 +26145,7 @@ pub enum MaxMetSpeedSource {
 }
 impl MaxMetSpeedSource {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64 | 1i64 | 2i64)
+        matches!(value, 0i64..=2i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -27900,7 +26257,7 @@ pub enum HrvStatus {
 }
 impl HrvStatus {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64 | 1i64 | 2i64 | 3i64 | 4i64)
+        matches!(value, 0i64..=4i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {

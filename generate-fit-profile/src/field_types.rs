@@ -10,6 +10,20 @@ use std::{
 
 fn field_type_enum_is_named_variant(field_type: &FieldTypeDefintion) -> TokenStream {
     let variant_values = field_type.variant_map().keys();
+    if variant_values.len() >= 3 {
+        // Consider range
+        let mut variant_values_mut = variant_values.clone();
+        let first = variant_values_mut.next().expect("variant_values is empty");
+        let last = variant_values_mut.last().expect("variant_values is empty");
+        if last - first == (variant_values.len() - 1) as i64 {
+            // This can be written as range
+            return quote! {
+                pub fn is_named_variant(value: i64) -> bool {
+                    matches!(value, #first..=#last)
+                }
+            };
+        }
+    }
     quote! {
         pub fn is_named_variant(value: i64) -> bool {
             matches!(value, #(#variant_values)|*)
