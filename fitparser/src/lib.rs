@@ -455,13 +455,12 @@ mod tests {
         data[12] = 0x00;
         data[13] = 0x00;
         match de::from_bytes(&data) {
-            Ok(_) => assert!(
-                false,
+            Ok(_) => panic!(
                 "This test should fail without the data CRC value being recomputed to include the header."
             ),
             Err(e) => match *e {
                 ErrorKind::InvalidCrc(..) => {}
-                _ => assert!(false, "Incorrect error returned {:?}", e),
+                _ => panic!("Incorrect error returned {:?}", e),
             },
         }
 
@@ -480,13 +479,10 @@ mod tests {
         data[13] = 0xFF;
         let mut options = HashSet::new();
         match de::from_bytes_with_options(&data, &options) {
-            Ok(_) => assert!(
-                false,
-                "This test should fail without the SkipHeaderCrcValidation option."
-            ),
+            Ok(_) => panic!("This test should fail without the SkipHeaderCrcValidation option."),
             Err(e) => match *e {
                 ErrorKind::InvalidCrc(..) => {}
-                _ => assert!(false, "Incorrect error returned {:?}", e),
+                _ => panic!("Incorrect error returned {:?}", e),
             },
         }
 
@@ -505,13 +501,10 @@ mod tests {
         data[leng - 1] = 0xFF;
         let mut options = HashSet::new();
         match de::from_bytes_with_options(&data, &options) {
-            Ok(_) => assert!(
-                false,
-                "This test should fail without the SkipDataCrcValidation option."
-            ),
+            Ok(_) => panic!("This test should fail without the SkipDataCrcValidation option."),
             Err(e) => match *e {
                 ErrorKind::InvalidCrc(..) => {}
-                _ => assert!(false, "Incorrect error returned {:?}", e),
+                _ => panic!("Incorrect error returned {:?}", e),
             },
         }
 

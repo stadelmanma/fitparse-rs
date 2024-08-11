@@ -1,5 +1,6 @@
 #![doc = "//! Auto generated profile messages from FIT SDK Release: 21.141.00"]
 #![allow(unused_variables)]
+#![allow(clippy::if_same_then_else, clippy::too_many_arguments)]
 use super::field_types::*;
 use super::{calculate_cumulative_value, data_field_with_info, extract_component, unknown_field};
 use crate::de::DecodeOption;
@@ -54,8 +55,7 @@ fn file_id_message(
                 if Manufacturer::FaveroElectronics.as_i64()
                     == data_map
                         .get(&1u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(file_id_message_favero_product_field(
@@ -72,8 +72,7 @@ fn file_id_message(
                 } else if Manufacturer::Garmin.as_i64()
                     == data_map
                         .get(&1u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(file_id_message_garmin_product_field(
@@ -90,8 +89,7 @@ fn file_id_message(
                 } else if Manufacturer::Dynastream.as_i64()
                     == data_map
                         .get(&1u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(file_id_message_garmin_product_field(
@@ -108,8 +106,7 @@ fn file_id_message(
                 } else if Manufacturer::DynastreamOem.as_i64()
                     == data_map
                         .get(&1u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(file_id_message_garmin_product_field(
@@ -126,8 +123,7 @@ fn file_id_message(
                 } else if Manufacturer::Tacx.as_i64()
                     == data_map
                         .get(&1u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(file_id_message_garmin_product_field(
@@ -1050,8 +1046,7 @@ fn slave_device_message(
                 if Manufacturer::FaveroElectronics.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(slave_device_message_favero_product_field(
@@ -1068,8 +1063,7 @@ fn slave_device_message(
                 } else if Manufacturer::Garmin.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(slave_device_message_garmin_product_field(
@@ -1086,8 +1080,7 @@ fn slave_device_message(
                 } else if Manufacturer::Dynastream.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(slave_device_message_garmin_product_field(
@@ -1104,8 +1097,7 @@ fn slave_device_message(
                 } else if Manufacturer::DynastreamOem.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(slave_device_message_garmin_product_field(
@@ -1122,8 +1114,7 @@ fn slave_device_message(
                 } else if Manufacturer::Tacx.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(slave_device_message_garmin_product_field(
@@ -1777,8 +1768,7 @@ fn mesg_capabilities_message(
                 if MesgCount::NumPerFile.as_i64()
                     == data_map
                         .get(&2u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(mesg_capabilities_message_num_per_file_field(
@@ -1795,8 +1785,7 @@ fn mesg_capabilities_message(
                 } else if MesgCount::MaxPerFile.as_i64()
                     == data_map
                         .get(&2u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(mesg_capabilities_message_max_per_file_field(
@@ -1813,8 +1802,7 @@ fn mesg_capabilities_message(
                 } else if MesgCount::MaxPerFileType.as_i64()
                     == data_map
                         .get(&2u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(mesg_capabilities_message_max_per_file_type_field(
@@ -6951,8 +6939,7 @@ fn watchface_settings_message(
                 if WatchfaceMode::Digital.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(watchface_settings_message_digital_layout_field(
@@ -6969,8 +6956,7 @@ fn watchface_settings_message(
                 } else if WatchfaceMode::Analog.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(watchface_settings_message_analog_layout_field(
@@ -9367,8 +9353,7 @@ fn dive_settings_message(
                 if SourceType::Antplus.as_i64()
                     == data_map
                         .get(&19u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(dive_settings_message_heart_rate_antplus_device_type_field(
@@ -9385,8 +9370,7 @@ fn dive_settings_message(
                 } else if SourceType::Local.as_i64()
                     == data_map
                         .get(&19u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(dive_settings_message_heart_rate_local_device_type_field(
@@ -13032,8 +13016,7 @@ fn session_message(
                 if Sport::Running.as_i64()
                     == data_map
                         .get(&5u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(session_message_total_strides_field(
@@ -13050,8 +13033,7 @@ fn session_message(
                 } else if Sport::Walking.as_i64()
                     == data_map
                         .get(&5u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(session_message_total_strides_field(
@@ -13068,8 +13050,7 @@ fn session_message(
                 } else if Sport::Cycling.as_i64()
                     == data_map
                         .get(&5u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(session_message_total_strokes_field(
@@ -13086,8 +13067,7 @@ fn session_message(
                 } else if Sport::Swimming.as_i64()
                     == data_map
                         .get(&5u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(session_message_total_strokes_field(
@@ -13104,8 +13084,7 @@ fn session_message(
                 } else if Sport::Rowing.as_i64()
                     == data_map
                         .get(&5u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(session_message_total_strokes_field(
@@ -13122,8 +13101,7 @@ fn session_message(
                 } else if Sport::StandUpPaddleboarding.as_i64()
                     == data_map
                         .get(&5u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(session_message_total_strokes_field(
@@ -13265,8 +13243,7 @@ fn session_message(
                 if Sport::Running.as_i64()
                     == data_map
                         .get(&5u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(session_message_avg_running_cadence_field(
@@ -13298,8 +13275,7 @@ fn session_message(
                 if Sport::Running.as_i64()
                     == data_map
                         .get(&5u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(session_message_max_running_cadence_field(
@@ -19747,8 +19723,7 @@ fn lap_message(
                 if Sport::Running.as_i64()
                     == data_map
                         .get(&25u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(lap_message_total_strides_field(
@@ -19765,8 +19740,7 @@ fn lap_message(
                 } else if Sport::Walking.as_i64()
                     == data_map
                         .get(&25u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(lap_message_total_strides_field(
@@ -19783,8 +19757,7 @@ fn lap_message(
                 } else if Sport::Cycling.as_i64()
                     == data_map
                         .get(&25u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(lap_message_total_strokes_field(
@@ -19801,8 +19774,7 @@ fn lap_message(
                 } else if Sport::Swimming.as_i64()
                     == data_map
                         .get(&25u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(lap_message_total_strokes_field(
@@ -19819,8 +19791,7 @@ fn lap_message(
                 } else if Sport::Rowing.as_i64()
                     == data_map
                         .get(&25u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(lap_message_total_strokes_field(
@@ -19837,8 +19808,7 @@ fn lap_message(
                 } else if Sport::StandUpPaddleboarding.as_i64()
                     == data_map
                         .get(&25u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(lap_message_total_strokes_field(
@@ -19980,8 +19950,7 @@ fn lap_message(
                 if Sport::Running.as_i64()
                     == data_map
                         .get(&25u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(lap_message_avg_running_cadence_field(
@@ -20013,8 +19982,7 @@ fn lap_message(
                 if Sport::Running.as_i64()
                     == data_map
                         .get(&25u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(lap_message_max_running_cadence_field(
@@ -29482,8 +29450,7 @@ fn event_message(
                 if Event::Timer.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(event_message_timer_trigger_field(
@@ -29500,8 +29467,7 @@ fn event_message(
                 } else if Event::CoursePoint.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(event_message_course_point_index_field(
@@ -29518,8 +29484,7 @@ fn event_message(
                 } else if Event::Battery.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(event_message_battery_level_field(
@@ -29536,8 +29501,7 @@ fn event_message(
                 } else if Event::VirtualPartnerPace.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(event_message_virtual_partner_speed_field(
@@ -29554,8 +29518,7 @@ fn event_message(
                 } else if Event::HrHighAlert.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(event_message_hr_high_alert_field(
@@ -29572,8 +29535,7 @@ fn event_message(
                 } else if Event::HrLowAlert.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(event_message_hr_low_alert_field(
@@ -29590,8 +29552,7 @@ fn event_message(
                 } else if Event::SpeedHighAlert.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(event_message_speed_high_alert_field(
@@ -29608,8 +29569,7 @@ fn event_message(
                 } else if Event::SpeedLowAlert.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(event_message_speed_low_alert_field(
@@ -29626,8 +29586,7 @@ fn event_message(
                 } else if Event::CadHighAlert.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(event_message_cad_high_alert_field(
@@ -29644,8 +29603,7 @@ fn event_message(
                 } else if Event::CadLowAlert.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(event_message_cad_low_alert_field(
@@ -29662,8 +29620,7 @@ fn event_message(
                 } else if Event::PowerHighAlert.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(event_message_power_high_alert_field(
@@ -29680,8 +29637,7 @@ fn event_message(
                 } else if Event::PowerLowAlert.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(event_message_power_low_alert_field(
@@ -29698,8 +29654,7 @@ fn event_message(
                 } else if Event::TimeDurationAlert.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(event_message_time_duration_alert_field(
@@ -29716,8 +29671,7 @@ fn event_message(
                 } else if Event::DistanceDurationAlert.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(event_message_distance_duration_alert_field(
@@ -29734,8 +29688,7 @@ fn event_message(
                 } else if Event::CalorieDurationAlert.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(event_message_calorie_duration_alert_field(
@@ -29752,8 +29705,7 @@ fn event_message(
                 } else if Event::FitnessEquipment.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(event_message_fitness_equipment_state_field(
@@ -29770,8 +29722,7 @@ fn event_message(
                 } else if Event::SportPoint.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(event_message_sport_point_field(
@@ -29788,8 +29739,7 @@ fn event_message(
                 } else if Event::FrontGearChange.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(event_message_gear_change_data_field(
@@ -29806,8 +29756,7 @@ fn event_message(
                 } else if Event::RearGearChange.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(event_message_gear_change_data_field(
@@ -29824,8 +29773,7 @@ fn event_message(
                 } else if Event::RiderPositionChange.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(event_message_rider_position_field(
@@ -29842,8 +29790,7 @@ fn event_message(
                 } else if Event::CommTimeout.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(event_message_comm_timeout_field(
@@ -29860,8 +29807,7 @@ fn event_message(
                 } else if Event::DiveAlert.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(event_message_dive_alert_field(
@@ -29878,8 +29824,7 @@ fn event_message(
                 } else if Event::AutoActivityDetect.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(event_message_auto_activity_detect_duration_field(
@@ -29896,8 +29841,7 @@ fn event_message(
                 } else if Event::RadarThreatAlert.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(event_message_radar_threat_alert_field(
@@ -29929,8 +29873,7 @@ fn event_message(
                 if Event::Timer.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(event_message_timer_trigger_field(
@@ -29947,8 +29890,7 @@ fn event_message(
                 } else if Event::CoursePoint.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(event_message_course_point_index_field(
@@ -29965,8 +29907,7 @@ fn event_message(
                 } else if Event::Battery.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(event_message_battery_level_field(
@@ -29983,8 +29924,7 @@ fn event_message(
                 } else if Event::VirtualPartnerPace.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(event_message_virtual_partner_speed_field(
@@ -30001,8 +29941,7 @@ fn event_message(
                 } else if Event::HrHighAlert.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(event_message_hr_high_alert_field(
@@ -30019,8 +29958,7 @@ fn event_message(
                 } else if Event::HrLowAlert.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(event_message_hr_low_alert_field(
@@ -30037,8 +29975,7 @@ fn event_message(
                 } else if Event::SpeedHighAlert.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(event_message_speed_high_alert_field(
@@ -30055,8 +29992,7 @@ fn event_message(
                 } else if Event::SpeedLowAlert.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(event_message_speed_low_alert_field(
@@ -30073,8 +30009,7 @@ fn event_message(
                 } else if Event::CadHighAlert.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(event_message_cad_high_alert_field(
@@ -30091,8 +30026,7 @@ fn event_message(
                 } else if Event::CadLowAlert.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(event_message_cad_low_alert_field(
@@ -30109,8 +30043,7 @@ fn event_message(
                 } else if Event::PowerHighAlert.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(event_message_power_high_alert_field(
@@ -30127,8 +30060,7 @@ fn event_message(
                 } else if Event::PowerLowAlert.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(event_message_power_low_alert_field(
@@ -30145,8 +30077,7 @@ fn event_message(
                 } else if Event::TimeDurationAlert.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(event_message_time_duration_alert_field(
@@ -30163,8 +30094,7 @@ fn event_message(
                 } else if Event::DistanceDurationAlert.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(event_message_distance_duration_alert_field(
@@ -30181,8 +30111,7 @@ fn event_message(
                 } else if Event::CalorieDurationAlert.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(event_message_calorie_duration_alert_field(
@@ -30199,8 +30128,7 @@ fn event_message(
                 } else if Event::FitnessEquipment.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(event_message_fitness_equipment_state_field(
@@ -30217,8 +30145,7 @@ fn event_message(
                 } else if Event::SportPoint.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(event_message_sport_point_field(
@@ -30235,8 +30162,7 @@ fn event_message(
                 } else if Event::FrontGearChange.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(event_message_gear_change_data_field(
@@ -30253,8 +30179,7 @@ fn event_message(
                 } else if Event::RearGearChange.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(event_message_gear_change_data_field(
@@ -30271,8 +30196,7 @@ fn event_message(
                 } else if Event::RiderPositionChange.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(event_message_rider_position_field(
@@ -30289,8 +30213,7 @@ fn event_message(
                 } else if Event::CommTimeout.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(event_message_comm_timeout_field(
@@ -30307,8 +30230,7 @@ fn event_message(
                 } else if Event::DiveAlert.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(event_message_dive_alert_field(
@@ -30325,8 +30247,7 @@ fn event_message(
                 } else if Event::AutoActivityDetect.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(event_message_auto_activity_detect_duration_field(
@@ -30343,8 +30264,7 @@ fn event_message(
                 } else if Event::RadarThreatAlert.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(event_message_radar_threat_alert_field(
@@ -30493,8 +30413,7 @@ fn event_message(
                 if Event::AutoActivityDetect.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(event_message_auto_activity_detect_start_timestamp_field(
@@ -31910,8 +31829,7 @@ fn device_info_message(
                 if SourceType::BluetoothLowEnergy.as_i64()
                     == data_map
                         .get(&25u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(device_info_message_ble_device_type_field(
@@ -31928,8 +31846,7 @@ fn device_info_message(
                 } else if SourceType::Antplus.as_i64()
                     == data_map
                         .get(&25u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(device_info_message_antplus_device_type_field(
@@ -31946,8 +31863,7 @@ fn device_info_message(
                 } else if SourceType::Ant.as_i64()
                     == data_map
                         .get(&25u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(device_info_message_ant_device_type_field(
@@ -31964,8 +31880,7 @@ fn device_info_message(
                 } else if SourceType::Local.as_i64()
                     == data_map
                         .get(&25u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(device_info_message_local_device_type_field(
@@ -32023,8 +31938,7 @@ fn device_info_message(
                 if Manufacturer::FaveroElectronics.as_i64()
                     == data_map
                         .get(&2u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(device_info_message_favero_product_field(
@@ -32041,8 +31955,7 @@ fn device_info_message(
                 } else if Manufacturer::Garmin.as_i64()
                     == data_map
                         .get(&2u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(device_info_message_garmin_product_field(
@@ -32059,8 +31972,7 @@ fn device_info_message(
                 } else if Manufacturer::Dynastream.as_i64()
                     == data_map
                         .get(&2u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(device_info_message_garmin_product_field(
@@ -32077,8 +31989,7 @@ fn device_info_message(
                 } else if Manufacturer::DynastreamOem.as_i64()
                     == data_map
                         .get(&2u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(device_info_message_garmin_product_field(
@@ -32095,8 +32006,7 @@ fn device_info_message(
                 } else if Manufacturer::Tacx.as_i64()
                     == data_map
                         .get(&2u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(device_info_message_garmin_product_field(
@@ -33283,8 +33193,7 @@ fn training_file_message(
                 if Manufacturer::FaveroElectronics.as_i64()
                     == data_map
                         .get(&1u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(training_file_message_favero_product_field(
@@ -33301,8 +33210,7 @@ fn training_file_message(
                 } else if Manufacturer::Garmin.as_i64()
                     == data_map
                         .get(&1u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(training_file_message_garmin_product_field(
@@ -33319,8 +33227,7 @@ fn training_file_message(
                 } else if Manufacturer::Dynastream.as_i64()
                     == data_map
                         .get(&1u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(training_file_message_garmin_product_field(
@@ -33337,8 +33244,7 @@ fn training_file_message(
                 } else if Manufacturer::DynastreamOem.as_i64()
                     == data_map
                         .get(&1u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(training_file_message_garmin_product_field(
@@ -33355,8 +33261,7 @@ fn training_file_message(
                 } else if Manufacturer::Tacx.as_i64()
                     == data_map
                         .get(&1u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(training_file_message_garmin_product_field(
@@ -36721,8 +36626,7 @@ fn three_d_sensor_calibration_message(
                 if SensorType::Accelerometer.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(three_d_sensor_calibration_message_accel_cal_factor_field(
@@ -36739,8 +36643,7 @@ fn three_d_sensor_calibration_message(
                 } else if SensorType::Gyroscope.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(three_d_sensor_calibration_message_gyro_cal_factor_field(
@@ -37133,8 +37036,7 @@ fn one_d_sensor_calibration_message(
                 if SensorType::Barometer.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(one_d_sensor_calibration_message_baro_cal_factor_field(
@@ -44424,8 +44326,7 @@ fn segment_lap_message(
                 if Sport::Cycling.as_i64()
                     == data_map
                         .get(&23u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(segment_lap_message_total_strokes_field(
@@ -49286,8 +49187,7 @@ fn workout_step_message(
                 if WktStepDuration::Time.as_i64()
                     == data_map
                         .get(&1u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_duration_time_field(
@@ -49304,8 +49204,7 @@ fn workout_step_message(
                 } else if WktStepDuration::RepetitionTime.as_i64()
                     == data_map
                         .get(&1u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_duration_time_field(
@@ -49322,8 +49221,7 @@ fn workout_step_message(
                 } else if WktStepDuration::Distance.as_i64()
                     == data_map
                         .get(&1u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_duration_distance_field(
@@ -49340,8 +49238,7 @@ fn workout_step_message(
                 } else if WktStepDuration::HrLessThan.as_i64()
                     == data_map
                         .get(&1u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_duration_hr_field(
@@ -49358,8 +49255,7 @@ fn workout_step_message(
                 } else if WktStepDuration::HrGreaterThan.as_i64()
                     == data_map
                         .get(&1u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_duration_hr_field(
@@ -49376,8 +49272,7 @@ fn workout_step_message(
                 } else if WktStepDuration::Calories.as_i64()
                     == data_map
                         .get(&1u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_duration_calories_field(
@@ -49394,8 +49289,7 @@ fn workout_step_message(
                 } else if WktStepDuration::RepeatUntilStepsCmplt.as_i64()
                     == data_map
                         .get(&1u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_duration_step_field(
@@ -49412,8 +49306,7 @@ fn workout_step_message(
                 } else if WktStepDuration::RepeatUntilTime.as_i64()
                     == data_map
                         .get(&1u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_duration_step_field(
@@ -49430,8 +49323,7 @@ fn workout_step_message(
                 } else if WktStepDuration::RepeatUntilDistance.as_i64()
                     == data_map
                         .get(&1u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_duration_step_field(
@@ -49448,8 +49340,7 @@ fn workout_step_message(
                 } else if WktStepDuration::RepeatUntilCalories.as_i64()
                     == data_map
                         .get(&1u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_duration_step_field(
@@ -49466,8 +49357,7 @@ fn workout_step_message(
                 } else if WktStepDuration::RepeatUntilHrLessThan.as_i64()
                     == data_map
                         .get(&1u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_duration_step_field(
@@ -49484,8 +49374,7 @@ fn workout_step_message(
                 } else if WktStepDuration::RepeatUntilHrGreaterThan.as_i64()
                     == data_map
                         .get(&1u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_duration_step_field(
@@ -49502,8 +49391,7 @@ fn workout_step_message(
                 } else if WktStepDuration::RepeatUntilPowerLessThan.as_i64()
                     == data_map
                         .get(&1u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_duration_step_field(
@@ -49520,8 +49408,7 @@ fn workout_step_message(
                 } else if WktStepDuration::RepeatUntilPowerGreaterThan.as_i64()
                     == data_map
                         .get(&1u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_duration_step_field(
@@ -49538,8 +49425,7 @@ fn workout_step_message(
                 } else if WktStepDuration::PowerLessThan.as_i64()
                     == data_map
                         .get(&1u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_duration_power_field(
@@ -49556,8 +49442,7 @@ fn workout_step_message(
                 } else if WktStepDuration::PowerGreaterThan.as_i64()
                     == data_map
                         .get(&1u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_duration_power_field(
@@ -49574,8 +49459,7 @@ fn workout_step_message(
                 } else if WktStepDuration::Reps.as_i64()
                     == data_map
                         .get(&1u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_duration_reps_field(
@@ -49620,8 +49504,7 @@ fn workout_step_message(
                 if WktStepTarget::Speed.as_i64()
                     == data_map
                         .get(&3u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_target_speed_zone_field(
@@ -49638,8 +49521,7 @@ fn workout_step_message(
                 } else if WktStepTarget::HeartRate.as_i64()
                     == data_map
                         .get(&3u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_target_hr_zone_field(
@@ -49656,8 +49538,7 @@ fn workout_step_message(
                 } else if WktStepTarget::Cadence.as_i64()
                     == data_map
                         .get(&3u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_target_cadence_zone_field(
@@ -49674,8 +49555,7 @@ fn workout_step_message(
                 } else if WktStepTarget::Power.as_i64()
                     == data_map
                         .get(&3u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_target_power_zone_field(
@@ -49692,8 +49572,7 @@ fn workout_step_message(
                 } else if WktStepDuration::RepeatUntilStepsCmplt.as_i64()
                     == data_map
                         .get(&1u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_repeat_steps_field(
@@ -49710,8 +49589,7 @@ fn workout_step_message(
                 } else if WktStepDuration::RepeatUntilTime.as_i64()
                     == data_map
                         .get(&1u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_repeat_time_field(
@@ -49728,8 +49606,7 @@ fn workout_step_message(
                 } else if WktStepDuration::RepeatUntilDistance.as_i64()
                     == data_map
                         .get(&1u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_repeat_distance_field(
@@ -49746,8 +49623,7 @@ fn workout_step_message(
                 } else if WktStepDuration::RepeatUntilCalories.as_i64()
                     == data_map
                         .get(&1u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_repeat_calories_field(
@@ -49764,8 +49640,7 @@ fn workout_step_message(
                 } else if WktStepDuration::RepeatUntilHrLessThan.as_i64()
                     == data_map
                         .get(&1u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_repeat_hr_field(
@@ -49782,8 +49657,7 @@ fn workout_step_message(
                 } else if WktStepDuration::RepeatUntilHrGreaterThan.as_i64()
                     == data_map
                         .get(&1u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_repeat_hr_field(
@@ -49800,8 +49674,7 @@ fn workout_step_message(
                 } else if WktStepDuration::RepeatUntilPowerLessThan.as_i64()
                     == data_map
                         .get(&1u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_repeat_power_field(
@@ -49818,8 +49691,7 @@ fn workout_step_message(
                 } else if WktStepDuration::RepeatUntilPowerGreaterThan.as_i64()
                     == data_map
                         .get(&1u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_repeat_power_field(
@@ -49836,8 +49708,7 @@ fn workout_step_message(
                 } else if WktStepTarget::SwimStroke.as_i64()
                     == data_map
                         .get(&3u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_target_stroke_type_field(
@@ -49869,8 +49740,7 @@ fn workout_step_message(
                 if WktStepTarget::Speed.as_i64()
                     == data_map
                         .get(&3u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_custom_target_speed_low_field(
@@ -49887,8 +49757,7 @@ fn workout_step_message(
                 } else if WktStepTarget::HeartRate.as_i64()
                     == data_map
                         .get(&3u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_custom_target_heart_rate_low_field(
@@ -49905,8 +49774,7 @@ fn workout_step_message(
                 } else if WktStepTarget::Cadence.as_i64()
                     == data_map
                         .get(&3u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_custom_target_cadence_low_field(
@@ -49923,8 +49791,7 @@ fn workout_step_message(
                 } else if WktStepTarget::Power.as_i64()
                     == data_map
                         .get(&3u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_custom_target_power_low_field(
@@ -49956,8 +49823,7 @@ fn workout_step_message(
                 if WktStepTarget::Speed.as_i64()
                     == data_map
                         .get(&3u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_custom_target_speed_high_field(
@@ -49974,8 +49840,7 @@ fn workout_step_message(
                 } else if WktStepTarget::HeartRate.as_i64()
                     == data_map
                         .get(&3u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_custom_target_heart_rate_high_field(
@@ -49992,8 +49857,7 @@ fn workout_step_message(
                 } else if WktStepTarget::Cadence.as_i64()
                     == data_map
                         .get(&3u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_custom_target_cadence_high_field(
@@ -50010,8 +49874,7 @@ fn workout_step_message(
                 } else if WktStepTarget::Power.as_i64()
                     == data_map
                         .get(&3u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_custom_target_power_high_field(
@@ -50147,8 +50010,7 @@ fn workout_step_message(
                 if WktStepTarget::Speed.as_i64()
                     == data_map
                         .get(&19u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_secondary_target_speed_zone_field(
@@ -50165,8 +50027,7 @@ fn workout_step_message(
                 } else if WktStepTarget::HeartRate.as_i64()
                     == data_map
                         .get(&19u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_secondary_target_hr_zone_field(
@@ -50183,8 +50044,7 @@ fn workout_step_message(
                 } else if WktStepTarget::Cadence.as_i64()
                     == data_map
                         .get(&19u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_secondary_target_cadence_zone_field(
@@ -50201,8 +50061,7 @@ fn workout_step_message(
                 } else if WktStepTarget::Power.as_i64()
                     == data_map
                         .get(&19u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_secondary_target_power_zone_field(
@@ -50219,8 +50078,7 @@ fn workout_step_message(
                 } else if WktStepTarget::SwimStroke.as_i64()
                     == data_map
                         .get(&19u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(workout_step_message_secondary_target_stroke_type_field(
@@ -50252,8 +50110,7 @@ fn workout_step_message(
                 if WktStepTarget::Speed.as_i64()
                     == data_map
                         .get(&19u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(
@@ -50272,8 +50129,7 @@ fn workout_step_message(
                 } else if WktStepTarget::HeartRate.as_i64()
                     == data_map
                         .get(&19u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(
@@ -50292,8 +50148,7 @@ fn workout_step_message(
                 } else if WktStepTarget::Cadence.as_i64()
                     == data_map
                         .get(&19u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(
@@ -50312,8 +50167,7 @@ fn workout_step_message(
                 } else if WktStepTarget::Power.as_i64()
                     == data_map
                         .get(&19u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(
@@ -50349,8 +50203,7 @@ fn workout_step_message(
                 if WktStepTarget::Speed.as_i64()
                     == data_map
                         .get(&19u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(
@@ -50369,8 +50222,7 @@ fn workout_step_message(
                 } else if WktStepTarget::HeartRate.as_i64()
                     == data_map
                         .get(&19u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(
@@ -50389,8 +50241,7 @@ fn workout_step_message(
                 } else if WktStepTarget::Cadence.as_i64()
                     == data_map
                         .get(&19u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(
@@ -50409,8 +50260,7 @@ fn workout_step_message(
                 } else if WktStepTarget::Power.as_i64()
                     == data_map
                         .get(&19u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(
@@ -52440,8 +52290,7 @@ fn schedule_message(
                 if Manufacturer::FaveroElectronics.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(schedule_message_favero_product_field(
@@ -52458,8 +52307,7 @@ fn schedule_message(
                 } else if Manufacturer::Garmin.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(schedule_message_garmin_product_field(
@@ -52476,8 +52324,7 @@ fn schedule_message(
                 } else if Manufacturer::Dynastream.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(schedule_message_garmin_product_field(
@@ -52494,8 +52341,7 @@ fn schedule_message(
                 } else if Manufacturer::DynastreamOem.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(schedule_message_garmin_product_field(
@@ -52512,8 +52358,7 @@ fn schedule_message(
                 } else if Manufacturer::Tacx.as_i64()
                     == data_map
                         .get(&0u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(schedule_message_garmin_product_field(
@@ -54666,8 +54511,7 @@ fn monitoring_message(
                 if ActivityType::Walking.as_i64()
                     == data_map
                         .get(&5u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(monitoring_message_steps_field(
@@ -54684,8 +54528,7 @@ fn monitoring_message(
                 } else if ActivityType::Running.as_i64()
                     == data_map
                         .get(&5u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(monitoring_message_steps_field(
@@ -54702,8 +54545,7 @@ fn monitoring_message(
                 } else if ActivityType::Cycling.as_i64()
                     == data_map
                         .get(&5u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(monitoring_message_strokes_field(
@@ -54720,8 +54562,7 @@ fn monitoring_message(
                 } else if ActivityType::Swimming.as_i64()
                     == data_map
                         .get(&5u8)
-                        .map(|v| v.try_into().ok())
-                        .flatten()
+                        .and_then(|v| v.try_into().ok())
                         .unwrap_or(-1i64)
                 {
                     fields.push(monitoring_message_strokes_field(

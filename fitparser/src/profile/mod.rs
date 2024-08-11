@@ -6,7 +6,6 @@ use crate::{FitDataField, Value};
 use chrono::{DateTime, Duration, Local, NaiveDate, TimeZone};
 use std::collections::{HashMap, HashSet};
 use std::convert::TryInto;
-use std::f64::EPSILON;
 
 pub mod field_types;
 pub use field_types::{get_field_variant_as_string, FieldDataType, MesgNum};
@@ -63,8 +62,7 @@ impl TimestampField {
     fn to_date_time(self) -> DateTime<Local> {
         // reference date defined in FIT profile, it's either in UTC or local TZ
         let ref_date = NaiveDate::from_ymd_opt(1989, 12, 31)
-            .map(|d: NaiveDate| d.and_hms_opt(0, 0, 0))
-            .flatten()
+            .and_then(|d: NaiveDate| d.and_hms_opt(0, 0, 0))
             .unwrap();
         match self {
             Self::Local(value) => {
@@ -281,7 +279,7 @@ fn convert_value(
 }
 
 fn apply_scale_and_offset(value: Value, scale: f64, offset: f64) -> Result<Value> {
-    if ((scale - 1.0).abs() > EPSILON) || ((offset - 0.0).abs() > EPSILON) {
+    if ((scale - 1.0).abs() > f64::EPSILON) || ((offset - 0.0).abs() > f64::EPSILON) {
         let val: f64 = value.try_into()?;
         Ok(Value::Float64(val / scale - offset))
     } else {
