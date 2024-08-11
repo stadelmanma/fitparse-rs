@@ -36,7 +36,9 @@
 //! ```
 #![warn(missing_docs)]
 use chrono::{DateTime, Local};
+use profile::field_types::FitBaseType;
 use serde::Serialize;
+use std::collections::HashMap;
 use std::convert;
 use std::fmt;
 
@@ -44,7 +46,7 @@ pub mod de;
 mod error;
 pub mod profile;
 
-pub use de::{from_bytes, from_reader};
+pub use de::{from_bytes, from_reader, BaseType};
 pub use error::{Error, ErrorKind, Result};
 
 /// Defines a set of data derived from a FIT Data message.
@@ -351,6 +353,115 @@ impl fmt::Display for ValueWithUnits {
             write!(f, "{}", self.value)
         } else {
             write!(f, "{} {}", self.value, self.units)
+        }
+    }
+}
+
+/// Developer fields are fields with properties that are not already defined
+/// by the SDK, but instead the definition is part of the fit file, for more
+/// flexiblity. Since their properties are dynamically defined and cannot be
+/// looked up statically we need to store these properties. This is what the
+/// DeveloperFieldDescription struct is for.
+///
+#[derive(Debug)]
+pub struct DeveloperFieldDescription {
+    developer_data_index: u8,
+    field_definition_number: u8,
+    fit_base_type_id: BaseType,
+    field_name: String,
+    scale: f64,
+    offset: f64,
+    units: String,
+    //currently not used:
+    //native_mesg_num: Option<String>,
+    //native_field_num: Option<u8>, //This could also be from an enum, but we don't generate these currently
+}
+
+impl DeveloperFieldDescription {
+    /// Create DeveloperFieldDescription from FitDataFields
+    pub fn new(fields: &Vec<FitDataField>) -> Self {
+        let mut name_to_value = HashMap::new();
+        for field in fields {
+            name_to_value.insert(field.name.clone(), field.value.clone());
+        }
+        let developer_data_index = if let Value::UInt8(developer_data_index) = name_to_value
+            .get("developer_data_index")
+            .expect("developer_data_index is mandatory")
+        {
+            *developer_data_index
+        } else {
+            panic!("developer_data_index must be u8")
+        };
+        let field_definition_number = if let Value::UInt8(field_definition_number) = name_to_value
+            .get("field_definition_number")
+            .expect("field_definition_number is mandatory")
+        {
+            *field_definition_number
+        } else {
+            panic!("field_definition_number must be u8")
+        };
+        let fit_base_type_id = if let Value::String(fit_base_type_id) = name_to_value
+            .get("fit_base_type_id")
+            .expect("fit_base_type_id is mandatory")
+        {
+            // TODO: Make this prettier
+            BaseType::from(FitBaseType::from(fit_base_type_id as &str).as_u8())
+        } else {
+            panic!("fit_base_type_id must be String")
+        };
+        let field_name = if let Value::String(field_name) = name_to_value
+            .get("field_name")
+            .unwrap_or(&Value::String("Field Name Missing".to_string()))
+        {
+            field_name.clone()
+        } else {
+            panic!("field_name must be String")
+        };
+        let scale =
+            if let Value::UInt8(scale) = name_to_value.get("scale").unwrap_or(&Value::UInt8(1u8)) {
+                *scale as f64
+            } else {
+                panic!("scale must be u8")
+            };
+        let offset = if let Value::SInt8(offset) =
+            name_to_value.get("offset").unwrap_or(&Value::SInt8(0i8))
+        {
+            *offset as f64
+        } else {
+            panic!("offset must be i8")
+        };
+        let units = if let Value::String(units) = name_to_value
+            .get("units")
+            .unwrap_or(&Value::String(String::new()))
+        {
+            units.clone()
+        } else {
+            panic!("field_name must be String")
+        };
+        /* Currently unused:
+        let native_mesg_num = name_to_value.get("native_mesg_num").map(|f| {
+            if let Value::String(native_mesg_num) = f {
+                String::from(native_mesg_num)
+            } else {
+                panic!("native_mesg_num must be String")
+            }
+        });
+        let native_field_num = name_to_value.get("native_field_num").map(|f| {
+            if let Value::UInt8(native_field_num) = f {
+                *native_field_num
+            } else {
+                panic!("native_field_num must be u8")
+            }
+        });*/
+
+        DeveloperFieldDescription {
+            developer_data_index,
+            field_definition_number,
+            fit_base_type_id,
+            field_name,
+            scale,
+            offset,
+            units,
         }
     }
 }
