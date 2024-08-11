@@ -247,7 +247,7 @@ fn subfield_deref(
         };
 
         deref_branches.push(quote!{
-                #elif #ref_field_ident::#ref_val_ident.as_i64() == data_map.get(&#ref_def_num).map(|v| v.try_into().ok()).flatten().unwrap_or(-1i64) {
+                #elif #ref_field_ident::#ref_val_ident.as_i64() == data_map.get(&#ref_def_num).and_then(|v| v.try_into().ok()).unwrap_or(-1i64) {
                     #body
                 }
             });
@@ -370,6 +370,7 @@ pub fn write_decode_file(profile: &FitProfile, out: &mut File) -> Result<(), std
     let output = quote! {
         #![doc = #comment]
         #![allow(unused_variables)]
+        #![allow(clippy::if_same_then_else, clippy::too_many_arguments)]
         use std::collections::{HashMap, HashSet, VecDeque};
         use std::convert::TryInto;
         use crate::{{FitDataField, Value}};

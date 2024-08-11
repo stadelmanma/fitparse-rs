@@ -12,10 +12,7 @@ fn field_type_enum_is_named_variant(field_type: &FieldTypeDefintion) -> TokenStr
     let variant_values = field_type.variant_map().keys();
     quote! {
         pub fn is_named_variant(value: i64) -> bool {
-            match value {
-                #( #variant_values => true,)*
-                _ => false
-            }
+            matches!(value, #(#variant_values)|*)
         }
     }
 }

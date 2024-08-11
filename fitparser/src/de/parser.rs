@@ -671,7 +671,7 @@ mod tests {
         let sl = &data[12..];
         let (_, hdr) = message_header(sl).unwrap();
 
-        assert_eq!(hdr.contains_developer_data, false);
+        assert!(!hdr.contains_developer_data);
         assert_eq!(hdr.local_message_number, 0);
         assert_eq!(hdr.message_type, FitMessageType::Definition);
         assert_eq!(hdr.time_offset, None);
@@ -685,15 +685,14 @@ mod tests {
         let (rem, val) = data_field_value(&data, BaseType::UInt8, Endianness::Native, 1).unwrap();
         match val {
             Some(v) => assert_eq!(v, Value::UInt8(0x01)),
-            None => assert!(false, "No value returned."),
+            None => panic!("No value returned."),
         }
         assert_eq!(rem, &[0xFF]);
 
         // parse off an invalid byte
         let (rem, val) = data_field_value(rem, BaseType::UInt8, Endianness::Native, 1).unwrap();
-        match val {
-            Some(_) => assert!(false, "None should be returned for invalid bytes."),
-            None => {}
+        if val.is_some() {
+            panic!("None should be returned for invalid bytes.")
         }
         assert_eq!(rem, &[]);
 
@@ -701,14 +700,14 @@ mod tests {
         let (rem, val) = data_field_value(&data, BaseType::UInt16, Endianness::Big, 2).unwrap();
         match val {
             Some(v) => assert_eq!(v, Value::UInt16(0x01FF)),
-            None => assert!(false, "No value returned."),
+            None => panic!("No value returned."),
         }
         assert_eq!(rem, &[]);
 
         let (rem, val) = data_field_value(&data, BaseType::UInt16, Endianness::Little, 2).unwrap();
         match val {
             Some(v) => assert_eq!(v, Value::UInt16(0xFF01)),
-            None => assert!(false, "No value returned."),
+            None => panic!("No value returned."),
         }
         assert_eq!(rem, &[]);
     }
@@ -729,24 +728,19 @@ mod tests {
                     Value::UInt8(0x03)
                 ])
             ),
-            None => assert!(false, "No value returned."),
+            None => panic!("No value returned."),
         }
         assert_eq!(rem, &[0xFF]);
 
         // parse off an invalid byte
         let (rem, val) = data_field_value(&data, BaseType::UInt8, Endianness::Native, 5).unwrap();
-        match val {
-            Some(_) => assert!(false, "None should be returned for invalid bytes."),
-            None => {}
+        if val.is_some() {
+            panic!("None should be returned for invalid bytes.")
         }
         assert_eq!(rem, &[]);
 
-        match val {
-            Some(_) => assert!(
-                false,
-                "None should be returned for array with an invalid size."
-            ),
-            None => {}
+        if val.is_some() {
+            panic!("None should be returned for array with an invalid size.")
         }
         assert_eq!(rem, &[]);
     }
@@ -759,16 +753,15 @@ mod tests {
         let (rem, val) = data_field_value(&data, BaseType::String, Endianness::Native, 8).unwrap();
         match val {
             Some(v) => assert_eq!(v, Value::String(String::from("GARMIN"))),
-            None => assert!(false, "No value returned."),
+            None => panic!("No value returned."),
         }
         assert_eq!(rem, &[0xFF]);
 
         // parse invalid UTF8 string
         let data = [71, 195, 40, 77, 73, 78, 0, 63, 255];
         let (rem, val) = data_field_value(&data, BaseType::String, Endianness::Native, 8).unwrap();
-        match val {
-            Some(_) => assert!(false, "None should be returned for invalid string."),
-            None => {}
+        if val.is_some() {
+            panic!("None should be returned for invalid string.")
         }
         assert_eq!(rem, &[0xFF]);
 
@@ -777,7 +770,7 @@ mod tests {
         let (rem, val) = data_field_value(&data, BaseType::String, Endianness::Native, 8).unwrap();
         match val {
             Some(v) => assert_eq!(v, Value::String(String::from("GARM"))),
-            None => assert!(false, "No value returned."),
+            None => panic!("No value returned."),
         }
         assert_eq!(rem, &[0xFF]);
     }
@@ -788,8 +781,7 @@ mod tests {
         // try and parse an array with a size that isn't a multiple of the base type
         let data: Vec<u8> = (0..=255).collect();
         match data_field_value(&data, BaseType::UInt16, Endianness::Native, 255) {
-            Ok(..) => {}
-            Err(..) => {}
+            Ok(..) | Err(..) => {}
         };
     }
 }

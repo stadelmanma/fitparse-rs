@@ -843,29 +843,28 @@ pub enum File {
 }
 impl File {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            9i64 => true,
-            10i64 => true,
-            11i64 => true,
-            14i64 => true,
-            15i64 => true,
-            20i64 => true,
-            28i64 => true,
-            32i64 => true,
-            34i64 => true,
-            35i64 => true,
-            40i64 => true,
-            247i64 => true,
-            254i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            1i64 | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 14i64
+                | 15i64
+                | 20i64
+                | 28i64
+                | 32i64
+                | 34i64
+                | 35i64
+                | 40i64
+                | 247i64
+                | 254i64
+        )
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -1094,131 +1093,130 @@ pub enum MesgNum {
 }
 impl MesgNum {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            9i64 => true,
-            10i64 => true,
-            12i64 => true,
-            15i64 => true,
-            18i64 => true,
-            19i64 => true,
-            20i64 => true,
-            21i64 => true,
-            23i64 => true,
-            26i64 => true,
-            27i64 => true,
-            28i64 => true,
-            30i64 => true,
-            31i64 => true,
-            32i64 => true,
-            33i64 => true,
-            34i64 => true,
-            35i64 => true,
-            37i64 => true,
-            38i64 => true,
-            39i64 => true,
-            49i64 => true,
-            51i64 => true,
-            53i64 => true,
-            55i64 => true,
-            72i64 => true,
-            78i64 => true,
-            80i64 => true,
-            81i64 => true,
-            82i64 => true,
-            101i64 => true,
-            103i64 => true,
-            105i64 => true,
-            106i64 => true,
-            127i64 => true,
-            128i64 => true,
-            129i64 => true,
-            131i64 => true,
-            132i64 => true,
-            142i64 => true,
-            145i64 => true,
-            148i64 => true,
-            149i64 => true,
-            150i64 => true,
-            151i64 => true,
-            158i64 => true,
-            159i64 => true,
-            160i64 => true,
-            161i64 => true,
-            162i64 => true,
-            164i64 => true,
-            165i64 => true,
-            167i64 => true,
-            169i64 => true,
-            174i64 => true,
-            177i64 => true,
-            178i64 => true,
-            184i64 => true,
-            185i64 => true,
-            186i64 => true,
-            187i64 => true,
-            188i64 => true,
-            200i64 => true,
-            201i64 => true,
-            202i64 => true,
-            206i64 => true,
-            207i64 => true,
-            208i64 => true,
-            209i64 => true,
-            210i64 => true,
-            211i64 => true,
-            216i64 => true,
-            225i64 => true,
-            227i64 => true,
-            229i64 => true,
-            258i64 => true,
-            259i64 => true,
-            262i64 => true,
-            264i64 => true,
-            268i64 => true,
-            269i64 => true,
-            275i64 => true,
-            285i64 => true,
-            289i64 => true,
-            290i64 => true,
-            297i64 => true,
-            302i64 => true,
-            304i64 => true,
-            305i64 => true,
-            306i64 => true,
-            307i64 => true,
-            308i64 => true,
-            312i64 => true,
-            313i64 => true,
-            314i64 => true,
-            315i64 => true,
-            317i64 => true,
-            319i64 => true,
-            323i64 => true,
-            346i64 => true,
-            370i64 => true,
-            371i64 => true,
-            372i64 => true,
-            375i64 => true,
-            376i64 => true,
-            387i64 => true,
-            388i64 => true,
-            389i64 => true,
-            393i64 => true,
-            398i64 => true,
-            409i64 => true,
-            65280i64 => true,
-            65534i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 12i64
+                | 15i64
+                | 18i64
+                | 19i64
+                | 20i64
+                | 21i64
+                | 23i64
+                | 26i64
+                | 27i64
+                | 28i64
+                | 30i64
+                | 31i64
+                | 32i64
+                | 33i64
+                | 34i64
+                | 35i64
+                | 37i64
+                | 38i64
+                | 39i64
+                | 49i64
+                | 51i64
+                | 53i64
+                | 55i64
+                | 72i64
+                | 78i64
+                | 80i64
+                | 81i64
+                | 82i64
+                | 101i64
+                | 103i64
+                | 105i64
+                | 106i64
+                | 127i64
+                | 128i64
+                | 129i64
+                | 131i64
+                | 132i64
+                | 142i64
+                | 145i64
+                | 148i64
+                | 149i64
+                | 150i64
+                | 151i64
+                | 158i64
+                | 159i64
+                | 160i64
+                | 161i64
+                | 162i64
+                | 164i64
+                | 165i64
+                | 167i64
+                | 169i64
+                | 174i64
+                | 177i64
+                | 178i64
+                | 184i64
+                | 185i64
+                | 186i64
+                | 187i64
+                | 188i64
+                | 200i64
+                | 201i64
+                | 202i64
+                | 206i64
+                | 207i64
+                | 208i64
+                | 209i64
+                | 210i64
+                | 211i64
+                | 216i64
+                | 225i64
+                | 227i64
+                | 229i64
+                | 258i64
+                | 259i64
+                | 262i64
+                | 264i64
+                | 268i64
+                | 269i64
+                | 275i64
+                | 285i64
+                | 289i64
+                | 290i64
+                | 297i64
+                | 302i64
+                | 304i64
+                | 305i64
+                | 306i64
+                | 307i64
+                | 308i64
+                | 312i64
+                | 313i64
+                | 314i64
+                | 315i64
+                | 317i64
+                | 319i64
+                | 323i64
+                | 346i64
+                | 370i64
+                | 371i64
+                | 372i64
+                | 375i64
+                | 376i64
+                | 387i64
+                | 388i64
+                | 389i64
+                | 393i64
+                | 398i64
+                | 409i64
+                | 65280i64
+                | 65534i64
+        )
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -1635,11 +1633,7 @@ pub enum Checksum {
 }
 impl Checksum {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -1695,12 +1689,7 @@ pub enum FileFlags {
 }
 impl FileFlags {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            2i64 => true,
-            4i64 => true,
-            8i64 => true,
-            _ => false,
-        }
+        matches!(value, 2i64 | 4i64 | 8i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -1759,12 +1748,7 @@ pub enum MesgCount {
 }
 impl MesgCount {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -1820,10 +1804,7 @@ pub enum DateTime {
 }
 impl DateTime {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            268435456i64 => true,
-            _ => false,
-        }
+        matches!(value, 268435456i64)
     }
     pub fn as_u32(self) -> u32 {
         match self {
@@ -1876,10 +1857,7 @@ pub enum LocalDateTime {
 }
 impl LocalDateTime {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            268435456i64 => true,
-            _ => false,
-        }
+        matches!(value, 268435456i64)
     }
     pub fn as_u32(self) -> u32 {
         match self {
@@ -1935,12 +1913,7 @@ pub enum MessageIndex {
 }
 impl MessageIndex {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            4095i64 => true,
-            28672i64 => true,
-            32768i64 => true,
-            _ => false,
-        }
+        matches!(value, 4095i64 | 28672i64 | 32768i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -1998,10 +1971,7 @@ pub enum DeviceIndex {
 }
 impl DeviceIndex {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -2053,11 +2023,7 @@ pub enum Gender {
 }
 impl Gender {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -2146,48 +2112,47 @@ pub enum Language {
 }
 impl Language {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            9i64 => true,
-            10i64 => true,
-            11i64 => true,
-            12i64 => true,
-            13i64 => true,
-            14i64 => true,
-            15i64 => true,
-            16i64 => true,
-            17i64 => true,
-            18i64 => true,
-            19i64 => true,
-            20i64 => true,
-            21i64 => true,
-            22i64 => true,
-            23i64 => true,
-            24i64 => true,
-            25i64 => true,
-            26i64 => true,
-            27i64 => true,
-            28i64 => true,
-            29i64 => true,
-            30i64 => true,
-            31i64 => true,
-            32i64 => true,
-            33i64 => true,
-            34i64 => true,
-            35i64 => true,
-            36i64 => true,
-            37i64 => true,
-            254i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+                | 15i64
+                | 16i64
+                | 17i64
+                | 18i64
+                | 19i64
+                | 20i64
+                | 21i64
+                | 22i64
+                | 23i64
+                | 24i64
+                | 25i64
+                | 26i64
+                | 27i64
+                | 28i64
+                | 29i64
+                | 30i64
+                | 31i64
+                | 32i64
+                | 33i64
+                | 34i64
+                | 35i64
+                | 36i64
+                | 37i64
+                | 254i64
+        )
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -2357,17 +2322,10 @@ pub enum LanguageBits0 {
 }
 impl LanguageBits0 {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            1i64 => true,
-            2i64 => true,
-            4i64 => true,
-            8i64 => true,
-            16i64 => true,
-            32i64 => true,
-            64i64 => true,
-            128i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            1i64 | 2i64 | 4i64 | 8i64 | 16i64 | 32i64 | 64i64 | 128i64
+        )
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -2446,17 +2404,10 @@ pub enum LanguageBits1 {
 }
 impl LanguageBits1 {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            1i64 => true,
-            2i64 => true,
-            4i64 => true,
-            8i64 => true,
-            16i64 => true,
-            32i64 => true,
-            64i64 => true,
-            128i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            1i64 | 2i64 | 4i64 | 8i64 | 16i64 | 32i64 | 64i64 | 128i64
+        )
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -2535,17 +2486,10 @@ pub enum LanguageBits2 {
 }
 impl LanguageBits2 {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            1i64 => true,
-            2i64 => true,
-            4i64 => true,
-            8i64 => true,
-            16i64 => true,
-            32i64 => true,
-            64i64 => true,
-            128i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            1i64 | 2i64 | 4i64 | 8i64 | 16i64 | 32i64 | 64i64 | 128i64
+        )
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -2624,17 +2568,10 @@ pub enum LanguageBits3 {
 }
 impl LanguageBits3 {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            1i64 => true,
-            2i64 => true,
-            4i64 => true,
-            8i64 => true,
-            16i64 => true,
-            32i64 => true,
-            64i64 => true,
-            128i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            1i64 | 2i64 | 4i64 | 8i64 | 16i64 | 32i64 | 64i64 | 128i64
+        )
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -2711,15 +2648,7 @@ pub enum LanguageBits4 {
 }
 impl LanguageBits4 {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            1i64 => true,
-            2i64 => true,
-            4i64 => true,
-            8i64 => true,
-            16i64 => true,
-            32i64 => true,
-            _ => false,
-        }
+        matches!(value, 1i64 | 2i64 | 4i64 | 8i64 | 16i64 | 32i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -2890,115 +2819,114 @@ pub enum TimeZone {
 }
 impl TimeZone {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            9i64 => true,
-            10i64 => true,
-            11i64 => true,
-            12i64 => true,
-            13i64 => true,
-            14i64 => true,
-            15i64 => true,
-            16i64 => true,
-            17i64 => true,
-            18i64 => true,
-            19i64 => true,
-            20i64 => true,
-            21i64 => true,
-            22i64 => true,
-            23i64 => true,
-            24i64 => true,
-            25i64 => true,
-            26i64 => true,
-            27i64 => true,
-            28i64 => true,
-            29i64 => true,
-            30i64 => true,
-            31i64 => true,
-            32i64 => true,
-            33i64 => true,
-            34i64 => true,
-            35i64 => true,
-            36i64 => true,
-            37i64 => true,
-            38i64 => true,
-            39i64 => true,
-            40i64 => true,
-            41i64 => true,
-            42i64 => true,
-            43i64 => true,
-            44i64 => true,
-            45i64 => true,
-            46i64 => true,
-            47i64 => true,
-            48i64 => true,
-            49i64 => true,
-            50i64 => true,
-            51i64 => true,
-            52i64 => true,
-            53i64 => true,
-            54i64 => true,
-            55i64 => true,
-            56i64 => true,
-            57i64 => true,
-            58i64 => true,
-            59i64 => true,
-            60i64 => true,
-            61i64 => true,
-            62i64 => true,
-            63i64 => true,
-            64i64 => true,
-            65i64 => true,
-            66i64 => true,
-            67i64 => true,
-            68i64 => true,
-            69i64 => true,
-            70i64 => true,
-            71i64 => true,
-            72i64 => true,
-            73i64 => true,
-            74i64 => true,
-            75i64 => true,
-            76i64 => true,
-            77i64 => true,
-            78i64 => true,
-            79i64 => true,
-            80i64 => true,
-            81i64 => true,
-            82i64 => true,
-            83i64 => true,
-            84i64 => true,
-            85i64 => true,
-            86i64 => true,
-            87i64 => true,
-            88i64 => true,
-            89i64 => true,
-            90i64 => true,
-            91i64 => true,
-            92i64 => true,
-            93i64 => true,
-            94i64 => true,
-            95i64 => true,
-            96i64 => true,
-            97i64 => true,
-            98i64 => true,
-            99i64 => true,
-            100i64 => true,
-            101i64 => true,
-            102i64 => true,
-            103i64 => true,
-            253i64 => true,
-            254i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+                | 15i64
+                | 16i64
+                | 17i64
+                | 18i64
+                | 19i64
+                | 20i64
+                | 21i64
+                | 22i64
+                | 23i64
+                | 24i64
+                | 25i64
+                | 26i64
+                | 27i64
+                | 28i64
+                | 29i64
+                | 30i64
+                | 31i64
+                | 32i64
+                | 33i64
+                | 34i64
+                | 35i64
+                | 36i64
+                | 37i64
+                | 38i64
+                | 39i64
+                | 40i64
+                | 41i64
+                | 42i64
+                | 43i64
+                | 44i64
+                | 45i64
+                | 46i64
+                | 47i64
+                | 48i64
+                | 49i64
+                | 50i64
+                | 51i64
+                | 52i64
+                | 53i64
+                | 54i64
+                | 55i64
+                | 56i64
+                | 57i64
+                | 58i64
+                | 59i64
+                | 60i64
+                | 61i64
+                | 62i64
+                | 63i64
+                | 64i64
+                | 65i64
+                | 66i64
+                | 67i64
+                | 68i64
+                | 69i64
+                | 70i64
+                | 71i64
+                | 72i64
+                | 73i64
+                | 74i64
+                | 75i64
+                | 76i64
+                | 77i64
+                | 78i64
+                | 79i64
+                | 80i64
+                | 81i64
+                | 82i64
+                | 83i64
+                | 84i64
+                | 85i64
+                | 86i64
+                | 87i64
+                | 88i64
+                | 89i64
+                | 90i64
+                | 91i64
+                | 92i64
+                | 93i64
+                | 94i64
+                | 95i64
+                | 96i64
+                | 97i64
+                | 98i64
+                | 99i64
+                | 100i64
+                | 101i64
+                | 102i64
+                | 103i64
+                | 253i64
+                | 254i64
+        )
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -3363,12 +3291,7 @@ pub enum DisplayMeasure {
 }
 impl DisplayMeasure {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -3424,12 +3347,7 @@ pub enum DisplayHeart {
 }
 impl DisplayHeart {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -3484,11 +3402,7 @@ pub enum DisplayPower {
 }
 impl DisplayPower {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -3622,51 +3536,50 @@ pub enum DisplayPosition {
 }
 impl DisplayPosition {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            9i64 => true,
-            10i64 => true,
-            11i64 => true,
-            12i64 => true,
-            13i64 => true,
-            14i64 => true,
-            15i64 => true,
-            16i64 => true,
-            17i64 => true,
-            18i64 => true,
-            19i64 => true,
-            20i64 => true,
-            21i64 => true,
-            22i64 => true,
-            23i64 => true,
-            24i64 => true,
-            25i64 => true,
-            26i64 => true,
-            27i64 => true,
-            28i64 => true,
-            29i64 => true,
-            30i64 => true,
-            31i64 => true,
-            32i64 => true,
-            33i64 => true,
-            34i64 => true,
-            35i64 => true,
-            36i64 => true,
-            37i64 => true,
-            38i64 => true,
-            39i64 => true,
-            40i64 => true,
-            41i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+                | 15i64
+                | 16i64
+                | 17i64
+                | 18i64
+                | 19i64
+                | 20i64
+                | 21i64
+                | 22i64
+                | 23i64
+                | 24i64
+                | 25i64
+                | 26i64
+                | 27i64
+                | 28i64
+                | 29i64
+                | 30i64
+                | 31i64
+                | 32i64
+                | 33i64
+                | 34i64
+                | 35i64
+                | 36i64
+                | 37i64
+                | 38i64
+                | 39i64
+                | 40i64
+                | 41i64
+        )
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -3839,12 +3752,7 @@ pub enum Switch {
 }
 impl Switch {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -3968,78 +3876,77 @@ pub enum Sport {
 }
 impl Sport {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            9i64 => true,
-            10i64 => true,
-            11i64 => true,
-            12i64 => true,
-            13i64 => true,
-            14i64 => true,
-            15i64 => true,
-            16i64 => true,
-            17i64 => true,
-            18i64 => true,
-            19i64 => true,
-            20i64 => true,
-            21i64 => true,
-            22i64 => true,
-            23i64 => true,
-            24i64 => true,
-            25i64 => true,
-            26i64 => true,
-            27i64 => true,
-            28i64 => true,
-            29i64 => true,
-            30i64 => true,
-            31i64 => true,
-            32i64 => true,
-            33i64 => true,
-            34i64 => true,
-            35i64 => true,
-            36i64 => true,
-            37i64 => true,
-            38i64 => true,
-            39i64 => true,
-            40i64 => true,
-            41i64 => true,
-            42i64 => true,
-            43i64 => true,
-            44i64 => true,
-            45i64 => true,
-            46i64 => true,
-            47i64 => true,
-            48i64 => true,
-            49i64 => true,
-            53i64 => true,
-            62i64 => true,
-            64i64 => true,
-            65i64 => true,
-            66i64 => true,
-            67i64 => true,
-            69i64 => true,
-            71i64 => true,
-            72i64 => true,
-            73i64 => true,
-            74i64 => true,
-            75i64 => true,
-            76i64 => true,
-            77i64 => true,
-            80i64 => true,
-            82i64 => true,
-            83i64 => true,
-            84i64 => true,
-            254i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+                | 15i64
+                | 16i64
+                | 17i64
+                | 18i64
+                | 19i64
+                | 20i64
+                | 21i64
+                | 22i64
+                | 23i64
+                | 24i64
+                | 25i64
+                | 26i64
+                | 27i64
+                | 28i64
+                | 29i64
+                | 30i64
+                | 31i64
+                | 32i64
+                | 33i64
+                | 34i64
+                | 35i64
+                | 36i64
+                | 37i64
+                | 38i64
+                | 39i64
+                | 40i64
+                | 41i64
+                | 42i64
+                | 43i64
+                | 44i64
+                | 45i64
+                | 46i64
+                | 47i64
+                | 48i64
+                | 49i64
+                | 53i64
+                | 62i64
+                | 64i64
+                | 65i64
+                | 66i64
+                | 67i64
+                | 69i64
+                | 71i64
+                | 72i64
+                | 73i64
+                | 74i64
+                | 75i64
+                | 76i64
+                | 77i64
+                | 80i64
+                | 82i64
+                | 83i64
+                | 84i64
+                | 254i64
+        )
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -4300,17 +4207,10 @@ pub enum SportBits0 {
 }
 impl SportBits0 {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            1i64 => true,
-            2i64 => true,
-            4i64 => true,
-            8i64 => true,
-            16i64 => true,
-            32i64 => true,
-            64i64 => true,
-            128i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            1i64 | 2i64 | 4i64 | 8i64 | 16i64 | 32i64 | 64i64 | 128i64
+        )
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -4390,17 +4290,10 @@ pub enum SportBits1 {
 }
 impl SportBits1 {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            1i64 => true,
-            2i64 => true,
-            4i64 => true,
-            8i64 => true,
-            16i64 => true,
-            32i64 => true,
-            64i64 => true,
-            128i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            1i64 | 2i64 | 4i64 | 8i64 | 16i64 | 32i64 | 64i64 | 128i64
+        )
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -4480,17 +4373,10 @@ pub enum SportBits2 {
 }
 impl SportBits2 {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            1i64 => true,
-            2i64 => true,
-            4i64 => true,
-            8i64 => true,
-            16i64 => true,
-            32i64 => true,
-            64i64 => true,
-            128i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            1i64 | 2i64 | 4i64 | 8i64 | 16i64 | 32i64 | 64i64 | 128i64
+        )
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -4570,17 +4456,10 @@ pub enum SportBits3 {
 }
 impl SportBits3 {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            1i64 => true,
-            2i64 => true,
-            4i64 => true,
-            8i64 => true,
-            16i64 => true,
-            32i64 => true,
-            64i64 => true,
-            128i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            1i64 | 2i64 | 4i64 | 8i64 | 16i64 | 32i64 | 64i64 | 128i64
+        )
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -4660,17 +4539,10 @@ pub enum SportBits4 {
 }
 impl SportBits4 {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            1i64 => true,
-            2i64 => true,
-            4i64 => true,
-            8i64 => true,
-            16i64 => true,
-            32i64 => true,
-            64i64 => true,
-            128i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            1i64 | 2i64 | 4i64 | 8i64 | 16i64 | 32i64 | 64i64 | 128i64
+        )
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -4750,17 +4622,10 @@ pub enum SportBits5 {
 }
 impl SportBits5 {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            1i64 => true,
-            2i64 => true,
-            4i64 => true,
-            8i64 => true,
-            16i64 => true,
-            32i64 => true,
-            64i64 => true,
-            128i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            1i64 | 2i64 | 4i64 | 8i64 | 16i64 | 32i64 | 64i64 | 128i64
+        )
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -4833,10 +4698,7 @@ pub enum SportBits6 {
 }
 impl SportBits6 {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            1i64 => true,
-            _ => false,
-        }
+        matches!(value, 1i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -5049,98 +4911,97 @@ pub enum SubSport {
 }
 impl SubSport {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            9i64 => true,
-            10i64 => true,
-            11i64 => true,
-            12i64 => true,
-            13i64 => true,
-            14i64 => true,
-            15i64 => true,
-            16i64 => true,
-            17i64 => true,
-            18i64 => true,
-            19i64 => true,
-            20i64 => true,
-            21i64 => true,
-            22i64 => true,
-            23i64 => true,
-            24i64 => true,
-            25i64 => true,
-            26i64 => true,
-            27i64 => true,
-            28i64 => true,
-            29i64 => true,
-            30i64 => true,
-            31i64 => true,
-            32i64 => true,
-            33i64 => true,
-            34i64 => true,
-            35i64 => true,
-            36i64 => true,
-            37i64 => true,
-            38i64 => true,
-            39i64 => true,
-            40i64 => true,
-            41i64 => true,
-            42i64 => true,
-            43i64 => true,
-            44i64 => true,
-            45i64 => true,
-            46i64 => true,
-            47i64 => true,
-            48i64 => true,
-            49i64 => true,
-            50i64 => true,
-            51i64 => true,
-            52i64 => true,
-            53i64 => true,
-            54i64 => true,
-            55i64 => true,
-            56i64 => true,
-            57i64 => true,
-            58i64 => true,
-            59i64 => true,
-            62i64 => true,
-            65i64 => true,
-            67i64 => true,
-            68i64 => true,
-            69i64 => true,
-            70i64 => true,
-            73i64 => true,
-            74i64 => true,
-            75i64 => true,
-            84i64 => true,
-            85i64 => true,
-            86i64 => true,
-            87i64 => true,
-            88i64 => true,
-            94i64 => true,
-            95i64 => true,
-            96i64 => true,
-            97i64 => true,
-            110i64 => true,
-            111i64 => true,
-            112i64 => true,
-            113i64 => true,
-            114i64 => true,
-            115i64 => true,
-            116i64 => true,
-            117i64 => true,
-            118i64 => true,
-            119i64 => true,
-            254i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+                | 15i64
+                | 16i64
+                | 17i64
+                | 18i64
+                | 19i64
+                | 20i64
+                | 21i64
+                | 22i64
+                | 23i64
+                | 24i64
+                | 25i64
+                | 26i64
+                | 27i64
+                | 28i64
+                | 29i64
+                | 30i64
+                | 31i64
+                | 32i64
+                | 33i64
+                | 34i64
+                | 35i64
+                | 36i64
+                | 37i64
+                | 38i64
+                | 39i64
+                | 40i64
+                | 41i64
+                | 42i64
+                | 43i64
+                | 44i64
+                | 45i64
+                | 46i64
+                | 47i64
+                | 48i64
+                | 49i64
+                | 50i64
+                | 51i64
+                | 52i64
+                | 53i64
+                | 54i64
+                | 55i64
+                | 56i64
+                | 57i64
+                | 58i64
+                | 59i64
+                | 62i64
+                | 65i64
+                | 67i64
+                | 68i64
+                | 69i64
+                | 70i64
+                | 73i64
+                | 74i64
+                | 75i64
+                | 84i64
+                | 85i64
+                | 86i64
+                | 87i64
+                | 88i64
+                | 94i64
+                | 95i64
+                | 96i64
+                | 97i64
+                | 110i64
+                | 111i64
+                | 112i64
+                | 113i64
+                | 114i64
+                | 115i64
+                | 116i64
+                | 117i64
+                | 118i64
+                | 119i64
+                | 254i64
+        )
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -5460,18 +5321,10 @@ pub enum SportEvent {
 }
 impl SportEvent {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64 | 2i64 | 3i64 | 4i64 | 5i64 | 6i64 | 7i64 | 8i64
+        )
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -5544,11 +5397,7 @@ pub enum Activity {
 }
 impl Activity {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -5605,16 +5454,7 @@ pub enum Intensity {
 }
 impl Intensity {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64 | 3i64 | 4i64 | 5i64 | 6i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -5686,13 +5526,7 @@ pub enum SessionTrigger {
 }
 impl SessionTrigger {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64 | 3i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -5755,16 +5589,7 @@ pub enum AutolapTrigger {
 }
 impl AutolapTrigger {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64 | 3i64 | 4i64 | 5i64 | 6i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -5838,18 +5663,10 @@ pub enum LapTrigger {
 }
 impl LapTrigger {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64 | 2i64 | 3i64 | 4i64 | 5i64 | 6i64 | 7i64 | 8i64
+        )
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -5928,15 +5745,7 @@ pub enum TimeMode {
 }
 impl TimeMode {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64 | 3i64 | 4i64 | 5i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -6005,16 +5814,7 @@ pub enum BacklightMode {
 }
 impl BacklightMode {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64 | 3i64 | 4i64 | 5i64 | 6i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -6083,11 +5883,7 @@ pub enum DateMode {
 }
 impl DateMode {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -6140,10 +5936,7 @@ pub enum BacklightTimeout {
 }
 impl BacklightTimeout {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -6285,55 +6078,54 @@ pub enum Event {
 }
 impl Event {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            9i64 => true,
-            10i64 => true,
-            11i64 => true,
-            12i64 => true,
-            13i64 => true,
-            14i64 => true,
-            15i64 => true,
-            16i64 => true,
-            17i64 => true,
-            18i64 => true,
-            19i64 => true,
-            20i64 => true,
-            21i64 => true,
-            22i64 => true,
-            23i64 => true,
-            24i64 => true,
-            25i64 => true,
-            26i64 => true,
-            27i64 => true,
-            28i64 => true,
-            32i64 => true,
-            33i64 => true,
-            36i64 => true,
-            42i64 => true,
-            43i64 => true,
-            44i64 => true,
-            45i64 => true,
-            46i64 => true,
-            47i64 => true,
-            54i64 => true,
-            56i64 => true,
-            57i64 => true,
-            71i64 => true,
-            72i64 => true,
-            73i64 => true,
-            75i64 => true,
-            76i64 => true,
-            81i64 => true,
-            82i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+                | 15i64
+                | 16i64
+                | 17i64
+                | 18i64
+                | 19i64
+                | 20i64
+                | 21i64
+                | 22i64
+                | 23i64
+                | 24i64
+                | 25i64
+                | 26i64
+                | 27i64
+                | 28i64
+                | 32i64
+                | 33i64
+                | 36i64
+                | 42i64
+                | 43i64
+                | 44i64
+                | 45i64
+                | 46i64
+                | 47i64
+                | 54i64
+                | 56i64
+                | 57i64
+                | 71i64
+                | 72i64
+                | 73i64
+                | 75i64
+                | 76i64
+                | 81i64
+                | 82i64
+        )
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -6525,19 +6317,10 @@ pub enum EventType {
 }
 impl EventType {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            9i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64 | 2i64 | 3i64 | 4i64 | 5i64 | 6i64 | 7i64 | 8i64 | 9i64
+        )
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -6615,12 +6398,7 @@ pub enum TimerTrigger {
 }
 impl TimerTrigger {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -6679,13 +6457,7 @@ pub enum FitnessEquipmentState {
 }
 impl FitnessEquipmentState {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64 | 3i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -6745,13 +6517,7 @@ pub enum Tone {
 }
 impl Tone {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64 | 3i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -6811,13 +6577,7 @@ pub enum Autoscroll {
 }
 impl Autoscroll {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64 | 3i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -6877,12 +6637,7 @@ pub enum ActivityClass {
 }
 impl ActivityClass {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            100i64 => true,
-            127i64 => true,
-            128i64 => true,
-            _ => false,
-        }
+        matches!(value, 100i64 | 127i64 | 128i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -6939,13 +6694,7 @@ pub enum HrZoneCalc {
 }
 impl HrZoneCalc {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64 | 3i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -7003,11 +6752,7 @@ pub enum PwrZoneCalc {
 }
 impl PwrZoneCalc {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -7088,40 +6833,39 @@ pub enum WktStepDuration {
 }
 impl WktStepDuration {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            9i64 => true,
-            10i64 => true,
-            11i64 => true,
-            12i64 => true,
-            13i64 => true,
-            14i64 => true,
-            15i64 => true,
-            16i64 => true,
-            17i64 => true,
-            18i64 => true,
-            19i64 => true,
-            20i64 => true,
-            21i64 => true,
-            22i64 => true,
-            23i64 => true,
-            24i64 => true,
-            25i64 => true,
-            26i64 => true,
-            27i64 => true,
-            28i64 => true,
-            29i64 => true,
-            31i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+                | 15i64
+                | 16i64
+                | 17i64
+                | 18i64
+                | 19i64
+                | 20i64
+                | 21i64
+                | 22i64
+                | 23i64
+                | 24i64
+                | 25i64
+                | 26i64
+                | 27i64
+                | 28i64
+                | 29i64
+                | 31i64
+        )
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -7280,23 +7024,22 @@ pub enum WktStepTarget {
 }
 impl WktStepTarget {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            9i64 => true,
-            10i64 => true,
-            11i64 => true,
-            12i64 => true,
-            13i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+        )
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -7389,16 +7132,7 @@ pub enum Goal {
 }
 impl Goal {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64 | 3i64 | 4i64 | 5i64 | 6i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -7469,15 +7203,7 @@ pub enum GoalRecurrence {
 }
 impl GoalRecurrence {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64 | 3i64 | 4i64 | 5i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -7545,12 +7271,7 @@ pub enum GoalSource {
 }
 impl GoalSource {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -7605,11 +7326,7 @@ pub enum Schedule {
 }
 impl Schedule {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -7713,62 +7430,61 @@ pub enum CoursePoint {
 }
 impl CoursePoint {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            9i64 => true,
-            10i64 => true,
-            11i64 => true,
-            12i64 => true,
-            13i64 => true,
-            14i64 => true,
-            15i64 => true,
-            16i64 => true,
-            17i64 => true,
-            18i64 => true,
-            19i64 => true,
-            20i64 => true,
-            21i64 => true,
-            22i64 => true,
-            23i64 => true,
-            24i64 => true,
-            25i64 => true,
-            27i64 => true,
-            28i64 => true,
-            29i64 => true,
-            30i64 => true,
-            31i64 => true,
-            32i64 => true,
-            33i64 => true,
-            34i64 => true,
-            35i64 => true,
-            36i64 => true,
-            37i64 => true,
-            38i64 => true,
-            39i64 => true,
-            40i64 => true,
-            41i64 => true,
-            42i64 => true,
-            43i64 => true,
-            44i64 => true,
-            45i64 => true,
-            46i64 => true,
-            47i64 => true,
-            48i64 => true,
-            49i64 => true,
-            50i64 => true,
-            51i64 => true,
-            52i64 => true,
-            53i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+                | 15i64
+                | 16i64
+                | 17i64
+                | 18i64
+                | 19i64
+                | 20i64
+                | 21i64
+                | 22i64
+                | 23i64
+                | 24i64
+                | 25i64
+                | 27i64
+                | 28i64
+                | 29i64
+                | 30i64
+                | 31i64
+                | 32i64
+                | 33i64
+                | 34i64
+                | 35i64
+                | 36i64
+                | 37i64
+                | 38i64
+                | 39i64
+                | 40i64
+                | 41i64
+                | 42i64
+                | 43i64
+                | 44i64
+                | 45i64
+                | 46i64
+                | 47i64
+                | 48i64
+                | 49i64
+                | 50i64
+                | 51i64
+                | 52i64
+                | 53i64
+        )
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -8204,232 +7920,231 @@ pub enum Manufacturer {
 }
 impl Manufacturer {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            9i64 => true,
-            10i64 => true,
-            11i64 => true,
-            12i64 => true,
-            13i64 => true,
-            14i64 => true,
-            15i64 => true,
-            16i64 => true,
-            17i64 => true,
-            18i64 => true,
-            19i64 => true,
-            20i64 => true,
-            21i64 => true,
-            22i64 => true,
-            23i64 => true,
-            24i64 => true,
-            25i64 => true,
-            26i64 => true,
-            27i64 => true,
-            28i64 => true,
-            29i64 => true,
-            30i64 => true,
-            31i64 => true,
-            32i64 => true,
-            33i64 => true,
-            34i64 => true,
-            35i64 => true,
-            36i64 => true,
-            37i64 => true,
-            38i64 => true,
-            39i64 => true,
-            40i64 => true,
-            41i64 => true,
-            42i64 => true,
-            43i64 => true,
-            44i64 => true,
-            45i64 => true,
-            46i64 => true,
-            47i64 => true,
-            48i64 => true,
-            49i64 => true,
-            50i64 => true,
-            51i64 => true,
-            52i64 => true,
-            53i64 => true,
-            54i64 => true,
-            55i64 => true,
-            56i64 => true,
-            57i64 => true,
-            58i64 => true,
-            59i64 => true,
-            60i64 => true,
-            61i64 => true,
-            62i64 => true,
-            63i64 => true,
-            64i64 => true,
-            65i64 => true,
-            66i64 => true,
-            67i64 => true,
-            68i64 => true,
-            69i64 => true,
-            70i64 => true,
-            71i64 => true,
-            72i64 => true,
-            73i64 => true,
-            76i64 => true,
-            77i64 => true,
-            78i64 => true,
-            79i64 => true,
-            80i64 => true,
-            81i64 => true,
-            82i64 => true,
-            83i64 => true,
-            84i64 => true,
-            85i64 => true,
-            86i64 => true,
-            87i64 => true,
-            88i64 => true,
-            89i64 => true,
-            90i64 => true,
-            91i64 => true,
-            92i64 => true,
-            93i64 => true,
-            94i64 => true,
-            95i64 => true,
-            96i64 => true,
-            97i64 => true,
-            98i64 => true,
-            99i64 => true,
-            100i64 => true,
-            101i64 => true,
-            102i64 => true,
-            103i64 => true,
-            104i64 => true,
-            105i64 => true,
-            106i64 => true,
-            107i64 => true,
-            108i64 => true,
-            109i64 => true,
-            110i64 => true,
-            111i64 => true,
-            112i64 => true,
-            113i64 => true,
-            114i64 => true,
-            115i64 => true,
-            116i64 => true,
-            117i64 => true,
-            118i64 => true,
-            119i64 => true,
-            120i64 => true,
-            121i64 => true,
-            122i64 => true,
-            123i64 => true,
-            124i64 => true,
-            125i64 => true,
-            126i64 => true,
-            127i64 => true,
-            128i64 => true,
-            129i64 => true,
-            130i64 => true,
-            131i64 => true,
-            132i64 => true,
-            133i64 => true,
-            134i64 => true,
-            135i64 => true,
-            136i64 => true,
-            137i64 => true,
-            138i64 => true,
-            139i64 => true,
-            140i64 => true,
-            141i64 => true,
-            142i64 => true,
-            143i64 => true,
-            144i64 => true,
-            145i64 => true,
-            146i64 => true,
-            147i64 => true,
-            148i64 => true,
-            149i64 => true,
-            150i64 => true,
-            255i64 => true,
-            257i64 => true,
-            258i64 => true,
-            259i64 => true,
-            260i64 => true,
-            261i64 => true,
-            262i64 => true,
-            263i64 => true,
-            264i64 => true,
-            265i64 => true,
-            266i64 => true,
-            267i64 => true,
-            268i64 => true,
-            269i64 => true,
-            270i64 => true,
-            271i64 => true,
-            272i64 => true,
-            273i64 => true,
-            274i64 => true,
-            275i64 => true,
-            276i64 => true,
-            277i64 => true,
-            278i64 => true,
-            279i64 => true,
-            280i64 => true,
-            281i64 => true,
-            282i64 => true,
-            283i64 => true,
-            284i64 => true,
-            285i64 => true,
-            286i64 => true,
-            287i64 => true,
-            288i64 => true,
-            289i64 => true,
-            290i64 => true,
-            291i64 => true,
-            292i64 => true,
-            293i64 => true,
-            294i64 => true,
-            295i64 => true,
-            296i64 => true,
-            297i64 => true,
-            298i64 => true,
-            299i64 => true,
-            300i64 => true,
-            301i64 => true,
-            302i64 => true,
-            303i64 => true,
-            304i64 => true,
-            305i64 => true,
-            306i64 => true,
-            307i64 => true,
-            308i64 => true,
-            309i64 => true,
-            310i64 => true,
-            311i64 => true,
-            312i64 => true,
-            313i64 => true,
-            314i64 => true,
-            315i64 => true,
-            316i64 => true,
-            317i64 => true,
-            318i64 => true,
-            319i64 => true,
-            320i64 => true,
-            321i64 => true,
-            322i64 => true,
-            323i64 => true,
-            324i64 => true,
-            325i64 => true,
-            326i64 => true,
-            327i64 => true,
-            328i64 => true,
-            329i64 => true,
-            5759i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            1i64 | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+                | 15i64
+                | 16i64
+                | 17i64
+                | 18i64
+                | 19i64
+                | 20i64
+                | 21i64
+                | 22i64
+                | 23i64
+                | 24i64
+                | 25i64
+                | 26i64
+                | 27i64
+                | 28i64
+                | 29i64
+                | 30i64
+                | 31i64
+                | 32i64
+                | 33i64
+                | 34i64
+                | 35i64
+                | 36i64
+                | 37i64
+                | 38i64
+                | 39i64
+                | 40i64
+                | 41i64
+                | 42i64
+                | 43i64
+                | 44i64
+                | 45i64
+                | 46i64
+                | 47i64
+                | 48i64
+                | 49i64
+                | 50i64
+                | 51i64
+                | 52i64
+                | 53i64
+                | 54i64
+                | 55i64
+                | 56i64
+                | 57i64
+                | 58i64
+                | 59i64
+                | 60i64
+                | 61i64
+                | 62i64
+                | 63i64
+                | 64i64
+                | 65i64
+                | 66i64
+                | 67i64
+                | 68i64
+                | 69i64
+                | 70i64
+                | 71i64
+                | 72i64
+                | 73i64
+                | 76i64
+                | 77i64
+                | 78i64
+                | 79i64
+                | 80i64
+                | 81i64
+                | 82i64
+                | 83i64
+                | 84i64
+                | 85i64
+                | 86i64
+                | 87i64
+                | 88i64
+                | 89i64
+                | 90i64
+                | 91i64
+                | 92i64
+                | 93i64
+                | 94i64
+                | 95i64
+                | 96i64
+                | 97i64
+                | 98i64
+                | 99i64
+                | 100i64
+                | 101i64
+                | 102i64
+                | 103i64
+                | 104i64
+                | 105i64
+                | 106i64
+                | 107i64
+                | 108i64
+                | 109i64
+                | 110i64
+                | 111i64
+                | 112i64
+                | 113i64
+                | 114i64
+                | 115i64
+                | 116i64
+                | 117i64
+                | 118i64
+                | 119i64
+                | 120i64
+                | 121i64
+                | 122i64
+                | 123i64
+                | 124i64
+                | 125i64
+                | 126i64
+                | 127i64
+                | 128i64
+                | 129i64
+                | 130i64
+                | 131i64
+                | 132i64
+                | 133i64
+                | 134i64
+                | 135i64
+                | 136i64
+                | 137i64
+                | 138i64
+                | 139i64
+                | 140i64
+                | 141i64
+                | 142i64
+                | 143i64
+                | 144i64
+                | 145i64
+                | 146i64
+                | 147i64
+                | 148i64
+                | 149i64
+                | 150i64
+                | 255i64
+                | 257i64
+                | 258i64
+                | 259i64
+                | 260i64
+                | 261i64
+                | 262i64
+                | 263i64
+                | 264i64
+                | 265i64
+                | 266i64
+                | 267i64
+                | 268i64
+                | 269i64
+                | 270i64
+                | 271i64
+                | 272i64
+                | 273i64
+                | 274i64
+                | 275i64
+                | 276i64
+                | 277i64
+                | 278i64
+                | 279i64
+                | 280i64
+                | 281i64
+                | 282i64
+                | 283i64
+                | 284i64
+                | 285i64
+                | 286i64
+                | 287i64
+                | 288i64
+                | 289i64
+                | 290i64
+                | 291i64
+                | 292i64
+                | 293i64
+                | 294i64
+                | 295i64
+                | 296i64
+                | 297i64
+                | 298i64
+                | 299i64
+                | 300i64
+                | 301i64
+                | 302i64
+                | 303i64
+                | 304i64
+                | 305i64
+                | 306i64
+                | 307i64
+                | 308i64
+                | 309i64
+                | 310i64
+                | 311i64
+                | 312i64
+                | 313i64
+                | 314i64
+                | 315i64
+                | 316i64
+                | 317i64
+                | 318i64
+                | 319i64
+                | 320i64
+                | 321i64
+                | 322i64
+                | 323i64
+                | 324i64
+                | 325i64
+                | 326i64
+                | 327i64
+                | 328i64
+                | 329i64
+                | 5759i64
+        )
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -9618,442 +9333,441 @@ pub enum GarminProduct {
 }
 impl GarminProduct {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            9i64 => true,
-            10i64 => true,
-            11i64 => true,
-            12i64 => true,
-            13i64 => true,
-            14i64 => true,
-            15i64 => true,
-            16i64 => true,
-            22i64 => true,
-            255i64 => true,
-            473i64 => true,
-            474i64 => true,
-            475i64 => true,
-            494i64 => true,
-            717i64 => true,
-            782i64 => true,
-            987i64 => true,
-            988i64 => true,
-            1011i64 => true,
-            1018i64 => true,
-            1036i64 => true,
-            1124i64 => true,
-            1169i64 => true,
-            1199i64 => true,
-            1213i64 => true,
-            1253i64 => true,
-            1274i64 => true,
-            1325i64 => true,
-            1328i64 => true,
-            1333i64 => true,
-            1334i64 => true,
-            1341i64 => true,
-            1345i64 => true,
-            1360i64 => true,
-            1380i64 => true,
-            1381i64 => true,
-            1386i64 => true,
-            1387i64 => true,
-            1405i64 => true,
-            1410i64 => true,
-            1422i64 => true,
-            1436i64 => true,
-            1446i64 => true,
-            1461i64 => true,
-            1482i64 => true,
-            1497i64 => true,
-            1499i64 => true,
-            1537i64 => true,
-            1551i64 => true,
-            1555i64 => true,
-            1561i64 => true,
-            1567i64 => true,
-            1570i64 => true,
-            1600i64 => true,
-            1623i64 => true,
-            1632i64 => true,
-            1664i64 => true,
-            1688i64 => true,
-            1721i64 => true,
-            1735i64 => true,
-            1736i64 => true,
-            1742i64 => true,
-            1743i64 => true,
-            1752i64 => true,
-            1765i64 => true,
-            1821i64 => true,
-            1822i64 => true,
-            1823i64 => true,
-            1836i64 => true,
-            1837i64 => true,
-            1853i64 => true,
-            1885i64 => true,
-            1903i64 => true,
-            1907i64 => true,
-            1918i64 => true,
-            1928i64 => true,
-            1929i64 => true,
-            1930i64 => true,
-            1931i64 => true,
-            1936i64 => true,
-            1956i64 => true,
-            1967i64 => true,
-            1988i64 => true,
-            2050i64 => true,
-            2052i64 => true,
-            2053i64 => true,
-            2061i64 => true,
-            2067i64 => true,
-            2070i64 => true,
-            2072i64 => true,
-            2073i64 => true,
-            2079i64 => true,
-            2100i64 => true,
-            2130i64 => true,
-            2131i64 => true,
-            2132i64 => true,
-            2134i64 => true,
-            2135i64 => true,
-            2140i64 => true,
-            2147i64 => true,
-            2148i64 => true,
-            2150i64 => true,
-            2153i64 => true,
-            2156i64 => true,
-            2157i64 => true,
-            2158i64 => true,
-            2160i64 => true,
-            2161i64 => true,
-            2162i64 => true,
-            2172i64 => true,
-            2173i64 => true,
-            2174i64 => true,
-            2175i64 => true,
-            2187i64 => true,
-            2188i64 => true,
-            2189i64 => true,
-            2192i64 => true,
-            2193i64 => true,
-            2204i64 => true,
-            2219i64 => true,
-            2225i64 => true,
-            2226i64 => true,
-            2238i64 => true,
-            2260i64 => true,
-            2261i64 => true,
-            2262i64 => true,
-            2266i64 => true,
-            2271i64 => true,
-            2274i64 => true,
-            2276i64 => true,
-            2288i64 => true,
-            2289i64 => true,
-            2290i64 => true,
-            2292i64 => true,
-            2293i64 => true,
-            2294i64 => true,
-            2310i64 => true,
-            2311i64 => true,
-            2313i64 => true,
-            2327i64 => true,
-            2332i64 => true,
-            2337i64 => true,
-            2343i64 => true,
-            2347i64 => true,
-            2348i64 => true,
-            2361i64 => true,
-            2362i64 => true,
-            2368i64 => true,
-            2379i64 => true,
-            2396i64 => true,
-            2397i64 => true,
-            2398i64 => true,
-            2406i64 => true,
-            2407i64 => true,
-            2408i64 => true,
-            2413i64 => true,
-            2417i64 => true,
-            2429i64 => true,
-            2431i64 => true,
-            2432i64 => true,
-            2441i64 => true,
-            2444i64 => true,
-            2457i64 => true,
-            2473i64 => true,
-            2474i64 => true,
-            2475i64 => true,
-            2476i64 => true,
-            2477i64 => true,
-            2496i64 => true,
-            2497i64 => true,
-            2503i64 => true,
-            2512i64 => true,
-            2530i64 => true,
-            2531i64 => true,
-            2533i64 => true,
-            2534i64 => true,
-            2544i64 => true,
-            2547i64 => true,
-            2567i64 => true,
-            2593i64 => true,
-            2599i64 => true,
-            2600i64 => true,
-            2604i64 => true,
-            2606i64 => true,
-            2622i64 => true,
-            2623i64 => true,
-            2628i64 => true,
-            2629i64 => true,
-            2630i64 => true,
-            2650i64 => true,
-            2656i64 => true,
-            2667i64 => true,
-            2668i64 => true,
-            2675i64 => true,
-            2687i64 => true,
-            2691i64 => true,
-            2697i64 => true,
-            2700i64 => true,
-            2713i64 => true,
-            2727i64 => true,
-            2733i64 => true,
-            2769i64 => true,
-            2772i64 => true,
-            2787i64 => true,
-            2796i64 => true,
-            2797i64 => true,
-            2798i64 => true,
-            2806i64 => true,
-            2814i64 => true,
-            2819i64 => true,
-            2831i64 => true,
-            2832i64 => true,
-            2833i64 => true,
-            2859i64 => true,
-            2878i64 => true,
-            2886i64 => true,
-            2888i64 => true,
-            2891i64 => true,
-            2900i64 => true,
-            2909i64 => true,
-            2924i64 => true,
-            2927i64 => true,
-            2945i64 => true,
-            2962i64 => true,
-            2977i64 => true,
-            2988i64 => true,
-            3003i64 => true,
-            3004i64 => true,
-            3011i64 => true,
-            3028i64 => true,
-            3049i64 => true,
-            3066i64 => true,
-            3085i64 => true,
-            3092i64 => true,
-            3095i64 => true,
-            3110i64 => true,
-            3111i64 => true,
-            3112i64 => true,
-            3113i64 => true,
-            3121i64 => true,
-            3122i64 => true,
-            3126i64 => true,
-            3134i64 => true,
-            3135i64 => true,
-            3142i64 => true,
-            3143i64 => true,
-            3144i64 => true,
-            3145i64 => true,
-            3163i64 => true,
-            3192i64 => true,
-            3193i64 => true,
-            3218i64 => true,
-            3224i64 => true,
-            3225i64 => true,
-            3226i64 => true,
-            3246i64 => true,
-            3247i64 => true,
-            3248i64 => true,
-            3249i64 => true,
-            3250i64 => true,
-            3251i64 => true,
-            3258i64 => true,
-            3284i64 => true,
-            3287i64 => true,
-            3288i64 => true,
-            3289i64 => true,
-            3290i64 => true,
-            3291i64 => true,
-            3299i64 => true,
-            3300i64 => true,
-            3308i64 => true,
-            3314i64 => true,
-            3321i64 => true,
-            3349i64 => true,
-            3350i64 => true,
-            3378i64 => true,
-            3387i64 => true,
-            3388i64 => true,
-            3389i64 => true,
-            3405i64 => true,
-            3420i64 => true,
-            3421i64 => true,
-            3422i64 => true,
-            3441i64 => true,
-            3446i64 => true,
-            3448i64 => true,
-            3449i64 => true,
-            3450i64 => true,
-            3451i64 => true,
-            3466i64 => true,
-            3469i64 => true,
-            3473i64 => true,
-            3498i64 => true,
-            3499i64 => true,
-            3500i64 => true,
-            3501i64 => true,
-            3512i64 => true,
-            3513i64 => true,
-            3514i64 => true,
-            3515i64 => true,
-            3516i64 => true,
-            3535i64 => true,
-            3536i64 => true,
-            3537i64 => true,
-            3538i64 => true,
-            3542i64 => true,
-            3558i64 => true,
-            3570i64 => true,
-            3578i64 => true,
-            3589i64 => true,
-            3600i64 => true,
-            3615i64 => true,
-            3624i64 => true,
-            3638i64 => true,
-            3639i64 => true,
-            3648i64 => true,
-            3652i64 => true,
-            3702i64 => true,
-            3703i64 => true,
-            3704i64 => true,
-            3737i64 => true,
-            3739i64 => true,
-            3740i64 => true,
-            3794i64 => true,
-            3808i64 => true,
-            3809i64 => true,
-            3812i64 => true,
-            3813i64 => true,
-            3823i64 => true,
-            3837i64 => true,
-            3843i64 => true,
-            3850i64 => true,
-            3851i64 => true,
-            3865i64 => true,
-            3869i64 => true,
-            3872i64 => true,
-            3888i64 => true,
-            3905i64 => true,
-            3906i64 => true,
-            3907i64 => true,
-            3908i64 => true,
-            3909i64 => true,
-            3910i64 => true,
-            3930i64 => true,
-            3934i64 => true,
-            3943i64 => true,
-            3944i64 => true,
-            3949i64 => true,
-            3950i64 => true,
-            3978i64 => true,
-            3982i64 => true,
-            3983i64 => true,
-            3986i64 => true,
-            3990i64 => true,
-            3991i64 => true,
-            3992i64 => true,
-            3993i64 => true,
-            4002i64 => true,
-            4005i64 => true,
-            4017i64 => true,
-            4024i64 => true,
-            4033i64 => true,
-            4061i64 => true,
-            4062i64 => true,
-            4063i64 => true,
-            4071i64 => true,
-            4105i64 => true,
-            4115i64 => true,
-            4116i64 => true,
-            4124i64 => true,
-            4125i64 => true,
-            4130i64 => true,
-            4132i64 => true,
-            4135i64 => true,
-            4155i64 => true,
-            4169i64 => true,
-            4222i64 => true,
-            4223i64 => true,
-            4233i64 => true,
-            4257i64 => true,
-            4258i64 => true,
-            4260i64 => true,
-            4261i64 => true,
-            4265i64 => true,
-            4266i64 => true,
-            4267i64 => true,
-            4268i64 => true,
-            4269i64 => true,
-            4270i64 => true,
-            4271i64 => true,
-            4272i64 => true,
-            4273i64 => true,
-            4274i64 => true,
-            4275i64 => true,
-            4276i64 => true,
-            4305i64 => true,
-            4312i64 => true,
-            4313i64 => true,
-            4314i64 => true,
-            4315i64 => true,
-            4341i64 => true,
-            4374i64 => true,
-            4375i64 => true,
-            4376i64 => true,
-            4380i64 => true,
-            4394i64 => true,
-            4426i64 => true,
-            4432i64 => true,
-            4433i64 => true,
-            4442i64 => true,
-            4446i64 => true,
-            4472i64 => true,
-            4556i64 => true,
-            10007i64 => true,
-            10014i64 => true,
-            20119i64 => true,
-            20533i64 => true,
-            20534i64 => true,
-            20565i64 => true,
-            30045i64 => true,
-            30046i64 => true,
-            30047i64 => true,
-            65531i64 => true,
-            65532i64 => true,
-            65534i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            1i64 | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+                | 15i64
+                | 16i64
+                | 22i64
+                | 255i64
+                | 473i64
+                | 474i64
+                | 475i64
+                | 494i64
+                | 717i64
+                | 782i64
+                | 987i64
+                | 988i64
+                | 1011i64
+                | 1018i64
+                | 1036i64
+                | 1124i64
+                | 1169i64
+                | 1199i64
+                | 1213i64
+                | 1253i64
+                | 1274i64
+                | 1325i64
+                | 1328i64
+                | 1333i64
+                | 1334i64
+                | 1341i64
+                | 1345i64
+                | 1360i64
+                | 1380i64
+                | 1381i64
+                | 1386i64
+                | 1387i64
+                | 1405i64
+                | 1410i64
+                | 1422i64
+                | 1436i64
+                | 1446i64
+                | 1461i64
+                | 1482i64
+                | 1497i64
+                | 1499i64
+                | 1537i64
+                | 1551i64
+                | 1555i64
+                | 1561i64
+                | 1567i64
+                | 1570i64
+                | 1600i64
+                | 1623i64
+                | 1632i64
+                | 1664i64
+                | 1688i64
+                | 1721i64
+                | 1735i64
+                | 1736i64
+                | 1742i64
+                | 1743i64
+                | 1752i64
+                | 1765i64
+                | 1821i64
+                | 1822i64
+                | 1823i64
+                | 1836i64
+                | 1837i64
+                | 1853i64
+                | 1885i64
+                | 1903i64
+                | 1907i64
+                | 1918i64
+                | 1928i64
+                | 1929i64
+                | 1930i64
+                | 1931i64
+                | 1936i64
+                | 1956i64
+                | 1967i64
+                | 1988i64
+                | 2050i64
+                | 2052i64
+                | 2053i64
+                | 2061i64
+                | 2067i64
+                | 2070i64
+                | 2072i64
+                | 2073i64
+                | 2079i64
+                | 2100i64
+                | 2130i64
+                | 2131i64
+                | 2132i64
+                | 2134i64
+                | 2135i64
+                | 2140i64
+                | 2147i64
+                | 2148i64
+                | 2150i64
+                | 2153i64
+                | 2156i64
+                | 2157i64
+                | 2158i64
+                | 2160i64
+                | 2161i64
+                | 2162i64
+                | 2172i64
+                | 2173i64
+                | 2174i64
+                | 2175i64
+                | 2187i64
+                | 2188i64
+                | 2189i64
+                | 2192i64
+                | 2193i64
+                | 2204i64
+                | 2219i64
+                | 2225i64
+                | 2226i64
+                | 2238i64
+                | 2260i64
+                | 2261i64
+                | 2262i64
+                | 2266i64
+                | 2271i64
+                | 2274i64
+                | 2276i64
+                | 2288i64
+                | 2289i64
+                | 2290i64
+                | 2292i64
+                | 2293i64
+                | 2294i64
+                | 2310i64
+                | 2311i64
+                | 2313i64
+                | 2327i64
+                | 2332i64
+                | 2337i64
+                | 2343i64
+                | 2347i64
+                | 2348i64
+                | 2361i64
+                | 2362i64
+                | 2368i64
+                | 2379i64
+                | 2396i64
+                | 2397i64
+                | 2398i64
+                | 2406i64
+                | 2407i64
+                | 2408i64
+                | 2413i64
+                | 2417i64
+                | 2429i64
+                | 2431i64
+                | 2432i64
+                | 2441i64
+                | 2444i64
+                | 2457i64
+                | 2473i64
+                | 2474i64
+                | 2475i64
+                | 2476i64
+                | 2477i64
+                | 2496i64
+                | 2497i64
+                | 2503i64
+                | 2512i64
+                | 2530i64
+                | 2531i64
+                | 2533i64
+                | 2534i64
+                | 2544i64
+                | 2547i64
+                | 2567i64
+                | 2593i64
+                | 2599i64
+                | 2600i64
+                | 2604i64
+                | 2606i64
+                | 2622i64
+                | 2623i64
+                | 2628i64
+                | 2629i64
+                | 2630i64
+                | 2650i64
+                | 2656i64
+                | 2667i64
+                | 2668i64
+                | 2675i64
+                | 2687i64
+                | 2691i64
+                | 2697i64
+                | 2700i64
+                | 2713i64
+                | 2727i64
+                | 2733i64
+                | 2769i64
+                | 2772i64
+                | 2787i64
+                | 2796i64
+                | 2797i64
+                | 2798i64
+                | 2806i64
+                | 2814i64
+                | 2819i64
+                | 2831i64
+                | 2832i64
+                | 2833i64
+                | 2859i64
+                | 2878i64
+                | 2886i64
+                | 2888i64
+                | 2891i64
+                | 2900i64
+                | 2909i64
+                | 2924i64
+                | 2927i64
+                | 2945i64
+                | 2962i64
+                | 2977i64
+                | 2988i64
+                | 3003i64
+                | 3004i64
+                | 3011i64
+                | 3028i64
+                | 3049i64
+                | 3066i64
+                | 3085i64
+                | 3092i64
+                | 3095i64
+                | 3110i64
+                | 3111i64
+                | 3112i64
+                | 3113i64
+                | 3121i64
+                | 3122i64
+                | 3126i64
+                | 3134i64
+                | 3135i64
+                | 3142i64
+                | 3143i64
+                | 3144i64
+                | 3145i64
+                | 3163i64
+                | 3192i64
+                | 3193i64
+                | 3218i64
+                | 3224i64
+                | 3225i64
+                | 3226i64
+                | 3246i64
+                | 3247i64
+                | 3248i64
+                | 3249i64
+                | 3250i64
+                | 3251i64
+                | 3258i64
+                | 3284i64
+                | 3287i64
+                | 3288i64
+                | 3289i64
+                | 3290i64
+                | 3291i64
+                | 3299i64
+                | 3300i64
+                | 3308i64
+                | 3314i64
+                | 3321i64
+                | 3349i64
+                | 3350i64
+                | 3378i64
+                | 3387i64
+                | 3388i64
+                | 3389i64
+                | 3405i64
+                | 3420i64
+                | 3421i64
+                | 3422i64
+                | 3441i64
+                | 3446i64
+                | 3448i64
+                | 3449i64
+                | 3450i64
+                | 3451i64
+                | 3466i64
+                | 3469i64
+                | 3473i64
+                | 3498i64
+                | 3499i64
+                | 3500i64
+                | 3501i64
+                | 3512i64
+                | 3513i64
+                | 3514i64
+                | 3515i64
+                | 3516i64
+                | 3535i64
+                | 3536i64
+                | 3537i64
+                | 3538i64
+                | 3542i64
+                | 3558i64
+                | 3570i64
+                | 3578i64
+                | 3589i64
+                | 3600i64
+                | 3615i64
+                | 3624i64
+                | 3638i64
+                | 3639i64
+                | 3648i64
+                | 3652i64
+                | 3702i64
+                | 3703i64
+                | 3704i64
+                | 3737i64
+                | 3739i64
+                | 3740i64
+                | 3794i64
+                | 3808i64
+                | 3809i64
+                | 3812i64
+                | 3813i64
+                | 3823i64
+                | 3837i64
+                | 3843i64
+                | 3850i64
+                | 3851i64
+                | 3865i64
+                | 3869i64
+                | 3872i64
+                | 3888i64
+                | 3905i64
+                | 3906i64
+                | 3907i64
+                | 3908i64
+                | 3909i64
+                | 3910i64
+                | 3930i64
+                | 3934i64
+                | 3943i64
+                | 3944i64
+                | 3949i64
+                | 3950i64
+                | 3978i64
+                | 3982i64
+                | 3983i64
+                | 3986i64
+                | 3990i64
+                | 3991i64
+                | 3992i64
+                | 3993i64
+                | 4002i64
+                | 4005i64
+                | 4017i64
+                | 4024i64
+                | 4033i64
+                | 4061i64
+                | 4062i64
+                | 4063i64
+                | 4071i64
+                | 4105i64
+                | 4115i64
+                | 4116i64
+                | 4124i64
+                | 4125i64
+                | 4130i64
+                | 4132i64
+                | 4135i64
+                | 4155i64
+                | 4169i64
+                | 4222i64
+                | 4223i64
+                | 4233i64
+                | 4257i64
+                | 4258i64
+                | 4260i64
+                | 4261i64
+                | 4265i64
+                | 4266i64
+                | 4267i64
+                | 4268i64
+                | 4269i64
+                | 4270i64
+                | 4271i64
+                | 4272i64
+                | 4273i64
+                | 4274i64
+                | 4275i64
+                | 4276i64
+                | 4305i64
+                | 4312i64
+                | 4313i64
+                | 4314i64
+                | 4315i64
+                | 4341i64
+                | 4374i64
+                | 4375i64
+                | 4376i64
+                | 4380i64
+                | 4394i64
+                | 4426i64
+                | 4432i64
+                | 4433i64
+                | 4442i64
+                | 4446i64
+                | 4472i64
+                | 4556i64
+                | 10007i64
+                | 10014i64
+                | 20119i64
+                | 20533i64
+                | 20534i64
+                | 20565i64
+                | 30045i64
+                | 30046i64
+                | 30047i64
+                | 65531i64
+                | 65532i64
+                | 65534i64
+        )
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -11432,34 +11146,33 @@ pub enum AntplusDeviceType {
 }
 impl AntplusDeviceType {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            1i64 => true,
-            11i64 => true,
-            12i64 => true,
-            15i64 => true,
-            16i64 => true,
-            17i64 => true,
-            18i64 => true,
-            19i64 => true,
-            20i64 => true,
-            25i64 => true,
-            26i64 => true,
-            27i64 => true,
-            31i64 => true,
-            34i64 => true,
-            35i64 => true,
-            36i64 => true,
-            38i64 => true,
-            40i64 => true,
-            46i64 => true,
-            119i64 => true,
-            120i64 => true,
-            121i64 => true,
-            122i64 => true,
-            123i64 => true,
-            124i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            1i64 | 11i64
+                | 12i64
+                | 15i64
+                | 16i64
+                | 17i64
+                | 18i64
+                | 19i64
+                | 20i64
+                | 25i64
+                | 26i64
+                | 27i64
+                | 31i64
+                | 34i64
+                | 35i64
+                | 36i64
+                | 38i64
+                | 40i64
+                | 46i64
+                | 119i64
+                | 120i64
+                | 121i64
+                | 122i64
+                | 123i64
+                | 124i64
+        )
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -11585,13 +11298,7 @@ pub enum AntNetwork {
 }
 impl AntNetwork {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64 | 3i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -11669,23 +11376,22 @@ pub enum WorkoutCapabilities {
 }
 impl WorkoutCapabilities {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            1i64 => true,
-            2i64 => true,
-            4i64 => true,
-            8i64 => true,
-            16i64 => true,
-            32i64 => true,
-            128i64 => true,
-            256i64 => true,
-            512i64 => true,
-            1024i64 => true,
-            2048i64 => true,
-            4096i64 => true,
-            8192i64 => true,
-            16384i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            1i64 | 2i64
+                | 4i64
+                | 8i64
+                | 16i64
+                | 32i64
+                | 128i64
+                | 256i64
+                | 512i64
+                | 1024i64
+                | 2048i64
+                | 4096i64
+                | 8192i64
+                | 16384i64
+        )
     }
     pub fn as_u32(self) -> u32 {
         match self {
@@ -11781,16 +11487,7 @@ pub enum BatteryStatus {
 }
 impl BatteryStatus {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            _ => false,
-        }
+        matches!(value, 1i64 | 2i64 | 3i64 | 4i64 | 5i64 | 6i64 | 7i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -11860,11 +11557,7 @@ pub enum HrType {
 }
 impl HrType {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -11927,21 +11620,20 @@ pub enum CourseCapabilities {
 }
 impl CourseCapabilities {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            1i64 => true,
-            2i64 => true,
-            4i64 => true,
-            8i64 => true,
-            16i64 => true,
-            32i64 => true,
-            64i64 => true,
-            128i64 => true,
-            256i64 => true,
-            512i64 => true,
-            1024i64 => true,
-            4096i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            1i64 | 2i64
+                | 4i64
+                | 8i64
+                | 16i64
+                | 32i64
+                | 64i64
+                | 128i64
+                | 256i64
+                | 512i64
+                | 1024i64
+                | 4096i64
+        )
     }
     pub fn as_u32(self) -> u32 {
         match self {
@@ -12025,10 +11717,7 @@ pub enum Weight {
 }
 impl Weight {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            65534i64 => true,
-            _ => false,
-        }
+        matches!(value, 65534i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -12080,10 +11769,7 @@ pub enum WorkoutHr {
 }
 impl WorkoutHr {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            100i64 => true,
-            _ => false,
-        }
+        matches!(value, 100i64)
     }
     pub fn as_u32(self) -> u32 {
         match self {
@@ -12135,10 +11821,7 @@ pub enum WorkoutPower {
 }
 impl WorkoutPower {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            1000i64 => true,
-            _ => false,
-        }
+        matches!(value, 1000i64)
     }
     pub fn as_u32(self) -> u32 {
         match self {
@@ -12193,14 +11876,7 @@ pub enum BpStatus {
 }
 impl BpStatus {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64 | 3i64 | 4i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -12265,15 +11941,7 @@ pub enum UserLocalId {
 }
 impl UserLocalId {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            15i64 => true,
-            16i64 => true,
-            255i64 => true,
-            256i64 => true,
-            65534i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 15i64 | 16i64 | 255i64 | 256i64 | 65534i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -12346,16 +12014,7 @@ pub enum SwimStroke {
 }
 impl SwimStroke {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64 | 3i64 | 4i64 | 5i64 | 6i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -12431,18 +12090,10 @@ pub enum ActivityType {
 }
 impl ActivityType {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            8i64 => true,
-            254i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64 | 2i64 | 3i64 | 4i64 | 5i64 | 6i64 | 8i64 | 254i64
+        )
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -12551,29 +12202,28 @@ pub enum ActivitySubtype {
 }
 impl ActivitySubtype {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            9i64 => true,
-            10i64 => true,
-            11i64 => true,
-            12i64 => true,
-            13i64 => true,
-            14i64 => true,
-            15i64 => true,
-            16i64 => true,
-            17i64 => true,
-            18i64 => true,
-            254i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+                | 15i64
+                | 16i64
+                | 17i64
+                | 18i64
+                | 254i64
+        )
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -12680,12 +12330,7 @@ pub enum ActivityLevel {
 }
 impl ActivityLevel {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -12740,11 +12385,7 @@ pub enum Side {
 }
 impl Side {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -12798,11 +12439,7 @@ pub enum LeftRightBalance {
 }
 impl LeftRightBalance {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            127i64 => true,
-            128i64 => true,
-            _ => false,
-        }
+        matches!(value, 127i64 | 128i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -12859,11 +12496,7 @@ pub enum LeftRightBalance100 {
 }
 impl LeftRightBalance100 {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            16383i64 => true,
-            32768i64 => true,
-            _ => false,
-        }
+        matches!(value, 16383i64 | 32768i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -12920,11 +12553,7 @@ pub enum LengthType {
 }
 impl LengthType {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -12981,16 +12610,7 @@ pub enum DayOfWeek {
 }
 impl DayOfWeek {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64 | 3i64 | 4i64 | 5i64 | 6i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -13096,41 +12716,40 @@ pub enum ConnectivityCapabilities {
 }
 impl ConnectivityCapabilities {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            1i64 => true,
-            2i64 => true,
-            4i64 => true,
-            8i64 => true,
-            16i64 => true,
-            32i64 => true,
-            64i64 => true,
-            128i64 => true,
-            256i64 => true,
-            512i64 => true,
-            1024i64 => true,
-            2048i64 => true,
-            4096i64 => true,
-            8192i64 => true,
-            16384i64 => true,
-            32768i64 => true,
-            65536i64 => true,
-            131072i64 => true,
-            262144i64 => true,
-            524288i64 => true,
-            1048576i64 => true,
-            2097152i64 => true,
-            4194304i64 => true,
-            8388608i64 => true,
-            16777216i64 => true,
-            33554432i64 => true,
-            67108864i64 => true,
-            134217728i64 => true,
-            268435456i64 => true,
-            536870912i64 => true,
-            1073741824i64 => true,
-            2147483648i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            1i64 | 2i64
+                | 4i64
+                | 8i64
+                | 16i64
+                | 32i64
+                | 64i64
+                | 128i64
+                | 256i64
+                | 512i64
+                | 1024i64
+                | 2048i64
+                | 4096i64
+                | 8192i64
+                | 16384i64
+                | 32768i64
+                | 65536i64
+                | 131072i64
+                | 262144i64
+                | 524288i64
+                | 1048576i64
+                | 2097152i64
+                | 4194304i64
+                | 8388608i64
+                | 16777216i64
+                | 33554432i64
+                | 67108864i64
+                | 134217728i64
+                | 268435456i64
+                | 536870912i64
+                | 1073741824i64
+                | 2147483648i64
+        )
     }
     pub fn as_u32(self) -> u32 {
         match self {
@@ -13288,12 +12907,7 @@ pub enum WeatherReport {
 }
 impl WeatherReport {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -13367,30 +12981,29 @@ pub enum WeatherStatus {
 }
 impl WeatherStatus {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            11i64 => true,
-            12i64 => true,
-            13i64 => true,
-            14i64 => true,
-            15i64 => true,
-            16i64 => true,
-            17i64 => true,
-            18i64 => true,
-            19i64 => true,
-            20i64 => true,
-            21i64 => true,
-            22i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+                | 15i64
+                | 16i64
+                | 17i64
+                | 18i64
+                | 19i64
+                | 20i64
+                | 21i64
+                | 22i64
+        )
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -13502,14 +13115,7 @@ pub enum WeatherSeverity {
 }
 impl WeatherSeverity {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64 | 3i64 | 4i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -13653,94 +13259,93 @@ pub enum WeatherSevereType {
 }
 impl WeatherSevereType {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            9i64 => true,
-            10i64 => true,
-            11i64 => true,
-            12i64 => true,
-            13i64 => true,
-            14i64 => true,
-            15i64 => true,
-            16i64 => true,
-            17i64 => true,
-            18i64 => true,
-            19i64 => true,
-            20i64 => true,
-            21i64 => true,
-            22i64 => true,
-            23i64 => true,
-            24i64 => true,
-            25i64 => true,
-            26i64 => true,
-            27i64 => true,
-            28i64 => true,
-            29i64 => true,
-            30i64 => true,
-            31i64 => true,
-            32i64 => true,
-            33i64 => true,
-            34i64 => true,
-            35i64 => true,
-            36i64 => true,
-            37i64 => true,
-            38i64 => true,
-            39i64 => true,
-            40i64 => true,
-            41i64 => true,
-            42i64 => true,
-            43i64 => true,
-            44i64 => true,
-            45i64 => true,
-            46i64 => true,
-            47i64 => true,
-            48i64 => true,
-            49i64 => true,
-            50i64 => true,
-            51i64 => true,
-            52i64 => true,
-            53i64 => true,
-            54i64 => true,
-            55i64 => true,
-            56i64 => true,
-            57i64 => true,
-            58i64 => true,
-            59i64 => true,
-            60i64 => true,
-            61i64 => true,
-            62i64 => true,
-            63i64 => true,
-            64i64 => true,
-            65i64 => true,
-            66i64 => true,
-            67i64 => true,
-            68i64 => true,
-            69i64 => true,
-            70i64 => true,
-            71i64 => true,
-            72i64 => true,
-            73i64 => true,
-            74i64 => true,
-            75i64 => true,
-            76i64 => true,
-            77i64 => true,
-            78i64 => true,
-            79i64 => true,
-            80i64 => true,
-            81i64 => true,
-            82i64 => true,
-            83i64 => true,
-            84i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+                | 15i64
+                | 16i64
+                | 17i64
+                | 18i64
+                | 19i64
+                | 20i64
+                | 21i64
+                | 22i64
+                | 23i64
+                | 24i64
+                | 25i64
+                | 26i64
+                | 27i64
+                | 28i64
+                | 29i64
+                | 30i64
+                | 31i64
+                | 32i64
+                | 33i64
+                | 34i64
+                | 35i64
+                | 36i64
+                | 37i64
+                | 38i64
+                | 39i64
+                | 40i64
+                | 41i64
+                | 42i64
+                | 43i64
+                | 44i64
+                | 45i64
+                | 46i64
+                | 47i64
+                | 48i64
+                | 49i64
+                | 50i64
+                | 51i64
+                | 52i64
+                | 53i64
+                | 54i64
+                | 55i64
+                | 56i64
+                | 57i64
+                | 58i64
+                | 59i64
+                | 60i64
+                | 61i64
+                | 62i64
+                | 63i64
+                | 64i64
+                | 65i64
+                | 66i64
+                | 67i64
+                | 68i64
+                | 69i64
+                | 70i64
+                | 71i64
+                | 72i64
+                | 73i64
+                | 74i64
+                | 75i64
+                | 76i64
+                | 77i64
+                | 78i64
+                | 79i64
+                | 80i64
+                | 81i64
+                | 82i64
+                | 83i64
+                | 84i64
+        )
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -14046,15 +13651,7 @@ pub enum StrokeType {
 }
 impl StrokeType {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64 | 3i64 | 4i64 | 5i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -14160,49 +13757,48 @@ pub enum BodyLocation {
 }
 impl BodyLocation {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            9i64 => true,
-            10i64 => true,
-            11i64 => true,
-            12i64 => true,
-            13i64 => true,
-            14i64 => true,
-            15i64 => true,
-            16i64 => true,
-            17i64 => true,
-            18i64 => true,
-            19i64 => true,
-            20i64 => true,
-            21i64 => true,
-            22i64 => true,
-            23i64 => true,
-            24i64 => true,
-            25i64 => true,
-            26i64 => true,
-            27i64 => true,
-            28i64 => true,
-            29i64 => true,
-            30i64 => true,
-            31i64 => true,
-            32i64 => true,
-            33i64 => true,
-            34i64 => true,
-            35i64 => true,
-            36i64 => true,
-            37i64 => true,
-            38i64 => true,
-            39i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+                | 15i64
+                | 16i64
+                | 17i64
+                | 18i64
+                | 19i64
+                | 20i64
+                | 21i64
+                | 22i64
+                | 23i64
+                | 24i64
+                | 25i64
+                | 26i64
+                | 27i64
+                | 28i64
+                | 29i64
+                | 30i64
+                | 31i64
+                | 32i64
+                | 33i64
+                | 34i64
+                | 35i64
+                | 36i64
+                | 37i64
+                | 38i64
+                | 39i64
+        )
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -14368,11 +13964,7 @@ pub enum SegmentLapStatus {
 }
 impl SegmentLapStatus {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -14437,24 +14029,23 @@ pub enum SegmentLeaderboardType {
 }
 impl SegmentLeaderboardType {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            9i64 => true,
-            10i64 => true,
-            11i64 => true,
-            12i64 => true,
-            13i64 => true,
-            14i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+        )
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -14546,12 +14137,7 @@ pub enum SegmentDeleteStatus {
 }
 impl SegmentDeleteStatus {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -14606,11 +14192,7 @@ pub enum SegmentSelectionType {
 }
 impl SegmentSelectionType {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -14672,15 +14254,7 @@ pub enum SourceType {
 }
 impl SourceType {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64 | 3i64 | 4i64 | 5i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -14758,17 +14332,10 @@ pub enum LocalDeviceType {
 }
 impl LocalDeviceType {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            10i64 => true,
-            12i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64 | 2i64 | 3i64 | 4i64 | 5i64 | 10i64 | 12i64
+        )
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -14849,17 +14416,7 @@ pub enum BleDeviceType {
 }
 impl BleDeviceType {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64 | 3i64 | 4i64 | 5i64 | 6i64 | 7i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -14934,13 +14491,7 @@ pub enum AntChannelId {
 }
 impl AntChannelId {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            65535i64 => true,
-            16711680i64 => true,
-            251658240i64 => true,
-            4026531840i64 => true,
-            _ => false,
-        }
+        matches!(value, 65535i64 | 16711680i64 | 251658240i64 | 4026531840i64)
     }
     pub fn as_u32(self) -> u32 {
         match self {
@@ -15011,14 +14562,7 @@ pub enum DisplayOrientation {
 }
 impl DisplayOrientation {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64 | 3i64 | 4i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -15083,15 +14627,7 @@ pub enum WorkoutEquipment {
 }
 impl WorkoutEquipment {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64 | 3i64 | 4i64 | 5i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -15157,13 +14693,7 @@ pub enum WatchfaceMode {
 }
 impl WatchfaceMode {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64 | 3i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -15222,12 +14752,7 @@ pub enum DigitalWatchfaceLayout {
 }
 impl DigitalWatchfaceLayout {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -15283,12 +14808,7 @@ pub enum AnalogWatchfaceLayout {
 }
 impl AnalogWatchfaceLayout {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -15345,13 +14865,7 @@ pub enum RiderPositionType {
 }
 impl RiderPositionType {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64 | 3i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -15411,13 +14925,7 @@ pub enum PowerPhaseType {
 }
 impl PowerPhaseType {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64 | 3i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -15493,22 +15001,21 @@ pub enum CameraEventType {
 }
 impl CameraEventType {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            11i64 => true,
-            12i64 => true,
-            13i64 => true,
-            14i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+        )
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -15598,13 +15105,7 @@ pub enum SensorType {
 }
 impl SensorType {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64 | 3i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -15664,13 +15165,7 @@ pub enum BikeLightNetworkConfigType {
 }
 impl BikeLightNetworkConfigType {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 4i64 | 5i64 | 6i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -15736,13 +15231,7 @@ pub enum CommTimeoutType {
 }
 impl CommTimeoutType {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64 | 3i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -15805,13 +15294,7 @@ pub enum CameraOrientationType {
 }
 impl CameraOrientationType {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64 | 3i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -15871,13 +15354,7 @@ pub enum AttitudeStage {
 }
 impl AttitudeStage {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64 | 3i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -15946,22 +15423,21 @@ pub enum AttitudeValidity {
 }
 impl AttitudeValidity {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            1i64 => true,
-            2i64 => true,
-            4i64 => true,
-            8i64 => true,
-            16i64 => true,
-            32i64 => true,
-            64i64 => true,
-            128i64 => true,
-            256i64 => true,
-            512i64 => true,
-            1024i64 => true,
-            2048i64 => true,
-            4096i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            1i64 | 2i64
+                | 4i64
+                | 8i64
+                | 16i64
+                | 32i64
+                | 64i64
+                | 128i64
+                | 256i64
+                | 512i64
+                | 1024i64
+                | 2048i64
+                | 4096i64
+        )
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -16052,14 +15528,7 @@ pub enum AutoSyncFrequency {
 }
 impl AutoSyncFrequency {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64 | 3i64 | 4i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -16128,18 +15597,10 @@ pub enum ExdLayout {
 }
 impl ExdLayout {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64 | 2i64 | 3i64 | 4i64 | 5i64 | 6i64 | 7i64 | 8i64
+        )
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -16221,20 +15682,10 @@ pub enum ExdDisplayType {
 }
 impl ExdDisplayType {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            9i64 => true,
-            10i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64 | 2i64 | 3i64 | 4i64 | 5i64 | 6i64 | 7i64 | 8i64 | 9i64 | 10i64
+        )
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -16361,59 +15812,58 @@ pub enum ExdDataUnits {
 }
 impl ExdDataUnits {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            9i64 => true,
-            10i64 => true,
-            11i64 => true,
-            12i64 => true,
-            13i64 => true,
-            14i64 => true,
-            15i64 => true,
-            16i64 => true,
-            17i64 => true,
-            18i64 => true,
-            19i64 => true,
-            20i64 => true,
-            21i64 => true,
-            22i64 => true,
-            23i64 => true,
-            24i64 => true,
-            25i64 => true,
-            26i64 => true,
-            27i64 => true,
-            28i64 => true,
-            29i64 => true,
-            30i64 => true,
-            31i64 => true,
-            32i64 => true,
-            33i64 => true,
-            34i64 => true,
-            35i64 => true,
-            36i64 => true,
-            37i64 => true,
-            38i64 => true,
-            39i64 => true,
-            40i64 => true,
-            41i64 => true,
-            42i64 => true,
-            43i64 => true,
-            44i64 => true,
-            45i64 => true,
-            46i64 => true,
-            47i64 => true,
-            48i64 => true,
-            49i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+                | 15i64
+                | 16i64
+                | 17i64
+                | 18i64
+                | 19i64
+                | 20i64
+                | 21i64
+                | 22i64
+                | 23i64
+                | 24i64
+                | 25i64
+                | 26i64
+                | 27i64
+                | 28i64
+                | 29i64
+                | 30i64
+                | 31i64
+                | 32i64
+                | 33i64
+                | 34i64
+                | 35i64
+                | 36i64
+                | 37i64
+                | 38i64
+                | 39i64
+                | 40i64
+                | 41i64
+                | 42i64
+                | 43i64
+                | 44i64
+                | 45i64
+                | 46i64
+                | 47i64
+                | 48i64
+                | 49i64
+        )
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -16655,53 +16105,52 @@ pub enum ExdQualifiers {
 }
 impl ExdQualifiers {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            9i64 => true,
-            10i64 => true,
-            11i64 => true,
-            12i64 => true,
-            13i64 => true,
-            14i64 => true,
-            15i64 => true,
-            16i64 => true,
-            17i64 => true,
-            18i64 => true,
-            19i64 => true,
-            20i64 => true,
-            21i64 => true,
-            22i64 => true,
-            23i64 => true,
-            24i64 => true,
-            25i64 => true,
-            26i64 => true,
-            27i64 => true,
-            28i64 => true,
-            29i64 => true,
-            30i64 => true,
-            31i64 => true,
-            32i64 => true,
-            33i64 => true,
-            34i64 => true,
-            242i64 => true,
-            243i64 => true,
-            244i64 => true,
-            245i64 => true,
-            246i64 => true,
-            247i64 => true,
-            248i64 => true,
-            249i64 => true,
-            250i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+                | 15i64
+                | 16i64
+                | 17i64
+                | 18i64
+                | 19i64
+                | 20i64
+                | 21i64
+                | 22i64
+                | 23i64
+                | 24i64
+                | 25i64
+                | 26i64
+                | 27i64
+                | 28i64
+                | 29i64
+                | 30i64
+                | 31i64
+                | 32i64
+                | 33i64
+                | 34i64
+                | 242i64
+                | 243i64
+                | 244i64
+                | 245i64
+                | 246i64
+                | 247i64
+                | 248i64
+                | 249i64
+                | 250i64
+        )
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -16975,106 +16424,105 @@ pub enum ExdDescriptors {
 }
 impl ExdDescriptors {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            9i64 => true,
-            10i64 => true,
-            11i64 => true,
-            12i64 => true,
-            13i64 => true,
-            14i64 => true,
-            15i64 => true,
-            16i64 => true,
-            17i64 => true,
-            18i64 => true,
-            19i64 => true,
-            20i64 => true,
-            21i64 => true,
-            22i64 => true,
-            23i64 => true,
-            24i64 => true,
-            25i64 => true,
-            26i64 => true,
-            27i64 => true,
-            28i64 => true,
-            29i64 => true,
-            30i64 => true,
-            31i64 => true,
-            32i64 => true,
-            33i64 => true,
-            34i64 => true,
-            35i64 => true,
-            36i64 => true,
-            37i64 => true,
-            38i64 => true,
-            39i64 => true,
-            40i64 => true,
-            41i64 => true,
-            42i64 => true,
-            43i64 => true,
-            44i64 => true,
-            45i64 => true,
-            46i64 => true,
-            47i64 => true,
-            48i64 => true,
-            49i64 => true,
-            50i64 => true,
-            51i64 => true,
-            52i64 => true,
-            53i64 => true,
-            54i64 => true,
-            55i64 => true,
-            56i64 => true,
-            57i64 => true,
-            58i64 => true,
-            59i64 => true,
-            60i64 => true,
-            61i64 => true,
-            62i64 => true,
-            63i64 => true,
-            64i64 => true,
-            65i64 => true,
-            66i64 => true,
-            67i64 => true,
-            68i64 => true,
-            69i64 => true,
-            70i64 => true,
-            71i64 => true,
-            72i64 => true,
-            73i64 => true,
-            74i64 => true,
-            75i64 => true,
-            76i64 => true,
-            77i64 => true,
-            78i64 => true,
-            79i64 => true,
-            80i64 => true,
-            81i64 => true,
-            82i64 => true,
-            83i64 => true,
-            84i64 => true,
-            85i64 => true,
-            86i64 => true,
-            87i64 => true,
-            88i64 => true,
-            89i64 => true,
-            90i64 => true,
-            91i64 => true,
-            92i64 => true,
-            93i64 => true,
-            94i64 => true,
-            95i64 => true,
-            96i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+                | 15i64
+                | 16i64
+                | 17i64
+                | 18i64
+                | 19i64
+                | 20i64
+                | 21i64
+                | 22i64
+                | 23i64
+                | 24i64
+                | 25i64
+                | 26i64
+                | 27i64
+                | 28i64
+                | 29i64
+                | 30i64
+                | 31i64
+                | 32i64
+                | 33i64
+                | 34i64
+                | 35i64
+                | 36i64
+                | 37i64
+                | 38i64
+                | 39i64
+                | 40i64
+                | 41i64
+                | 42i64
+                | 43i64
+                | 44i64
+                | 45i64
+                | 46i64
+                | 47i64
+                | 48i64
+                | 49i64
+                | 50i64
+                | 51i64
+                | 52i64
+                | 53i64
+                | 54i64
+                | 55i64
+                | 56i64
+                | 57i64
+                | 58i64
+                | 59i64
+                | 60i64
+                | 61i64
+                | 62i64
+                | 63i64
+                | 64i64
+                | 65i64
+                | 66i64
+                | 67i64
+                | 68i64
+                | 69i64
+                | 70i64
+                | 71i64
+                | 72i64
+                | 73i64
+                | 74i64
+                | 75i64
+                | 76i64
+                | 77i64
+                | 78i64
+                | 79i64
+                | 80i64
+                | 81i64
+                | 82i64
+                | 83i64
+                | 84i64
+                | 85i64
+                | 86i64
+                | 87i64
+                | 88i64
+                | 89i64
+                | 90i64
+                | 91i64
+                | 92i64
+                | 93i64
+                | 94i64
+                | 95i64
+                | 96i64
+        )
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -17426,16 +16874,7 @@ pub enum AutoActivityDetect {
 }
 impl AutoActivityDetect {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            4i64 => true,
-            8i64 => true,
-            32i64 => true,
-            1024i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64 | 4i64 | 8i64 | 32i64 | 1024i64)
     }
     pub fn as_u32(self) -> u32 {
         match self {
@@ -17511,17 +16950,10 @@ pub enum SupportedExdScreenLayouts {
 }
 impl SupportedExdScreenLayouts {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            1i64 => true,
-            2i64 => true,
-            4i64 => true,
-            8i64 => true,
-            16i64 => true,
-            32i64 => true,
-            64i64 => true,
-            128i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            1i64 | 2i64 | 4i64 | 8i64 | 16i64 | 32i64 | 64i64 | 128i64
+        )
     }
     pub fn as_u32(self) -> u32 {
         match self {
@@ -17617,26 +17049,25 @@ pub enum FitBaseType {
 }
 impl FitBaseType {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            7i64 => true,
-            10i64 => true,
-            13i64 => true,
-            131i64 => true,
-            132i64 => true,
-            133i64 => true,
-            134i64 => true,
-            136i64 => true,
-            137i64 => true,
-            139i64 => true,
-            140i64 => true,
-            142i64 => true,
-            143i64 => true,
-            144i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 7i64
+                | 10i64
+                | 13i64
+                | 131i64
+                | 132i64
+                | 133i64
+                | 134i64
+                | 136i64
+                | 137i64
+                | 139i64
+                | 140i64
+                | 142i64
+                | 143i64
+                | 144i64
+        )
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -17772,47 +17203,46 @@ pub enum TurnType {
 }
 impl TurnType {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            9i64 => true,
-            10i64 => true,
-            11i64 => true,
-            12i64 => true,
-            13i64 => true,
-            14i64 => true,
-            15i64 => true,
-            16i64 => true,
-            17i64 => true,
-            18i64 => true,
-            19i64 => true,
-            20i64 => true,
-            21i64 => true,
-            22i64 => true,
-            23i64 => true,
-            24i64 => true,
-            25i64 => true,
-            26i64 => true,
-            27i64 => true,
-            28i64 => true,
-            29i64 => true,
-            30i64 => true,
-            31i64 => true,
-            32i64 => true,
-            33i64 => true,
-            34i64 => true,
-            35i64 => true,
-            36i64 => true,
-            37i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+                | 15i64
+                | 16i64
+                | 17i64
+                | 18i64
+                | 19i64
+                | 20i64
+                | 21i64
+                | 22i64
+                | 23i64
+                | 24i64
+                | 25i64
+                | 26i64
+                | 27i64
+                | 28i64
+                | 29i64
+                | 30i64
+                | 31i64
+                | 32i64
+                | 33i64
+                | 34i64
+                | 35i64
+                | 36i64
+                | 37i64
+        )
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -17972,11 +17402,7 @@ pub enum BikeLightBeamAngleMode {
 }
 impl BikeLightBeamAngleMode {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -18032,12 +17458,7 @@ pub enum FitBaseUnit {
 }
 impl FitBaseUnit {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -18095,11 +17516,7 @@ pub enum SetType {
 }
 impl SetType {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -18154,11 +17571,7 @@ pub enum MaxMetCategory {
 }
 impl MaxMetCategory {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -18242,43 +17655,42 @@ pub enum ExerciseCategory {
 }
 impl ExerciseCategory {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            9i64 => true,
-            10i64 => true,
-            11i64 => true,
-            12i64 => true,
-            13i64 => true,
-            14i64 => true,
-            15i64 => true,
-            16i64 => true,
-            17i64 => true,
-            18i64 => true,
-            19i64 => true,
-            20i64 => true,
-            21i64 => true,
-            22i64 => true,
-            23i64 => true,
-            24i64 => true,
-            25i64 => true,
-            26i64 => true,
-            27i64 => true,
-            28i64 => true,
-            29i64 => true,
-            30i64 => true,
-            31i64 => true,
-            32i64 => true,
-            65534i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+                | 15i64
+                | 16i64
+                | 17i64
+                | 18i64
+                | 19i64
+                | 20i64
+                | 21i64
+                | 22i64
+                | 23i64
+                | 24i64
+                | 25i64
+                | 26i64
+                | 27i64
+                | 28i64
+                | 29i64
+                | 30i64
+                | 31i64
+                | 32i64
+                | 65534i64
+        )
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -18454,36 +17866,35 @@ pub enum BenchPressExerciseName {
 }
 impl BenchPressExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            9i64 => true,
-            10i64 => true,
-            11i64 => true,
-            12i64 => true,
-            13i64 => true,
-            14i64 => true,
-            15i64 => true,
-            16i64 => true,
-            17i64 => true,
-            18i64 => true,
-            19i64 => true,
-            20i64 => true,
-            21i64 => true,
-            22i64 => true,
-            23i64 => true,
-            24i64 => true,
-            25i64 => true,
-            26i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+                | 15i64
+                | 16i64
+                | 17i64
+                | 18i64
+                | 19i64
+                | 20i64
+                | 21i64
+                | 22i64
+                | 23i64
+                | 24i64
+                | 25i64
+                | 26i64
+        )
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -18672,30 +18083,29 @@ pub enum CalfRaiseExerciseName {
 }
 impl CalfRaiseExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            9i64 => true,
-            10i64 => true,
-            11i64 => true,
-            12i64 => true,
-            13i64 => true,
-            14i64 => true,
-            15i64 => true,
-            16i64 => true,
-            17i64 => true,
-            18i64 => true,
-            19i64 => true,
-            20i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+                | 15i64
+                | 16i64
+                | 17i64
+                | 18i64
+                | 19i64
+                | 20i64
+        )
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -18859,31 +18269,30 @@ pub enum CardioExerciseName {
 }
 impl CardioExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            9i64 => true,
-            10i64 => true,
-            11i64 => true,
-            12i64 => true,
-            13i64 => true,
-            14i64 => true,
-            15i64 => true,
-            16i64 => true,
-            17i64 => true,
-            18i64 => true,
-            19i64 => true,
-            20i64 => true,
-            21i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+                | 15i64
+                | 16i64
+                | 17i64
+                | 18i64
+                | 19i64
+                | 20i64
+                | 21i64
+        )
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -19005,14 +18414,7 @@ pub enum CarryExerciseName {
 }
 impl CarryExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64 | 3i64 | 4i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -19097,32 +18499,31 @@ pub enum ChopExerciseName {
 }
 impl ChopExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            9i64 => true,
-            10i64 => true,
-            11i64 => true,
-            12i64 => true,
-            13i64 => true,
-            14i64 => true,
-            15i64 => true,
-            16i64 => true,
-            17i64 => true,
-            18i64 => true,
-            19i64 => true,
-            20i64 => true,
-            21i64 => true,
-            22i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+                | 15i64
+                | 16i64
+                | 17i64
+                | 18i64
+                | 19i64
+                | 20i64
+                | 21i64
+                | 22i64
+        )
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -19332,82 +18733,81 @@ pub enum CoreExerciseName {
 }
 impl CoreExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            9i64 => true,
-            10i64 => true,
-            11i64 => true,
-            12i64 => true,
-            13i64 => true,
-            14i64 => true,
-            15i64 => true,
-            16i64 => true,
-            17i64 => true,
-            18i64 => true,
-            19i64 => true,
-            20i64 => true,
-            21i64 => true,
-            22i64 => true,
-            23i64 => true,
-            24i64 => true,
-            25i64 => true,
-            26i64 => true,
-            27i64 => true,
-            28i64 => true,
-            29i64 => true,
-            30i64 => true,
-            31i64 => true,
-            32i64 => true,
-            33i64 => true,
-            34i64 => true,
-            35i64 => true,
-            36i64 => true,
-            37i64 => true,
-            38i64 => true,
-            39i64 => true,
-            40i64 => true,
-            41i64 => true,
-            42i64 => true,
-            43i64 => true,
-            44i64 => true,
-            45i64 => true,
-            46i64 => true,
-            47i64 => true,
-            48i64 => true,
-            49i64 => true,
-            50i64 => true,
-            51i64 => true,
-            52i64 => true,
-            53i64 => true,
-            54i64 => true,
-            55i64 => true,
-            56i64 => true,
-            57i64 => true,
-            58i64 => true,
-            59i64 => true,
-            60i64 => true,
-            61i64 => true,
-            62i64 => true,
-            63i64 => true,
-            64i64 => true,
-            65i64 => true,
-            66i64 => true,
-            67i64 => true,
-            68i64 => true,
-            69i64 => true,
-            70i64 => true,
-            71i64 => true,
-            72i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+                | 15i64
+                | 16i64
+                | 17i64
+                | 18i64
+                | 19i64
+                | 20i64
+                | 21i64
+                | 22i64
+                | 23i64
+                | 24i64
+                | 25i64
+                | 26i64
+                | 27i64
+                | 28i64
+                | 29i64
+                | 30i64
+                | 31i64
+                | 32i64
+                | 33i64
+                | 34i64
+                | 35i64
+                | 36i64
+                | 37i64
+                | 38i64
+                | 39i64
+                | 40i64
+                | 41i64
+                | 42i64
+                | 43i64
+                | 44i64
+                | 45i64
+                | 46i64
+                | 47i64
+                | 48i64
+                | 49i64
+                | 50i64
+                | 51i64
+                | 52i64
+                | 53i64
+                | 54i64
+                | 55i64
+                | 56i64
+                | 57i64
+                | 58i64
+                | 59i64
+                | 60i64
+                | 61i64
+                | 62i64
+                | 63i64
+                | 64i64
+                | 65i64
+                | 66i64
+                | 67i64
+                | 68i64
+                | 69i64
+                | 70i64
+                | 71i64
+                | 72i64
+        )
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -19776,94 +19176,93 @@ pub enum CrunchExerciseName {
 }
 impl CrunchExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            9i64 => true,
-            10i64 => true,
-            11i64 => true,
-            12i64 => true,
-            13i64 => true,
-            14i64 => true,
-            15i64 => true,
-            16i64 => true,
-            17i64 => true,
-            18i64 => true,
-            19i64 => true,
-            20i64 => true,
-            21i64 => true,
-            22i64 => true,
-            23i64 => true,
-            24i64 => true,
-            25i64 => true,
-            26i64 => true,
-            27i64 => true,
-            28i64 => true,
-            29i64 => true,
-            30i64 => true,
-            31i64 => true,
-            32i64 => true,
-            33i64 => true,
-            34i64 => true,
-            35i64 => true,
-            36i64 => true,
-            37i64 => true,
-            38i64 => true,
-            39i64 => true,
-            40i64 => true,
-            41i64 => true,
-            42i64 => true,
-            43i64 => true,
-            44i64 => true,
-            45i64 => true,
-            46i64 => true,
-            47i64 => true,
-            48i64 => true,
-            49i64 => true,
-            50i64 => true,
-            51i64 => true,
-            52i64 => true,
-            53i64 => true,
-            54i64 => true,
-            55i64 => true,
-            56i64 => true,
-            57i64 => true,
-            58i64 => true,
-            59i64 => true,
-            60i64 => true,
-            61i64 => true,
-            62i64 => true,
-            63i64 => true,
-            64i64 => true,
-            65i64 => true,
-            66i64 => true,
-            67i64 => true,
-            68i64 => true,
-            69i64 => true,
-            70i64 => true,
-            71i64 => true,
-            72i64 => true,
-            73i64 => true,
-            74i64 => true,
-            75i64 => true,
-            76i64 => true,
-            77i64 => true,
-            78i64 => true,
-            79i64 => true,
-            80i64 => true,
-            81i64 => true,
-            82i64 => true,
-            83i64 => true,
-            84i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+                | 15i64
+                | 16i64
+                | 17i64
+                | 18i64
+                | 19i64
+                | 20i64
+                | 21i64
+                | 22i64
+                | 23i64
+                | 24i64
+                | 25i64
+                | 26i64
+                | 27i64
+                | 28i64
+                | 29i64
+                | 30i64
+                | 31i64
+                | 32i64
+                | 33i64
+                | 34i64
+                | 35i64
+                | 36i64
+                | 37i64
+                | 38i64
+                | 39i64
+                | 40i64
+                | 41i64
+                | 42i64
+                | 43i64
+                | 44i64
+                | 45i64
+                | 46i64
+                | 47i64
+                | 48i64
+                | 49i64
+                | 50i64
+                | 51i64
+                | 52i64
+                | 53i64
+                | 54i64
+                | 55i64
+                | 56i64
+                | 57i64
+                | 58i64
+                | 59i64
+                | 60i64
+                | 61i64
+                | 62i64
+                | 63i64
+                | 64i64
+                | 65i64
+                | 66i64
+                | 67i64
+                | 68i64
+                | 69i64
+                | 70i64
+                | 71i64
+                | 72i64
+                | 73i64
+                | 74i64
+                | 75i64
+                | 76i64
+                | 77i64
+                | 78i64
+                | 79i64
+                | 80i64
+                | 81i64
+                | 82i64
+                | 83i64
+                | 84i64
+        )
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -20269,53 +19668,52 @@ pub enum CurlExerciseName {
 }
 impl CurlExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            9i64 => true,
-            10i64 => true,
-            11i64 => true,
-            12i64 => true,
-            13i64 => true,
-            14i64 => true,
-            15i64 => true,
-            16i64 => true,
-            17i64 => true,
-            18i64 => true,
-            19i64 => true,
-            20i64 => true,
-            21i64 => true,
-            22i64 => true,
-            23i64 => true,
-            24i64 => true,
-            25i64 => true,
-            26i64 => true,
-            27i64 => true,
-            28i64 => true,
-            29i64 => true,
-            30i64 => true,
-            31i64 => true,
-            32i64 => true,
-            33i64 => true,
-            34i64 => true,
-            35i64 => true,
-            36i64 => true,
-            37i64 => true,
-            38i64 => true,
-            39i64 => true,
-            40i64 => true,
-            41i64 => true,
-            42i64 => true,
-            43i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+                | 15i64
+                | 16i64
+                | 17i64
+                | 18i64
+                | 19i64
+                | 20i64
+                | 21i64
+                | 22i64
+                | 23i64
+                | 24i64
+                | 25i64
+                | 26i64
+                | 27i64
+                | 28i64
+                | 29i64
+                | 30i64
+                | 31i64
+                | 32i64
+                | 33i64
+                | 34i64
+                | 35i64
+                | 36i64
+                | 37i64
+                | 38i64
+                | 39i64
+                | 40i64
+                | 41i64
+                | 42i64
+                | 43i64
+        )
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -20555,28 +19953,27 @@ pub enum DeadliftExerciseName {
 }
 impl DeadliftExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            9i64 => true,
-            10i64 => true,
-            11i64 => true,
-            12i64 => true,
-            13i64 => true,
-            14i64 => true,
-            15i64 => true,
-            16i64 => true,
-            17i64 => true,
-            18i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+                | 15i64
+                | 16i64
+                | 17i64
+                | 18i64
+        )
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -20708,19 +20105,10 @@ pub enum FlyeExerciseName {
 }
 impl FlyeExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            9i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64 | 2i64 | 3i64 | 4i64 | 5i64 | 6i64 | 7i64 | 8i64 | 9i64
+        )
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -20851,59 +20239,58 @@ pub enum HipRaiseExerciseName {
 }
 impl HipRaiseExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            9i64 => true,
-            10i64 => true,
-            11i64 => true,
-            12i64 => true,
-            13i64 => true,
-            14i64 => true,
-            15i64 => true,
-            16i64 => true,
-            17i64 => true,
-            18i64 => true,
-            19i64 => true,
-            20i64 => true,
-            21i64 => true,
-            22i64 => true,
-            23i64 => true,
-            24i64 => true,
-            25i64 => true,
-            26i64 => true,
-            27i64 => true,
-            28i64 => true,
-            29i64 => true,
-            30i64 => true,
-            31i64 => true,
-            32i64 => true,
-            33i64 => true,
-            34i64 => true,
-            35i64 => true,
-            36i64 => true,
-            37i64 => true,
-            38i64 => true,
-            39i64 => true,
-            40i64 => true,
-            41i64 => true,
-            42i64 => true,
-            43i64 => true,
-            44i64 => true,
-            45i64 => true,
-            46i64 => true,
-            47i64 => true,
-            48i64 => true,
-            49i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+                | 15i64
+                | 16i64
+                | 17i64
+                | 18i64
+                | 19i64
+                | 20i64
+                | 21i64
+                | 22i64
+                | 23i64
+                | 24i64
+                | 25i64
+                | 26i64
+                | 27i64
+                | 28i64
+                | 29i64
+                | 30i64
+                | 31i64
+                | 32i64
+                | 33i64
+                | 34i64
+                | 35i64
+                | 36i64
+                | 37i64
+                | 38i64
+                | 39i64
+                | 40i64
+                | 41i64
+                | 42i64
+                | 43i64
+                | 44i64
+                | 45i64
+                | 46i64
+                | 47i64
+                | 48i64
+                | 49i64
+        )
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -21203,43 +20590,42 @@ pub enum HipStabilityExerciseName {
 }
 impl HipStabilityExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            9i64 => true,
-            10i64 => true,
-            11i64 => true,
-            12i64 => true,
-            13i64 => true,
-            14i64 => true,
-            15i64 => true,
-            16i64 => true,
-            17i64 => true,
-            18i64 => true,
-            19i64 => true,
-            20i64 => true,
-            21i64 => true,
-            22i64 => true,
-            23i64 => true,
-            24i64 => true,
-            25i64 => true,
-            26i64 => true,
-            27i64 => true,
-            28i64 => true,
-            29i64 => true,
-            30i64 => true,
-            31i64 => true,
-            32i64 => true,
-            33i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+                | 15i64
+                | 16i64
+                | 17i64
+                | 18i64
+                | 19i64
+                | 20i64
+                | 21i64
+                | 22i64
+                | 23i64
+                | 24i64
+                | 25i64
+                | 26i64
+                | 27i64
+                | 28i64
+                | 29i64
+                | 30i64
+                | 31i64
+                | 32i64
+                | 33i64
+        )
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -21427,12 +20813,7 @@ pub enum HipSwingExerciseName {
 }
 impl HipSwingExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -21531,49 +20912,48 @@ pub enum HyperextensionExerciseName {
 }
 impl HyperextensionExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            9i64 => true,
-            10i64 => true,
-            11i64 => true,
-            12i64 => true,
-            13i64 => true,
-            14i64 => true,
-            15i64 => true,
-            16i64 => true,
-            17i64 => true,
-            18i64 => true,
-            19i64 => true,
-            20i64 => true,
-            21i64 => true,
-            22i64 => true,
-            23i64 => true,
-            24i64 => true,
-            25i64 => true,
-            26i64 => true,
-            27i64 => true,
-            28i64 => true,
-            29i64 => true,
-            30i64 => true,
-            31i64 => true,
-            32i64 => true,
-            33i64 => true,
-            34i64 => true,
-            35i64 => true,
-            36i64 => true,
-            37i64 => true,
-            38i64 => true,
-            39i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+                | 15i64
+                | 16i64
+                | 17i64
+                | 18i64
+                | 19i64
+                | 20i64
+                | 21i64
+                | 22i64
+                | 23i64
+                | 24i64
+                | 25i64
+                | 26i64
+                | 27i64
+                | 28i64
+                | 29i64
+                | 30i64
+                | 31i64
+                | 32i64
+                | 33i64
+                | 34i64
+                | 35i64
+                | 36i64
+                | 37i64
+                | 38i64
+                | 39i64
+        )
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -21816,43 +21196,42 @@ pub enum LateralRaiseExerciseName {
 }
 impl LateralRaiseExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            9i64 => true,
-            10i64 => true,
-            11i64 => true,
-            12i64 => true,
-            13i64 => true,
-            14i64 => true,
-            15i64 => true,
-            16i64 => true,
-            17i64 => true,
-            18i64 => true,
-            19i64 => true,
-            20i64 => true,
-            21i64 => true,
-            22i64 => true,
-            23i64 => true,
-            24i64 => true,
-            25i64 => true,
-            26i64 => true,
-            27i64 => true,
-            28i64 => true,
-            29i64 => true,
-            30i64 => true,
-            31i64 => true,
-            32i64 => true,
-            33i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+                | 15i64
+                | 16i64
+                | 17i64
+                | 18i64
+                | 19i64
+                | 20i64
+                | 21i64
+                | 22i64
+                | 23i64
+                | 24i64
+                | 25i64
+                | 26i64
+                | 27i64
+                | 28i64
+                | 29i64
+                | 30i64
+                | 31i64
+                | 32i64
+                | 33i64
+        )
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -22029,21 +21408,10 @@ pub enum LegCurlExerciseName {
 }
 impl LegCurlExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            9i64 => true,
-            10i64 => true,
-            11i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64 | 2i64 | 3i64 | 4i64 | 5i64 | 6i64 | 7i64 | 8i64 | 9i64 | 10i64 | 11i64
+        )
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -22158,31 +21526,30 @@ pub enum LegRaiseExerciseName {
 }
 impl LegRaiseExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            9i64 => true,
-            10i64 => true,
-            11i64 => true,
-            12i64 => true,
-            13i64 => true,
-            14i64 => true,
-            15i64 => true,
-            16i64 => true,
-            17i64 => true,
-            18i64 => true,
-            19i64 => true,
-            20i64 => true,
-            21i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+                | 15i64
+                | 16i64
+                | 17i64
+                | 18i64
+                | 19i64
+                | 20i64
+                | 21i64
+        )
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -22396,90 +21763,89 @@ pub enum LungeExerciseName {
 }
 impl LungeExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            9i64 => true,
-            10i64 => true,
-            11i64 => true,
-            12i64 => true,
-            13i64 => true,
-            14i64 => true,
-            15i64 => true,
-            16i64 => true,
-            17i64 => true,
-            18i64 => true,
-            19i64 => true,
-            20i64 => true,
-            21i64 => true,
-            22i64 => true,
-            23i64 => true,
-            24i64 => true,
-            25i64 => true,
-            26i64 => true,
-            27i64 => true,
-            28i64 => true,
-            29i64 => true,
-            30i64 => true,
-            31i64 => true,
-            32i64 => true,
-            33i64 => true,
-            34i64 => true,
-            35i64 => true,
-            36i64 => true,
-            37i64 => true,
-            38i64 => true,
-            39i64 => true,
-            40i64 => true,
-            41i64 => true,
-            42i64 => true,
-            43i64 => true,
-            44i64 => true,
-            45i64 => true,
-            46i64 => true,
-            47i64 => true,
-            48i64 => true,
-            49i64 => true,
-            50i64 => true,
-            51i64 => true,
-            52i64 => true,
-            53i64 => true,
-            54i64 => true,
-            55i64 => true,
-            56i64 => true,
-            57i64 => true,
-            58i64 => true,
-            59i64 => true,
-            60i64 => true,
-            61i64 => true,
-            62i64 => true,
-            63i64 => true,
-            64i64 => true,
-            65i64 => true,
-            66i64 => true,
-            67i64 => true,
-            68i64 => true,
-            69i64 => true,
-            70i64 => true,
-            71i64 => true,
-            72i64 => true,
-            73i64 => true,
-            74i64 => true,
-            75i64 => true,
-            76i64 => true,
-            77i64 => true,
-            78i64 => true,
-            79i64 => true,
-            80i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+                | 15i64
+                | 16i64
+                | 17i64
+                | 18i64
+                | 19i64
+                | 20i64
+                | 21i64
+                | 22i64
+                | 23i64
+                | 24i64
+                | 25i64
+                | 26i64
+                | 27i64
+                | 28i64
+                | 29i64
+                | 30i64
+                | 31i64
+                | 32i64
+                | 33i64
+                | 34i64
+                | 35i64
+                | 36i64
+                | 37i64
+                | 38i64
+                | 39i64
+                | 40i64
+                | 41i64
+                | 42i64
+                | 43i64
+                | 44i64
+                | 45i64
+                | 46i64
+                | 47i64
+                | 48i64
+                | 49i64
+                | 50i64
+                | 51i64
+                | 52i64
+                | 53i64
+                | 54i64
+                | 55i64
+                | 56i64
+                | 57i64
+                | 58i64
+                | 59i64
+                | 60i64
+                | 61i64
+                | 62i64
+                | 63i64
+                | 64i64
+                | 65i64
+                | 66i64
+                | 67i64
+                | 68i64
+                | 69i64
+                | 70i64
+                | 71i64
+                | 72i64
+                | 73i64
+                | 74i64
+                | 75i64
+                | 76i64
+                | 77i64
+                | 78i64
+                | 79i64
+                | 80i64
+        )
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -22850,30 +22216,29 @@ pub enum OlympicLiftExerciseName {
 }
 impl OlympicLiftExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            9i64 => true,
-            10i64 => true,
-            11i64 => true,
-            12i64 => true,
-            13i64 => true,
-            14i64 => true,
-            15i64 => true,
-            16i64 => true,
-            17i64 => true,
-            18i64 => true,
-            19i64 => true,
-            20i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+                | 15i64
+                | 16i64
+                | 17i64
+                | 18i64
+                | 19i64
+                | 20i64
+        )
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -23126,144 +22491,143 @@ pub enum PlankExerciseName {
 }
 impl PlankExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            9i64 => true,
-            10i64 => true,
-            11i64 => true,
-            12i64 => true,
-            13i64 => true,
-            14i64 => true,
-            15i64 => true,
-            16i64 => true,
-            17i64 => true,
-            18i64 => true,
-            19i64 => true,
-            20i64 => true,
-            21i64 => true,
-            22i64 => true,
-            23i64 => true,
-            24i64 => true,
-            25i64 => true,
-            26i64 => true,
-            27i64 => true,
-            28i64 => true,
-            29i64 => true,
-            30i64 => true,
-            31i64 => true,
-            32i64 => true,
-            33i64 => true,
-            34i64 => true,
-            35i64 => true,
-            36i64 => true,
-            37i64 => true,
-            38i64 => true,
-            39i64 => true,
-            40i64 => true,
-            41i64 => true,
-            42i64 => true,
-            43i64 => true,
-            44i64 => true,
-            45i64 => true,
-            46i64 => true,
-            47i64 => true,
-            48i64 => true,
-            49i64 => true,
-            50i64 => true,
-            51i64 => true,
-            52i64 => true,
-            53i64 => true,
-            54i64 => true,
-            55i64 => true,
-            56i64 => true,
-            57i64 => true,
-            58i64 => true,
-            59i64 => true,
-            60i64 => true,
-            61i64 => true,
-            62i64 => true,
-            63i64 => true,
-            64i64 => true,
-            65i64 => true,
-            66i64 => true,
-            67i64 => true,
-            68i64 => true,
-            69i64 => true,
-            70i64 => true,
-            71i64 => true,
-            72i64 => true,
-            73i64 => true,
-            74i64 => true,
-            75i64 => true,
-            76i64 => true,
-            77i64 => true,
-            78i64 => true,
-            79i64 => true,
-            80i64 => true,
-            81i64 => true,
-            82i64 => true,
-            83i64 => true,
-            84i64 => true,
-            85i64 => true,
-            86i64 => true,
-            87i64 => true,
-            88i64 => true,
-            89i64 => true,
-            90i64 => true,
-            91i64 => true,
-            92i64 => true,
-            93i64 => true,
-            94i64 => true,
-            95i64 => true,
-            96i64 => true,
-            97i64 => true,
-            98i64 => true,
-            99i64 => true,
-            100i64 => true,
-            101i64 => true,
-            102i64 => true,
-            103i64 => true,
-            104i64 => true,
-            105i64 => true,
-            106i64 => true,
-            107i64 => true,
-            108i64 => true,
-            109i64 => true,
-            110i64 => true,
-            111i64 => true,
-            112i64 => true,
-            113i64 => true,
-            114i64 => true,
-            115i64 => true,
-            116i64 => true,
-            117i64 => true,
-            118i64 => true,
-            119i64 => true,
-            120i64 => true,
-            121i64 => true,
-            122i64 => true,
-            123i64 => true,
-            124i64 => true,
-            125i64 => true,
-            126i64 => true,
-            127i64 => true,
-            128i64 => true,
-            129i64 => true,
-            130i64 => true,
-            131i64 => true,
-            132i64 => true,
-            133i64 => true,
-            134i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+                | 15i64
+                | 16i64
+                | 17i64
+                | 18i64
+                | 19i64
+                | 20i64
+                | 21i64
+                | 22i64
+                | 23i64
+                | 24i64
+                | 25i64
+                | 26i64
+                | 27i64
+                | 28i64
+                | 29i64
+                | 30i64
+                | 31i64
+                | 32i64
+                | 33i64
+                | 34i64
+                | 35i64
+                | 36i64
+                | 37i64
+                | 38i64
+                | 39i64
+                | 40i64
+                | 41i64
+                | 42i64
+                | 43i64
+                | 44i64
+                | 45i64
+                | 46i64
+                | 47i64
+                | 48i64
+                | 49i64
+                | 50i64
+                | 51i64
+                | 52i64
+                | 53i64
+                | 54i64
+                | 55i64
+                | 56i64
+                | 57i64
+                | 58i64
+                | 59i64
+                | 60i64
+                | 61i64
+                | 62i64
+                | 63i64
+                | 64i64
+                | 65i64
+                | 66i64
+                | 67i64
+                | 68i64
+                | 69i64
+                | 70i64
+                | 71i64
+                | 72i64
+                | 73i64
+                | 74i64
+                | 75i64
+                | 76i64
+                | 77i64
+                | 78i64
+                | 79i64
+                | 80i64
+                | 81i64
+                | 82i64
+                | 83i64
+                | 84i64
+                | 85i64
+                | 86i64
+                | 87i64
+                | 88i64
+                | 89i64
+                | 90i64
+                | 91i64
+                | 92i64
+                | 93i64
+                | 94i64
+                | 95i64
+                | 96i64
+                | 97i64
+                | 98i64
+                | 99i64
+                | 100i64
+                | 101i64
+                | 102i64
+                | 103i64
+                | 104i64
+                | 105i64
+                | 106i64
+                | 107i64
+                | 108i64
+                | 109i64
+                | 110i64
+                | 111i64
+                | 112i64
+                | 113i64
+                | 114i64
+                | 115i64
+                | 116i64
+                | 117i64
+                | 118i64
+                | 119i64
+                | 120i64
+                | 121i64
+                | 122i64
+                | 123i64
+                | 124i64
+                | 125i64
+                | 126i64
+                | 127i64
+                | 128i64
+                | 129i64
+                | 130i64
+                | 131i64
+                | 132i64
+                | 133i64
+                | 134i64
+        )
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -23873,42 +23237,41 @@ pub enum PlyoExerciseName {
 }
 impl PlyoExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            9i64 => true,
-            10i64 => true,
-            11i64 => true,
-            12i64 => true,
-            13i64 => true,
-            14i64 => true,
-            15i64 => true,
-            16i64 => true,
-            17i64 => true,
-            18i64 => true,
-            19i64 => true,
-            20i64 => true,
-            21i64 => true,
-            22i64 => true,
-            23i64 => true,
-            24i64 => true,
-            25i64 => true,
-            26i64 => true,
-            27i64 => true,
-            28i64 => true,
-            29i64 => true,
-            30i64 => true,
-            31i64 => true,
-            32i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+                | 15i64
+                | 16i64
+                | 17i64
+                | 18i64
+                | 19i64
+                | 20i64
+                | 21i64
+                | 22i64
+                | 23i64
+                | 24i64
+                | 25i64
+                | 26i64
+                | 27i64
+                | 28i64
+                | 29i64
+                | 30i64
+                | 31i64
+                | 32i64
+        )
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -24111,48 +23474,47 @@ pub enum PullUpExerciseName {
 }
 impl PullUpExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            9i64 => true,
-            10i64 => true,
-            11i64 => true,
-            12i64 => true,
-            13i64 => true,
-            14i64 => true,
-            15i64 => true,
-            16i64 => true,
-            17i64 => true,
-            18i64 => true,
-            19i64 => true,
-            20i64 => true,
-            21i64 => true,
-            22i64 => true,
-            23i64 => true,
-            24i64 => true,
-            25i64 => true,
-            26i64 => true,
-            27i64 => true,
-            28i64 => true,
-            29i64 => true,
-            30i64 => true,
-            31i64 => true,
-            32i64 => true,
-            33i64 => true,
-            34i64 => true,
-            35i64 => true,
-            36i64 => true,
-            37i64 => true,
-            38i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+                | 15i64
+                | 16i64
+                | 17i64
+                | 18i64
+                | 19i64
+                | 20i64
+                | 21i64
+                | 22i64
+                | 23i64
+                | 24i64
+                | 25i64
+                | 26i64
+                | 27i64
+                | 28i64
+                | 29i64
+                | 30i64
+                | 31i64
+                | 32i64
+                | 33i64
+                | 34i64
+                | 35i64
+                | 36i64
+                | 37i64
+                | 38i64
+        )
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -24397,88 +23759,87 @@ pub enum PushUpExerciseName {
 }
 impl PushUpExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            9i64 => true,
-            10i64 => true,
-            11i64 => true,
-            12i64 => true,
-            13i64 => true,
-            14i64 => true,
-            15i64 => true,
-            16i64 => true,
-            17i64 => true,
-            18i64 => true,
-            19i64 => true,
-            20i64 => true,
-            21i64 => true,
-            22i64 => true,
-            23i64 => true,
-            24i64 => true,
-            25i64 => true,
-            26i64 => true,
-            27i64 => true,
-            28i64 => true,
-            29i64 => true,
-            30i64 => true,
-            31i64 => true,
-            32i64 => true,
-            33i64 => true,
-            34i64 => true,
-            35i64 => true,
-            36i64 => true,
-            37i64 => true,
-            38i64 => true,
-            39i64 => true,
-            40i64 => true,
-            41i64 => true,
-            42i64 => true,
-            43i64 => true,
-            44i64 => true,
-            45i64 => true,
-            46i64 => true,
-            47i64 => true,
-            48i64 => true,
-            49i64 => true,
-            50i64 => true,
-            51i64 => true,
-            52i64 => true,
-            53i64 => true,
-            54i64 => true,
-            55i64 => true,
-            56i64 => true,
-            57i64 => true,
-            58i64 => true,
-            59i64 => true,
-            60i64 => true,
-            61i64 => true,
-            62i64 => true,
-            63i64 => true,
-            64i64 => true,
-            65i64 => true,
-            66i64 => true,
-            67i64 => true,
-            68i64 => true,
-            69i64 => true,
-            70i64 => true,
-            71i64 => true,
-            72i64 => true,
-            73i64 => true,
-            74i64 => true,
-            75i64 => true,
-            76i64 => true,
-            77i64 => true,
-            78i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+                | 15i64
+                | 16i64
+                | 17i64
+                | 18i64
+                | 19i64
+                | 20i64
+                | 21i64
+                | 22i64
+                | 23i64
+                | 24i64
+                | 25i64
+                | 26i64
+                | 27i64
+                | 28i64
+                | 29i64
+                | 30i64
+                | 31i64
+                | 32i64
+                | 33i64
+                | 34i64
+                | 35i64
+                | 36i64
+                | 37i64
+                | 38i64
+                | 39i64
+                | 40i64
+                | 41i64
+                | 42i64
+                | 43i64
+                | 44i64
+                | 45i64
+                | 46i64
+                | 47i64
+                | 48i64
+                | 49i64
+                | 50i64
+                | 51i64
+                | 52i64
+                | 53i64
+                | 54i64
+                | 55i64
+                | 56i64
+                | 57i64
+                | 58i64
+                | 59i64
+                | 60i64
+                | 61i64
+                | 62i64
+                | 63i64
+                | 64i64
+                | 65i64
+                | 66i64
+                | 67i64
+                | 68i64
+                | 69i64
+                | 70i64
+                | 71i64
+                | 72i64
+                | 73i64
+                | 74i64
+                | 75i64
+                | 76i64
+                | 77i64
+                | 78i64
+        )
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -24852,43 +24213,42 @@ pub enum RowExerciseName {
 }
 impl RowExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            9i64 => true,
-            10i64 => true,
-            11i64 => true,
-            12i64 => true,
-            13i64 => true,
-            14i64 => true,
-            15i64 => true,
-            16i64 => true,
-            17i64 => true,
-            18i64 => true,
-            19i64 => true,
-            20i64 => true,
-            21i64 => true,
-            22i64 => true,
-            23i64 => true,
-            24i64 => true,
-            25i64 => true,
-            26i64 => true,
-            27i64 => true,
-            28i64 => true,
-            29i64 => true,
-            30i64 => true,
-            31i64 => true,
-            32i64 => true,
-            33i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+                | 15i64
+                | 16i64
+                | 17i64
+                | 18i64
+                | 19i64
+                | 20i64
+                | 21i64
+                | 22i64
+                | 23i64
+                | 24i64
+                | 25i64
+                | 26i64
+                | 27i64
+                | 28i64
+                | 29i64
+                | 30i64
+                | 31i64
+                | 32i64
+                | 33i64
+        )
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -25087,33 +24447,32 @@ pub enum ShoulderPressExerciseName {
 }
 impl ShoulderPressExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            9i64 => true,
-            10i64 => true,
-            11i64 => true,
-            12i64 => true,
-            13i64 => true,
-            14i64 => true,
-            15i64 => true,
-            16i64 => true,
-            17i64 => true,
-            18i64 => true,
-            19i64 => true,
-            20i64 => true,
-            21i64 => true,
-            22i64 => true,
-            23i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+                | 15i64
+                | 16i64
+                | 17i64
+                | 18i64
+                | 19i64
+                | 20i64
+                | 21i64
+                | 22i64
+                | 23i64
+        )
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -25299,42 +24658,41 @@ pub enum ShoulderStabilityExerciseName {
 }
 impl ShoulderStabilityExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            9i64 => true,
-            10i64 => true,
-            11i64 => true,
-            12i64 => true,
-            13i64 => true,
-            14i64 => true,
-            15i64 => true,
-            16i64 => true,
-            17i64 => true,
-            18i64 => true,
-            19i64 => true,
-            20i64 => true,
-            21i64 => true,
-            22i64 => true,
-            23i64 => true,
-            24i64 => true,
-            25i64 => true,
-            26i64 => true,
-            27i64 => true,
-            28i64 => true,
-            29i64 => true,
-            30i64 => true,
-            31i64 => true,
-            32i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+                | 15i64
+                | 16i64
+                | 17i64
+                | 18i64
+                | 19i64
+                | 20i64
+                | 21i64
+                | 22i64
+                | 23i64
+                | 24i64
+                | 25i64
+                | 26i64
+                | 27i64
+                | 28i64
+                | 29i64
+                | 30i64
+                | 31i64
+                | 32i64
+        )
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -25537,26 +24895,25 @@ pub enum ShrugExerciseName {
 }
 impl ShrugExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            9i64 => true,
-            10i64 => true,
-            11i64 => true,
-            12i64 => true,
-            13i64 => true,
-            14i64 => true,
-            15i64 => true,
-            16i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+                | 15i64
+                | 16i64
+        )
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -25696,47 +25053,46 @@ pub enum SitUpExerciseName {
 }
 impl SitUpExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            9i64 => true,
-            10i64 => true,
-            11i64 => true,
-            12i64 => true,
-            13i64 => true,
-            14i64 => true,
-            15i64 => true,
-            16i64 => true,
-            17i64 => true,
-            18i64 => true,
-            19i64 => true,
-            20i64 => true,
-            21i64 => true,
-            22i64 => true,
-            23i64 => true,
-            24i64 => true,
-            25i64 => true,
-            26i64 => true,
-            27i64 => true,
-            28i64 => true,
-            29i64 => true,
-            30i64 => true,
-            31i64 => true,
-            32i64 => true,
-            33i64 => true,
-            34i64 => true,
-            35i64 => true,
-            36i64 => true,
-            37i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+                | 15i64
+                | 16i64
+                | 17i64
+                | 18i64
+                | 19i64
+                | 20i64
+                | 21i64
+                | 22i64
+                | 23i64
+                | 24i64
+                | 25i64
+                | 26i64
+                | 27i64
+                | 28i64
+                | 29i64
+                | 30i64
+                | 31i64
+                | 32i64
+                | 33i64
+                | 34i64
+                | 35i64
+                | 36i64
+                | 37i64
+        )
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -26004,101 +25360,100 @@ pub enum SquatExerciseName {
 }
 impl SquatExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            9i64 => true,
-            10i64 => true,
-            11i64 => true,
-            12i64 => true,
-            13i64 => true,
-            14i64 => true,
-            15i64 => true,
-            16i64 => true,
-            17i64 => true,
-            18i64 => true,
-            19i64 => true,
-            20i64 => true,
-            21i64 => true,
-            22i64 => true,
-            23i64 => true,
-            24i64 => true,
-            25i64 => true,
-            26i64 => true,
-            27i64 => true,
-            28i64 => true,
-            29i64 => true,
-            30i64 => true,
-            31i64 => true,
-            32i64 => true,
-            33i64 => true,
-            34i64 => true,
-            35i64 => true,
-            36i64 => true,
-            37i64 => true,
-            38i64 => true,
-            39i64 => true,
-            40i64 => true,
-            41i64 => true,
-            42i64 => true,
-            43i64 => true,
-            44i64 => true,
-            45i64 => true,
-            46i64 => true,
-            47i64 => true,
-            48i64 => true,
-            49i64 => true,
-            50i64 => true,
-            51i64 => true,
-            52i64 => true,
-            53i64 => true,
-            54i64 => true,
-            55i64 => true,
-            56i64 => true,
-            57i64 => true,
-            58i64 => true,
-            59i64 => true,
-            60i64 => true,
-            61i64 => true,
-            62i64 => true,
-            63i64 => true,
-            64i64 => true,
-            65i64 => true,
-            66i64 => true,
-            67i64 => true,
-            68i64 => true,
-            69i64 => true,
-            70i64 => true,
-            71i64 => true,
-            72i64 => true,
-            73i64 => true,
-            74i64 => true,
-            75i64 => true,
-            76i64 => true,
-            77i64 => true,
-            78i64 => true,
-            79i64 => true,
-            80i64 => true,
-            81i64 => true,
-            82i64 => true,
-            83i64 => true,
-            84i64 => true,
-            85i64 => true,
-            86i64 => true,
-            87i64 => true,
-            88i64 => true,
-            89i64 => true,
-            90i64 => true,
-            91i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+                | 15i64
+                | 16i64
+                | 17i64
+                | 18i64
+                | 19i64
+                | 20i64
+                | 21i64
+                | 22i64
+                | 23i64
+                | 24i64
+                | 25i64
+                | 26i64
+                | 27i64
+                | 28i64
+                | 29i64
+                | 30i64
+                | 31i64
+                | 32i64
+                | 33i64
+                | 34i64
+                | 35i64
+                | 36i64
+                | 37i64
+                | 38i64
+                | 39i64
+                | 40i64
+                | 41i64
+                | 42i64
+                | 43i64
+                | 44i64
+                | 45i64
+                | 46i64
+                | 47i64
+                | 48i64
+                | 49i64
+                | 50i64
+                | 51i64
+                | 52i64
+                | 53i64
+                | 54i64
+                | 55i64
+                | 56i64
+                | 57i64
+                | 58i64
+                | 59i64
+                | 60i64
+                | 61i64
+                | 62i64
+                | 63i64
+                | 64i64
+                | 65i64
+                | 66i64
+                | 67i64
+                | 68i64
+                | 69i64
+                | 70i64
+                | 71i64
+                | 72i64
+                | 73i64
+                | 74i64
+                | 75i64
+                | 76i64
+                | 77i64
+                | 78i64
+                | 79i64
+                | 80i64
+                | 81i64
+                | 82i64
+                | 83i64
+                | 84i64
+                | 85i64
+                | 86i64
+                | 87i64
+                | 88i64
+                | 89i64
+                | 90i64
+                | 91i64
+        )
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -26471,22 +25826,21 @@ pub enum TotalBodyExerciseName {
 }
 impl TotalBodyExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            9i64 => true,
-            10i64 => true,
-            11i64 => true,
-            12i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+        )
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -26619,50 +25973,49 @@ pub enum TricepsExtensionExerciseName {
 }
 impl TricepsExtensionExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            9i64 => true,
-            10i64 => true,
-            11i64 => true,
-            12i64 => true,
-            13i64 => true,
-            14i64 => true,
-            15i64 => true,
-            16i64 => true,
-            17i64 => true,
-            18i64 => true,
-            19i64 => true,
-            20i64 => true,
-            21i64 => true,
-            22i64 => true,
-            23i64 => true,
-            24i64 => true,
-            25i64 => true,
-            26i64 => true,
-            27i64 => true,
-            28i64 => true,
-            29i64 => true,
-            30i64 => true,
-            31i64 => true,
-            32i64 => true,
-            33i64 => true,
-            34i64 => true,
-            35i64 => true,
-            36i64 => true,
-            37i64 => true,
-            38i64 => true,
-            39i64 => true,
-            40i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+                | 15i64
+                | 16i64
+                | 17i64
+                | 18i64
+                | 19i64
+                | 20i64
+                | 21i64
+                | 22i64
+                | 23i64
+                | 24i64
+                | 25i64
+                | 26i64
+                | 27i64
+                | 28i64
+                | 29i64
+                | 30i64
+                | 31i64
+                | 32i64
+                | 33i64
+                | 34i64
+                | 35i64
+                | 36i64
+                | 37i64
+                | 38i64
+                | 39i64
+                | 40i64
+        )
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -26918,40 +26271,39 @@ pub enum WarmUpExerciseName {
 }
 impl WarmUpExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            9i64 => true,
-            10i64 => true,
-            11i64 => true,
-            12i64 => true,
-            13i64 => true,
-            14i64 => true,
-            15i64 => true,
-            16i64 => true,
-            17i64 => true,
-            18i64 => true,
-            19i64 => true,
-            20i64 => true,
-            21i64 => true,
-            22i64 => true,
-            23i64 => true,
-            24i64 => true,
-            25i64 => true,
-            26i64 => true,
-            27i64 => true,
-            28i64 => true,
-            29i64 => true,
-            30i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+                | 15i64
+                | 16i64
+                | 17i64
+                | 18i64
+                | 19i64
+                | 20i64
+                | 21i64
+                | 22i64
+                | 23i64
+                | 24i64
+                | 25i64
+                | 26i64
+                | 27i64
+                | 28i64
+                | 29i64
+                | 30i64
+        )
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -27107,13 +26459,7 @@ pub enum RunExerciseName {
 }
 impl RunExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64 | 3i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -27176,13 +26522,7 @@ pub enum WaterType {
 }
 impl WaterType {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64 | 3i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -27240,10 +26580,7 @@ pub enum TissueModelType {
 }
 impl TissueModelType {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -27293,12 +26630,7 @@ pub enum DiveGasStatus {
 }
 impl DiveGasStatus {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -27397,48 +26729,47 @@ pub enum DiveAlert {
 }
 impl DiveAlert {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            9i64 => true,
-            10i64 => true,
-            11i64 => true,
-            12i64 => true,
-            13i64 => true,
-            14i64 => true,
-            15i64 => true,
-            16i64 => true,
-            17i64 => true,
-            18i64 => true,
-            19i64 => true,
-            20i64 => true,
-            21i64 => true,
-            22i64 => true,
-            23i64 => true,
-            24i64 => true,
-            25i64 => true,
-            26i64 => true,
-            27i64 => true,
-            28i64 => true,
-            29i64 => true,
-            30i64 => true,
-            32i64 => true,
-            33i64 => true,
-            34i64 => true,
-            35i64 => true,
-            36i64 => true,
-            37i64 => true,
-            38i64 => true,
-            39i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+                | 15i64
+                | 16i64
+                | 17i64
+                | 18i64
+                | 19i64
+                | 20i64
+                | 21i64
+                | 22i64
+                | 23i64
+                | 24i64
+                | 25i64
+                | 26i64
+                | 27i64
+                | 28i64
+                | 29i64
+                | 30i64
+                | 32i64
+                | 33i64
+                | 34i64
+                | 35i64
+                | 36i64
+                | 37i64
+                | 38i64
+                | 39i64
+        )
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -27605,12 +26936,7 @@ pub enum DiveAlarmType {
 }
 impl DiveAlarmType {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -27665,11 +26991,7 @@ pub enum DiveBacklightMode {
 }
 impl DiveBacklightMode {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -27724,14 +27046,7 @@ pub enum SleepLevel {
 }
 impl SleepLevel {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64 | 3i64 | 4i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -27794,13 +27109,7 @@ pub enum Spo2MeasurementType {
 }
 impl Spo2MeasurementType {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64 | 3i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -27860,11 +27169,7 @@ pub enum CcrSetpointSwitchMode {
 }
 impl CcrSetpointSwitchMode {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -27916,11 +27221,7 @@ pub enum DiveGasMode {
 }
 impl DiveGasMode {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -27982,15 +27283,7 @@ pub enum ProjectileType {
 }
 impl ProjectileType {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64 | 3i64 | 4i64 | 5i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -28054,11 +27347,7 @@ pub enum FaveroProduct {
 }
 impl FaveroProduct {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            10i64 => true,
-            12i64 => true,
-            _ => false,
-        }
+        matches!(value, 10i64 | 12i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -28136,30 +27425,29 @@ pub enum SplitType {
 }
 impl SplitType {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            5i64 => true,
-            6i64 => true,
-            7i64 => true,
-            8i64 => true,
-            9i64 => true,
-            10i64 => true,
-            11i64 => true,
-            12i64 => true,
-            13i64 => true,
-            14i64 => true,
-            17i64 => true,
-            18i64 => true,
-            21i64 => true,
-            22i64 => true,
-            23i64 => true,
-            28i64 => true,
-            29i64 => true,
-            _ => false,
-        }
+        matches!(
+            value,
+            1i64 | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+                | 17i64
+                | 18i64
+                | 21i64
+                | 22i64
+                | 23i64
+                | 28i64
+                | 29i64
+        )
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -28269,12 +27557,7 @@ pub enum ClimbProEvent {
 }
 impl ClimbProEvent {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -28333,12 +27616,7 @@ pub enum GasConsumptionRateType {
 }
 impl GasConsumptionRateType {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -28394,12 +27672,7 @@ pub enum TapSensitivity {
 }
 impl TapSensitivity {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -28456,13 +27729,7 @@ pub enum RadarThreatLevelType {
 }
 impl RadarThreatLevelType {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64 | 3i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -28521,12 +27788,7 @@ pub enum MaxMetSpeedSource {
 }
 impl MaxMetSpeedSource {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -28583,11 +27845,7 @@ pub enum MaxMetHeartRateSource {
 }
 impl MaxMetHeartRateSource {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -28642,14 +27900,7 @@ pub enum HrvStatus {
 }
 impl HrvStatus {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            2i64 => true,
-            3i64 => true,
-            4i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64 | 2i64 | 3i64 | 4i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -28712,11 +27963,7 @@ pub enum NoFlyTimeMode {
 }
 impl NoFlyTimeMode {
     pub fn is_named_variant(value: i64) -> bool {
-        match value {
-            0i64 => true,
-            1i64 => true,
-            _ => false,
-        }
+        matches!(value, 0i64 | 1i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
