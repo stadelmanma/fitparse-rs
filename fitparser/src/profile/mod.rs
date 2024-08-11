@@ -230,6 +230,27 @@ pub fn unknown_field(field_def_num: u8, value: Value) -> FitDataField {
     )
 }
 
+/// Create an "unknown" field as a placeholder if we don't have any field information
+pub fn unknown_field_possibly_dev_field(
+    dev_field_idx: u8,
+    field_def_num: u8,
+    value: Value,
+) -> FitDataField {
+    if dev_field_idx == 255 {
+        unknown_field(field_def_num, value)
+    } else {
+        FitDataField::new(
+            format!(
+                "unknown_developer_field_{}_{}",
+                dev_field_idx, field_def_num
+            ),
+            field_def_num,
+            value,
+            String::new(),
+        )
+    }
+}
+
 /// Applies any necessary value conversions based on the field specification
 fn convert_value(
     field_type: FieldDataType,

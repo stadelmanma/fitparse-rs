@@ -2,9 +2,10 @@
 //! applying the packaged FIT profile to the data.
 use crate::error::{ErrorKind, Result};
 use crate::profile::MesgNum;
-use crate::FitDataRecord;
+use crate::{DeveloperFieldDescription, FitDataRecord};
 use nom::number::complete::le_u16;
 use std::collections::{HashMap, HashSet};
+use std::hash::Hash;
 use std::io::Read;
 use std::sync::Arc;
 
@@ -13,7 +14,7 @@ use crc::{caculate_crc, update_crc};
 mod decode;
 use decode::Decoder;
 mod parser;
-pub use parser::{FitDataMessage, FitDefinitionMessage, FitFileHeader};
+pub use parser::{BaseType, FitDataMessage, FitDefinitionMessage, FitFileHeader};
 
 /// Decoding options for the deserializer
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
@@ -97,7 +98,11 @@ impl Deserializer {
 
     /// Advance the parser state returning one of four possible objects defined within the
     /// FIT file.
-    fn deserialize_next<'de>(&mut self, input: &'de [u8]) -> Result<(&'de [u8], FitObject)> {
+    fn deserialize_next<'de>(
+        &mut self,
+        input: &'de [u8],
+        developer_fields: &HashMap<(u8, u8), DeveloperFieldDescription>,
+    ) -> Result<(&'de [u8], FitObject)> {
         if self.position > 0 && self.position == self.end_of_messages {
             // extract the CRC
             return self.deserialize_crc(input);
@@ -109,7 +114,7 @@ impl Deserializer {
         }
         // if we reach this point then we must be at some position: 0 < X < self.end_of_messages
         // and a message should exist (either data or definition).
-        self.deserialize_message(input)
+        self.deserialize_message(input, developer_fields)
     }
 
     /// Parse the FIT header
@@ -164,11 +169,15 @@ impl Deserializer {
     }
 
     /// Parse a FIT data or definition message
-    fn deserialize_message<'de>(&mut self, input: &'de [u8]) -> Result<(&'de [u8], FitObject)> {
+    fn deserialize_message<'de>(
+        &mut self,
+        input: &'de [u8],
+        developer_fields: &HashMap<(u8, u8), DeveloperFieldDescription>,
+    ) -> Result<(&'de [u8], FitObject)> {
         // parse a single message of either variety
         let init_len = input.len();
-        let (remaining, message) =
-            parser::fit_message(input, &self.definitions).map_err(|e| self.to_parse_err(e))?;
+        let (remaining, message) = parser::fit_message(input, &self.definitions, developer_fields)
+            .map_err(|e| self.to_parse_err(e))?;
         // update CRC with the consumed bytes
         self.crc = update_crc(self.crc, &input[0..(input.len() - remaining.len())]);
 
@@ -252,7 +261,8 @@ impl FitStreamProcessor {
 
     /// Deserialize a FitObject from the byte stream.
     pub fn deserialize_next<'de>(&mut self, input: &'de [u8]) -> Result<(&'de [u8], FitObject)> {
-        self.deserializer.deserialize_next(input)
+        self.deserializer
+            .deserialize_next(input, &self.decoder.developer_fields)
     }
 
     /// Decode a FIT data message into a FIT data record using the defined FIT profile.

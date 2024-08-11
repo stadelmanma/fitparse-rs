@@ -3,7 +3,7 @@ use super::parser::FitDataMessage;
 use super::DecodeOption;
 use crate::error::Result;
 use crate::profile::{MesgNum, TimestampField};
-use crate::{FitDataField, FitDataRecord, Value};
+use crate::{DeveloperFieldDescription, FitDataField, FitDataRecord, Value};
 use std::collections::{HashMap, HashSet};
 use std::convert::{From, TryInto};
 
@@ -14,6 +14,7 @@ use std::convert::{From, TryInto};
 pub struct Decoder {
     base_timestamp: TimestampField,
     accumulate_fields: HashMap<u32, Value>,
+    pub developer_fields: HashMap<(u8, u8), DeveloperFieldDescription>,
 }
 
 impl Decoder {
@@ -22,6 +23,7 @@ impl Decoder {
         Decoder {
             base_timestamp: TimestampField::Utc(0),
             accumulate_fields: HashMap::new(),
+            developer_fields: HashMap::new(),
         }
     }
 
@@ -29,6 +31,7 @@ impl Decoder {
     pub fn reset(&mut self) {
         self.base_timestamp = TimestampField::Utc(0);
         self.accumulate_fields = HashMap::new();
+        self.developer_fields = HashMap::new();
     }
 
     /// Decode a raw FIT data message by applying the defined profile
@@ -43,14 +46,29 @@ impl Decoder {
         // check if we have a real timestamp field to set the reference
         // field id 253 always appears to be a timestamp with the type
         // FieldDataType::DateTime
-        if let Some(value) = message.fields().get(&253) {
+        if let Some(value) = message.fields().get(&(255, 253)) {
             self.base_timestamp = TimestampField::Utc(value.clone().try_into().unwrap_or(0));
         }
 
         // process raw data
-        let mut fields =
-            mesg_num.decode_message(message.fields_mut(), &mut self.accumulate_fields, options)?;
+        let mut fields = mesg_num.decode_message(
+            message.fields_mut(),
+            &mut self.accumulate_fields,
+            &self.developer_fields,
+            options,
+        )?;
         fields.sort_by_key(|f| f.number());
+        if mesg_num == MesgNum::FieldDescription {
+            // This message describes a new developer field
+            let description = DeveloperFieldDescription::new(&fields);
+            self.developer_fields.insert(
+                (
+                    description.developer_data_index,
+                    description.field_definition_number,
+                ),
+                description,
+            );
+        }
         record.extend(fields);
 
         // Add a timestamp field if we have a time offset
@@ -62,8 +80,6 @@ impl Decoder {
                 String::new(),
             ));
         }
-
-        // TODO: process developer fields
 
         Ok(record)
     }
