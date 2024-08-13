@@ -1,5 +1,9 @@
 # Changelog
 
+## HEAD
+* Bump packaged FIT SDK version to 21.141.00 (lingepumpe)
+
+
 ## v0.7.0
 * Bump packaged FIT SDK version to 21.133.00 (robinkrahl)
 * Remove dead code files in generate-fit-profile (robinkrahl)

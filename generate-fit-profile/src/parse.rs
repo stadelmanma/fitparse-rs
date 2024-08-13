@@ -405,7 +405,9 @@ fn process_types(sheet: &Range<DataType>) -> Vec<FieldTypeDefintion> {
             let comment = row[4].get_string().map(std::string::ToString::to_string);
             field_types.push(FieldTypeDefintion::new(&enum_name, rust_type, comment));
         } else if !row[2].is_empty() {
-            let Some(field_type) = field_types.last_mut() else { panic!("field_types vector was empty!") };
+            let Some(field_type) = field_types.last_mut() else {
+                panic!("field_types vector was empty!")
+            };
 
             // add enum variant
             // extract enum name
