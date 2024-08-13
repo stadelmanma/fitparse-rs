@@ -372,9 +372,6 @@ pub struct DeveloperFieldDescription {
     scale: f64,
     offset: f64,
     units: String,
-    //currently not used:
-    //native_mesg_num: Option<String>,
-    //native_field_num: Option<u8>, //This could also be from an enum, but we don't generate these currently
 }
 
 impl DeveloperFieldDescription {
@@ -438,21 +435,6 @@ impl DeveloperFieldDescription {
         } else {
             panic!("field_name must be String")
         };
-        /* Currently unused:
-        let native_mesg_num = name_to_value.get("native_mesg_num").map(|f| {
-            if let Value::String(native_mesg_num) = f {
-                String::from(native_mesg_num)
-            } else {
-                panic!("native_mesg_num must be String")
-            }
-        });
-        let native_field_num = name_to_value.get("native_field_num").map(|f| {
-            if let Value::UInt8(native_field_num) = f {
-                *native_field_num
-            } else {
-                panic!("native_field_num must be u8")
-            }
-        });*/
 
         DeveloperFieldDescription {
             developer_data_index,
