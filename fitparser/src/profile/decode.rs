@@ -1,4 +1,4 @@
-#![doc = "//! Auto generated profile messages from FIT SDK Release: 21.133.00"]
+#![doc = "//! Auto generated profile messages from FIT SDK Release: 21.141.00"]
 #![allow(unused_variables)]
 use super::field_types::*;
 use super::{calculate_cumulative_value, data_field_with_info, extract_component, unknown_field};
@@ -8,7 +8,7 @@ use crate::{FitDataField, Value};
 use std::collections::{HashMap, HashSet, VecDeque};
 use std::convert::TryInto;
 #[doc = "FIT SDK version used to generate profile decoder"]
-pub const VERSION: &str = "21.133.00";
+pub const VERSION: &str = "21.141.00";
 #[doc = "Must be first message in file."]
 #[doc = " * time_created: Only set for files that are can be created/erased."]
 #[doc = " * number: Only set for files that are not created/erased."]
@@ -12877,6 +12877,8 @@ fn activity_message_timestamp_field(
 #[doc = " * total_flow: The flow score estimates how long distance wise a cyclist deaccelerates over intervals where deacceleration is unnecessary such as smooth turns or small grade angle intervals."]
 #[doc = " * avg_grit: The grit score estimates how challenging a route could be for a cyclist in terms of time spent going over sharp turns or large grade slopes."]
 #[doc = " * avg_flow: The flow score estimates how long distance wise a cyclist deaccelerates over intervals where deacceleration is unnecessary such as smooth turns or small grade angle intervals."]
+#[doc = " * workout_feel: A 0-100 scale representing how a user felt while performing a workout. Low values are considered feeling bad, while high values are good."]
+#[doc = " * workout_rpe: Common Borg CR10 / 0-10 RPE scale, multiplied 10x.. Aggregate score for all workouts in a single session."]
 #[doc = " * avg_spo2: Average SPO2 for the monitoring session"]
 #[doc = " * avg_stress: Average stress for the monitoring session"]
 #[doc = " * sdrr_hrv: Standard deviation of R-R interval (SDRR) - Heart rate variability measure most useful for wellness users."]
@@ -15036,6 +15038,32 @@ fn session_message(
                     1f64,
                     0f64,
                     "Flow",
+                    value,
+                )?);
+            }
+            192u8 => {
+                fields.push(session_message_workout_feel_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "",
+                    value,
+                )?);
+            }
+            193u8 => {
+                fields.push(session_message_workout_rpe_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "",
                     value,
                 )?);
             }
@@ -19173,6 +19201,60 @@ fn session_message_avg_flow_field(
         187u8,
         "avg_flow",
         FieldDataType::Float32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn session_message_workout_feel_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 192u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        192u8,
+        "workout_feel",
+        FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn session_message_workout_rpe_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 193u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        193u8,
+        "workout_rpe",
+        FieldDataType::UInt8,
         scale,
         offset,
         units,
@@ -64879,6 +64961,230 @@ fn sleep_assessment_message_average_stress_during_sleep_field(
         options,
     )
 }
+#[doc = "skin_temp_overnight message definition"]
+#[doc = " * average_deviation: The average overnight deviation from baseline temperature in degrees C"]
+#[doc = " * average_7_day_deviation: The average 7 day overnight deviation from baseline temperature in degrees C"]
+#[doc = " * nightly_value: Final overnight temperature value"]
+fn skin_temp_overnight_message(
+    mesg_num: MesgNum,
+    data_map: &mut HashMap<u8, Value>,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+) -> Result<Vec<FitDataField>> {
+    let mut fields = Vec::new();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
+    while let Some((def_num, value)) = entries.pop_front() {
+        match def_num {
+            0u8 => {
+                fields.push(skin_temp_overnight_message_local_timestamp_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "",
+                    value,
+                )?);
+            }
+            1u8 => {
+                fields.push(skin_temp_overnight_message_average_deviation_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "",
+                    value,
+                )?);
+            }
+            2u8 => {
+                fields.push(skin_temp_overnight_message_average_7_day_deviation_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "",
+                    value,
+                )?);
+            }
+            4u8 => {
+                fields.push(skin_temp_overnight_message_nightly_value_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "",
+                    value,
+                )?);
+            }
+            253u8 => {
+                fields.push(skin_temp_overnight_message_timestamp_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "",
+                    value,
+                )?);
+            }
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(def_num, value));
+                }
+            }
+        }
+    }
+    Ok(fields)
+}
+fn skin_temp_overnight_message_local_timestamp_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 0u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        0u8,
+        "local_timestamp",
+        FieldDataType::LocalDateTime,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn skin_temp_overnight_message_average_deviation_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 1u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        1u8,
+        "average_deviation",
+        FieldDataType::Float32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn skin_temp_overnight_message_average_7_day_deviation_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 2u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        2u8,
+        "average_7_day_deviation",
+        FieldDataType::Float32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn skin_temp_overnight_message_nightly_value_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 4u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        4u8,
+        "nightly_value",
+        FieldDataType::Float32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn skin_temp_overnight_message_timestamp_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 253u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        253u8,
+        "timestamp",
+        FieldDataType::DateTime,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
 fn unknown_message(
     data_map: &HashMap<u8, Value>,
     options: &HashSet<DecodeOption>,
@@ -65092,6 +65398,9 @@ impl MesgNum {
             MesgNum::TankSummary => tank_summary_message(self, data_map, accumlators, options),
             MesgNum::SleepAssessment => {
                 sleep_assessment_message(self, data_map, accumlators, options)
+            }
+            MesgNum::SkinTempOvernight => {
+                skin_temp_overnight_message(self, data_map, accumlators, options)
             }
             _ => unknown_message(data_map, options),
         }

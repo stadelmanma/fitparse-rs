@@ -1,7 +1,7 @@
 #![allow(missing_docs)]
 #![allow(dead_code)]
 #![allow(clippy::unreadable_literal)]
-#![doc = "Auto generated profile field types from FIT SDK Release: 21.133.00"]
+#![doc = "Auto generated profile field types from FIT SDK Release: 21.141.00"]
 #![doc = "Not all of these may be used by the defined set of FIT messages"]
 use serde::{ser::Serializer, Serialize};
 use std::{convert, fmt};
@@ -1083,6 +1083,7 @@ pub enum MesgNum {
     ChronoShotData,
     HsaConfigurationData,
     DiveApneaAlarm,
+    SkinTempOvernight,
     #[doc = "Message number for the HSA wrist temperature data message"]
     HsaWristTemperatureData,
     #[doc = "0xFF00 - 0xFFFE reserved for manufacturer specific messages"]
@@ -1212,6 +1213,7 @@ impl MesgNum {
             388i64 => true,
             389i64 => true,
             393i64 => true,
+            398i64 => true,
             409i64 => true,
             65280i64 => true,
             65534i64 => true,
@@ -1338,6 +1340,7 @@ impl MesgNum {
             MesgNum::ChronoShotData => 388,
             MesgNum::HsaConfigurationData => 389,
             MesgNum::DiveApneaAlarm => 393,
+            MesgNum::SkinTempOvernight => 398,
             MesgNum::HsaWristTemperatureData => 409,
             MesgNum::MfgRangeMin => 65280,
             MesgNum::MfgRangeMax => 65534,
@@ -1469,6 +1472,7 @@ impl fmt::Display for MesgNum {
             MesgNum::ChronoShotData => write!(f, "chrono_shot_data"),
             MesgNum::HsaConfigurationData => write!(f, "hsa_configuration_data"),
             MesgNum::DiveApneaAlarm => write!(f, "dive_apnea_alarm"),
+            MesgNum::SkinTempOvernight => write!(f, "skin_temp_overnight"),
             MesgNum::HsaWristTemperatureData => write!(f, "hsa_wrist_temperature_data"),
             MesgNum::MfgRangeMin => write!(f, "mfg_range_min"),
             MesgNum::MfgRangeMax => write!(f, "mfg_range_max"),
@@ -1597,6 +1601,7 @@ impl convert::From<u16> for MesgNum {
             388 => MesgNum::ChronoShotData,
             389 => MesgNum::HsaConfigurationData,
             393 => MesgNum::DiveApneaAlarm,
+            398 => MesgNum::SkinTempOvernight,
             409 => MesgNum::HsaWristTemperatureData,
             65280 => MesgNum::MfgRangeMin,
             65534 => MesgNum::MfgRangeMax,
@@ -8193,6 +8198,7 @@ pub enum Manufacturer {
     Nike,
     Magicshine,
     Ictrainer,
+    AbsoluteCycling,
     Actigraphcorp,
     Value(u16),
 }
@@ -8420,6 +8426,7 @@ impl Manufacturer {
             326i64 => true,
             327i64 => true,
             328i64 => true,
+            329i64 => true,
             5759i64 => true,
             _ => false,
         }
@@ -8647,6 +8654,7 @@ impl Manufacturer {
             Manufacturer::Nike => 326,
             Manufacturer::Magicshine => 327,
             Manufacturer::Ictrainer => 328,
+            Manufacturer::AbsoluteCycling => 329,
             Manufacturer::Actigraphcorp => 5759,
             Manufacturer::Value(value) => value,
         }
@@ -8879,6 +8887,7 @@ impl fmt::Display for Manufacturer {
             Manufacturer::Nike => write!(f, "nike"),
             Manufacturer::Magicshine => write!(f, "magicshine"),
             Manufacturer::Ictrainer => write!(f, "ictrainer"),
+            Manufacturer::AbsoluteCycling => write!(f, "absolute_cycling"),
             Manufacturer::Actigraphcorp => write!(f, "actigraphcorp"),
             Manufacturer::Value(value) => write!(f, "{}", value),
         }
@@ -9108,6 +9117,7 @@ impl convert::From<u16> for Manufacturer {
             326 => Manufacturer::Nike,
             327 => Manufacturer::Magicshine,
             328 => Manufacturer::Ictrainer,
+            329 => Manufacturer::AbsoluteCycling,
             5759 => Manufacturer::Actigraphcorp,
             _ => Manufacturer::Value(value),
         }
@@ -9584,6 +9594,8 @@ pub enum GarminProduct {
     Lily2,
     Instinct2x,
     Vivoactive5,
+    Fr165,
+    Fr165Music,
     DescentT2,
     HrmFit,
     MarqGen2Commander,
@@ -10022,6 +10034,8 @@ impl GarminProduct {
             4380i64 => true,
             4394i64 => true,
             4426i64 => true,
+            4432i64 => true,
+            4433i64 => true,
             4442i64 => true,
             4446i64 => true,
             4472i64 => true,
@@ -10458,6 +10472,8 @@ impl GarminProduct {
             GarminProduct::Lily2 => 4380,
             GarminProduct::Instinct2x => 4394,
             GarminProduct::Vivoactive5 => 4426,
+            GarminProduct::Fr165 => 4432,
+            GarminProduct::Fr165Music => 4433,
             GarminProduct::DescentT2 => 4442,
             GarminProduct::HrmFit => 4446,
             GarminProduct::MarqGen2Commander => 4472,
@@ -10905,6 +10921,8 @@ impl fmt::Display for GarminProduct {
             GarminProduct::Lily2 => write!(f, "lily2"),
             GarminProduct::Instinct2x => write!(f, "instinct_2x"),
             GarminProduct::Vivoactive5 => write!(f, "vivoactive5"),
+            GarminProduct::Fr165 => write!(f, "fr165"),
+            GarminProduct::Fr165Music => write!(f, "fr165_music"),
             GarminProduct::DescentT2 => write!(f, "descent_t2"),
             GarminProduct::HrmFit => write!(f, "hrm_fit"),
             GarminProduct::MarqGen2Commander => write!(f, "marq_gen2_commander"),
@@ -11345,6 +11363,8 @@ impl convert::From<u16> for GarminProduct {
             4380 => GarminProduct::Lily2,
             4394 => GarminProduct::Instinct2x,
             4426 => GarminProduct::Vivoactive5,
+            4432 => GarminProduct::Fr165,
+            4433 => GarminProduct::Fr165Music,
             4442 => GarminProduct::DescentT2,
             4446 => GarminProduct::HrmFit,
             4472 => GarminProduct::MarqGen2Commander,
@@ -14407,8 +14427,12 @@ pub enum SegmentLeaderboardType {
     Qom,
     Pr,
     Goal,
-    Rival,
+    Carrot,
     ClubLeader,
+    Rival,
+    Last,
+    RecentBest,
+    CourseRecord,
     UnknownVariant(u8),
 }
 impl SegmentLeaderboardType {
@@ -14425,6 +14449,10 @@ impl SegmentLeaderboardType {
             8i64 => true,
             9i64 => true,
             10i64 => true,
+            11i64 => true,
+            12i64 => true,
+            13i64 => true,
+            14i64 => true,
             _ => false,
         }
     }
@@ -14439,8 +14467,12 @@ impl SegmentLeaderboardType {
             SegmentLeaderboardType::Qom => 6,
             SegmentLeaderboardType::Pr => 7,
             SegmentLeaderboardType::Goal => 8,
-            SegmentLeaderboardType::Rival => 9,
+            SegmentLeaderboardType::Carrot => 9,
             SegmentLeaderboardType::ClubLeader => 10,
+            SegmentLeaderboardType::Rival => 11,
+            SegmentLeaderboardType::Last => 12,
+            SegmentLeaderboardType::RecentBest => 13,
+            SegmentLeaderboardType::CourseRecord => 14,
             SegmentLeaderboardType::UnknownVariant(value) => value,
         }
     }
@@ -14460,8 +14492,12 @@ impl fmt::Display for SegmentLeaderboardType {
             SegmentLeaderboardType::Qom => write!(f, "qom"),
             SegmentLeaderboardType::Pr => write!(f, "pr"),
             SegmentLeaderboardType::Goal => write!(f, "goal"),
-            SegmentLeaderboardType::Rival => write!(f, "rival"),
+            SegmentLeaderboardType::Carrot => write!(f, "carrot"),
             SegmentLeaderboardType::ClubLeader => write!(f, "club_leader"),
+            SegmentLeaderboardType::Rival => write!(f, "rival"),
+            SegmentLeaderboardType::Last => write!(f, "last"),
+            SegmentLeaderboardType::RecentBest => write!(f, "recent_best"),
+            SegmentLeaderboardType::CourseRecord => write!(f, "course_record"),
             SegmentLeaderboardType::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
@@ -14478,8 +14514,12 @@ impl convert::From<u8> for SegmentLeaderboardType {
             6 => SegmentLeaderboardType::Qom,
             7 => SegmentLeaderboardType::Pr,
             8 => SegmentLeaderboardType::Goal,
-            9 => SegmentLeaderboardType::Rival,
+            9 => SegmentLeaderboardType::Carrot,
             10 => SegmentLeaderboardType::ClubLeader,
+            11 => SegmentLeaderboardType::Rival,
+            12 => SegmentLeaderboardType::Last,
+            13 => SegmentLeaderboardType::RecentBest,
+            14 => SegmentLeaderboardType::CourseRecord,
             _ => SegmentLeaderboardType::UnknownVariant(value),
         }
     }
