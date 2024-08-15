@@ -46,7 +46,7 @@ pub mod de;
 mod error;
 pub mod profile;
 
-pub use de::{from_bytes, from_reader, BaseType};
+pub use de::{from_bytes, from_reader};
 pub use error::{Error, ErrorKind, Result};
 
 /// Defines a set of data derived from a FIT Data message.
@@ -367,7 +367,7 @@ impl fmt::Display for ValueWithUnits {
 pub struct DeveloperFieldDescription {
     developer_data_index: u8,
     field_definition_number: u8,
-    fit_base_type_id: BaseType,
+    fit_base_type_id: FitBaseType,
     field_name: String,
     scale: f64,
     offset: f64,
@@ -401,8 +401,8 @@ impl DeveloperFieldDescription {
             .get("fit_base_type_id")
             .expect("fit_base_type_id is mandatory")
         {
-            // TODO: Make this prettier
-            BaseType::from(FitBaseType::from(fit_base_type_id as &str).as_u8())
+            // Since the decoder turns enums to string, we need to undo it to get FitBaseType back
+            FitBaseType::from(fit_base_type_id as &str)
         } else {
             panic!("fit_base_type_id must be String")
         };
