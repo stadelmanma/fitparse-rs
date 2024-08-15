@@ -14,7 +14,7 @@ use crc::{caculate_crc, update_crc};
 mod decode;
 use decode::Decoder;
 mod parser;
-pub use parser::{BaseType, FitDataMessage, FitDefinitionMessage, FitFileHeader};
+pub use parser::{FitDataMessage, FitDefinitionMessage, FitFileHeader};
 
 /// Decoding options for the deserializer
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
