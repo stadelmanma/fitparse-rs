@@ -267,7 +267,7 @@ impl FitBaseType {
             FitBaseType::Sint64 => 8,
             FitBaseType::Uint64 => 8,
             FitBaseType::Uint64z => 8,
-            _ => panic!("Unknown FitBaseType"),
+            _ => 1, //Unknown FitBaseType, default to Byte
         }
     }
 }
@@ -587,7 +587,7 @@ fn data_field_value(
             FitBaseType::Sint64 => i64(byte_order)(input).map(|(i, v)| (i, Value::SInt64(v)))?,
             FitBaseType::Uint64 => u64(byte_order)(input).map(|(i, v)| (i, Value::UInt64(v)))?,
             FitBaseType::Uint64z => u64(byte_order)(input).map(|(i, v)| (i, Value::UInt64z(v)))?,
-            _ => panic!("Unexpected FitBaseType"),
+            _ => le_u8(input).map(|(i, v)| (i, Value::UInt8(v)))?, // Treat unexpected like Byte
         };
         bytes_consumed += base_type.size();
         values.push(value);
