@@ -211,7 +211,10 @@ pub struct DeveloperFieldDefinition {
 pub struct FitDataMessage {
     global_message_number: u16,
     time_offset: Option<u8>,
-    fields: HashMap<(u8, u8), Value>,
+    /// Data field mapping of <(dev_data_idx, field_number), Value>
+    pub fields: HashMap<u8, Value>, //indexed by field_nr
+    /// Mutable Data field mapping of <(dev_data_idx, field_number), Value>
+    pub developer_fields: HashMap<(u8, u8), Value>, //indexed by (dev_data_idx, field_nr)
 }
 
 impl FitDataMessage {
@@ -226,13 +229,18 @@ impl FitDataMessage {
     }
 
     /// Data field mapping of <(dev_data_idx, field_number), Value>
-    pub fn fields(&self) -> &HashMap<(u8, u8), Value> {
+    pub fn fields(&self) -> &HashMap<u8, Value> {
         &self.fields
     }
 
     /// Mutable Data field mapping of <(dev_data_idx, field_number), Value>
-    pub fn fields_mut(&mut self) -> &mut HashMap<(u8, u8), Value> {
+    pub fn fields_mut(&mut self) -> &mut HashMap<u8, Value> {
         &mut self.fields
+    }
+
+    /// Data field mapping of <(dev_data_idx, field_number), Value>
+    pub fn developer_fields(&self) -> &HashMap<(u8, u8), Value> {
+        &self.developer_fields
     }
 }
 
@@ -314,18 +322,20 @@ fn split_decimal_to_float(left: u16, right: u16) -> f32 {
 pub fn fit_message<'a>(
     input: &'a [u8],
     definitions: &HashMap<u8, Arc<FitDefinitionMessage>>,
-    developer_fields: &HashMap<(u8, u8), DeveloperFieldDescription>,
+    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
 ) -> IResult<&'a [u8], FitMessage> {
     // parse a single message of either variety
     let (input, header) = message_header(input)?;
     match header.message_type {
         FitMessageType::Data => {
             if let Some(def_mesg) = definitions.get(&header.local_message_number) {
-                let (input, fields) = data_message_fields(input, def_mesg, developer_fields)?;
+                let (input, (fields, developer_fields)) =
+                    data_message_fields(input, def_mesg, developer_field_descriptions)?;
                 Ok((
                     input,
                     FitMessage::Data(FitDataMessage {
                         fields,
+                        developer_fields,
                         global_message_number: def_mesg.global_message_number,
                         time_offset: header.time_offset,
                     }),
@@ -467,9 +477,9 @@ fn developer_field_definition(input: &[u8]) -> IResult<&[u8], DeveloperFieldDefi
 fn data_message_fields<'a>(
     input: &'a [u8],
     def_mesg: &FitDefinitionMessage,
-    developer_fields: &HashMap<(u8, u8), DeveloperFieldDescription>,
-) -> IResult<&'a [u8], HashMap<(u8, u8), Value>> {
-    match data_message_fields_impl(input, def_mesg, developer_fields) {
+    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
+) -> IResult<&'a [u8], (HashMap<u8, Value>, HashMap<(u8, u8), Value>)> {
+    match data_message_fields_impl(input, def_mesg, developer_field_descriptions) {
         Ok(r) => Ok(r),
         Err(Err::Incomplete(_)) => {
             // output a correct "needed" value, subtract one because we've already parsed the header
@@ -487,9 +497,10 @@ fn data_message_fields<'a>(
 fn data_message_fields_impl<'a>(
     input: &'a [u8],
     def_mesg: &FitDefinitionMessage,
-    developer_fields: &HashMap<(u8, u8), DeveloperFieldDescription>,
-) -> IResult<&'a [u8], HashMap<(u8, u8), Value>> {
+    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
+) -> IResult<&'a [u8], (HashMap<u8, Value>, HashMap<(u8, u8), Value>)> {
     let mut fields = HashMap::new();
+    let mut developer_fields = HashMap::new();
     let mut input = input;
     for field_def in &def_mesg.field_definitions {
         let (i, value) = data_field_value(
@@ -499,13 +510,13 @@ fn data_message_fields_impl<'a>(
             field_def.size,
         )?;
         if let Some(value) = value {
-            fields.insert((255u8, field_def.field_definition_number), value);
+            fields.insert(field_def.field_definition_number, value);
         }
         input = i;
     }
     // handle developer fields analogously to fixed fields
     for field_def in &def_mesg.developer_field_definitions {
-        let dev_field_description = developer_fields
+        let dev_field_description = developer_field_descriptions
             .get(&(field_def.developer_data_index, field_def.field_number))
             .expect("Dev field must previously be defined");
         let (i, value) = data_field_value(
@@ -515,7 +526,7 @@ fn data_message_fields_impl<'a>(
             field_def.size,
         )?;
         if let Some(value) = value {
-            fields.insert(
+            developer_fields.insert(
                 (field_def.developer_data_index, field_def.field_number),
                 value,
             );
@@ -523,7 +534,7 @@ fn data_message_fields_impl<'a>(
         input = i;
     }
 
-    Ok((input, fields))
+    Ok((input, (fields, developer_fields)))
 }
 
 /// Parse a single raw data value.

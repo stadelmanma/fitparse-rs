@@ -50,34 +50,34 @@ fn decode_function_def(msg: &MessageDefinition) -> TokenStream {
 
     quote! {
         #(#comments)*
-        fn #fn_name(mesg_num: MesgNum, data_map: &mut HashMap<(u8, u8), Value>, accumlators: &mut HashMap<u32, Value>, developer_fields: &HashMap<(u8, u8), DeveloperFieldDescription>, options: &HashSet<DecodeOption>) -> Result<Vec<FitDataField>> {
+        fn #fn_name(mesg_num: MesgNum, data_map: &mut HashMap<u8, Value> , developer_data_map: &HashMap<(u8, u8), Value>, accumlators: &mut HashMap<u32, Value>, developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>, options: &HashSet<DecodeOption>) -> Result<Vec<FitDataField>> {
             let mut fields = Vec::new();
-            let mut entries: VecDeque<((u8, u8), Value)> = data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
-            while let Some(((dev_data_idx, def_num), value)) = entries.pop_front() {
-                if dev_data_idx == 255 { // Not a developer data idx
-                    match def_num {
-                        #(#match_arms)*
-                        _ => {
-                            if !options.contains(&DecodeOption::DropUnknownFields) {
-                                fields.push(unknown_field(def_num, value));
-                            }
+            let mut entries: VecDeque<(u8, Value)> = data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
+            while let Some((field_nr, value)) = entries.pop_front() {
+                match field_nr {
+                    #(#match_arms)*
+                    _ => {
+                        if !options.contains(&DecodeOption::DropUnknownFields) {
+                            fields.push(unknown_field(field_nr, value));
                         }
                     }
-                } else {
-                    let dev_definition = developer_fields
-                        .get(&(dev_data_idx, def_num))
-                        .expect("Developer fields must be defined before used.");
-                    fields.push(data_field_with_info(
-                        dev_definition.field_definition_number,
-                        &dev_definition.field_name,
-                        FieldDataType::Byte, // data_type is ignored as long as it is not timestamp
-                        dev_definition.scale,
-                        dev_definition.offset,
-                        &dev_definition.units,
-                        value,
-                        options,
-                    )?);
                 }
+            }
+            let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
+            while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
+                let dev_definition = developer_field_descriptions
+                    .get(&(dev_data_idx, field_nr))
+                    .expect("Developer fields must be defined before used.");
+                fields.push(data_field_with_info(
+                    dev_definition.field_definition_number,
+                    &dev_definition.field_name,
+                    FieldDataType::Byte, // data_type is ignored as long as it is not timestamp
+                    dev_definition.scale,
+                    dev_definition.offset,
+                    &dev_definition.units,
+                    value,
+                    options,
+                )?);
             }
             Ok(fields)
         }
@@ -191,7 +191,7 @@ fn component_exp(
         // insert back into datamap for subfield look ups and then generate
         // a decode block incase the component has subfields/nested comps
         comp_decode_block.push(quote! {
-            data_map.insert((255, #def_num), #name.clone());
+            data_map.insert(#def_num, #name.clone());
         });
 
         // When we are expanding to a field that has a single component
@@ -263,7 +263,7 @@ fn subfield_deref(
         };
 
         deref_branches.push(quote!{
-                #elif #ref_field_ident::#ref_val_ident.as_i64() == data_map.get(&(255, #ref_def_num)).and_then(|v| v.try_into().ok()).unwrap_or(-1i64) {
+                #elif #ref_field_ident::#ref_val_ident.as_i64() == data_map.get(&#ref_def_num).and_then(|v| v.try_into().ok()).unwrap_or(-1i64) {
                     #body
                 }
             });
@@ -304,7 +304,7 @@ fn create_fn_def(mesg_def: &MessageDefinition, fld_def: &MessageFieldDefinition)
         fn #field_fn_name(mesg_num: MesgNum,
             accumlators: &mut HashMap<u32, Value>,
             options: &HashSet<DecodeOption>,
-            data_map: &HashMap<(u8, u8), Value>,
+            data_map: &HashMap<u8, Value>,
             accumulate: bool,
             scale: f64,
             offset: f64,
@@ -342,7 +342,7 @@ fn generate_create_fn_call(
 fn unknown_mesg_fn() -> TokenStream {
     quote! {
         fn unknown_message(
-            data_map: &HashMap<(u8, u8), Value>,
+            data_map: &HashMap<u8, Value>,
             options: &HashSet<DecodeOption>,
         ) -> Result<Vec<FitDataField>> {
             // since it's an unknown message all the fields are unknown
@@ -350,7 +350,7 @@ fn unknown_mesg_fn() -> TokenStream {
                 return Ok(Vec::new());
             }
             let fields = data_map.iter()
-                .map(|((dev_data_idx, field_def_num), v)| unknown_field_possibly_dev_field(*dev_data_idx, *field_def_num, v.clone()))
+                .map(|(field_def_num, v)| unknown_field(*field_def_num, v.clone()))
                 .collect();
             Ok(fields)
         }
@@ -363,9 +363,9 @@ fn mesg_num_to_mesg_decode_fn(messages: &[MessageDefinition]) -> TokenStream {
     quote! {
         impl MesgNum {
             /// Decode the raw values from a FitDataMessage based on the Global Message Number
-            pub fn decode_message(self, data_map: &mut HashMap<(u8, u8), Value>, accumlators: &mut HashMap<u32, Value>, developer_fields: &HashMap<(u8, u8), DeveloperFieldDescription>, options: &HashSet<DecodeOption>) -> Result<Vec<FitDataField>> {
+            pub fn decode_message(self, data_map: &mut HashMap<u8, Value>, developer_data_map: &HashMap<(u8, u8), Value>, accumlators: &mut HashMap<u32, Value>, developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>, options: &HashSet<DecodeOption>) -> Result<Vec<FitDataField>> {
                 match self {
-                    #(MesgNum::#msg_variants => #fn_names(self, data_map, accumlators, developer_fields, options),)*
+                    #(MesgNum::#msg_variants => #fn_names(self, data_map, developer_data_map, accumlators, developer_field_descriptions, options),)*
                     _ => unknown_message(data_map, options)
                 }
             }
@@ -397,7 +397,6 @@ pub fn write_decode_file(profile: &FitProfile, out: &mut File) -> Result<(), std
             data_field_with_info,
             extract_component,
             unknown_field,
-            unknown_field_possibly_dev_field
         };
         use super::field_types::*;
         #[doc = "FIT SDK version used to generate profile decoder"]
