@@ -5,7 +5,7 @@ use super::field_types::*;
 use super::{calculate_cumulative_value, data_field_with_info, extract_component, unknown_field};
 use crate::de::DecodeOption;
 use crate::error::Result;
-use crate::{DeveloperFieldDescription, FitDataField, Value};
+use crate::{DeveloperFieldDescription, ErrorKind, FitDataField, Value};
 use std::collections::{HashMap, HashSet, VecDeque};
 use std::convert::TryInto;
 #[doc = "FIT SDK version used to generate profile decoder"]
@@ -219,7 +219,7 @@ fn file_id_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -540,7 +540,7 @@ fn file_creator_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -736,7 +736,7 @@ fn timestamp_correlation_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -1006,7 +1006,7 @@ fn software_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -1242,7 +1242,7 @@ fn slave_device_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -1456,7 +1456,7 @@ fn capabilities_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -1684,7 +1684,7 @@ fn file_capabilities_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -2006,7 +2006,7 @@ fn mesg_capabilities_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -2344,7 +2344,7 @@ fn field_capabilities_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -2858,7 +2858,7 @@ fn device_settings_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -3930,7 +3930,7 @@ fn user_profile_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -4820,7 +4820,7 @@ fn hrm_profile_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -5103,7 +5103,7 @@ fn sdm_profile_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -5782,7 +5782,7 @@ fn bike_profile_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -6860,7 +6860,7 @@ fn connectivity_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -7328,7 +7328,7 @@ fn watchface_settings_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -7541,7 +7541,7 @@ fn ohr_settings_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -7858,7 +7858,7 @@ fn time_in_zone_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -8424,7 +8424,7 @@ fn zones_target_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -8640,7 +8640,7 @@ fn sport_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -8802,7 +8802,7 @@ fn hr_zone_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -8964,7 +8964,7 @@ fn speed_zone_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -9126,7 +9126,7 @@ fn cadence_zone_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -9288,7 +9288,7 @@ fn power_zone_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -9463,7 +9463,7 @@ fn met_zone_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -10121,7 +10121,7 @@ fn dive_settings_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -11354,7 +11354,7 @@ fn dive_alarm_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -11929,7 +11929,7 @@ fn dive_apnea_alarm_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -12387,7 +12387,7 @@ fn dive_gas_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -12733,7 +12733,7 @@ fn goal_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -13232,7 +13232,7 @@ fn activity_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -15853,7 +15853,7 @@ fn session_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -22135,7 +22135,7 @@ fn lap_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -25948,7 +25948,7 @@ fn length_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -27830,7 +27830,7 @@ fn record_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -31257,7 +31257,7 @@ fn event_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -32988,7 +32988,7 @@ fn device_info_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -33800,7 +33800,7 @@ fn device_aux_battery_info_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -34142,7 +34142,7 @@ fn training_file_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -34624,7 +34624,7 @@ fn weather_conditions_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -35181,7 +35181,7 @@ fn weather_alert_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -35506,7 +35506,7 @@ fn gps_metadata_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -35858,7 +35858,7 @@ fn camera_event_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -36161,7 +36161,7 @@ fn gyroscope_data_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -36620,7 +36620,7 @@ fn accelerometer_data_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -37112,7 +37112,7 @@ fn magnetometer_data_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -37453,7 +37453,7 @@ fn barometer_data_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -37741,7 +37741,7 @@ fn three_d_sensor_calibration_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -38140,7 +38140,7 @@ fn one_d_sensor_calibration_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -38418,7 +38418,7 @@ fn video_frame_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -38667,7 +38667,7 @@ fn obdii_data_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -38994,7 +38994,7 @@ fn nmea_sentence_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -39283,7 +39283,7 @@ fn aviation_attitude_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -39689,7 +39689,7 @@ fn video_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -39853,7 +39853,7 @@ fn video_title_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -40017,7 +40017,7 @@ fn video_description_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -40233,7 +40233,7 @@ fn video_clip_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -40612,7 +40612,7 @@ fn set_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -41098,7 +41098,7 @@ fn jump_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -41657,7 +41657,7 @@ fn split_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -42394,7 +42394,7 @@ fn split_summary_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -42905,7 +42905,7 @@ fn climb_pro_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -43318,7 +43318,7 @@ fn field_description_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -43803,7 +43803,7 @@ fn developer_data_id_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -44032,7 +44032,7 @@ fn course_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -44286,7 +44286,7 @@ fn course_point_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -44670,7 +44670,7 @@ fn segment_id_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -45052,7 +45052,7 @@ fn segment_leaderboard_entry_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -45394,7 +45394,7 @@ fn segment_point_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -46962,7 +46962,7 @@ fn segment_lap_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -49726,7 +49726,7 @@ fn segment_file_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -50116,7 +50116,7 @@ fn workout_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -50465,7 +50465,7 @@ fn workout_session_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -51854,7 +51854,7 @@ fn workout_step_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -53709,7 +53709,7 @@ fn exercise_title_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -54042,7 +54042,7 @@ fn schedule_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -54469,7 +54469,7 @@ fn totals_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -54965,7 +54965,7 @@ fn weight_scale_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -55529,7 +55529,7 @@ fn blood_pressure_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -55949,7 +55949,7 @@ fn monitoring_info_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -56640,7 +56640,7 @@ fn monitoring_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -57573,7 +57573,7 @@ fn monitoring_hr_data_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -57749,7 +57749,7 @@ fn spo2_data_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -58030,7 +58030,7 @@ fn hr_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -58261,7 +58261,7 @@ fn stress_level_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -58465,7 +58465,7 @@ fn max_met_data_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -58792,7 +58792,7 @@ fn hsa_body_battery_data_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -58996,7 +58996,7 @@ fn hsa_event_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -59189,7 +59189,7 @@ fn hsa_accelerometer_data_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -59517,7 +59517,7 @@ fn hsa_gyroscope_data_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -59789,7 +59789,7 @@ fn hsa_step_data_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -59967,7 +59967,7 @@ fn hsa_spo2_data_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -60158,7 +60158,7 @@ fn hsa_stress_data_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -60322,7 +60322,7 @@ fn hsa_respiration_data_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -60500,7 +60500,7 @@ fn hsa_heart_rate_data_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -60691,7 +60691,7 @@ fn hsa_configuration_data_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -60857,7 +60857,7 @@ fn hsa_wrist_temperature_data_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -61064,7 +61064,7 @@ fn memo_glob_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -61294,7 +61294,7 @@ fn sleep_level_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -61455,7 +61455,7 @@ fn ant_channel_id_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -61749,7 +61749,7 @@ fn ant_rx_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -62070,7 +62070,7 @@ fn ant_tx_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -62327,7 +62327,7 @@ fn exd_screen_configuration_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -62584,7 +62584,7 @@ fn exd_data_field_configuration_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -62960,7 +62960,7 @@ fn exd_data_concept_configuration_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -63611,7 +63611,7 @@ fn dive_summary_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -64357,7 +64357,7 @@ fn aad_accel_features_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -64575,7 +64575,7 @@ fn hrv_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -64685,7 +64685,7 @@ fn beat_intervals_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -64918,7 +64918,7 @@ fn hrv_status_summary_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -65203,7 +65203,7 @@ fn hrv_value_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -65477,7 +65477,7 @@ fn raw_bbi_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -65708,7 +65708,7 @@ fn respiration_rate_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -65895,7 +65895,7 @@ fn chrono_shot_session_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -66165,7 +66165,7 @@ fn chrono_shot_data_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -66327,7 +66327,7 @@ fn tank_update_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -66515,7 +66515,7 @@ fn tank_summary_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -66888,7 +66888,7 @@ fn sleep_assessment_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,
@@ -67376,7 +67376,7 @@ fn skin_temp_overnight_message(
     while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
         let dev_definition = developer_field_descriptions
             .get(&(dev_data_idx, field_nr))
-            .expect("Developer fields must be defined before used.");
+            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
         fields.push(data_field_with_info(
             dev_definition.field_definition_number,
             &dev_definition.field_name,

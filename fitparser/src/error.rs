@@ -30,6 +30,8 @@ pub enum ErrorKind {
     UnexpectedEof(nom::Needed),
     /// Errors related to interactions with a Value enum
     ValueError(String),
+    /// Developer fields must be defined before they can be mentioned
+    MissingDeveloperDefinitionMessage(),
 }
 
 impl StdError for ErrorKind {
@@ -42,6 +44,7 @@ impl StdError for ErrorKind {
             ErrorKind::ParseError(..) => None, // TODO, I should chain nom's error in here somehow
             ErrorKind::UnexpectedEof(..) => None,
             ErrorKind::ValueError(..) => None,
+            ErrorKind::MissingDeveloperDefinitionMessage(..) => None,
         }
     }
 }
@@ -89,6 +92,9 @@ impl fmt::Display for ErrorKind {
                 write!(fmt, "parser error: requires more data")
             }
             ErrorKind::ValueError(ref message) => write!(fmt, "value error: {}", message),
+            ErrorKind::MissingDeveloperDefinitionMessage() => {
+                write!(fmt, "developer field referenced before being defined")
+            }
         }
     }
 }
