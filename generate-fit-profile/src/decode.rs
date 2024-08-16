@@ -65,9 +65,7 @@ fn decode_function_def(msg: &MessageDefinition) -> TokenStream {
             }
             let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
             while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-                let dev_definition = developer_field_descriptions
-                    .get(&(dev_data_idx, field_nr))
-                    .expect("Developer fields must be defined before used.");
+                let dev_definition = developer_field_descriptions.get(&(dev_data_idx, field_nr)).ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
                 fields.push(data_field_with_info(
                     dev_definition.field_definition_number,
                     &dev_definition.field_name,
@@ -389,7 +387,7 @@ pub fn write_decode_file(profile: &FitProfile, out: &mut File) -> Result<(), std
         #![allow(clippy::if_same_then_else, clippy::too_many_arguments)]
         use std::collections::{HashMap, HashSet, VecDeque};
         use std::convert::TryInto;
-        use crate::{{DeveloperFieldDescription, FitDataField, Value}};
+        use crate::{{DeveloperFieldDescription, ErrorKind, FitDataField, Value}};
         use crate::de::{{DecodeOption}};
         use crate::error::{{Result}};
         use super::{
