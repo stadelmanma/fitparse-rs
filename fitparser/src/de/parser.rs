@@ -518,7 +518,12 @@ fn data_message_fields_impl<'a>(
     for field_def in &def_mesg.developer_field_definitions {
         let dev_field_description = developer_field_descriptions
             .get(&(field_def.developer_data_index, field_def.field_number))
-            .expect("Dev field must previously be defined");
+            .ok_or({
+                nom::Err::Error(nom::error::Error {
+                    input,
+                    code: nom::error::ErrorKind::Fail,
+                })
+            })?;
         let (i, value) = data_field_value(
             input,
             dev_field_description.fit_base_type_id,

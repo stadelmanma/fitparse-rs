@@ -374,37 +374,50 @@ pub struct DeveloperFieldDescription {
     units: String,
 }
 
-impl DeveloperFieldDescription {
+impl TryFrom<&Vec<FitDataField>> for DeveloperFieldDescription {
+    type Error = ErrorKind;
+
     /// Create DeveloperFieldDescription from FitDataFields
-    pub fn new(fields: &Vec<FitDataField>) -> Self {
+    fn try_from(
+        fields: &Vec<FitDataField>,
+    ) -> std::result::Result<DeveloperFieldDescription, error::ErrorKind> {
         let mut name_to_value = HashMap::new();
         for field in fields {
             name_to_value.insert(field.name.clone(), field.value.clone());
         }
         let developer_data_index = if let Value::UInt8(developer_data_index) = name_to_value
             .get("developer_data_index")
-            .expect("developer_data_index is mandatory")
-        {
+            .ok_or(ErrorKind::ValueError(
+                "developer_data_index is mandatory".to_string(),
+            ))? {
             *developer_data_index
         } else {
-            panic!("developer_data_index must be u8")
+            return Err(ErrorKind::ValueError(
+                "developer_data_index must be u8".to_string(),
+            ));
         };
         let field_definition_number = if let Value::UInt8(field_definition_number) = name_to_value
             .get("field_definition_number")
-            .expect("field_definition_number is mandatory")
-        {
+            .ok_or(ErrorKind::ValueError(
+                "field_definition_number is mandatory".to_string(),
+            ))? {
             *field_definition_number
         } else {
-            panic!("field_definition_number must be u8")
+            return Err(ErrorKind::ValueError(
+                "field_definition_number must be u8".to_string(),
+            ));
         };
         let fit_base_type_id = if let Value::String(fit_base_type_id) = name_to_value
             .get("fit_base_type_id")
-            .expect("fit_base_type_id is mandatory")
-        {
+            .ok_or(ErrorKind::ValueError(
+                "fit_base_type_id is mandatory".to_string(),
+            ))? {
             // Since the decoder turns enums to string, we need to undo it to get FitBaseType back
             FitBaseType::from(fit_base_type_id as &str)
         } else {
-            panic!("fit_base_type_id must be String")
+            return Err(ErrorKind::ValueError(
+                "fit_base_type_id must be string".to_string(),
+            ));
         };
         let field_name = if let Value::String(field_name) = name_to_value
             .get("field_name")
@@ -412,20 +425,22 @@ impl DeveloperFieldDescription {
         {
             field_name.clone()
         } else {
-            panic!("field_name must be String")
+            return Err(ErrorKind::ValueError(
+                "field_name must be string".to_string(),
+            ));
         };
         let scale =
             if let Value::UInt8(scale) = name_to_value.get("scale").unwrap_or(&Value::UInt8(1u8)) {
                 *scale as f64
             } else {
-                panic!("scale must be u8")
+                return Err(ErrorKind::ValueError("scale must be u8".to_string()));
             };
         let offset = if let Value::SInt8(offset) =
             name_to_value.get("offset").unwrap_or(&Value::SInt8(0i8))
         {
             *offset as f64
         } else {
-            panic!("offset must be i8")
+            return Err(ErrorKind::ValueError("offset must be i8".to_string()));
         };
         let units = if let Value::String(units) = name_to_value
             .get("units")
@@ -433,10 +448,10 @@ impl DeveloperFieldDescription {
         {
             units.clone()
         } else {
-            panic!("field_name must be String")
+            return Err(ErrorKind::ValueError("units must be string".to_string()));
         };
 
-        DeveloperFieldDescription {
+        Ok(DeveloperFieldDescription {
             developer_data_index,
             field_definition_number,
             fit_base_type_id,
@@ -444,7 +459,7 @@ impl DeveloperFieldDescription {
             scale,
             offset,
             units,
-        }
+        })
     }
 }
 

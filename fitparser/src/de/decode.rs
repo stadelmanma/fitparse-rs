@@ -61,7 +61,7 @@ impl Decoder {
         fields.sort_by_key(|f| f.number());
         if mesg_num == MesgNum::FieldDescription {
             // This message describes a new developer field
-            let description = DeveloperFieldDescription::new(&fields);
+            let description = DeveloperFieldDescription::try_from(&fields)?;
             self.developer_field_descriptions.insert(
                 (
                     description.developer_data_index,
