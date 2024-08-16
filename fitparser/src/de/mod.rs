@@ -101,7 +101,7 @@ impl Deserializer {
     fn deserialize_next<'de>(
         &mut self,
         input: &'de [u8],
-        developer_fields: &HashMap<(u8, u8), DeveloperFieldDescription>,
+        developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     ) -> Result<(&'de [u8], FitObject)> {
         if self.position > 0 && self.position == self.end_of_messages {
             // extract the CRC
@@ -114,7 +114,7 @@ impl Deserializer {
         }
         // if we reach this point then we must be at some position: 0 < X < self.end_of_messages
         // and a message should exist (either data or definition).
-        self.deserialize_message(input, developer_fields)
+        self.deserialize_message(input, developer_field_descriptions)
     }
 
     /// Parse the FIT header
@@ -262,7 +262,7 @@ impl FitStreamProcessor {
     /// Deserialize a FitObject from the byte stream.
     pub fn deserialize_next<'de>(&mut self, input: &'de [u8]) -> Result<(&'de [u8], FitObject)> {
         self.deserializer
-            .deserialize_next(input, &self.decoder.developer_fields)
+            .deserialize_next(input, &self.decoder.developer_field_descriptions)
     }
 
     /// Decode a FIT data message into a FIT data record using the defined FIT profile.
