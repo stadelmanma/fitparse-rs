@@ -14,7 +14,7 @@ use std::convert::{From, TryInto};
 pub struct Decoder {
     base_timestamp: TimestampField,
     accumulate_fields: HashMap<u32, Value>,
-    pub developer_field_descriptions: HashMap<(u8, u8), DeveloperFieldDescription>,
+    developer_field_descriptions: HashMap<(u8, u8), DeveloperFieldDescription>,
 }
 
 impl Decoder {
@@ -106,5 +106,9 @@ impl Decoder {
         }
 
         Value::from(self.base_timestamp)
+    }
+
+    pub fn developer_field_descriptions(&self) -> &HashMap<(u8, u8), DeveloperFieldDescription> {
+        &self.developer_field_descriptions
     }
 }

@@ -262,7 +262,7 @@ impl FitStreamProcessor {
     /// Deserialize a FitObject from the byte stream.
     pub fn deserialize_next<'de>(&mut self, input: &'de [u8]) -> Result<(&'de [u8], FitObject)> {
         self.deserializer
-            .deserialize_next(input, &self.decoder.developer_field_descriptions)
+            .deserialize_next(input, self.decoder.developer_field_descriptions())
     }
 
     /// Decode a FIT data message into a FIT data record using the defined FIT profile.
