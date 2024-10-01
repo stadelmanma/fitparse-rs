@@ -434,8 +434,10 @@ impl TryFrom<&Vec<FitDataField>> for DeveloperFieldDescription {
         };
         let field_name = if let Value::String(field_name) = name_to_value
             .get("field_name")
-            .unwrap_or(&Value::String("Field Name Missing".to_string()))
-        {
+            .unwrap_or(&Value::String(format!(
+                "unknown_developer_field_{}",
+                field_definition_number
+            ))) {
             field_name.clone()
         } else {
             return Err(ErrorKind::ValueError(
@@ -493,6 +495,11 @@ mod tests {
         let data = include_bytes!("../tests/fixtures/DeveloperData.fit").to_vec();
         let fit_data = from_bytes(&data).unwrap();
         assert_eq!(fit_data.len(), 6);
+        // make sure we correctly parsed the dev data
+        assert_eq!(fit_data[3].developer_fields().len(), 1);
+        assert_eq!(fit_data[3].developer_fields()[0].name(), "doughnuts_earned");
+        assert_eq!(fit_data[3].developer_fields()[0].value(), &Value::SInt8(1));
+        assert_eq!(fit_data[3].developer_fields()[0].units(), "doughnuts");
     }
 
     #[test]
