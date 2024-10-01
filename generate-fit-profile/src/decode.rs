@@ -50,7 +50,7 @@ fn decode_function_def(msg: &MessageDefinition) -> TokenStream {
 
     quote! {
         #(#comments)*
-        fn #fn_name(mesg_num: MesgNum, data_map: &mut HashMap<u8, Value> , developer_data_map: &HashMap<(u8, u8), Value>, accumlators: &mut HashMap<u32, Value>, developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>, options: &HashSet<DecodeOption>) -> Result<Vec<FitDataField>> {
+        fn #fn_name(mesg_num: MesgNum, data_map: &mut HashMap<u8, Value> , accumlators: &mut HashMap<u32, Value>, options: &HashSet<DecodeOption>) -> Result<Vec<FitDataField>> {
             let mut fields = Vec::new();
             let mut entries: VecDeque<(u8, Value)> = data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
             while let Some((field_nr, value)) = entries.pop_front() {
@@ -62,20 +62,6 @@ fn decode_function_def(msg: &MessageDefinition) -> TokenStream {
                         }
                     }
                 }
-            }
-            let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
-            while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-                let dev_definition = developer_field_descriptions.get(&(dev_data_idx, field_nr)).ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-                fields.push(data_field_with_info(
-                    dev_definition.field_definition_number,
-                    &dev_definition.field_name,
-                    FieldDataType::Byte, // data_type is ignored as long as it is not timestamp
-                    dev_definition.scale,
-                    dev_definition.offset,
-                    &dev_definition.units,
-                    value,
-                    options,
-                )?);
             }
             Ok(fields)
         }
@@ -361,9 +347,9 @@ fn mesg_num_to_mesg_decode_fn(messages: &[MessageDefinition]) -> TokenStream {
     quote! {
         impl MesgNum {
             /// Decode the raw values from a FitDataMessage based on the Global Message Number
-            pub fn decode_message(self, data_map: &mut HashMap<u8, Value>, developer_data_map: &HashMap<(u8, u8), Value>, accumlators: &mut HashMap<u32, Value>, developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>, options: &HashSet<DecodeOption>) -> Result<Vec<FitDataField>> {
+            pub fn decode_message(self, data_map: &mut HashMap<u8, Value>, accumlators: &mut HashMap<u32, Value>, options: &HashSet<DecodeOption>) -> Result<Vec<FitDataField>> {
                 match self {
-                    #(MesgNum::#msg_variants => #fn_names(self, data_map, developer_data_map, accumlators, developer_field_descriptions, options),)*
+                    #(MesgNum::#msg_variants => #fn_names(self, data_map, accumlators, options),)*
                     _ => unknown_message(data_map, options)
                 }
             }
@@ -387,7 +373,7 @@ pub fn write_decode_file(profile: &FitProfile, out: &mut File) -> Result<(), std
         #![allow(clippy::if_same_then_else, clippy::too_many_arguments)]
         use std::collections::{HashMap, HashSet, VecDeque};
         use std::convert::TryInto;
-        use crate::{{DeveloperFieldDescription, ErrorKind, FitDataField, Value}};
+        use crate::{{FitDataField, Value}};
         use crate::de::{{DecodeOption}};
         use crate::error::{{Result}};
         use super::{

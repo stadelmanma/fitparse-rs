@@ -57,6 +57,8 @@ pub struct FitDataRecord {
     kind: profile::MesgNum,
     /// All the fields present in this message, a record may not have every possible field defined
     fields: Vec<FitDataField>,
+    /// Developer defined fields
+    developer_fields: Vec<FitDataField>,
 }
 
 impl FitDataRecord {
@@ -65,6 +67,7 @@ impl FitDataRecord {
         FitDataRecord {
             kind,
             fields: Vec::new(),
+            developer_fields: Vec::new(),
         }
     }
 
@@ -76,6 +79,16 @@ impl FitDataRecord {
     /// Get all fields as a slice
     pub fn fields(&self) -> &[FitDataField] {
         &self.fields
+    }
+
+    /// Get all fields as a slice
+    pub fn developer_fields(&self) -> &[FitDataField] {
+        &self.developer_fields
+    }
+
+    /// get a mutable reference to
+    pub fn push_developer_field(&mut self, field: FitDataField) {
+        self.developer_fields.push(field);
     }
 
     /// Add a field to the record

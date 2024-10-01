@@ -2,9 +2,9 @@
 use super::parser::FitDataMessage;
 use super::DecodeOption;
 use crate::error::Result;
-use crate::profile::{MesgNum, TimestampField};
-use crate::{DeveloperFieldDescription, FitDataField, FitDataRecord, Value};
-use std::collections::{HashMap, HashSet};
+use crate::profile::{data_field_with_info, FieldDataType, MesgNum, TimestampField};
+use crate::{DeveloperFieldDescription, ErrorKind, FitDataField, FitDataRecord, Value};
+use std::collections::{HashMap, HashSet, VecDeque};
 use std::convert::{From, TryInto};
 
 /// Decodes a raw FitDataMessage using the defined profile. Additional logic is used to handle
@@ -51,13 +51,8 @@ impl Decoder {
         }
 
         // process raw data
-        let mut fields = mesg_num.decode_message(
-            &mut message.fields,
-            &message.developer_fields,
-            &mut self.accumulate_fields,
-            &self.developer_field_descriptions,
-            options,
-        )?;
+        let mut fields =
+            mesg_num.decode_message(&mut message.fields, &mut self.accumulate_fields, options)?;
         fields.sort_by_key(|f| f.number());
         if mesg_num == MesgNum::FieldDescription {
             // This message describes a new developer field
@@ -71,6 +66,7 @@ impl Decoder {
             );
         }
         record.extend(fields);
+        self.decode_developer_fields(&mut record, &message.developer_fields, options)?;
 
         // Add a timestamp field if we have a time offset
         if let Some(time_offset) = message.time_offset() {
@@ -110,5 +106,35 @@ impl Decoder {
 
     pub fn developer_field_descriptions(&self) -> &HashMap<(u8, u8), DeveloperFieldDescription> {
         &self.developer_field_descriptions
+    }
+
+    fn decode_developer_fields(
+        &self,
+        record: &mut FitDataRecord,
+        developer_data_map: &HashMap<(u8, u8), Value>,
+        options: &HashSet<DecodeOption>,
+    ) -> Result<()> {
+        let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
+            .iter()
+            .map(|(k, v)| (*k, v.clone()))
+            .collect();
+        while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
+            let dev_definition = self
+                .developer_field_descriptions
+                .get(&(dev_data_idx, field_nr))
+                .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
+            record.push_developer_field(data_field_with_info(
+                dev_definition.field_definition_number,
+                &dev_definition.field_name,
+                FieldDataType::Byte,
+                dev_definition.scale,
+                dev_definition.offset,
+                &dev_definition.units,
+                value,
+                options,
+            )?);
+        }
+
+        Ok(())
     }
 }

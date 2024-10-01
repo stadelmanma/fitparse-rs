@@ -5,7 +5,7 @@ use super::field_types::*;
 use super::{calculate_cumulative_value, data_field_with_info, extract_component, unknown_field};
 use crate::de::DecodeOption;
 use crate::error::Result;
-use crate::{DeveloperFieldDescription, ErrorKind, FitDataField, Value};
+use crate::{FitDataField, Value};
 use std::collections::{HashMap, HashSet, VecDeque};
 use std::convert::TryInto;
 #[doc = "FIT SDK version used to generate profile decoder"]
@@ -17,9 +17,7 @@ pub const VERSION: &str = "21.141.00";
 fn file_id_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -211,25 +209,6 @@ fn file_id_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -490,9 +469,7 @@ fn file_id_message_product_name_field(
 fn file_creator_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -532,25 +509,6 @@ fn file_creator_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -619,9 +577,7 @@ fn file_creator_message_hardware_version_field(
 fn timestamp_correlation_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -728,25 +684,6 @@ fn timestamp_correlation_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -943,9 +880,7 @@ fn timestamp_correlation_message_timestamp_field(
 fn software_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -998,25 +933,6 @@ fn software_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -1105,9 +1021,7 @@ fn software_message_message_index_field(
 fn slave_device_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -1235,25 +1149,6 @@ fn slave_device_message(
             }
         }
     }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
-    }
     Ok(fields)
 }
 fn slave_device_message_manufacturer_field(
@@ -1380,9 +1275,7 @@ fn slave_device_message_garmin_product_field(
 fn capabilities_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -1448,25 +1341,6 @@ fn capabilities_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -1582,9 +1456,7 @@ fn capabilities_message_connectivity_supported_field(
 fn file_capabilities_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -1676,25 +1548,6 @@ fn file_capabilities_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -1864,9 +1717,7 @@ fn file_capabilities_message_message_index_field(
 fn mesg_capabilities_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -1998,25 +1849,6 @@ fn mesg_capabilities_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -2255,9 +2087,7 @@ fn mesg_capabilities_message_message_index_field(
 fn field_capabilities_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -2336,25 +2166,6 @@ fn field_capabilities_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -2518,9 +2329,7 @@ fn field_capabilities_message_message_index_field(
 fn device_settings_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -2850,25 +2659,6 @@ fn device_settings_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -3529,9 +3319,7 @@ fn device_settings_message_tap_sensitivity_field(
 fn user_profile_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -3922,25 +3710,6 @@ fn user_profile_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -4731,9 +4500,7 @@ fn user_profile_message_message_index_field(
 fn hrm_profile_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -4812,25 +4579,6 @@ fn hrm_profile_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -4975,9 +4723,7 @@ fn hrm_profile_message_message_index_field(
 fn sdm_profile_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -5095,25 +4841,6 @@ fn sdm_profile_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -5342,9 +5069,7 @@ fn sdm_profile_message_message_index_field(
 fn bike_profile_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -5774,25 +5499,6 @@ fn bike_profile_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -6667,9 +6373,7 @@ fn bike_profile_message_message_index_field(
 fn connectivity_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -6852,25 +6556,6 @@ fn connectivity_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -7229,9 +6914,7 @@ fn connectivity_message_grouptrack_enabled_field(
 fn watchface_settings_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -7320,25 +7003,6 @@ fn watchface_settings_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -7491,9 +7155,7 @@ fn watchface_settings_message_message_index_field(
 fn ohr_settings_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -7533,25 +7195,6 @@ fn ohr_settings_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -7613,9 +7256,7 @@ fn ohr_settings_message_timestamp_field(
 fn time_in_zone_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -7850,25 +7491,6 @@ fn time_in_zone_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -8335,9 +7957,7 @@ fn time_in_zone_message_timestamp_field(
 fn zones_target_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -8416,25 +8036,6 @@ fn zones_target_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -8577,9 +8178,7 @@ fn zones_target_message_pwr_calc_type_field(
 fn sport_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -8632,25 +8231,6 @@ fn sport_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -8739,9 +8319,7 @@ fn sport_message_name_field(
 fn hr_zone_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -8794,25 +8372,6 @@ fn hr_zone_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -8901,9 +8460,7 @@ fn hr_zone_message_message_index_field(
 fn speed_zone_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -8956,25 +8513,6 @@ fn speed_zone_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -9063,9 +8601,7 @@ fn speed_zone_message_message_index_field(
 fn cadence_zone_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -9118,25 +8654,6 @@ fn cadence_zone_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -9225,9 +8742,7 @@ fn cadence_zone_message_message_index_field(
 fn power_zone_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -9280,25 +8795,6 @@ fn power_zone_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -9387,9 +8883,7 @@ fn power_zone_message_message_index_field(
 fn met_zone_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -9455,25 +8949,6 @@ fn met_zone_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -9606,9 +9081,7 @@ fn met_zone_message_message_index_field(
 fn dive_settings_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -10113,25 +9586,6 @@ fn dive_settings_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -11161,9 +10615,7 @@ fn dive_settings_message_message_index_field(
 fn dive_alarm_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -11346,25 +10798,6 @@ fn dive_alarm_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -11736,9 +11169,7 @@ fn dive_alarm_message_message_index_field(
 fn dive_apnea_alarm_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -11921,25 +11352,6 @@ fn dive_apnea_alarm_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -12298,9 +11710,7 @@ fn dive_apnea_alarm_message_message_index_field(
 fn dive_gas_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -12379,25 +11789,6 @@ fn dive_gas_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -12540,9 +11931,7 @@ fn dive_gas_message_message_index_field(
 fn goal_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -12725,25 +12114,6 @@ fn goal_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -13104,9 +12474,7 @@ fn goal_message_message_index_field(
 fn activity_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -13224,25 +12592,6 @@ fn activity_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -13525,9 +12874,7 @@ fn activity_message_timestamp_field(
 fn session_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -15845,25 +15192,6 @@ fn session_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -20253,9 +19581,7 @@ fn session_message_message_index_field(
 fn lap_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -22127,25 +21453,6 @@ fn lap_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -25604,9 +24911,7 @@ fn lap_message_message_index_field(
 fn length_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -25940,25 +25245,6 @@ fn length_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -26588,9 +25874,7 @@ fn length_message_message_index_field(
 fn record_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -27822,25 +27106,6 @@ fn record_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -30131,9 +29396,7 @@ fn record_message_timestamp_field(
 fn event_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -31249,25 +30512,6 @@ fn event_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -32560,9 +31804,7 @@ fn event_message_timestamp_field(
 fn device_info_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -32980,25 +32222,6 @@ fn device_info_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -33711,9 +32934,7 @@ fn device_info_message_timestamp_field(
 fn device_aux_battery_info_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -33792,25 +33013,6 @@ fn device_aux_battery_info_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -33953,9 +33155,7 @@ fn device_aux_battery_info_message_timestamp_field(
 fn training_file_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -34134,25 +33334,6 @@ fn training_file_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -34392,9 +33573,7 @@ fn training_file_message_timestamp_field(
 fn weather_conditions_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -34616,25 +33795,6 @@ fn weather_conditions_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -35079,9 +34239,7 @@ fn weather_conditions_message_timestamp_field(
 fn weather_alert_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -35173,25 +34331,6 @@ fn weather_alert_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -35365,9 +34504,7 @@ fn weather_alert_message_timestamp_field(
 fn gps_metadata_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -35498,25 +34635,6 @@ fn gps_metadata_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -35769,9 +34887,7 @@ fn gps_metadata_message_timestamp_field(
 fn camera_event_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -35850,25 +34966,6 @@ fn camera_event_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -36020,9 +35117,7 @@ fn camera_event_message_timestamp_field(
 fn gyroscope_data_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -36153,25 +35248,6 @@ fn gyroscope_data_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -36434,9 +35510,7 @@ fn gyroscope_data_message_timestamp_field(
 fn accelerometer_data_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -36612,25 +35686,6 @@ fn accelerometer_data_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -36971,9 +36026,7 @@ fn accelerometer_data_message_timestamp_field(
 fn magnetometer_data_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -37104,25 +36157,6 @@ fn magnetometer_data_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -37377,9 +36411,7 @@ fn magnetometer_data_message_timestamp_field(
 fn barometer_data_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -37445,25 +36477,6 @@ fn barometer_data_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -37588,9 +36601,7 @@ fn barometer_data_message_timestamp_field(
 fn three_d_sensor_calibration_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -37733,25 +36744,6 @@ fn three_d_sensor_calibration_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -38019,9 +37011,7 @@ fn three_d_sensor_calibration_message_timestamp_field(
 fn one_d_sensor_calibration_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -38132,25 +37122,6 @@ fn one_d_sensor_calibration_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -38355,9 +37326,7 @@ fn one_d_sensor_calibration_message_timestamp_field(
 fn video_frame_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -38410,25 +37379,6 @@ fn video_frame_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -38526,9 +37476,7 @@ fn video_frame_message_timestamp_field(
 fn obdii_data_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -38659,25 +37607,6 @@ fn obdii_data_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -38931,9 +37860,7 @@ fn obdii_data_message_timestamp_field(
 fn nmea_sentence_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -38986,25 +37913,6 @@ fn nmea_sentence_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -39103,9 +38011,7 @@ fn nmea_sentence_message_timestamp_field(
 fn aviation_attitude_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -39275,25 +38181,6 @@ fn aviation_attitude_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -39626,9 +38513,7 @@ fn aviation_attitude_message_timestamp_field(
 fn video_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -39681,25 +38566,6 @@ fn video_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -39790,9 +38656,7 @@ fn video_message_duration_field(
 fn video_title_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -39845,25 +38709,6 @@ fn video_title_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -39954,9 +38799,7 @@ fn video_title_message_message_index_field(
 fn video_description_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -40009,25 +38852,6 @@ fn video_description_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -40118,9 +38942,7 @@ fn video_description_message_message_index_field(
 fn video_clip_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -40225,25 +39047,6 @@ fn video_clip_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -40445,9 +39248,7 @@ fn video_clip_message_clip_end_field(
 fn set_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -40604,25 +39405,6 @@ fn set_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -40928,9 +39710,7 @@ fn set_message_timestamp_field(
 fn jump_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -41090,25 +39870,6 @@ fn jump_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -41386,9 +40147,7 @@ fn jump_message_timestamp_field(
 fn split_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -41649,25 +40408,6 @@ fn split_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -42188,9 +40928,7 @@ fn split_message_message_index_field(
 fn split_summary_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -42386,25 +41124,6 @@ fn split_summary_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -42790,9 +41509,7 @@ fn split_summary_message_message_index_field(
 fn climb_pro_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -42897,25 +41614,6 @@ fn climb_pro_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -43112,9 +41810,7 @@ fn climb_pro_message_timestamp_field(
 fn field_description_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -43310,25 +42006,6 @@ fn field_description_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -43714,9 +42391,7 @@ fn field_description_message_native_field_num_field(
 fn developer_data_id_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -43795,25 +42470,6 @@ fn developer_data_id_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -43956,9 +42612,7 @@ fn developer_data_id_message_application_version_field(
 fn course_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -44024,25 +42678,6 @@ fn course_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -44158,9 +42793,7 @@ fn course_message_sub_sport_field(
 fn course_point_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -44278,25 +42911,6 @@ fn course_point_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -44529,9 +43143,7 @@ fn course_point_message_message_index_field(
 fn segment_id_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -44662,25 +43274,6 @@ fn segment_id_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -44937,9 +43530,7 @@ fn segment_id_message_selection_type_field(
 fn segment_leaderboard_entry_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -45044,25 +43635,6 @@ fn segment_leaderboard_entry_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -45263,9 +43835,7 @@ fn segment_leaderboard_entry_message_message_index_field(
 fn segment_point_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -45386,25 +43956,6 @@ fn segment_point_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -45633,9 +44184,7 @@ fn segment_point_message_message_index_field(
 fn segment_lap_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -46954,25 +45503,6 @@ fn segment_lap_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -49585,9 +48115,7 @@ fn segment_lap_message_message_index_field(
 fn segment_file_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -49718,25 +48246,6 @@ fn segment_file_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -49988,9 +48497,7 @@ fn segment_file_message_message_index_field(
 fn workout_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -50108,25 +48615,6 @@ fn workout_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -50350,9 +48838,7 @@ fn workout_message_message_index_field(
 fn workout_session_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -50457,25 +48943,6 @@ fn workout_session_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -50682,9 +49149,7 @@ fn workout_session_message_message_index_field(
 fn workout_step_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -51846,25 +50311,6 @@ fn workout_step_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -53633,9 +52079,7 @@ fn workout_step_message_message_index_field(
 fn exercise_title_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -53701,25 +52145,6 @@ fn exercise_title_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -53840,9 +52265,7 @@ fn exercise_title_message_message_index_field(
 fn schedule_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -54034,25 +52457,6 @@ fn schedule_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -54315,9 +52719,7 @@ fn schedule_message_scheduled_time_field(
 fn totals_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -54461,25 +52863,6 @@ fn totals_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -54759,9 +53142,7 @@ fn totals_message_message_index_field(
 fn weight_scale_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -54957,25 +53338,6 @@ fn weight_scale_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -55362,9 +53724,7 @@ fn weight_scale_message_timestamp_field(
 fn blood_pressure_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -55521,25 +53881,6 @@ fn blood_pressure_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -55847,9 +54188,7 @@ fn blood_pressure_message_timestamp_field(
 fn monitoring_info_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -55941,25 +54280,6 @@ fn monitoring_info_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -56140,9 +54460,7 @@ fn monitoring_info_message_timestamp_field(
 fn monitoring_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -56632,25 +54950,6 @@ fn monitoring_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -57508,9 +55807,7 @@ fn monitoring_message_timestamp_field(
 fn monitoring_hr_data_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -57565,25 +55862,6 @@ fn monitoring_hr_data_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -57673,9 +55951,7 @@ fn monitoring_hr_data_message_timestamp_field(
 fn spo2_data_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -57741,25 +56017,6 @@ fn spo2_data_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -57875,9 +56132,7 @@ fn spo2_data_message_timestamp_field(
 fn hr_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -58022,25 +56277,6 @@ fn hr_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -58211,9 +56447,7 @@ fn hr_message_timestamp_field(
 fn stress_level_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -58253,25 +56487,6 @@ fn stress_level_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -58337,9 +56552,7 @@ fn stress_level_message_stress_level_time_field(
 fn max_met_data_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -58457,25 +56670,6 @@ fn max_met_data_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -58703,9 +56897,7 @@ fn max_met_data_message_speed_source_field(
 fn hsa_body_battery_data_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -58784,25 +56976,6 @@ fn hsa_body_battery_data_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -58946,9 +57119,7 @@ fn hsa_body_battery_data_message_timestamp_field(
 fn hsa_event_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -58988,25 +57159,6 @@ fn hsa_event_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -59074,9 +57226,7 @@ fn hsa_event_message_timestamp_field(
 fn hsa_accelerometer_data_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -59181,25 +57331,6 @@ fn hsa_accelerometer_data_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -59402,9 +57533,7 @@ fn hsa_accelerometer_data_message_timestamp_field(
 fn hsa_gyroscope_data_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -59509,25 +57638,6 @@ fn hsa_gyroscope_data_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -59726,9 +57836,7 @@ fn hsa_gyroscope_data_message_timestamp_field(
 fn hsa_step_data_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -59781,25 +57889,6 @@ fn hsa_step_data_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -59891,9 +57980,7 @@ fn hsa_step_data_message_timestamp_field(
 fn hsa_spo2_data_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -59959,25 +58046,6 @@ fn hsa_spo2_data_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -60095,9 +58163,7 @@ fn hsa_spo2_data_message_timestamp_field(
 fn hsa_stress_data_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -60150,25 +58216,6 @@ fn hsa_stress_data_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -60259,9 +58306,7 @@ fn hsa_stress_data_message_timestamp_field(
 fn hsa_respiration_data_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -60314,25 +58359,6 @@ fn hsa_respiration_data_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -60424,9 +58450,7 @@ fn hsa_respiration_data_message_timestamp_field(
 fn hsa_heart_rate_data_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -60492,25 +58516,6 @@ fn hsa_heart_rate_data_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -60628,9 +58633,7 @@ fn hsa_heart_rate_data_message_timestamp_field(
 fn hsa_configuration_data_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -60683,25 +58686,6 @@ fn hsa_configuration_data_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -60792,9 +58776,7 @@ fn hsa_configuration_data_message_timestamp_field(
 fn hsa_wrist_temperature_data_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -60849,25 +58831,6 @@ fn hsa_wrist_temperature_data_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -60962,9 +58925,7 @@ fn hsa_wrist_temperature_data_message_timestamp_field(
 fn memo_glob_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -61056,25 +59017,6 @@ fn memo_glob_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -61244,9 +59186,7 @@ fn memo_glob_message_part_index_field(
 fn sleep_level_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -61286,25 +59226,6 @@ fn sleep_level_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -61366,9 +59287,7 @@ fn sleep_level_message_timestamp_field(
 fn ant_channel_id_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -61447,25 +59366,6 @@ fn ant_channel_id_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -61608,9 +59508,7 @@ fn ant_channel_id_message_device_index_field(
 fn ant_rx_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -61741,25 +59639,6 @@ fn ant_rx_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -61929,9 +59808,7 @@ fn ant_rx_message_timestamp_field(
 fn ant_tx_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -62062,25 +59939,6 @@ fn ant_tx_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -62251,9 +60109,7 @@ fn ant_tx_message_timestamp_field(
 fn exd_screen_configuration_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -62319,25 +60175,6 @@ fn exd_screen_configuration_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -62453,9 +60290,7 @@ fn exd_screen_configuration_message_screen_enabled_field(
 fn exd_data_field_configuration_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -62576,25 +60411,6 @@ fn exd_data_field_configuration_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -62764,9 +60580,7 @@ fn exd_data_field_configuration_message_title_field(
 fn exd_data_concept_configuration_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -62952,25 +60766,6 @@ fn exd_data_concept_configuration_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -63288,9 +61083,7 @@ fn exd_data_concept_configuration_message_is_signed_field(
 fn dive_summary_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -63603,25 +61396,6 @@ fn dive_summary_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -64255,9 +62029,7 @@ fn dive_summary_message_timestamp_field(
 fn aad_accel_features_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -64349,25 +62121,6 @@ fn aad_accel_features_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -64538,9 +62291,7 @@ fn aad_accel_features_message_timestamp_field(
 fn hrv_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -64567,25 +62318,6 @@ fn hrv_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -64622,9 +62354,7 @@ fn hrv_message_time_field(
 fn beat_intervals_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -64677,25 +62407,6 @@ fn beat_intervals_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -64790,9 +62501,7 @@ fn beat_intervals_message_timestamp_field(
 fn hrv_status_summary_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -64910,25 +62619,6 @@ fn hrv_status_summary_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -65153,9 +62843,7 @@ fn hrv_status_summary_message_timestamp_field(
 fn hrv_value_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -65195,25 +62883,6 @@ fn hrv_value_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -65278,9 +62947,7 @@ fn hrv_value_message_timestamp_field(
 fn raw_bbi_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -65470,25 +63137,6 @@ fn raw_bbi_message(
             }
         }
     }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
-    }
     Ok(fields)
 }
 fn raw_bbi_message_timestamp_ms_field(
@@ -65658,9 +63306,7 @@ fn raw_bbi_message_timestamp_field(
 fn respiration_rate_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -65700,25 +63346,6 @@ fn respiration_rate_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -65780,9 +63407,7 @@ fn respiration_rate_message_timestamp_field(
 fn chrono_shot_session_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -65887,25 +63512,6 @@ fn chrono_shot_session_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -66102,9 +63708,7 @@ fn chrono_shot_session_message_timestamp_field(
 fn chrono_shot_data_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -66157,25 +63761,6 @@ fn chrono_shot_data_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -66264,9 +63849,7 @@ fn chrono_shot_data_message_timestamp_field(
 fn tank_update_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -66319,25 +63902,6 @@ fn tank_update_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -66426,9 +63990,7 @@ fn tank_update_message_timestamp_field(
 fn tank_summary_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -66507,25 +64069,6 @@ fn tank_summary_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -66682,9 +64225,7 @@ fn tank_summary_message_timestamp_field(
 fn sleep_assessment_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -66880,25 +64421,6 @@ fn sleep_assessment_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -67287,9 +64809,7 @@ fn sleep_assessment_message_average_stress_during_sleep_field(
 fn skin_temp_overnight_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
-    developer_data_map: &HashMap<(u8, u8), Value>,
     accumlators: &mut HashMap<u32, Value>,
-    developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
     options: &HashSet<DecodeOption>,
 ) -> Result<Vec<FitDataField>> {
     let mut fields = Vec::new();
@@ -67368,25 +64888,6 @@ fn skin_temp_overnight_message(
                 }
             }
         }
-    }
-    let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
-        .iter()
-        .map(|(k, v)| (*k, v.clone()))
-        .collect();
-    while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-        let dev_definition = developer_field_descriptions
-            .get(&(dev_data_idx, field_nr))
-            .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-        fields.push(data_field_with_info(
-            dev_definition.field_definition_number,
-            &dev_definition.field_name,
-            FieldDataType::Byte,
-            dev_definition.scale,
-            dev_definition.offset,
-            &dev_definition.units,
-            value,
-            options,
-        )?);
     }
     Ok(fields)
 }
@@ -67543,964 +65044,205 @@ impl MesgNum {
     pub fn decode_message(
         self,
         data_map: &mut HashMap<u8, Value>,
-        developer_data_map: &HashMap<(u8, u8), Value>,
         accumlators: &mut HashMap<u32, Value>,
-        developer_field_descriptions: &HashMap<(u8, u8), DeveloperFieldDescription>,
         options: &HashSet<DecodeOption>,
     ) -> Result<Vec<FitDataField>> {
         match self {
-            MesgNum::FileId => file_id_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::FileCreator => file_creator_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::TimestampCorrelation => timestamp_correlation_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::Software => software_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::SlaveDevice => slave_device_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::Capabilities => capabilities_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::FileCapabilities => file_capabilities_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::MesgCapabilities => mesg_capabilities_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::FieldCapabilities => field_capabilities_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::DeviceSettings => device_settings_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::UserProfile => user_profile_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::HrmProfile => hrm_profile_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::SdmProfile => sdm_profile_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::BikeProfile => bike_profile_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::Connectivity => connectivity_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::WatchfaceSettings => watchface_settings_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::OhrSettings => ohr_settings_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::TimeInZone => time_in_zone_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::ZonesTarget => zones_target_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::Sport => sport_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::HrZone => hr_zone_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::SpeedZone => speed_zone_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::CadenceZone => cadence_zone_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::PowerZone => power_zone_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::MetZone => met_zone_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::DiveSettings => dive_settings_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::DiveAlarm => dive_alarm_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::DiveApneaAlarm => dive_apnea_alarm_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::DiveGas => dive_gas_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::Goal => goal_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::Activity => activity_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::Session => session_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::Lap => lap_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::Length => length_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::Record => record_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::Event => event_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::DeviceInfo => device_info_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::DeviceAuxBatteryInfo => device_aux_battery_info_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::TrainingFile => training_file_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::WeatherConditions => weather_conditions_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::WeatherAlert => weather_alert_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::GpsMetadata => gps_metadata_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::CameraEvent => camera_event_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::GyroscopeData => gyroscope_data_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::AccelerometerData => accelerometer_data_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::MagnetometerData => magnetometer_data_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::BarometerData => barometer_data_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::ThreeDSensorCalibration => three_d_sensor_calibration_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::OneDSensorCalibration => one_d_sensor_calibration_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::VideoFrame => video_frame_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::ObdiiData => obdii_data_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::NmeaSentence => nmea_sentence_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::AviationAttitude => aviation_attitude_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::Video => video_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::VideoTitle => video_title_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::VideoDescription => video_description_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::VideoClip => video_clip_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::Set => set_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::Jump => jump_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::Split => split_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::SplitSummary => split_summary_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::ClimbPro => climb_pro_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::FieldDescription => field_description_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::DeveloperDataId => developer_data_id_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::Course => course_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::CoursePoint => course_point_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::SegmentId => segment_id_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::SegmentLeaderboardEntry => segment_leaderboard_entry_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::SegmentPoint => segment_point_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::SegmentLap => segment_lap_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::SegmentFile => segment_file_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::Workout => workout_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::WorkoutSession => workout_session_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::WorkoutStep => workout_step_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::ExerciseTitle => exercise_title_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::Schedule => schedule_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::Totals => totals_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::WeightScale => weight_scale_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::BloodPressure => blood_pressure_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::MonitoringInfo => monitoring_info_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::Monitoring => monitoring_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::MonitoringHrData => monitoring_hr_data_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::Spo2Data => spo2_data_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::Hr => hr_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::StressLevel => stress_level_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::MaxMetData => max_met_data_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::HsaBodyBatteryData => hsa_body_battery_data_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::HsaEvent => hsa_event_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::HsaAccelerometerData => hsa_accelerometer_data_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::HsaGyroscopeData => hsa_gyroscope_data_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::HsaStepData => hsa_step_data_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::HsaSpo2Data => hsa_spo2_data_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::HsaStressData => hsa_stress_data_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::HsaRespirationData => hsa_respiration_data_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::HsaHeartRateData => hsa_heart_rate_data_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::HsaConfigurationData => hsa_configuration_data_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::HsaWristTemperatureData => hsa_wrist_temperature_data_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::MemoGlob => memo_glob_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::SleepLevel => sleep_level_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::AntChannelId => ant_channel_id_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::AntRx => ant_rx_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::AntTx => ant_tx_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::ExdScreenConfiguration => exd_screen_configuration_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::ExdDataFieldConfiguration => exd_data_field_configuration_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::ExdDataConceptConfiguration => exd_data_concept_configuration_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::DiveSummary => dive_summary_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::AadAccelFeatures => aad_accel_features_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::Hrv => hrv_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::BeatIntervals => beat_intervals_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::HrvStatusSummary => hrv_status_summary_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::HrvValue => hrv_value_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::RawBbi => raw_bbi_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::RespirationRate => respiration_rate_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::ChronoShotSession => chrono_shot_session_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::ChronoShotData => chrono_shot_data_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::TankUpdate => tank_update_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::TankSummary => tank_summary_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::SleepAssessment => sleep_assessment_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
-            MesgNum::SkinTempOvernight => skin_temp_overnight_message(
-                self,
-                data_map,
-                developer_data_map,
-                accumlators,
-                developer_field_descriptions,
-                options,
-            ),
+            MesgNum::FileId => file_id_message(self, data_map, accumlators, options),
+            MesgNum::FileCreator => file_creator_message(self, data_map, accumlators, options),
+            MesgNum::TimestampCorrelation => {
+                timestamp_correlation_message(self, data_map, accumlators, options)
+            }
+            MesgNum::Software => software_message(self, data_map, accumlators, options),
+            MesgNum::SlaveDevice => slave_device_message(self, data_map, accumlators, options),
+            MesgNum::Capabilities => capabilities_message(self, data_map, accumlators, options),
+            MesgNum::FileCapabilities => {
+                file_capabilities_message(self, data_map, accumlators, options)
+            }
+            MesgNum::MesgCapabilities => {
+                mesg_capabilities_message(self, data_map, accumlators, options)
+            }
+            MesgNum::FieldCapabilities => {
+                field_capabilities_message(self, data_map, accumlators, options)
+            }
+            MesgNum::DeviceSettings => {
+                device_settings_message(self, data_map, accumlators, options)
+            }
+            MesgNum::UserProfile => user_profile_message(self, data_map, accumlators, options),
+            MesgNum::HrmProfile => hrm_profile_message(self, data_map, accumlators, options),
+            MesgNum::SdmProfile => sdm_profile_message(self, data_map, accumlators, options),
+            MesgNum::BikeProfile => bike_profile_message(self, data_map, accumlators, options),
+            MesgNum::Connectivity => connectivity_message(self, data_map, accumlators, options),
+            MesgNum::WatchfaceSettings => {
+                watchface_settings_message(self, data_map, accumlators, options)
+            }
+            MesgNum::OhrSettings => ohr_settings_message(self, data_map, accumlators, options),
+            MesgNum::TimeInZone => time_in_zone_message(self, data_map, accumlators, options),
+            MesgNum::ZonesTarget => zones_target_message(self, data_map, accumlators, options),
+            MesgNum::Sport => sport_message(self, data_map, accumlators, options),
+            MesgNum::HrZone => hr_zone_message(self, data_map, accumlators, options),
+            MesgNum::SpeedZone => speed_zone_message(self, data_map, accumlators, options),
+            MesgNum::CadenceZone => cadence_zone_message(self, data_map, accumlators, options),
+            MesgNum::PowerZone => power_zone_message(self, data_map, accumlators, options),
+            MesgNum::MetZone => met_zone_message(self, data_map, accumlators, options),
+            MesgNum::DiveSettings => dive_settings_message(self, data_map, accumlators, options),
+            MesgNum::DiveAlarm => dive_alarm_message(self, data_map, accumlators, options),
+            MesgNum::DiveApneaAlarm => {
+                dive_apnea_alarm_message(self, data_map, accumlators, options)
+            }
+            MesgNum::DiveGas => dive_gas_message(self, data_map, accumlators, options),
+            MesgNum::Goal => goal_message(self, data_map, accumlators, options),
+            MesgNum::Activity => activity_message(self, data_map, accumlators, options),
+            MesgNum::Session => session_message(self, data_map, accumlators, options),
+            MesgNum::Lap => lap_message(self, data_map, accumlators, options),
+            MesgNum::Length => length_message(self, data_map, accumlators, options),
+            MesgNum::Record => record_message(self, data_map, accumlators, options),
+            MesgNum::Event => event_message(self, data_map, accumlators, options),
+            MesgNum::DeviceInfo => device_info_message(self, data_map, accumlators, options),
+            MesgNum::DeviceAuxBatteryInfo => {
+                device_aux_battery_info_message(self, data_map, accumlators, options)
+            }
+            MesgNum::TrainingFile => training_file_message(self, data_map, accumlators, options),
+            MesgNum::WeatherConditions => {
+                weather_conditions_message(self, data_map, accumlators, options)
+            }
+            MesgNum::WeatherAlert => weather_alert_message(self, data_map, accumlators, options),
+            MesgNum::GpsMetadata => gps_metadata_message(self, data_map, accumlators, options),
+            MesgNum::CameraEvent => camera_event_message(self, data_map, accumlators, options),
+            MesgNum::GyroscopeData => gyroscope_data_message(self, data_map, accumlators, options),
+            MesgNum::AccelerometerData => {
+                accelerometer_data_message(self, data_map, accumlators, options)
+            }
+            MesgNum::MagnetometerData => {
+                magnetometer_data_message(self, data_map, accumlators, options)
+            }
+            MesgNum::BarometerData => barometer_data_message(self, data_map, accumlators, options),
+            MesgNum::ThreeDSensorCalibration => {
+                three_d_sensor_calibration_message(self, data_map, accumlators, options)
+            }
+            MesgNum::OneDSensorCalibration => {
+                one_d_sensor_calibration_message(self, data_map, accumlators, options)
+            }
+            MesgNum::VideoFrame => video_frame_message(self, data_map, accumlators, options),
+            MesgNum::ObdiiData => obdii_data_message(self, data_map, accumlators, options),
+            MesgNum::NmeaSentence => nmea_sentence_message(self, data_map, accumlators, options),
+            MesgNum::AviationAttitude => {
+                aviation_attitude_message(self, data_map, accumlators, options)
+            }
+            MesgNum::Video => video_message(self, data_map, accumlators, options),
+            MesgNum::VideoTitle => video_title_message(self, data_map, accumlators, options),
+            MesgNum::VideoDescription => {
+                video_description_message(self, data_map, accumlators, options)
+            }
+            MesgNum::VideoClip => video_clip_message(self, data_map, accumlators, options),
+            MesgNum::Set => set_message(self, data_map, accumlators, options),
+            MesgNum::Jump => jump_message(self, data_map, accumlators, options),
+            MesgNum::Split => split_message(self, data_map, accumlators, options),
+            MesgNum::SplitSummary => split_summary_message(self, data_map, accumlators, options),
+            MesgNum::ClimbPro => climb_pro_message(self, data_map, accumlators, options),
+            MesgNum::FieldDescription => {
+                field_description_message(self, data_map, accumlators, options)
+            }
+            MesgNum::DeveloperDataId => {
+                developer_data_id_message(self, data_map, accumlators, options)
+            }
+            MesgNum::Course => course_message(self, data_map, accumlators, options),
+            MesgNum::CoursePoint => course_point_message(self, data_map, accumlators, options),
+            MesgNum::SegmentId => segment_id_message(self, data_map, accumlators, options),
+            MesgNum::SegmentLeaderboardEntry => {
+                segment_leaderboard_entry_message(self, data_map, accumlators, options)
+            }
+            MesgNum::SegmentPoint => segment_point_message(self, data_map, accumlators, options),
+            MesgNum::SegmentLap => segment_lap_message(self, data_map, accumlators, options),
+            MesgNum::SegmentFile => segment_file_message(self, data_map, accumlators, options),
+            MesgNum::Workout => workout_message(self, data_map, accumlators, options),
+            MesgNum::WorkoutSession => {
+                workout_session_message(self, data_map, accumlators, options)
+            }
+            MesgNum::WorkoutStep => workout_step_message(self, data_map, accumlators, options),
+            MesgNum::ExerciseTitle => exercise_title_message(self, data_map, accumlators, options),
+            MesgNum::Schedule => schedule_message(self, data_map, accumlators, options),
+            MesgNum::Totals => totals_message(self, data_map, accumlators, options),
+            MesgNum::WeightScale => weight_scale_message(self, data_map, accumlators, options),
+            MesgNum::BloodPressure => blood_pressure_message(self, data_map, accumlators, options),
+            MesgNum::MonitoringInfo => {
+                monitoring_info_message(self, data_map, accumlators, options)
+            }
+            MesgNum::Monitoring => monitoring_message(self, data_map, accumlators, options),
+            MesgNum::MonitoringHrData => {
+                monitoring_hr_data_message(self, data_map, accumlators, options)
+            }
+            MesgNum::Spo2Data => spo2_data_message(self, data_map, accumlators, options),
+            MesgNum::Hr => hr_message(self, data_map, accumlators, options),
+            MesgNum::StressLevel => stress_level_message(self, data_map, accumlators, options),
+            MesgNum::MaxMetData => max_met_data_message(self, data_map, accumlators, options),
+            MesgNum::HsaBodyBatteryData => {
+                hsa_body_battery_data_message(self, data_map, accumlators, options)
+            }
+            MesgNum::HsaEvent => hsa_event_message(self, data_map, accumlators, options),
+            MesgNum::HsaAccelerometerData => {
+                hsa_accelerometer_data_message(self, data_map, accumlators, options)
+            }
+            MesgNum::HsaGyroscopeData => {
+                hsa_gyroscope_data_message(self, data_map, accumlators, options)
+            }
+            MesgNum::HsaStepData => hsa_step_data_message(self, data_map, accumlators, options),
+            MesgNum::HsaSpo2Data => hsa_spo2_data_message(self, data_map, accumlators, options),
+            MesgNum::HsaStressData => hsa_stress_data_message(self, data_map, accumlators, options),
+            MesgNum::HsaRespirationData => {
+                hsa_respiration_data_message(self, data_map, accumlators, options)
+            }
+            MesgNum::HsaHeartRateData => {
+                hsa_heart_rate_data_message(self, data_map, accumlators, options)
+            }
+            MesgNum::HsaConfigurationData => {
+                hsa_configuration_data_message(self, data_map, accumlators, options)
+            }
+            MesgNum::HsaWristTemperatureData => {
+                hsa_wrist_temperature_data_message(self, data_map, accumlators, options)
+            }
+            MesgNum::MemoGlob => memo_glob_message(self, data_map, accumlators, options),
+            MesgNum::SleepLevel => sleep_level_message(self, data_map, accumlators, options),
+            MesgNum::AntChannelId => ant_channel_id_message(self, data_map, accumlators, options),
+            MesgNum::AntRx => ant_rx_message(self, data_map, accumlators, options),
+            MesgNum::AntTx => ant_tx_message(self, data_map, accumlators, options),
+            MesgNum::ExdScreenConfiguration => {
+                exd_screen_configuration_message(self, data_map, accumlators, options)
+            }
+            MesgNum::ExdDataFieldConfiguration => {
+                exd_data_field_configuration_message(self, data_map, accumlators, options)
+            }
+            MesgNum::ExdDataConceptConfiguration => {
+                exd_data_concept_configuration_message(self, data_map, accumlators, options)
+            }
+            MesgNum::DiveSummary => dive_summary_message(self, data_map, accumlators, options),
+            MesgNum::AadAccelFeatures => {
+                aad_accel_features_message(self, data_map, accumlators, options)
+            }
+            MesgNum::Hrv => hrv_message(self, data_map, accumlators, options),
+            MesgNum::BeatIntervals => beat_intervals_message(self, data_map, accumlators, options),
+            MesgNum::HrvStatusSummary => {
+                hrv_status_summary_message(self, data_map, accumlators, options)
+            }
+            MesgNum::HrvValue => hrv_value_message(self, data_map, accumlators, options),
+            MesgNum::RawBbi => raw_bbi_message(self, data_map, accumlators, options),
+            MesgNum::RespirationRate => {
+                respiration_rate_message(self, data_map, accumlators, options)
+            }
+            MesgNum::ChronoShotSession => {
+                chrono_shot_session_message(self, data_map, accumlators, options)
+            }
+            MesgNum::ChronoShotData => {
+                chrono_shot_data_message(self, data_map, accumlators, options)
+            }
+            MesgNum::TankUpdate => tank_update_message(self, data_map, accumlators, options),
+            MesgNum::TankSummary => tank_summary_message(self, data_map, accumlators, options),
+            MesgNum::SleepAssessment => {
+                sleep_assessment_message(self, data_map, accumlators, options)
+            }
+            MesgNum::SkinTempOvernight => {
+                skin_temp_overnight_message(self, data_map, accumlators, options)
+            }
             _ => unknown_message(data_map, options),
         }
     }
