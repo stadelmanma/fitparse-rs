@@ -230,6 +230,7 @@ fn file_id_message_type_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "type",
         FieldDataType::File,
         scale,
@@ -257,6 +258,7 @@ fn file_id_message_manufacturer_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "manufacturer",
         FieldDataType::Manufacturer,
         scale,
@@ -284,6 +286,7 @@ fn file_id_message_product_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "product",
         FieldDataType::UInt16,
         scale,
@@ -316,6 +319,7 @@ fn file_id_message_favero_product_field(
     };
     data_field_with_info(
         2u8,
+        None,
         name,
         FieldDataType::FaveroProduct,
         scale,
@@ -348,6 +352,7 @@ fn file_id_message_garmin_product_field(
     };
     data_field_with_info(
         2u8,
+        None,
         name,
         FieldDataType::GarminProduct,
         scale,
@@ -375,6 +380,7 @@ fn file_id_message_serial_number_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "serial_number",
         FieldDataType::UInt32z,
         scale,
@@ -402,6 +408,7 @@ fn file_id_message_time_created_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "time_created",
         FieldDataType::DateTime,
         scale,
@@ -429,6 +436,7 @@ fn file_id_message_number_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "number",
         FieldDataType::UInt16,
         scale,
@@ -456,6 +464,7 @@ fn file_id_message_product_name_field(
     };
     data_field_with_info(
         8u8,
+        None,
         "product_name",
         FieldDataType::String,
         scale,
@@ -530,6 +539,7 @@ fn file_creator_message_software_version_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "software_version",
         FieldDataType::UInt16,
         scale,
@@ -557,6 +567,7 @@ fn file_creator_message_hardware_version_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "hardware_version",
         FieldDataType::UInt8,
         scale,
@@ -705,6 +716,7 @@ fn timestamp_correlation_message_fractional_timestamp_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "fractional_timestamp",
         FieldDataType::UInt16,
         scale,
@@ -732,6 +744,7 @@ fn timestamp_correlation_message_system_timestamp_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "system_timestamp",
         FieldDataType::DateTime,
         scale,
@@ -759,6 +772,7 @@ fn timestamp_correlation_message_fractional_system_timestamp_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "fractional_system_timestamp",
         FieldDataType::UInt16,
         scale,
@@ -786,6 +800,7 @@ fn timestamp_correlation_message_local_timestamp_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "local_timestamp",
         FieldDataType::LocalDateTime,
         scale,
@@ -813,6 +828,7 @@ fn timestamp_correlation_message_timestamp_ms_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "timestamp_ms",
         FieldDataType::UInt16,
         scale,
@@ -840,6 +856,7 @@ fn timestamp_correlation_message_system_timestamp_ms_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "system_timestamp_ms",
         FieldDataType::UInt16,
         scale,
@@ -867,6 +884,7 @@ fn timestamp_correlation_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -954,6 +972,7 @@ fn software_message_version_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "version",
         FieldDataType::UInt16,
         scale,
@@ -981,6 +1000,7 @@ fn software_message_part_number_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "part_number",
         FieldDataType::String,
         scale,
@@ -1008,6 +1028,7 @@ fn software_message_message_index_field(
     };
     data_field_with_info(
         254u8,
+        None,
         "message_index",
         FieldDataType::MessageIndex,
         scale,
@@ -1169,6 +1190,7 @@ fn slave_device_message_manufacturer_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "manufacturer",
         FieldDataType::Manufacturer,
         scale,
@@ -1196,6 +1218,7 @@ fn slave_device_message_product_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "product",
         FieldDataType::UInt16,
         scale,
@@ -1228,6 +1251,7 @@ fn slave_device_message_favero_product_field(
     };
     data_field_with_info(
         1u8,
+        None,
         name,
         FieldDataType::FaveroProduct,
         scale,
@@ -1260,6 +1284,7 @@ fn slave_device_message_garmin_product_field(
     };
     data_field_with_info(
         1u8,
+        None,
         name,
         FieldDataType::GarminProduct,
         scale,
@@ -1362,6 +1387,7 @@ fn capabilities_message_languages_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "languages",
         FieldDataType::UInt8z,
         scale,
@@ -1389,6 +1415,7 @@ fn capabilities_message_sports_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "sports",
         FieldDataType::SportBits0,
         scale,
@@ -1416,6 +1443,7 @@ fn capabilities_message_workouts_supported_field(
     };
     data_field_with_info(
         21u8,
+        None,
         "workouts_supported",
         FieldDataType::WorkoutCapabilities,
         scale,
@@ -1443,6 +1471,7 @@ fn capabilities_message_connectivity_supported_field(
     };
     data_field_with_info(
         23u8,
+        None,
         "connectivity_supported",
         FieldDataType::ConnectivityCapabilities,
         scale,
@@ -1569,6 +1598,7 @@ fn file_capabilities_message_type_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "type",
         FieldDataType::File,
         scale,
@@ -1596,6 +1626,7 @@ fn file_capabilities_message_flags_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "flags",
         FieldDataType::FileFlags,
         scale,
@@ -1623,6 +1654,7 @@ fn file_capabilities_message_directory_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "directory",
         FieldDataType::String,
         scale,
@@ -1650,6 +1682,7 @@ fn file_capabilities_message_max_count_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "max_count",
         FieldDataType::UInt16,
         scale,
@@ -1677,6 +1710,7 @@ fn file_capabilities_message_max_size_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "max_size",
         FieldDataType::UInt32,
         scale,
@@ -1704,6 +1738,7 @@ fn file_capabilities_message_message_index_field(
     };
     data_field_with_info(
         254u8,
+        None,
         "message_index",
         FieldDataType::MessageIndex,
         scale,
@@ -1870,6 +1905,7 @@ fn mesg_capabilities_message_file_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "file",
         FieldDataType::File,
         scale,
@@ -1897,6 +1933,7 @@ fn mesg_capabilities_message_mesg_num_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "mesg_num",
         FieldDataType::MesgNum,
         scale,
@@ -1924,6 +1961,7 @@ fn mesg_capabilities_message_count_type_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "count_type",
         FieldDataType::MesgCount,
         scale,
@@ -1951,6 +1989,7 @@ fn mesg_capabilities_message_count_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "count",
         FieldDataType::UInt16,
         scale,
@@ -1983,6 +2022,7 @@ fn mesg_capabilities_message_num_per_file_field(
     };
     data_field_with_info(
         3u8,
+        None,
         name,
         FieldDataType::UInt16,
         scale,
@@ -2015,6 +2055,7 @@ fn mesg_capabilities_message_max_per_file_field(
     };
     data_field_with_info(
         3u8,
+        None,
         name,
         FieldDataType::UInt16,
         scale,
@@ -2047,6 +2088,7 @@ fn mesg_capabilities_message_max_per_file_type_field(
     };
     data_field_with_info(
         3u8,
+        None,
         name,
         FieldDataType::UInt16,
         scale,
@@ -2074,6 +2116,7 @@ fn mesg_capabilities_message_message_index_field(
     };
     data_field_with_info(
         254u8,
+        None,
         "message_index",
         FieldDataType::MessageIndex,
         scale,
@@ -2187,6 +2230,7 @@ fn field_capabilities_message_file_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "file",
         FieldDataType::File,
         scale,
@@ -2214,6 +2258,7 @@ fn field_capabilities_message_mesg_num_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "mesg_num",
         FieldDataType::MesgNum,
         scale,
@@ -2241,6 +2286,7 @@ fn field_capabilities_message_field_num_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "field_num",
         FieldDataType::UInt8,
         scale,
@@ -2268,6 +2314,7 @@ fn field_capabilities_message_count_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "count",
         FieldDataType::UInt16,
         scale,
@@ -2295,6 +2342,7 @@ fn field_capabilities_message_message_index_field(
     };
     data_field_with_info(
         254u8,
+        None,
         "message_index",
         FieldDataType::MessageIndex,
         scale,
@@ -2680,6 +2728,7 @@ fn device_settings_message_active_time_zone_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "active_time_zone",
         FieldDataType::UInt8,
         scale,
@@ -2707,6 +2756,7 @@ fn device_settings_message_utc_offset_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "utc_offset",
         FieldDataType::UInt32,
         scale,
@@ -2734,6 +2784,7 @@ fn device_settings_message_time_offset_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "time_offset",
         FieldDataType::UInt32,
         scale,
@@ -2761,6 +2812,7 @@ fn device_settings_message_time_mode_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "time_mode",
         FieldDataType::TimeMode,
         scale,
@@ -2788,6 +2840,7 @@ fn device_settings_message_time_zone_offset_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "time_zone_offset",
         FieldDataType::SInt8,
         scale,
@@ -2815,6 +2868,7 @@ fn device_settings_message_backlight_mode_field(
     };
     data_field_with_info(
         12u8,
+        None,
         "backlight_mode",
         FieldDataType::BacklightMode,
         scale,
@@ -2842,6 +2896,7 @@ fn device_settings_message_activity_tracker_enabled_field(
     };
     data_field_with_info(
         36u8,
+        None,
         "activity_tracker_enabled",
         FieldDataType::Bool,
         scale,
@@ -2869,6 +2924,7 @@ fn device_settings_message_clock_time_field(
     };
     data_field_with_info(
         39u8,
+        None,
         "clock_time",
         FieldDataType::DateTime,
         scale,
@@ -2896,6 +2952,7 @@ fn device_settings_message_pages_enabled_field(
     };
     data_field_with_info(
         40u8,
+        None,
         "pages_enabled",
         FieldDataType::UInt16,
         scale,
@@ -2923,6 +2980,7 @@ fn device_settings_message_move_alert_enabled_field(
     };
     data_field_with_info(
         46u8,
+        None,
         "move_alert_enabled",
         FieldDataType::Bool,
         scale,
@@ -2950,6 +3008,7 @@ fn device_settings_message_date_mode_field(
     };
     data_field_with_info(
         47u8,
+        None,
         "date_mode",
         FieldDataType::DateMode,
         scale,
@@ -2977,6 +3036,7 @@ fn device_settings_message_display_orientation_field(
     };
     data_field_with_info(
         55u8,
+        None,
         "display_orientation",
         FieldDataType::DisplayOrientation,
         scale,
@@ -3004,6 +3064,7 @@ fn device_settings_message_mounting_side_field(
     };
     data_field_with_info(
         56u8,
+        None,
         "mounting_side",
         FieldDataType::Side,
         scale,
@@ -3031,6 +3092,7 @@ fn device_settings_message_default_page_field(
     };
     data_field_with_info(
         57u8,
+        None,
         "default_page",
         FieldDataType::UInt16,
         scale,
@@ -3058,6 +3120,7 @@ fn device_settings_message_autosync_min_steps_field(
     };
     data_field_with_info(
         58u8,
+        None,
         "autosync_min_steps",
         FieldDataType::UInt16,
         scale,
@@ -3085,6 +3148,7 @@ fn device_settings_message_autosync_min_time_field(
     };
     data_field_with_info(
         59u8,
+        None,
         "autosync_min_time",
         FieldDataType::UInt16,
         scale,
@@ -3112,6 +3176,7 @@ fn device_settings_message_lactate_threshold_autodetect_enabled_field(
     };
     data_field_with_info(
         80u8,
+        None,
         "lactate_threshold_autodetect_enabled",
         FieldDataType::Bool,
         scale,
@@ -3139,6 +3204,7 @@ fn device_settings_message_ble_auto_upload_enabled_field(
     };
     data_field_with_info(
         86u8,
+        None,
         "ble_auto_upload_enabled",
         FieldDataType::Bool,
         scale,
@@ -3166,6 +3232,7 @@ fn device_settings_message_auto_sync_frequency_field(
     };
     data_field_with_info(
         89u8,
+        None,
         "auto_sync_frequency",
         FieldDataType::AutoSyncFrequency,
         scale,
@@ -3193,6 +3260,7 @@ fn device_settings_message_auto_activity_detect_field(
     };
     data_field_with_info(
         90u8,
+        None,
         "auto_activity_detect",
         FieldDataType::AutoActivityDetect,
         scale,
@@ -3220,6 +3288,7 @@ fn device_settings_message_number_of_screens_field(
     };
     data_field_with_info(
         94u8,
+        None,
         "number_of_screens",
         FieldDataType::UInt8,
         scale,
@@ -3247,6 +3316,7 @@ fn device_settings_message_smart_notification_display_orientation_field(
     };
     data_field_with_info(
         95u8,
+        None,
         "smart_notification_display_orientation",
         FieldDataType::DisplayOrientation,
         scale,
@@ -3274,6 +3344,7 @@ fn device_settings_message_tap_interface_field(
     };
     data_field_with_info(
         134u8,
+        None,
         "tap_interface",
         FieldDataType::Switch,
         scale,
@@ -3301,6 +3372,7 @@ fn device_settings_message_tap_sensitivity_field(
     };
     data_field_with_info(
         174u8,
+        None,
         "tap_sensitivity",
         FieldDataType::TapSensitivity,
         scale,
@@ -3731,6 +3803,7 @@ fn user_profile_message_friendly_name_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "friendly_name",
         FieldDataType::String,
         scale,
@@ -3758,6 +3831,7 @@ fn user_profile_message_gender_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "gender",
         FieldDataType::Gender,
         scale,
@@ -3785,6 +3859,7 @@ fn user_profile_message_age_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "age",
         FieldDataType::UInt8,
         scale,
@@ -3812,6 +3887,7 @@ fn user_profile_message_height_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "height",
         FieldDataType::UInt8,
         scale,
@@ -3839,6 +3915,7 @@ fn user_profile_message_weight_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "weight",
         FieldDataType::UInt16,
         scale,
@@ -3866,6 +3943,7 @@ fn user_profile_message_language_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "language",
         FieldDataType::Language,
         scale,
@@ -3893,6 +3971,7 @@ fn user_profile_message_elev_setting_field(
     };
     data_field_with_info(
         6u8,
+        None,
         "elev_setting",
         FieldDataType::DisplayMeasure,
         scale,
@@ -3920,6 +3999,7 @@ fn user_profile_message_weight_setting_field(
     };
     data_field_with_info(
         7u8,
+        None,
         "weight_setting",
         FieldDataType::DisplayMeasure,
         scale,
@@ -3947,6 +4027,7 @@ fn user_profile_message_resting_heart_rate_field(
     };
     data_field_with_info(
         8u8,
+        None,
         "resting_heart_rate",
         FieldDataType::UInt8,
         scale,
@@ -3974,6 +4055,7 @@ fn user_profile_message_default_max_running_heart_rate_field(
     };
     data_field_with_info(
         9u8,
+        None,
         "default_max_running_heart_rate",
         FieldDataType::UInt8,
         scale,
@@ -4001,6 +4083,7 @@ fn user_profile_message_default_max_biking_heart_rate_field(
     };
     data_field_with_info(
         10u8,
+        None,
         "default_max_biking_heart_rate",
         FieldDataType::UInt8,
         scale,
@@ -4028,6 +4111,7 @@ fn user_profile_message_default_max_heart_rate_field(
     };
     data_field_with_info(
         11u8,
+        None,
         "default_max_heart_rate",
         FieldDataType::UInt8,
         scale,
@@ -4055,6 +4139,7 @@ fn user_profile_message_hr_setting_field(
     };
     data_field_with_info(
         12u8,
+        None,
         "hr_setting",
         FieldDataType::DisplayHeart,
         scale,
@@ -4082,6 +4167,7 @@ fn user_profile_message_speed_setting_field(
     };
     data_field_with_info(
         13u8,
+        None,
         "speed_setting",
         FieldDataType::DisplayMeasure,
         scale,
@@ -4109,6 +4195,7 @@ fn user_profile_message_dist_setting_field(
     };
     data_field_with_info(
         14u8,
+        None,
         "dist_setting",
         FieldDataType::DisplayMeasure,
         scale,
@@ -4136,6 +4223,7 @@ fn user_profile_message_power_setting_field(
     };
     data_field_with_info(
         16u8,
+        None,
         "power_setting",
         FieldDataType::DisplayPower,
         scale,
@@ -4163,6 +4251,7 @@ fn user_profile_message_activity_class_field(
     };
     data_field_with_info(
         17u8,
+        None,
         "activity_class",
         FieldDataType::ActivityClass,
         scale,
@@ -4190,6 +4279,7 @@ fn user_profile_message_position_setting_field(
     };
     data_field_with_info(
         18u8,
+        None,
         "position_setting",
         FieldDataType::DisplayPosition,
         scale,
@@ -4217,6 +4307,7 @@ fn user_profile_message_temperature_setting_field(
     };
     data_field_with_info(
         21u8,
+        None,
         "temperature_setting",
         FieldDataType::DisplayMeasure,
         scale,
@@ -4244,6 +4335,7 @@ fn user_profile_message_local_id_field(
     };
     data_field_with_info(
         22u8,
+        None,
         "local_id",
         FieldDataType::UserLocalId,
         scale,
@@ -4271,6 +4363,7 @@ fn user_profile_message_global_id_field(
     };
     data_field_with_info(
         23u8,
+        None,
         "global_id",
         FieldDataType::Byte,
         scale,
@@ -4298,6 +4391,7 @@ fn user_profile_message_wake_time_field(
     };
     data_field_with_info(
         28u8,
+        None,
         "wake_time",
         FieldDataType::LocaltimeIntoDay,
         scale,
@@ -4325,6 +4419,7 @@ fn user_profile_message_sleep_time_field(
     };
     data_field_with_info(
         29u8,
+        None,
         "sleep_time",
         FieldDataType::LocaltimeIntoDay,
         scale,
@@ -4352,6 +4447,7 @@ fn user_profile_message_height_setting_field(
     };
     data_field_with_info(
         30u8,
+        None,
         "height_setting",
         FieldDataType::DisplayMeasure,
         scale,
@@ -4379,6 +4475,7 @@ fn user_profile_message_user_running_step_length_field(
     };
     data_field_with_info(
         31u8,
+        None,
         "user_running_step_length",
         FieldDataType::UInt16,
         scale,
@@ -4406,6 +4503,7 @@ fn user_profile_message_user_walking_step_length_field(
     };
     data_field_with_info(
         32u8,
+        None,
         "user_walking_step_length",
         FieldDataType::UInt16,
         scale,
@@ -4433,6 +4531,7 @@ fn user_profile_message_depth_setting_field(
     };
     data_field_with_info(
         47u8,
+        None,
         "depth_setting",
         FieldDataType::DisplayMeasure,
         scale,
@@ -4460,6 +4559,7 @@ fn user_profile_message_dive_count_field(
     };
     data_field_with_info(
         49u8,
+        None,
         "dive_count",
         FieldDataType::UInt32,
         scale,
@@ -4487,6 +4587,7 @@ fn user_profile_message_message_index_field(
     };
     data_field_with_info(
         254u8,
+        None,
         "message_index",
         FieldDataType::MessageIndex,
         scale,
@@ -4600,6 +4701,7 @@ fn hrm_profile_message_enabled_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "enabled",
         FieldDataType::Bool,
         scale,
@@ -4627,6 +4729,7 @@ fn hrm_profile_message_hrm_ant_id_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "hrm_ant_id",
         FieldDataType::UInt16z,
         scale,
@@ -4654,6 +4757,7 @@ fn hrm_profile_message_log_hrv_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "log_hrv",
         FieldDataType::Bool,
         scale,
@@ -4681,6 +4785,7 @@ fn hrm_profile_message_hrm_ant_id_trans_type_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "hrm_ant_id_trans_type",
         FieldDataType::UInt8z,
         scale,
@@ -4708,6 +4813,7 @@ fn hrm_profile_message_message_index_field(
     };
     data_field_with_info(
         254u8,
+        None,
         "message_index",
         FieldDataType::MessageIndex,
         scale,
@@ -4862,6 +4968,7 @@ fn sdm_profile_message_enabled_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "enabled",
         FieldDataType::Bool,
         scale,
@@ -4889,6 +4996,7 @@ fn sdm_profile_message_sdm_ant_id_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "sdm_ant_id",
         FieldDataType::UInt16z,
         scale,
@@ -4916,6 +5024,7 @@ fn sdm_profile_message_sdm_cal_factor_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "sdm_cal_factor",
         FieldDataType::UInt16,
         scale,
@@ -4943,6 +5052,7 @@ fn sdm_profile_message_odometer_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "odometer",
         FieldDataType::UInt32,
         scale,
@@ -4970,6 +5080,7 @@ fn sdm_profile_message_speed_source_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "speed_source",
         FieldDataType::Bool,
         scale,
@@ -4997,6 +5108,7 @@ fn sdm_profile_message_sdm_ant_id_trans_type_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "sdm_ant_id_trans_type",
         FieldDataType::UInt8z,
         scale,
@@ -5024,6 +5136,7 @@ fn sdm_profile_message_odometer_rollover_field(
     };
     data_field_with_info(
         7u8,
+        None,
         "odometer_rollover",
         FieldDataType::UInt8,
         scale,
@@ -5051,6 +5164,7 @@ fn sdm_profile_message_message_index_field(
     };
     data_field_with_info(
         254u8,
+        None,
         "message_index",
         FieldDataType::MessageIndex,
         scale,
@@ -5520,6 +5634,7 @@ fn bike_profile_message_name_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "name",
         FieldDataType::String,
         scale,
@@ -5547,6 +5662,7 @@ fn bike_profile_message_sport_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "sport",
         FieldDataType::Sport,
         scale,
@@ -5574,6 +5690,7 @@ fn bike_profile_message_sub_sport_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "sub_sport",
         FieldDataType::SubSport,
         scale,
@@ -5601,6 +5718,7 @@ fn bike_profile_message_odometer_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "odometer",
         FieldDataType::UInt32,
         scale,
@@ -5628,6 +5746,7 @@ fn bike_profile_message_bike_spd_ant_id_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "bike_spd_ant_id",
         FieldDataType::UInt16z,
         scale,
@@ -5655,6 +5774,7 @@ fn bike_profile_message_bike_cad_ant_id_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "bike_cad_ant_id",
         FieldDataType::UInt16z,
         scale,
@@ -5682,6 +5802,7 @@ fn bike_profile_message_bike_spdcad_ant_id_field(
     };
     data_field_with_info(
         6u8,
+        None,
         "bike_spdcad_ant_id",
         FieldDataType::UInt16z,
         scale,
@@ -5709,6 +5830,7 @@ fn bike_profile_message_bike_power_ant_id_field(
     };
     data_field_with_info(
         7u8,
+        None,
         "bike_power_ant_id",
         FieldDataType::UInt16z,
         scale,
@@ -5736,6 +5858,7 @@ fn bike_profile_message_custom_wheelsize_field(
     };
     data_field_with_info(
         8u8,
+        None,
         "custom_wheelsize",
         FieldDataType::UInt16,
         scale,
@@ -5763,6 +5886,7 @@ fn bike_profile_message_auto_wheelsize_field(
     };
     data_field_with_info(
         9u8,
+        None,
         "auto_wheelsize",
         FieldDataType::UInt16,
         scale,
@@ -5790,6 +5914,7 @@ fn bike_profile_message_bike_weight_field(
     };
     data_field_with_info(
         10u8,
+        None,
         "bike_weight",
         FieldDataType::UInt16,
         scale,
@@ -5817,6 +5942,7 @@ fn bike_profile_message_power_cal_factor_field(
     };
     data_field_with_info(
         11u8,
+        None,
         "power_cal_factor",
         FieldDataType::UInt16,
         scale,
@@ -5844,6 +5970,7 @@ fn bike_profile_message_auto_wheel_cal_field(
     };
     data_field_with_info(
         12u8,
+        None,
         "auto_wheel_cal",
         FieldDataType::Bool,
         scale,
@@ -5871,6 +5998,7 @@ fn bike_profile_message_auto_power_zero_field(
     };
     data_field_with_info(
         13u8,
+        None,
         "auto_power_zero",
         FieldDataType::Bool,
         scale,
@@ -5898,6 +6026,7 @@ fn bike_profile_message_id_field(
     };
     data_field_with_info(
         14u8,
+        None,
         "id",
         FieldDataType::UInt8,
         scale,
@@ -5925,6 +6054,7 @@ fn bike_profile_message_spd_enabled_field(
     };
     data_field_with_info(
         15u8,
+        None,
         "spd_enabled",
         FieldDataType::Bool,
         scale,
@@ -5952,6 +6082,7 @@ fn bike_profile_message_cad_enabled_field(
     };
     data_field_with_info(
         16u8,
+        None,
         "cad_enabled",
         FieldDataType::Bool,
         scale,
@@ -5979,6 +6110,7 @@ fn bike_profile_message_spdcad_enabled_field(
     };
     data_field_with_info(
         17u8,
+        None,
         "spdcad_enabled",
         FieldDataType::Bool,
         scale,
@@ -6006,6 +6138,7 @@ fn bike_profile_message_power_enabled_field(
     };
     data_field_with_info(
         18u8,
+        None,
         "power_enabled",
         FieldDataType::Bool,
         scale,
@@ -6033,6 +6166,7 @@ fn bike_profile_message_crank_length_field(
     };
     data_field_with_info(
         19u8,
+        None,
         "crank_length",
         FieldDataType::UInt8,
         scale,
@@ -6060,6 +6194,7 @@ fn bike_profile_message_enabled_field(
     };
     data_field_with_info(
         20u8,
+        None,
         "enabled",
         FieldDataType::Bool,
         scale,
@@ -6087,6 +6222,7 @@ fn bike_profile_message_bike_spd_ant_id_trans_type_field(
     };
     data_field_with_info(
         21u8,
+        None,
         "bike_spd_ant_id_trans_type",
         FieldDataType::UInt8z,
         scale,
@@ -6114,6 +6250,7 @@ fn bike_profile_message_bike_cad_ant_id_trans_type_field(
     };
     data_field_with_info(
         22u8,
+        None,
         "bike_cad_ant_id_trans_type",
         FieldDataType::UInt8z,
         scale,
@@ -6141,6 +6278,7 @@ fn bike_profile_message_bike_spdcad_ant_id_trans_type_field(
     };
     data_field_with_info(
         23u8,
+        None,
         "bike_spdcad_ant_id_trans_type",
         FieldDataType::UInt8z,
         scale,
@@ -6168,6 +6306,7 @@ fn bike_profile_message_bike_power_ant_id_trans_type_field(
     };
     data_field_with_info(
         24u8,
+        None,
         "bike_power_ant_id_trans_type",
         FieldDataType::UInt8z,
         scale,
@@ -6195,6 +6334,7 @@ fn bike_profile_message_odometer_rollover_field(
     };
     data_field_with_info(
         37u8,
+        None,
         "odometer_rollover",
         FieldDataType::UInt8,
         scale,
@@ -6222,6 +6362,7 @@ fn bike_profile_message_front_gear_num_field(
     };
     data_field_with_info(
         38u8,
+        None,
         "front_gear_num",
         FieldDataType::UInt8z,
         scale,
@@ -6249,6 +6390,7 @@ fn bike_profile_message_front_gear_field(
     };
     data_field_with_info(
         39u8,
+        None,
         "front_gear",
         FieldDataType::UInt8z,
         scale,
@@ -6276,6 +6418,7 @@ fn bike_profile_message_rear_gear_num_field(
     };
     data_field_with_info(
         40u8,
+        None,
         "rear_gear_num",
         FieldDataType::UInt8z,
         scale,
@@ -6303,6 +6446,7 @@ fn bike_profile_message_rear_gear_field(
     };
     data_field_with_info(
         41u8,
+        None,
         "rear_gear",
         FieldDataType::UInt8z,
         scale,
@@ -6330,6 +6474,7 @@ fn bike_profile_message_shimano_di2_enabled_field(
     };
     data_field_with_info(
         44u8,
+        None,
         "shimano_di2_enabled",
         FieldDataType::Bool,
         scale,
@@ -6357,6 +6502,7 @@ fn bike_profile_message_message_index_field(
     };
     data_field_with_info(
         254u8,
+        None,
         "message_index",
         FieldDataType::MessageIndex,
         scale,
@@ -6577,6 +6723,7 @@ fn connectivity_message_bluetooth_enabled_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "bluetooth_enabled",
         FieldDataType::Bool,
         scale,
@@ -6604,6 +6751,7 @@ fn connectivity_message_bluetooth_le_enabled_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "bluetooth_le_enabled",
         FieldDataType::Bool,
         scale,
@@ -6631,6 +6779,7 @@ fn connectivity_message_ant_enabled_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "ant_enabled",
         FieldDataType::Bool,
         scale,
@@ -6658,6 +6807,7 @@ fn connectivity_message_name_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "name",
         FieldDataType::String,
         scale,
@@ -6685,6 +6835,7 @@ fn connectivity_message_live_tracking_enabled_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "live_tracking_enabled",
         FieldDataType::Bool,
         scale,
@@ -6712,6 +6863,7 @@ fn connectivity_message_weather_conditions_enabled_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "weather_conditions_enabled",
         FieldDataType::Bool,
         scale,
@@ -6739,6 +6891,7 @@ fn connectivity_message_weather_alerts_enabled_field(
     };
     data_field_with_info(
         6u8,
+        None,
         "weather_alerts_enabled",
         FieldDataType::Bool,
         scale,
@@ -6766,6 +6919,7 @@ fn connectivity_message_auto_activity_upload_enabled_field(
     };
     data_field_with_info(
         7u8,
+        None,
         "auto_activity_upload_enabled",
         FieldDataType::Bool,
         scale,
@@ -6793,6 +6947,7 @@ fn connectivity_message_course_download_enabled_field(
     };
     data_field_with_info(
         8u8,
+        None,
         "course_download_enabled",
         FieldDataType::Bool,
         scale,
@@ -6820,6 +6975,7 @@ fn connectivity_message_workout_download_enabled_field(
     };
     data_field_with_info(
         9u8,
+        None,
         "workout_download_enabled",
         FieldDataType::Bool,
         scale,
@@ -6847,6 +7003,7 @@ fn connectivity_message_gps_ephemeris_download_enabled_field(
     };
     data_field_with_info(
         10u8,
+        None,
         "gps_ephemeris_download_enabled",
         FieldDataType::Bool,
         scale,
@@ -6874,6 +7031,7 @@ fn connectivity_message_incident_detection_enabled_field(
     };
     data_field_with_info(
         11u8,
+        None,
         "incident_detection_enabled",
         FieldDataType::Bool,
         scale,
@@ -6901,6 +7059,7 @@ fn connectivity_message_grouptrack_enabled_field(
     };
     data_field_with_info(
         12u8,
+        None,
         "grouptrack_enabled",
         FieldDataType::Bool,
         scale,
@@ -7024,6 +7183,7 @@ fn watchface_settings_message_mode_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "mode",
         FieldDataType::WatchfaceMode,
         scale,
@@ -7051,6 +7211,7 @@ fn watchface_settings_message_layout_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "layout",
         FieldDataType::Byte,
         scale,
@@ -7083,6 +7244,7 @@ fn watchface_settings_message_digital_layout_field(
     };
     data_field_with_info(
         1u8,
+        None,
         name,
         FieldDataType::DigitalWatchfaceLayout,
         scale,
@@ -7115,6 +7277,7 @@ fn watchface_settings_message_analog_layout_field(
     };
     data_field_with_info(
         1u8,
+        None,
         name,
         FieldDataType::AnalogWatchfaceLayout,
         scale,
@@ -7142,6 +7305,7 @@ fn watchface_settings_message_message_index_field(
     };
     data_field_with_info(
         254u8,
+        None,
         "message_index",
         FieldDataType::MessageIndex,
         scale,
@@ -7216,6 +7380,7 @@ fn ohr_settings_message_enabled_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "enabled",
         FieldDataType::Switch,
         scale,
@@ -7243,6 +7408,7 @@ fn ohr_settings_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -7512,6 +7678,7 @@ fn time_in_zone_message_reference_mesg_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "reference_mesg",
         FieldDataType::MesgNum,
         scale,
@@ -7539,6 +7706,7 @@ fn time_in_zone_message_reference_index_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "reference_index",
         FieldDataType::MessageIndex,
         scale,
@@ -7566,6 +7734,7 @@ fn time_in_zone_message_time_in_hr_zone_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "time_in_hr_zone",
         FieldDataType::UInt32,
         scale,
@@ -7593,6 +7762,7 @@ fn time_in_zone_message_time_in_speed_zone_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "time_in_speed_zone",
         FieldDataType::UInt32,
         scale,
@@ -7620,6 +7790,7 @@ fn time_in_zone_message_time_in_cadence_zone_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "time_in_cadence_zone",
         FieldDataType::UInt32,
         scale,
@@ -7647,6 +7818,7 @@ fn time_in_zone_message_time_in_power_zone_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "time_in_power_zone",
         FieldDataType::UInt32,
         scale,
@@ -7674,6 +7846,7 @@ fn time_in_zone_message_hr_zone_high_boundary_field(
     };
     data_field_with_info(
         6u8,
+        None,
         "hr_zone_high_boundary",
         FieldDataType::UInt8,
         scale,
@@ -7701,6 +7874,7 @@ fn time_in_zone_message_speed_zone_high_boundary_field(
     };
     data_field_with_info(
         7u8,
+        None,
         "speed_zone_high_boundary",
         FieldDataType::UInt16,
         scale,
@@ -7728,6 +7902,7 @@ fn time_in_zone_message_cadence_zone_high_bondary_field(
     };
     data_field_with_info(
         8u8,
+        None,
         "cadence_zone_high_bondary",
         FieldDataType::UInt8,
         scale,
@@ -7755,6 +7930,7 @@ fn time_in_zone_message_power_zone_high_boundary_field(
     };
     data_field_with_info(
         9u8,
+        None,
         "power_zone_high_boundary",
         FieldDataType::UInt16,
         scale,
@@ -7782,6 +7958,7 @@ fn time_in_zone_message_hr_calc_type_field(
     };
     data_field_with_info(
         10u8,
+        None,
         "hr_calc_type",
         FieldDataType::HrZoneCalc,
         scale,
@@ -7809,6 +7986,7 @@ fn time_in_zone_message_max_heart_rate_field(
     };
     data_field_with_info(
         11u8,
+        None,
         "max_heart_rate",
         FieldDataType::UInt8,
         scale,
@@ -7836,6 +8014,7 @@ fn time_in_zone_message_resting_heart_rate_field(
     };
     data_field_with_info(
         12u8,
+        None,
         "resting_heart_rate",
         FieldDataType::UInt8,
         scale,
@@ -7863,6 +8042,7 @@ fn time_in_zone_message_threshold_heart_rate_field(
     };
     data_field_with_info(
         13u8,
+        None,
         "threshold_heart_rate",
         FieldDataType::UInt8,
         scale,
@@ -7890,6 +8070,7 @@ fn time_in_zone_message_pwr_calc_type_field(
     };
     data_field_with_info(
         14u8,
+        None,
         "pwr_calc_type",
         FieldDataType::PwrZoneCalc,
         scale,
@@ -7917,6 +8098,7 @@ fn time_in_zone_message_functional_threshold_power_field(
     };
     data_field_with_info(
         15u8,
+        None,
         "functional_threshold_power",
         FieldDataType::UInt16,
         scale,
@@ -7944,6 +8126,7 @@ fn time_in_zone_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -8057,6 +8240,7 @@ fn zones_target_message_max_heart_rate_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "max_heart_rate",
         FieldDataType::UInt8,
         scale,
@@ -8084,6 +8268,7 @@ fn zones_target_message_threshold_heart_rate_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "threshold_heart_rate",
         FieldDataType::UInt8,
         scale,
@@ -8111,6 +8296,7 @@ fn zones_target_message_functional_threshold_power_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "functional_threshold_power",
         FieldDataType::UInt16,
         scale,
@@ -8138,6 +8324,7 @@ fn zones_target_message_hr_calc_type_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "hr_calc_type",
         FieldDataType::HrZoneCalc,
         scale,
@@ -8165,6 +8352,7 @@ fn zones_target_message_pwr_calc_type_field(
     };
     data_field_with_info(
         7u8,
+        None,
         "pwr_calc_type",
         FieldDataType::PwrZoneCalc,
         scale,
@@ -8252,6 +8440,7 @@ fn sport_message_sport_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "sport",
         FieldDataType::Sport,
         scale,
@@ -8279,6 +8468,7 @@ fn sport_message_sub_sport_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "sub_sport",
         FieldDataType::SubSport,
         scale,
@@ -8306,6 +8496,7 @@ fn sport_message_name_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "name",
         FieldDataType::String,
         scale,
@@ -8393,6 +8584,7 @@ fn hr_zone_message_high_bpm_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "high_bpm",
         FieldDataType::UInt8,
         scale,
@@ -8420,6 +8612,7 @@ fn hr_zone_message_name_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "name",
         FieldDataType::String,
         scale,
@@ -8447,6 +8640,7 @@ fn hr_zone_message_message_index_field(
     };
     data_field_with_info(
         254u8,
+        None,
         "message_index",
         FieldDataType::MessageIndex,
         scale,
@@ -8534,6 +8728,7 @@ fn speed_zone_message_high_value_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "high_value",
         FieldDataType::UInt16,
         scale,
@@ -8561,6 +8756,7 @@ fn speed_zone_message_name_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "name",
         FieldDataType::String,
         scale,
@@ -8588,6 +8784,7 @@ fn speed_zone_message_message_index_field(
     };
     data_field_with_info(
         254u8,
+        None,
         "message_index",
         FieldDataType::MessageIndex,
         scale,
@@ -8675,6 +8872,7 @@ fn cadence_zone_message_high_value_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "high_value",
         FieldDataType::UInt8,
         scale,
@@ -8702,6 +8900,7 @@ fn cadence_zone_message_name_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "name",
         FieldDataType::String,
         scale,
@@ -8729,6 +8928,7 @@ fn cadence_zone_message_message_index_field(
     };
     data_field_with_info(
         254u8,
+        None,
         "message_index",
         FieldDataType::MessageIndex,
         scale,
@@ -8816,6 +9016,7 @@ fn power_zone_message_high_value_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "high_value",
         FieldDataType::UInt16,
         scale,
@@ -8843,6 +9044,7 @@ fn power_zone_message_name_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "name",
         FieldDataType::String,
         scale,
@@ -8870,6 +9072,7 @@ fn power_zone_message_message_index_field(
     };
     data_field_with_info(
         254u8,
+        None,
         "message_index",
         FieldDataType::MessageIndex,
         scale,
@@ -8970,6 +9173,7 @@ fn met_zone_message_high_bpm_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "high_bpm",
         FieldDataType::UInt8,
         scale,
@@ -8997,6 +9201,7 @@ fn met_zone_message_calories_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "calories",
         FieldDataType::UInt16,
         scale,
@@ -9024,6 +9229,7 @@ fn met_zone_message_fat_calories_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "fat_calories",
         FieldDataType::UInt8,
         scale,
@@ -9051,6 +9257,7 @@ fn met_zone_message_message_index_field(
     };
     data_field_with_info(
         254u8,
+        None,
         "message_index",
         FieldDataType::MessageIndex,
         scale,
@@ -9607,6 +9814,7 @@ fn dive_settings_message_name_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "name",
         FieldDataType::String,
         scale,
@@ -9634,6 +9842,7 @@ fn dive_settings_message_model_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "model",
         FieldDataType::TissueModelType,
         scale,
@@ -9661,6 +9870,7 @@ fn dive_settings_message_gf_low_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "gf_low",
         FieldDataType::UInt8,
         scale,
@@ -9688,6 +9898,7 @@ fn dive_settings_message_gf_high_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "gf_high",
         FieldDataType::UInt8,
         scale,
@@ -9715,6 +9926,7 @@ fn dive_settings_message_water_type_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "water_type",
         FieldDataType::WaterType,
         scale,
@@ -9742,6 +9954,7 @@ fn dive_settings_message_water_density_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "water_density",
         FieldDataType::Float32,
         scale,
@@ -9769,6 +9982,7 @@ fn dive_settings_message_po2_warn_field(
     };
     data_field_with_info(
         6u8,
+        None,
         "po2_warn",
         FieldDataType::UInt8,
         scale,
@@ -9796,6 +10010,7 @@ fn dive_settings_message_po2_critical_field(
     };
     data_field_with_info(
         7u8,
+        None,
         "po2_critical",
         FieldDataType::UInt8,
         scale,
@@ -9823,6 +10038,7 @@ fn dive_settings_message_po2_deco_field(
     };
     data_field_with_info(
         8u8,
+        None,
         "po2_deco",
         FieldDataType::UInt8,
         scale,
@@ -9850,6 +10066,7 @@ fn dive_settings_message_safety_stop_enabled_field(
     };
     data_field_with_info(
         9u8,
+        None,
         "safety_stop_enabled",
         FieldDataType::Bool,
         scale,
@@ -9877,6 +10094,7 @@ fn dive_settings_message_bottom_depth_field(
     };
     data_field_with_info(
         10u8,
+        None,
         "bottom_depth",
         FieldDataType::Float32,
         scale,
@@ -9904,6 +10122,7 @@ fn dive_settings_message_bottom_time_field(
     };
     data_field_with_info(
         11u8,
+        None,
         "bottom_time",
         FieldDataType::UInt32,
         scale,
@@ -9931,6 +10150,7 @@ fn dive_settings_message_apnea_countdown_enabled_field(
     };
     data_field_with_info(
         12u8,
+        None,
         "apnea_countdown_enabled",
         FieldDataType::Bool,
         scale,
@@ -9958,6 +10178,7 @@ fn dive_settings_message_apnea_countdown_time_field(
     };
     data_field_with_info(
         13u8,
+        None,
         "apnea_countdown_time",
         FieldDataType::UInt32,
         scale,
@@ -9985,6 +10206,7 @@ fn dive_settings_message_backlight_mode_field(
     };
     data_field_with_info(
         14u8,
+        None,
         "backlight_mode",
         FieldDataType::DiveBacklightMode,
         scale,
@@ -10012,6 +10234,7 @@ fn dive_settings_message_backlight_brightness_field(
     };
     data_field_with_info(
         15u8,
+        None,
         "backlight_brightness",
         FieldDataType::UInt8,
         scale,
@@ -10039,6 +10262,7 @@ fn dive_settings_message_backlight_timeout_field(
     };
     data_field_with_info(
         16u8,
+        None,
         "backlight_timeout",
         FieldDataType::BacklightTimeout,
         scale,
@@ -10066,6 +10290,7 @@ fn dive_settings_message_repeat_dive_interval_field(
     };
     data_field_with_info(
         17u8,
+        None,
         "repeat_dive_interval",
         FieldDataType::UInt16,
         scale,
@@ -10093,6 +10318,7 @@ fn dive_settings_message_safety_stop_time_field(
     };
     data_field_with_info(
         18u8,
+        None,
         "safety_stop_time",
         FieldDataType::UInt16,
         scale,
@@ -10120,6 +10346,7 @@ fn dive_settings_message_heart_rate_source_type_field(
     };
     data_field_with_info(
         19u8,
+        None,
         "heart_rate_source_type",
         FieldDataType::SourceType,
         scale,
@@ -10147,6 +10374,7 @@ fn dive_settings_message_heart_rate_source_field(
     };
     data_field_with_info(
         20u8,
+        None,
         "heart_rate_source",
         FieldDataType::UInt8,
         scale,
@@ -10179,6 +10407,7 @@ fn dive_settings_message_heart_rate_antplus_device_type_field(
     };
     data_field_with_info(
         20u8,
+        None,
         name,
         FieldDataType::AntplusDeviceType,
         scale,
@@ -10211,6 +10440,7 @@ fn dive_settings_message_heart_rate_local_device_type_field(
     };
     data_field_with_info(
         20u8,
+        None,
         name,
         FieldDataType::LocalDeviceType,
         scale,
@@ -10238,6 +10468,7 @@ fn dive_settings_message_travel_gas_field(
     };
     data_field_with_info(
         21u8,
+        None,
         "travel_gas",
         FieldDataType::MessageIndex,
         scale,
@@ -10265,6 +10496,7 @@ fn dive_settings_message_ccr_low_setpoint_switch_mode_field(
     };
     data_field_with_info(
         22u8,
+        None,
         "ccr_low_setpoint_switch_mode",
         FieldDataType::CcrSetpointSwitchMode,
         scale,
@@ -10292,6 +10524,7 @@ fn dive_settings_message_ccr_low_setpoint_field(
     };
     data_field_with_info(
         23u8,
+        None,
         "ccr_low_setpoint",
         FieldDataType::UInt8,
         scale,
@@ -10319,6 +10552,7 @@ fn dive_settings_message_ccr_low_setpoint_depth_field(
     };
     data_field_with_info(
         24u8,
+        None,
         "ccr_low_setpoint_depth",
         FieldDataType::UInt32,
         scale,
@@ -10346,6 +10580,7 @@ fn dive_settings_message_ccr_high_setpoint_switch_mode_field(
     };
     data_field_with_info(
         25u8,
+        None,
         "ccr_high_setpoint_switch_mode",
         FieldDataType::CcrSetpointSwitchMode,
         scale,
@@ -10373,6 +10608,7 @@ fn dive_settings_message_ccr_high_setpoint_field(
     };
     data_field_with_info(
         26u8,
+        None,
         "ccr_high_setpoint",
         FieldDataType::UInt8,
         scale,
@@ -10400,6 +10636,7 @@ fn dive_settings_message_ccr_high_setpoint_depth_field(
     };
     data_field_with_info(
         27u8,
+        None,
         "ccr_high_setpoint_depth",
         FieldDataType::UInt32,
         scale,
@@ -10427,6 +10664,7 @@ fn dive_settings_message_gas_consumption_display_field(
     };
     data_field_with_info(
         29u8,
+        None,
         "gas_consumption_display",
         FieldDataType::GasConsumptionRateType,
         scale,
@@ -10454,6 +10692,7 @@ fn dive_settings_message_up_key_enabled_field(
     };
     data_field_with_info(
         30u8,
+        None,
         "up_key_enabled",
         FieldDataType::Bool,
         scale,
@@ -10481,6 +10720,7 @@ fn dive_settings_message_dive_sounds_field(
     };
     data_field_with_info(
         35u8,
+        None,
         "dive_sounds",
         FieldDataType::Tone,
         scale,
@@ -10508,6 +10748,7 @@ fn dive_settings_message_last_stop_multiple_field(
     };
     data_field_with_info(
         36u8,
+        None,
         "last_stop_multiple",
         FieldDataType::UInt8,
         scale,
@@ -10535,6 +10776,7 @@ fn dive_settings_message_no_fly_time_mode_field(
     };
     data_field_with_info(
         37u8,
+        None,
         "no_fly_time_mode",
         FieldDataType::NoFlyTimeMode,
         scale,
@@ -10562,6 +10804,7 @@ fn dive_settings_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -10589,6 +10832,7 @@ fn dive_settings_message_message_index_field(
     };
     data_field_with_info(
         254u8,
+        None,
         "message_index",
         FieldDataType::MessageIndex,
         scale,
@@ -10819,6 +11063,7 @@ fn dive_alarm_message_depth_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "depth",
         FieldDataType::UInt32,
         scale,
@@ -10846,6 +11091,7 @@ fn dive_alarm_message_time_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "time",
         FieldDataType::SInt32,
         scale,
@@ -10873,6 +11119,7 @@ fn dive_alarm_message_enabled_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "enabled",
         FieldDataType::Bool,
         scale,
@@ -10900,6 +11147,7 @@ fn dive_alarm_message_alarm_type_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "alarm_type",
         FieldDataType::DiveAlarmType,
         scale,
@@ -10927,6 +11175,7 @@ fn dive_alarm_message_sound_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "sound",
         FieldDataType::Tone,
         scale,
@@ -10954,6 +11203,7 @@ fn dive_alarm_message_dive_types_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "dive_types",
         FieldDataType::SubSport,
         scale,
@@ -10981,6 +11231,7 @@ fn dive_alarm_message_id_field(
     };
     data_field_with_info(
         6u8,
+        None,
         "id",
         FieldDataType::UInt32,
         scale,
@@ -11008,6 +11259,7 @@ fn dive_alarm_message_popup_enabled_field(
     };
     data_field_with_info(
         7u8,
+        None,
         "popup_enabled",
         FieldDataType::Bool,
         scale,
@@ -11035,6 +11287,7 @@ fn dive_alarm_message_trigger_on_descent_field(
     };
     data_field_with_info(
         8u8,
+        None,
         "trigger_on_descent",
         FieldDataType::Bool,
         scale,
@@ -11062,6 +11315,7 @@ fn dive_alarm_message_trigger_on_ascent_field(
     };
     data_field_with_info(
         9u8,
+        None,
         "trigger_on_ascent",
         FieldDataType::Bool,
         scale,
@@ -11089,6 +11343,7 @@ fn dive_alarm_message_repeating_field(
     };
     data_field_with_info(
         10u8,
+        None,
         "repeating",
         FieldDataType::Bool,
         scale,
@@ -11116,6 +11371,7 @@ fn dive_alarm_message_speed_field(
     };
     data_field_with_info(
         11u8,
+        None,
         "speed",
         FieldDataType::SInt32,
         scale,
@@ -11143,6 +11399,7 @@ fn dive_alarm_message_message_index_field(
     };
     data_field_with_info(
         254u8,
+        None,
         "message_index",
         FieldDataType::MessageIndex,
         scale,
@@ -11373,6 +11630,7 @@ fn dive_apnea_alarm_message_depth_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "depth",
         FieldDataType::UInt32,
         scale,
@@ -11400,6 +11658,7 @@ fn dive_apnea_alarm_message_time_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "time",
         FieldDataType::SInt32,
         scale,
@@ -11427,6 +11686,7 @@ fn dive_apnea_alarm_message_enabled_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "enabled",
         FieldDataType::Bool,
         scale,
@@ -11454,6 +11714,7 @@ fn dive_apnea_alarm_message_alarm_type_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "alarm_type",
         FieldDataType::DiveAlarmType,
         scale,
@@ -11481,6 +11742,7 @@ fn dive_apnea_alarm_message_sound_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "sound",
         FieldDataType::Tone,
         scale,
@@ -11508,6 +11770,7 @@ fn dive_apnea_alarm_message_dive_types_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "dive_types",
         FieldDataType::SubSport,
         scale,
@@ -11535,6 +11798,7 @@ fn dive_apnea_alarm_message_id_field(
     };
     data_field_with_info(
         6u8,
+        None,
         "id",
         FieldDataType::UInt32,
         scale,
@@ -11562,6 +11826,7 @@ fn dive_apnea_alarm_message_popup_enabled_field(
     };
     data_field_with_info(
         7u8,
+        None,
         "popup_enabled",
         FieldDataType::Bool,
         scale,
@@ -11589,6 +11854,7 @@ fn dive_apnea_alarm_message_trigger_on_descent_field(
     };
     data_field_with_info(
         8u8,
+        None,
         "trigger_on_descent",
         FieldDataType::Bool,
         scale,
@@ -11616,6 +11882,7 @@ fn dive_apnea_alarm_message_trigger_on_ascent_field(
     };
     data_field_with_info(
         9u8,
+        None,
         "trigger_on_ascent",
         FieldDataType::Bool,
         scale,
@@ -11643,6 +11910,7 @@ fn dive_apnea_alarm_message_repeating_field(
     };
     data_field_with_info(
         10u8,
+        None,
         "repeating",
         FieldDataType::Bool,
         scale,
@@ -11670,6 +11938,7 @@ fn dive_apnea_alarm_message_speed_field(
     };
     data_field_with_info(
         11u8,
+        None,
         "speed",
         FieldDataType::SInt32,
         scale,
@@ -11697,6 +11966,7 @@ fn dive_apnea_alarm_message_message_index_field(
     };
     data_field_with_info(
         254u8,
+        None,
         "message_index",
         FieldDataType::MessageIndex,
         scale,
@@ -11810,6 +12080,7 @@ fn dive_gas_message_helium_content_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "helium_content",
         FieldDataType::UInt8,
         scale,
@@ -11837,6 +12108,7 @@ fn dive_gas_message_oxygen_content_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "oxygen_content",
         FieldDataType::UInt8,
         scale,
@@ -11864,6 +12136,7 @@ fn dive_gas_message_status_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "status",
         FieldDataType::DiveGasStatus,
         scale,
@@ -11891,6 +12164,7 @@ fn dive_gas_message_mode_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "mode",
         FieldDataType::DiveGasMode,
         scale,
@@ -11918,6 +12192,7 @@ fn dive_gas_message_message_index_field(
     };
     data_field_with_info(
         254u8,
+        None,
         "message_index",
         FieldDataType::MessageIndex,
         scale,
@@ -12135,6 +12410,7 @@ fn goal_message_sport_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "sport",
         FieldDataType::Sport,
         scale,
@@ -12162,6 +12438,7 @@ fn goal_message_sub_sport_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "sub_sport",
         FieldDataType::SubSport,
         scale,
@@ -12189,6 +12466,7 @@ fn goal_message_start_date_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "start_date",
         FieldDataType::DateTime,
         scale,
@@ -12216,6 +12494,7 @@ fn goal_message_end_date_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "end_date",
         FieldDataType::DateTime,
         scale,
@@ -12243,6 +12522,7 @@ fn goal_message_type_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "type",
         FieldDataType::Goal,
         scale,
@@ -12270,6 +12550,7 @@ fn goal_message_value_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "value",
         FieldDataType::UInt32,
         scale,
@@ -12297,6 +12578,7 @@ fn goal_message_repeat_field(
     };
     data_field_with_info(
         6u8,
+        None,
         "repeat",
         FieldDataType::Bool,
         scale,
@@ -12324,6 +12606,7 @@ fn goal_message_target_value_field(
     };
     data_field_with_info(
         7u8,
+        None,
         "target_value",
         FieldDataType::UInt32,
         scale,
@@ -12351,6 +12634,7 @@ fn goal_message_recurrence_field(
     };
     data_field_with_info(
         8u8,
+        None,
         "recurrence",
         FieldDataType::GoalRecurrence,
         scale,
@@ -12378,6 +12662,7 @@ fn goal_message_recurrence_value_field(
     };
     data_field_with_info(
         9u8,
+        None,
         "recurrence_value",
         FieldDataType::UInt16,
         scale,
@@ -12405,6 +12690,7 @@ fn goal_message_enabled_field(
     };
     data_field_with_info(
         10u8,
+        None,
         "enabled",
         FieldDataType::Bool,
         scale,
@@ -12432,6 +12718,7 @@ fn goal_message_source_field(
     };
     data_field_with_info(
         11u8,
+        None,
         "source",
         FieldDataType::GoalSource,
         scale,
@@ -12459,6 +12746,7 @@ fn goal_message_message_index_field(
     };
     data_field_with_info(
         254u8,
+        None,
         "message_index",
         FieldDataType::MessageIndex,
         scale,
@@ -12613,6 +12901,7 @@ fn activity_message_total_timer_time_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "total_timer_time",
         FieldDataType::UInt32,
         scale,
@@ -12640,6 +12929,7 @@ fn activity_message_num_sessions_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "num_sessions",
         FieldDataType::UInt16,
         scale,
@@ -12667,6 +12957,7 @@ fn activity_message_type_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "type",
         FieldDataType::Activity,
         scale,
@@ -12694,6 +12985,7 @@ fn activity_message_event_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "event",
         FieldDataType::Event,
         scale,
@@ -12721,6 +13013,7 @@ fn activity_message_event_type_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "event_type",
         FieldDataType::EventType,
         scale,
@@ -12748,6 +13041,7 @@ fn activity_message_local_timestamp_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "local_timestamp",
         FieldDataType::LocalDateTime,
         scale,
@@ -12775,6 +13069,7 @@ fn activity_message_event_group_field(
     };
     data_field_with_info(
         6u8,
+        None,
         "event_group",
         FieldDataType::UInt8,
         scale,
@@ -12802,6 +13097,7 @@ fn activity_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -15213,6 +15509,7 @@ fn session_message_event_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "event",
         FieldDataType::Event,
         scale,
@@ -15240,6 +15537,7 @@ fn session_message_event_type_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "event_type",
         FieldDataType::EventType,
         scale,
@@ -15267,6 +15565,7 @@ fn session_message_start_time_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "start_time",
         FieldDataType::DateTime,
         scale,
@@ -15294,6 +15593,7 @@ fn session_message_start_position_lat_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "start_position_lat",
         FieldDataType::SInt32,
         scale,
@@ -15321,6 +15621,7 @@ fn session_message_start_position_long_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "start_position_long",
         FieldDataType::SInt32,
         scale,
@@ -15348,6 +15649,7 @@ fn session_message_sport_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "sport",
         FieldDataType::Sport,
         scale,
@@ -15375,6 +15677,7 @@ fn session_message_sub_sport_field(
     };
     data_field_with_info(
         6u8,
+        None,
         "sub_sport",
         FieldDataType::SubSport,
         scale,
@@ -15402,6 +15705,7 @@ fn session_message_total_elapsed_time_field(
     };
     data_field_with_info(
         7u8,
+        None,
         "total_elapsed_time",
         FieldDataType::UInt32,
         scale,
@@ -15429,6 +15733,7 @@ fn session_message_total_timer_time_field(
     };
     data_field_with_info(
         8u8,
+        None,
         "total_timer_time",
         FieldDataType::UInt32,
         scale,
@@ -15456,6 +15761,7 @@ fn session_message_total_distance_field(
     };
     data_field_with_info(
         9u8,
+        None,
         "total_distance",
         FieldDataType::UInt32,
         scale,
@@ -15483,6 +15789,7 @@ fn session_message_total_cycles_field(
     };
     data_field_with_info(
         10u8,
+        None,
         "total_cycles",
         FieldDataType::UInt32,
         scale,
@@ -15515,6 +15822,7 @@ fn session_message_total_strides_field(
     };
     data_field_with_info(
         10u8,
+        None,
         name,
         FieldDataType::UInt32,
         scale,
@@ -15547,6 +15855,7 @@ fn session_message_total_strokes_field(
     };
     data_field_with_info(
         10u8,
+        None,
         name,
         FieldDataType::UInt32,
         scale,
@@ -15574,6 +15883,7 @@ fn session_message_total_calories_field(
     };
     data_field_with_info(
         11u8,
+        None,
         "total_calories",
         FieldDataType::UInt16,
         scale,
@@ -15601,6 +15911,7 @@ fn session_message_total_fat_calories_field(
     };
     data_field_with_info(
         13u8,
+        None,
         "total_fat_calories",
         FieldDataType::UInt16,
         scale,
@@ -15628,6 +15939,7 @@ fn session_message_avg_speed_field(
     };
     data_field_with_info(
         14u8,
+        None,
         "avg_speed",
         FieldDataType::UInt16,
         scale,
@@ -15655,6 +15967,7 @@ fn session_message_max_speed_field(
     };
     data_field_with_info(
         15u8,
+        None,
         "max_speed",
         FieldDataType::UInt16,
         scale,
@@ -15682,6 +15995,7 @@ fn session_message_avg_heart_rate_field(
     };
     data_field_with_info(
         16u8,
+        None,
         "avg_heart_rate",
         FieldDataType::UInt8,
         scale,
@@ -15709,6 +16023,7 @@ fn session_message_max_heart_rate_field(
     };
     data_field_with_info(
         17u8,
+        None,
         "max_heart_rate",
         FieldDataType::UInt8,
         scale,
@@ -15736,6 +16051,7 @@ fn session_message_avg_cadence_field(
     };
     data_field_with_info(
         18u8,
+        None,
         "avg_cadence",
         FieldDataType::UInt8,
         scale,
@@ -15768,6 +16084,7 @@ fn session_message_avg_running_cadence_field(
     };
     data_field_with_info(
         18u8,
+        None,
         name,
         FieldDataType::UInt8,
         scale,
@@ -15795,6 +16112,7 @@ fn session_message_max_cadence_field(
     };
     data_field_with_info(
         19u8,
+        None,
         "max_cadence",
         FieldDataType::UInt8,
         scale,
@@ -15827,6 +16145,7 @@ fn session_message_max_running_cadence_field(
     };
     data_field_with_info(
         19u8,
+        None,
         name,
         FieldDataType::UInt8,
         scale,
@@ -15854,6 +16173,7 @@ fn session_message_avg_power_field(
     };
     data_field_with_info(
         20u8,
+        None,
         "avg_power",
         FieldDataType::UInt16,
         scale,
@@ -15881,6 +16201,7 @@ fn session_message_max_power_field(
     };
     data_field_with_info(
         21u8,
+        None,
         "max_power",
         FieldDataType::UInt16,
         scale,
@@ -15908,6 +16229,7 @@ fn session_message_total_ascent_field(
     };
     data_field_with_info(
         22u8,
+        None,
         "total_ascent",
         FieldDataType::UInt16,
         scale,
@@ -15935,6 +16257,7 @@ fn session_message_total_descent_field(
     };
     data_field_with_info(
         23u8,
+        None,
         "total_descent",
         FieldDataType::UInt16,
         scale,
@@ -15962,6 +16285,7 @@ fn session_message_total_training_effect_field(
     };
     data_field_with_info(
         24u8,
+        None,
         "total_training_effect",
         FieldDataType::UInt8,
         scale,
@@ -15989,6 +16313,7 @@ fn session_message_first_lap_index_field(
     };
     data_field_with_info(
         25u8,
+        None,
         "first_lap_index",
         FieldDataType::UInt16,
         scale,
@@ -16016,6 +16341,7 @@ fn session_message_num_laps_field(
     };
     data_field_with_info(
         26u8,
+        None,
         "num_laps",
         FieldDataType::UInt16,
         scale,
@@ -16043,6 +16369,7 @@ fn session_message_event_group_field(
     };
     data_field_with_info(
         27u8,
+        None,
         "event_group",
         FieldDataType::UInt8,
         scale,
@@ -16070,6 +16397,7 @@ fn session_message_trigger_field(
     };
     data_field_with_info(
         28u8,
+        None,
         "trigger",
         FieldDataType::SessionTrigger,
         scale,
@@ -16097,6 +16425,7 @@ fn session_message_nec_lat_field(
     };
     data_field_with_info(
         29u8,
+        None,
         "nec_lat",
         FieldDataType::SInt32,
         scale,
@@ -16124,6 +16453,7 @@ fn session_message_nec_long_field(
     };
     data_field_with_info(
         30u8,
+        None,
         "nec_long",
         FieldDataType::SInt32,
         scale,
@@ -16151,6 +16481,7 @@ fn session_message_swc_lat_field(
     };
     data_field_with_info(
         31u8,
+        None,
         "swc_lat",
         FieldDataType::SInt32,
         scale,
@@ -16178,6 +16509,7 @@ fn session_message_swc_long_field(
     };
     data_field_with_info(
         32u8,
+        None,
         "swc_long",
         FieldDataType::SInt32,
         scale,
@@ -16205,6 +16537,7 @@ fn session_message_num_lengths_field(
     };
     data_field_with_info(
         33u8,
+        None,
         "num_lengths",
         FieldDataType::UInt16,
         scale,
@@ -16232,6 +16565,7 @@ fn session_message_normalized_power_field(
     };
     data_field_with_info(
         34u8,
+        None,
         "normalized_power",
         FieldDataType::UInt16,
         scale,
@@ -16259,6 +16593,7 @@ fn session_message_training_stress_score_field(
     };
     data_field_with_info(
         35u8,
+        None,
         "training_stress_score",
         FieldDataType::UInt16,
         scale,
@@ -16286,6 +16621,7 @@ fn session_message_intensity_factor_field(
     };
     data_field_with_info(
         36u8,
+        None,
         "intensity_factor",
         FieldDataType::UInt16,
         scale,
@@ -16313,6 +16649,7 @@ fn session_message_left_right_balance_field(
     };
     data_field_with_info(
         37u8,
+        None,
         "left_right_balance",
         FieldDataType::LeftRightBalance100,
         scale,
@@ -16340,6 +16677,7 @@ fn session_message_end_position_lat_field(
     };
     data_field_with_info(
         38u8,
+        None,
         "end_position_lat",
         FieldDataType::SInt32,
         scale,
@@ -16367,6 +16705,7 @@ fn session_message_end_position_long_field(
     };
     data_field_with_info(
         39u8,
+        None,
         "end_position_long",
         FieldDataType::SInt32,
         scale,
@@ -16394,6 +16733,7 @@ fn session_message_avg_stroke_count_field(
     };
     data_field_with_info(
         41u8,
+        None,
         "avg_stroke_count",
         FieldDataType::UInt32,
         scale,
@@ -16421,6 +16761,7 @@ fn session_message_avg_stroke_distance_field(
     };
     data_field_with_info(
         42u8,
+        None,
         "avg_stroke_distance",
         FieldDataType::UInt16,
         scale,
@@ -16448,6 +16789,7 @@ fn session_message_swim_stroke_field(
     };
     data_field_with_info(
         43u8,
+        None,
         "swim_stroke",
         FieldDataType::SwimStroke,
         scale,
@@ -16475,6 +16817,7 @@ fn session_message_pool_length_field(
     };
     data_field_with_info(
         44u8,
+        None,
         "pool_length",
         FieldDataType::UInt16,
         scale,
@@ -16502,6 +16845,7 @@ fn session_message_threshold_power_field(
     };
     data_field_with_info(
         45u8,
+        None,
         "threshold_power",
         FieldDataType::UInt16,
         scale,
@@ -16529,6 +16873,7 @@ fn session_message_pool_length_unit_field(
     };
     data_field_with_info(
         46u8,
+        None,
         "pool_length_unit",
         FieldDataType::DisplayMeasure,
         scale,
@@ -16556,6 +16901,7 @@ fn session_message_num_active_lengths_field(
     };
     data_field_with_info(
         47u8,
+        None,
         "num_active_lengths",
         FieldDataType::UInt16,
         scale,
@@ -16583,6 +16929,7 @@ fn session_message_total_work_field(
     };
     data_field_with_info(
         48u8,
+        None,
         "total_work",
         FieldDataType::UInt32,
         scale,
@@ -16610,6 +16957,7 @@ fn session_message_avg_altitude_field(
     };
     data_field_with_info(
         49u8,
+        None,
         "avg_altitude",
         FieldDataType::UInt16,
         scale,
@@ -16637,6 +16985,7 @@ fn session_message_max_altitude_field(
     };
     data_field_with_info(
         50u8,
+        None,
         "max_altitude",
         FieldDataType::UInt16,
         scale,
@@ -16664,6 +17013,7 @@ fn session_message_gps_accuracy_field(
     };
     data_field_with_info(
         51u8,
+        None,
         "gps_accuracy",
         FieldDataType::UInt8,
         scale,
@@ -16691,6 +17041,7 @@ fn session_message_avg_grade_field(
     };
     data_field_with_info(
         52u8,
+        None,
         "avg_grade",
         FieldDataType::SInt16,
         scale,
@@ -16718,6 +17069,7 @@ fn session_message_avg_pos_grade_field(
     };
     data_field_with_info(
         53u8,
+        None,
         "avg_pos_grade",
         FieldDataType::SInt16,
         scale,
@@ -16745,6 +17097,7 @@ fn session_message_avg_neg_grade_field(
     };
     data_field_with_info(
         54u8,
+        None,
         "avg_neg_grade",
         FieldDataType::SInt16,
         scale,
@@ -16772,6 +17125,7 @@ fn session_message_max_pos_grade_field(
     };
     data_field_with_info(
         55u8,
+        None,
         "max_pos_grade",
         FieldDataType::SInt16,
         scale,
@@ -16799,6 +17153,7 @@ fn session_message_max_neg_grade_field(
     };
     data_field_with_info(
         56u8,
+        None,
         "max_neg_grade",
         FieldDataType::SInt16,
         scale,
@@ -16826,6 +17181,7 @@ fn session_message_avg_temperature_field(
     };
     data_field_with_info(
         57u8,
+        None,
         "avg_temperature",
         FieldDataType::SInt8,
         scale,
@@ -16853,6 +17209,7 @@ fn session_message_max_temperature_field(
     };
     data_field_with_info(
         58u8,
+        None,
         "max_temperature",
         FieldDataType::SInt8,
         scale,
@@ -16880,6 +17237,7 @@ fn session_message_total_moving_time_field(
     };
     data_field_with_info(
         59u8,
+        None,
         "total_moving_time",
         FieldDataType::UInt32,
         scale,
@@ -16907,6 +17265,7 @@ fn session_message_avg_pos_vertical_speed_field(
     };
     data_field_with_info(
         60u8,
+        None,
         "avg_pos_vertical_speed",
         FieldDataType::SInt16,
         scale,
@@ -16934,6 +17293,7 @@ fn session_message_avg_neg_vertical_speed_field(
     };
     data_field_with_info(
         61u8,
+        None,
         "avg_neg_vertical_speed",
         FieldDataType::SInt16,
         scale,
@@ -16961,6 +17321,7 @@ fn session_message_max_pos_vertical_speed_field(
     };
     data_field_with_info(
         62u8,
+        None,
         "max_pos_vertical_speed",
         FieldDataType::SInt16,
         scale,
@@ -16988,6 +17349,7 @@ fn session_message_max_neg_vertical_speed_field(
     };
     data_field_with_info(
         63u8,
+        None,
         "max_neg_vertical_speed",
         FieldDataType::SInt16,
         scale,
@@ -17015,6 +17377,7 @@ fn session_message_min_heart_rate_field(
     };
     data_field_with_info(
         64u8,
+        None,
         "min_heart_rate",
         FieldDataType::UInt8,
         scale,
@@ -17042,6 +17405,7 @@ fn session_message_time_in_hr_zone_field(
     };
     data_field_with_info(
         65u8,
+        None,
         "time_in_hr_zone",
         FieldDataType::UInt32,
         scale,
@@ -17069,6 +17433,7 @@ fn session_message_time_in_speed_zone_field(
     };
     data_field_with_info(
         66u8,
+        None,
         "time_in_speed_zone",
         FieldDataType::UInt32,
         scale,
@@ -17096,6 +17461,7 @@ fn session_message_time_in_cadence_zone_field(
     };
     data_field_with_info(
         67u8,
+        None,
         "time_in_cadence_zone",
         FieldDataType::UInt32,
         scale,
@@ -17123,6 +17489,7 @@ fn session_message_time_in_power_zone_field(
     };
     data_field_with_info(
         68u8,
+        None,
         "time_in_power_zone",
         FieldDataType::UInt32,
         scale,
@@ -17150,6 +17517,7 @@ fn session_message_avg_lap_time_field(
     };
     data_field_with_info(
         69u8,
+        None,
         "avg_lap_time",
         FieldDataType::UInt32,
         scale,
@@ -17177,6 +17545,7 @@ fn session_message_best_lap_index_field(
     };
     data_field_with_info(
         70u8,
+        None,
         "best_lap_index",
         FieldDataType::UInt16,
         scale,
@@ -17204,6 +17573,7 @@ fn session_message_min_altitude_field(
     };
     data_field_with_info(
         71u8,
+        None,
         "min_altitude",
         FieldDataType::UInt16,
         scale,
@@ -17231,6 +17601,7 @@ fn session_message_player_score_field(
     };
     data_field_with_info(
         82u8,
+        None,
         "player_score",
         FieldDataType::UInt16,
         scale,
@@ -17258,6 +17629,7 @@ fn session_message_opponent_score_field(
     };
     data_field_with_info(
         83u8,
+        None,
         "opponent_score",
         FieldDataType::UInt16,
         scale,
@@ -17285,6 +17657,7 @@ fn session_message_opponent_name_field(
     };
     data_field_with_info(
         84u8,
+        None,
         "opponent_name",
         FieldDataType::String,
         scale,
@@ -17312,6 +17685,7 @@ fn session_message_stroke_count_field(
     };
     data_field_with_info(
         85u8,
+        None,
         "stroke_count",
         FieldDataType::UInt16,
         scale,
@@ -17339,6 +17713,7 @@ fn session_message_zone_count_field(
     };
     data_field_with_info(
         86u8,
+        None,
         "zone_count",
         FieldDataType::UInt16,
         scale,
@@ -17366,6 +17741,7 @@ fn session_message_max_ball_speed_field(
     };
     data_field_with_info(
         87u8,
+        None,
         "max_ball_speed",
         FieldDataType::UInt16,
         scale,
@@ -17393,6 +17769,7 @@ fn session_message_avg_ball_speed_field(
     };
     data_field_with_info(
         88u8,
+        None,
         "avg_ball_speed",
         FieldDataType::UInt16,
         scale,
@@ -17420,6 +17797,7 @@ fn session_message_avg_vertical_oscillation_field(
     };
     data_field_with_info(
         89u8,
+        None,
         "avg_vertical_oscillation",
         FieldDataType::UInt16,
         scale,
@@ -17447,6 +17825,7 @@ fn session_message_avg_stance_time_percent_field(
     };
     data_field_with_info(
         90u8,
+        None,
         "avg_stance_time_percent",
         FieldDataType::UInt16,
         scale,
@@ -17474,6 +17853,7 @@ fn session_message_avg_stance_time_field(
     };
     data_field_with_info(
         91u8,
+        None,
         "avg_stance_time",
         FieldDataType::UInt16,
         scale,
@@ -17501,6 +17881,7 @@ fn session_message_avg_fractional_cadence_field(
     };
     data_field_with_info(
         92u8,
+        None,
         "avg_fractional_cadence",
         FieldDataType::UInt8,
         scale,
@@ -17528,6 +17909,7 @@ fn session_message_max_fractional_cadence_field(
     };
     data_field_with_info(
         93u8,
+        None,
         "max_fractional_cadence",
         FieldDataType::UInt8,
         scale,
@@ -17555,6 +17937,7 @@ fn session_message_total_fractional_cycles_field(
     };
     data_field_with_info(
         94u8,
+        None,
         "total_fractional_cycles",
         FieldDataType::UInt8,
         scale,
@@ -17582,6 +17965,7 @@ fn session_message_avg_total_hemoglobin_conc_field(
     };
     data_field_with_info(
         95u8,
+        None,
         "avg_total_hemoglobin_conc",
         FieldDataType::UInt16,
         scale,
@@ -17609,6 +17993,7 @@ fn session_message_min_total_hemoglobin_conc_field(
     };
     data_field_with_info(
         96u8,
+        None,
         "min_total_hemoglobin_conc",
         FieldDataType::UInt16,
         scale,
@@ -17636,6 +18021,7 @@ fn session_message_max_total_hemoglobin_conc_field(
     };
     data_field_with_info(
         97u8,
+        None,
         "max_total_hemoglobin_conc",
         FieldDataType::UInt16,
         scale,
@@ -17663,6 +18049,7 @@ fn session_message_avg_saturated_hemoglobin_percent_field(
     };
     data_field_with_info(
         98u8,
+        None,
         "avg_saturated_hemoglobin_percent",
         FieldDataType::UInt16,
         scale,
@@ -17690,6 +18077,7 @@ fn session_message_min_saturated_hemoglobin_percent_field(
     };
     data_field_with_info(
         99u8,
+        None,
         "min_saturated_hemoglobin_percent",
         FieldDataType::UInt16,
         scale,
@@ -17717,6 +18105,7 @@ fn session_message_max_saturated_hemoglobin_percent_field(
     };
     data_field_with_info(
         100u8,
+        None,
         "max_saturated_hemoglobin_percent",
         FieldDataType::UInt16,
         scale,
@@ -17744,6 +18133,7 @@ fn session_message_avg_left_torque_effectiveness_field(
     };
     data_field_with_info(
         101u8,
+        None,
         "avg_left_torque_effectiveness",
         FieldDataType::UInt8,
         scale,
@@ -17771,6 +18161,7 @@ fn session_message_avg_right_torque_effectiveness_field(
     };
     data_field_with_info(
         102u8,
+        None,
         "avg_right_torque_effectiveness",
         FieldDataType::UInt8,
         scale,
@@ -17798,6 +18189,7 @@ fn session_message_avg_left_pedal_smoothness_field(
     };
     data_field_with_info(
         103u8,
+        None,
         "avg_left_pedal_smoothness",
         FieldDataType::UInt8,
         scale,
@@ -17825,6 +18217,7 @@ fn session_message_avg_right_pedal_smoothness_field(
     };
     data_field_with_info(
         104u8,
+        None,
         "avg_right_pedal_smoothness",
         FieldDataType::UInt8,
         scale,
@@ -17852,6 +18245,7 @@ fn session_message_avg_combined_pedal_smoothness_field(
     };
     data_field_with_info(
         105u8,
+        None,
         "avg_combined_pedal_smoothness",
         FieldDataType::UInt8,
         scale,
@@ -17879,6 +18273,7 @@ fn session_message_sport_profile_name_field(
     };
     data_field_with_info(
         110u8,
+        None,
         "sport_profile_name",
         FieldDataType::String,
         scale,
@@ -17906,6 +18301,7 @@ fn session_message_sport_index_field(
     };
     data_field_with_info(
         111u8,
+        None,
         "sport_index",
         FieldDataType::UInt8,
         scale,
@@ -17933,6 +18329,7 @@ fn session_message_time_standing_field(
     };
     data_field_with_info(
         112u8,
+        None,
         "time_standing",
         FieldDataType::UInt32,
         scale,
@@ -17960,6 +18357,7 @@ fn session_message_stand_count_field(
     };
     data_field_with_info(
         113u8,
+        None,
         "stand_count",
         FieldDataType::UInt16,
         scale,
@@ -17987,6 +18385,7 @@ fn session_message_avg_left_pco_field(
     };
     data_field_with_info(
         114u8,
+        None,
         "avg_left_pco",
         FieldDataType::SInt8,
         scale,
@@ -18014,6 +18413,7 @@ fn session_message_avg_right_pco_field(
     };
     data_field_with_info(
         115u8,
+        None,
         "avg_right_pco",
         FieldDataType::SInt8,
         scale,
@@ -18041,6 +18441,7 @@ fn session_message_avg_left_power_phase_field(
     };
     data_field_with_info(
         116u8,
+        None,
         "avg_left_power_phase",
         FieldDataType::UInt8,
         scale,
@@ -18068,6 +18469,7 @@ fn session_message_avg_left_power_phase_peak_field(
     };
     data_field_with_info(
         117u8,
+        None,
         "avg_left_power_phase_peak",
         FieldDataType::UInt8,
         scale,
@@ -18095,6 +18497,7 @@ fn session_message_avg_right_power_phase_field(
     };
     data_field_with_info(
         118u8,
+        None,
         "avg_right_power_phase",
         FieldDataType::UInt8,
         scale,
@@ -18122,6 +18525,7 @@ fn session_message_avg_right_power_phase_peak_field(
     };
     data_field_with_info(
         119u8,
+        None,
         "avg_right_power_phase_peak",
         FieldDataType::UInt8,
         scale,
@@ -18149,6 +18553,7 @@ fn session_message_avg_power_position_field(
     };
     data_field_with_info(
         120u8,
+        None,
         "avg_power_position",
         FieldDataType::UInt16,
         scale,
@@ -18176,6 +18581,7 @@ fn session_message_max_power_position_field(
     };
     data_field_with_info(
         121u8,
+        None,
         "max_power_position",
         FieldDataType::UInt16,
         scale,
@@ -18203,6 +18609,7 @@ fn session_message_avg_cadence_position_field(
     };
     data_field_with_info(
         122u8,
+        None,
         "avg_cadence_position",
         FieldDataType::UInt8,
         scale,
@@ -18230,6 +18637,7 @@ fn session_message_max_cadence_position_field(
     };
     data_field_with_info(
         123u8,
+        None,
         "max_cadence_position",
         FieldDataType::UInt8,
         scale,
@@ -18257,6 +18665,7 @@ fn session_message_enhanced_avg_speed_field(
     };
     data_field_with_info(
         124u8,
+        None,
         "enhanced_avg_speed",
         FieldDataType::UInt32,
         scale,
@@ -18284,6 +18693,7 @@ fn session_message_enhanced_max_speed_field(
     };
     data_field_with_info(
         125u8,
+        None,
         "enhanced_max_speed",
         FieldDataType::UInt32,
         scale,
@@ -18311,6 +18721,7 @@ fn session_message_enhanced_avg_altitude_field(
     };
     data_field_with_info(
         126u8,
+        None,
         "enhanced_avg_altitude",
         FieldDataType::UInt32,
         scale,
@@ -18338,6 +18749,7 @@ fn session_message_enhanced_min_altitude_field(
     };
     data_field_with_info(
         127u8,
+        None,
         "enhanced_min_altitude",
         FieldDataType::UInt32,
         scale,
@@ -18365,6 +18777,7 @@ fn session_message_enhanced_max_altitude_field(
     };
     data_field_with_info(
         128u8,
+        None,
         "enhanced_max_altitude",
         FieldDataType::UInt32,
         scale,
@@ -18392,6 +18805,7 @@ fn session_message_avg_lev_motor_power_field(
     };
     data_field_with_info(
         129u8,
+        None,
         "avg_lev_motor_power",
         FieldDataType::UInt16,
         scale,
@@ -18419,6 +18833,7 @@ fn session_message_max_lev_motor_power_field(
     };
     data_field_with_info(
         130u8,
+        None,
         "max_lev_motor_power",
         FieldDataType::UInt16,
         scale,
@@ -18446,6 +18861,7 @@ fn session_message_lev_battery_consumption_field(
     };
     data_field_with_info(
         131u8,
+        None,
         "lev_battery_consumption",
         FieldDataType::UInt8,
         scale,
@@ -18473,6 +18889,7 @@ fn session_message_avg_vertical_ratio_field(
     };
     data_field_with_info(
         132u8,
+        None,
         "avg_vertical_ratio",
         FieldDataType::UInt16,
         scale,
@@ -18500,6 +18917,7 @@ fn session_message_avg_stance_time_balance_field(
     };
     data_field_with_info(
         133u8,
+        None,
         "avg_stance_time_balance",
         FieldDataType::UInt16,
         scale,
@@ -18527,6 +18945,7 @@ fn session_message_avg_step_length_field(
     };
     data_field_with_info(
         134u8,
+        None,
         "avg_step_length",
         FieldDataType::UInt16,
         scale,
@@ -18554,6 +18973,7 @@ fn session_message_total_anaerobic_training_effect_field(
     };
     data_field_with_info(
         137u8,
+        None,
         "total_anaerobic_training_effect",
         FieldDataType::UInt8,
         scale,
@@ -18581,6 +19001,7 @@ fn session_message_avg_vam_field(
     };
     data_field_with_info(
         139u8,
+        None,
         "avg_vam",
         FieldDataType::UInt16,
         scale,
@@ -18608,6 +19029,7 @@ fn session_message_avg_depth_field(
     };
     data_field_with_info(
         140u8,
+        None,
         "avg_depth",
         FieldDataType::UInt32,
         scale,
@@ -18635,6 +19057,7 @@ fn session_message_max_depth_field(
     };
     data_field_with_info(
         141u8,
+        None,
         "max_depth",
         FieldDataType::UInt32,
         scale,
@@ -18662,6 +19085,7 @@ fn session_message_surface_interval_field(
     };
     data_field_with_info(
         142u8,
+        None,
         "surface_interval",
         FieldDataType::UInt32,
         scale,
@@ -18689,6 +19113,7 @@ fn session_message_start_cns_field(
     };
     data_field_with_info(
         143u8,
+        None,
         "start_cns",
         FieldDataType::UInt8,
         scale,
@@ -18716,6 +19141,7 @@ fn session_message_end_cns_field(
     };
     data_field_with_info(
         144u8,
+        None,
         "end_cns",
         FieldDataType::UInt8,
         scale,
@@ -18743,6 +19169,7 @@ fn session_message_start_n2_field(
     };
     data_field_with_info(
         145u8,
+        None,
         "start_n2",
         FieldDataType::UInt16,
         scale,
@@ -18770,6 +19197,7 @@ fn session_message_end_n2_field(
     };
     data_field_with_info(
         146u8,
+        None,
         "end_n2",
         FieldDataType::UInt16,
         scale,
@@ -18797,6 +19225,7 @@ fn session_message_avg_respiration_rate_field(
     };
     data_field_with_info(
         147u8,
+        None,
         "avg_respiration_rate",
         FieldDataType::UInt8,
         scale,
@@ -18824,6 +19253,7 @@ fn session_message_max_respiration_rate_field(
     };
     data_field_with_info(
         148u8,
+        None,
         "max_respiration_rate",
         FieldDataType::UInt8,
         scale,
@@ -18851,6 +19281,7 @@ fn session_message_min_respiration_rate_field(
     };
     data_field_with_info(
         149u8,
+        None,
         "min_respiration_rate",
         FieldDataType::UInt8,
         scale,
@@ -18878,6 +19309,7 @@ fn session_message_min_temperature_field(
     };
     data_field_with_info(
         150u8,
+        None,
         "min_temperature",
         FieldDataType::SInt8,
         scale,
@@ -18905,6 +19337,7 @@ fn session_message_o2_toxicity_field(
     };
     data_field_with_info(
         155u8,
+        None,
         "o2_toxicity",
         FieldDataType::UInt16,
         scale,
@@ -18932,6 +19365,7 @@ fn session_message_dive_number_field(
     };
     data_field_with_info(
         156u8,
+        None,
         "dive_number",
         FieldDataType::UInt32,
         scale,
@@ -18959,6 +19393,7 @@ fn session_message_training_load_peak_field(
     };
     data_field_with_info(
         168u8,
+        None,
         "training_load_peak",
         FieldDataType::SInt32,
         scale,
@@ -18986,6 +19421,7 @@ fn session_message_enhanced_avg_respiration_rate_field(
     };
     data_field_with_info(
         169u8,
+        None,
         "enhanced_avg_respiration_rate",
         FieldDataType::UInt16,
         scale,
@@ -19013,6 +19449,7 @@ fn session_message_enhanced_max_respiration_rate_field(
     };
     data_field_with_info(
         170u8,
+        None,
         "enhanced_max_respiration_rate",
         FieldDataType::UInt16,
         scale,
@@ -19040,6 +19477,7 @@ fn session_message_enhanced_min_respiration_rate_field(
     };
     data_field_with_info(
         180u8,
+        None,
         "enhanced_min_respiration_rate",
         FieldDataType::UInt16,
         scale,
@@ -19067,6 +19505,7 @@ fn session_message_total_grit_field(
     };
     data_field_with_info(
         181u8,
+        None,
         "total_grit",
         FieldDataType::Float32,
         scale,
@@ -19094,6 +19533,7 @@ fn session_message_total_flow_field(
     };
     data_field_with_info(
         182u8,
+        None,
         "total_flow",
         FieldDataType::Float32,
         scale,
@@ -19121,6 +19561,7 @@ fn session_message_jump_count_field(
     };
     data_field_with_info(
         183u8,
+        None,
         "jump_count",
         FieldDataType::UInt16,
         scale,
@@ -19148,6 +19589,7 @@ fn session_message_avg_grit_field(
     };
     data_field_with_info(
         186u8,
+        None,
         "avg_grit",
         FieldDataType::Float32,
         scale,
@@ -19175,6 +19617,7 @@ fn session_message_avg_flow_field(
     };
     data_field_with_info(
         187u8,
+        None,
         "avg_flow",
         FieldDataType::Float32,
         scale,
@@ -19202,6 +19645,7 @@ fn session_message_workout_feel_field(
     };
     data_field_with_info(
         192u8,
+        None,
         "workout_feel",
         FieldDataType::UInt8,
         scale,
@@ -19229,6 +19673,7 @@ fn session_message_workout_rpe_field(
     };
     data_field_with_info(
         193u8,
+        None,
         "workout_rpe",
         FieldDataType::UInt8,
         scale,
@@ -19256,6 +19701,7 @@ fn session_message_avg_spo2_field(
     };
     data_field_with_info(
         194u8,
+        None,
         "avg_spo2",
         FieldDataType::UInt8,
         scale,
@@ -19283,6 +19729,7 @@ fn session_message_avg_stress_field(
     };
     data_field_with_info(
         195u8,
+        None,
         "avg_stress",
         FieldDataType::UInt8,
         scale,
@@ -19310,6 +19757,7 @@ fn session_message_sdrr_hrv_field(
     };
     data_field_with_info(
         197u8,
+        None,
         "sdrr_hrv",
         FieldDataType::UInt8,
         scale,
@@ -19337,6 +19785,7 @@ fn session_message_rmssd_hrv_field(
     };
     data_field_with_info(
         198u8,
+        None,
         "rmssd_hrv",
         FieldDataType::UInt8,
         scale,
@@ -19364,6 +19813,7 @@ fn session_message_total_fractional_ascent_field(
     };
     data_field_with_info(
         199u8,
+        None,
         "total_fractional_ascent",
         FieldDataType::UInt8,
         scale,
@@ -19391,6 +19841,7 @@ fn session_message_total_fractional_descent_field(
     };
     data_field_with_info(
         200u8,
+        None,
         "total_fractional_descent",
         FieldDataType::UInt8,
         scale,
@@ -19418,6 +19869,7 @@ fn session_message_avg_core_temperature_field(
     };
     data_field_with_info(
         208u8,
+        None,
         "avg_core_temperature",
         FieldDataType::UInt16,
         scale,
@@ -19445,6 +19897,7 @@ fn session_message_min_core_temperature_field(
     };
     data_field_with_info(
         209u8,
+        None,
         "min_core_temperature",
         FieldDataType::UInt16,
         scale,
@@ -19472,6 +19925,7 @@ fn session_message_max_core_temperature_field(
     };
     data_field_with_info(
         210u8,
+        None,
         "max_core_temperature",
         FieldDataType::UInt16,
         scale,
@@ -19499,6 +19953,7 @@ fn session_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -19526,6 +19981,7 @@ fn session_message_message_index_field(
     };
     data_field_with_info(
         254u8,
+        None,
         "message_index",
         FieldDataType::MessageIndex,
         scale,
@@ -21474,6 +21930,7 @@ fn lap_message_event_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "event",
         FieldDataType::Event,
         scale,
@@ -21501,6 +21958,7 @@ fn lap_message_event_type_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "event_type",
         FieldDataType::EventType,
         scale,
@@ -21528,6 +21986,7 @@ fn lap_message_start_time_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "start_time",
         FieldDataType::DateTime,
         scale,
@@ -21555,6 +22014,7 @@ fn lap_message_start_position_lat_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "start_position_lat",
         FieldDataType::SInt32,
         scale,
@@ -21582,6 +22042,7 @@ fn lap_message_start_position_long_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "start_position_long",
         FieldDataType::SInt32,
         scale,
@@ -21609,6 +22070,7 @@ fn lap_message_end_position_lat_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "end_position_lat",
         FieldDataType::SInt32,
         scale,
@@ -21636,6 +22098,7 @@ fn lap_message_end_position_long_field(
     };
     data_field_with_info(
         6u8,
+        None,
         "end_position_long",
         FieldDataType::SInt32,
         scale,
@@ -21663,6 +22126,7 @@ fn lap_message_total_elapsed_time_field(
     };
     data_field_with_info(
         7u8,
+        None,
         "total_elapsed_time",
         FieldDataType::UInt32,
         scale,
@@ -21690,6 +22154,7 @@ fn lap_message_total_timer_time_field(
     };
     data_field_with_info(
         8u8,
+        None,
         "total_timer_time",
         FieldDataType::UInt32,
         scale,
@@ -21717,6 +22182,7 @@ fn lap_message_total_distance_field(
     };
     data_field_with_info(
         9u8,
+        None,
         "total_distance",
         FieldDataType::UInt32,
         scale,
@@ -21744,6 +22210,7 @@ fn lap_message_total_cycles_field(
     };
     data_field_with_info(
         10u8,
+        None,
         "total_cycles",
         FieldDataType::UInt32,
         scale,
@@ -21776,6 +22243,7 @@ fn lap_message_total_strides_field(
     };
     data_field_with_info(
         10u8,
+        None,
         name,
         FieldDataType::UInt32,
         scale,
@@ -21808,6 +22276,7 @@ fn lap_message_total_strokes_field(
     };
     data_field_with_info(
         10u8,
+        None,
         name,
         FieldDataType::UInt32,
         scale,
@@ -21835,6 +22304,7 @@ fn lap_message_total_calories_field(
     };
     data_field_with_info(
         11u8,
+        None,
         "total_calories",
         FieldDataType::UInt16,
         scale,
@@ -21862,6 +22332,7 @@ fn lap_message_total_fat_calories_field(
     };
     data_field_with_info(
         12u8,
+        None,
         "total_fat_calories",
         FieldDataType::UInt16,
         scale,
@@ -21889,6 +22360,7 @@ fn lap_message_avg_speed_field(
     };
     data_field_with_info(
         13u8,
+        None,
         "avg_speed",
         FieldDataType::UInt16,
         scale,
@@ -21916,6 +22388,7 @@ fn lap_message_max_speed_field(
     };
     data_field_with_info(
         14u8,
+        None,
         "max_speed",
         FieldDataType::UInt16,
         scale,
@@ -21943,6 +22416,7 @@ fn lap_message_avg_heart_rate_field(
     };
     data_field_with_info(
         15u8,
+        None,
         "avg_heart_rate",
         FieldDataType::UInt8,
         scale,
@@ -21970,6 +22444,7 @@ fn lap_message_max_heart_rate_field(
     };
     data_field_with_info(
         16u8,
+        None,
         "max_heart_rate",
         FieldDataType::UInt8,
         scale,
@@ -21997,6 +22472,7 @@ fn lap_message_avg_cadence_field(
     };
     data_field_with_info(
         17u8,
+        None,
         "avg_cadence",
         FieldDataType::UInt8,
         scale,
@@ -22029,6 +22505,7 @@ fn lap_message_avg_running_cadence_field(
     };
     data_field_with_info(
         17u8,
+        None,
         name,
         FieldDataType::UInt8,
         scale,
@@ -22056,6 +22533,7 @@ fn lap_message_max_cadence_field(
     };
     data_field_with_info(
         18u8,
+        None,
         "max_cadence",
         FieldDataType::UInt8,
         scale,
@@ -22088,6 +22566,7 @@ fn lap_message_max_running_cadence_field(
     };
     data_field_with_info(
         18u8,
+        None,
         name,
         FieldDataType::UInt8,
         scale,
@@ -22115,6 +22594,7 @@ fn lap_message_avg_power_field(
     };
     data_field_with_info(
         19u8,
+        None,
         "avg_power",
         FieldDataType::UInt16,
         scale,
@@ -22142,6 +22622,7 @@ fn lap_message_max_power_field(
     };
     data_field_with_info(
         20u8,
+        None,
         "max_power",
         FieldDataType::UInt16,
         scale,
@@ -22169,6 +22650,7 @@ fn lap_message_total_ascent_field(
     };
     data_field_with_info(
         21u8,
+        None,
         "total_ascent",
         FieldDataType::UInt16,
         scale,
@@ -22196,6 +22678,7 @@ fn lap_message_total_descent_field(
     };
     data_field_with_info(
         22u8,
+        None,
         "total_descent",
         FieldDataType::UInt16,
         scale,
@@ -22223,6 +22706,7 @@ fn lap_message_intensity_field(
     };
     data_field_with_info(
         23u8,
+        None,
         "intensity",
         FieldDataType::Intensity,
         scale,
@@ -22250,6 +22734,7 @@ fn lap_message_lap_trigger_field(
     };
     data_field_with_info(
         24u8,
+        None,
         "lap_trigger",
         FieldDataType::LapTrigger,
         scale,
@@ -22277,6 +22762,7 @@ fn lap_message_sport_field(
     };
     data_field_with_info(
         25u8,
+        None,
         "sport",
         FieldDataType::Sport,
         scale,
@@ -22304,6 +22790,7 @@ fn lap_message_event_group_field(
     };
     data_field_with_info(
         26u8,
+        None,
         "event_group",
         FieldDataType::UInt8,
         scale,
@@ -22331,6 +22818,7 @@ fn lap_message_num_lengths_field(
     };
     data_field_with_info(
         32u8,
+        None,
         "num_lengths",
         FieldDataType::UInt16,
         scale,
@@ -22358,6 +22846,7 @@ fn lap_message_normalized_power_field(
     };
     data_field_with_info(
         33u8,
+        None,
         "normalized_power",
         FieldDataType::UInt16,
         scale,
@@ -22385,6 +22874,7 @@ fn lap_message_left_right_balance_field(
     };
     data_field_with_info(
         34u8,
+        None,
         "left_right_balance",
         FieldDataType::LeftRightBalance100,
         scale,
@@ -22412,6 +22902,7 @@ fn lap_message_first_length_index_field(
     };
     data_field_with_info(
         35u8,
+        None,
         "first_length_index",
         FieldDataType::UInt16,
         scale,
@@ -22439,6 +22930,7 @@ fn lap_message_avg_stroke_distance_field(
     };
     data_field_with_info(
         37u8,
+        None,
         "avg_stroke_distance",
         FieldDataType::UInt16,
         scale,
@@ -22466,6 +22958,7 @@ fn lap_message_swim_stroke_field(
     };
     data_field_with_info(
         38u8,
+        None,
         "swim_stroke",
         FieldDataType::SwimStroke,
         scale,
@@ -22493,6 +22986,7 @@ fn lap_message_sub_sport_field(
     };
     data_field_with_info(
         39u8,
+        None,
         "sub_sport",
         FieldDataType::SubSport,
         scale,
@@ -22520,6 +23014,7 @@ fn lap_message_num_active_lengths_field(
     };
     data_field_with_info(
         40u8,
+        None,
         "num_active_lengths",
         FieldDataType::UInt16,
         scale,
@@ -22547,6 +23042,7 @@ fn lap_message_total_work_field(
     };
     data_field_with_info(
         41u8,
+        None,
         "total_work",
         FieldDataType::UInt32,
         scale,
@@ -22574,6 +23070,7 @@ fn lap_message_avg_altitude_field(
     };
     data_field_with_info(
         42u8,
+        None,
         "avg_altitude",
         FieldDataType::UInt16,
         scale,
@@ -22601,6 +23098,7 @@ fn lap_message_max_altitude_field(
     };
     data_field_with_info(
         43u8,
+        None,
         "max_altitude",
         FieldDataType::UInt16,
         scale,
@@ -22628,6 +23126,7 @@ fn lap_message_gps_accuracy_field(
     };
     data_field_with_info(
         44u8,
+        None,
         "gps_accuracy",
         FieldDataType::UInt8,
         scale,
@@ -22655,6 +23154,7 @@ fn lap_message_avg_grade_field(
     };
     data_field_with_info(
         45u8,
+        None,
         "avg_grade",
         FieldDataType::SInt16,
         scale,
@@ -22682,6 +23182,7 @@ fn lap_message_avg_pos_grade_field(
     };
     data_field_with_info(
         46u8,
+        None,
         "avg_pos_grade",
         FieldDataType::SInt16,
         scale,
@@ -22709,6 +23210,7 @@ fn lap_message_avg_neg_grade_field(
     };
     data_field_with_info(
         47u8,
+        None,
         "avg_neg_grade",
         FieldDataType::SInt16,
         scale,
@@ -22736,6 +23238,7 @@ fn lap_message_max_pos_grade_field(
     };
     data_field_with_info(
         48u8,
+        None,
         "max_pos_grade",
         FieldDataType::SInt16,
         scale,
@@ -22763,6 +23266,7 @@ fn lap_message_max_neg_grade_field(
     };
     data_field_with_info(
         49u8,
+        None,
         "max_neg_grade",
         FieldDataType::SInt16,
         scale,
@@ -22790,6 +23294,7 @@ fn lap_message_avg_temperature_field(
     };
     data_field_with_info(
         50u8,
+        None,
         "avg_temperature",
         FieldDataType::SInt8,
         scale,
@@ -22817,6 +23322,7 @@ fn lap_message_max_temperature_field(
     };
     data_field_with_info(
         51u8,
+        None,
         "max_temperature",
         FieldDataType::SInt8,
         scale,
@@ -22844,6 +23350,7 @@ fn lap_message_total_moving_time_field(
     };
     data_field_with_info(
         52u8,
+        None,
         "total_moving_time",
         FieldDataType::UInt32,
         scale,
@@ -22871,6 +23378,7 @@ fn lap_message_avg_pos_vertical_speed_field(
     };
     data_field_with_info(
         53u8,
+        None,
         "avg_pos_vertical_speed",
         FieldDataType::SInt16,
         scale,
@@ -22898,6 +23406,7 @@ fn lap_message_avg_neg_vertical_speed_field(
     };
     data_field_with_info(
         54u8,
+        None,
         "avg_neg_vertical_speed",
         FieldDataType::SInt16,
         scale,
@@ -22925,6 +23434,7 @@ fn lap_message_max_pos_vertical_speed_field(
     };
     data_field_with_info(
         55u8,
+        None,
         "max_pos_vertical_speed",
         FieldDataType::SInt16,
         scale,
@@ -22952,6 +23462,7 @@ fn lap_message_max_neg_vertical_speed_field(
     };
     data_field_with_info(
         56u8,
+        None,
         "max_neg_vertical_speed",
         FieldDataType::SInt16,
         scale,
@@ -22979,6 +23490,7 @@ fn lap_message_time_in_hr_zone_field(
     };
     data_field_with_info(
         57u8,
+        None,
         "time_in_hr_zone",
         FieldDataType::UInt32,
         scale,
@@ -23006,6 +23518,7 @@ fn lap_message_time_in_speed_zone_field(
     };
     data_field_with_info(
         58u8,
+        None,
         "time_in_speed_zone",
         FieldDataType::UInt32,
         scale,
@@ -23033,6 +23546,7 @@ fn lap_message_time_in_cadence_zone_field(
     };
     data_field_with_info(
         59u8,
+        None,
         "time_in_cadence_zone",
         FieldDataType::UInt32,
         scale,
@@ -23060,6 +23574,7 @@ fn lap_message_time_in_power_zone_field(
     };
     data_field_with_info(
         60u8,
+        None,
         "time_in_power_zone",
         FieldDataType::UInt32,
         scale,
@@ -23087,6 +23602,7 @@ fn lap_message_repetition_num_field(
     };
     data_field_with_info(
         61u8,
+        None,
         "repetition_num",
         FieldDataType::UInt16,
         scale,
@@ -23114,6 +23630,7 @@ fn lap_message_min_altitude_field(
     };
     data_field_with_info(
         62u8,
+        None,
         "min_altitude",
         FieldDataType::UInt16,
         scale,
@@ -23141,6 +23658,7 @@ fn lap_message_min_heart_rate_field(
     };
     data_field_with_info(
         63u8,
+        None,
         "min_heart_rate",
         FieldDataType::UInt8,
         scale,
@@ -23168,6 +23686,7 @@ fn lap_message_wkt_step_index_field(
     };
     data_field_with_info(
         71u8,
+        None,
         "wkt_step_index",
         FieldDataType::MessageIndex,
         scale,
@@ -23195,6 +23714,7 @@ fn lap_message_opponent_score_field(
     };
     data_field_with_info(
         74u8,
+        None,
         "opponent_score",
         FieldDataType::UInt16,
         scale,
@@ -23222,6 +23742,7 @@ fn lap_message_stroke_count_field(
     };
     data_field_with_info(
         75u8,
+        None,
         "stroke_count",
         FieldDataType::UInt16,
         scale,
@@ -23249,6 +23770,7 @@ fn lap_message_zone_count_field(
     };
     data_field_with_info(
         76u8,
+        None,
         "zone_count",
         FieldDataType::UInt16,
         scale,
@@ -23276,6 +23798,7 @@ fn lap_message_avg_vertical_oscillation_field(
     };
     data_field_with_info(
         77u8,
+        None,
         "avg_vertical_oscillation",
         FieldDataType::UInt16,
         scale,
@@ -23303,6 +23826,7 @@ fn lap_message_avg_stance_time_percent_field(
     };
     data_field_with_info(
         78u8,
+        None,
         "avg_stance_time_percent",
         FieldDataType::UInt16,
         scale,
@@ -23330,6 +23854,7 @@ fn lap_message_avg_stance_time_field(
     };
     data_field_with_info(
         79u8,
+        None,
         "avg_stance_time",
         FieldDataType::UInt16,
         scale,
@@ -23357,6 +23882,7 @@ fn lap_message_avg_fractional_cadence_field(
     };
     data_field_with_info(
         80u8,
+        None,
         "avg_fractional_cadence",
         FieldDataType::UInt8,
         scale,
@@ -23384,6 +23910,7 @@ fn lap_message_max_fractional_cadence_field(
     };
     data_field_with_info(
         81u8,
+        None,
         "max_fractional_cadence",
         FieldDataType::UInt8,
         scale,
@@ -23411,6 +23938,7 @@ fn lap_message_total_fractional_cycles_field(
     };
     data_field_with_info(
         82u8,
+        None,
         "total_fractional_cycles",
         FieldDataType::UInt8,
         scale,
@@ -23438,6 +23966,7 @@ fn lap_message_player_score_field(
     };
     data_field_with_info(
         83u8,
+        None,
         "player_score",
         FieldDataType::UInt16,
         scale,
@@ -23465,6 +23994,7 @@ fn lap_message_avg_total_hemoglobin_conc_field(
     };
     data_field_with_info(
         84u8,
+        None,
         "avg_total_hemoglobin_conc",
         FieldDataType::UInt16,
         scale,
@@ -23492,6 +24022,7 @@ fn lap_message_min_total_hemoglobin_conc_field(
     };
     data_field_with_info(
         85u8,
+        None,
         "min_total_hemoglobin_conc",
         FieldDataType::UInt16,
         scale,
@@ -23519,6 +24050,7 @@ fn lap_message_max_total_hemoglobin_conc_field(
     };
     data_field_with_info(
         86u8,
+        None,
         "max_total_hemoglobin_conc",
         FieldDataType::UInt16,
         scale,
@@ -23546,6 +24078,7 @@ fn lap_message_avg_saturated_hemoglobin_percent_field(
     };
     data_field_with_info(
         87u8,
+        None,
         "avg_saturated_hemoglobin_percent",
         FieldDataType::UInt16,
         scale,
@@ -23573,6 +24106,7 @@ fn lap_message_min_saturated_hemoglobin_percent_field(
     };
     data_field_with_info(
         88u8,
+        None,
         "min_saturated_hemoglobin_percent",
         FieldDataType::UInt16,
         scale,
@@ -23600,6 +24134,7 @@ fn lap_message_max_saturated_hemoglobin_percent_field(
     };
     data_field_with_info(
         89u8,
+        None,
         "max_saturated_hemoglobin_percent",
         FieldDataType::UInt16,
         scale,
@@ -23627,6 +24162,7 @@ fn lap_message_avg_left_torque_effectiveness_field(
     };
     data_field_with_info(
         91u8,
+        None,
         "avg_left_torque_effectiveness",
         FieldDataType::UInt8,
         scale,
@@ -23654,6 +24190,7 @@ fn lap_message_avg_right_torque_effectiveness_field(
     };
     data_field_with_info(
         92u8,
+        None,
         "avg_right_torque_effectiveness",
         FieldDataType::UInt8,
         scale,
@@ -23681,6 +24218,7 @@ fn lap_message_avg_left_pedal_smoothness_field(
     };
     data_field_with_info(
         93u8,
+        None,
         "avg_left_pedal_smoothness",
         FieldDataType::UInt8,
         scale,
@@ -23708,6 +24246,7 @@ fn lap_message_avg_right_pedal_smoothness_field(
     };
     data_field_with_info(
         94u8,
+        None,
         "avg_right_pedal_smoothness",
         FieldDataType::UInt8,
         scale,
@@ -23735,6 +24274,7 @@ fn lap_message_avg_combined_pedal_smoothness_field(
     };
     data_field_with_info(
         95u8,
+        None,
         "avg_combined_pedal_smoothness",
         FieldDataType::UInt8,
         scale,
@@ -23762,6 +24302,7 @@ fn lap_message_time_standing_field(
     };
     data_field_with_info(
         98u8,
+        None,
         "time_standing",
         FieldDataType::UInt32,
         scale,
@@ -23789,6 +24330,7 @@ fn lap_message_stand_count_field(
     };
     data_field_with_info(
         99u8,
+        None,
         "stand_count",
         FieldDataType::UInt16,
         scale,
@@ -23816,6 +24358,7 @@ fn lap_message_avg_left_pco_field(
     };
     data_field_with_info(
         100u8,
+        None,
         "avg_left_pco",
         FieldDataType::SInt8,
         scale,
@@ -23843,6 +24386,7 @@ fn lap_message_avg_right_pco_field(
     };
     data_field_with_info(
         101u8,
+        None,
         "avg_right_pco",
         FieldDataType::SInt8,
         scale,
@@ -23870,6 +24414,7 @@ fn lap_message_avg_left_power_phase_field(
     };
     data_field_with_info(
         102u8,
+        None,
         "avg_left_power_phase",
         FieldDataType::UInt8,
         scale,
@@ -23897,6 +24442,7 @@ fn lap_message_avg_left_power_phase_peak_field(
     };
     data_field_with_info(
         103u8,
+        None,
         "avg_left_power_phase_peak",
         FieldDataType::UInt8,
         scale,
@@ -23924,6 +24470,7 @@ fn lap_message_avg_right_power_phase_field(
     };
     data_field_with_info(
         104u8,
+        None,
         "avg_right_power_phase",
         FieldDataType::UInt8,
         scale,
@@ -23951,6 +24498,7 @@ fn lap_message_avg_right_power_phase_peak_field(
     };
     data_field_with_info(
         105u8,
+        None,
         "avg_right_power_phase_peak",
         FieldDataType::UInt8,
         scale,
@@ -23978,6 +24526,7 @@ fn lap_message_avg_power_position_field(
     };
     data_field_with_info(
         106u8,
+        None,
         "avg_power_position",
         FieldDataType::UInt16,
         scale,
@@ -24005,6 +24554,7 @@ fn lap_message_max_power_position_field(
     };
     data_field_with_info(
         107u8,
+        None,
         "max_power_position",
         FieldDataType::UInt16,
         scale,
@@ -24032,6 +24582,7 @@ fn lap_message_avg_cadence_position_field(
     };
     data_field_with_info(
         108u8,
+        None,
         "avg_cadence_position",
         FieldDataType::UInt8,
         scale,
@@ -24059,6 +24610,7 @@ fn lap_message_max_cadence_position_field(
     };
     data_field_with_info(
         109u8,
+        None,
         "max_cadence_position",
         FieldDataType::UInt8,
         scale,
@@ -24086,6 +24638,7 @@ fn lap_message_enhanced_avg_speed_field(
     };
     data_field_with_info(
         110u8,
+        None,
         "enhanced_avg_speed",
         FieldDataType::UInt32,
         scale,
@@ -24113,6 +24666,7 @@ fn lap_message_enhanced_max_speed_field(
     };
     data_field_with_info(
         111u8,
+        None,
         "enhanced_max_speed",
         FieldDataType::UInt32,
         scale,
@@ -24140,6 +24694,7 @@ fn lap_message_enhanced_avg_altitude_field(
     };
     data_field_with_info(
         112u8,
+        None,
         "enhanced_avg_altitude",
         FieldDataType::UInt32,
         scale,
@@ -24167,6 +24722,7 @@ fn lap_message_enhanced_min_altitude_field(
     };
     data_field_with_info(
         113u8,
+        None,
         "enhanced_min_altitude",
         FieldDataType::UInt32,
         scale,
@@ -24194,6 +24750,7 @@ fn lap_message_enhanced_max_altitude_field(
     };
     data_field_with_info(
         114u8,
+        None,
         "enhanced_max_altitude",
         FieldDataType::UInt32,
         scale,
@@ -24221,6 +24778,7 @@ fn lap_message_avg_lev_motor_power_field(
     };
     data_field_with_info(
         115u8,
+        None,
         "avg_lev_motor_power",
         FieldDataType::UInt16,
         scale,
@@ -24248,6 +24806,7 @@ fn lap_message_max_lev_motor_power_field(
     };
     data_field_with_info(
         116u8,
+        None,
         "max_lev_motor_power",
         FieldDataType::UInt16,
         scale,
@@ -24275,6 +24834,7 @@ fn lap_message_lev_battery_consumption_field(
     };
     data_field_with_info(
         117u8,
+        None,
         "lev_battery_consumption",
         FieldDataType::UInt8,
         scale,
@@ -24302,6 +24862,7 @@ fn lap_message_avg_vertical_ratio_field(
     };
     data_field_with_info(
         118u8,
+        None,
         "avg_vertical_ratio",
         FieldDataType::UInt16,
         scale,
@@ -24329,6 +24890,7 @@ fn lap_message_avg_stance_time_balance_field(
     };
     data_field_with_info(
         119u8,
+        None,
         "avg_stance_time_balance",
         FieldDataType::UInt16,
         scale,
@@ -24356,6 +24918,7 @@ fn lap_message_avg_step_length_field(
     };
     data_field_with_info(
         120u8,
+        None,
         "avg_step_length",
         FieldDataType::UInt16,
         scale,
@@ -24383,6 +24946,7 @@ fn lap_message_avg_vam_field(
     };
     data_field_with_info(
         121u8,
+        None,
         "avg_vam",
         FieldDataType::UInt16,
         scale,
@@ -24410,6 +24974,7 @@ fn lap_message_avg_depth_field(
     };
     data_field_with_info(
         122u8,
+        None,
         "avg_depth",
         FieldDataType::UInt32,
         scale,
@@ -24437,6 +25002,7 @@ fn lap_message_max_depth_field(
     };
     data_field_with_info(
         123u8,
+        None,
         "max_depth",
         FieldDataType::UInt32,
         scale,
@@ -24464,6 +25030,7 @@ fn lap_message_min_temperature_field(
     };
     data_field_with_info(
         124u8,
+        None,
         "min_temperature",
         FieldDataType::SInt8,
         scale,
@@ -24491,6 +25058,7 @@ fn lap_message_enhanced_avg_respiration_rate_field(
     };
     data_field_with_info(
         136u8,
+        None,
         "enhanced_avg_respiration_rate",
         FieldDataType::UInt16,
         scale,
@@ -24518,6 +25086,7 @@ fn lap_message_enhanced_max_respiration_rate_field(
     };
     data_field_with_info(
         137u8,
+        None,
         "enhanced_max_respiration_rate",
         FieldDataType::UInt16,
         scale,
@@ -24545,6 +25114,7 @@ fn lap_message_avg_respiration_rate_field(
     };
     data_field_with_info(
         147u8,
+        None,
         "avg_respiration_rate",
         FieldDataType::UInt8,
         scale,
@@ -24572,6 +25142,7 @@ fn lap_message_max_respiration_rate_field(
     };
     data_field_with_info(
         148u8,
+        None,
         "max_respiration_rate",
         FieldDataType::UInt8,
         scale,
@@ -24599,6 +25170,7 @@ fn lap_message_total_grit_field(
     };
     data_field_with_info(
         149u8,
+        None,
         "total_grit",
         FieldDataType::Float32,
         scale,
@@ -24626,6 +25198,7 @@ fn lap_message_total_flow_field(
     };
     data_field_with_info(
         150u8,
+        None,
         "total_flow",
         FieldDataType::Float32,
         scale,
@@ -24653,6 +25226,7 @@ fn lap_message_jump_count_field(
     };
     data_field_with_info(
         151u8,
+        None,
         "jump_count",
         FieldDataType::UInt16,
         scale,
@@ -24680,6 +25254,7 @@ fn lap_message_avg_grit_field(
     };
     data_field_with_info(
         153u8,
+        None,
         "avg_grit",
         FieldDataType::Float32,
         scale,
@@ -24707,6 +25282,7 @@ fn lap_message_avg_flow_field(
     };
     data_field_with_info(
         154u8,
+        None,
         "avg_flow",
         FieldDataType::Float32,
         scale,
@@ -24734,6 +25310,7 @@ fn lap_message_total_fractional_ascent_field(
     };
     data_field_with_info(
         156u8,
+        None,
         "total_fractional_ascent",
         FieldDataType::UInt8,
         scale,
@@ -24761,6 +25338,7 @@ fn lap_message_total_fractional_descent_field(
     };
     data_field_with_info(
         157u8,
+        None,
         "total_fractional_descent",
         FieldDataType::UInt8,
         scale,
@@ -24788,6 +25366,7 @@ fn lap_message_avg_core_temperature_field(
     };
     data_field_with_info(
         158u8,
+        None,
         "avg_core_temperature",
         FieldDataType::UInt16,
         scale,
@@ -24815,6 +25394,7 @@ fn lap_message_min_core_temperature_field(
     };
     data_field_with_info(
         159u8,
+        None,
         "min_core_temperature",
         FieldDataType::UInt16,
         scale,
@@ -24842,6 +25422,7 @@ fn lap_message_max_core_temperature_field(
     };
     data_field_with_info(
         160u8,
+        None,
         "max_core_temperature",
         FieldDataType::UInt16,
         scale,
@@ -24869,6 +25450,7 @@ fn lap_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -24896,6 +25478,7 @@ fn lap_message_message_index_field(
     };
     data_field_with_info(
         254u8,
+        None,
         "message_index",
         FieldDataType::MessageIndex,
         scale,
@@ -25266,6 +25849,7 @@ fn length_message_event_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "event",
         FieldDataType::Event,
         scale,
@@ -25293,6 +25877,7 @@ fn length_message_event_type_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "event_type",
         FieldDataType::EventType,
         scale,
@@ -25320,6 +25905,7 @@ fn length_message_start_time_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "start_time",
         FieldDataType::DateTime,
         scale,
@@ -25347,6 +25933,7 @@ fn length_message_total_elapsed_time_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "total_elapsed_time",
         FieldDataType::UInt32,
         scale,
@@ -25374,6 +25961,7 @@ fn length_message_total_timer_time_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "total_timer_time",
         FieldDataType::UInt32,
         scale,
@@ -25401,6 +25989,7 @@ fn length_message_total_strokes_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "total_strokes",
         FieldDataType::UInt16,
         scale,
@@ -25428,6 +26017,7 @@ fn length_message_avg_speed_field(
     };
     data_field_with_info(
         6u8,
+        None,
         "avg_speed",
         FieldDataType::UInt16,
         scale,
@@ -25455,6 +26045,7 @@ fn length_message_swim_stroke_field(
     };
     data_field_with_info(
         7u8,
+        None,
         "swim_stroke",
         FieldDataType::SwimStroke,
         scale,
@@ -25482,6 +26073,7 @@ fn length_message_avg_swimming_cadence_field(
     };
     data_field_with_info(
         9u8,
+        None,
         "avg_swimming_cadence",
         FieldDataType::UInt8,
         scale,
@@ -25509,6 +26101,7 @@ fn length_message_event_group_field(
     };
     data_field_with_info(
         10u8,
+        None,
         "event_group",
         FieldDataType::UInt8,
         scale,
@@ -25536,6 +26129,7 @@ fn length_message_total_calories_field(
     };
     data_field_with_info(
         11u8,
+        None,
         "total_calories",
         FieldDataType::UInt16,
         scale,
@@ -25563,6 +26157,7 @@ fn length_message_length_type_field(
     };
     data_field_with_info(
         12u8,
+        None,
         "length_type",
         FieldDataType::LengthType,
         scale,
@@ -25590,6 +26185,7 @@ fn length_message_player_score_field(
     };
     data_field_with_info(
         18u8,
+        None,
         "player_score",
         FieldDataType::UInt16,
         scale,
@@ -25617,6 +26213,7 @@ fn length_message_opponent_score_field(
     };
     data_field_with_info(
         19u8,
+        None,
         "opponent_score",
         FieldDataType::UInt16,
         scale,
@@ -25644,6 +26241,7 @@ fn length_message_stroke_count_field(
     };
     data_field_with_info(
         20u8,
+        None,
         "stroke_count",
         FieldDataType::UInt16,
         scale,
@@ -25671,6 +26269,7 @@ fn length_message_zone_count_field(
     };
     data_field_with_info(
         21u8,
+        None,
         "zone_count",
         FieldDataType::UInt16,
         scale,
@@ -25698,6 +26297,7 @@ fn length_message_enhanced_avg_respiration_rate_field(
     };
     data_field_with_info(
         22u8,
+        None,
         "enhanced_avg_respiration_rate",
         FieldDataType::UInt16,
         scale,
@@ -25725,6 +26325,7 @@ fn length_message_enhanced_max_respiration_rate_field(
     };
     data_field_with_info(
         23u8,
+        None,
         "enhanced_max_respiration_rate",
         FieldDataType::UInt16,
         scale,
@@ -25752,6 +26353,7 @@ fn length_message_avg_respiration_rate_field(
     };
     data_field_with_info(
         24u8,
+        None,
         "avg_respiration_rate",
         FieldDataType::UInt8,
         scale,
@@ -25779,6 +26381,7 @@ fn length_message_max_respiration_rate_field(
     };
     data_field_with_info(
         25u8,
+        None,
         "max_respiration_rate",
         FieldDataType::UInt8,
         scale,
@@ -25806,6 +26409,7 @@ fn length_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -25833,6 +26437,7 @@ fn length_message_message_index_field(
     };
     data_field_with_info(
         254u8,
+        None,
         "message_index",
         FieldDataType::MessageIndex,
         scale,
@@ -27127,6 +27732,7 @@ fn record_message_position_lat_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "position_lat",
         FieldDataType::SInt32,
         scale,
@@ -27154,6 +27760,7 @@ fn record_message_position_long_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "position_long",
         FieldDataType::SInt32,
         scale,
@@ -27181,6 +27788,7 @@ fn record_message_altitude_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "altitude",
         FieldDataType::UInt16,
         scale,
@@ -27208,6 +27816,7 @@ fn record_message_heart_rate_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "heart_rate",
         FieldDataType::UInt8,
         scale,
@@ -27235,6 +27844,7 @@ fn record_message_cadence_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "cadence",
         FieldDataType::UInt8,
         scale,
@@ -27262,6 +27872,7 @@ fn record_message_distance_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "distance",
         FieldDataType::UInt32,
         scale,
@@ -27289,6 +27900,7 @@ fn record_message_speed_field(
     };
     data_field_with_info(
         6u8,
+        None,
         "speed",
         FieldDataType::UInt16,
         scale,
@@ -27316,6 +27928,7 @@ fn record_message_power_field(
     };
     data_field_with_info(
         7u8,
+        None,
         "power",
         FieldDataType::UInt16,
         scale,
@@ -27343,6 +27956,7 @@ fn record_message_compressed_speed_distance_field(
     };
     data_field_with_info(
         8u8,
+        None,
         "compressed_speed_distance",
         FieldDataType::Byte,
         scale,
@@ -27370,6 +27984,7 @@ fn record_message_grade_field(
     };
     data_field_with_info(
         9u8,
+        None,
         "grade",
         FieldDataType::SInt16,
         scale,
@@ -27397,6 +28012,7 @@ fn record_message_resistance_field(
     };
     data_field_with_info(
         10u8,
+        None,
         "resistance",
         FieldDataType::UInt8,
         scale,
@@ -27424,6 +28040,7 @@ fn record_message_time_from_course_field(
     };
     data_field_with_info(
         11u8,
+        None,
         "time_from_course",
         FieldDataType::SInt32,
         scale,
@@ -27451,6 +28068,7 @@ fn record_message_cycle_length_field(
     };
     data_field_with_info(
         12u8,
+        None,
         "cycle_length",
         FieldDataType::UInt8,
         scale,
@@ -27478,6 +28096,7 @@ fn record_message_temperature_field(
     };
     data_field_with_info(
         13u8,
+        None,
         "temperature",
         FieldDataType::SInt8,
         scale,
@@ -27505,6 +28124,7 @@ fn record_message_speed_1s_field(
     };
     data_field_with_info(
         17u8,
+        None,
         "speed_1s",
         FieldDataType::UInt8,
         scale,
@@ -27532,6 +28152,7 @@ fn record_message_cycles_field(
     };
     data_field_with_info(
         18u8,
+        None,
         "cycles",
         FieldDataType::UInt8,
         scale,
@@ -27559,6 +28180,7 @@ fn record_message_total_cycles_field(
     };
     data_field_with_info(
         19u8,
+        None,
         "total_cycles",
         FieldDataType::UInt32,
         scale,
@@ -27586,6 +28208,7 @@ fn record_message_compressed_accumulated_power_field(
     };
     data_field_with_info(
         28u8,
+        None,
         "compressed_accumulated_power",
         FieldDataType::UInt16,
         scale,
@@ -27613,6 +28236,7 @@ fn record_message_accumulated_power_field(
     };
     data_field_with_info(
         29u8,
+        None,
         "accumulated_power",
         FieldDataType::UInt32,
         scale,
@@ -27640,6 +28264,7 @@ fn record_message_left_right_balance_field(
     };
     data_field_with_info(
         30u8,
+        None,
         "left_right_balance",
         FieldDataType::LeftRightBalance,
         scale,
@@ -27667,6 +28292,7 @@ fn record_message_gps_accuracy_field(
     };
     data_field_with_info(
         31u8,
+        None,
         "gps_accuracy",
         FieldDataType::UInt8,
         scale,
@@ -27694,6 +28320,7 @@ fn record_message_vertical_speed_field(
     };
     data_field_with_info(
         32u8,
+        None,
         "vertical_speed",
         FieldDataType::SInt16,
         scale,
@@ -27721,6 +28348,7 @@ fn record_message_calories_field(
     };
     data_field_with_info(
         33u8,
+        None,
         "calories",
         FieldDataType::UInt16,
         scale,
@@ -27748,6 +28376,7 @@ fn record_message_vertical_oscillation_field(
     };
     data_field_with_info(
         39u8,
+        None,
         "vertical_oscillation",
         FieldDataType::UInt16,
         scale,
@@ -27775,6 +28404,7 @@ fn record_message_stance_time_percent_field(
     };
     data_field_with_info(
         40u8,
+        None,
         "stance_time_percent",
         FieldDataType::UInt16,
         scale,
@@ -27802,6 +28432,7 @@ fn record_message_stance_time_field(
     };
     data_field_with_info(
         41u8,
+        None,
         "stance_time",
         FieldDataType::UInt16,
         scale,
@@ -27829,6 +28460,7 @@ fn record_message_activity_type_field(
     };
     data_field_with_info(
         42u8,
+        None,
         "activity_type",
         FieldDataType::ActivityType,
         scale,
@@ -27856,6 +28488,7 @@ fn record_message_left_torque_effectiveness_field(
     };
     data_field_with_info(
         43u8,
+        None,
         "left_torque_effectiveness",
         FieldDataType::UInt8,
         scale,
@@ -27883,6 +28516,7 @@ fn record_message_right_torque_effectiveness_field(
     };
     data_field_with_info(
         44u8,
+        None,
         "right_torque_effectiveness",
         FieldDataType::UInt8,
         scale,
@@ -27910,6 +28544,7 @@ fn record_message_left_pedal_smoothness_field(
     };
     data_field_with_info(
         45u8,
+        None,
         "left_pedal_smoothness",
         FieldDataType::UInt8,
         scale,
@@ -27937,6 +28572,7 @@ fn record_message_right_pedal_smoothness_field(
     };
     data_field_with_info(
         46u8,
+        None,
         "right_pedal_smoothness",
         FieldDataType::UInt8,
         scale,
@@ -27964,6 +28600,7 @@ fn record_message_combined_pedal_smoothness_field(
     };
     data_field_with_info(
         47u8,
+        None,
         "combined_pedal_smoothness",
         FieldDataType::UInt8,
         scale,
@@ -27991,6 +28628,7 @@ fn record_message_time128_field(
     };
     data_field_with_info(
         48u8,
+        None,
         "time128",
         FieldDataType::UInt8,
         scale,
@@ -28018,6 +28656,7 @@ fn record_message_stroke_type_field(
     };
     data_field_with_info(
         49u8,
+        None,
         "stroke_type",
         FieldDataType::StrokeType,
         scale,
@@ -28045,6 +28684,7 @@ fn record_message_zone_field(
     };
     data_field_with_info(
         50u8,
+        None,
         "zone",
         FieldDataType::UInt8,
         scale,
@@ -28072,6 +28712,7 @@ fn record_message_ball_speed_field(
     };
     data_field_with_info(
         51u8,
+        None,
         "ball_speed",
         FieldDataType::UInt16,
         scale,
@@ -28099,6 +28740,7 @@ fn record_message_cadence256_field(
     };
     data_field_with_info(
         52u8,
+        None,
         "cadence256",
         FieldDataType::UInt16,
         scale,
@@ -28126,6 +28768,7 @@ fn record_message_fractional_cadence_field(
     };
     data_field_with_info(
         53u8,
+        None,
         "fractional_cadence",
         FieldDataType::UInt8,
         scale,
@@ -28153,6 +28796,7 @@ fn record_message_total_hemoglobin_conc_field(
     };
     data_field_with_info(
         54u8,
+        None,
         "total_hemoglobin_conc",
         FieldDataType::UInt16,
         scale,
@@ -28180,6 +28824,7 @@ fn record_message_total_hemoglobin_conc_min_field(
     };
     data_field_with_info(
         55u8,
+        None,
         "total_hemoglobin_conc_min",
         FieldDataType::UInt16,
         scale,
@@ -28207,6 +28852,7 @@ fn record_message_total_hemoglobin_conc_max_field(
     };
     data_field_with_info(
         56u8,
+        None,
         "total_hemoglobin_conc_max",
         FieldDataType::UInt16,
         scale,
@@ -28234,6 +28880,7 @@ fn record_message_saturated_hemoglobin_percent_field(
     };
     data_field_with_info(
         57u8,
+        None,
         "saturated_hemoglobin_percent",
         FieldDataType::UInt16,
         scale,
@@ -28261,6 +28908,7 @@ fn record_message_saturated_hemoglobin_percent_min_field(
     };
     data_field_with_info(
         58u8,
+        None,
         "saturated_hemoglobin_percent_min",
         FieldDataType::UInt16,
         scale,
@@ -28288,6 +28936,7 @@ fn record_message_saturated_hemoglobin_percent_max_field(
     };
     data_field_with_info(
         59u8,
+        None,
         "saturated_hemoglobin_percent_max",
         FieldDataType::UInt16,
         scale,
@@ -28315,6 +28964,7 @@ fn record_message_device_index_field(
     };
     data_field_with_info(
         62u8,
+        None,
         "device_index",
         FieldDataType::DeviceIndex,
         scale,
@@ -28342,6 +28992,7 @@ fn record_message_left_pco_field(
     };
     data_field_with_info(
         67u8,
+        None,
         "left_pco",
         FieldDataType::SInt8,
         scale,
@@ -28369,6 +29020,7 @@ fn record_message_right_pco_field(
     };
     data_field_with_info(
         68u8,
+        None,
         "right_pco",
         FieldDataType::SInt8,
         scale,
@@ -28396,6 +29048,7 @@ fn record_message_left_power_phase_field(
     };
     data_field_with_info(
         69u8,
+        None,
         "left_power_phase",
         FieldDataType::UInt8,
         scale,
@@ -28423,6 +29076,7 @@ fn record_message_left_power_phase_peak_field(
     };
     data_field_with_info(
         70u8,
+        None,
         "left_power_phase_peak",
         FieldDataType::UInt8,
         scale,
@@ -28450,6 +29104,7 @@ fn record_message_right_power_phase_field(
     };
     data_field_with_info(
         71u8,
+        None,
         "right_power_phase",
         FieldDataType::UInt8,
         scale,
@@ -28477,6 +29132,7 @@ fn record_message_right_power_phase_peak_field(
     };
     data_field_with_info(
         72u8,
+        None,
         "right_power_phase_peak",
         FieldDataType::UInt8,
         scale,
@@ -28504,6 +29160,7 @@ fn record_message_enhanced_speed_field(
     };
     data_field_with_info(
         73u8,
+        None,
         "enhanced_speed",
         FieldDataType::UInt32,
         scale,
@@ -28531,6 +29188,7 @@ fn record_message_enhanced_altitude_field(
     };
     data_field_with_info(
         78u8,
+        None,
         "enhanced_altitude",
         FieldDataType::UInt32,
         scale,
@@ -28558,6 +29216,7 @@ fn record_message_battery_soc_field(
     };
     data_field_with_info(
         81u8,
+        None,
         "battery_soc",
         FieldDataType::UInt8,
         scale,
@@ -28585,6 +29244,7 @@ fn record_message_motor_power_field(
     };
     data_field_with_info(
         82u8,
+        None,
         "motor_power",
         FieldDataType::UInt16,
         scale,
@@ -28612,6 +29272,7 @@ fn record_message_vertical_ratio_field(
     };
     data_field_with_info(
         83u8,
+        None,
         "vertical_ratio",
         FieldDataType::UInt16,
         scale,
@@ -28639,6 +29300,7 @@ fn record_message_stance_time_balance_field(
     };
     data_field_with_info(
         84u8,
+        None,
         "stance_time_balance",
         FieldDataType::UInt16,
         scale,
@@ -28666,6 +29328,7 @@ fn record_message_step_length_field(
     };
     data_field_with_info(
         85u8,
+        None,
         "step_length",
         FieldDataType::UInt16,
         scale,
@@ -28693,6 +29356,7 @@ fn record_message_cycle_length16_field(
     };
     data_field_with_info(
         87u8,
+        None,
         "cycle_length16",
         FieldDataType::UInt16,
         scale,
@@ -28720,6 +29384,7 @@ fn record_message_absolute_pressure_field(
     };
     data_field_with_info(
         91u8,
+        None,
         "absolute_pressure",
         FieldDataType::UInt32,
         scale,
@@ -28747,6 +29412,7 @@ fn record_message_depth_field(
     };
     data_field_with_info(
         92u8,
+        None,
         "depth",
         FieldDataType::UInt32,
         scale,
@@ -28774,6 +29440,7 @@ fn record_message_next_stop_depth_field(
     };
     data_field_with_info(
         93u8,
+        None,
         "next_stop_depth",
         FieldDataType::UInt32,
         scale,
@@ -28801,6 +29468,7 @@ fn record_message_next_stop_time_field(
     };
     data_field_with_info(
         94u8,
+        None,
         "next_stop_time",
         FieldDataType::UInt32,
         scale,
@@ -28828,6 +29496,7 @@ fn record_message_time_to_surface_field(
     };
     data_field_with_info(
         95u8,
+        None,
         "time_to_surface",
         FieldDataType::UInt32,
         scale,
@@ -28855,6 +29524,7 @@ fn record_message_ndl_time_field(
     };
     data_field_with_info(
         96u8,
+        None,
         "ndl_time",
         FieldDataType::UInt32,
         scale,
@@ -28882,6 +29552,7 @@ fn record_message_cns_load_field(
     };
     data_field_with_info(
         97u8,
+        None,
         "cns_load",
         FieldDataType::UInt8,
         scale,
@@ -28909,6 +29580,7 @@ fn record_message_n2_load_field(
     };
     data_field_with_info(
         98u8,
+        None,
         "n2_load",
         FieldDataType::UInt16,
         scale,
@@ -28936,6 +29608,7 @@ fn record_message_respiration_rate_field(
     };
     data_field_with_info(
         99u8,
+        None,
         "respiration_rate",
         FieldDataType::UInt8,
         scale,
@@ -28963,6 +29636,7 @@ fn record_message_enhanced_respiration_rate_field(
     };
     data_field_with_info(
         108u8,
+        None,
         "enhanced_respiration_rate",
         FieldDataType::UInt16,
         scale,
@@ -28990,6 +29664,7 @@ fn record_message_grit_field(
     };
     data_field_with_info(
         114u8,
+        None,
         "grit",
         FieldDataType::Float32,
         scale,
@@ -29017,6 +29692,7 @@ fn record_message_flow_field(
     };
     data_field_with_info(
         115u8,
+        None,
         "flow",
         FieldDataType::Float32,
         scale,
@@ -29044,6 +29720,7 @@ fn record_message_current_stress_field(
     };
     data_field_with_info(
         116u8,
+        None,
         "current_stress",
         FieldDataType::UInt16,
         scale,
@@ -29071,6 +29748,7 @@ fn record_message_ebike_travel_range_field(
     };
     data_field_with_info(
         117u8,
+        None,
         "ebike_travel_range",
         FieldDataType::UInt16,
         scale,
@@ -29098,6 +29776,7 @@ fn record_message_ebike_battery_level_field(
     };
     data_field_with_info(
         118u8,
+        None,
         "ebike_battery_level",
         FieldDataType::UInt8,
         scale,
@@ -29125,6 +29804,7 @@ fn record_message_ebike_assist_mode_field(
     };
     data_field_with_info(
         119u8,
+        None,
         "ebike_assist_mode",
         FieldDataType::UInt8,
         scale,
@@ -29152,6 +29832,7 @@ fn record_message_ebike_assist_level_percent_field(
     };
     data_field_with_info(
         120u8,
+        None,
         "ebike_assist_level_percent",
         FieldDataType::UInt8,
         scale,
@@ -29179,6 +29860,7 @@ fn record_message_air_time_remaining_field(
     };
     data_field_with_info(
         123u8,
+        None,
         "air_time_remaining",
         FieldDataType::UInt32,
         scale,
@@ -29206,6 +29888,7 @@ fn record_message_pressure_sac_field(
     };
     data_field_with_info(
         124u8,
+        None,
         "pressure_sac",
         FieldDataType::UInt16,
         scale,
@@ -29233,6 +29916,7 @@ fn record_message_volume_sac_field(
     };
     data_field_with_info(
         125u8,
+        None,
         "volume_sac",
         FieldDataType::UInt16,
         scale,
@@ -29260,6 +29944,7 @@ fn record_message_rmv_field(
     };
     data_field_with_info(
         126u8,
+        None,
         "rmv",
         FieldDataType::UInt16,
         scale,
@@ -29287,6 +29972,7 @@ fn record_message_ascent_rate_field(
     };
     data_field_with_info(
         127u8,
+        None,
         "ascent_rate",
         FieldDataType::SInt32,
         scale,
@@ -29314,6 +30000,7 @@ fn record_message_po2_field(
     };
     data_field_with_info(
         129u8,
+        None,
         "po2",
         FieldDataType::UInt8,
         scale,
@@ -29341,6 +30028,7 @@ fn record_message_core_temperature_field(
     };
     data_field_with_info(
         139u8,
+        None,
         "core_temperature",
         FieldDataType::UInt16,
         scale,
@@ -29368,6 +30056,7 @@ fn record_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -30533,6 +31222,7 @@ fn event_message_event_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "event",
         FieldDataType::Event,
         scale,
@@ -30560,6 +31250,7 @@ fn event_message_event_type_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "event_type",
         FieldDataType::EventType,
         scale,
@@ -30587,6 +31278,7 @@ fn event_message_data16_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "data16",
         FieldDataType::UInt16,
         scale,
@@ -30614,6 +31306,7 @@ fn event_message_data_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "data",
         FieldDataType::UInt32,
         scale,
@@ -30646,6 +31339,7 @@ fn event_message_timer_trigger_field(
     };
     data_field_with_info(
         3u8,
+        None,
         name,
         FieldDataType::TimerTrigger,
         scale,
@@ -30678,6 +31372,7 @@ fn event_message_course_point_index_field(
     };
     data_field_with_info(
         3u8,
+        None,
         name,
         FieldDataType::MessageIndex,
         scale,
@@ -30710,6 +31405,7 @@ fn event_message_battery_level_field(
     };
     data_field_with_info(
         3u8,
+        None,
         name,
         FieldDataType::UInt16,
         scale,
@@ -30742,6 +31438,7 @@ fn event_message_virtual_partner_speed_field(
     };
     data_field_with_info(
         3u8,
+        None,
         name,
         FieldDataType::UInt16,
         scale,
@@ -30774,6 +31471,7 @@ fn event_message_hr_high_alert_field(
     };
     data_field_with_info(
         3u8,
+        None,
         name,
         FieldDataType::UInt8,
         scale,
@@ -30806,6 +31504,7 @@ fn event_message_hr_low_alert_field(
     };
     data_field_with_info(
         3u8,
+        None,
         name,
         FieldDataType::UInt8,
         scale,
@@ -30838,6 +31537,7 @@ fn event_message_speed_high_alert_field(
     };
     data_field_with_info(
         3u8,
+        None,
         name,
         FieldDataType::UInt32,
         scale,
@@ -30870,6 +31570,7 @@ fn event_message_speed_low_alert_field(
     };
     data_field_with_info(
         3u8,
+        None,
         name,
         FieldDataType::UInt32,
         scale,
@@ -30902,6 +31603,7 @@ fn event_message_cad_high_alert_field(
     };
     data_field_with_info(
         3u8,
+        None,
         name,
         FieldDataType::UInt16,
         scale,
@@ -30934,6 +31636,7 @@ fn event_message_cad_low_alert_field(
     };
     data_field_with_info(
         3u8,
+        None,
         name,
         FieldDataType::UInt16,
         scale,
@@ -30966,6 +31669,7 @@ fn event_message_power_high_alert_field(
     };
     data_field_with_info(
         3u8,
+        None,
         name,
         FieldDataType::UInt16,
         scale,
@@ -30998,6 +31702,7 @@ fn event_message_power_low_alert_field(
     };
     data_field_with_info(
         3u8,
+        None,
         name,
         FieldDataType::UInt16,
         scale,
@@ -31030,6 +31735,7 @@ fn event_message_time_duration_alert_field(
     };
     data_field_with_info(
         3u8,
+        None,
         name,
         FieldDataType::UInt32,
         scale,
@@ -31062,6 +31768,7 @@ fn event_message_distance_duration_alert_field(
     };
     data_field_with_info(
         3u8,
+        None,
         name,
         FieldDataType::UInt32,
         scale,
@@ -31094,6 +31801,7 @@ fn event_message_calorie_duration_alert_field(
     };
     data_field_with_info(
         3u8,
+        None,
         name,
         FieldDataType::UInt32,
         scale,
@@ -31126,6 +31834,7 @@ fn event_message_fitness_equipment_state_field(
     };
     data_field_with_info(
         3u8,
+        None,
         name,
         FieldDataType::FitnessEquipmentState,
         scale,
@@ -31158,6 +31867,7 @@ fn event_message_sport_point_field(
     };
     data_field_with_info(
         3u8,
+        None,
         name,
         FieldDataType::UInt32,
         scale,
@@ -31190,6 +31900,7 @@ fn event_message_gear_change_data_field(
     };
     data_field_with_info(
         3u8,
+        None,
         name,
         FieldDataType::UInt32,
         scale,
@@ -31222,6 +31933,7 @@ fn event_message_rider_position_field(
     };
     data_field_with_info(
         3u8,
+        None,
         name,
         FieldDataType::RiderPositionType,
         scale,
@@ -31254,6 +31966,7 @@ fn event_message_comm_timeout_field(
     };
     data_field_with_info(
         3u8,
+        None,
         name,
         FieldDataType::CommTimeoutType,
         scale,
@@ -31286,6 +31999,7 @@ fn event_message_dive_alert_field(
     };
     data_field_with_info(
         3u8,
+        None,
         name,
         FieldDataType::DiveAlert,
         scale,
@@ -31318,6 +32032,7 @@ fn event_message_auto_activity_detect_duration_field(
     };
     data_field_with_info(
         3u8,
+        None,
         name,
         FieldDataType::UInt16,
         scale,
@@ -31350,6 +32065,7 @@ fn event_message_radar_threat_alert_field(
     };
     data_field_with_info(
         3u8,
+        None,
         name,
         FieldDataType::UInt32,
         scale,
@@ -31377,6 +32093,7 @@ fn event_message_event_group_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "event_group",
         FieldDataType::UInt8,
         scale,
@@ -31404,6 +32121,7 @@ fn event_message_score_field(
     };
     data_field_with_info(
         7u8,
+        None,
         "score",
         FieldDataType::UInt16,
         scale,
@@ -31431,6 +32149,7 @@ fn event_message_opponent_score_field(
     };
     data_field_with_info(
         8u8,
+        None,
         "opponent_score",
         FieldDataType::UInt16,
         scale,
@@ -31458,6 +32177,7 @@ fn event_message_front_gear_num_field(
     };
     data_field_with_info(
         9u8,
+        None,
         "front_gear_num",
         FieldDataType::UInt8z,
         scale,
@@ -31485,6 +32205,7 @@ fn event_message_front_gear_field(
     };
     data_field_with_info(
         10u8,
+        None,
         "front_gear",
         FieldDataType::UInt8z,
         scale,
@@ -31512,6 +32233,7 @@ fn event_message_rear_gear_num_field(
     };
     data_field_with_info(
         11u8,
+        None,
         "rear_gear_num",
         FieldDataType::UInt8z,
         scale,
@@ -31539,6 +32261,7 @@ fn event_message_rear_gear_field(
     };
     data_field_with_info(
         12u8,
+        None,
         "rear_gear",
         FieldDataType::UInt8z,
         scale,
@@ -31566,6 +32289,7 @@ fn event_message_device_index_field(
     };
     data_field_with_info(
         13u8,
+        None,
         "device_index",
         FieldDataType::DeviceIndex,
         scale,
@@ -31593,6 +32317,7 @@ fn event_message_activity_type_field(
     };
     data_field_with_info(
         14u8,
+        None,
         "activity_type",
         FieldDataType::ActivityType,
         scale,
@@ -31620,6 +32345,7 @@ fn event_message_start_timestamp_field(
     };
     data_field_with_info(
         15u8,
+        None,
         "start_timestamp",
         FieldDataType::DateTime,
         scale,
@@ -31652,6 +32378,7 @@ fn event_message_auto_activity_detect_start_timestamp_field(
     };
     data_field_with_info(
         15u8,
+        None,
         name,
         FieldDataType::DateTime,
         scale,
@@ -31679,6 +32406,7 @@ fn event_message_radar_threat_level_max_field(
     };
     data_field_with_info(
         21u8,
+        None,
         "radar_threat_level_max",
         FieldDataType::RadarThreatLevelType,
         scale,
@@ -31706,6 +32434,7 @@ fn event_message_radar_threat_count_field(
     };
     data_field_with_info(
         22u8,
+        None,
         "radar_threat_count",
         FieldDataType::UInt8,
         scale,
@@ -31733,6 +32462,7 @@ fn event_message_radar_threat_avg_approach_speed_field(
     };
     data_field_with_info(
         23u8,
+        None,
         "radar_threat_avg_approach_speed",
         FieldDataType::UInt8,
         scale,
@@ -31760,6 +32490,7 @@ fn event_message_radar_threat_max_approach_speed_field(
     };
     data_field_with_info(
         24u8,
+        None,
         "radar_threat_max_approach_speed",
         FieldDataType::UInt8,
         scale,
@@ -31787,6 +32518,7 @@ fn event_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -32243,6 +32975,7 @@ fn device_info_message_device_index_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "device_index",
         FieldDataType::DeviceIndex,
         scale,
@@ -32270,6 +33003,7 @@ fn device_info_message_device_type_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "device_type",
         FieldDataType::UInt8,
         scale,
@@ -32302,6 +33036,7 @@ fn device_info_message_ble_device_type_field(
     };
     data_field_with_info(
         1u8,
+        None,
         name,
         FieldDataType::BleDeviceType,
         scale,
@@ -32334,6 +33069,7 @@ fn device_info_message_antplus_device_type_field(
     };
     data_field_with_info(
         1u8,
+        None,
         name,
         FieldDataType::AntplusDeviceType,
         scale,
@@ -32366,6 +33102,7 @@ fn device_info_message_ant_device_type_field(
     };
     data_field_with_info(
         1u8,
+        None,
         name,
         FieldDataType::UInt8,
         scale,
@@ -32398,6 +33135,7 @@ fn device_info_message_local_device_type_field(
     };
     data_field_with_info(
         1u8,
+        None,
         name,
         FieldDataType::LocalDeviceType,
         scale,
@@ -32425,6 +33163,7 @@ fn device_info_message_manufacturer_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "manufacturer",
         FieldDataType::Manufacturer,
         scale,
@@ -32452,6 +33191,7 @@ fn device_info_message_serial_number_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "serial_number",
         FieldDataType::UInt32z,
         scale,
@@ -32479,6 +33219,7 @@ fn device_info_message_product_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "product",
         FieldDataType::UInt16,
         scale,
@@ -32511,6 +33252,7 @@ fn device_info_message_favero_product_field(
     };
     data_field_with_info(
         4u8,
+        None,
         name,
         FieldDataType::FaveroProduct,
         scale,
@@ -32543,6 +33285,7 @@ fn device_info_message_garmin_product_field(
     };
     data_field_with_info(
         4u8,
+        None,
         name,
         FieldDataType::GarminProduct,
         scale,
@@ -32570,6 +33313,7 @@ fn device_info_message_software_version_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "software_version",
         FieldDataType::UInt16,
         scale,
@@ -32597,6 +33341,7 @@ fn device_info_message_hardware_version_field(
     };
     data_field_with_info(
         6u8,
+        None,
         "hardware_version",
         FieldDataType::UInt8,
         scale,
@@ -32624,6 +33369,7 @@ fn device_info_message_cum_operating_time_field(
     };
     data_field_with_info(
         7u8,
+        None,
         "cum_operating_time",
         FieldDataType::UInt32,
         scale,
@@ -32651,6 +33397,7 @@ fn device_info_message_battery_voltage_field(
     };
     data_field_with_info(
         10u8,
+        None,
         "battery_voltage",
         FieldDataType::UInt16,
         scale,
@@ -32678,6 +33425,7 @@ fn device_info_message_battery_status_field(
     };
     data_field_with_info(
         11u8,
+        None,
         "battery_status",
         FieldDataType::BatteryStatus,
         scale,
@@ -32705,6 +33453,7 @@ fn device_info_message_sensor_position_field(
     };
     data_field_with_info(
         18u8,
+        None,
         "sensor_position",
         FieldDataType::BodyLocation,
         scale,
@@ -32732,6 +33481,7 @@ fn device_info_message_descriptor_field(
     };
     data_field_with_info(
         19u8,
+        None,
         "descriptor",
         FieldDataType::String,
         scale,
@@ -32759,6 +33509,7 @@ fn device_info_message_ant_transmission_type_field(
     };
     data_field_with_info(
         20u8,
+        None,
         "ant_transmission_type",
         FieldDataType::UInt8z,
         scale,
@@ -32786,6 +33537,7 @@ fn device_info_message_ant_device_number_field(
     };
     data_field_with_info(
         21u8,
+        None,
         "ant_device_number",
         FieldDataType::UInt16z,
         scale,
@@ -32813,6 +33565,7 @@ fn device_info_message_ant_network_field(
     };
     data_field_with_info(
         22u8,
+        None,
         "ant_network",
         FieldDataType::AntNetwork,
         scale,
@@ -32840,6 +33593,7 @@ fn device_info_message_source_type_field(
     };
     data_field_with_info(
         25u8,
+        None,
         "source_type",
         FieldDataType::SourceType,
         scale,
@@ -32867,6 +33621,7 @@ fn device_info_message_product_name_field(
     };
     data_field_with_info(
         27u8,
+        None,
         "product_name",
         FieldDataType::String,
         scale,
@@ -32894,6 +33649,7 @@ fn device_info_message_battery_level_field(
     };
     data_field_with_info(
         32u8,
+        None,
         "battery_level",
         FieldDataType::UInt8,
         scale,
@@ -32921,6 +33677,7 @@ fn device_info_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -33034,6 +33791,7 @@ fn device_aux_battery_info_message_device_index_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "device_index",
         FieldDataType::DeviceIndex,
         scale,
@@ -33061,6 +33819,7 @@ fn device_aux_battery_info_message_battery_voltage_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "battery_voltage",
         FieldDataType::UInt16,
         scale,
@@ -33088,6 +33847,7 @@ fn device_aux_battery_info_message_battery_status_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "battery_status",
         FieldDataType::BatteryStatus,
         scale,
@@ -33115,6 +33875,7 @@ fn device_aux_battery_info_message_battery_identifier_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "battery_identifier",
         FieldDataType::UInt8,
         scale,
@@ -33142,6 +33903,7 @@ fn device_aux_battery_info_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -33355,6 +34117,7 @@ fn training_file_message_type_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "type",
         FieldDataType::File,
         scale,
@@ -33382,6 +34145,7 @@ fn training_file_message_manufacturer_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "manufacturer",
         FieldDataType::Manufacturer,
         scale,
@@ -33409,6 +34173,7 @@ fn training_file_message_product_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "product",
         FieldDataType::UInt16,
         scale,
@@ -33441,6 +34206,7 @@ fn training_file_message_favero_product_field(
     };
     data_field_with_info(
         2u8,
+        None,
         name,
         FieldDataType::FaveroProduct,
         scale,
@@ -33473,6 +34239,7 @@ fn training_file_message_garmin_product_field(
     };
     data_field_with_info(
         2u8,
+        None,
         name,
         FieldDataType::GarminProduct,
         scale,
@@ -33500,6 +34267,7 @@ fn training_file_message_serial_number_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "serial_number",
         FieldDataType::UInt32z,
         scale,
@@ -33527,6 +34295,7 @@ fn training_file_message_time_created_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "time_created",
         FieldDataType::DateTime,
         scale,
@@ -33554,6 +34323,7 @@ fn training_file_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -33816,6 +34586,7 @@ fn weather_conditions_message_weather_report_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "weather_report",
         FieldDataType::WeatherReport,
         scale,
@@ -33843,6 +34614,7 @@ fn weather_conditions_message_temperature_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "temperature",
         FieldDataType::SInt8,
         scale,
@@ -33870,6 +34642,7 @@ fn weather_conditions_message_condition_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "condition",
         FieldDataType::WeatherStatus,
         scale,
@@ -33897,6 +34670,7 @@ fn weather_conditions_message_wind_direction_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "wind_direction",
         FieldDataType::UInt16,
         scale,
@@ -33924,6 +34698,7 @@ fn weather_conditions_message_wind_speed_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "wind_speed",
         FieldDataType::UInt16,
         scale,
@@ -33951,6 +34726,7 @@ fn weather_conditions_message_precipitation_probability_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "precipitation_probability",
         FieldDataType::UInt8,
         scale,
@@ -33978,6 +34754,7 @@ fn weather_conditions_message_temperature_feels_like_field(
     };
     data_field_with_info(
         6u8,
+        None,
         "temperature_feels_like",
         FieldDataType::SInt8,
         scale,
@@ -34005,6 +34782,7 @@ fn weather_conditions_message_relative_humidity_field(
     };
     data_field_with_info(
         7u8,
+        None,
         "relative_humidity",
         FieldDataType::UInt8,
         scale,
@@ -34032,6 +34810,7 @@ fn weather_conditions_message_location_field(
     };
     data_field_with_info(
         8u8,
+        None,
         "location",
         FieldDataType::String,
         scale,
@@ -34059,6 +34838,7 @@ fn weather_conditions_message_observed_at_time_field(
     };
     data_field_with_info(
         9u8,
+        None,
         "observed_at_time",
         FieldDataType::DateTime,
         scale,
@@ -34086,6 +34866,7 @@ fn weather_conditions_message_observed_location_lat_field(
     };
     data_field_with_info(
         10u8,
+        None,
         "observed_location_lat",
         FieldDataType::SInt32,
         scale,
@@ -34113,6 +34894,7 @@ fn weather_conditions_message_observed_location_long_field(
     };
     data_field_with_info(
         11u8,
+        None,
         "observed_location_long",
         FieldDataType::SInt32,
         scale,
@@ -34140,6 +34922,7 @@ fn weather_conditions_message_day_of_week_field(
     };
     data_field_with_info(
         12u8,
+        None,
         "day_of_week",
         FieldDataType::DayOfWeek,
         scale,
@@ -34167,6 +34950,7 @@ fn weather_conditions_message_high_temperature_field(
     };
     data_field_with_info(
         13u8,
+        None,
         "high_temperature",
         FieldDataType::SInt8,
         scale,
@@ -34194,6 +34978,7 @@ fn weather_conditions_message_low_temperature_field(
     };
     data_field_with_info(
         14u8,
+        None,
         "low_temperature",
         FieldDataType::SInt8,
         scale,
@@ -34221,6 +35006,7 @@ fn weather_conditions_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -34352,6 +35138,7 @@ fn weather_alert_message_report_id_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "report_id",
         FieldDataType::String,
         scale,
@@ -34379,6 +35166,7 @@ fn weather_alert_message_issue_time_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "issue_time",
         FieldDataType::DateTime,
         scale,
@@ -34406,6 +35194,7 @@ fn weather_alert_message_expire_time_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "expire_time",
         FieldDataType::DateTime,
         scale,
@@ -34433,6 +35222,7 @@ fn weather_alert_message_severity_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "severity",
         FieldDataType::WeatherSeverity,
         scale,
@@ -34460,6 +35250,7 @@ fn weather_alert_message_type_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "type",
         FieldDataType::WeatherSevereType,
         scale,
@@ -34487,6 +35278,7 @@ fn weather_alert_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -34656,6 +35448,7 @@ fn gps_metadata_message_timestamp_ms_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "timestamp_ms",
         FieldDataType::UInt16,
         scale,
@@ -34683,6 +35476,7 @@ fn gps_metadata_message_position_lat_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "position_lat",
         FieldDataType::SInt32,
         scale,
@@ -34710,6 +35504,7 @@ fn gps_metadata_message_position_long_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "position_long",
         FieldDataType::SInt32,
         scale,
@@ -34737,6 +35532,7 @@ fn gps_metadata_message_enhanced_altitude_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "enhanced_altitude",
         FieldDataType::UInt32,
         scale,
@@ -34764,6 +35560,7 @@ fn gps_metadata_message_enhanced_speed_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "enhanced_speed",
         FieldDataType::UInt32,
         scale,
@@ -34791,6 +35588,7 @@ fn gps_metadata_message_heading_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "heading",
         FieldDataType::UInt16,
         scale,
@@ -34818,6 +35616,7 @@ fn gps_metadata_message_utc_timestamp_field(
     };
     data_field_with_info(
         6u8,
+        None,
         "utc_timestamp",
         FieldDataType::DateTime,
         scale,
@@ -34845,6 +35644,7 @@ fn gps_metadata_message_velocity_field(
     };
     data_field_with_info(
         7u8,
+        None,
         "velocity",
         FieldDataType::SInt16,
         scale,
@@ -34872,6 +35672,7 @@ fn gps_metadata_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -34987,6 +35788,7 @@ fn camera_event_message_timestamp_ms_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "timestamp_ms",
         FieldDataType::UInt16,
         scale,
@@ -35014,6 +35816,7 @@ fn camera_event_message_camera_event_type_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "camera_event_type",
         FieldDataType::CameraEventType,
         scale,
@@ -35041,6 +35844,7 @@ fn camera_event_message_camera_file_uuid_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "camera_file_uuid",
         FieldDataType::String,
         scale,
@@ -35068,6 +35872,7 @@ fn camera_event_message_camera_orientation_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "camera_orientation",
         FieldDataType::CameraOrientationType,
         scale,
@@ -35095,6 +35900,7 @@ fn camera_event_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -35269,6 +36075,7 @@ fn gyroscope_data_message_timestamp_ms_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "timestamp_ms",
         FieldDataType::UInt16,
         scale,
@@ -35296,6 +36103,7 @@ fn gyroscope_data_message_sample_time_offset_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "sample_time_offset",
         FieldDataType::UInt16,
         scale,
@@ -35323,6 +36131,7 @@ fn gyroscope_data_message_gyro_x_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "gyro_x",
         FieldDataType::UInt16,
         scale,
@@ -35350,6 +36159,7 @@ fn gyroscope_data_message_gyro_y_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "gyro_y",
         FieldDataType::UInt16,
         scale,
@@ -35377,6 +36187,7 @@ fn gyroscope_data_message_gyro_z_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "gyro_z",
         FieldDataType::UInt16,
         scale,
@@ -35404,6 +36215,7 @@ fn gyroscope_data_message_calibrated_gyro_x_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "calibrated_gyro_x",
         FieldDataType::Float32,
         scale,
@@ -35431,6 +36243,7 @@ fn gyroscope_data_message_calibrated_gyro_y_field(
     };
     data_field_with_info(
         6u8,
+        None,
         "calibrated_gyro_y",
         FieldDataType::Float32,
         scale,
@@ -35458,6 +36271,7 @@ fn gyroscope_data_message_calibrated_gyro_z_field(
     };
     data_field_with_info(
         7u8,
+        None,
         "calibrated_gyro_z",
         FieldDataType::Float32,
         scale,
@@ -35485,6 +36299,7 @@ fn gyroscope_data_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -35707,6 +36522,7 @@ fn accelerometer_data_message_timestamp_ms_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "timestamp_ms",
         FieldDataType::UInt16,
         scale,
@@ -35734,6 +36550,7 @@ fn accelerometer_data_message_sample_time_offset_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "sample_time_offset",
         FieldDataType::UInt16,
         scale,
@@ -35761,6 +36578,7 @@ fn accelerometer_data_message_accel_x_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "accel_x",
         FieldDataType::UInt16,
         scale,
@@ -35788,6 +36606,7 @@ fn accelerometer_data_message_accel_y_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "accel_y",
         FieldDataType::UInt16,
         scale,
@@ -35815,6 +36634,7 @@ fn accelerometer_data_message_accel_z_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "accel_z",
         FieldDataType::UInt16,
         scale,
@@ -35842,6 +36662,7 @@ fn accelerometer_data_message_calibrated_accel_x_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "calibrated_accel_x",
         FieldDataType::Float32,
         scale,
@@ -35869,6 +36690,7 @@ fn accelerometer_data_message_calibrated_accel_y_field(
     };
     data_field_with_info(
         6u8,
+        None,
         "calibrated_accel_y",
         FieldDataType::Float32,
         scale,
@@ -35896,6 +36718,7 @@ fn accelerometer_data_message_calibrated_accel_z_field(
     };
     data_field_with_info(
         7u8,
+        None,
         "calibrated_accel_z",
         FieldDataType::Float32,
         scale,
@@ -35923,6 +36746,7 @@ fn accelerometer_data_message_compressed_calibrated_accel_x_field(
     };
     data_field_with_info(
         8u8,
+        None,
         "compressed_calibrated_accel_x",
         FieldDataType::SInt16,
         scale,
@@ -35950,6 +36774,7 @@ fn accelerometer_data_message_compressed_calibrated_accel_y_field(
     };
     data_field_with_info(
         9u8,
+        None,
         "compressed_calibrated_accel_y",
         FieldDataType::SInt16,
         scale,
@@ -35977,6 +36802,7 @@ fn accelerometer_data_message_compressed_calibrated_accel_z_field(
     };
     data_field_with_info(
         10u8,
+        None,
         "compressed_calibrated_accel_z",
         FieldDataType::SInt16,
         scale,
@@ -36004,6 +36830,7 @@ fn accelerometer_data_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -36178,6 +37005,7 @@ fn magnetometer_data_message_timestamp_ms_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "timestamp_ms",
         FieldDataType::UInt16,
         scale,
@@ -36205,6 +37033,7 @@ fn magnetometer_data_message_sample_time_offset_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "sample_time_offset",
         FieldDataType::UInt16,
         scale,
@@ -36232,6 +37061,7 @@ fn magnetometer_data_message_mag_x_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "mag_x",
         FieldDataType::UInt16,
         scale,
@@ -36259,6 +37089,7 @@ fn magnetometer_data_message_mag_y_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "mag_y",
         FieldDataType::UInt16,
         scale,
@@ -36286,6 +37117,7 @@ fn magnetometer_data_message_mag_z_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "mag_z",
         FieldDataType::UInt16,
         scale,
@@ -36313,6 +37145,7 @@ fn magnetometer_data_message_calibrated_mag_x_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "calibrated_mag_x",
         FieldDataType::Float32,
         scale,
@@ -36340,6 +37173,7 @@ fn magnetometer_data_message_calibrated_mag_y_field(
     };
     data_field_with_info(
         6u8,
+        None,
         "calibrated_mag_y",
         FieldDataType::Float32,
         scale,
@@ -36367,6 +37201,7 @@ fn magnetometer_data_message_calibrated_mag_z_field(
     };
     data_field_with_info(
         7u8,
+        None,
         "calibrated_mag_z",
         FieldDataType::Float32,
         scale,
@@ -36394,6 +37229,7 @@ fn magnetometer_data_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -36498,6 +37334,7 @@ fn barometer_data_message_timestamp_ms_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "timestamp_ms",
         FieldDataType::UInt16,
         scale,
@@ -36525,6 +37362,7 @@ fn barometer_data_message_sample_time_offset_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "sample_time_offset",
         FieldDataType::UInt16,
         scale,
@@ -36552,6 +37390,7 @@ fn barometer_data_message_baro_pres_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "baro_pres",
         FieldDataType::UInt32,
         scale,
@@ -36579,6 +37418,7 @@ fn barometer_data_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -36765,6 +37605,7 @@ fn three_d_sensor_calibration_message_sensor_type_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "sensor_type",
         FieldDataType::SensorType,
         scale,
@@ -36792,6 +37633,7 @@ fn three_d_sensor_calibration_message_calibration_factor_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "calibration_factor",
         FieldDataType::UInt32,
         scale,
@@ -36824,6 +37666,7 @@ fn three_d_sensor_calibration_message_accel_cal_factor_field(
     };
     data_field_with_info(
         1u8,
+        None,
         name,
         FieldDataType::UInt32,
         scale,
@@ -36856,6 +37699,7 @@ fn three_d_sensor_calibration_message_gyro_cal_factor_field(
     };
     data_field_with_info(
         1u8,
+        None,
         name,
         FieldDataType::UInt32,
         scale,
@@ -36883,6 +37727,7 @@ fn three_d_sensor_calibration_message_calibration_divisor_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "calibration_divisor",
         FieldDataType::UInt32,
         scale,
@@ -36910,6 +37755,7 @@ fn three_d_sensor_calibration_message_level_shift_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "level_shift",
         FieldDataType::UInt32,
         scale,
@@ -36937,6 +37783,7 @@ fn three_d_sensor_calibration_message_offset_cal_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "offset_cal",
         FieldDataType::SInt32,
         scale,
@@ -36964,6 +37811,7 @@ fn three_d_sensor_calibration_message_orientation_matrix_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "orientation_matrix",
         FieldDataType::SInt32,
         scale,
@@ -36991,6 +37839,7 @@ fn three_d_sensor_calibration_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -37143,6 +37992,7 @@ fn one_d_sensor_calibration_message_sensor_type_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "sensor_type",
         FieldDataType::SensorType,
         scale,
@@ -37170,6 +38020,7 @@ fn one_d_sensor_calibration_message_calibration_factor_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "calibration_factor",
         FieldDataType::UInt32,
         scale,
@@ -37202,6 +38053,7 @@ fn one_d_sensor_calibration_message_baro_cal_factor_field(
     };
     data_field_with_info(
         1u8,
+        None,
         name,
         FieldDataType::UInt32,
         scale,
@@ -37229,6 +38081,7 @@ fn one_d_sensor_calibration_message_calibration_divisor_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "calibration_divisor",
         FieldDataType::UInt32,
         scale,
@@ -37256,6 +38109,7 @@ fn one_d_sensor_calibration_message_level_shift_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "level_shift",
         FieldDataType::UInt32,
         scale,
@@ -37283,6 +38137,7 @@ fn one_d_sensor_calibration_message_offset_cal_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "offset_cal",
         FieldDataType::SInt32,
         scale,
@@ -37310,6 +38165,7 @@ fn one_d_sensor_calibration_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -37400,6 +38256,7 @@ fn video_frame_message_timestamp_ms_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "timestamp_ms",
         FieldDataType::UInt16,
         scale,
@@ -37427,6 +38284,7 @@ fn video_frame_message_frame_number_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "frame_number",
         FieldDataType::UInt32,
         scale,
@@ -37454,6 +38312,7 @@ fn video_frame_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -37628,6 +38487,7 @@ fn obdii_data_message_timestamp_ms_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "timestamp_ms",
         FieldDataType::UInt16,
         scale,
@@ -37655,6 +38515,7 @@ fn obdii_data_message_time_offset_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "time_offset",
         FieldDataType::UInt16,
         scale,
@@ -37682,6 +38543,7 @@ fn obdii_data_message_pid_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "pid",
         FieldDataType::Byte,
         scale,
@@ -37709,6 +38571,7 @@ fn obdii_data_message_raw_data_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "raw_data",
         FieldDataType::Byte,
         scale,
@@ -37736,6 +38599,7 @@ fn obdii_data_message_pid_data_size_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "pid_data_size",
         FieldDataType::UInt8,
         scale,
@@ -37763,6 +38627,7 @@ fn obdii_data_message_system_time_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "system_time",
         FieldDataType::UInt32,
         scale,
@@ -37790,6 +38655,7 @@ fn obdii_data_message_start_timestamp_field(
     };
     data_field_with_info(
         6u8,
+        None,
         "start_timestamp",
         FieldDataType::DateTime,
         scale,
@@ -37817,6 +38683,7 @@ fn obdii_data_message_start_timestamp_ms_field(
     };
     data_field_with_info(
         7u8,
+        None,
         "start_timestamp_ms",
         FieldDataType::UInt16,
         scale,
@@ -37844,6 +38711,7 @@ fn obdii_data_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -37934,6 +38802,7 @@ fn nmea_sentence_message_timestamp_ms_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "timestamp_ms",
         FieldDataType::UInt16,
         scale,
@@ -37961,6 +38830,7 @@ fn nmea_sentence_message_sentence_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "sentence",
         FieldDataType::String,
         scale,
@@ -37988,6 +38858,7 @@ fn nmea_sentence_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -38202,6 +39073,7 @@ fn aviation_attitude_message_timestamp_ms_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "timestamp_ms",
         FieldDataType::UInt16,
         scale,
@@ -38229,6 +39101,7 @@ fn aviation_attitude_message_system_time_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "system_time",
         FieldDataType::UInt32,
         scale,
@@ -38256,6 +39129,7 @@ fn aviation_attitude_message_pitch_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "pitch",
         FieldDataType::SInt16,
         scale,
@@ -38283,6 +39157,7 @@ fn aviation_attitude_message_roll_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "roll",
         FieldDataType::SInt16,
         scale,
@@ -38310,6 +39185,7 @@ fn aviation_attitude_message_accel_lateral_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "accel_lateral",
         FieldDataType::SInt16,
         scale,
@@ -38337,6 +39213,7 @@ fn aviation_attitude_message_accel_normal_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "accel_normal",
         FieldDataType::SInt16,
         scale,
@@ -38364,6 +39241,7 @@ fn aviation_attitude_message_turn_rate_field(
     };
     data_field_with_info(
         6u8,
+        None,
         "turn_rate",
         FieldDataType::SInt16,
         scale,
@@ -38391,6 +39269,7 @@ fn aviation_attitude_message_stage_field(
     };
     data_field_with_info(
         7u8,
+        None,
         "stage",
         FieldDataType::AttitudeStage,
         scale,
@@ -38418,6 +39297,7 @@ fn aviation_attitude_message_attitude_stage_complete_field(
     };
     data_field_with_info(
         8u8,
+        None,
         "attitude_stage_complete",
         FieldDataType::UInt8,
         scale,
@@ -38445,6 +39325,7 @@ fn aviation_attitude_message_track_field(
     };
     data_field_with_info(
         9u8,
+        None,
         "track",
         FieldDataType::UInt16,
         scale,
@@ -38472,6 +39353,7 @@ fn aviation_attitude_message_validity_field(
     };
     data_field_with_info(
         10u8,
+        None,
         "validity",
         FieldDataType::AttitudeValidity,
         scale,
@@ -38499,6 +39381,7 @@ fn aviation_attitude_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -38587,6 +39470,7 @@ fn video_message_url_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "url",
         FieldDataType::String,
         scale,
@@ -38614,6 +39498,7 @@ fn video_message_hosting_provider_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "hosting_provider",
         FieldDataType::String,
         scale,
@@ -38641,6 +39526,7 @@ fn video_message_duration_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "duration",
         FieldDataType::UInt32,
         scale,
@@ -38730,6 +39616,7 @@ fn video_title_message_message_count_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "message_count",
         FieldDataType::UInt16,
         scale,
@@ -38757,6 +39644,7 @@ fn video_title_message_text_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "text",
         FieldDataType::String,
         scale,
@@ -38784,6 +39672,7 @@ fn video_title_message_message_index_field(
     };
     data_field_with_info(
         254u8,
+        None,
         "message_index",
         FieldDataType::MessageIndex,
         scale,
@@ -38873,6 +39762,7 @@ fn video_description_message_message_count_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "message_count",
         FieldDataType::UInt16,
         scale,
@@ -38900,6 +39790,7 @@ fn video_description_message_text_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "text",
         FieldDataType::String,
         scale,
@@ -38927,6 +39818,7 @@ fn video_description_message_message_index_field(
     };
     data_field_with_info(
         254u8,
+        None,
         "message_index",
         FieldDataType::MessageIndex,
         scale,
@@ -39068,6 +39960,7 @@ fn video_clip_message_clip_number_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "clip_number",
         FieldDataType::UInt16,
         scale,
@@ -39095,6 +39988,7 @@ fn video_clip_message_start_timestamp_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "start_timestamp",
         FieldDataType::DateTime,
         scale,
@@ -39122,6 +40016,7 @@ fn video_clip_message_start_timestamp_ms_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "start_timestamp_ms",
         FieldDataType::UInt16,
         scale,
@@ -39149,6 +40044,7 @@ fn video_clip_message_end_timestamp_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "end_timestamp",
         FieldDataType::DateTime,
         scale,
@@ -39176,6 +40072,7 @@ fn video_clip_message_end_timestamp_ms_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "end_timestamp_ms",
         FieldDataType::UInt16,
         scale,
@@ -39203,6 +40100,7 @@ fn video_clip_message_clip_start_field(
     };
     data_field_with_info(
         6u8,
+        None,
         "clip_start",
         FieldDataType::UInt32,
         scale,
@@ -39230,6 +40128,7 @@ fn video_clip_message_clip_end_field(
     };
     data_field_with_info(
         7u8,
+        None,
         "clip_end",
         FieldDataType::UInt32,
         scale,
@@ -39426,6 +40325,7 @@ fn set_message_duration_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "duration",
         FieldDataType::UInt32,
         scale,
@@ -39453,6 +40353,7 @@ fn set_message_repetitions_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "repetitions",
         FieldDataType::UInt16,
         scale,
@@ -39480,6 +40381,7 @@ fn set_message_weight_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "weight",
         FieldDataType::UInt16,
         scale,
@@ -39507,6 +40409,7 @@ fn set_message_set_type_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "set_type",
         FieldDataType::SetType,
         scale,
@@ -39534,6 +40437,7 @@ fn set_message_start_time_field(
     };
     data_field_with_info(
         6u8,
+        None,
         "start_time",
         FieldDataType::DateTime,
         scale,
@@ -39561,6 +40465,7 @@ fn set_message_category_field(
     };
     data_field_with_info(
         7u8,
+        None,
         "category",
         FieldDataType::ExerciseCategory,
         scale,
@@ -39588,6 +40493,7 @@ fn set_message_category_subtype_field(
     };
     data_field_with_info(
         8u8,
+        None,
         "category_subtype",
         FieldDataType::UInt16,
         scale,
@@ -39615,6 +40521,7 @@ fn set_message_weight_display_unit_field(
     };
     data_field_with_info(
         9u8,
+        None,
         "weight_display_unit",
         FieldDataType::FitBaseUnit,
         scale,
@@ -39642,6 +40549,7 @@ fn set_message_message_index_field(
     };
     data_field_with_info(
         10u8,
+        None,
         "message_index",
         FieldDataType::MessageIndex,
         scale,
@@ -39669,6 +40577,7 @@ fn set_message_wkt_step_index_field(
     };
     data_field_with_info(
         11u8,
+        None,
         "wkt_step_index",
         FieldDataType::MessageIndex,
         scale,
@@ -39696,6 +40605,7 @@ fn set_message_timestamp_field(
     };
     data_field_with_info(
         254u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -39891,6 +40801,7 @@ fn jump_message_distance_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "distance",
         FieldDataType::Float32,
         scale,
@@ -39918,6 +40829,7 @@ fn jump_message_height_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "height",
         FieldDataType::Float32,
         scale,
@@ -39945,6 +40857,7 @@ fn jump_message_rotations_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "rotations",
         FieldDataType::UInt8,
         scale,
@@ -39972,6 +40885,7 @@ fn jump_message_hang_time_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "hang_time",
         FieldDataType::Float32,
         scale,
@@ -39999,6 +40913,7 @@ fn jump_message_score_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "score",
         FieldDataType::Float32,
         scale,
@@ -40026,6 +40941,7 @@ fn jump_message_position_lat_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "position_lat",
         FieldDataType::SInt32,
         scale,
@@ -40053,6 +40969,7 @@ fn jump_message_position_long_field(
     };
     data_field_with_info(
         6u8,
+        None,
         "position_long",
         FieldDataType::SInt32,
         scale,
@@ -40080,6 +40997,7 @@ fn jump_message_speed_field(
     };
     data_field_with_info(
         7u8,
+        None,
         "speed",
         FieldDataType::UInt16,
         scale,
@@ -40107,6 +41025,7 @@ fn jump_message_enhanced_speed_field(
     };
     data_field_with_info(
         8u8,
+        None,
         "enhanced_speed",
         FieldDataType::UInt32,
         scale,
@@ -40134,6 +41053,7 @@ fn jump_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -40429,6 +41349,7 @@ fn split_message_split_type_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "split_type",
         FieldDataType::SplitType,
         scale,
@@ -40456,6 +41377,7 @@ fn split_message_total_elapsed_time_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "total_elapsed_time",
         FieldDataType::UInt32,
         scale,
@@ -40483,6 +41405,7 @@ fn split_message_total_timer_time_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "total_timer_time",
         FieldDataType::UInt32,
         scale,
@@ -40510,6 +41433,7 @@ fn split_message_total_distance_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "total_distance",
         FieldDataType::UInt32,
         scale,
@@ -40537,6 +41461,7 @@ fn split_message_avg_speed_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "avg_speed",
         FieldDataType::UInt32,
         scale,
@@ -40564,6 +41489,7 @@ fn split_message_start_time_field(
     };
     data_field_with_info(
         9u8,
+        None,
         "start_time",
         FieldDataType::DateTime,
         scale,
@@ -40591,6 +41517,7 @@ fn split_message_total_ascent_field(
     };
     data_field_with_info(
         13u8,
+        None,
         "total_ascent",
         FieldDataType::UInt16,
         scale,
@@ -40618,6 +41545,7 @@ fn split_message_total_descent_field(
     };
     data_field_with_info(
         14u8,
+        None,
         "total_descent",
         FieldDataType::UInt16,
         scale,
@@ -40645,6 +41573,7 @@ fn split_message_start_position_lat_field(
     };
     data_field_with_info(
         21u8,
+        None,
         "start_position_lat",
         FieldDataType::SInt32,
         scale,
@@ -40672,6 +41601,7 @@ fn split_message_start_position_long_field(
     };
     data_field_with_info(
         22u8,
+        None,
         "start_position_long",
         FieldDataType::SInt32,
         scale,
@@ -40699,6 +41629,7 @@ fn split_message_end_position_lat_field(
     };
     data_field_with_info(
         23u8,
+        None,
         "end_position_lat",
         FieldDataType::SInt32,
         scale,
@@ -40726,6 +41657,7 @@ fn split_message_end_position_long_field(
     };
     data_field_with_info(
         24u8,
+        None,
         "end_position_long",
         FieldDataType::SInt32,
         scale,
@@ -40753,6 +41685,7 @@ fn split_message_max_speed_field(
     };
     data_field_with_info(
         25u8,
+        None,
         "max_speed",
         FieldDataType::UInt32,
         scale,
@@ -40780,6 +41713,7 @@ fn split_message_avg_vert_speed_field(
     };
     data_field_with_info(
         26u8,
+        None,
         "avg_vert_speed",
         FieldDataType::SInt32,
         scale,
@@ -40807,6 +41741,7 @@ fn split_message_end_time_field(
     };
     data_field_with_info(
         27u8,
+        None,
         "end_time",
         FieldDataType::DateTime,
         scale,
@@ -40834,6 +41769,7 @@ fn split_message_total_calories_field(
     };
     data_field_with_info(
         28u8,
+        None,
         "total_calories",
         FieldDataType::UInt32,
         scale,
@@ -40861,6 +41797,7 @@ fn split_message_start_elevation_field(
     };
     data_field_with_info(
         74u8,
+        None,
         "start_elevation",
         FieldDataType::UInt32,
         scale,
@@ -40888,6 +41825,7 @@ fn split_message_total_moving_time_field(
     };
     data_field_with_info(
         110u8,
+        None,
         "total_moving_time",
         FieldDataType::UInt32,
         scale,
@@ -40915,6 +41853,7 @@ fn split_message_message_index_field(
     };
     data_field_with_info(
         254u8,
+        None,
         "message_index",
         FieldDataType::MessageIndex,
         scale,
@@ -41145,6 +42084,7 @@ fn split_summary_message_split_type_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "split_type",
         FieldDataType::SplitType,
         scale,
@@ -41172,6 +42112,7 @@ fn split_summary_message_num_splits_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "num_splits",
         FieldDataType::UInt16,
         scale,
@@ -41199,6 +42140,7 @@ fn split_summary_message_total_timer_time_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "total_timer_time",
         FieldDataType::UInt32,
         scale,
@@ -41226,6 +42168,7 @@ fn split_summary_message_total_distance_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "total_distance",
         FieldDataType::UInt32,
         scale,
@@ -41253,6 +42196,7 @@ fn split_summary_message_avg_speed_field(
     };
     data_field_with_info(
         6u8,
+        None,
         "avg_speed",
         FieldDataType::UInt32,
         scale,
@@ -41280,6 +42224,7 @@ fn split_summary_message_max_speed_field(
     };
     data_field_with_info(
         7u8,
+        None,
         "max_speed",
         FieldDataType::UInt32,
         scale,
@@ -41307,6 +42252,7 @@ fn split_summary_message_total_ascent_field(
     };
     data_field_with_info(
         8u8,
+        None,
         "total_ascent",
         FieldDataType::UInt16,
         scale,
@@ -41334,6 +42280,7 @@ fn split_summary_message_total_descent_field(
     };
     data_field_with_info(
         9u8,
+        None,
         "total_descent",
         FieldDataType::UInt16,
         scale,
@@ -41361,6 +42308,7 @@ fn split_summary_message_avg_heart_rate_field(
     };
     data_field_with_info(
         10u8,
+        None,
         "avg_heart_rate",
         FieldDataType::UInt8,
         scale,
@@ -41388,6 +42336,7 @@ fn split_summary_message_max_heart_rate_field(
     };
     data_field_with_info(
         11u8,
+        None,
         "max_heart_rate",
         FieldDataType::UInt8,
         scale,
@@ -41415,6 +42364,7 @@ fn split_summary_message_avg_vert_speed_field(
     };
     data_field_with_info(
         12u8,
+        None,
         "avg_vert_speed",
         FieldDataType::SInt32,
         scale,
@@ -41442,6 +42392,7 @@ fn split_summary_message_total_calories_field(
     };
     data_field_with_info(
         13u8,
+        None,
         "total_calories",
         FieldDataType::UInt32,
         scale,
@@ -41469,6 +42420,7 @@ fn split_summary_message_total_moving_time_field(
     };
     data_field_with_info(
         77u8,
+        None,
         "total_moving_time",
         FieldDataType::UInt32,
         scale,
@@ -41496,6 +42448,7 @@ fn split_summary_message_message_index_field(
     };
     data_field_with_info(
         254u8,
+        None,
         "message_index",
         FieldDataType::MessageIndex,
         scale,
@@ -41635,6 +42588,7 @@ fn climb_pro_message_position_lat_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "position_lat",
         FieldDataType::SInt32,
         scale,
@@ -41662,6 +42616,7 @@ fn climb_pro_message_position_long_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "position_long",
         FieldDataType::SInt32,
         scale,
@@ -41689,6 +42644,7 @@ fn climb_pro_message_climb_pro_event_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "climb_pro_event",
         FieldDataType::ClimbProEvent,
         scale,
@@ -41716,6 +42672,7 @@ fn climb_pro_message_climb_number_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "climb_number",
         FieldDataType::UInt16,
         scale,
@@ -41743,6 +42700,7 @@ fn climb_pro_message_climb_category_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "climb_category",
         FieldDataType::UInt8,
         scale,
@@ -41770,6 +42728,7 @@ fn climb_pro_message_current_dist_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "current_dist",
         FieldDataType::Float32,
         scale,
@@ -41797,6 +42756,7 @@ fn climb_pro_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -42027,6 +42987,7 @@ fn field_description_message_developer_data_index_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "developer_data_index",
         FieldDataType::UInt8,
         scale,
@@ -42054,6 +43015,7 @@ fn field_description_message_field_definition_number_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "field_definition_number",
         FieldDataType::UInt8,
         scale,
@@ -42081,6 +43043,7 @@ fn field_description_message_fit_base_type_id_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "fit_base_type_id",
         FieldDataType::FitBaseType,
         scale,
@@ -42108,6 +43071,7 @@ fn field_description_message_field_name_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "field_name",
         FieldDataType::String,
         scale,
@@ -42135,6 +43099,7 @@ fn field_description_message_array_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "array",
         FieldDataType::UInt8,
         scale,
@@ -42162,6 +43127,7 @@ fn field_description_message_components_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "components",
         FieldDataType::String,
         scale,
@@ -42189,6 +43155,7 @@ fn field_description_message_scale_field(
     };
     data_field_with_info(
         6u8,
+        None,
         "scale",
         FieldDataType::UInt8,
         scale,
@@ -42216,6 +43183,7 @@ fn field_description_message_offset_field(
     };
     data_field_with_info(
         7u8,
+        None,
         "offset",
         FieldDataType::SInt8,
         scale,
@@ -42243,6 +43211,7 @@ fn field_description_message_units_field(
     };
     data_field_with_info(
         8u8,
+        None,
         "units",
         FieldDataType::String,
         scale,
@@ -42270,6 +43239,7 @@ fn field_description_message_bits_field(
     };
     data_field_with_info(
         9u8,
+        None,
         "bits",
         FieldDataType::String,
         scale,
@@ -42297,6 +43267,7 @@ fn field_description_message_accumulate_field(
     };
     data_field_with_info(
         10u8,
+        None,
         "accumulate",
         FieldDataType::String,
         scale,
@@ -42324,6 +43295,7 @@ fn field_description_message_fit_base_unit_id_field(
     };
     data_field_with_info(
         13u8,
+        None,
         "fit_base_unit_id",
         FieldDataType::FitBaseUnit,
         scale,
@@ -42351,6 +43323,7 @@ fn field_description_message_native_mesg_num_field(
     };
     data_field_with_info(
         14u8,
+        None,
         "native_mesg_num",
         FieldDataType::MesgNum,
         scale,
@@ -42378,6 +43351,7 @@ fn field_description_message_native_field_num_field(
     };
     data_field_with_info(
         15u8,
+        None,
         "native_field_num",
         FieldDataType::UInt8,
         scale,
@@ -42491,6 +43465,7 @@ fn developer_data_id_message_developer_id_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "developer_id",
         FieldDataType::Byte,
         scale,
@@ -42518,6 +43493,7 @@ fn developer_data_id_message_application_id_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "application_id",
         FieldDataType::Byte,
         scale,
@@ -42545,6 +43521,7 @@ fn developer_data_id_message_manufacturer_id_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "manufacturer_id",
         FieldDataType::Manufacturer,
         scale,
@@ -42572,6 +43549,7 @@ fn developer_data_id_message_developer_data_index_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "developer_data_index",
         FieldDataType::UInt8,
         scale,
@@ -42599,6 +43577,7 @@ fn developer_data_id_message_application_version_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "application_version",
         FieldDataType::UInt32,
         scale,
@@ -42699,6 +43678,7 @@ fn course_message_sport_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "sport",
         FieldDataType::Sport,
         scale,
@@ -42726,6 +43706,7 @@ fn course_message_name_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "name",
         FieldDataType::String,
         scale,
@@ -42753,6 +43734,7 @@ fn course_message_capabilities_field(
     };
     data_field_with_info(
         6u8,
+        None,
         "capabilities",
         FieldDataType::CourseCapabilities,
         scale,
@@ -42780,6 +43762,7 @@ fn course_message_sub_sport_field(
     };
     data_field_with_info(
         7u8,
+        None,
         "sub_sport",
         FieldDataType::SubSport,
         scale,
@@ -42932,6 +43915,7 @@ fn course_point_message_timestamp_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -42959,6 +43943,7 @@ fn course_point_message_position_lat_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "position_lat",
         FieldDataType::SInt32,
         scale,
@@ -42986,6 +43971,7 @@ fn course_point_message_position_long_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "position_long",
         FieldDataType::SInt32,
         scale,
@@ -43013,6 +43999,7 @@ fn course_point_message_distance_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "distance",
         FieldDataType::UInt32,
         scale,
@@ -43040,6 +44027,7 @@ fn course_point_message_type_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "type",
         FieldDataType::CoursePoint,
         scale,
@@ -43067,6 +44055,7 @@ fn course_point_message_name_field(
     };
     data_field_with_info(
         6u8,
+        None,
         "name",
         FieldDataType::String,
         scale,
@@ -43094,6 +44083,7 @@ fn course_point_message_favorite_field(
     };
     data_field_with_info(
         8u8,
+        None,
         "favorite",
         FieldDataType::Bool,
         scale,
@@ -43121,6 +44111,7 @@ fn course_point_message_message_index_field(
     };
     data_field_with_info(
         254u8,
+        None,
         "message_index",
         FieldDataType::MessageIndex,
         scale,
@@ -43295,6 +44286,7 @@ fn segment_id_message_name_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "name",
         FieldDataType::String,
         scale,
@@ -43322,6 +44314,7 @@ fn segment_id_message_uuid_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "uuid",
         FieldDataType::String,
         scale,
@@ -43349,6 +44342,7 @@ fn segment_id_message_sport_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "sport",
         FieldDataType::Sport,
         scale,
@@ -43376,6 +44370,7 @@ fn segment_id_message_enabled_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "enabled",
         FieldDataType::Bool,
         scale,
@@ -43403,6 +44398,7 @@ fn segment_id_message_user_profile_primary_key_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "user_profile_primary_key",
         FieldDataType::UInt32,
         scale,
@@ -43430,6 +44426,7 @@ fn segment_id_message_device_id_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "device_id",
         FieldDataType::UInt32,
         scale,
@@ -43457,6 +44454,7 @@ fn segment_id_message_default_race_leader_field(
     };
     data_field_with_info(
         6u8,
+        None,
         "default_race_leader",
         FieldDataType::UInt8,
         scale,
@@ -43484,6 +44482,7 @@ fn segment_id_message_delete_status_field(
     };
     data_field_with_info(
         7u8,
+        None,
         "delete_status",
         FieldDataType::SegmentDeleteStatus,
         scale,
@@ -43511,6 +44510,7 @@ fn segment_id_message_selection_type_field(
     };
     data_field_with_info(
         8u8,
+        None,
         "selection_type",
         FieldDataType::SegmentSelectionType,
         scale,
@@ -43656,6 +44656,7 @@ fn segment_leaderboard_entry_message_name_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "name",
         FieldDataType::String,
         scale,
@@ -43683,6 +44684,7 @@ fn segment_leaderboard_entry_message_type_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "type",
         FieldDataType::SegmentLeaderboardType,
         scale,
@@ -43710,6 +44712,7 @@ fn segment_leaderboard_entry_message_group_primary_key_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "group_primary_key",
         FieldDataType::UInt32,
         scale,
@@ -43737,6 +44740,7 @@ fn segment_leaderboard_entry_message_activity_id_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "activity_id",
         FieldDataType::UInt32,
         scale,
@@ -43764,6 +44768,7 @@ fn segment_leaderboard_entry_message_segment_time_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "segment_time",
         FieldDataType::UInt32,
         scale,
@@ -43791,6 +44796,7 @@ fn segment_leaderboard_entry_message_activity_id_string_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "activity_id_string",
         FieldDataType::String,
         scale,
@@ -43818,6 +44824,7 @@ fn segment_leaderboard_entry_message_message_index_field(
     };
     data_field_with_info(
         254u8,
+        None,
         "message_index",
         FieldDataType::MessageIndex,
         scale,
@@ -43977,6 +44984,7 @@ fn segment_point_message_position_lat_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "position_lat",
         FieldDataType::SInt32,
         scale,
@@ -44004,6 +45012,7 @@ fn segment_point_message_position_long_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "position_long",
         FieldDataType::SInt32,
         scale,
@@ -44031,6 +45040,7 @@ fn segment_point_message_distance_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "distance",
         FieldDataType::UInt32,
         scale,
@@ -44058,6 +45068,7 @@ fn segment_point_message_altitude_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "altitude",
         FieldDataType::UInt16,
         scale,
@@ -44085,6 +45096,7 @@ fn segment_point_message_leader_time_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "leader_time",
         FieldDataType::UInt32,
         scale,
@@ -44112,6 +45124,7 @@ fn segment_point_message_enhanced_altitude_field(
     };
     data_field_with_info(
         6u8,
+        None,
         "enhanced_altitude",
         FieldDataType::UInt32,
         scale,
@@ -44139,6 +45152,7 @@ fn segment_point_message_message_index_field(
     };
     data_field_with_info(
         254u8,
+        None,
         "message_index",
         FieldDataType::MessageIndex,
         scale,
@@ -45524,6 +46538,7 @@ fn segment_lap_message_event_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "event",
         FieldDataType::Event,
         scale,
@@ -45551,6 +46566,7 @@ fn segment_lap_message_event_type_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "event_type",
         FieldDataType::EventType,
         scale,
@@ -45578,6 +46594,7 @@ fn segment_lap_message_start_time_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "start_time",
         FieldDataType::DateTime,
         scale,
@@ -45605,6 +46622,7 @@ fn segment_lap_message_start_position_lat_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "start_position_lat",
         FieldDataType::SInt32,
         scale,
@@ -45632,6 +46650,7 @@ fn segment_lap_message_start_position_long_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "start_position_long",
         FieldDataType::SInt32,
         scale,
@@ -45659,6 +46678,7 @@ fn segment_lap_message_end_position_lat_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "end_position_lat",
         FieldDataType::SInt32,
         scale,
@@ -45686,6 +46706,7 @@ fn segment_lap_message_end_position_long_field(
     };
     data_field_with_info(
         6u8,
+        None,
         "end_position_long",
         FieldDataType::SInt32,
         scale,
@@ -45713,6 +46734,7 @@ fn segment_lap_message_total_elapsed_time_field(
     };
     data_field_with_info(
         7u8,
+        None,
         "total_elapsed_time",
         FieldDataType::UInt32,
         scale,
@@ -45740,6 +46762,7 @@ fn segment_lap_message_total_timer_time_field(
     };
     data_field_with_info(
         8u8,
+        None,
         "total_timer_time",
         FieldDataType::UInt32,
         scale,
@@ -45767,6 +46790,7 @@ fn segment_lap_message_total_distance_field(
     };
     data_field_with_info(
         9u8,
+        None,
         "total_distance",
         FieldDataType::UInt32,
         scale,
@@ -45794,6 +46818,7 @@ fn segment_lap_message_total_cycles_field(
     };
     data_field_with_info(
         10u8,
+        None,
         "total_cycles",
         FieldDataType::UInt32,
         scale,
@@ -45826,6 +46851,7 @@ fn segment_lap_message_total_strokes_field(
     };
     data_field_with_info(
         10u8,
+        None,
         name,
         FieldDataType::UInt32,
         scale,
@@ -45853,6 +46879,7 @@ fn segment_lap_message_total_calories_field(
     };
     data_field_with_info(
         11u8,
+        None,
         "total_calories",
         FieldDataType::UInt16,
         scale,
@@ -45880,6 +46907,7 @@ fn segment_lap_message_total_fat_calories_field(
     };
     data_field_with_info(
         12u8,
+        None,
         "total_fat_calories",
         FieldDataType::UInt16,
         scale,
@@ -45907,6 +46935,7 @@ fn segment_lap_message_avg_speed_field(
     };
     data_field_with_info(
         13u8,
+        None,
         "avg_speed",
         FieldDataType::UInt16,
         scale,
@@ -45934,6 +46963,7 @@ fn segment_lap_message_max_speed_field(
     };
     data_field_with_info(
         14u8,
+        None,
         "max_speed",
         FieldDataType::UInt16,
         scale,
@@ -45961,6 +46991,7 @@ fn segment_lap_message_avg_heart_rate_field(
     };
     data_field_with_info(
         15u8,
+        None,
         "avg_heart_rate",
         FieldDataType::UInt8,
         scale,
@@ -45988,6 +47019,7 @@ fn segment_lap_message_max_heart_rate_field(
     };
     data_field_with_info(
         16u8,
+        None,
         "max_heart_rate",
         FieldDataType::UInt8,
         scale,
@@ -46015,6 +47047,7 @@ fn segment_lap_message_avg_cadence_field(
     };
     data_field_with_info(
         17u8,
+        None,
         "avg_cadence",
         FieldDataType::UInt8,
         scale,
@@ -46042,6 +47075,7 @@ fn segment_lap_message_max_cadence_field(
     };
     data_field_with_info(
         18u8,
+        None,
         "max_cadence",
         FieldDataType::UInt8,
         scale,
@@ -46069,6 +47103,7 @@ fn segment_lap_message_avg_power_field(
     };
     data_field_with_info(
         19u8,
+        None,
         "avg_power",
         FieldDataType::UInt16,
         scale,
@@ -46096,6 +47131,7 @@ fn segment_lap_message_max_power_field(
     };
     data_field_with_info(
         20u8,
+        None,
         "max_power",
         FieldDataType::UInt16,
         scale,
@@ -46123,6 +47159,7 @@ fn segment_lap_message_total_ascent_field(
     };
     data_field_with_info(
         21u8,
+        None,
         "total_ascent",
         FieldDataType::UInt16,
         scale,
@@ -46150,6 +47187,7 @@ fn segment_lap_message_total_descent_field(
     };
     data_field_with_info(
         22u8,
+        None,
         "total_descent",
         FieldDataType::UInt16,
         scale,
@@ -46177,6 +47215,7 @@ fn segment_lap_message_sport_field(
     };
     data_field_with_info(
         23u8,
+        None,
         "sport",
         FieldDataType::Sport,
         scale,
@@ -46204,6 +47243,7 @@ fn segment_lap_message_event_group_field(
     };
     data_field_with_info(
         24u8,
+        None,
         "event_group",
         FieldDataType::UInt8,
         scale,
@@ -46231,6 +47271,7 @@ fn segment_lap_message_nec_lat_field(
     };
     data_field_with_info(
         25u8,
+        None,
         "nec_lat",
         FieldDataType::SInt32,
         scale,
@@ -46258,6 +47299,7 @@ fn segment_lap_message_nec_long_field(
     };
     data_field_with_info(
         26u8,
+        None,
         "nec_long",
         FieldDataType::SInt32,
         scale,
@@ -46285,6 +47327,7 @@ fn segment_lap_message_swc_lat_field(
     };
     data_field_with_info(
         27u8,
+        None,
         "swc_lat",
         FieldDataType::SInt32,
         scale,
@@ -46312,6 +47355,7 @@ fn segment_lap_message_swc_long_field(
     };
     data_field_with_info(
         28u8,
+        None,
         "swc_long",
         FieldDataType::SInt32,
         scale,
@@ -46339,6 +47383,7 @@ fn segment_lap_message_name_field(
     };
     data_field_with_info(
         29u8,
+        None,
         "name",
         FieldDataType::String,
         scale,
@@ -46366,6 +47411,7 @@ fn segment_lap_message_normalized_power_field(
     };
     data_field_with_info(
         30u8,
+        None,
         "normalized_power",
         FieldDataType::UInt16,
         scale,
@@ -46393,6 +47439,7 @@ fn segment_lap_message_left_right_balance_field(
     };
     data_field_with_info(
         31u8,
+        None,
         "left_right_balance",
         FieldDataType::LeftRightBalance100,
         scale,
@@ -46420,6 +47467,7 @@ fn segment_lap_message_sub_sport_field(
     };
     data_field_with_info(
         32u8,
+        None,
         "sub_sport",
         FieldDataType::SubSport,
         scale,
@@ -46447,6 +47495,7 @@ fn segment_lap_message_total_work_field(
     };
     data_field_with_info(
         33u8,
+        None,
         "total_work",
         FieldDataType::UInt32,
         scale,
@@ -46474,6 +47523,7 @@ fn segment_lap_message_avg_altitude_field(
     };
     data_field_with_info(
         34u8,
+        None,
         "avg_altitude",
         FieldDataType::UInt16,
         scale,
@@ -46501,6 +47551,7 @@ fn segment_lap_message_max_altitude_field(
     };
     data_field_with_info(
         35u8,
+        None,
         "max_altitude",
         FieldDataType::UInt16,
         scale,
@@ -46528,6 +47579,7 @@ fn segment_lap_message_gps_accuracy_field(
     };
     data_field_with_info(
         36u8,
+        None,
         "gps_accuracy",
         FieldDataType::UInt8,
         scale,
@@ -46555,6 +47607,7 @@ fn segment_lap_message_avg_grade_field(
     };
     data_field_with_info(
         37u8,
+        None,
         "avg_grade",
         FieldDataType::SInt16,
         scale,
@@ -46582,6 +47635,7 @@ fn segment_lap_message_avg_pos_grade_field(
     };
     data_field_with_info(
         38u8,
+        None,
         "avg_pos_grade",
         FieldDataType::SInt16,
         scale,
@@ -46609,6 +47663,7 @@ fn segment_lap_message_avg_neg_grade_field(
     };
     data_field_with_info(
         39u8,
+        None,
         "avg_neg_grade",
         FieldDataType::SInt16,
         scale,
@@ -46636,6 +47691,7 @@ fn segment_lap_message_max_pos_grade_field(
     };
     data_field_with_info(
         40u8,
+        None,
         "max_pos_grade",
         FieldDataType::SInt16,
         scale,
@@ -46663,6 +47719,7 @@ fn segment_lap_message_max_neg_grade_field(
     };
     data_field_with_info(
         41u8,
+        None,
         "max_neg_grade",
         FieldDataType::SInt16,
         scale,
@@ -46690,6 +47747,7 @@ fn segment_lap_message_avg_temperature_field(
     };
     data_field_with_info(
         42u8,
+        None,
         "avg_temperature",
         FieldDataType::SInt8,
         scale,
@@ -46717,6 +47775,7 @@ fn segment_lap_message_max_temperature_field(
     };
     data_field_with_info(
         43u8,
+        None,
         "max_temperature",
         FieldDataType::SInt8,
         scale,
@@ -46744,6 +47803,7 @@ fn segment_lap_message_total_moving_time_field(
     };
     data_field_with_info(
         44u8,
+        None,
         "total_moving_time",
         FieldDataType::UInt32,
         scale,
@@ -46771,6 +47831,7 @@ fn segment_lap_message_avg_pos_vertical_speed_field(
     };
     data_field_with_info(
         45u8,
+        None,
         "avg_pos_vertical_speed",
         FieldDataType::SInt16,
         scale,
@@ -46798,6 +47859,7 @@ fn segment_lap_message_avg_neg_vertical_speed_field(
     };
     data_field_with_info(
         46u8,
+        None,
         "avg_neg_vertical_speed",
         FieldDataType::SInt16,
         scale,
@@ -46825,6 +47887,7 @@ fn segment_lap_message_max_pos_vertical_speed_field(
     };
     data_field_with_info(
         47u8,
+        None,
         "max_pos_vertical_speed",
         FieldDataType::SInt16,
         scale,
@@ -46852,6 +47915,7 @@ fn segment_lap_message_max_neg_vertical_speed_field(
     };
     data_field_with_info(
         48u8,
+        None,
         "max_neg_vertical_speed",
         FieldDataType::SInt16,
         scale,
@@ -46879,6 +47943,7 @@ fn segment_lap_message_time_in_hr_zone_field(
     };
     data_field_with_info(
         49u8,
+        None,
         "time_in_hr_zone",
         FieldDataType::UInt32,
         scale,
@@ -46906,6 +47971,7 @@ fn segment_lap_message_time_in_speed_zone_field(
     };
     data_field_with_info(
         50u8,
+        None,
         "time_in_speed_zone",
         FieldDataType::UInt32,
         scale,
@@ -46933,6 +47999,7 @@ fn segment_lap_message_time_in_cadence_zone_field(
     };
     data_field_with_info(
         51u8,
+        None,
         "time_in_cadence_zone",
         FieldDataType::UInt32,
         scale,
@@ -46960,6 +48027,7 @@ fn segment_lap_message_time_in_power_zone_field(
     };
     data_field_with_info(
         52u8,
+        None,
         "time_in_power_zone",
         FieldDataType::UInt32,
         scale,
@@ -46987,6 +48055,7 @@ fn segment_lap_message_repetition_num_field(
     };
     data_field_with_info(
         53u8,
+        None,
         "repetition_num",
         FieldDataType::UInt16,
         scale,
@@ -47014,6 +48083,7 @@ fn segment_lap_message_min_altitude_field(
     };
     data_field_with_info(
         54u8,
+        None,
         "min_altitude",
         FieldDataType::UInt16,
         scale,
@@ -47041,6 +48111,7 @@ fn segment_lap_message_min_heart_rate_field(
     };
     data_field_with_info(
         55u8,
+        None,
         "min_heart_rate",
         FieldDataType::UInt8,
         scale,
@@ -47068,6 +48139,7 @@ fn segment_lap_message_active_time_field(
     };
     data_field_with_info(
         56u8,
+        None,
         "active_time",
         FieldDataType::UInt32,
         scale,
@@ -47095,6 +48167,7 @@ fn segment_lap_message_wkt_step_index_field(
     };
     data_field_with_info(
         57u8,
+        None,
         "wkt_step_index",
         FieldDataType::MessageIndex,
         scale,
@@ -47122,6 +48195,7 @@ fn segment_lap_message_sport_event_field(
     };
     data_field_with_info(
         58u8,
+        None,
         "sport_event",
         FieldDataType::SportEvent,
         scale,
@@ -47149,6 +48223,7 @@ fn segment_lap_message_avg_left_torque_effectiveness_field(
     };
     data_field_with_info(
         59u8,
+        None,
         "avg_left_torque_effectiveness",
         FieldDataType::UInt8,
         scale,
@@ -47176,6 +48251,7 @@ fn segment_lap_message_avg_right_torque_effectiveness_field(
     };
     data_field_with_info(
         60u8,
+        None,
         "avg_right_torque_effectiveness",
         FieldDataType::UInt8,
         scale,
@@ -47203,6 +48279,7 @@ fn segment_lap_message_avg_left_pedal_smoothness_field(
     };
     data_field_with_info(
         61u8,
+        None,
         "avg_left_pedal_smoothness",
         FieldDataType::UInt8,
         scale,
@@ -47230,6 +48307,7 @@ fn segment_lap_message_avg_right_pedal_smoothness_field(
     };
     data_field_with_info(
         62u8,
+        None,
         "avg_right_pedal_smoothness",
         FieldDataType::UInt8,
         scale,
@@ -47257,6 +48335,7 @@ fn segment_lap_message_avg_combined_pedal_smoothness_field(
     };
     data_field_with_info(
         63u8,
+        None,
         "avg_combined_pedal_smoothness",
         FieldDataType::UInt8,
         scale,
@@ -47284,6 +48363,7 @@ fn segment_lap_message_status_field(
     };
     data_field_with_info(
         64u8,
+        None,
         "status",
         FieldDataType::SegmentLapStatus,
         scale,
@@ -47311,6 +48391,7 @@ fn segment_lap_message_uuid_field(
     };
     data_field_with_info(
         65u8,
+        None,
         "uuid",
         FieldDataType::String,
         scale,
@@ -47338,6 +48419,7 @@ fn segment_lap_message_avg_fractional_cadence_field(
     };
     data_field_with_info(
         66u8,
+        None,
         "avg_fractional_cadence",
         FieldDataType::UInt8,
         scale,
@@ -47365,6 +48447,7 @@ fn segment_lap_message_max_fractional_cadence_field(
     };
     data_field_with_info(
         67u8,
+        None,
         "max_fractional_cadence",
         FieldDataType::UInt8,
         scale,
@@ -47392,6 +48475,7 @@ fn segment_lap_message_total_fractional_cycles_field(
     };
     data_field_with_info(
         68u8,
+        None,
         "total_fractional_cycles",
         FieldDataType::UInt8,
         scale,
@@ -47419,6 +48503,7 @@ fn segment_lap_message_front_gear_shift_count_field(
     };
     data_field_with_info(
         69u8,
+        None,
         "front_gear_shift_count",
         FieldDataType::UInt16,
         scale,
@@ -47446,6 +48531,7 @@ fn segment_lap_message_rear_gear_shift_count_field(
     };
     data_field_with_info(
         70u8,
+        None,
         "rear_gear_shift_count",
         FieldDataType::UInt16,
         scale,
@@ -47473,6 +48559,7 @@ fn segment_lap_message_time_standing_field(
     };
     data_field_with_info(
         71u8,
+        None,
         "time_standing",
         FieldDataType::UInt32,
         scale,
@@ -47500,6 +48587,7 @@ fn segment_lap_message_stand_count_field(
     };
     data_field_with_info(
         72u8,
+        None,
         "stand_count",
         FieldDataType::UInt16,
         scale,
@@ -47527,6 +48615,7 @@ fn segment_lap_message_avg_left_pco_field(
     };
     data_field_with_info(
         73u8,
+        None,
         "avg_left_pco",
         FieldDataType::SInt8,
         scale,
@@ -47554,6 +48643,7 @@ fn segment_lap_message_avg_right_pco_field(
     };
     data_field_with_info(
         74u8,
+        None,
         "avg_right_pco",
         FieldDataType::SInt8,
         scale,
@@ -47581,6 +48671,7 @@ fn segment_lap_message_avg_left_power_phase_field(
     };
     data_field_with_info(
         75u8,
+        None,
         "avg_left_power_phase",
         FieldDataType::UInt8,
         scale,
@@ -47608,6 +48699,7 @@ fn segment_lap_message_avg_left_power_phase_peak_field(
     };
     data_field_with_info(
         76u8,
+        None,
         "avg_left_power_phase_peak",
         FieldDataType::UInt8,
         scale,
@@ -47635,6 +48727,7 @@ fn segment_lap_message_avg_right_power_phase_field(
     };
     data_field_with_info(
         77u8,
+        None,
         "avg_right_power_phase",
         FieldDataType::UInt8,
         scale,
@@ -47662,6 +48755,7 @@ fn segment_lap_message_avg_right_power_phase_peak_field(
     };
     data_field_with_info(
         78u8,
+        None,
         "avg_right_power_phase_peak",
         FieldDataType::UInt8,
         scale,
@@ -47689,6 +48783,7 @@ fn segment_lap_message_avg_power_position_field(
     };
     data_field_with_info(
         79u8,
+        None,
         "avg_power_position",
         FieldDataType::UInt16,
         scale,
@@ -47716,6 +48811,7 @@ fn segment_lap_message_max_power_position_field(
     };
     data_field_with_info(
         80u8,
+        None,
         "max_power_position",
         FieldDataType::UInt16,
         scale,
@@ -47743,6 +48839,7 @@ fn segment_lap_message_avg_cadence_position_field(
     };
     data_field_with_info(
         81u8,
+        None,
         "avg_cadence_position",
         FieldDataType::UInt8,
         scale,
@@ -47770,6 +48867,7 @@ fn segment_lap_message_max_cadence_position_field(
     };
     data_field_with_info(
         82u8,
+        None,
         "max_cadence_position",
         FieldDataType::UInt8,
         scale,
@@ -47797,6 +48895,7 @@ fn segment_lap_message_manufacturer_field(
     };
     data_field_with_info(
         83u8,
+        None,
         "manufacturer",
         FieldDataType::Manufacturer,
         scale,
@@ -47824,6 +48923,7 @@ fn segment_lap_message_total_grit_field(
     };
     data_field_with_info(
         84u8,
+        None,
         "total_grit",
         FieldDataType::Float32,
         scale,
@@ -47851,6 +48951,7 @@ fn segment_lap_message_total_flow_field(
     };
     data_field_with_info(
         85u8,
+        None,
         "total_flow",
         FieldDataType::Float32,
         scale,
@@ -47878,6 +48979,7 @@ fn segment_lap_message_avg_grit_field(
     };
     data_field_with_info(
         86u8,
+        None,
         "avg_grit",
         FieldDataType::Float32,
         scale,
@@ -47905,6 +49007,7 @@ fn segment_lap_message_avg_flow_field(
     };
     data_field_with_info(
         87u8,
+        None,
         "avg_flow",
         FieldDataType::Float32,
         scale,
@@ -47932,6 +49035,7 @@ fn segment_lap_message_total_fractional_ascent_field(
     };
     data_field_with_info(
         89u8,
+        None,
         "total_fractional_ascent",
         FieldDataType::UInt8,
         scale,
@@ -47959,6 +49063,7 @@ fn segment_lap_message_total_fractional_descent_field(
     };
     data_field_with_info(
         90u8,
+        None,
         "total_fractional_descent",
         FieldDataType::UInt8,
         scale,
@@ -47986,6 +49091,7 @@ fn segment_lap_message_enhanced_avg_altitude_field(
     };
     data_field_with_info(
         91u8,
+        None,
         "enhanced_avg_altitude",
         FieldDataType::UInt32,
         scale,
@@ -48013,6 +49119,7 @@ fn segment_lap_message_enhanced_max_altitude_field(
     };
     data_field_with_info(
         92u8,
+        None,
         "enhanced_max_altitude",
         FieldDataType::UInt32,
         scale,
@@ -48040,6 +49147,7 @@ fn segment_lap_message_enhanced_min_altitude_field(
     };
     data_field_with_info(
         93u8,
+        None,
         "enhanced_min_altitude",
         FieldDataType::UInt32,
         scale,
@@ -48067,6 +49175,7 @@ fn segment_lap_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -48094,6 +49203,7 @@ fn segment_lap_message_message_index_field(
     };
     data_field_with_info(
         254u8,
+        None,
         "message_index",
         FieldDataType::MessageIndex,
         scale,
@@ -48267,6 +49377,7 @@ fn segment_file_message_file_uuid_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "file_uuid",
         FieldDataType::String,
         scale,
@@ -48294,6 +49405,7 @@ fn segment_file_message_enabled_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "enabled",
         FieldDataType::Bool,
         scale,
@@ -48321,6 +49433,7 @@ fn segment_file_message_user_profile_primary_key_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "user_profile_primary_key",
         FieldDataType::UInt32,
         scale,
@@ -48348,6 +49461,7 @@ fn segment_file_message_leader_type_field(
     };
     data_field_with_info(
         7u8,
+        None,
         "leader_type",
         FieldDataType::SegmentLeaderboardType,
         scale,
@@ -48375,6 +49489,7 @@ fn segment_file_message_leader_group_primary_key_field(
     };
     data_field_with_info(
         8u8,
+        None,
         "leader_group_primary_key",
         FieldDataType::UInt32,
         scale,
@@ -48402,6 +49517,7 @@ fn segment_file_message_leader_activity_id_field(
     };
     data_field_with_info(
         9u8,
+        None,
         "leader_activity_id",
         FieldDataType::UInt32,
         scale,
@@ -48429,6 +49545,7 @@ fn segment_file_message_leader_activity_id_string_field(
     };
     data_field_with_info(
         10u8,
+        None,
         "leader_activity_id_string",
         FieldDataType::String,
         scale,
@@ -48456,6 +49573,7 @@ fn segment_file_message_default_race_leader_field(
     };
     data_field_with_info(
         11u8,
+        None,
         "default_race_leader",
         FieldDataType::UInt8,
         scale,
@@ -48483,6 +49601,7 @@ fn segment_file_message_message_index_field(
     };
     data_field_with_info(
         254u8,
+        None,
         "message_index",
         FieldDataType::MessageIndex,
         scale,
@@ -48636,6 +49755,7 @@ fn workout_message_sport_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "sport",
         FieldDataType::Sport,
         scale,
@@ -48663,6 +49783,7 @@ fn workout_message_capabilities_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "capabilities",
         FieldDataType::WorkoutCapabilities,
         scale,
@@ -48690,6 +49811,7 @@ fn workout_message_num_valid_steps_field(
     };
     data_field_with_info(
         6u8,
+        None,
         "num_valid_steps",
         FieldDataType::UInt16,
         scale,
@@ -48717,6 +49839,7 @@ fn workout_message_wkt_name_field(
     };
     data_field_with_info(
         8u8,
+        None,
         "wkt_name",
         FieldDataType::String,
         scale,
@@ -48744,6 +49867,7 @@ fn workout_message_sub_sport_field(
     };
     data_field_with_info(
         11u8,
+        None,
         "sub_sport",
         FieldDataType::SubSport,
         scale,
@@ -48771,6 +49895,7 @@ fn workout_message_pool_length_field(
     };
     data_field_with_info(
         14u8,
+        None,
         "pool_length",
         FieldDataType::UInt16,
         scale,
@@ -48798,6 +49923,7 @@ fn workout_message_pool_length_unit_field(
     };
     data_field_with_info(
         15u8,
+        None,
         "pool_length_unit",
         FieldDataType::DisplayMeasure,
         scale,
@@ -48825,6 +49951,7 @@ fn workout_message_message_index_field(
     };
     data_field_with_info(
         254u8,
+        None,
         "message_index",
         FieldDataType::MessageIndex,
         scale,
@@ -48964,6 +50091,7 @@ fn workout_session_message_sport_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "sport",
         FieldDataType::Sport,
         scale,
@@ -48991,6 +50119,7 @@ fn workout_session_message_sub_sport_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "sub_sport",
         FieldDataType::SubSport,
         scale,
@@ -49018,6 +50147,7 @@ fn workout_session_message_num_valid_steps_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "num_valid_steps",
         FieldDataType::UInt16,
         scale,
@@ -49045,6 +50175,7 @@ fn workout_session_message_first_step_index_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "first_step_index",
         FieldDataType::UInt16,
         scale,
@@ -49072,6 +50203,7 @@ fn workout_session_message_pool_length_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "pool_length",
         FieldDataType::UInt16,
         scale,
@@ -49099,6 +50231,7 @@ fn workout_session_message_pool_length_unit_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "pool_length_unit",
         FieldDataType::DisplayMeasure,
         scale,
@@ -49126,6 +50259,7 @@ fn workout_session_message_message_index_field(
     };
     data_field_with_info(
         254u8,
+        None,
         "message_index",
         FieldDataType::MessageIndex,
         scale,
@@ -50332,6 +51466,7 @@ fn workout_step_message_wkt_step_name_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "wkt_step_name",
         FieldDataType::String,
         scale,
@@ -50359,6 +51494,7 @@ fn workout_step_message_duration_type_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "duration_type",
         FieldDataType::WktStepDuration,
         scale,
@@ -50386,6 +51522,7 @@ fn workout_step_message_duration_value_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "duration_value",
         FieldDataType::UInt32,
         scale,
@@ -50418,6 +51555,7 @@ fn workout_step_message_duration_time_field(
     };
     data_field_with_info(
         2u8,
+        None,
         name,
         FieldDataType::UInt32,
         scale,
@@ -50450,6 +51588,7 @@ fn workout_step_message_duration_distance_field(
     };
     data_field_with_info(
         2u8,
+        None,
         name,
         FieldDataType::UInt32,
         scale,
@@ -50482,6 +51621,7 @@ fn workout_step_message_duration_hr_field(
     };
     data_field_with_info(
         2u8,
+        None,
         name,
         FieldDataType::WorkoutHr,
         scale,
@@ -50514,6 +51654,7 @@ fn workout_step_message_duration_calories_field(
     };
     data_field_with_info(
         2u8,
+        None,
         name,
         FieldDataType::UInt32,
         scale,
@@ -50546,6 +51687,7 @@ fn workout_step_message_duration_step_field(
     };
     data_field_with_info(
         2u8,
+        None,
         name,
         FieldDataType::UInt32,
         scale,
@@ -50578,6 +51720,7 @@ fn workout_step_message_duration_power_field(
     };
     data_field_with_info(
         2u8,
+        None,
         name,
         FieldDataType::WorkoutPower,
         scale,
@@ -50610,6 +51753,7 @@ fn workout_step_message_duration_reps_field(
     };
     data_field_with_info(
         2u8,
+        None,
         name,
         FieldDataType::UInt32,
         scale,
@@ -50637,6 +51781,7 @@ fn workout_step_message_target_type_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "target_type",
         FieldDataType::WktStepTarget,
         scale,
@@ -50664,6 +51809,7 @@ fn workout_step_message_target_value_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "target_value",
         FieldDataType::UInt32,
         scale,
@@ -50696,6 +51842,7 @@ fn workout_step_message_target_speed_zone_field(
     };
     data_field_with_info(
         4u8,
+        None,
         name,
         FieldDataType::UInt32,
         scale,
@@ -50728,6 +51875,7 @@ fn workout_step_message_target_hr_zone_field(
     };
     data_field_with_info(
         4u8,
+        None,
         name,
         FieldDataType::UInt32,
         scale,
@@ -50760,6 +51908,7 @@ fn workout_step_message_target_cadence_zone_field(
     };
     data_field_with_info(
         4u8,
+        None,
         name,
         FieldDataType::UInt32,
         scale,
@@ -50792,6 +51941,7 @@ fn workout_step_message_target_power_zone_field(
     };
     data_field_with_info(
         4u8,
+        None,
         name,
         FieldDataType::UInt32,
         scale,
@@ -50824,6 +51974,7 @@ fn workout_step_message_repeat_steps_field(
     };
     data_field_with_info(
         4u8,
+        None,
         name,
         FieldDataType::UInt32,
         scale,
@@ -50856,6 +52007,7 @@ fn workout_step_message_repeat_time_field(
     };
     data_field_with_info(
         4u8,
+        None,
         name,
         FieldDataType::UInt32,
         scale,
@@ -50888,6 +52040,7 @@ fn workout_step_message_repeat_distance_field(
     };
     data_field_with_info(
         4u8,
+        None,
         name,
         FieldDataType::UInt32,
         scale,
@@ -50920,6 +52073,7 @@ fn workout_step_message_repeat_calories_field(
     };
     data_field_with_info(
         4u8,
+        None,
         name,
         FieldDataType::UInt32,
         scale,
@@ -50952,6 +52106,7 @@ fn workout_step_message_repeat_hr_field(
     };
     data_field_with_info(
         4u8,
+        None,
         name,
         FieldDataType::WorkoutHr,
         scale,
@@ -50984,6 +52139,7 @@ fn workout_step_message_repeat_power_field(
     };
     data_field_with_info(
         4u8,
+        None,
         name,
         FieldDataType::WorkoutPower,
         scale,
@@ -51016,6 +52172,7 @@ fn workout_step_message_target_stroke_type_field(
     };
     data_field_with_info(
         4u8,
+        None,
         name,
         FieldDataType::SwimStroke,
         scale,
@@ -51043,6 +52200,7 @@ fn workout_step_message_custom_target_value_low_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "custom_target_value_low",
         FieldDataType::UInt32,
         scale,
@@ -51075,6 +52233,7 @@ fn workout_step_message_custom_target_speed_low_field(
     };
     data_field_with_info(
         5u8,
+        None,
         name,
         FieldDataType::UInt32,
         scale,
@@ -51107,6 +52266,7 @@ fn workout_step_message_custom_target_heart_rate_low_field(
     };
     data_field_with_info(
         5u8,
+        None,
         name,
         FieldDataType::WorkoutHr,
         scale,
@@ -51139,6 +52299,7 @@ fn workout_step_message_custom_target_cadence_low_field(
     };
     data_field_with_info(
         5u8,
+        None,
         name,
         FieldDataType::UInt32,
         scale,
@@ -51171,6 +52332,7 @@ fn workout_step_message_custom_target_power_low_field(
     };
     data_field_with_info(
         5u8,
+        None,
         name,
         FieldDataType::WorkoutPower,
         scale,
@@ -51198,6 +52360,7 @@ fn workout_step_message_custom_target_value_high_field(
     };
     data_field_with_info(
         6u8,
+        None,
         "custom_target_value_high",
         FieldDataType::UInt32,
         scale,
@@ -51230,6 +52393,7 @@ fn workout_step_message_custom_target_speed_high_field(
     };
     data_field_with_info(
         6u8,
+        None,
         name,
         FieldDataType::UInt32,
         scale,
@@ -51262,6 +52426,7 @@ fn workout_step_message_custom_target_heart_rate_high_field(
     };
     data_field_with_info(
         6u8,
+        None,
         name,
         FieldDataType::WorkoutHr,
         scale,
@@ -51294,6 +52459,7 @@ fn workout_step_message_custom_target_cadence_high_field(
     };
     data_field_with_info(
         6u8,
+        None,
         name,
         FieldDataType::UInt32,
         scale,
@@ -51326,6 +52492,7 @@ fn workout_step_message_custom_target_power_high_field(
     };
     data_field_with_info(
         6u8,
+        None,
         name,
         FieldDataType::WorkoutPower,
         scale,
@@ -51353,6 +52520,7 @@ fn workout_step_message_intensity_field(
     };
     data_field_with_info(
         7u8,
+        None,
         "intensity",
         FieldDataType::Intensity,
         scale,
@@ -51380,6 +52548,7 @@ fn workout_step_message_notes_field(
     };
     data_field_with_info(
         8u8,
+        None,
         "notes",
         FieldDataType::String,
         scale,
@@ -51407,6 +52576,7 @@ fn workout_step_message_equipment_field(
     };
     data_field_with_info(
         9u8,
+        None,
         "equipment",
         FieldDataType::WorkoutEquipment,
         scale,
@@ -51434,6 +52604,7 @@ fn workout_step_message_exercise_category_field(
     };
     data_field_with_info(
         10u8,
+        None,
         "exercise_category",
         FieldDataType::ExerciseCategory,
         scale,
@@ -51461,6 +52632,7 @@ fn workout_step_message_exercise_name_field(
     };
     data_field_with_info(
         11u8,
+        None,
         "exercise_name",
         FieldDataType::UInt16,
         scale,
@@ -51488,6 +52660,7 @@ fn workout_step_message_exercise_weight_field(
     };
     data_field_with_info(
         12u8,
+        None,
         "exercise_weight",
         FieldDataType::UInt16,
         scale,
@@ -51515,6 +52688,7 @@ fn workout_step_message_weight_display_unit_field(
     };
     data_field_with_info(
         13u8,
+        None,
         "weight_display_unit",
         FieldDataType::FitBaseUnit,
         scale,
@@ -51542,6 +52716,7 @@ fn workout_step_message_secondary_target_type_field(
     };
     data_field_with_info(
         19u8,
+        None,
         "secondary_target_type",
         FieldDataType::WktStepTarget,
         scale,
@@ -51569,6 +52744,7 @@ fn workout_step_message_secondary_target_value_field(
     };
     data_field_with_info(
         20u8,
+        None,
         "secondary_target_value",
         FieldDataType::UInt32,
         scale,
@@ -51601,6 +52777,7 @@ fn workout_step_message_secondary_target_speed_zone_field(
     };
     data_field_with_info(
         20u8,
+        None,
         name,
         FieldDataType::UInt32,
         scale,
@@ -51633,6 +52810,7 @@ fn workout_step_message_secondary_target_hr_zone_field(
     };
     data_field_with_info(
         20u8,
+        None,
         name,
         FieldDataType::UInt32,
         scale,
@@ -51665,6 +52843,7 @@ fn workout_step_message_secondary_target_cadence_zone_field(
     };
     data_field_with_info(
         20u8,
+        None,
         name,
         FieldDataType::UInt32,
         scale,
@@ -51697,6 +52876,7 @@ fn workout_step_message_secondary_target_power_zone_field(
     };
     data_field_with_info(
         20u8,
+        None,
         name,
         FieldDataType::UInt32,
         scale,
@@ -51729,6 +52909,7 @@ fn workout_step_message_secondary_target_stroke_type_field(
     };
     data_field_with_info(
         20u8,
+        None,
         name,
         FieldDataType::SwimStroke,
         scale,
@@ -51756,6 +52937,7 @@ fn workout_step_message_secondary_custom_target_value_low_field(
     };
     data_field_with_info(
         21u8,
+        None,
         "secondary_custom_target_value_low",
         FieldDataType::UInt32,
         scale,
@@ -51788,6 +52970,7 @@ fn workout_step_message_secondary_custom_target_speed_low_field(
     };
     data_field_with_info(
         21u8,
+        None,
         name,
         FieldDataType::UInt32,
         scale,
@@ -51820,6 +53003,7 @@ fn workout_step_message_secondary_custom_target_heart_rate_low_field(
     };
     data_field_with_info(
         21u8,
+        None,
         name,
         FieldDataType::WorkoutHr,
         scale,
@@ -51852,6 +53036,7 @@ fn workout_step_message_secondary_custom_target_cadence_low_field(
     };
     data_field_with_info(
         21u8,
+        None,
         name,
         FieldDataType::UInt32,
         scale,
@@ -51884,6 +53069,7 @@ fn workout_step_message_secondary_custom_target_power_low_field(
     };
     data_field_with_info(
         21u8,
+        None,
         name,
         FieldDataType::WorkoutPower,
         scale,
@@ -51911,6 +53097,7 @@ fn workout_step_message_secondary_custom_target_value_high_field(
     };
     data_field_with_info(
         22u8,
+        None,
         "secondary_custom_target_value_high",
         FieldDataType::UInt32,
         scale,
@@ -51943,6 +53130,7 @@ fn workout_step_message_secondary_custom_target_speed_high_field(
     };
     data_field_with_info(
         22u8,
+        None,
         name,
         FieldDataType::UInt32,
         scale,
@@ -51975,6 +53163,7 @@ fn workout_step_message_secondary_custom_target_heart_rate_high_field(
     };
     data_field_with_info(
         22u8,
+        None,
         name,
         FieldDataType::WorkoutHr,
         scale,
@@ -52007,6 +53196,7 @@ fn workout_step_message_secondary_custom_target_cadence_high_field(
     };
     data_field_with_info(
         22u8,
+        None,
         name,
         FieldDataType::UInt32,
         scale,
@@ -52039,6 +53229,7 @@ fn workout_step_message_secondary_custom_target_power_high_field(
     };
     data_field_with_info(
         22u8,
+        None,
         name,
         FieldDataType::WorkoutPower,
         scale,
@@ -52066,6 +53257,7 @@ fn workout_step_message_message_index_field(
     };
     data_field_with_info(
         254u8,
+        None,
         "message_index",
         FieldDataType::MessageIndex,
         scale,
@@ -52166,6 +53358,7 @@ fn exercise_title_message_exercise_category_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "exercise_category",
         FieldDataType::ExerciseCategory,
         scale,
@@ -52193,6 +53386,7 @@ fn exercise_title_message_exercise_name_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "exercise_name",
         FieldDataType::UInt16,
         scale,
@@ -52220,6 +53414,7 @@ fn exercise_title_message_wkt_step_name_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "wkt_step_name",
         FieldDataType::String,
         scale,
@@ -52247,6 +53442,7 @@ fn exercise_title_message_message_index_field(
     };
     data_field_with_info(
         254u8,
+        None,
         "message_index",
         FieldDataType::MessageIndex,
         scale,
@@ -52478,6 +53674,7 @@ fn schedule_message_manufacturer_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "manufacturer",
         FieldDataType::Manufacturer,
         scale,
@@ -52505,6 +53702,7 @@ fn schedule_message_product_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "product",
         FieldDataType::UInt16,
         scale,
@@ -52537,6 +53735,7 @@ fn schedule_message_favero_product_field(
     };
     data_field_with_info(
         1u8,
+        None,
         name,
         FieldDataType::FaveroProduct,
         scale,
@@ -52569,6 +53768,7 @@ fn schedule_message_garmin_product_field(
     };
     data_field_with_info(
         1u8,
+        None,
         name,
         FieldDataType::GarminProduct,
         scale,
@@ -52596,6 +53796,7 @@ fn schedule_message_serial_number_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "serial_number",
         FieldDataType::UInt32z,
         scale,
@@ -52623,6 +53824,7 @@ fn schedule_message_time_created_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "time_created",
         FieldDataType::DateTime,
         scale,
@@ -52650,6 +53852,7 @@ fn schedule_message_completed_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "completed",
         FieldDataType::Bool,
         scale,
@@ -52677,6 +53880,7 @@ fn schedule_message_type_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "type",
         FieldDataType::Schedule,
         scale,
@@ -52704,6 +53908,7 @@ fn schedule_message_scheduled_time_field(
     };
     data_field_with_info(
         6u8,
+        None,
         "scheduled_time",
         FieldDataType::LocalDateTime,
         scale,
@@ -52884,6 +54089,7 @@ fn totals_message_timer_time_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "timer_time",
         FieldDataType::UInt32,
         scale,
@@ -52911,6 +54117,7 @@ fn totals_message_distance_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "distance",
         FieldDataType::UInt32,
         scale,
@@ -52938,6 +54145,7 @@ fn totals_message_calories_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "calories",
         FieldDataType::UInt32,
         scale,
@@ -52965,6 +54173,7 @@ fn totals_message_sport_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "sport",
         FieldDataType::Sport,
         scale,
@@ -52992,6 +54201,7 @@ fn totals_message_elapsed_time_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "elapsed_time",
         FieldDataType::UInt32,
         scale,
@@ -53019,6 +54229,7 @@ fn totals_message_sessions_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "sessions",
         FieldDataType::UInt16,
         scale,
@@ -53046,6 +54257,7 @@ fn totals_message_active_time_field(
     };
     data_field_with_info(
         6u8,
+        None,
         "active_time",
         FieldDataType::UInt32,
         scale,
@@ -53073,6 +54285,7 @@ fn totals_message_sport_index_field(
     };
     data_field_with_info(
         9u8,
+        None,
         "sport_index",
         FieldDataType::UInt8,
         scale,
@@ -53100,6 +54313,7 @@ fn totals_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -53127,6 +54341,7 @@ fn totals_message_message_index_field(
     };
     data_field_with_info(
         254u8,
+        None,
         "message_index",
         FieldDataType::MessageIndex,
         scale,
@@ -53359,6 +54574,7 @@ fn weight_scale_message_weight_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "weight",
         FieldDataType::Weight,
         scale,
@@ -53386,6 +54602,7 @@ fn weight_scale_message_percent_fat_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "percent_fat",
         FieldDataType::UInt16,
         scale,
@@ -53413,6 +54630,7 @@ fn weight_scale_message_percent_hydration_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "percent_hydration",
         FieldDataType::UInt16,
         scale,
@@ -53440,6 +54658,7 @@ fn weight_scale_message_visceral_fat_mass_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "visceral_fat_mass",
         FieldDataType::UInt16,
         scale,
@@ -53467,6 +54686,7 @@ fn weight_scale_message_bone_mass_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "bone_mass",
         FieldDataType::UInt16,
         scale,
@@ -53494,6 +54714,7 @@ fn weight_scale_message_muscle_mass_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "muscle_mass",
         FieldDataType::UInt16,
         scale,
@@ -53521,6 +54742,7 @@ fn weight_scale_message_basal_met_field(
     };
     data_field_with_info(
         7u8,
+        None,
         "basal_met",
         FieldDataType::UInt16,
         scale,
@@ -53548,6 +54770,7 @@ fn weight_scale_message_physique_rating_field(
     };
     data_field_with_info(
         8u8,
+        None,
         "physique_rating",
         FieldDataType::UInt8,
         scale,
@@ -53575,6 +54798,7 @@ fn weight_scale_message_active_met_field(
     };
     data_field_with_info(
         9u8,
+        None,
         "active_met",
         FieldDataType::UInt16,
         scale,
@@ -53602,6 +54826,7 @@ fn weight_scale_message_metabolic_age_field(
     };
     data_field_with_info(
         10u8,
+        None,
         "metabolic_age",
         FieldDataType::UInt8,
         scale,
@@ -53629,6 +54854,7 @@ fn weight_scale_message_visceral_fat_rating_field(
     };
     data_field_with_info(
         11u8,
+        None,
         "visceral_fat_rating",
         FieldDataType::UInt8,
         scale,
@@ -53656,6 +54882,7 @@ fn weight_scale_message_user_profile_index_field(
     };
     data_field_with_info(
         12u8,
+        None,
         "user_profile_index",
         FieldDataType::MessageIndex,
         scale,
@@ -53683,6 +54910,7 @@ fn weight_scale_message_bmi_field(
     };
     data_field_with_info(
         13u8,
+        None,
         "bmi",
         FieldDataType::UInt16,
         scale,
@@ -53710,6 +54938,7 @@ fn weight_scale_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -53902,6 +55131,7 @@ fn blood_pressure_message_systolic_pressure_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "systolic_pressure",
         FieldDataType::UInt16,
         scale,
@@ -53929,6 +55159,7 @@ fn blood_pressure_message_diastolic_pressure_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "diastolic_pressure",
         FieldDataType::UInt16,
         scale,
@@ -53956,6 +55187,7 @@ fn blood_pressure_message_mean_arterial_pressure_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "mean_arterial_pressure",
         FieldDataType::UInt16,
         scale,
@@ -53983,6 +55215,7 @@ fn blood_pressure_message_map_3_sample_mean_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "map_3_sample_mean",
         FieldDataType::UInt16,
         scale,
@@ -54010,6 +55243,7 @@ fn blood_pressure_message_map_morning_values_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "map_morning_values",
         FieldDataType::UInt16,
         scale,
@@ -54037,6 +55271,7 @@ fn blood_pressure_message_map_evening_values_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "map_evening_values",
         FieldDataType::UInt16,
         scale,
@@ -54064,6 +55299,7 @@ fn blood_pressure_message_heart_rate_field(
     };
     data_field_with_info(
         6u8,
+        None,
         "heart_rate",
         FieldDataType::UInt8,
         scale,
@@ -54091,6 +55327,7 @@ fn blood_pressure_message_heart_rate_type_field(
     };
     data_field_with_info(
         7u8,
+        None,
         "heart_rate_type",
         FieldDataType::HrType,
         scale,
@@ -54118,6 +55355,7 @@ fn blood_pressure_message_status_field(
     };
     data_field_with_info(
         8u8,
+        None,
         "status",
         FieldDataType::BpStatus,
         scale,
@@ -54145,6 +55383,7 @@ fn blood_pressure_message_user_profile_index_field(
     };
     data_field_with_info(
         9u8,
+        None,
         "user_profile_index",
         FieldDataType::MessageIndex,
         scale,
@@ -54172,6 +55411,7 @@ fn blood_pressure_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -54301,6 +55541,7 @@ fn monitoring_info_message_local_timestamp_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "local_timestamp",
         FieldDataType::LocalDateTime,
         scale,
@@ -54328,6 +55569,7 @@ fn monitoring_info_message_activity_type_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "activity_type",
         FieldDataType::ActivityType,
         scale,
@@ -54355,6 +55597,7 @@ fn monitoring_info_message_cycles_to_distance_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "cycles_to_distance",
         FieldDataType::UInt16,
         scale,
@@ -54382,6 +55625,7 @@ fn monitoring_info_message_cycles_to_calories_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "cycles_to_calories",
         FieldDataType::UInt16,
         scale,
@@ -54409,6 +55653,7 @@ fn monitoring_info_message_resting_metabolic_rate_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "resting_metabolic_rate",
         FieldDataType::UInt16,
         scale,
@@ -54436,6 +55681,7 @@ fn monitoring_info_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -54971,6 +56217,7 @@ fn monitoring_message_device_index_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "device_index",
         FieldDataType::DeviceIndex,
         scale,
@@ -54998,6 +56245,7 @@ fn monitoring_message_calories_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "calories",
         FieldDataType::UInt16,
         scale,
@@ -55025,6 +56273,7 @@ fn monitoring_message_distance_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "distance",
         FieldDataType::UInt32,
         scale,
@@ -55052,6 +56301,7 @@ fn monitoring_message_cycles_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "cycles",
         FieldDataType::UInt32,
         scale,
@@ -55084,6 +56334,7 @@ fn monitoring_message_steps_field(
     };
     data_field_with_info(
         3u8,
+        None,
         name,
         FieldDataType::UInt32,
         scale,
@@ -55116,6 +56367,7 @@ fn monitoring_message_strokes_field(
     };
     data_field_with_info(
         3u8,
+        None,
         name,
         FieldDataType::UInt32,
         scale,
@@ -55143,6 +56395,7 @@ fn monitoring_message_active_time_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "active_time",
         FieldDataType::UInt32,
         scale,
@@ -55170,6 +56423,7 @@ fn monitoring_message_activity_type_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "activity_type",
         FieldDataType::ActivityType,
         scale,
@@ -55197,6 +56451,7 @@ fn monitoring_message_activity_subtype_field(
     };
     data_field_with_info(
         6u8,
+        None,
         "activity_subtype",
         FieldDataType::ActivitySubtype,
         scale,
@@ -55224,6 +56479,7 @@ fn monitoring_message_activity_level_field(
     };
     data_field_with_info(
         7u8,
+        None,
         "activity_level",
         FieldDataType::ActivityLevel,
         scale,
@@ -55251,6 +56507,7 @@ fn monitoring_message_distance_16_field(
     };
     data_field_with_info(
         8u8,
+        None,
         "distance_16",
         FieldDataType::UInt16,
         scale,
@@ -55278,6 +56535,7 @@ fn monitoring_message_cycles_16_field(
     };
     data_field_with_info(
         9u8,
+        None,
         "cycles_16",
         FieldDataType::UInt16,
         scale,
@@ -55305,6 +56563,7 @@ fn monitoring_message_active_time_16_field(
     };
     data_field_with_info(
         10u8,
+        None,
         "active_time_16",
         FieldDataType::UInt16,
         scale,
@@ -55332,6 +56591,7 @@ fn monitoring_message_local_timestamp_field(
     };
     data_field_with_info(
         11u8,
+        None,
         "local_timestamp",
         FieldDataType::LocalDateTime,
         scale,
@@ -55359,6 +56619,7 @@ fn monitoring_message_temperature_field(
     };
     data_field_with_info(
         12u8,
+        None,
         "temperature",
         FieldDataType::SInt16,
         scale,
@@ -55386,6 +56647,7 @@ fn monitoring_message_temperature_min_field(
     };
     data_field_with_info(
         14u8,
+        None,
         "temperature_min",
         FieldDataType::SInt16,
         scale,
@@ -55413,6 +56675,7 @@ fn monitoring_message_temperature_max_field(
     };
     data_field_with_info(
         15u8,
+        None,
         "temperature_max",
         FieldDataType::SInt16,
         scale,
@@ -55440,6 +56703,7 @@ fn monitoring_message_activity_time_field(
     };
     data_field_with_info(
         16u8,
+        None,
         "activity_time",
         FieldDataType::UInt16,
         scale,
@@ -55467,6 +56731,7 @@ fn monitoring_message_active_calories_field(
     };
     data_field_with_info(
         19u8,
+        None,
         "active_calories",
         FieldDataType::UInt16,
         scale,
@@ -55494,6 +56759,7 @@ fn monitoring_message_current_activity_type_intensity_field(
     };
     data_field_with_info(
         24u8,
+        None,
         "current_activity_type_intensity",
         FieldDataType::Byte,
         scale,
@@ -55521,6 +56787,7 @@ fn monitoring_message_timestamp_min_8_field(
     };
     data_field_with_info(
         25u8,
+        None,
         "timestamp_min_8",
         FieldDataType::UInt8,
         scale,
@@ -55548,6 +56815,7 @@ fn monitoring_message_timestamp_16_field(
     };
     data_field_with_info(
         26u8,
+        None,
         "timestamp_16",
         FieldDataType::UInt16,
         scale,
@@ -55575,6 +56843,7 @@ fn monitoring_message_heart_rate_field(
     };
     data_field_with_info(
         27u8,
+        None,
         "heart_rate",
         FieldDataType::UInt8,
         scale,
@@ -55602,6 +56871,7 @@ fn monitoring_message_intensity_field(
     };
     data_field_with_info(
         28u8,
+        None,
         "intensity",
         FieldDataType::UInt8,
         scale,
@@ -55629,6 +56899,7 @@ fn monitoring_message_duration_min_field(
     };
     data_field_with_info(
         29u8,
+        None,
         "duration_min",
         FieldDataType::UInt16,
         scale,
@@ -55656,6 +56927,7 @@ fn monitoring_message_duration_field(
     };
     data_field_with_info(
         30u8,
+        None,
         "duration",
         FieldDataType::UInt32,
         scale,
@@ -55683,6 +56955,7 @@ fn monitoring_message_ascent_field(
     };
     data_field_with_info(
         31u8,
+        None,
         "ascent",
         FieldDataType::UInt32,
         scale,
@@ -55710,6 +56983,7 @@ fn monitoring_message_descent_field(
     };
     data_field_with_info(
         32u8,
+        None,
         "descent",
         FieldDataType::UInt32,
         scale,
@@ -55737,6 +57011,7 @@ fn monitoring_message_moderate_activity_minutes_field(
     };
     data_field_with_info(
         33u8,
+        None,
         "moderate_activity_minutes",
         FieldDataType::UInt16,
         scale,
@@ -55764,6 +57039,7 @@ fn monitoring_message_vigorous_activity_minutes_field(
     };
     data_field_with_info(
         34u8,
+        None,
         "vigorous_activity_minutes",
         FieldDataType::UInt16,
         scale,
@@ -55791,6 +57067,7 @@ fn monitoring_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -55883,6 +57160,7 @@ fn monitoring_hr_data_message_resting_heart_rate_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "resting_heart_rate",
         FieldDataType::UInt8,
         scale,
@@ -55910,6 +57188,7 @@ fn monitoring_hr_data_message_current_day_resting_heart_rate_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "current_day_resting_heart_rate",
         FieldDataType::UInt8,
         scale,
@@ -55937,6 +57216,7 @@ fn monitoring_hr_data_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -56038,6 +57318,7 @@ fn spo2_data_message_reading_spo2_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "reading_spo2",
         FieldDataType::UInt8,
         scale,
@@ -56065,6 +57346,7 @@ fn spo2_data_message_reading_confidence_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "reading_confidence",
         FieldDataType::UInt8,
         scale,
@@ -56092,6 +57374,7 @@ fn spo2_data_message_mode_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "mode",
         FieldDataType::Spo2MeasurementType,
         scale,
@@ -56119,6 +57402,7 @@ fn spo2_data_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -56298,6 +57582,7 @@ fn hr_message_fractional_timestamp_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "fractional_timestamp",
         FieldDataType::UInt16,
         scale,
@@ -56325,6 +57610,7 @@ fn hr_message_time256_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "time256",
         FieldDataType::UInt8,
         scale,
@@ -56352,6 +57638,7 @@ fn hr_message_filtered_bpm_field(
     };
     data_field_with_info(
         6u8,
+        None,
         "filtered_bpm",
         FieldDataType::UInt8,
         scale,
@@ -56379,6 +57666,7 @@ fn hr_message_event_timestamp_field(
     };
     data_field_with_info(
         9u8,
+        None,
         "event_timestamp",
         FieldDataType::UInt32,
         scale,
@@ -56406,6 +57694,7 @@ fn hr_message_event_timestamp_12_field(
     };
     data_field_with_info(
         10u8,
+        None,
         "event_timestamp_12",
         FieldDataType::Byte,
         scale,
@@ -56433,6 +57722,7 @@ fn hr_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -56508,6 +57798,7 @@ fn stress_level_message_stress_level_value_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "stress_level_value",
         FieldDataType::SInt16,
         scale,
@@ -56535,6 +57826,7 @@ fn stress_level_message_stress_level_time_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "stress_level_time",
         FieldDataType::DateTime,
         scale,
@@ -56691,6 +57983,7 @@ fn max_met_data_message_update_time_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "update_time",
         FieldDataType::DateTime,
         scale,
@@ -56718,6 +58011,7 @@ fn max_met_data_message_vo2_max_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "vo2_max",
         FieldDataType::UInt16,
         scale,
@@ -56745,6 +58039,7 @@ fn max_met_data_message_sport_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "sport",
         FieldDataType::Sport,
         scale,
@@ -56772,6 +58067,7 @@ fn max_met_data_message_sub_sport_field(
     };
     data_field_with_info(
         6u8,
+        None,
         "sub_sport",
         FieldDataType::SubSport,
         scale,
@@ -56799,6 +58095,7 @@ fn max_met_data_message_max_met_category_field(
     };
     data_field_with_info(
         8u8,
+        None,
         "max_met_category",
         FieldDataType::MaxMetCategory,
         scale,
@@ -56826,6 +58123,7 @@ fn max_met_data_message_calibrated_data_field(
     };
     data_field_with_info(
         9u8,
+        None,
         "calibrated_data",
         FieldDataType::Bool,
         scale,
@@ -56853,6 +58151,7 @@ fn max_met_data_message_hr_source_field(
     };
     data_field_with_info(
         12u8,
+        None,
         "hr_source",
         FieldDataType::MaxMetHeartRateSource,
         scale,
@@ -56880,6 +58179,7 @@ fn max_met_data_message_speed_source_field(
     };
     data_field_with_info(
         13u8,
+        None,
         "speed_source",
         FieldDataType::MaxMetSpeedSource,
         scale,
@@ -56997,6 +58297,7 @@ fn hsa_body_battery_data_message_processing_interval_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "processing_interval",
         FieldDataType::UInt16,
         scale,
@@ -57024,6 +58325,7 @@ fn hsa_body_battery_data_message_level_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "level",
         FieldDataType::SInt8,
         scale,
@@ -57051,6 +58353,7 @@ fn hsa_body_battery_data_message_charged_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "charged",
         FieldDataType::SInt16,
         scale,
@@ -57078,6 +58381,7 @@ fn hsa_body_battery_data_message_uncharged_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "uncharged",
         FieldDataType::SInt16,
         scale,
@@ -57105,6 +58409,7 @@ fn hsa_body_battery_data_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -57180,6 +58485,7 @@ fn hsa_event_message_event_id_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "event_id",
         FieldDataType::UInt8,
         scale,
@@ -57207,6 +58513,7 @@ fn hsa_event_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -57352,6 +58659,7 @@ fn hsa_accelerometer_data_message_timestamp_ms_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "timestamp_ms",
         FieldDataType::UInt16,
         scale,
@@ -57379,6 +58687,7 @@ fn hsa_accelerometer_data_message_sampling_interval_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "sampling_interval",
         FieldDataType::UInt16,
         scale,
@@ -57406,6 +58715,7 @@ fn hsa_accelerometer_data_message_accel_x_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "accel_x",
         FieldDataType::SInt16,
         scale,
@@ -57433,6 +58743,7 @@ fn hsa_accelerometer_data_message_accel_y_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "accel_y",
         FieldDataType::SInt16,
         scale,
@@ -57460,6 +58771,7 @@ fn hsa_accelerometer_data_message_accel_z_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "accel_z",
         FieldDataType::SInt16,
         scale,
@@ -57487,6 +58799,7 @@ fn hsa_accelerometer_data_message_timestamp_32k_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "timestamp_32k",
         FieldDataType::UInt32,
         scale,
@@ -57514,6 +58827,7 @@ fn hsa_accelerometer_data_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -57659,6 +58973,7 @@ fn hsa_gyroscope_data_message_timestamp_ms_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "timestamp_ms",
         FieldDataType::UInt16,
         scale,
@@ -57686,6 +59001,7 @@ fn hsa_gyroscope_data_message_sampling_interval_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "sampling_interval",
         FieldDataType::UInt16,
         scale,
@@ -57713,6 +59029,7 @@ fn hsa_gyroscope_data_message_gyro_x_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "gyro_x",
         FieldDataType::SInt16,
         scale,
@@ -57740,6 +59057,7 @@ fn hsa_gyroscope_data_message_gyro_y_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "gyro_y",
         FieldDataType::SInt16,
         scale,
@@ -57767,6 +59085,7 @@ fn hsa_gyroscope_data_message_gyro_z_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "gyro_z",
         FieldDataType::SInt16,
         scale,
@@ -57794,6 +59113,7 @@ fn hsa_gyroscope_data_message_timestamp_32k_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "timestamp_32k",
         FieldDataType::UInt32,
         scale,
@@ -57821,6 +59141,7 @@ fn hsa_gyroscope_data_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -57910,6 +59231,7 @@ fn hsa_step_data_message_processing_interval_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "processing_interval",
         FieldDataType::UInt16,
         scale,
@@ -57937,6 +59259,7 @@ fn hsa_step_data_message_steps_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "steps",
         FieldDataType::UInt32,
         scale,
@@ -57964,6 +59287,7 @@ fn hsa_step_data_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -58067,6 +59391,7 @@ fn hsa_spo2_data_message_processing_interval_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "processing_interval",
         FieldDataType::UInt16,
         scale,
@@ -58094,6 +59419,7 @@ fn hsa_spo2_data_message_reading_spo2_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "reading_spo2",
         FieldDataType::UInt8,
         scale,
@@ -58121,6 +59447,7 @@ fn hsa_spo2_data_message_confidence_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "confidence",
         FieldDataType::UInt8,
         scale,
@@ -58148,6 +59475,7 @@ fn hsa_spo2_data_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -58237,6 +59565,7 @@ fn hsa_stress_data_message_processing_interval_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "processing_interval",
         FieldDataType::UInt16,
         scale,
@@ -58264,6 +59593,7 @@ fn hsa_stress_data_message_stress_level_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "stress_level",
         FieldDataType::SInt8,
         scale,
@@ -58291,6 +59621,7 @@ fn hsa_stress_data_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -58380,6 +59711,7 @@ fn hsa_respiration_data_message_processing_interval_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "processing_interval",
         FieldDataType::UInt16,
         scale,
@@ -58407,6 +59739,7 @@ fn hsa_respiration_data_message_respiration_rate_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "respiration_rate",
         FieldDataType::SInt16,
         scale,
@@ -58434,6 +59767,7 @@ fn hsa_respiration_data_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -58537,6 +59871,7 @@ fn hsa_heart_rate_data_message_processing_interval_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "processing_interval",
         FieldDataType::UInt16,
         scale,
@@ -58564,6 +59899,7 @@ fn hsa_heart_rate_data_message_status_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "status",
         FieldDataType::UInt8,
         scale,
@@ -58591,6 +59927,7 @@ fn hsa_heart_rate_data_message_heart_rate_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "heart_rate",
         FieldDataType::UInt8,
         scale,
@@ -58618,6 +59955,7 @@ fn hsa_heart_rate_data_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -58707,6 +60045,7 @@ fn hsa_configuration_data_message_data_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "data",
         FieldDataType::Byte,
         scale,
@@ -58734,6 +60073,7 @@ fn hsa_configuration_data_message_data_size_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "data_size",
         FieldDataType::UInt8,
         scale,
@@ -58761,6 +60101,7 @@ fn hsa_configuration_data_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -58852,6 +60193,7 @@ fn hsa_wrist_temperature_data_message_processing_interval_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "processing_interval",
         FieldDataType::UInt16,
         scale,
@@ -58879,6 +60221,7 @@ fn hsa_wrist_temperature_data_message_value_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "value",
         FieldDataType::UInt16,
         scale,
@@ -58906,6 +60249,7 @@ fn hsa_wrist_temperature_data_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -59038,6 +60382,7 @@ fn memo_glob_message_memo_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "memo",
         FieldDataType::Byte,
         scale,
@@ -59065,6 +60410,7 @@ fn memo_glob_message_mesg_num_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "mesg_num",
         FieldDataType::MesgNum,
         scale,
@@ -59092,6 +60438,7 @@ fn memo_glob_message_parent_index_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "parent_index",
         FieldDataType::MessageIndex,
         scale,
@@ -59119,6 +60466,7 @@ fn memo_glob_message_field_num_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "field_num",
         FieldDataType::UInt8,
         scale,
@@ -59146,6 +60494,7 @@ fn memo_glob_message_data_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "data",
         FieldDataType::UInt8z,
         scale,
@@ -59173,6 +60522,7 @@ fn memo_glob_message_part_index_field(
     };
     data_field_with_info(
         250u8,
+        None,
         "part_index",
         FieldDataType::UInt32,
         scale,
@@ -59247,6 +60597,7 @@ fn sleep_level_message_sleep_level_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "sleep_level",
         FieldDataType::SleepLevel,
         scale,
@@ -59274,6 +60625,7 @@ fn sleep_level_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -59387,6 +60739,7 @@ fn ant_channel_id_message_channel_number_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "channel_number",
         FieldDataType::UInt8,
         scale,
@@ -59414,6 +60767,7 @@ fn ant_channel_id_message_device_type_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "device_type",
         FieldDataType::UInt8z,
         scale,
@@ -59441,6 +60795,7 @@ fn ant_channel_id_message_device_number_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "device_number",
         FieldDataType::UInt16z,
         scale,
@@ -59468,6 +60823,7 @@ fn ant_channel_id_message_transmission_type_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "transmission_type",
         FieldDataType::UInt8z,
         scale,
@@ -59495,6 +60851,7 @@ fn ant_channel_id_message_device_index_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "device_index",
         FieldDataType::DeviceIndex,
         scale,
@@ -59660,6 +61017,7 @@ fn ant_rx_message_fractional_timestamp_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "fractional_timestamp",
         FieldDataType::UInt16,
         scale,
@@ -59687,6 +61045,7 @@ fn ant_rx_message_mesg_id_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "mesg_id",
         FieldDataType::Byte,
         scale,
@@ -59714,6 +61073,7 @@ fn ant_rx_message_mesg_data_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "mesg_data",
         FieldDataType::Byte,
         scale,
@@ -59741,6 +61101,7 @@ fn ant_rx_message_channel_number_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "channel_number",
         FieldDataType::UInt8,
         scale,
@@ -59768,6 +61129,7 @@ fn ant_rx_message_data_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "data",
         FieldDataType::Byte,
         scale,
@@ -59795,6 +61157,7 @@ fn ant_rx_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -59960,6 +61323,7 @@ fn ant_tx_message_fractional_timestamp_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "fractional_timestamp",
         FieldDataType::UInt16,
         scale,
@@ -59987,6 +61351,7 @@ fn ant_tx_message_mesg_id_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "mesg_id",
         FieldDataType::Byte,
         scale,
@@ -60014,6 +61379,7 @@ fn ant_tx_message_mesg_data_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "mesg_data",
         FieldDataType::Byte,
         scale,
@@ -60041,6 +61407,7 @@ fn ant_tx_message_channel_number_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "channel_number",
         FieldDataType::UInt8,
         scale,
@@ -60068,6 +61435,7 @@ fn ant_tx_message_data_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "data",
         FieldDataType::Byte,
         scale,
@@ -60095,6 +61463,7 @@ fn ant_tx_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -60196,6 +61565,7 @@ fn exd_screen_configuration_message_screen_index_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "screen_index",
         FieldDataType::UInt8,
         scale,
@@ -60223,6 +61593,7 @@ fn exd_screen_configuration_message_field_count_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "field_count",
         FieldDataType::UInt8,
         scale,
@@ -60250,6 +61621,7 @@ fn exd_screen_configuration_message_layout_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "layout",
         FieldDataType::ExdLayout,
         scale,
@@ -60277,6 +61649,7 @@ fn exd_screen_configuration_message_screen_enabled_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "screen_enabled",
         FieldDataType::Bool,
         scale,
@@ -60432,6 +61805,7 @@ fn exd_data_field_configuration_message_screen_index_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "screen_index",
         FieldDataType::UInt8,
         scale,
@@ -60459,6 +61833,7 @@ fn exd_data_field_configuration_message_concept_field_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "concept_field",
         FieldDataType::Byte,
         scale,
@@ -60486,6 +61861,7 @@ fn exd_data_field_configuration_message_field_id_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "field_id",
         FieldDataType::UInt8,
         scale,
@@ -60513,6 +61889,7 @@ fn exd_data_field_configuration_message_concept_count_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "concept_count",
         FieldDataType::UInt8,
         scale,
@@ -60540,6 +61917,7 @@ fn exd_data_field_configuration_message_display_type_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "display_type",
         FieldDataType::ExdDisplayType,
         scale,
@@ -60567,6 +61945,7 @@ fn exd_data_field_configuration_message_title_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "title",
         FieldDataType::String,
         scale,
@@ -60787,6 +62166,7 @@ fn exd_data_concept_configuration_message_screen_index_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "screen_index",
         FieldDataType::UInt8,
         scale,
@@ -60814,6 +62194,7 @@ fn exd_data_concept_configuration_message_concept_field_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "concept_field",
         FieldDataType::Byte,
         scale,
@@ -60841,6 +62222,7 @@ fn exd_data_concept_configuration_message_field_id_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "field_id",
         FieldDataType::UInt8,
         scale,
@@ -60868,6 +62250,7 @@ fn exd_data_concept_configuration_message_concept_index_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "concept_index",
         FieldDataType::UInt8,
         scale,
@@ -60895,6 +62278,7 @@ fn exd_data_concept_configuration_message_data_page_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "data_page",
         FieldDataType::UInt8,
         scale,
@@ -60922,6 +62306,7 @@ fn exd_data_concept_configuration_message_concept_key_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "concept_key",
         FieldDataType::UInt8,
         scale,
@@ -60949,6 +62334,7 @@ fn exd_data_concept_configuration_message_scaling_field(
     };
     data_field_with_info(
         6u8,
+        None,
         "scaling",
         FieldDataType::UInt8,
         scale,
@@ -60976,6 +62362,7 @@ fn exd_data_concept_configuration_message_data_units_field(
     };
     data_field_with_info(
         8u8,
+        None,
         "data_units",
         FieldDataType::ExdDataUnits,
         scale,
@@ -61003,6 +62390,7 @@ fn exd_data_concept_configuration_message_qualifier_field(
     };
     data_field_with_info(
         9u8,
+        None,
         "qualifier",
         FieldDataType::ExdQualifiers,
         scale,
@@ -61030,6 +62418,7 @@ fn exd_data_concept_configuration_message_descriptor_field(
     };
     data_field_with_info(
         10u8,
+        None,
         "descriptor",
         FieldDataType::ExdDescriptors,
         scale,
@@ -61057,6 +62446,7 @@ fn exd_data_concept_configuration_message_is_signed_field(
     };
     data_field_with_info(
         11u8,
+        None,
         "is_signed",
         FieldDataType::Bool,
         scale,
@@ -61417,6 +62807,7 @@ fn dive_summary_message_reference_mesg_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "reference_mesg",
         FieldDataType::MesgNum,
         scale,
@@ -61444,6 +62835,7 @@ fn dive_summary_message_reference_index_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "reference_index",
         FieldDataType::MessageIndex,
         scale,
@@ -61471,6 +62863,7 @@ fn dive_summary_message_avg_depth_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "avg_depth",
         FieldDataType::UInt32,
         scale,
@@ -61498,6 +62891,7 @@ fn dive_summary_message_max_depth_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "max_depth",
         FieldDataType::UInt32,
         scale,
@@ -61525,6 +62919,7 @@ fn dive_summary_message_surface_interval_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "surface_interval",
         FieldDataType::UInt32,
         scale,
@@ -61552,6 +62947,7 @@ fn dive_summary_message_start_cns_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "start_cns",
         FieldDataType::UInt8,
         scale,
@@ -61579,6 +62975,7 @@ fn dive_summary_message_end_cns_field(
     };
     data_field_with_info(
         6u8,
+        None,
         "end_cns",
         FieldDataType::UInt8,
         scale,
@@ -61606,6 +63003,7 @@ fn dive_summary_message_start_n2_field(
     };
     data_field_with_info(
         7u8,
+        None,
         "start_n2",
         FieldDataType::UInt16,
         scale,
@@ -61633,6 +63031,7 @@ fn dive_summary_message_end_n2_field(
     };
     data_field_with_info(
         8u8,
+        None,
         "end_n2",
         FieldDataType::UInt16,
         scale,
@@ -61660,6 +63059,7 @@ fn dive_summary_message_o2_toxicity_field(
     };
     data_field_with_info(
         9u8,
+        None,
         "o2_toxicity",
         FieldDataType::UInt16,
         scale,
@@ -61687,6 +63087,7 @@ fn dive_summary_message_dive_number_field(
     };
     data_field_with_info(
         10u8,
+        None,
         "dive_number",
         FieldDataType::UInt32,
         scale,
@@ -61714,6 +63115,7 @@ fn dive_summary_message_bottom_time_field(
     };
     data_field_with_info(
         11u8,
+        None,
         "bottom_time",
         FieldDataType::UInt32,
         scale,
@@ -61741,6 +63143,7 @@ fn dive_summary_message_avg_pressure_sac_field(
     };
     data_field_with_info(
         12u8,
+        None,
         "avg_pressure_sac",
         FieldDataType::UInt16,
         scale,
@@ -61768,6 +63171,7 @@ fn dive_summary_message_avg_volume_sac_field(
     };
     data_field_with_info(
         13u8,
+        None,
         "avg_volume_sac",
         FieldDataType::UInt16,
         scale,
@@ -61795,6 +63199,7 @@ fn dive_summary_message_avg_rmv_field(
     };
     data_field_with_info(
         14u8,
+        None,
         "avg_rmv",
         FieldDataType::UInt16,
         scale,
@@ -61822,6 +63227,7 @@ fn dive_summary_message_descent_time_field(
     };
     data_field_with_info(
         15u8,
+        None,
         "descent_time",
         FieldDataType::UInt32,
         scale,
@@ -61849,6 +63255,7 @@ fn dive_summary_message_ascent_time_field(
     };
     data_field_with_info(
         16u8,
+        None,
         "ascent_time",
         FieldDataType::UInt32,
         scale,
@@ -61876,6 +63283,7 @@ fn dive_summary_message_avg_ascent_rate_field(
     };
     data_field_with_info(
         17u8,
+        None,
         "avg_ascent_rate",
         FieldDataType::SInt32,
         scale,
@@ -61903,6 +63311,7 @@ fn dive_summary_message_avg_descent_rate_field(
     };
     data_field_with_info(
         22u8,
+        None,
         "avg_descent_rate",
         FieldDataType::UInt32,
         scale,
@@ -61930,6 +63339,7 @@ fn dive_summary_message_max_ascent_rate_field(
     };
     data_field_with_info(
         23u8,
+        None,
         "max_ascent_rate",
         FieldDataType::UInt32,
         scale,
@@ -61957,6 +63367,7 @@ fn dive_summary_message_max_descent_rate_field(
     };
     data_field_with_info(
         24u8,
+        None,
         "max_descent_rate",
         FieldDataType::UInt32,
         scale,
@@ -61984,6 +63395,7 @@ fn dive_summary_message_hang_time_field(
     };
     data_field_with_info(
         25u8,
+        None,
         "hang_time",
         FieldDataType::UInt32,
         scale,
@@ -62011,6 +63423,7 @@ fn dive_summary_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -62142,6 +63555,7 @@ fn aad_accel_features_message_time_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "time",
         FieldDataType::UInt16,
         scale,
@@ -62169,6 +63583,7 @@ fn aad_accel_features_message_energy_total_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "energy_total",
         FieldDataType::UInt32,
         scale,
@@ -62196,6 +63611,7 @@ fn aad_accel_features_message_zero_cross_cnt_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "zero_cross_cnt",
         FieldDataType::UInt16,
         scale,
@@ -62223,6 +63639,7 @@ fn aad_accel_features_message_instance_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "instance",
         FieldDataType::UInt8,
         scale,
@@ -62250,6 +63667,7 @@ fn aad_accel_features_message_time_above_threshold_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "time_above_threshold",
         FieldDataType::UInt16,
         scale,
@@ -62277,6 +63695,7 @@ fn aad_accel_features_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -62339,6 +63758,7 @@ fn hrv_message_time_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "time",
         FieldDataType::UInt16,
         scale,
@@ -62428,6 +63848,7 @@ fn beat_intervals_message_timestamp_ms_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "timestamp_ms",
         FieldDataType::UInt16,
         scale,
@@ -62455,6 +63876,7 @@ fn beat_intervals_message_time_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "time",
         FieldDataType::UInt16,
         scale,
@@ -62482,6 +63904,7 @@ fn beat_intervals_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -62640,6 +64063,7 @@ fn hrv_status_summary_message_weekly_average_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "weekly_average",
         FieldDataType::UInt16,
         scale,
@@ -62667,6 +64091,7 @@ fn hrv_status_summary_message_last_night_average_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "last_night_average",
         FieldDataType::UInt16,
         scale,
@@ -62694,6 +64119,7 @@ fn hrv_status_summary_message_last_night_5_min_high_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "last_night_5_min_high",
         FieldDataType::UInt16,
         scale,
@@ -62721,6 +64147,7 @@ fn hrv_status_summary_message_baseline_low_upper_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "baseline_low_upper",
         FieldDataType::UInt16,
         scale,
@@ -62748,6 +64175,7 @@ fn hrv_status_summary_message_baseline_balanced_lower_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "baseline_balanced_lower",
         FieldDataType::UInt16,
         scale,
@@ -62775,6 +64203,7 @@ fn hrv_status_summary_message_baseline_balanced_upper_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "baseline_balanced_upper",
         FieldDataType::UInt16,
         scale,
@@ -62802,6 +64231,7 @@ fn hrv_status_summary_message_status_field(
     };
     data_field_with_info(
         6u8,
+        None,
         "status",
         FieldDataType::HrvStatus,
         scale,
@@ -62829,6 +64259,7 @@ fn hrv_status_summary_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -62904,6 +64335,7 @@ fn hrv_value_message_value_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "value",
         FieldDataType::UInt16,
         scale,
@@ -62931,6 +64363,7 @@ fn hrv_value_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -63157,6 +64590,7 @@ fn raw_bbi_message_timestamp_ms_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "timestamp_ms",
         FieldDataType::UInt16,
         scale,
@@ -63184,6 +64618,7 @@ fn raw_bbi_message_data_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "data",
         FieldDataType::UInt16,
         scale,
@@ -63211,6 +64646,7 @@ fn raw_bbi_message_time_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "time",
         FieldDataType::UInt16,
         scale,
@@ -63238,6 +64674,7 @@ fn raw_bbi_message_quality_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "quality",
         FieldDataType::UInt8,
         scale,
@@ -63265,6 +64702,7 @@ fn raw_bbi_message_gap_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "gap",
         FieldDataType::UInt8,
         scale,
@@ -63292,6 +64730,7 @@ fn raw_bbi_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -63367,6 +64806,7 @@ fn respiration_rate_message_respiration_rate_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "respiration_rate",
         FieldDataType::SInt16,
         scale,
@@ -63394,6 +64834,7 @@ fn respiration_rate_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -63533,6 +64974,7 @@ fn chrono_shot_session_message_min_speed_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "min_speed",
         FieldDataType::UInt32,
         scale,
@@ -63560,6 +65002,7 @@ fn chrono_shot_session_message_max_speed_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "max_speed",
         FieldDataType::UInt32,
         scale,
@@ -63587,6 +65030,7 @@ fn chrono_shot_session_message_avg_speed_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "avg_speed",
         FieldDataType::UInt32,
         scale,
@@ -63614,6 +65058,7 @@ fn chrono_shot_session_message_shot_count_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "shot_count",
         FieldDataType::UInt16,
         scale,
@@ -63641,6 +65086,7 @@ fn chrono_shot_session_message_projectile_type_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "projectile_type",
         FieldDataType::ProjectileType,
         scale,
@@ -63668,6 +65114,7 @@ fn chrono_shot_session_message_grain_weight_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "grain_weight",
         FieldDataType::UInt32,
         scale,
@@ -63695,6 +65142,7 @@ fn chrono_shot_session_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -63782,6 +65230,7 @@ fn chrono_shot_data_message_shot_speed_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "shot_speed",
         FieldDataType::UInt32,
         scale,
@@ -63809,6 +65258,7 @@ fn chrono_shot_data_message_shot_num_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "shot_num",
         FieldDataType::UInt16,
         scale,
@@ -63836,6 +65286,7 @@ fn chrono_shot_data_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -63923,6 +65374,7 @@ fn tank_update_message_sensor_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "sensor",
         FieldDataType::AntChannelId,
         scale,
@@ -63950,6 +65402,7 @@ fn tank_update_message_pressure_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "pressure",
         FieldDataType::UInt16,
         scale,
@@ -63977,6 +65430,7 @@ fn tank_update_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -64090,6 +65544,7 @@ fn tank_summary_message_sensor_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "sensor",
         FieldDataType::AntChannelId,
         scale,
@@ -64117,6 +65572,7 @@ fn tank_summary_message_start_pressure_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "start_pressure",
         FieldDataType::UInt16,
         scale,
@@ -64144,6 +65600,7 @@ fn tank_summary_message_end_pressure_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "end_pressure",
         FieldDataType::UInt16,
         scale,
@@ -64171,6 +65628,7 @@ fn tank_summary_message_volume_used_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "volume_used",
         FieldDataType::UInt32,
         scale,
@@ -64198,6 +65656,7 @@ fn tank_summary_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,
@@ -64442,6 +65901,7 @@ fn sleep_assessment_message_combined_awake_score_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "combined_awake_score",
         FieldDataType::UInt8,
         scale,
@@ -64469,6 +65929,7 @@ fn sleep_assessment_message_awake_time_score_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "awake_time_score",
         FieldDataType::UInt8,
         scale,
@@ -64496,6 +65957,7 @@ fn sleep_assessment_message_awakenings_count_score_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "awakenings_count_score",
         FieldDataType::UInt8,
         scale,
@@ -64523,6 +65985,7 @@ fn sleep_assessment_message_deep_sleep_score_field(
     };
     data_field_with_info(
         3u8,
+        None,
         "deep_sleep_score",
         FieldDataType::UInt8,
         scale,
@@ -64550,6 +66013,7 @@ fn sleep_assessment_message_sleep_duration_score_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "sleep_duration_score",
         FieldDataType::UInt8,
         scale,
@@ -64577,6 +66041,7 @@ fn sleep_assessment_message_light_sleep_score_field(
     };
     data_field_with_info(
         5u8,
+        None,
         "light_sleep_score",
         FieldDataType::UInt8,
         scale,
@@ -64604,6 +66069,7 @@ fn sleep_assessment_message_overall_sleep_score_field(
     };
     data_field_with_info(
         6u8,
+        None,
         "overall_sleep_score",
         FieldDataType::UInt8,
         scale,
@@ -64631,6 +66097,7 @@ fn sleep_assessment_message_sleep_quality_score_field(
     };
     data_field_with_info(
         7u8,
+        None,
         "sleep_quality_score",
         FieldDataType::UInt8,
         scale,
@@ -64658,6 +66125,7 @@ fn sleep_assessment_message_sleep_recovery_score_field(
     };
     data_field_with_info(
         8u8,
+        None,
         "sleep_recovery_score",
         FieldDataType::UInt8,
         scale,
@@ -64685,6 +66153,7 @@ fn sleep_assessment_message_rem_sleep_score_field(
     };
     data_field_with_info(
         9u8,
+        None,
         "rem_sleep_score",
         FieldDataType::UInt8,
         scale,
@@ -64712,6 +66181,7 @@ fn sleep_assessment_message_sleep_restlessness_score_field(
     };
     data_field_with_info(
         10u8,
+        None,
         "sleep_restlessness_score",
         FieldDataType::UInt8,
         scale,
@@ -64739,6 +66209,7 @@ fn sleep_assessment_message_awakenings_count_field(
     };
     data_field_with_info(
         11u8,
+        None,
         "awakenings_count",
         FieldDataType::UInt8,
         scale,
@@ -64766,6 +66237,7 @@ fn sleep_assessment_message_interruptions_score_field(
     };
     data_field_with_info(
         14u8,
+        None,
         "interruptions_score",
         FieldDataType::UInt8,
         scale,
@@ -64793,6 +66265,7 @@ fn sleep_assessment_message_average_stress_during_sleep_field(
     };
     data_field_with_info(
         15u8,
+        None,
         "average_stress_during_sleep",
         FieldDataType::UInt16,
         scale,
@@ -64909,6 +66382,7 @@ fn skin_temp_overnight_message_local_timestamp_field(
     };
     data_field_with_info(
         0u8,
+        None,
         "local_timestamp",
         FieldDataType::LocalDateTime,
         scale,
@@ -64936,6 +66410,7 @@ fn skin_temp_overnight_message_average_deviation_field(
     };
     data_field_with_info(
         1u8,
+        None,
         "average_deviation",
         FieldDataType::Float32,
         scale,
@@ -64963,6 +66438,7 @@ fn skin_temp_overnight_message_average_7_day_deviation_field(
     };
     data_field_with_info(
         2u8,
+        None,
         "average_7_day_deviation",
         FieldDataType::Float32,
         scale,
@@ -64990,6 +66466,7 @@ fn skin_temp_overnight_message_nightly_value_field(
     };
     data_field_with_info(
         4u8,
+        None,
         "nightly_value",
         FieldDataType::Float32,
         scale,
@@ -65017,6 +66494,7 @@ fn skin_temp_overnight_message_timestamp_field(
     };
     data_field_with_info(
         253u8,
+        None,
         "timestamp",
         FieldDataType::DateTime,
         scale,

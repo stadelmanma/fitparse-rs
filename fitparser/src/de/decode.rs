@@ -73,6 +73,7 @@ impl Decoder {
             record.push(FitDataField::new(
                 String::from("timestamp"),
                 253,
+                None,
                 self.update_timestamp(time_offset),
                 String::new(),
             ));
@@ -123,8 +124,9 @@ impl Decoder {
                 .developer_field_descriptions
                 .get(&(dev_data_idx, field_nr))
                 .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
-            record.push_developer_field(data_field_with_info(
+            record.push(data_field_with_info(
                 dev_definition.field_definition_number,
+                Some(dev_definition.developer_data_index),
                 &dev_definition.field_name,
                 FieldDataType::Byte,
                 dev_definition.scale,

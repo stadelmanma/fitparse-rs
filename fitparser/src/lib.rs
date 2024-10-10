@@ -57,8 +57,6 @@ pub struct FitDataRecord {
     kind: profile::MesgNum,
     /// All the fields present in this message, a record may not have every possible field defined
     fields: Vec<FitDataField>,
-    /// Developer defined fields
-    developer_fields: Vec<FitDataField>,
 }
 
 impl FitDataRecord {
@@ -67,7 +65,6 @@ impl FitDataRecord {
         FitDataRecord {
             kind,
             fields: Vec::new(),
-            developer_fields: Vec::new(),
         }
     }
 
@@ -79,16 +76,6 @@ impl FitDataRecord {
     /// Get all fields as a slice
     pub fn fields(&self) -> &[FitDataField] {
         &self.fields
-    }
-
-    /// Get all fields as a slice
-    pub fn developer_fields(&self) -> &[FitDataField] {
-        &self.developer_fields
-    }
-
-    /// get a mutable reference to
-    pub fn push_developer_field(&mut self, field: FitDataField) {
-        self.developer_fields.push(field);
     }
 
     /// Add a field to the record
@@ -112,16 +99,24 @@ impl FitDataRecord {
 pub struct FitDataField {
     name: String,
     number: u8,
+    developer_data_index: Option<u8>, // None for built-in fields, for developer fields identifies which developer
     value: Value,
     units: String,
 }
 
 impl FitDataField {
     /// Create a new FitDataField
-    pub fn new(name: String, number: u8, value: Value, units: String) -> Self {
+    pub fn new(
+        name: String,
+        number: u8,
+        developer_data_index: Option<u8>,
+        value: Value,
+        units: String,
+    ) -> Self {
         FitDataField {
             name,
             number,
+            developer_data_index,
             value,
             units,
         }
@@ -496,10 +491,10 @@ mod tests {
         let fit_data = from_bytes(&data).unwrap();
         assert_eq!(fit_data.len(), 6);
         // make sure we correctly parsed the dev data
-        assert_eq!(fit_data[3].developer_fields().len(), 1);
-        assert_eq!(fit_data[3].developer_fields()[0].name(), "doughnuts_earned");
-        assert_eq!(fit_data[3].developer_fields()[0].value(), &Value::SInt8(1));
-        assert_eq!(fit_data[3].developer_fields()[0].units(), "doughnuts");
+        assert_eq!(fit_data[3].fields().len(), 5);
+        assert_eq!(fit_data[3].fields()[4].name(), "doughnuts_earned");
+        assert_eq!(fit_data[3].fields()[4].value(), &Value::SInt8(1));
+        assert_eq!(fit_data[3].fields()[4].units(), "doughnuts");
     }
 
     #[test]

@@ -276,11 +276,11 @@ fn create_fn_def(mesg_def: &MessageDefinition, fld_def: &MessageFieldDefinition)
             } else {
                 #name
             };
-            data_field_with_info(#def_number, name, #fld_type, scale, offset, units, value, options)
+            data_field_with_info(#def_number, None, name, #fld_type, scale, offset, units, value, options)
         }
     } else {
         quote! {
-            data_field_with_info(#def_number, #name, #fld_type, scale, offset, units, value, options)
+            data_field_with_info(#def_number, None, #name, #fld_type, scale, offset, units, value, options)
         }
     };
 
