@@ -1,9 +1,9 @@
 # Fitparser
+
 [![LICENSE](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Crates.io Version](https://img.shields.io/crates/v/fitparser.svg)](https://crates.io/crates/fitparser)
 [![Docs.rs](https://docs.rs/fitparser/badge.svg)](https://docs.rs/fitparser)
 [![Build Status](https://github.com/stadelmanma/fitparse-rs/actions/workflows/ci.yml/badge.svg)](https://github.com/stadelmanma/fitparse-rs/actions/workflows/ci.yml)
-
 
 ## Overview
 
@@ -22,18 +22,20 @@ data in whatever format suits their needs. This library provides a
 other serialization format implemented using Serde.
 
 Notes:
- * This library **does not** support writing FIT files at this time.
- * Files with Developer Data fields can be parsed but the developer
-   fields are dropped.
- * The FIT SDK is regularly updated by Garmin/Ant this library may not
-   be up to date; check the `src/profile/messages.rs` for the packaged version.
-   Submit an issue and I will gladly bump it!
+
+- This library **does not** support writing FIT files at this time.
+- Files with Developer Data fields can be parsed and the developer
+  fields are correctly extracted.
+- The FIT SDK is regularly updated by Garmin/Ant this library may not
+  be up to date; check the `src/profile/messages.rs` for the packaged version.
+  Submit an issue and I will gladly bump it!
 
 ## Usage
 
 See library documentation at [docs.rs/fitparser](https://docs.rs/fitparser)
 for full usage information. Below is a basic example of calling the parser
 on a FIT file.
+
 ```rust
 use fitparser;
 use std::fs::File;
@@ -56,7 +58,6 @@ Additional decoding options are also available to customize the output of the
 parser. See the source code of the `fitparser/src/de/mod.rs` to view all options
 (or view the crate docs). The `fit_to_json` example program demos all of the
 currently available options as well.
-
 
 ## Updating the FIT profile
 

@@ -97,25 +97,36 @@ fn field_type_enum_impl_from(field_type: &FieldTypeDefintion) -> TokenStream {
     let ident = field_type.ident();
     let base_type = field_type.base_type();
     let variant_idents = field_type.variant_map().values().map(|v| v.ident());
+    let variant_idents_clone = variant_idents.clone();
     let variant_values = field_type
         .variant_map()
         .values()
         .map(FieldTypeVariant::value);
+    let variant_names = field_type.variant_map().values().map(|v| v.name());
     let other_val_ident = field_type.other_value_field_name();
 
     quote! {
-            impl convert::From<#base_type> for #ident {
-                fn from(value: #base_type) -> Self {
-                    match value {
-                        #( #variant_values => #ident::#variant_idents, )*
-                        _ => #ident::#other_val_ident(value)
-                    }
+        impl convert::From<#base_type> for #ident {
+            fn from(value: #base_type) -> Self {
+                match value {
+                    #( #variant_values => #ident::#variant_idents, )*
+                    _ => #ident::#other_val_ident(value)
                 }
             }
+        }
 
         impl convert::From<i64> for #ident {
             fn from(value: i64) -> Self {
                 #ident::from(value as #base_type)
+            }
+        }
+
+        impl convert::From<&str> for #ident {
+            fn from(value: &str) -> Self {
+                match value {
+                    #( #variant_names => #ident::#variant_idents_clone, )*
+                    &_ => #ident::#other_val_ident(0)
+                }
             }
         }
     }

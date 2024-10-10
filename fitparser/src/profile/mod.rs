@@ -203,6 +203,7 @@ pub fn calculate_cumulative_value(
 #[allow(clippy::too_many_arguments)]
 pub fn data_field_with_info(
     def_number: u8,
+    developer_data_index: Option<u8>,
     name: &str,
     data_type: FieldDataType,
     scale: f64,
@@ -215,6 +216,7 @@ pub fn data_field_with_info(
     Ok(FitDataField::new(
         name.to_string(),
         def_number,
+        developer_data_index,
         value,
         units.to_string(),
     ))
@@ -225,6 +227,7 @@ pub fn unknown_field(field_def_num: u8, value: Value) -> FitDataField {
     FitDataField::new(
         format!("unknown_field_{}", field_def_num),
         field_def_num,
+        None,
         value,
         String::new(),
     )

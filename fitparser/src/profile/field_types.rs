@@ -954,6 +954,33 @@ impl convert::From<i64> for File {
         File::from(value as u8)
     }
 }
+impl convert::From<&str> for File {
+    fn from(value: &str) -> Self {
+        match value {
+            "device" => File::Device,
+            "settings" => File::Settings,
+            "sport" => File::Sport,
+            "activity" => File::Activity,
+            "workout" => File::Workout,
+            "course" => File::Course,
+            "schedules" => File::Schedules,
+            "weight" => File::Weight,
+            "totals" => File::Totals,
+            "goals" => File::Goals,
+            "blood_pressure" => File::BloodPressure,
+            "monitoring_a" => File::MonitoringA,
+            "activity_summary" => File::ActivitySummary,
+            "monitoring_daily" => File::MonitoringDaily,
+            "monitoring_b" => File::MonitoringB,
+            "segment" => File::Segment,
+            "segment_list" => File::SegmentList,
+            "exd_configuration" => File::ExdConfiguration,
+            "mfg_range_min" => File::MfgRangeMin,
+            "mfg_range_max" => File::MfgRangeMax,
+            &_ => File::UnknownVariant(0),
+        }
+    }
+}
 impl Serialize for File {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -1612,6 +1639,135 @@ impl convert::From<i64> for MesgNum {
         MesgNum::from(value as u16)
     }
 }
+impl convert::From<&str> for MesgNum {
+    fn from(value: &str) -> Self {
+        match value {
+            "file_id" => MesgNum::FileId,
+            "capabilities" => MesgNum::Capabilities,
+            "device_settings" => MesgNum::DeviceSettings,
+            "user_profile" => MesgNum::UserProfile,
+            "hrm_profile" => MesgNum::HrmProfile,
+            "sdm_profile" => MesgNum::SdmProfile,
+            "bike_profile" => MesgNum::BikeProfile,
+            "zones_target" => MesgNum::ZonesTarget,
+            "hr_zone" => MesgNum::HrZone,
+            "power_zone" => MesgNum::PowerZone,
+            "met_zone" => MesgNum::MetZone,
+            "sport" => MesgNum::Sport,
+            "goal" => MesgNum::Goal,
+            "session" => MesgNum::Session,
+            "lap" => MesgNum::Lap,
+            "record" => MesgNum::Record,
+            "event" => MesgNum::Event,
+            "device_info" => MesgNum::DeviceInfo,
+            "workout" => MesgNum::Workout,
+            "workout_step" => MesgNum::WorkoutStep,
+            "schedule" => MesgNum::Schedule,
+            "weight_scale" => MesgNum::WeightScale,
+            "course" => MesgNum::Course,
+            "course_point" => MesgNum::CoursePoint,
+            "totals" => MesgNum::Totals,
+            "activity" => MesgNum::Activity,
+            "software" => MesgNum::Software,
+            "file_capabilities" => MesgNum::FileCapabilities,
+            "mesg_capabilities" => MesgNum::MesgCapabilities,
+            "field_capabilities" => MesgNum::FieldCapabilities,
+            "file_creator" => MesgNum::FileCreator,
+            "blood_pressure" => MesgNum::BloodPressure,
+            "speed_zone" => MesgNum::SpeedZone,
+            "monitoring" => MesgNum::Monitoring,
+            "training_file" => MesgNum::TrainingFile,
+            "hrv" => MesgNum::Hrv,
+            "ant_rx" => MesgNum::AntRx,
+            "ant_tx" => MesgNum::AntTx,
+            "ant_channel_id" => MesgNum::AntChannelId,
+            "length" => MesgNum::Length,
+            "monitoring_info" => MesgNum::MonitoringInfo,
+            "pad" => MesgNum::Pad,
+            "slave_device" => MesgNum::SlaveDevice,
+            "connectivity" => MesgNum::Connectivity,
+            "weather_conditions" => MesgNum::WeatherConditions,
+            "weather_alert" => MesgNum::WeatherAlert,
+            "cadence_zone" => MesgNum::CadenceZone,
+            "hr" => MesgNum::Hr,
+            "segment_lap" => MesgNum::SegmentLap,
+            "memo_glob" => MesgNum::MemoGlob,
+            "segment_id" => MesgNum::SegmentId,
+            "segment_leaderboard_entry" => MesgNum::SegmentLeaderboardEntry,
+            "segment_point" => MesgNum::SegmentPoint,
+            "segment_file" => MesgNum::SegmentFile,
+            "workout_session" => MesgNum::WorkoutSession,
+            "watchface_settings" => MesgNum::WatchfaceSettings,
+            "gps_metadata" => MesgNum::GpsMetadata,
+            "camera_event" => MesgNum::CameraEvent,
+            "timestamp_correlation" => MesgNum::TimestampCorrelation,
+            "gyroscope_data" => MesgNum::GyroscopeData,
+            "accelerometer_data" => MesgNum::AccelerometerData,
+            "three_d_sensor_calibration" => MesgNum::ThreeDSensorCalibration,
+            "video_frame" => MesgNum::VideoFrame,
+            "obdii_data" => MesgNum::ObdiiData,
+            "nmea_sentence" => MesgNum::NmeaSentence,
+            "aviation_attitude" => MesgNum::AviationAttitude,
+            "video" => MesgNum::Video,
+            "video_title" => MesgNum::VideoTitle,
+            "video_description" => MesgNum::VideoDescription,
+            "video_clip" => MesgNum::VideoClip,
+            "ohr_settings" => MesgNum::OhrSettings,
+            "exd_screen_configuration" => MesgNum::ExdScreenConfiguration,
+            "exd_data_field_configuration" => MesgNum::ExdDataFieldConfiguration,
+            "exd_data_concept_configuration" => MesgNum::ExdDataConceptConfiguration,
+            "field_description" => MesgNum::FieldDescription,
+            "developer_data_id" => MesgNum::DeveloperDataId,
+            "magnetometer_data" => MesgNum::MagnetometerData,
+            "barometer_data" => MesgNum::BarometerData,
+            "one_d_sensor_calibration" => MesgNum::OneDSensorCalibration,
+            "monitoring_hr_data" => MesgNum::MonitoringHrData,
+            "time_in_zone" => MesgNum::TimeInZone,
+            "set" => MesgNum::Set,
+            "stress_level" => MesgNum::StressLevel,
+            "max_met_data" => MesgNum::MaxMetData,
+            "dive_settings" => MesgNum::DiveSettings,
+            "dive_gas" => MesgNum::DiveGas,
+            "dive_alarm" => MesgNum::DiveAlarm,
+            "exercise_title" => MesgNum::ExerciseTitle,
+            "dive_summary" => MesgNum::DiveSummary,
+            "spo2_data" => MesgNum::Spo2Data,
+            "sleep_level" => MesgNum::SleepLevel,
+            "jump" => MesgNum::Jump,
+            "aad_accel_features" => MesgNum::AadAccelFeatures,
+            "beat_intervals" => MesgNum::BeatIntervals,
+            "respiration_rate" => MesgNum::RespirationRate,
+            "hsa_accelerometer_data" => MesgNum::HsaAccelerometerData,
+            "hsa_step_data" => MesgNum::HsaStepData,
+            "hsa_spo2_data" => MesgNum::HsaSpo2Data,
+            "hsa_stress_data" => MesgNum::HsaStressData,
+            "hsa_respiration_data" => MesgNum::HsaRespirationData,
+            "hsa_heart_rate_data" => MesgNum::HsaHeartRateData,
+            "split" => MesgNum::Split,
+            "split_summary" => MesgNum::SplitSummary,
+            "hsa_body_battery_data" => MesgNum::HsaBodyBatteryData,
+            "hsa_event" => MesgNum::HsaEvent,
+            "climb_pro" => MesgNum::ClimbPro,
+            "tank_update" => MesgNum::TankUpdate,
+            "tank_summary" => MesgNum::TankSummary,
+            "sleep_assessment" => MesgNum::SleepAssessment,
+            "hrv_status_summary" => MesgNum::HrvStatusSummary,
+            "hrv_value" => MesgNum::HrvValue,
+            "raw_bbi" => MesgNum::RawBbi,
+            "device_aux_battery_info" => MesgNum::DeviceAuxBatteryInfo,
+            "hsa_gyroscope_data" => MesgNum::HsaGyroscopeData,
+            "chrono_shot_session" => MesgNum::ChronoShotSession,
+            "chrono_shot_data" => MesgNum::ChronoShotData,
+            "hsa_configuration_data" => MesgNum::HsaConfigurationData,
+            "dive_apnea_alarm" => MesgNum::DiveApneaAlarm,
+            "skin_temp_overnight" => MesgNum::SkinTempOvernight,
+            "hsa_wrist_temperature_data" => MesgNum::HsaWristTemperatureData,
+            "mfg_range_min" => MesgNum::MfgRangeMin,
+            "mfg_range_max" => MesgNum::MfgRangeMax,
+            &_ => MesgNum::Value(0),
+        }
+    }
+}
 impl Serialize for MesgNum {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -1667,6 +1823,15 @@ impl convert::From<u8> for Checksum {
 impl convert::From<i64> for Checksum {
     fn from(value: i64) -> Self {
         Checksum::from(value as u8)
+    }
+}
+impl convert::From<&str> for Checksum {
+    fn from(value: &str) -> Self {
+        match value {
+            "clear" => Checksum::Clear,
+            "ok" => Checksum::Ok,
+            &_ => Checksum::Value(0),
+        }
     }
 }
 impl Serialize for Checksum {
@@ -1728,6 +1893,16 @@ impl convert::From<i64> for FileFlags {
         FileFlags::from(value as u8)
     }
 }
+impl convert::From<&str> for FileFlags {
+    fn from(value: &str) -> Self {
+        match value {
+            "read" => FileFlags::Read,
+            "write" => FileFlags::Write,
+            "erase" => FileFlags::Erase,
+            &_ => FileFlags::Value(0),
+        }
+    }
+}
 impl Serialize for FileFlags {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -1787,6 +1962,16 @@ impl convert::From<i64> for MesgCount {
         MesgCount::from(value as u8)
     }
 }
+impl convert::From<&str> for MesgCount {
+    fn from(value: &str) -> Self {
+        match value {
+            "num_per_file" => MesgCount::NumPerFile,
+            "max_per_file" => MesgCount::MaxPerFile,
+            "max_per_file_type" => MesgCount::MaxPerFileType,
+            &_ => MesgCount::UnknownVariant(0),
+        }
+    }
+}
 impl Serialize for MesgCount {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -1835,6 +2020,14 @@ impl convert::From<u32> for DateTime {
 impl convert::From<i64> for DateTime {
     fn from(value: i64) -> Self {
         DateTime::from(value as u32)
+    }
+}
+impl convert::From<&str> for DateTime {
+    fn from(value: &str) -> Self {
+        match value {
+            "min" => DateTime::Min,
+            &_ => DateTime::Value(0),
+        }
     }
 }
 impl Serialize for DateTime {
@@ -1888,6 +2081,14 @@ impl convert::From<u32> for LocalDateTime {
 impl convert::From<i64> for LocalDateTime {
     fn from(value: i64) -> Self {
         LocalDateTime::from(value as u32)
+    }
+}
+impl convert::From<&str> for LocalDateTime {
+    fn from(value: &str) -> Self {
+        match value {
+            "min" => LocalDateTime::Min,
+            &_ => LocalDateTime::Value(0),
+        }
     }
 }
 impl Serialize for LocalDateTime {
@@ -1952,6 +2153,16 @@ impl convert::From<i64> for MessageIndex {
         MessageIndex::from(value as u16)
     }
 }
+impl convert::From<&str> for MessageIndex {
+    fn from(value: &str) -> Self {
+        match value {
+            "mask" => MessageIndex::Mask,
+            "reserved" => MessageIndex::Reserved,
+            "selected" => MessageIndex::Selected,
+            &_ => MessageIndex::Value(0),
+        }
+    }
+}
 impl Serialize for MessageIndex {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -2002,6 +2213,14 @@ impl convert::From<u8> for DeviceIndex {
 impl convert::From<i64> for DeviceIndex {
     fn from(value: i64) -> Self {
         DeviceIndex::from(value as u8)
+    }
+}
+impl convert::From<&str> for DeviceIndex {
+    fn from(value: &str) -> Self {
+        match value {
+            "creator" => DeviceIndex::Creator,
+            &_ => DeviceIndex::Value(0),
+        }
     }
 }
 impl Serialize for DeviceIndex {
@@ -2057,6 +2276,15 @@ impl convert::From<u8> for Gender {
 impl convert::From<i64> for Gender {
     fn from(value: i64) -> Self {
         Gender::from(value as u8)
+    }
+}
+impl convert::From<&str> for Gender {
+    fn from(value: &str) -> Self {
+        match value {
+            "female" => Gender::Female,
+            "male" => Gender::Male,
+            &_ => Gender::UnknownVariant(0),
+        }
     }
 }
 impl Serialize for Gender {
@@ -2299,6 +2527,52 @@ impl convert::From<i64> for Language {
         Language::from(value as u8)
     }
 }
+impl convert::From<&str> for Language {
+    fn from(value: &str) -> Self {
+        match value {
+            "english" => Language::English,
+            "french" => Language::French,
+            "italian" => Language::Italian,
+            "german" => Language::German,
+            "spanish" => Language::Spanish,
+            "croatian" => Language::Croatian,
+            "czech" => Language::Czech,
+            "danish" => Language::Danish,
+            "dutch" => Language::Dutch,
+            "finnish" => Language::Finnish,
+            "greek" => Language::Greek,
+            "hungarian" => Language::Hungarian,
+            "norwegian" => Language::Norwegian,
+            "polish" => Language::Polish,
+            "portuguese" => Language::Portuguese,
+            "slovakian" => Language::Slovakian,
+            "slovenian" => Language::Slovenian,
+            "swedish" => Language::Swedish,
+            "russian" => Language::Russian,
+            "turkish" => Language::Turkish,
+            "latvian" => Language::Latvian,
+            "ukrainian" => Language::Ukrainian,
+            "arabic" => Language::Arabic,
+            "farsi" => Language::Farsi,
+            "bulgarian" => Language::Bulgarian,
+            "romanian" => Language::Romanian,
+            "chinese" => Language::Chinese,
+            "japanese" => Language::Japanese,
+            "korean" => Language::Korean,
+            "taiwanese" => Language::Taiwanese,
+            "thai" => Language::Thai,
+            "hebrew" => Language::Hebrew,
+            "brazilian_portuguese" => Language::BrazilianPortuguese,
+            "indonesian" => Language::Indonesian,
+            "malaysian" => Language::Malaysian,
+            "vietnamese" => Language::Vietnamese,
+            "burmese" => Language::Burmese,
+            "mongolian" => Language::Mongolian,
+            "custom" => Language::Custom,
+            &_ => Language::UnknownVariant(0),
+        }
+    }
+}
 impl Serialize for Language {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -2377,6 +2651,21 @@ impl convert::From<u8> for LanguageBits0 {
 impl convert::From<i64> for LanguageBits0 {
     fn from(value: i64) -> Self {
         LanguageBits0::from(value as u8)
+    }
+}
+impl convert::From<&str> for LanguageBits0 {
+    fn from(value: &str) -> Self {
+        match value {
+            "english" => LanguageBits0::English,
+            "french" => LanguageBits0::French,
+            "italian" => LanguageBits0::Italian,
+            "german" => LanguageBits0::German,
+            "spanish" => LanguageBits0::Spanish,
+            "croatian" => LanguageBits0::Croatian,
+            "czech" => LanguageBits0::Czech,
+            "danish" => LanguageBits0::Danish,
+            &_ => LanguageBits0::Value(0),
+        }
     }
 }
 impl Serialize for LanguageBits0 {
@@ -2461,6 +2750,21 @@ impl convert::From<i64> for LanguageBits1 {
         LanguageBits1::from(value as u8)
     }
 }
+impl convert::From<&str> for LanguageBits1 {
+    fn from(value: &str) -> Self {
+        match value {
+            "dutch" => LanguageBits1::Dutch,
+            "finnish" => LanguageBits1::Finnish,
+            "greek" => LanguageBits1::Greek,
+            "hungarian" => LanguageBits1::Hungarian,
+            "norwegian" => LanguageBits1::Norwegian,
+            "polish" => LanguageBits1::Polish,
+            "portuguese" => LanguageBits1::Portuguese,
+            "slovakian" => LanguageBits1::Slovakian,
+            &_ => LanguageBits1::Value(0),
+        }
+    }
+}
 impl Serialize for LanguageBits1 {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -2541,6 +2845,21 @@ impl convert::From<u8> for LanguageBits2 {
 impl convert::From<i64> for LanguageBits2 {
     fn from(value: i64) -> Self {
         LanguageBits2::from(value as u8)
+    }
+}
+impl convert::From<&str> for LanguageBits2 {
+    fn from(value: &str) -> Self {
+        match value {
+            "slovenian" => LanguageBits2::Slovenian,
+            "swedish" => LanguageBits2::Swedish,
+            "russian" => LanguageBits2::Russian,
+            "turkish" => LanguageBits2::Turkish,
+            "latvian" => LanguageBits2::Latvian,
+            "ukrainian" => LanguageBits2::Ukrainian,
+            "arabic" => LanguageBits2::Arabic,
+            "farsi" => LanguageBits2::Farsi,
+            &_ => LanguageBits2::Value(0),
+        }
     }
 }
 impl Serialize for LanguageBits2 {
@@ -2625,6 +2944,21 @@ impl convert::From<i64> for LanguageBits3 {
         LanguageBits3::from(value as u8)
     }
 }
+impl convert::From<&str> for LanguageBits3 {
+    fn from(value: &str) -> Self {
+        match value {
+            "bulgarian" => LanguageBits3::Bulgarian,
+            "romanian" => LanguageBits3::Romanian,
+            "chinese" => LanguageBits3::Chinese,
+            "japanese" => LanguageBits3::Japanese,
+            "korean" => LanguageBits3::Korean,
+            "taiwanese" => LanguageBits3::Taiwanese,
+            "thai" => LanguageBits3::Thai,
+            "hebrew" => LanguageBits3::Hebrew,
+            &_ => LanguageBits3::Value(0),
+        }
+    }
+}
 impl Serialize for LanguageBits3 {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -2694,6 +3028,19 @@ impl convert::From<u8> for LanguageBits4 {
 impl convert::From<i64> for LanguageBits4 {
     fn from(value: i64) -> Self {
         LanguageBits4::from(value as u8)
+    }
+}
+impl convert::From<&str> for LanguageBits4 {
+    fn from(value: &str) -> Self {
+        match value {
+            "brazilian_portuguese" => LanguageBits4::BrazilianPortuguese,
+            "indonesian" => LanguageBits4::Indonesian,
+            "malaysian" => LanguageBits4::Malaysian,
+            "vietnamese" => LanguageBits4::Vietnamese,
+            "burmese" => LanguageBits4::Burmese,
+            "mongolian" => LanguageBits4::Mongolian,
+            &_ => LanguageBits4::Value(0),
+        }
     }
 }
 impl Serialize for LanguageBits4 {
@@ -3274,6 +3621,119 @@ impl convert::From<i64> for TimeZone {
         TimeZone::from(value as u8)
     }
 }
+impl convert::From<&str> for TimeZone {
+    fn from(value: &str) -> Self {
+        match value {
+            "almaty" => TimeZone::Almaty,
+            "bangkok" => TimeZone::Bangkok,
+            "bombay" => TimeZone::Bombay,
+            "brasilia" => TimeZone::Brasilia,
+            "cairo" => TimeZone::Cairo,
+            "cape_verde_is" => TimeZone::CapeVerdeIs,
+            "darwin" => TimeZone::Darwin,
+            "eniwetok" => TimeZone::Eniwetok,
+            "fiji" => TimeZone::Fiji,
+            "hong_kong" => TimeZone::HongKong,
+            "islamabad" => TimeZone::Islamabad,
+            "kabul" => TimeZone::Kabul,
+            "magadan" => TimeZone::Magadan,
+            "mid_atlantic" => TimeZone::MidAtlantic,
+            "moscow" => TimeZone::Moscow,
+            "muscat" => TimeZone::Muscat,
+            "newfoundland" => TimeZone::Newfoundland,
+            "samoa" => TimeZone::Samoa,
+            "sydney" => TimeZone::Sydney,
+            "tehran" => TimeZone::Tehran,
+            "tokyo" => TimeZone::Tokyo,
+            "us_alaska" => TimeZone::UsAlaska,
+            "us_atlantic" => TimeZone::UsAtlantic,
+            "us_central" => TimeZone::UsCentral,
+            "us_eastern" => TimeZone::UsEastern,
+            "us_hawaii" => TimeZone::UsHawaii,
+            "us_mountain" => TimeZone::UsMountain,
+            "us_pacific" => TimeZone::UsPacific,
+            "other" => TimeZone::Other,
+            "auckland" => TimeZone::Auckland,
+            "kathmandu" => TimeZone::Kathmandu,
+            "europe_western_wet" => TimeZone::EuropeWesternWet,
+            "europe_central_cet" => TimeZone::EuropeCentralCet,
+            "europe_eastern_eet" => TimeZone::EuropeEasternEet,
+            "jakarta" => TimeZone::Jakarta,
+            "perth" => TimeZone::Perth,
+            "adelaide" => TimeZone::Adelaide,
+            "brisbane" => TimeZone::Brisbane,
+            "tasmania" => TimeZone::Tasmania,
+            "iceland" => TimeZone::Iceland,
+            "amsterdam" => TimeZone::Amsterdam,
+            "athens" => TimeZone::Athens,
+            "barcelona" => TimeZone::Barcelona,
+            "berlin" => TimeZone::Berlin,
+            "brussels" => TimeZone::Brussels,
+            "budapest" => TimeZone::Budapest,
+            "copenhagen" => TimeZone::Copenhagen,
+            "dublin" => TimeZone::Dublin,
+            "helsinki" => TimeZone::Helsinki,
+            "lisbon" => TimeZone::Lisbon,
+            "london" => TimeZone::London,
+            "madrid" => TimeZone::Madrid,
+            "munich" => TimeZone::Munich,
+            "oslo" => TimeZone::Oslo,
+            "paris" => TimeZone::Paris,
+            "prague" => TimeZone::Prague,
+            "reykjavik" => TimeZone::Reykjavik,
+            "rome" => TimeZone::Rome,
+            "stockholm" => TimeZone::Stockholm,
+            "vienna" => TimeZone::Vienna,
+            "warsaw" => TimeZone::Warsaw,
+            "zurich" => TimeZone::Zurich,
+            "quebec" => TimeZone::Quebec,
+            "ontario" => TimeZone::Ontario,
+            "manitoba" => TimeZone::Manitoba,
+            "saskatchewan" => TimeZone::Saskatchewan,
+            "alberta" => TimeZone::Alberta,
+            "british_columbia" => TimeZone::BritishColumbia,
+            "boise" => TimeZone::Boise,
+            "boston" => TimeZone::Boston,
+            "chicago" => TimeZone::Chicago,
+            "dallas" => TimeZone::Dallas,
+            "denver" => TimeZone::Denver,
+            "kansas_city" => TimeZone::KansasCity,
+            "las_vegas" => TimeZone::LasVegas,
+            "los_angeles" => TimeZone::LosAngeles,
+            "miami" => TimeZone::Miami,
+            "minneapolis" => TimeZone::Minneapolis,
+            "new_york" => TimeZone::NewYork,
+            "new_orleans" => TimeZone::NewOrleans,
+            "phoenix" => TimeZone::Phoenix,
+            "santa_fe" => TimeZone::SantaFe,
+            "seattle" => TimeZone::Seattle,
+            "washington_dc" => TimeZone::WashingtonDc,
+            "us_arizona" => TimeZone::UsArizona,
+            "chita" => TimeZone::Chita,
+            "ekaterinburg" => TimeZone::Ekaterinburg,
+            "irkutsk" => TimeZone::Irkutsk,
+            "kaliningrad" => TimeZone::Kaliningrad,
+            "krasnoyarsk" => TimeZone::Krasnoyarsk,
+            "novosibirsk" => TimeZone::Novosibirsk,
+            "petropavlovsk_kamchatskiy" => TimeZone::PetropavlovskKamchatskiy,
+            "samara" => TimeZone::Samara,
+            "vladivostok" => TimeZone::Vladivostok,
+            "mexico_central" => TimeZone::MexicoCentral,
+            "mexico_mountain" => TimeZone::MexicoMountain,
+            "mexico_pacific" => TimeZone::MexicoPacific,
+            "cape_town" => TimeZone::CapeTown,
+            "winkhoek" => TimeZone::Winkhoek,
+            "lagos" => TimeZone::Lagos,
+            "riyahd" => TimeZone::Riyahd,
+            "venezuela" => TimeZone::Venezuela,
+            "australia_lh" => TimeZone::AustraliaLh,
+            "santiago" => TimeZone::Santiago,
+            "manual" => TimeZone::Manual,
+            "automatic" => TimeZone::Automatic,
+            &_ => TimeZone::UnknownVariant(0),
+        }
+    }
+}
 impl Serialize for TimeZone {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -3328,6 +3788,16 @@ impl convert::From<u8> for DisplayMeasure {
 impl convert::From<i64> for DisplayMeasure {
     fn from(value: i64) -> Self {
         DisplayMeasure::from(value as u8)
+    }
+}
+impl convert::From<&str> for DisplayMeasure {
+    fn from(value: &str) -> Self {
+        match value {
+            "metric" => DisplayMeasure::Metric,
+            "statute" => DisplayMeasure::Statute,
+            "nautical" => DisplayMeasure::Nautical,
+            &_ => DisplayMeasure::UnknownVariant(0),
+        }
     }
 }
 impl Serialize for DisplayMeasure {
@@ -3386,6 +3856,16 @@ impl convert::From<i64> for DisplayHeart {
         DisplayHeart::from(value as u8)
     }
 }
+impl convert::From<&str> for DisplayHeart {
+    fn from(value: &str) -> Self {
+        match value {
+            "bpm" => DisplayHeart::Bpm,
+            "max" => DisplayHeart::Max,
+            "reserve" => DisplayHeart::Reserve,
+            &_ => DisplayHeart::UnknownVariant(0),
+        }
+    }
+}
 impl Serialize for DisplayHeart {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -3436,6 +3916,15 @@ impl convert::From<u8> for DisplayPower {
 impl convert::From<i64> for DisplayPower {
     fn from(value: i64) -> Self {
         DisplayPower::from(value as u8)
+    }
+}
+impl convert::From<&str> for DisplayPower {
+    fn from(value: &str) -> Self {
+        match value {
+            "watts" => DisplayPower::Watts,
+            "percent_ftp" => DisplayPower::PercentFtp,
+            &_ => DisplayPower::UnknownVariant(0),
+        }
     }
 }
 impl Serialize for DisplayPower {
@@ -3692,6 +4181,55 @@ impl convert::From<i64> for DisplayPosition {
         DisplayPosition::from(value as u8)
     }
 }
+impl convert::From<&str> for DisplayPosition {
+    fn from(value: &str) -> Self {
+        match value {
+            "degree" => DisplayPosition::Degree,
+            "degree_minute" => DisplayPosition::DegreeMinute,
+            "degree_minute_second" => DisplayPosition::DegreeMinuteSecond,
+            "austrian_grid" => DisplayPosition::AustrianGrid,
+            "british_grid" => DisplayPosition::BritishGrid,
+            "dutch_grid" => DisplayPosition::DutchGrid,
+            "hungarian_grid" => DisplayPosition::HungarianGrid,
+            "finnish_grid" => DisplayPosition::FinnishGrid,
+            "german_grid" => DisplayPosition::GermanGrid,
+            "icelandic_grid" => DisplayPosition::IcelandicGrid,
+            "indonesian_equatorial" => DisplayPosition::IndonesianEquatorial,
+            "indonesian_irian" => DisplayPosition::IndonesianIrian,
+            "indonesian_southern" => DisplayPosition::IndonesianSouthern,
+            "india_zone_0" => DisplayPosition::IndiaZone0,
+            "india_zone_IA" => DisplayPosition::IndiaZoneIA,
+            "india_zone_IB" => DisplayPosition::IndiaZoneIB,
+            "india_zone_IIA" => DisplayPosition::IndiaZoneIIA,
+            "india_zone_IIB" => DisplayPosition::IndiaZoneIIB,
+            "india_zone_IIIA" => DisplayPosition::IndiaZoneIIIA,
+            "india_zone_IIIB" => DisplayPosition::IndiaZoneIIIB,
+            "india_zone_IVA" => DisplayPosition::IndiaZoneIVA,
+            "india_zone_IVB" => DisplayPosition::IndiaZoneIVB,
+            "irish_transverse" => DisplayPosition::IrishTransverse,
+            "irish_grid" => DisplayPosition::IrishGrid,
+            "loran" => DisplayPosition::Loran,
+            "maidenhead_grid" => DisplayPosition::MaidenheadGrid,
+            "mgrs_grid" => DisplayPosition::MgrsGrid,
+            "new_zealand_grid" => DisplayPosition::NewZealandGrid,
+            "new_zealand_transverse" => DisplayPosition::NewZealandTransverse,
+            "qatar_grid" => DisplayPosition::QatarGrid,
+            "modified_swedish_grid" => DisplayPosition::ModifiedSwedishGrid,
+            "swedish_grid" => DisplayPosition::SwedishGrid,
+            "south_african_grid" => DisplayPosition::SouthAfricanGrid,
+            "swiss_grid" => DisplayPosition::SwissGrid,
+            "taiwan_grid" => DisplayPosition::TaiwanGrid,
+            "united_states_grid" => DisplayPosition::UnitedStatesGrid,
+            "utm_ups_grid" => DisplayPosition::UtmUpsGrid,
+            "west_malayan" => DisplayPosition::WestMalayan,
+            "borneo_rso" => DisplayPosition::BorneoRso,
+            "estonian_grid" => DisplayPosition::EstonianGrid,
+            "latvian_grid" => DisplayPosition::LatvianGrid,
+            "swedish_ref_99_grid" => DisplayPosition::SwedishRef99Grid,
+            &_ => DisplayPosition::UnknownVariant(0),
+        }
+    }
+}
 impl Serialize for DisplayPosition {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -3746,6 +4284,16 @@ impl convert::From<u8> for Switch {
 impl convert::From<i64> for Switch {
     fn from(value: i64) -> Self {
         Switch::from(value as u8)
+    }
+}
+impl convert::From<&str> for Switch {
+    fn from(value: &str) -> Self {
+        match value {
+            "off" => Switch::Off,
+            "on" => Switch::On,
+            "auto" => Switch::Auto,
+            &_ => Switch::UnknownVariant(0),
+        }
     }
 }
 impl Serialize for Switch {
@@ -4140,6 +4688,82 @@ impl convert::From<i64> for Sport {
         Sport::from(value as u8)
     }
 }
+impl convert::From<&str> for Sport {
+    fn from(value: &str) -> Self {
+        match value {
+            "generic" => Sport::Generic,
+            "running" => Sport::Running,
+            "cycling" => Sport::Cycling,
+            "transition" => Sport::Transition,
+            "fitness_equipment" => Sport::FitnessEquipment,
+            "swimming" => Sport::Swimming,
+            "basketball" => Sport::Basketball,
+            "soccer" => Sport::Soccer,
+            "tennis" => Sport::Tennis,
+            "american_football" => Sport::AmericanFootball,
+            "training" => Sport::Training,
+            "walking" => Sport::Walking,
+            "cross_country_skiing" => Sport::CrossCountrySkiing,
+            "alpine_skiing" => Sport::AlpineSkiing,
+            "snowboarding" => Sport::Snowboarding,
+            "rowing" => Sport::Rowing,
+            "mountaineering" => Sport::Mountaineering,
+            "hiking" => Sport::Hiking,
+            "multisport" => Sport::Multisport,
+            "paddling" => Sport::Paddling,
+            "flying" => Sport::Flying,
+            "e_biking" => Sport::EBiking,
+            "motorcycling" => Sport::Motorcycling,
+            "boating" => Sport::Boating,
+            "driving" => Sport::Driving,
+            "golf" => Sport::Golf,
+            "hang_gliding" => Sport::HangGliding,
+            "horseback_riding" => Sport::HorsebackRiding,
+            "hunting" => Sport::Hunting,
+            "fishing" => Sport::Fishing,
+            "inline_skating" => Sport::InlineSkating,
+            "rock_climbing" => Sport::RockClimbing,
+            "sailing" => Sport::Sailing,
+            "ice_skating" => Sport::IceSkating,
+            "sky_diving" => Sport::SkyDiving,
+            "snowshoeing" => Sport::Snowshoeing,
+            "snowmobiling" => Sport::Snowmobiling,
+            "stand_up_paddleboarding" => Sport::StandUpPaddleboarding,
+            "surfing" => Sport::Surfing,
+            "wakeboarding" => Sport::Wakeboarding,
+            "water_skiing" => Sport::WaterSkiing,
+            "kayaking" => Sport::Kayaking,
+            "rafting" => Sport::Rafting,
+            "windsurfing" => Sport::Windsurfing,
+            "kitesurfing" => Sport::Kitesurfing,
+            "tactical" => Sport::Tactical,
+            "jumpmaster" => Sport::Jumpmaster,
+            "boxing" => Sport::Boxing,
+            "floor_climbing" => Sport::FloorClimbing,
+            "baseball" => Sport::Baseball,
+            "diving" => Sport::Diving,
+            "hiit" => Sport::Hiit,
+            "racket" => Sport::Racket,
+            "wheelchair_push_walk" => Sport::WheelchairPushWalk,
+            "wheelchair_push_run" => Sport::WheelchairPushRun,
+            "meditation" => Sport::Meditation,
+            "disc_golf" => Sport::DiscGolf,
+            "cricket" => Sport::Cricket,
+            "rugby" => Sport::Rugby,
+            "hockey" => Sport::Hockey,
+            "lacrosse" => Sport::Lacrosse,
+            "volleyball" => Sport::Volleyball,
+            "water_tubing" => Sport::WaterTubing,
+            "wakesurfing" => Sport::Wakesurfing,
+            "mixed_martial_arts" => Sport::MixedMartialArts,
+            "snorkeling" => Sport::Snorkeling,
+            "dance" => Sport::Dance,
+            "jump_rope" => Sport::JumpRope,
+            "all" => Sport::All,
+            &_ => Sport::UnknownVariant(0),
+        }
+    }
+}
 impl Serialize for Sport {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -4219,6 +4843,21 @@ impl convert::From<u8> for SportBits0 {
 impl convert::From<i64> for SportBits0 {
     fn from(value: i64) -> Self {
         SportBits0::from(value as u8)
+    }
+}
+impl convert::From<&str> for SportBits0 {
+    fn from(value: &str) -> Self {
+        match value {
+            "generic" => SportBits0::Generic,
+            "running" => SportBits0::Running,
+            "cycling" => SportBits0::Cycling,
+            "transition" => SportBits0::Transition,
+            "fitness_equipment" => SportBits0::FitnessEquipment,
+            "swimming" => SportBits0::Swimming,
+            "basketball" => SportBits0::Basketball,
+            "soccer" => SportBits0::Soccer,
+            &_ => SportBits0::Value(0),
+        }
     }
 }
 impl Serialize for SportBits0 {
@@ -4304,6 +4943,21 @@ impl convert::From<i64> for SportBits1 {
         SportBits1::from(value as u8)
     }
 }
+impl convert::From<&str> for SportBits1 {
+    fn from(value: &str) -> Self {
+        match value {
+            "tennis" => SportBits1::Tennis,
+            "american_football" => SportBits1::AmericanFootball,
+            "training" => SportBits1::Training,
+            "walking" => SportBits1::Walking,
+            "cross_country_skiing" => SportBits1::CrossCountrySkiing,
+            "alpine_skiing" => SportBits1::AlpineSkiing,
+            "snowboarding" => SportBits1::Snowboarding,
+            "rowing" => SportBits1::Rowing,
+            &_ => SportBits1::Value(0),
+        }
+    }
+}
 impl Serialize for SportBits1 {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -4385,6 +5039,21 @@ impl convert::From<u8> for SportBits2 {
 impl convert::From<i64> for SportBits2 {
     fn from(value: i64) -> Self {
         SportBits2::from(value as u8)
+    }
+}
+impl convert::From<&str> for SportBits2 {
+    fn from(value: &str) -> Self {
+        match value {
+            "mountaineering" => SportBits2::Mountaineering,
+            "hiking" => SportBits2::Hiking,
+            "multisport" => SportBits2::Multisport,
+            "paddling" => SportBits2::Paddling,
+            "flying" => SportBits2::Flying,
+            "e_biking" => SportBits2::EBiking,
+            "motorcycling" => SportBits2::Motorcycling,
+            "boating" => SportBits2::Boating,
+            &_ => SportBits2::Value(0),
+        }
     }
 }
 impl Serialize for SportBits2 {
@@ -4470,6 +5139,21 @@ impl convert::From<i64> for SportBits3 {
         SportBits3::from(value as u8)
     }
 }
+impl convert::From<&str> for SportBits3 {
+    fn from(value: &str) -> Self {
+        match value {
+            "driving" => SportBits3::Driving,
+            "golf" => SportBits3::Golf,
+            "hang_gliding" => SportBits3::HangGliding,
+            "horseback_riding" => SportBits3::HorsebackRiding,
+            "hunting" => SportBits3::Hunting,
+            "fishing" => SportBits3::Fishing,
+            "inline_skating" => SportBits3::InlineSkating,
+            "rock_climbing" => SportBits3::RockClimbing,
+            &_ => SportBits3::Value(0),
+        }
+    }
+}
 impl Serialize for SportBits3 {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -4551,6 +5235,21 @@ impl convert::From<u8> for SportBits4 {
 impl convert::From<i64> for SportBits4 {
     fn from(value: i64) -> Self {
         SportBits4::from(value as u8)
+    }
+}
+impl convert::From<&str> for SportBits4 {
+    fn from(value: &str) -> Self {
+        match value {
+            "sailing" => SportBits4::Sailing,
+            "ice_skating" => SportBits4::IceSkating,
+            "sky_diving" => SportBits4::SkyDiving,
+            "snowshoeing" => SportBits4::Snowshoeing,
+            "snowmobiling" => SportBits4::Snowmobiling,
+            "stand_up_paddleboarding" => SportBits4::StandUpPaddleboarding,
+            "surfing" => SportBits4::Surfing,
+            "wakeboarding" => SportBits4::Wakeboarding,
+            &_ => SportBits4::Value(0),
+        }
     }
 }
 impl Serialize for SportBits4 {
@@ -4636,6 +5335,21 @@ impl convert::From<i64> for SportBits5 {
         SportBits5::from(value as u8)
     }
 }
+impl convert::From<&str> for SportBits5 {
+    fn from(value: &str) -> Self {
+        match value {
+            "water_skiing" => SportBits5::WaterSkiing,
+            "kayaking" => SportBits5::Kayaking,
+            "rafting" => SportBits5::Rafting,
+            "windsurfing" => SportBits5::Windsurfing,
+            "kitesurfing" => SportBits5::Kitesurfing,
+            "tactical" => SportBits5::Tactical,
+            "jumpmaster" => SportBits5::Jumpmaster,
+            "boxing" => SportBits5::Boxing,
+            &_ => SportBits5::Value(0),
+        }
+    }
+}
 impl Serialize for SportBits5 {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -4686,6 +5400,14 @@ impl convert::From<u8> for SportBits6 {
 impl convert::From<i64> for SportBits6 {
     fn from(value: i64) -> Self {
         SportBits6::from(value as u8)
+    }
+}
+impl convert::From<&str> for SportBits6 {
+    fn from(value: &str) -> Self {
+        match value {
+            "floor_climbing" => SportBits6::FloorClimbing,
+            &_ => SportBits6::Value(0),
+        }
     }
 }
 impl Serialize for SportBits6 {
@@ -5255,6 +5977,102 @@ impl convert::From<i64> for SubSport {
         SubSport::from(value as u8)
     }
 }
+impl convert::From<&str> for SubSport {
+    fn from(value: &str) -> Self {
+        match value {
+            "generic" => SubSport::Generic,
+            "treadmill" => SubSport::Treadmill,
+            "street" => SubSport::Street,
+            "trail" => SubSport::Trail,
+            "track" => SubSport::Track,
+            "spin" => SubSport::Spin,
+            "indoor_cycling" => SubSport::IndoorCycling,
+            "road" => SubSport::Road,
+            "mountain" => SubSport::Mountain,
+            "downhill" => SubSport::Downhill,
+            "recumbent" => SubSport::Recumbent,
+            "cyclocross" => SubSport::Cyclocross,
+            "hand_cycling" => SubSport::HandCycling,
+            "track_cycling" => SubSport::TrackCycling,
+            "indoor_rowing" => SubSport::IndoorRowing,
+            "elliptical" => SubSport::Elliptical,
+            "stair_climbing" => SubSport::StairClimbing,
+            "lap_swimming" => SubSport::LapSwimming,
+            "open_water" => SubSport::OpenWater,
+            "flexibility_training" => SubSport::FlexibilityTraining,
+            "strength_training" => SubSport::StrengthTraining,
+            "warm_up" => SubSport::WarmUp,
+            "match" => SubSport::Match,
+            "exercise" => SubSport::Exercise,
+            "challenge" => SubSport::Challenge,
+            "indoor_skiing" => SubSport::IndoorSkiing,
+            "cardio_training" => SubSport::CardioTraining,
+            "indoor_walking" => SubSport::IndoorWalking,
+            "e_bike_fitness" => SubSport::EBikeFitness,
+            "bmx" => SubSport::Bmx,
+            "casual_walking" => SubSport::CasualWalking,
+            "speed_walking" => SubSport::SpeedWalking,
+            "bike_to_run_transition" => SubSport::BikeToRunTransition,
+            "run_to_bike_transition" => SubSport::RunToBikeTransition,
+            "swim_to_bike_transition" => SubSport::SwimToBikeTransition,
+            "atv" => SubSport::Atv,
+            "motocross" => SubSport::Motocross,
+            "backcountry" => SubSport::Backcountry,
+            "resort" => SubSport::Resort,
+            "rc_drone" => SubSport::RcDrone,
+            "wingsuit" => SubSport::Wingsuit,
+            "whitewater" => SubSport::Whitewater,
+            "skate_skiing" => SubSport::SkateSkiing,
+            "yoga" => SubSport::Yoga,
+            "pilates" => SubSport::Pilates,
+            "indoor_running" => SubSport::IndoorRunning,
+            "gravel_cycling" => SubSport::GravelCycling,
+            "e_bike_mountain" => SubSport::EBikeMountain,
+            "commuting" => SubSport::Commuting,
+            "mixed_surface" => SubSport::MixedSurface,
+            "navigate" => SubSport::Navigate,
+            "track_me" => SubSport::TrackMe,
+            "map" => SubSport::Map,
+            "single_gas_diving" => SubSport::SingleGasDiving,
+            "multi_gas_diving" => SubSport::MultiGasDiving,
+            "gauge_diving" => SubSport::GaugeDiving,
+            "apnea_diving" => SubSport::ApneaDiving,
+            "apnea_hunting" => SubSport::ApneaHunting,
+            "virtual_activity" => SubSport::VirtualActivity,
+            "obstacle" => SubSport::Obstacle,
+            "breathing" => SubSport::Breathing,
+            "sail_race" => SubSport::SailRace,
+            "ultra" => SubSport::Ultra,
+            "indoor_climbing" => SubSport::IndoorClimbing,
+            "bouldering" => SubSport::Bouldering,
+            "hiit" => SubSport::Hiit,
+            "amrap" => SubSport::Amrap,
+            "emom" => SubSport::Emom,
+            "tabata" => SubSport::Tabata,
+            "pickleball" => SubSport::Pickleball,
+            "padel" => SubSport::Padel,
+            "indoor_wheelchair_walk" => SubSport::IndoorWheelchairWalk,
+            "indoor_wheelchair_run" => SubSport::IndoorWheelchairRun,
+            "indoor_hand_cycling" => SubSport::IndoorHandCycling,
+            "squash" => SubSport::Squash,
+            "badminton" => SubSport::Badminton,
+            "racquetball" => SubSport::Racquetball,
+            "table_tennis" => SubSport::TableTennis,
+            "fly_canopy" => SubSport::FlyCanopy,
+            "fly_paraglide" => SubSport::FlyParaglide,
+            "fly_paramotor" => SubSport::FlyParamotor,
+            "fly_pressurized" => SubSport::FlyPressurized,
+            "fly_navigate" => SubSport::FlyNavigate,
+            "fly_timer" => SubSport::FlyTimer,
+            "fly_altimeter" => SubSport::FlyAltimeter,
+            "fly_wx" => SubSport::FlyWx,
+            "fly_vfr" => SubSport::FlyVfr,
+            "fly_ifr" => SubSport::FlyIfr,
+            "all" => SubSport::All,
+            &_ => SubSport::UnknownVariant(0),
+        }
+    }
+}
 impl Serialize for SubSport {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -5335,6 +6153,22 @@ impl convert::From<i64> for SportEvent {
         SportEvent::from(value as u8)
     }
 }
+impl convert::From<&str> for SportEvent {
+    fn from(value: &str) -> Self {
+        match value {
+            "uncategorized" => SportEvent::Uncategorized,
+            "geocaching" => SportEvent::Geocaching,
+            "fitness" => SportEvent::Fitness,
+            "recreation" => SportEvent::Recreation,
+            "race" => SportEvent::Race,
+            "special_event" => SportEvent::SpecialEvent,
+            "training" => SportEvent::Training,
+            "transportation" => SportEvent::Transportation,
+            "touring" => SportEvent::Touring,
+            &_ => SportEvent::UnknownVariant(0),
+        }
+    }
+}
 impl Serialize for SportEvent {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -5385,6 +6219,15 @@ impl convert::From<u8> for Activity {
 impl convert::From<i64> for Activity {
     fn from(value: i64) -> Self {
         Activity::from(value as u8)
+    }
+}
+impl convert::From<&str> for Activity {
+    fn from(value: &str) -> Self {
+        match value {
+            "manual" => Activity::Manual,
+            "auto_multi_sport" => Activity::AutoMultiSport,
+            &_ => Activity::UnknownVariant(0),
+        }
     }
 }
 impl Serialize for Activity {
@@ -5459,6 +6302,20 @@ impl convert::From<i64> for Intensity {
         Intensity::from(value as u8)
     }
 }
+impl convert::From<&str> for Intensity {
+    fn from(value: &str) -> Self {
+        match value {
+            "active" => Intensity::Active,
+            "rest" => Intensity::Rest,
+            "warmup" => Intensity::Warmup,
+            "cooldown" => Intensity::Cooldown,
+            "recovery" => Intensity::Recovery,
+            "interval" => Intensity::Interval,
+            "other" => Intensity::Other,
+            &_ => Intensity::UnknownVariant(0),
+        }
+    }
+}
 impl Serialize for Intensity {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -5520,6 +6377,17 @@ impl convert::From<u8> for SessionTrigger {
 impl convert::From<i64> for SessionTrigger {
     fn from(value: i64) -> Self {
         SessionTrigger::from(value as u8)
+    }
+}
+impl convert::From<&str> for SessionTrigger {
+    fn from(value: &str) -> Self {
+        match value {
+            "activity_end" => SessionTrigger::ActivityEnd,
+            "manual" => SessionTrigger::Manual,
+            "auto_multi_sport" => SessionTrigger::AutoMultiSport,
+            "fitness_equipment" => SessionTrigger::FitnessEquipment,
+            &_ => SessionTrigger::UnknownVariant(0),
+        }
     }
 }
 impl Serialize for SessionTrigger {
@@ -5592,6 +6460,20 @@ impl convert::From<u8> for AutolapTrigger {
 impl convert::From<i64> for AutolapTrigger {
     fn from(value: i64) -> Self {
         AutolapTrigger::from(value as u8)
+    }
+}
+impl convert::From<&str> for AutolapTrigger {
+    fn from(value: &str) -> Self {
+        match value {
+            "time" => AutolapTrigger::Time,
+            "distance" => AutolapTrigger::Distance,
+            "position_start" => AutolapTrigger::PositionStart,
+            "position_lap" => AutolapTrigger::PositionLap,
+            "position_waypoint" => AutolapTrigger::PositionWaypoint,
+            "position_marked" => AutolapTrigger::PositionMarked,
+            "off" => AutolapTrigger::Off,
+            &_ => AutolapTrigger::UnknownVariant(0),
+        }
     }
 }
 impl Serialize for AutolapTrigger {
@@ -5674,6 +6556,22 @@ impl convert::From<i64> for LapTrigger {
         LapTrigger::from(value as u8)
     }
 }
+impl convert::From<&str> for LapTrigger {
+    fn from(value: &str) -> Self {
+        match value {
+            "manual" => LapTrigger::Manual,
+            "time" => LapTrigger::Time,
+            "distance" => LapTrigger::Distance,
+            "position_start" => LapTrigger::PositionStart,
+            "position_lap" => LapTrigger::PositionLap,
+            "position_waypoint" => LapTrigger::PositionWaypoint,
+            "position_marked" => LapTrigger::PositionMarked,
+            "session_end" => LapTrigger::SessionEnd,
+            "fitness_equipment" => LapTrigger::FitnessEquipment,
+            &_ => LapTrigger::UnknownVariant(0),
+        }
+    }
+}
 impl Serialize for LapTrigger {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -5742,6 +6640,19 @@ impl convert::From<u8> for TimeMode {
 impl convert::From<i64> for TimeMode {
     fn from(value: i64) -> Self {
         TimeMode::from(value as u8)
+    }
+}
+impl convert::From<&str> for TimeMode {
+    fn from(value: &str) -> Self {
+        match value {
+            "hour12" => TimeMode::Hour12,
+            "hour24" => TimeMode::Hour24,
+            "military" => TimeMode::Military,
+            "hour_12_with_seconds" => TimeMode::Hour12WithSeconds,
+            "hour_24_with_seconds" => TimeMode::Hour24WithSeconds,
+            "utc" => TimeMode::Utc,
+            &_ => TimeMode::UnknownVariant(0),
+        }
     }
 }
 impl Serialize for TimeMode {
@@ -5818,6 +6729,22 @@ impl convert::From<i64> for BacklightMode {
         BacklightMode::from(value as u8)
     }
 }
+impl convert::From<&str> for BacklightMode {
+    fn from(value: &str) -> Self {
+        match value {
+            "off" => BacklightMode::Off,
+            "manual" => BacklightMode::Manual,
+            "key_and_messages" => BacklightMode::KeyAndMessages,
+            "auto_brightness" => BacklightMode::AutoBrightness,
+            "smart_notifications" => BacklightMode::SmartNotifications,
+            "key_and_messages_night" => BacklightMode::KeyAndMessagesNight,
+            "key_and_messages_and_smart_notifications" => {
+                BacklightMode::KeyAndMessagesAndSmartNotifications
+            }
+            &_ => BacklightMode::UnknownVariant(0),
+        }
+    }
+}
 impl Serialize for BacklightMode {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -5870,6 +6797,15 @@ impl convert::From<i64> for DateMode {
         DateMode::from(value as u8)
     }
 }
+impl convert::From<&str> for DateMode {
+    fn from(value: &str) -> Self {
+        match value {
+            "day_month" => DateMode::DayMonth,
+            "month_day" => DateMode::MonthDay,
+            &_ => DateMode::UnknownVariant(0),
+        }
+    }
+}
 impl Serialize for DateMode {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -5918,6 +6854,14 @@ impl convert::From<u8> for BacklightTimeout {
 impl convert::From<i64> for BacklightTimeout {
     fn from(value: i64) -> Self {
         BacklightTimeout::from(value as u8)
+    }
+}
+impl convert::From<&str> for BacklightTimeout {
+    fn from(value: &str) -> Self {
+        match value {
+            "infinite" => BacklightTimeout::Infinite,
+            &_ => BacklightTimeout::Value(0),
+        }
     }
 }
 impl Serialize for BacklightTimeout {
@@ -6244,6 +7188,59 @@ impl convert::From<i64> for Event {
         Event::from(value as u8)
     }
 }
+impl convert::From<&str> for Event {
+    fn from(value: &str) -> Self {
+        match value {
+            "timer" => Event::Timer,
+            "workout" => Event::Workout,
+            "workout_step" => Event::WorkoutStep,
+            "power_down" => Event::PowerDown,
+            "power_up" => Event::PowerUp,
+            "off_course" => Event::OffCourse,
+            "session" => Event::Session,
+            "lap" => Event::Lap,
+            "course_point" => Event::CoursePoint,
+            "battery" => Event::Battery,
+            "virtual_partner_pace" => Event::VirtualPartnerPace,
+            "hr_high_alert" => Event::HrHighAlert,
+            "hr_low_alert" => Event::HrLowAlert,
+            "speed_high_alert" => Event::SpeedHighAlert,
+            "speed_low_alert" => Event::SpeedLowAlert,
+            "cad_high_alert" => Event::CadHighAlert,
+            "cad_low_alert" => Event::CadLowAlert,
+            "power_high_alert" => Event::PowerHighAlert,
+            "power_low_alert" => Event::PowerLowAlert,
+            "recovery_hr" => Event::RecoveryHr,
+            "battery_low" => Event::BatteryLow,
+            "time_duration_alert" => Event::TimeDurationAlert,
+            "distance_duration_alert" => Event::DistanceDurationAlert,
+            "calorie_duration_alert" => Event::CalorieDurationAlert,
+            "activity" => Event::Activity,
+            "fitness_equipment" => Event::FitnessEquipment,
+            "length" => Event::Length,
+            "user_marker" => Event::UserMarker,
+            "sport_point" => Event::SportPoint,
+            "calibration" => Event::Calibration,
+            "front_gear_change" => Event::FrontGearChange,
+            "rear_gear_change" => Event::RearGearChange,
+            "rider_position_change" => Event::RiderPositionChange,
+            "elev_high_alert" => Event::ElevHighAlert,
+            "elev_low_alert" => Event::ElevLowAlert,
+            "comm_timeout" => Event::CommTimeout,
+            "auto_activity_detect" => Event::AutoActivityDetect,
+            "dive_alert" => Event::DiveAlert,
+            "dive_gas_switched" => Event::DiveGasSwitched,
+            "tank_pressure_reserve" => Event::TankPressureReserve,
+            "tank_pressure_critical" => Event::TankPressureCritical,
+            "tank_lost" => Event::TankLost,
+            "radar_threat_alert" => Event::RadarThreatAlert,
+            "tank_battery_low" => Event::TankBatteryLow,
+            "tank_pod_connected" => Event::TankPodConnected,
+            "tank_pod_disconnected" => Event::TankPodDisconnected,
+            &_ => Event::UnknownVariant(0),
+        }
+    }
+}
 impl Serialize for Event {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -6328,6 +7325,23 @@ impl convert::From<i64> for EventType {
         EventType::from(value as u8)
     }
 }
+impl convert::From<&str> for EventType {
+    fn from(value: &str) -> Self {
+        match value {
+            "start" => EventType::Start,
+            "stop" => EventType::Stop,
+            "consecutive_depreciated" => EventType::ConsecutiveDepreciated,
+            "marker" => EventType::Marker,
+            "stop_all" => EventType::StopAll,
+            "begin_depreciated" => EventType::BeginDepreciated,
+            "end_depreciated" => EventType::EndDepreciated,
+            "end_all_depreciated" => EventType::EndAllDepreciated,
+            "stop_disable" => EventType::StopDisable,
+            "stop_disable_all" => EventType::StopDisableAll,
+            &_ => EventType::UnknownVariant(0),
+        }
+    }
+}
 impl Serialize for EventType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -6383,6 +7397,16 @@ impl convert::From<u8> for TimerTrigger {
 impl convert::From<i64> for TimerTrigger {
     fn from(value: i64) -> Self {
         TimerTrigger::from(value as u8)
+    }
+}
+impl convert::From<&str> for TimerTrigger {
+    fn from(value: &str) -> Self {
+        match value {
+            "manual" => TimerTrigger::Manual,
+            "auto" => TimerTrigger::Auto,
+            "fitness_equipment" => TimerTrigger::FitnessEquipment,
+            &_ => TimerTrigger::UnknownVariant(0),
+        }
     }
 }
 impl Serialize for TimerTrigger {
@@ -6447,6 +7471,17 @@ impl convert::From<i64> for FitnessEquipmentState {
         FitnessEquipmentState::from(value as u8)
     }
 }
+impl convert::From<&str> for FitnessEquipmentState {
+    fn from(value: &str) -> Self {
+        match value {
+            "ready" => FitnessEquipmentState::Ready,
+            "in_use" => FitnessEquipmentState::InUse,
+            "paused" => FitnessEquipmentState::Paused,
+            "unknown" => FitnessEquipmentState::Unknown,
+            &_ => FitnessEquipmentState::UnknownVariant(0),
+        }
+    }
+}
 impl Serialize for FitnessEquipmentState {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -6505,6 +7540,17 @@ impl convert::From<u8> for Tone {
 impl convert::From<i64> for Tone {
     fn from(value: i64) -> Self {
         Tone::from(value as u8)
+    }
+}
+impl convert::From<&str> for Tone {
+    fn from(value: &str) -> Self {
+        match value {
+            "off" => Tone::Off,
+            "tone" => Tone::Tone,
+            "vibrate" => Tone::Vibrate,
+            "tone_and_vibrate" => Tone::ToneAndVibrate,
+            &_ => Tone::UnknownVariant(0),
+        }
     }
 }
 impl Serialize for Tone {
@@ -6567,6 +7613,17 @@ impl convert::From<i64> for Autoscroll {
         Autoscroll::from(value as u8)
     }
 }
+impl convert::From<&str> for Autoscroll {
+    fn from(value: &str) -> Self {
+        match value {
+            "none" => Autoscroll::None,
+            "slow" => Autoscroll::Slow,
+            "medium" => Autoscroll::Medium,
+            "fast" => Autoscroll::Fast,
+            &_ => Autoscroll::UnknownVariant(0),
+        }
+    }
+}
 impl Serialize for Autoscroll {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -6622,6 +7679,16 @@ impl convert::From<u8> for ActivityClass {
 impl convert::From<i64> for ActivityClass {
     fn from(value: i64) -> Self {
         ActivityClass::from(value as u8)
+    }
+}
+impl convert::From<&str> for ActivityClass {
+    fn from(value: &str) -> Self {
+        match value {
+            "level_max" => ActivityClass::LevelMax,
+            "level" => ActivityClass::Level,
+            "athlete" => ActivityClass::Athlete,
+            &_ => ActivityClass::UnknownVariant(0),
+        }
     }
 }
 impl Serialize for ActivityClass {
@@ -6684,6 +7751,17 @@ impl convert::From<i64> for HrZoneCalc {
         HrZoneCalc::from(value as u8)
     }
 }
+impl convert::From<&str> for HrZoneCalc {
+    fn from(value: &str) -> Self {
+        match value {
+            "custom" => HrZoneCalc::Custom,
+            "percent_max_hr" => HrZoneCalc::PercentMaxHr,
+            "percent_hrr" => HrZoneCalc::PercentHrr,
+            "percent_lthr" => HrZoneCalc::PercentLthr,
+            &_ => HrZoneCalc::UnknownVariant(0),
+        }
+    }
+}
 impl Serialize for HrZoneCalc {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -6734,6 +7812,15 @@ impl convert::From<u8> for PwrZoneCalc {
 impl convert::From<i64> for PwrZoneCalc {
     fn from(value: i64) -> Self {
         PwrZoneCalc::from(value as u8)
+    }
+}
+impl convert::From<&str> for PwrZoneCalc {
+    fn from(value: &str) -> Self {
+        match value {
+            "custom" => PwrZoneCalc::Custom,
+            "percent_ftp" => PwrZoneCalc::PercentFtp,
+            &_ => PwrZoneCalc::UnknownVariant(0),
+        }
     }
 }
 impl Serialize for PwrZoneCalc {
@@ -6944,6 +8031,48 @@ impl convert::From<i64> for WktStepDuration {
         WktStepDuration::from(value as u8)
     }
 }
+impl convert::From<&str> for WktStepDuration {
+    fn from(value: &str) -> Self {
+        match value {
+            "time" => WktStepDuration::Time,
+            "distance" => WktStepDuration::Distance,
+            "hr_less_than" => WktStepDuration::HrLessThan,
+            "hr_greater_than" => WktStepDuration::HrGreaterThan,
+            "calories" => WktStepDuration::Calories,
+            "open" => WktStepDuration::Open,
+            "repeat_until_steps_cmplt" => WktStepDuration::RepeatUntilStepsCmplt,
+            "repeat_until_time" => WktStepDuration::RepeatUntilTime,
+            "repeat_until_distance" => WktStepDuration::RepeatUntilDistance,
+            "repeat_until_calories" => WktStepDuration::RepeatUntilCalories,
+            "repeat_until_hr_less_than" => WktStepDuration::RepeatUntilHrLessThan,
+            "repeat_until_hr_greater_than" => WktStepDuration::RepeatUntilHrGreaterThan,
+            "repeat_until_power_less_than" => WktStepDuration::RepeatUntilPowerLessThan,
+            "repeat_until_power_greater_than" => WktStepDuration::RepeatUntilPowerGreaterThan,
+            "power_less_than" => WktStepDuration::PowerLessThan,
+            "power_greater_than" => WktStepDuration::PowerGreaterThan,
+            "training_peaks_tss" => WktStepDuration::TrainingPeaksTss,
+            "repeat_until_power_last_lap_less_than" => {
+                WktStepDuration::RepeatUntilPowerLastLapLessThan
+            }
+            "repeat_until_max_power_last_lap_less_than" => {
+                WktStepDuration::RepeatUntilMaxPowerLastLapLessThan
+            }
+            "power_3s_less_than" => WktStepDuration::Power3sLessThan,
+            "power_10s_less_than" => WktStepDuration::Power10sLessThan,
+            "power_30s_less_than" => WktStepDuration::Power30sLessThan,
+            "power_3s_greater_than" => WktStepDuration::Power3sGreaterThan,
+            "power_10s_greater_than" => WktStepDuration::Power10sGreaterThan,
+            "power_30s_greater_than" => WktStepDuration::Power30sGreaterThan,
+            "power_lap_less_than" => WktStepDuration::PowerLapLessThan,
+            "power_lap_greater_than" => WktStepDuration::PowerLapGreaterThan,
+            "repeat_until_training_peaks_tss" => WktStepDuration::RepeatUntilTrainingPeaksTss,
+            "repetition_time" => WktStepDuration::RepetitionTime,
+            "reps" => WktStepDuration::Reps,
+            "time_only" => WktStepDuration::TimeOnly,
+            &_ => WktStepDuration::UnknownVariant(0),
+        }
+    }
+}
 impl Serialize for WktStepDuration {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -7044,6 +8173,27 @@ impl convert::From<i64> for WktStepTarget {
         WktStepTarget::from(value as u8)
     }
 }
+impl convert::From<&str> for WktStepTarget {
+    fn from(value: &str) -> Self {
+        match value {
+            "speed" => WktStepTarget::Speed,
+            "heart_rate" => WktStepTarget::HeartRate,
+            "open" => WktStepTarget::Open,
+            "cadence" => WktStepTarget::Cadence,
+            "power" => WktStepTarget::Power,
+            "grade" => WktStepTarget::Grade,
+            "resistance" => WktStepTarget::Resistance,
+            "power_3s" => WktStepTarget::Power3s,
+            "power_10s" => WktStepTarget::Power10s,
+            "power_30s" => WktStepTarget::Power30s,
+            "power_lap" => WktStepTarget::PowerLap,
+            "swim_stroke" => WktStepTarget::SwimStroke,
+            "speed_lap" => WktStepTarget::SpeedLap,
+            "heart_rate_lap" => WktStepTarget::HeartRateLap,
+            &_ => WktStepTarget::UnknownVariant(0),
+        }
+    }
+}
 impl Serialize for WktStepTarget {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -7116,6 +8266,20 @@ impl convert::From<i64> for Goal {
         Goal::from(value as u8)
     }
 }
+impl convert::From<&str> for Goal {
+    fn from(value: &str) -> Self {
+        match value {
+            "time" => Goal::Time,
+            "distance" => Goal::Distance,
+            "calories" => Goal::Calories,
+            "frequency" => Goal::Frequency,
+            "steps" => Goal::Steps,
+            "ascent" => Goal::Ascent,
+            "active_minutes" => Goal::ActiveMinutes,
+            &_ => Goal::UnknownVariant(0),
+        }
+    }
+}
 impl Serialize for Goal {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -7184,6 +8348,19 @@ impl convert::From<i64> for GoalRecurrence {
         GoalRecurrence::from(value as u8)
     }
 }
+impl convert::From<&str> for GoalRecurrence {
+    fn from(value: &str) -> Self {
+        match value {
+            "off" => GoalRecurrence::Off,
+            "daily" => GoalRecurrence::Daily,
+            "weekly" => GoalRecurrence::Weekly,
+            "monthly" => GoalRecurrence::Monthly,
+            "yearly" => GoalRecurrence::Yearly,
+            "custom" => GoalRecurrence::Custom,
+            &_ => GoalRecurrence::UnknownVariant(0),
+        }
+    }
+}
 impl Serialize for GoalRecurrence {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -7243,6 +8420,16 @@ impl convert::From<i64> for GoalSource {
         GoalSource::from(value as u8)
     }
 }
+impl convert::From<&str> for GoalSource {
+    fn from(value: &str) -> Self {
+        match value {
+            "auto" => GoalSource::Auto,
+            "community" => GoalSource::Community,
+            "user" => GoalSource::User,
+            &_ => GoalSource::UnknownVariant(0),
+        }
+    }
+}
 impl Serialize for GoalSource {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -7293,6 +8480,15 @@ impl convert::From<u8> for Schedule {
 impl convert::From<i64> for Schedule {
     fn from(value: i64) -> Self {
         Schedule::from(value as u8)
+    }
+}
+impl convert::From<&str> for Schedule {
+    fn from(value: &str) -> Self {
+        match value {
+            "workout" => Schedule::Workout,
+            "course" => Schedule::Course,
+            &_ => Schedule::UnknownVariant(0),
+        }
     }
 }
 impl Serialize for Schedule {
@@ -7604,6 +8800,66 @@ impl convert::From<u8> for CoursePoint {
 impl convert::From<i64> for CoursePoint {
     fn from(value: i64) -> Self {
         CoursePoint::from(value as u8)
+    }
+}
+impl convert::From<&str> for CoursePoint {
+    fn from(value: &str) -> Self {
+        match value {
+            "generic" => CoursePoint::Generic,
+            "summit" => CoursePoint::Summit,
+            "valley" => CoursePoint::Valley,
+            "water" => CoursePoint::Water,
+            "food" => CoursePoint::Food,
+            "danger" => CoursePoint::Danger,
+            "left" => CoursePoint::Left,
+            "right" => CoursePoint::Right,
+            "straight" => CoursePoint::Straight,
+            "first_aid" => CoursePoint::FirstAid,
+            "fourth_category" => CoursePoint::FourthCategory,
+            "third_category" => CoursePoint::ThirdCategory,
+            "second_category" => CoursePoint::SecondCategory,
+            "first_category" => CoursePoint::FirstCategory,
+            "hors_category" => CoursePoint::HorsCategory,
+            "sprint" => CoursePoint::Sprint,
+            "left_fork" => CoursePoint::LeftFork,
+            "right_fork" => CoursePoint::RightFork,
+            "middle_fork" => CoursePoint::MiddleFork,
+            "slight_left" => CoursePoint::SlightLeft,
+            "sharp_left" => CoursePoint::SharpLeft,
+            "slight_right" => CoursePoint::SlightRight,
+            "sharp_right" => CoursePoint::SharpRight,
+            "u_turn" => CoursePoint::UTurn,
+            "segment_start" => CoursePoint::SegmentStart,
+            "segment_end" => CoursePoint::SegmentEnd,
+            "campsite" => CoursePoint::Campsite,
+            "aid_station" => CoursePoint::AidStation,
+            "rest_area" => CoursePoint::RestArea,
+            "general_distance" => CoursePoint::GeneralDistance,
+            "service" => CoursePoint::Service,
+            "energy_gel" => CoursePoint::EnergyGel,
+            "sports_drink" => CoursePoint::SportsDrink,
+            "mile_marker" => CoursePoint::MileMarker,
+            "checkpoint" => CoursePoint::Checkpoint,
+            "shelter" => CoursePoint::Shelter,
+            "meeting_spot" => CoursePoint::MeetingSpot,
+            "overlook" => CoursePoint::Overlook,
+            "toilet" => CoursePoint::Toilet,
+            "shower" => CoursePoint::Shower,
+            "gear" => CoursePoint::Gear,
+            "sharp_curve" => CoursePoint::SharpCurve,
+            "steep_incline" => CoursePoint::SteepIncline,
+            "tunnel" => CoursePoint::Tunnel,
+            "bridge" => CoursePoint::Bridge,
+            "obstacle" => CoursePoint::Obstacle,
+            "crossing" => CoursePoint::Crossing,
+            "store" => CoursePoint::Store,
+            "transition" => CoursePoint::Transition,
+            "navaid" => CoursePoint::Navaid,
+            "transport" => CoursePoint::Transport,
+            "alert" => CoursePoint::Alert,
+            "info" => CoursePoint::Info,
+            &_ => CoursePoint::UnknownVariant(0),
+        }
     }
 }
 impl Serialize for CoursePoint {
@@ -8774,6 +10030,236 @@ impl convert::From<u16> for Manufacturer {
 impl convert::From<i64> for Manufacturer {
     fn from(value: i64) -> Self {
         Manufacturer::from(value as u16)
+    }
+}
+impl convert::From<&str> for Manufacturer {
+    fn from(value: &str) -> Self {
+        match value {
+            "garmin" => Manufacturer::Garmin,
+            "garmin_fr405_antfs" => Manufacturer::GarminFr405Antfs,
+            "zephyr" => Manufacturer::Zephyr,
+            "dayton" => Manufacturer::Dayton,
+            "idt" => Manufacturer::Idt,
+            "srm" => Manufacturer::Srm,
+            "quarq" => Manufacturer::Quarq,
+            "ibike" => Manufacturer::Ibike,
+            "saris" => Manufacturer::Saris,
+            "spark_hk" => Manufacturer::SparkHk,
+            "tanita" => Manufacturer::Tanita,
+            "echowell" => Manufacturer::Echowell,
+            "dynastream_oem" => Manufacturer::DynastreamOem,
+            "nautilus" => Manufacturer::Nautilus,
+            "dynastream" => Manufacturer::Dynastream,
+            "timex" => Manufacturer::Timex,
+            "metrigear" => Manufacturer::Metrigear,
+            "xelic" => Manufacturer::Xelic,
+            "beurer" => Manufacturer::Beurer,
+            "cardiosport" => Manufacturer::Cardiosport,
+            "a_and_d" => Manufacturer::AAndD,
+            "hmm" => Manufacturer::Hmm,
+            "suunto" => Manufacturer::Suunto,
+            "thita_elektronik" => Manufacturer::ThitaElektronik,
+            "gpulse" => Manufacturer::Gpulse,
+            "clean_mobile" => Manufacturer::CleanMobile,
+            "pedal_brain" => Manufacturer::PedalBrain,
+            "peaksware" => Manufacturer::Peaksware,
+            "saxonar" => Manufacturer::Saxonar,
+            "lemond_fitness" => Manufacturer::LemondFitness,
+            "dexcom" => Manufacturer::Dexcom,
+            "wahoo_fitness" => Manufacturer::WahooFitness,
+            "octane_fitness" => Manufacturer::OctaneFitness,
+            "archinoetics" => Manufacturer::Archinoetics,
+            "the_hurt_box" => Manufacturer::TheHurtBox,
+            "citizen_systems" => Manufacturer::CitizenSystems,
+            "magellan" => Manufacturer::Magellan,
+            "osynce" => Manufacturer::Osynce,
+            "holux" => Manufacturer::Holux,
+            "concept2" => Manufacturer::Concept2,
+            "shimano" => Manufacturer::Shimano,
+            "one_giant_leap" => Manufacturer::OneGiantLeap,
+            "ace_sensor" => Manufacturer::AceSensor,
+            "brim_brothers" => Manufacturer::BrimBrothers,
+            "xplova" => Manufacturer::Xplova,
+            "perception_digital" => Manufacturer::PerceptionDigital,
+            "bf1systems" => Manufacturer::Bf1systems,
+            "pioneer" => Manufacturer::Pioneer,
+            "spantec" => Manufacturer::Spantec,
+            "metalogics" => Manufacturer::Metalogics,
+            "4iiiis" => Manufacturer::Name4iiiis,
+            "seiko_epson" => Manufacturer::SeikoEpson,
+            "seiko_epson_oem" => Manufacturer::SeikoEpsonOem,
+            "ifor_powell" => Manufacturer::IforPowell,
+            "maxwell_guider" => Manufacturer::MaxwellGuider,
+            "star_trac" => Manufacturer::StarTrac,
+            "breakaway" => Manufacturer::Breakaway,
+            "alatech_technology_ltd" => Manufacturer::AlatechTechnologyLtd,
+            "mio_technology_europe" => Manufacturer::MioTechnologyEurope,
+            "rotor" => Manufacturer::Rotor,
+            "geonaute" => Manufacturer::Geonaute,
+            "id_bike" => Manufacturer::IdBike,
+            "specialized" => Manufacturer::Specialized,
+            "wtek" => Manufacturer::Wtek,
+            "physical_enterprises" => Manufacturer::PhysicalEnterprises,
+            "north_pole_engineering" => Manufacturer::NorthPoleEngineering,
+            "bkool" => Manufacturer::Bkool,
+            "cateye" => Manufacturer::Cateye,
+            "stages_cycling" => Manufacturer::StagesCycling,
+            "sigmasport" => Manufacturer::Sigmasport,
+            "tomtom" => Manufacturer::Tomtom,
+            "peripedal" => Manufacturer::Peripedal,
+            "wattbike" => Manufacturer::Wattbike,
+            "moxy" => Manufacturer::Moxy,
+            "ciclosport" => Manufacturer::Ciclosport,
+            "powerbahn" => Manufacturer::Powerbahn,
+            "acorn_projects_aps" => Manufacturer::AcornProjectsAps,
+            "lifebeam" => Manufacturer::Lifebeam,
+            "bontrager" => Manufacturer::Bontrager,
+            "wellgo" => Manufacturer::Wellgo,
+            "scosche" => Manufacturer::Scosche,
+            "magura" => Manufacturer::Magura,
+            "woodway" => Manufacturer::Woodway,
+            "elite" => Manufacturer::Elite,
+            "nielsen_kellerman" => Manufacturer::NielsenKellerman,
+            "dk_city" => Manufacturer::DkCity,
+            "tacx" => Manufacturer::Tacx,
+            "direction_technology" => Manufacturer::DirectionTechnology,
+            "magtonic" => Manufacturer::Magtonic,
+            "1partcarbon" => Manufacturer::Name1partcarbon,
+            "inside_ride_technologies" => Manufacturer::InsideRideTechnologies,
+            "sound_of_motion" => Manufacturer::SoundOfMotion,
+            "stryd" => Manufacturer::Stryd,
+            "icg" => Manufacturer::Icg,
+            "MiPulse" => Manufacturer::MiPulse,
+            "bsx_athletics" => Manufacturer::BsxAthletics,
+            "look" => Manufacturer::Look,
+            "campagnolo_srl" => Manufacturer::CampagnoloSrl,
+            "body_bike_smart" => Manufacturer::BodyBikeSmart,
+            "praxisworks" => Manufacturer::Praxisworks,
+            "limits_technology" => Manufacturer::LimitsTechnology,
+            "topaction_technology" => Manufacturer::TopactionTechnology,
+            "cosinuss" => Manufacturer::Cosinuss,
+            "fitcare" => Manufacturer::Fitcare,
+            "magene" => Manufacturer::Magene,
+            "giant_manufacturing_co" => Manufacturer::GiantManufacturingCo,
+            "tigrasport" => Manufacturer::Tigrasport,
+            "salutron" => Manufacturer::Salutron,
+            "technogym" => Manufacturer::Technogym,
+            "bryton_sensors" => Manufacturer::BrytonSensors,
+            "latitude_limited" => Manufacturer::LatitudeLimited,
+            "soaring_technology" => Manufacturer::SoaringTechnology,
+            "igpsport" => Manufacturer::Igpsport,
+            "thinkrider" => Manufacturer::Thinkrider,
+            "gopher_sport" => Manufacturer::GopherSport,
+            "waterrower" => Manufacturer::Waterrower,
+            "orangetheory" => Manufacturer::Orangetheory,
+            "inpeak" => Manufacturer::Inpeak,
+            "kinetic" => Manufacturer::Kinetic,
+            "johnson_health_tech" => Manufacturer::JohnsonHealthTech,
+            "polar_electro" => Manufacturer::PolarElectro,
+            "seesense" => Manufacturer::Seesense,
+            "nci_technology" => Manufacturer::NciTechnology,
+            "iqsquare" => Manufacturer::Iqsquare,
+            "leomo" => Manufacturer::Leomo,
+            "ifit_com" => Manufacturer::IfitCom,
+            "coros_byte" => Manufacturer::CorosByte,
+            "versa_design" => Manufacturer::VersaDesign,
+            "chileaf" => Manufacturer::Chileaf,
+            "cycplus" => Manufacturer::Cycplus,
+            "gravaa_byte" => Manufacturer::GravaaByte,
+            "sigeyi" => Manufacturer::Sigeyi,
+            "coospo" => Manufacturer::Coospo,
+            "geoid" => Manufacturer::Geoid,
+            "bosch" => Manufacturer::Bosch,
+            "kyto" => Manufacturer::Kyto,
+            "kinetic_sports" => Manufacturer::KineticSports,
+            "decathlon_byte" => Manufacturer::DecathlonByte,
+            "tq_systems" => Manufacturer::TqSystems,
+            "tag_heuer" => Manufacturer::TagHeuer,
+            "keiser_fitness" => Manufacturer::KeiserFitness,
+            "zwift_byte" => Manufacturer::ZwiftByte,
+            "porsche_ep" => Manufacturer::PorscheEp,
+            "blackbird" => Manufacturer::Blackbird,
+            "meilan_byte" => Manufacturer::MeilanByte,
+            "ezon" => Manufacturer::Ezon,
+            "laisi" => Manufacturer::Laisi,
+            "myzone" => Manufacturer::Myzone,
+            "development" => Manufacturer::Development,
+            "healthandlife" => Manufacturer::Healthandlife,
+            "lezyne" => Manufacturer::Lezyne,
+            "scribe_labs" => Manufacturer::ScribeLabs,
+            "zwift" => Manufacturer::Zwift,
+            "watteam" => Manufacturer::Watteam,
+            "recon" => Manufacturer::Recon,
+            "favero_electronics" => Manufacturer::FaveroElectronics,
+            "dynovelo" => Manufacturer::Dynovelo,
+            "strava" => Manufacturer::Strava,
+            "precor" => Manufacturer::Precor,
+            "bryton" => Manufacturer::Bryton,
+            "sram" => Manufacturer::Sram,
+            "navman" => Manufacturer::Navman,
+            "cobi" => Manufacturer::Cobi,
+            "spivi" => Manufacturer::Spivi,
+            "mio_magellan" => Manufacturer::MioMagellan,
+            "evesports" => Manufacturer::Evesports,
+            "sensitivus_gauge" => Manufacturer::SensitivusGauge,
+            "podoon" => Manufacturer::Podoon,
+            "life_time_fitness" => Manufacturer::LifeTimeFitness,
+            "falco_e_motors" => Manufacturer::FalcoEMotors,
+            "minoura" => Manufacturer::Minoura,
+            "cycliq" => Manufacturer::Cycliq,
+            "luxottica" => Manufacturer::Luxottica,
+            "trainer_road" => Manufacturer::TrainerRoad,
+            "the_sufferfest" => Manufacturer::TheSufferfest,
+            "fullspeedahead" => Manufacturer::Fullspeedahead,
+            "virtualtraining" => Manufacturer::Virtualtraining,
+            "feedbacksports" => Manufacturer::Feedbacksports,
+            "omata" => Manufacturer::Omata,
+            "vdo" => Manufacturer::Vdo,
+            "magneticdays" => Manufacturer::Magneticdays,
+            "hammerhead" => Manufacturer::Hammerhead,
+            "kinetic_by_kurt" => Manufacturer::KineticByKurt,
+            "shapelog" => Manufacturer::Shapelog,
+            "dabuziduo" => Manufacturer::Dabuziduo,
+            "jetblack" => Manufacturer::Jetblack,
+            "coros" => Manufacturer::Coros,
+            "virtugo" => Manufacturer::Virtugo,
+            "velosense" => Manufacturer::Velosense,
+            "cycligentinc" => Manufacturer::Cycligentinc,
+            "trailforks" => Manufacturer::Trailforks,
+            "mahle_ebikemotion" => Manufacturer::MahleEbikemotion,
+            "nurvv" => Manufacturer::Nurvv,
+            "microprogram" => Manufacturer::Microprogram,
+            "zone5cloud" => Manufacturer::Zone5cloud,
+            "greenteg" => Manufacturer::Greenteg,
+            "yamaha_motors" => Manufacturer::YamahaMotors,
+            "whoop" => Manufacturer::Whoop,
+            "gravaa" => Manufacturer::Gravaa,
+            "onelap" => Manufacturer::Onelap,
+            "monark_exercise" => Manufacturer::MonarkExercise,
+            "form" => Manufacturer::Form,
+            "decathlon" => Manufacturer::Decathlon,
+            "syncros" => Manufacturer::Syncros,
+            "heatup" => Manufacturer::Heatup,
+            "cannondale" => Manufacturer::Cannondale,
+            "true_fitness" => Manufacturer::TrueFitness,
+            "RGT_cycling" => Manufacturer::RGTCycling,
+            "vasa" => Manufacturer::Vasa,
+            "race_republic" => Manufacturer::RaceRepublic,
+            "fazua" => Manufacturer::Fazua,
+            "oreka_training" => Manufacturer::OrekaTraining,
+            "lsec" => Manufacturer::Lsec,
+            "lululemon_studio" => Manufacturer::LululemonStudio,
+            "shanyue" => Manufacturer::Shanyue,
+            "spinning_mda" => Manufacturer::SpinningMda,
+            "hilldating" => Manufacturer::Hilldating,
+            "aero_sensor" => Manufacturer::AeroSensor,
+            "nike" => Manufacturer::Nike,
+            "magicshine" => Manufacturer::Magicshine,
+            "ictrainer" => Manufacturer::Ictrainer,
+            "absolute_cycling" => Manufacturer::AbsoluteCycling,
+            "actigraphcorp" => Manufacturer::Actigraphcorp,
+            &_ => Manufacturer::Value(0),
+        }
     }
 }
 impl Serialize for Manufacturer {
@@ -11037,6 +12523,446 @@ impl convert::From<i64> for GarminProduct {
         GarminProduct::from(value as u16)
     }
 }
+impl convert::From<&str> for GarminProduct {
+    fn from(value: &str) -> Self {
+        match value {
+            "approach_g12_asia" => GarminProduct::ApproachG12Asia,
+            "axh01" => GarminProduct::Axh01,
+            "axb01" => GarminProduct::Axb01,
+            "axb02" => GarminProduct::Axb02,
+            "hrm2ss" => GarminProduct::Hrm2ss,
+            "dsi_alf02" => GarminProduct::DsiAlf02,
+            "hrm3ss" => GarminProduct::Hrm3ss,
+            "hrm_run_single_byte_product_id" => GarminProduct::HrmRunSingleByteProductId,
+            "bsm" => GarminProduct::Bsm,
+            "bcm" => GarminProduct::Bcm,
+            "axs01" => GarminProduct::Axs01,
+            "hrm_tri_single_byte_product_id" => GarminProduct::HrmTriSingleByteProductId,
+            "hrm4_run_single_byte_product_id" => GarminProduct::Hrm4RunSingleByteProductId,
+            "fr225_single_byte_product_id" => GarminProduct::Fr225SingleByteProductId,
+            "gen3_bsm_single_byte_product_id" => GarminProduct::Gen3BsmSingleByteProductId,
+            "gen3_bcm_single_byte_product_id" => GarminProduct::Gen3BcmSingleByteProductId,
+            "hrm_fit_single_byte_product_id" => GarminProduct::HrmFitSingleByteProductId,
+            "OHR" => GarminProduct::OHR,
+            "fr301_china" => GarminProduct::Fr301China,
+            "fr301_japan" => GarminProduct::Fr301Japan,
+            "fr301_korea" => GarminProduct::Fr301Korea,
+            "fr301_taiwan" => GarminProduct::Fr301Taiwan,
+            "fr405" => GarminProduct::Fr405,
+            "fr50" => GarminProduct::Fr50,
+            "fr405_japan" => GarminProduct::Fr405Japan,
+            "fr60" => GarminProduct::Fr60,
+            "dsi_alf01" => GarminProduct::DsiAlf01,
+            "fr310xt" => GarminProduct::Fr310xt,
+            "edge500" => GarminProduct::Edge500,
+            "fr110" => GarminProduct::Fr110,
+            "edge800" => GarminProduct::Edge800,
+            "edge500_taiwan" => GarminProduct::Edge500Taiwan,
+            "edge500_japan" => GarminProduct::Edge500Japan,
+            "chirp" => GarminProduct::Chirp,
+            "fr110_japan" => GarminProduct::Fr110Japan,
+            "edge200" => GarminProduct::Edge200,
+            "fr910xt" => GarminProduct::Fr910xt,
+            "edge800_taiwan" => GarminProduct::Edge800Taiwan,
+            "edge800_japan" => GarminProduct::Edge800Japan,
+            "alf04" => GarminProduct::Alf04,
+            "fr610" => GarminProduct::Fr610,
+            "fr210_japan" => GarminProduct::Fr210Japan,
+            "vector_ss" => GarminProduct::VectorSs,
+            "vector_cp" => GarminProduct::VectorCp,
+            "edge800_china" => GarminProduct::Edge800China,
+            "edge500_china" => GarminProduct::Edge500China,
+            "approach_g10" => GarminProduct::ApproachG10,
+            "fr610_japan" => GarminProduct::Fr610Japan,
+            "edge500_korea" => GarminProduct::Edge500Korea,
+            "fr70" => GarminProduct::Fr70,
+            "fr310xt_4t" => GarminProduct::Fr310xt4t,
+            "amx" => GarminProduct::Amx,
+            "fr10" => GarminProduct::Fr10,
+            "edge800_korea" => GarminProduct::Edge800Korea,
+            "swim" => GarminProduct::Swim,
+            "fr910xt_china" => GarminProduct::Fr910xtChina,
+            "fenix" => GarminProduct::Fenix,
+            "edge200_taiwan" => GarminProduct::Edge200Taiwan,
+            "edge510" => GarminProduct::Edge510,
+            "edge810" => GarminProduct::Edge810,
+            "tempe" => GarminProduct::Tempe,
+            "fr910xt_japan" => GarminProduct::Fr910xtJapan,
+            "fr620" => GarminProduct::Fr620,
+            "fr220" => GarminProduct::Fr220,
+            "fr910xt_korea" => GarminProduct::Fr910xtKorea,
+            "fr10_japan" => GarminProduct::Fr10Japan,
+            "edge810_japan" => GarminProduct::Edge810Japan,
+            "virb_elite" => GarminProduct::VirbElite,
+            "edge_touring" => GarminProduct::EdgeTouring,
+            "edge510_japan" => GarminProduct::Edge510Japan,
+            "hrm_tri" => GarminProduct::HrmTri,
+            "hrm_run" => GarminProduct::HrmRun,
+            "fr920xt" => GarminProduct::Fr920xt,
+            "edge510_asia" => GarminProduct::Edge510Asia,
+            "edge810_china" => GarminProduct::Edge810China,
+            "edge810_taiwan" => GarminProduct::Edge810Taiwan,
+            "edge1000" => GarminProduct::Edge1000,
+            "vivo_fit" => GarminProduct::VivoFit,
+            "virb_remote" => GarminProduct::VirbRemote,
+            "vivo_ki" => GarminProduct::VivoKi,
+            "fr15" => GarminProduct::Fr15,
+            "vivo_active" => GarminProduct::VivoActive,
+            "edge510_korea" => GarminProduct::Edge510Korea,
+            "fr620_japan" => GarminProduct::Fr620Japan,
+            "fr620_china" => GarminProduct::Fr620China,
+            "fr220_japan" => GarminProduct::Fr220Japan,
+            "fr220_china" => GarminProduct::Fr220China,
+            "approach_s6" => GarminProduct::ApproachS6,
+            "vivo_smart" => GarminProduct::VivoSmart,
+            "fenix2" => GarminProduct::Fenix2,
+            "epix" => GarminProduct::Epix,
+            "fenix3" => GarminProduct::Fenix3,
+            "edge1000_taiwan" => GarminProduct::Edge1000Taiwan,
+            "edge1000_japan" => GarminProduct::Edge1000Japan,
+            "fr15_japan" => GarminProduct::Fr15Japan,
+            "edge520" => GarminProduct::Edge520,
+            "edge1000_china" => GarminProduct::Edge1000China,
+            "fr620_russia" => GarminProduct::Fr620Russia,
+            "fr220_russia" => GarminProduct::Fr220Russia,
+            "vector_s" => GarminProduct::VectorS,
+            "edge1000_korea" => GarminProduct::Edge1000Korea,
+            "fr920xt_taiwan" => GarminProduct::Fr920xtTaiwan,
+            "fr920xt_china" => GarminProduct::Fr920xtChina,
+            "fr920xt_japan" => GarminProduct::Fr920xtJapan,
+            "virbx" => GarminProduct::Virbx,
+            "vivo_smart_apac" => GarminProduct::VivoSmartApac,
+            "etrex_touch" => GarminProduct::EtrexTouch,
+            "edge25" => GarminProduct::Edge25,
+            "fr25" => GarminProduct::Fr25,
+            "vivo_fit2" => GarminProduct::VivoFit2,
+            "fr225" => GarminProduct::Fr225,
+            "fr630" => GarminProduct::Fr630,
+            "fr230" => GarminProduct::Fr230,
+            "fr735xt" => GarminProduct::Fr735xt,
+            "vivo_active_apac" => GarminProduct::VivoActiveApac,
+            "vector_2" => GarminProduct::Vector2,
+            "vector_2s" => GarminProduct::Vector2s,
+            "virbxe" => GarminProduct::Virbxe,
+            "fr620_taiwan" => GarminProduct::Fr620Taiwan,
+            "fr220_taiwan" => GarminProduct::Fr220Taiwan,
+            "truswing" => GarminProduct::Truswing,
+            "d2airvenu" => GarminProduct::D2airvenu,
+            "fenix3_china" => GarminProduct::Fenix3China,
+            "fenix3_twn" => GarminProduct::Fenix3Twn,
+            "varia_headlight" => GarminProduct::VariaHeadlight,
+            "varia_taillight_old" => GarminProduct::VariaTaillightOld,
+            "edge_explore_1000" => GarminProduct::EdgeExplore1000,
+            "fr225_asia" => GarminProduct::Fr225Asia,
+            "varia_radar_taillight" => GarminProduct::VariaRadarTaillight,
+            "varia_radar_display" => GarminProduct::VariaRadarDisplay,
+            "edge20" => GarminProduct::Edge20,
+            "edge520_asia" => GarminProduct::Edge520Asia,
+            "edge520_japan" => GarminProduct::Edge520Japan,
+            "d2_bravo" => GarminProduct::D2Bravo,
+            "approach_s20" => GarminProduct::ApproachS20,
+            "vivo_smart2" => GarminProduct::VivoSmart2,
+            "edge1000_thai" => GarminProduct::Edge1000Thai,
+            "varia_remote" => GarminProduct::VariaRemote,
+            "edge25_asia" => GarminProduct::Edge25Asia,
+            "edge25_jpn" => GarminProduct::Edge25Jpn,
+            "edge20_asia" => GarminProduct::Edge20Asia,
+            "approach_x40" => GarminProduct::ApproachX40,
+            "fenix3_japan" => GarminProduct::Fenix3Japan,
+            "vivo_smart_emea" => GarminProduct::VivoSmartEmea,
+            "fr630_asia" => GarminProduct::Fr630Asia,
+            "fr630_jpn" => GarminProduct::Fr630Jpn,
+            "fr230_jpn" => GarminProduct::Fr230Jpn,
+            "hrm4_run" => GarminProduct::Hrm4Run,
+            "epix_japan" => GarminProduct::EpixJapan,
+            "vivo_active_hr" => GarminProduct::VivoActiveHr,
+            "approach_g12" => GarminProduct::ApproachG12,
+            "vivo_smart_gps_hr" => GarminProduct::VivoSmartGpsHr,
+            "vivo_smart_hr" => GarminProduct::VivoSmartHr,
+            "vivo_smart_hr_asia" => GarminProduct::VivoSmartHrAsia,
+            "vivo_smart_gps_hr_asia" => GarminProduct::VivoSmartGpsHrAsia,
+            "vivo_move" => GarminProduct::VivoMove,
+            "varia_taillight" => GarminProduct::VariaTaillight,
+            "fr235_asia" => GarminProduct::Fr235Asia,
+            "fr235_japan" => GarminProduct::Fr235Japan,
+            "varia_vision" => GarminProduct::VariaVision,
+            "vivo_fit3" => GarminProduct::VivoFit3,
+            "fenix3_korea" => GarminProduct::Fenix3Korea,
+            "fenix3_sea" => GarminProduct::Fenix3Sea,
+            "fenix3_hr" => GarminProduct::Fenix3Hr,
+            "virb_ultra_30" => GarminProduct::VirbUltra30,
+            "index_smart_scale" => GarminProduct::IndexSmartScale,
+            "fr235" => GarminProduct::Fr235,
+            "fenix3_chronos" => GarminProduct::Fenix3Chronos,
+            "oregon7xx" => GarminProduct::Oregon7xx,
+            "rino7xx" => GarminProduct::Rino7xx,
+            "epix_korea" => GarminProduct::EpixKorea,
+            "fenix3_hr_chn" => GarminProduct::Fenix3HrChn,
+            "fenix3_hr_twn" => GarminProduct::Fenix3HrTwn,
+            "fenix3_hr_jpn" => GarminProduct::Fenix3HrJpn,
+            "fenix3_hr_sea" => GarminProduct::Fenix3HrSea,
+            "fenix3_hr_kor" => GarminProduct::Fenix3HrKor,
+            "nautix" => GarminProduct::Nautix,
+            "vivo_active_hr_apac" => GarminProduct::VivoActiveHrApac,
+            "fr35" => GarminProduct::Fr35,
+            "oregon7xx_ww" => GarminProduct::Oregon7xxWw,
+            "edge_820" => GarminProduct::Edge820,
+            "edge_explore_820" => GarminProduct::EdgeExplore820,
+            "fr735xt_apac" => GarminProduct::Fr735xtApac,
+            "fr735xt_japan" => GarminProduct::Fr735xtJapan,
+            "fenix5s" => GarminProduct::Fenix5s,
+            "d2_bravo_titanium" => GarminProduct::D2BravoTitanium,
+            "varia_ut800" => GarminProduct::VariaUt800,
+            "running_dynamics_pod" => GarminProduct::RunningDynamicsPod,
+            "edge_820_china" => GarminProduct::Edge820China,
+            "edge_820_japan" => GarminProduct::Edge820Japan,
+            "fenix5x" => GarminProduct::Fenix5x,
+            "vivo_fit_jr" => GarminProduct::VivoFitJr,
+            "vivo_smart3" => GarminProduct::VivoSmart3,
+            "vivo_sport" => GarminProduct::VivoSport,
+            "edge_820_taiwan" => GarminProduct::Edge820Taiwan,
+            "edge_820_korea" => GarminProduct::Edge820Korea,
+            "edge_820_sea" => GarminProduct::Edge820Sea,
+            "fr35_hebrew" => GarminProduct::Fr35Hebrew,
+            "approach_s60" => GarminProduct::ApproachS60,
+            "fr35_apac" => GarminProduct::Fr35Apac,
+            "fr35_japan" => GarminProduct::Fr35Japan,
+            "fenix3_chronos_asia" => GarminProduct::Fenix3ChronosAsia,
+            "virb_360" => GarminProduct::Virb360,
+            "fr935" => GarminProduct::Fr935,
+            "fenix5" => GarminProduct::Fenix5,
+            "vivoactive3" => GarminProduct::Vivoactive3,
+            "edge_1030" => GarminProduct::Edge1030,
+            "fr35_sea" => GarminProduct::Fr35Sea,
+            "fr235_china_nfc" => GarminProduct::Fr235ChinaNfc,
+            "foretrex_601_701" => GarminProduct::Foretrex601701,
+            "vivo_move_hr" => GarminProduct::VivoMoveHr,
+            "vector_3" => GarminProduct::Vector3,
+            "fenix5_asia" => GarminProduct::Fenix5Asia,
+            "fenix5s_asia" => GarminProduct::Fenix5sAsia,
+            "fenix5x_asia" => GarminProduct::Fenix5xAsia,
+            "approach_z80" => GarminProduct::ApproachZ80,
+            "fr35_korea" => GarminProduct::Fr35Korea,
+            "d2charlie" => GarminProduct::D2charlie,
+            "vivo_smart3_apac" => GarminProduct::VivoSmart3Apac,
+            "vivo_sport_apac" => GarminProduct::VivoSportApac,
+            "fr935_asia" => GarminProduct::Fr935Asia,
+            "descent" => GarminProduct::Descent,
+            "vivo_fit4" => GarminProduct::VivoFit4,
+            "fr645" => GarminProduct::Fr645,
+            "fr645m" => GarminProduct::Fr645m,
+            "fr30" => GarminProduct::Fr30,
+            "fenix5s_plus" => GarminProduct::Fenix5sPlus,
+            "Edge_130" => GarminProduct::Edge130,
+            "edge_1030_asia" => GarminProduct::Edge1030Asia,
+            "vivosmart_4" => GarminProduct::Vivosmart4,
+            "vivo_move_hr_asia" => GarminProduct::VivoMoveHrAsia,
+            "approach_x10" => GarminProduct::ApproachX10,
+            "fr30_asia" => GarminProduct::Fr30Asia,
+            "vivoactive3m_w" => GarminProduct::Vivoactive3mW,
+            "fr645_asia" => GarminProduct::Fr645Asia,
+            "fr645m_asia" => GarminProduct::Fr645mAsia,
+            "edge_explore" => GarminProduct::EdgeExplore,
+            "gpsmap66" => GarminProduct::Gpsmap66,
+            "approach_s10" => GarminProduct::ApproachS10,
+            "vivoactive3m_l" => GarminProduct::Vivoactive3mL,
+            "approach_g80" => GarminProduct::ApproachG80,
+            "edge_130_asia" => GarminProduct::Edge130Asia,
+            "edge_1030_bontrager" => GarminProduct::Edge1030Bontrager,
+            "fenix5_plus" => GarminProduct::Fenix5Plus,
+            "fenix5x_plus" => GarminProduct::Fenix5xPlus,
+            "edge_520_plus" => GarminProduct::Edge520Plus,
+            "fr945" => GarminProduct::Fr945,
+            "edge_530" => GarminProduct::Edge530,
+            "edge_830" => GarminProduct::Edge830,
+            "instinct_esports" => GarminProduct::InstinctEsports,
+            "fenix5s_plus_apac" => GarminProduct::Fenix5sPlusApac,
+            "fenix5x_plus_apac" => GarminProduct::Fenix5xPlusApac,
+            "edge_520_plus_apac" => GarminProduct::Edge520PlusApac,
+            "descent_t1" => GarminProduct::DescentT1,
+            "fr235l_asia" => GarminProduct::Fr235lAsia,
+            "fr245_asia" => GarminProduct::Fr245Asia,
+            "vivo_active3m_apac" => GarminProduct::VivoActive3mApac,
+            "gen3_bsm" => GarminProduct::Gen3Bsm,
+            "gen3_bcm" => GarminProduct::Gen3Bcm,
+            "vivo_smart4_asia" => GarminProduct::VivoSmart4Asia,
+            "vivoactive4_small" => GarminProduct::Vivoactive4Small,
+            "vivoactive4_large" => GarminProduct::Vivoactive4Large,
+            "venu" => GarminProduct::Venu,
+            "marq_driver" => GarminProduct::MarqDriver,
+            "marq_aviator" => GarminProduct::MarqAviator,
+            "marq_captain" => GarminProduct::MarqCaptain,
+            "marq_commander" => GarminProduct::MarqCommander,
+            "marq_expedition" => GarminProduct::MarqExpedition,
+            "marq_athlete" => GarminProduct::MarqAthlete,
+            "descent_mk2" => GarminProduct::DescentMk2,
+            "gpsmap66i" => GarminProduct::Gpsmap66i,
+            "fenix6S_sport" => GarminProduct::Fenix6SSport,
+            "fenix6S" => GarminProduct::Fenix6S,
+            "fenix6_sport" => GarminProduct::Fenix6Sport,
+            "fenix6" => GarminProduct::Fenix6,
+            "fenix6x" => GarminProduct::Fenix6x,
+            "hrm_dual" => GarminProduct::HrmDual,
+            "hrm_pro" => GarminProduct::HrmPro,
+            "vivo_move3_premium" => GarminProduct::VivoMove3Premium,
+            "approach_s40" => GarminProduct::ApproachS40,
+            "fr245m_asia" => GarminProduct::Fr245mAsia,
+            "edge_530_apac" => GarminProduct::Edge530Apac,
+            "edge_830_apac" => GarminProduct::Edge830Apac,
+            "vivo_move3" => GarminProduct::VivoMove3,
+            "vivo_active4_small_asia" => GarminProduct::VivoActive4SmallAsia,
+            "vivo_active4_large_asia" => GarminProduct::VivoActive4LargeAsia,
+            "vivo_active4_oled_asia" => GarminProduct::VivoActive4OledAsia,
+            "swim2" => GarminProduct::Swim2,
+            "marq_driver_asia" => GarminProduct::MarqDriverAsia,
+            "marq_aviator_asia" => GarminProduct::MarqAviatorAsia,
+            "vivo_move3_asia" => GarminProduct::VivoMove3Asia,
+            "fr945_asia" => GarminProduct::Fr945Asia,
+            "vivo_active3t_chn" => GarminProduct::VivoActive3tChn,
+            "marq_captain_asia" => GarminProduct::MarqCaptainAsia,
+            "marq_commander_asia" => GarminProduct::MarqCommanderAsia,
+            "marq_expedition_asia" => GarminProduct::MarqExpeditionAsia,
+            "marq_athlete_asia" => GarminProduct::MarqAthleteAsia,
+            "instinct_solar" => GarminProduct::InstinctSolar,
+            "fr45_asia" => GarminProduct::Fr45Asia,
+            "vivoactive3_daimler" => GarminProduct::Vivoactive3Daimler,
+            "legacy_rey" => GarminProduct::LegacyRey,
+            "legacy_darth_vader" => GarminProduct::LegacyDarthVader,
+            "legacy_captain_marvel" => GarminProduct::LegacyCaptainMarvel,
+            "legacy_first_avenger" => GarminProduct::LegacyFirstAvenger,
+            "fenix6s_sport_asia" => GarminProduct::Fenix6sSportAsia,
+            "fenix6s_asia" => GarminProduct::Fenix6sAsia,
+            "fenix6_sport_asia" => GarminProduct::Fenix6SportAsia,
+            "fenix6_asia" => GarminProduct::Fenix6Asia,
+            "fenix6x_asia" => GarminProduct::Fenix6xAsia,
+            "legacy_captain_marvel_asia" => GarminProduct::LegacyCaptainMarvelAsia,
+            "legacy_first_avenger_asia" => GarminProduct::LegacyFirstAvengerAsia,
+            "legacy_rey_asia" => GarminProduct::LegacyReyAsia,
+            "legacy_darth_vader_asia" => GarminProduct::LegacyDarthVaderAsia,
+            "descent_mk2s" => GarminProduct::DescentMk2s,
+            "edge_130_plus" => GarminProduct::Edge130Plus,
+            "edge_1030_plus" => GarminProduct::Edge1030Plus,
+            "rally_200" => GarminProduct::Rally200,
+            "fr745" => GarminProduct::Fr745,
+            "venusq" => GarminProduct::Venusq,
+            "lily" => GarminProduct::Lily,
+            "marq_adventurer" => GarminProduct::MarqAdventurer,
+            "enduro" => GarminProduct::Enduro,
+            "swim2_apac" => GarminProduct::Swim2Apac,
+            "marq_adventurer_asia" => GarminProduct::MarqAdventurerAsia,
+            "fr945_lte" => GarminProduct::Fr945Lte,
+            "descent_mk2_asia" => GarminProduct::DescentMk2Asia,
+            "venu2" => GarminProduct::Venu2,
+            "venu2s" => GarminProduct::Venu2s,
+            "venu_daimler_asia" => GarminProduct::VenuDaimlerAsia,
+            "marq_golfer" => GarminProduct::MarqGolfer,
+            "venu_daimler" => GarminProduct::VenuDaimler,
+            "fr745_asia" => GarminProduct::Fr745Asia,
+            "varia_rct715" => GarminProduct::VariaRct715,
+            "lily_asia" => GarminProduct::LilyAsia,
+            "edge_1030_plus_asia" => GarminProduct::Edge1030PlusAsia,
+            "edge_130_plus_asia" => GarminProduct::Edge130PlusAsia,
+            "approach_s12" => GarminProduct::ApproachS12,
+            "venusq_asia" => GarminProduct::VenusqAsia,
+            "edge_1040" => GarminProduct::Edge1040,
+            "marq_golfer_asia" => GarminProduct::MarqGolferAsia,
+            "venu2_plus" => GarminProduct::Venu2Plus,
+            "gnss" => GarminProduct::Gnss,
+            "fr55" => GarminProduct::Fr55,
+            "enduro_asia" => GarminProduct::EnduroAsia,
+            "instinct_2" => GarminProduct::Instinct2,
+            "fenix7s" => GarminProduct::Fenix7s,
+            "fenix7" => GarminProduct::Fenix7,
+            "fenix7x" => GarminProduct::Fenix7x,
+            "fenix7s_apac" => GarminProduct::Fenix7sApac,
+            "fenix7_apac" => GarminProduct::Fenix7Apac,
+            "fenix7x_apac" => GarminProduct::Fenix7xApac,
+            "descent_mk2s_asia" => GarminProduct::DescentMk2sAsia,
+            "approach_s42" => GarminProduct::ApproachS42,
+            "epix_gen2" => GarminProduct::EpixGen2,
+            "epix_gen2_apac" => GarminProduct::EpixGen2Apac,
+            "venu2s_asia" => GarminProduct::Venu2sAsia,
+            "venu2_asia" => GarminProduct::Venu2Asia,
+            "fr945_lte_asia" => GarminProduct::Fr945LteAsia,
+            "vivo_move_sport" => GarminProduct::VivoMoveSport,
+            "vivomove_trend" => GarminProduct::VivomoveTrend,
+            "approach_S12_asia" => GarminProduct::ApproachS12Asia,
+            "fr255_music" => GarminProduct::Fr255Music,
+            "fr255_small_music" => GarminProduct::Fr255SmallMusic,
+            "fr255" => GarminProduct::Fr255,
+            "fr255_small" => GarminProduct::Fr255Small,
+            "approach_s42_asia" => GarminProduct::ApproachS42Asia,
+            "descent_g1" => GarminProduct::DescentG1,
+            "venu2_plus_asia" => GarminProduct::Venu2PlusAsia,
+            "fr955" => GarminProduct::Fr955,
+            "fr55_asia" => GarminProduct::Fr55Asia,
+            "edge_540" => GarminProduct::Edge540,
+            "edge_840" => GarminProduct::Edge840,
+            "vivosmart_5" => GarminProduct::Vivosmart5,
+            "instinct_2_asia" => GarminProduct::Instinct2Asia,
+            "marq_gen2" => GarminProduct::MarqGen2,
+            "venusq2" => GarminProduct::Venusq2,
+            "venusq2music" => GarminProduct::Venusq2music,
+            "marq_gen2_aviator" => GarminProduct::MarqGen2Aviator,
+            "d2_air_x10" => GarminProduct::D2AirX10,
+            "hrm_pro_plus" => GarminProduct::HrmProPlus,
+            "descent_g1_asia" => GarminProduct::DescentG1Asia,
+            "tactix7" => GarminProduct::Tactix7,
+            "instinct_crossover" => GarminProduct::InstinctCrossover,
+            "edge_explore2" => GarminProduct::EdgeExplore2,
+            "descent_mk3" => GarminProduct::DescentMk3,
+            "descent_mk3i" => GarminProduct::DescentMk3i,
+            "approach_s70" => GarminProduct::ApproachS70,
+            "fr265_large" => GarminProduct::Fr265Large,
+            "fr265_small" => GarminProduct::Fr265Small,
+            "venu3" => GarminProduct::Venu3,
+            "venu3s" => GarminProduct::Venu3s,
+            "tacx_neo_smart" => GarminProduct::TacxNeoSmart,
+            "tacx_neo2_smart" => GarminProduct::TacxNeo2Smart,
+            "tacx_neo2_t_smart" => GarminProduct::TacxNeo2TSmart,
+            "tacx_neo_smart_bike" => GarminProduct::TacxNeoSmartBike,
+            "tacx_satori_smart" => GarminProduct::TacxSatoriSmart,
+            "tacx_flow_smart" => GarminProduct::TacxFlowSmart,
+            "tacx_vortex_smart" => GarminProduct::TacxVortexSmart,
+            "tacx_bushido_smart" => GarminProduct::TacxBushidoSmart,
+            "tacx_genius_smart" => GarminProduct::TacxGeniusSmart,
+            "tacx_flux_flux_s_smart" => GarminProduct::TacxFluxFluxSSmart,
+            "tacx_flux2_smart" => GarminProduct::TacxFlux2Smart,
+            "tacx_magnum" => GarminProduct::TacxMagnum,
+            "edge_1040_asia" => GarminProduct::Edge1040Asia,
+            "epix_gen2_pro_42" => GarminProduct::EpixGen2Pro42,
+            "epix_gen2_pro_47" => GarminProduct::EpixGen2Pro47,
+            "epix_gen2_pro_51" => GarminProduct::EpixGen2Pro51,
+            "fr965" => GarminProduct::Fr965,
+            "enduro2" => GarminProduct::Enduro2,
+            "fenix7s_pro_solar" => GarminProduct::Fenix7sProSolar,
+            "fenix7_pro_solar" => GarminProduct::Fenix7ProSolar,
+            "fenix7x_pro_solar" => GarminProduct::Fenix7xProSolar,
+            "lily2" => GarminProduct::Lily2,
+            "instinct_2x" => GarminProduct::Instinct2x,
+            "vivoactive5" => GarminProduct::Vivoactive5,
+            "fr165" => GarminProduct::Fr165,
+            "fr165_music" => GarminProduct::Fr165Music,
+            "descent_t2" => GarminProduct::DescentT2,
+            "hrm_fit" => GarminProduct::HrmFit,
+            "marq_gen2_commander" => GarminProduct::MarqGen2Commander,
+            "d2_mach1_pro" => GarminProduct::D2Mach1Pro,
+            "sdm4" => GarminProduct::Sdm4,
+            "edge_remote" => GarminProduct::EdgeRemote,
+            "training_center" => GarminProduct::TrainingCenter,
+            "tacx_training_app_win" => GarminProduct::TacxTrainingAppWin,
+            "tacx_training_app_mac" => GarminProduct::TacxTrainingAppMac,
+            "tacx_training_app_mac_catalyst" => GarminProduct::TacxTrainingAppMacCatalyst,
+            "tacx_training_app_android" => GarminProduct::TacxTrainingAppAndroid,
+            "tacx_training_app_ios" => GarminProduct::TacxTrainingAppIos,
+            "tacx_training_app_legacy" => GarminProduct::TacxTrainingAppLegacy,
+            "connectiq_simulator" => GarminProduct::ConnectiqSimulator,
+            "android_antplus_plugin" => GarminProduct::AndroidAntplusPlugin,
+            "connect" => GarminProduct::Connect,
+            &_ => GarminProduct::Value(0),
+        }
+    }
+}
 impl Serialize for GarminProduct {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -11210,6 +13136,38 @@ impl convert::From<i64> for AntplusDeviceType {
         AntplusDeviceType::from(value as u8)
     }
 }
+impl convert::From<&str> for AntplusDeviceType {
+    fn from(value: &str) -> Self {
+        match value {
+            "antfs" => AntplusDeviceType::Antfs,
+            "bike_power" => AntplusDeviceType::BikePower,
+            "environment_sensor_legacy" => AntplusDeviceType::EnvironmentSensorLegacy,
+            "multi_sport_speed_distance" => AntplusDeviceType::MultiSportSpeedDistance,
+            "control" => AntplusDeviceType::Control,
+            "fitness_equipment" => AntplusDeviceType::FitnessEquipment,
+            "blood_pressure" => AntplusDeviceType::BloodPressure,
+            "geocache_node" => AntplusDeviceType::GeocacheNode,
+            "light_electric_vehicle" => AntplusDeviceType::LightElectricVehicle,
+            "env_sensor" => AntplusDeviceType::EnvSensor,
+            "racquet" => AntplusDeviceType::Racquet,
+            "control_hub" => AntplusDeviceType::ControlHub,
+            "muscle_oxygen" => AntplusDeviceType::MuscleOxygen,
+            "shifting" => AntplusDeviceType::Shifting,
+            "bike_light_main" => AntplusDeviceType::BikeLightMain,
+            "bike_light_shared" => AntplusDeviceType::BikeLightShared,
+            "exd" => AntplusDeviceType::Exd,
+            "bike_radar" => AntplusDeviceType::BikeRadar,
+            "bike_aero" => AntplusDeviceType::BikeAero,
+            "weight_scale" => AntplusDeviceType::WeightScale,
+            "heart_rate" => AntplusDeviceType::HeartRate,
+            "bike_speed_cadence" => AntplusDeviceType::BikeSpeedCadence,
+            "bike_cadence" => AntplusDeviceType::BikeCadence,
+            "bike_speed" => AntplusDeviceType::BikeSpeed,
+            "stride_speed_distance" => AntplusDeviceType::StrideSpeedDistance,
+            &_ => AntplusDeviceType::Value(0),
+        }
+    }
+}
 impl Serialize for AntplusDeviceType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -11271,6 +13229,17 @@ impl convert::From<u8> for AntNetwork {
 impl convert::From<i64> for AntNetwork {
     fn from(value: i64) -> Self {
         AntNetwork::from(value as u8)
+    }
+}
+impl convert::From<&str> for AntNetwork {
+    fn from(value: &str) -> Self {
+        match value {
+            "public" => AntNetwork::Public,
+            "antplus" => AntNetwork::Antplus,
+            "antfs" => AntNetwork::Antfs,
+            "private" => AntNetwork::Private,
+            &_ => AntNetwork::UnknownVariant(0),
+        }
     }
 }
 impl Serialize for AntNetwork {
@@ -11396,6 +13365,27 @@ impl convert::From<i64> for WorkoutCapabilities {
         WorkoutCapabilities::from(value as u32)
     }
 }
+impl convert::From<&str> for WorkoutCapabilities {
+    fn from(value: &str) -> Self {
+        match value {
+            "interval" => WorkoutCapabilities::Interval,
+            "custom" => WorkoutCapabilities::Custom,
+            "fitness_equipment" => WorkoutCapabilities::FitnessEquipment,
+            "firstbeat" => WorkoutCapabilities::Firstbeat,
+            "new_leaf" => WorkoutCapabilities::NewLeaf,
+            "tcx" => WorkoutCapabilities::Tcx,
+            "speed" => WorkoutCapabilities::Speed,
+            "heart_rate" => WorkoutCapabilities::HeartRate,
+            "distance" => WorkoutCapabilities::Distance,
+            "cadence" => WorkoutCapabilities::Cadence,
+            "power" => WorkoutCapabilities::Power,
+            "grade" => WorkoutCapabilities::Grade,
+            "resistance" => WorkoutCapabilities::Resistance,
+            "protected" => WorkoutCapabilities::Protected,
+            &_ => WorkoutCapabilities::Value(0),
+        }
+    }
+}
 impl Serialize for WorkoutCapabilities {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -11471,6 +13461,20 @@ impl convert::From<i64> for BatteryStatus {
         BatteryStatus::from(value as u8)
     }
 }
+impl convert::From<&str> for BatteryStatus {
+    fn from(value: &str) -> Self {
+        match value {
+            "new" => BatteryStatus::New,
+            "good" => BatteryStatus::Good,
+            "ok" => BatteryStatus::Ok,
+            "low" => BatteryStatus::Low,
+            "critical" => BatteryStatus::Critical,
+            "charging" => BatteryStatus::Charging,
+            "unknown" => BatteryStatus::Unknown,
+            &_ => BatteryStatus::Value(0),
+        }
+    }
+}
 impl Serialize for BatteryStatus {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -11524,6 +13528,15 @@ impl convert::From<u8> for HrType {
 impl convert::From<i64> for HrType {
     fn from(value: i64) -> Self {
         HrType::from(value as u8)
+    }
+}
+impl convert::From<&str> for HrType {
+    fn from(value: &str) -> Self {
+        match value {
+            "normal" => HrType::Normal,
+            "irregular" => HrType::Irregular,
+            &_ => HrType::UnknownVariant(0),
+        }
     }
 }
 impl Serialize for HrType {
@@ -11632,6 +13645,25 @@ impl convert::From<i64> for CourseCapabilities {
         CourseCapabilities::from(value as u32)
     }
 }
+impl convert::From<&str> for CourseCapabilities {
+    fn from(value: &str) -> Self {
+        match value {
+            "processed" => CourseCapabilities::Processed,
+            "valid" => CourseCapabilities::Valid,
+            "time" => CourseCapabilities::Time,
+            "distance" => CourseCapabilities::Distance,
+            "position" => CourseCapabilities::Position,
+            "heart_rate" => CourseCapabilities::HeartRate,
+            "power" => CourseCapabilities::Power,
+            "cadence" => CourseCapabilities::Cadence,
+            "training" => CourseCapabilities::Training,
+            "navigation" => CourseCapabilities::Navigation,
+            "bikeway" => CourseCapabilities::Bikeway,
+            "aviation" => CourseCapabilities::Aviation,
+            &_ => CourseCapabilities::Value(0),
+        }
+    }
+}
 impl Serialize for CourseCapabilities {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -11681,6 +13713,14 @@ impl convert::From<u16> for Weight {
 impl convert::From<i64> for Weight {
     fn from(value: i64) -> Self {
         Weight::from(value as u16)
+    }
+}
+impl convert::From<&str> for Weight {
+    fn from(value: &str) -> Self {
+        match value {
+            "calculating" => Weight::Calculating,
+            &_ => Weight::Value(0),
+        }
     }
 }
 impl Serialize for Weight {
@@ -11735,6 +13775,14 @@ impl convert::From<i64> for WorkoutHr {
         WorkoutHr::from(value as u32)
     }
 }
+impl convert::From<&str> for WorkoutHr {
+    fn from(value: &str) -> Self {
+        match value {
+            "bpm_offset" => WorkoutHr::BpmOffset,
+            &_ => WorkoutHr::Value(0),
+        }
+    }
+}
 impl Serialize for WorkoutHr {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -11785,6 +13833,14 @@ impl convert::From<u32> for WorkoutPower {
 impl convert::From<i64> for WorkoutPower {
     fn from(value: i64) -> Self {
         WorkoutPower::from(value as u32)
+    }
+}
+impl convert::From<&str> for WorkoutPower {
+    fn from(value: &str) -> Self {
+        match value {
+            "watts_offset" => WorkoutPower::WattsOffset,
+            &_ => WorkoutPower::Value(0),
+        }
     }
 }
 impl Serialize for WorkoutPower {
@@ -11854,6 +13910,18 @@ impl convert::From<i64> for BpStatus {
         BpStatus::from(value as u8)
     }
 }
+impl convert::From<&str> for BpStatus {
+    fn from(value: &str) -> Self {
+        match value {
+            "no_error" => BpStatus::NoError,
+            "error_incomplete_data" => BpStatus::ErrorIncompleteData,
+            "error_no_measurement" => BpStatus::ErrorNoMeasurement,
+            "error_data_out_of_range" => BpStatus::ErrorDataOutOfRange,
+            "error_irregular_heart_rate" => BpStatus::ErrorIrregularHeartRate,
+            &_ => BpStatus::UnknownVariant(0),
+        }
+    }
+}
 impl Serialize for BpStatus {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -11920,6 +13988,19 @@ impl convert::From<u16> for UserLocalId {
 impl convert::From<i64> for UserLocalId {
     fn from(value: i64) -> Self {
         UserLocalId::from(value as u16)
+    }
+}
+impl convert::From<&str> for UserLocalId {
+    fn from(value: &str) -> Self {
+        match value {
+            "local_min" => UserLocalId::LocalMin,
+            "local_max" => UserLocalId::LocalMax,
+            "stationary_min" => UserLocalId::StationaryMin,
+            "stationary_max" => UserLocalId::StationaryMax,
+            "portable_min" => UserLocalId::PortableMin,
+            "portable_max" => UserLocalId::PortableMax,
+            &_ => UserLocalId::Value(0),
+        }
     }
 }
 impl Serialize for UserLocalId {
@@ -11996,6 +14077,20 @@ impl convert::From<u8> for SwimStroke {
 impl convert::From<i64> for SwimStroke {
     fn from(value: i64) -> Self {
         SwimStroke::from(value as u8)
+    }
+}
+impl convert::From<&str> for SwimStroke {
+    fn from(value: &str) -> Self {
+        match value {
+            "freestyle" => SwimStroke::Freestyle,
+            "backstroke" => SwimStroke::Backstroke,
+            "breaststroke" => SwimStroke::Breaststroke,
+            "butterfly" => SwimStroke::Butterfly,
+            "drill" => SwimStroke::Drill,
+            "mixed" => SwimStroke::Mixed,
+            "im" => SwimStroke::Im,
+            &_ => SwimStroke::UnknownVariant(0),
+        }
     }
 }
 impl Serialize for SwimStroke {
@@ -12081,6 +14176,22 @@ impl convert::From<u8> for ActivityType {
 impl convert::From<i64> for ActivityType {
     fn from(value: i64) -> Self {
         ActivityType::from(value as u8)
+    }
+}
+impl convert::From<&str> for ActivityType {
+    fn from(value: &str) -> Self {
+        match value {
+            "generic" => ActivityType::Generic,
+            "running" => ActivityType::Running,
+            "cycling" => ActivityType::Cycling,
+            "transition" => ActivityType::Transition,
+            "fitness_equipment" => ActivityType::FitnessEquipment,
+            "swimming" => ActivityType::Swimming,
+            "walking" => ActivityType::Walking,
+            "sedentary" => ActivityType::Sedentary,
+            "all" => ActivityType::All,
+            &_ => ActivityType::UnknownVariant(0),
+        }
     }
 }
 impl Serialize for ActivityType {
@@ -12246,6 +14357,33 @@ impl convert::From<i64> for ActivitySubtype {
         ActivitySubtype::from(value as u8)
     }
 }
+impl convert::From<&str> for ActivitySubtype {
+    fn from(value: &str) -> Self {
+        match value {
+            "generic" => ActivitySubtype::Generic,
+            "treadmill" => ActivitySubtype::Treadmill,
+            "street" => ActivitySubtype::Street,
+            "trail" => ActivitySubtype::Trail,
+            "track" => ActivitySubtype::Track,
+            "spin" => ActivitySubtype::Spin,
+            "indoor_cycling" => ActivitySubtype::IndoorCycling,
+            "road" => ActivitySubtype::Road,
+            "mountain" => ActivitySubtype::Mountain,
+            "downhill" => ActivitySubtype::Downhill,
+            "recumbent" => ActivitySubtype::Recumbent,
+            "cyclocross" => ActivitySubtype::Cyclocross,
+            "hand_cycling" => ActivitySubtype::HandCycling,
+            "track_cycling" => ActivitySubtype::TrackCycling,
+            "indoor_rowing" => ActivitySubtype::IndoorRowing,
+            "elliptical" => ActivitySubtype::Elliptical,
+            "stair_climbing" => ActivitySubtype::StairClimbing,
+            "lap_swimming" => ActivitySubtype::LapSwimming,
+            "open_water" => ActivitySubtype::OpenWater,
+            "all" => ActivitySubtype::All,
+            &_ => ActivitySubtype::UnknownVariant(0),
+        }
+    }
+}
 impl Serialize for ActivitySubtype {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -12302,6 +14440,16 @@ impl convert::From<i64> for ActivityLevel {
         ActivityLevel::from(value as u8)
     }
 }
+impl convert::From<&str> for ActivityLevel {
+    fn from(value: &str) -> Self {
+        match value {
+            "low" => ActivityLevel::Low,
+            "medium" => ActivityLevel::Medium,
+            "high" => ActivityLevel::High,
+            &_ => ActivityLevel::UnknownVariant(0),
+        }
+    }
+}
 impl Serialize for ActivityLevel {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -12352,6 +14500,15 @@ impl convert::From<u8> for Side {
 impl convert::From<i64> for Side {
     fn from(value: i64) -> Self {
         Side::from(value as u8)
+    }
+}
+impl convert::From<&str> for Side {
+    fn from(value: &str) -> Self {
+        match value {
+            "right" => Side::Right,
+            "left" => Side::Left,
+            &_ => Side::UnknownVariant(0),
+        }
     }
 }
 impl Serialize for Side {
@@ -12406,6 +14563,15 @@ impl convert::From<u8> for LeftRightBalance {
 impl convert::From<i64> for LeftRightBalance {
     fn from(value: i64) -> Self {
         LeftRightBalance::from(value as u8)
+    }
+}
+impl convert::From<&str> for LeftRightBalance {
+    fn from(value: &str) -> Self {
+        match value {
+            "mask" => LeftRightBalance::Mask,
+            "right" => LeftRightBalance::Right,
+            &_ => LeftRightBalance::Value(0),
+        }
     }
 }
 impl Serialize for LeftRightBalance {
@@ -12465,6 +14631,15 @@ impl convert::From<i64> for LeftRightBalance100 {
         LeftRightBalance100::from(value as u16)
     }
 }
+impl convert::From<&str> for LeftRightBalance100 {
+    fn from(value: &str) -> Self {
+        match value {
+            "mask" => LeftRightBalance100::Mask,
+            "right" => LeftRightBalance100::Right,
+            &_ => LeftRightBalance100::Value(0),
+        }
+    }
+}
 impl Serialize for LeftRightBalance100 {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -12520,6 +14695,15 @@ impl convert::From<u8> for LengthType {
 impl convert::From<i64> for LengthType {
     fn from(value: i64) -> Self {
         LengthType::from(value as u8)
+    }
+}
+impl convert::From<&str> for LengthType {
+    fn from(value: &str) -> Self {
+        match value {
+            "idle" => LengthType::Idle,
+            "active" => LengthType::Active,
+            &_ => LengthType::UnknownVariant(0),
+        }
     }
 }
 impl Serialize for LengthType {
@@ -12592,6 +14776,20 @@ impl convert::From<u8> for DayOfWeek {
 impl convert::From<i64> for DayOfWeek {
     fn from(value: i64) -> Self {
         DayOfWeek::from(value as u8)
+    }
+}
+impl convert::From<&str> for DayOfWeek {
+    fn from(value: &str) -> Self {
+        match value {
+            "sunday" => DayOfWeek::Sunday,
+            "monday" => DayOfWeek::Monday,
+            "tuesday" => DayOfWeek::Tuesday,
+            "wednesday" => DayOfWeek::Wednesday,
+            "thursday" => DayOfWeek::Thursday,
+            "friday" => DayOfWeek::Friday,
+            "saturday" => DayOfWeek::Saturday,
+            &_ => DayOfWeek::UnknownVariant(0),
+        }
     }
 }
 impl Serialize for DayOfWeek {
@@ -12820,6 +15018,51 @@ impl convert::From<i64> for ConnectivityCapabilities {
         ConnectivityCapabilities::from(value as u32)
     }
 }
+impl convert::From<&str> for ConnectivityCapabilities {
+    fn from(value: &str) -> Self {
+        match value {
+            "bluetooth" => ConnectivityCapabilities::Bluetooth,
+            "bluetooth_le" => ConnectivityCapabilities::BluetoothLe,
+            "ant" => ConnectivityCapabilities::Ant,
+            "activity_upload" => ConnectivityCapabilities::ActivityUpload,
+            "course_download" => ConnectivityCapabilities::CourseDownload,
+            "workout_download" => ConnectivityCapabilities::WorkoutDownload,
+            "live_track" => ConnectivityCapabilities::LiveTrack,
+            "weather_conditions" => ConnectivityCapabilities::WeatherConditions,
+            "weather_alerts" => ConnectivityCapabilities::WeatherAlerts,
+            "gps_ephemeris_download" => ConnectivityCapabilities::GpsEphemerisDownload,
+            "explicit_archive" => ConnectivityCapabilities::ExplicitArchive,
+            "setup_incomplete" => ConnectivityCapabilities::SetupIncomplete,
+            "continue_sync_after_software_update" => {
+                ConnectivityCapabilities::ContinueSyncAfterSoftwareUpdate
+            }
+            "connect_iq_app_download" => ConnectivityCapabilities::ConnectIqAppDownload,
+            "golf_course_download" => ConnectivityCapabilities::GolfCourseDownload,
+            "device_initiates_sync" => ConnectivityCapabilities::DeviceInitiatesSync,
+            "connect_iq_watch_app_download" => ConnectivityCapabilities::ConnectIqWatchAppDownload,
+            "connect_iq_widget_download" => ConnectivityCapabilities::ConnectIqWidgetDownload,
+            "connect_iq_watch_face_download" => {
+                ConnectivityCapabilities::ConnectIqWatchFaceDownload
+            }
+            "connect_iq_data_field_download" => {
+                ConnectivityCapabilities::ConnectIqDataFieldDownload
+            }
+            "connect_iq_app_managment" => ConnectivityCapabilities::ConnectIqAppManagment,
+            "swing_sensor" => ConnectivityCapabilities::SwingSensor,
+            "swing_sensor_remote" => ConnectivityCapabilities::SwingSensorRemote,
+            "incident_detection" => ConnectivityCapabilities::IncidentDetection,
+            "audio_prompts" => ConnectivityCapabilities::AudioPrompts,
+            "wifi_verification" => ConnectivityCapabilities::WifiVerification,
+            "true_up" => ConnectivityCapabilities::TrueUp,
+            "find_my_watch" => ConnectivityCapabilities::FindMyWatch,
+            "remote_manual_sync" => ConnectivityCapabilities::RemoteManualSync,
+            "live_track_auto_start" => ConnectivityCapabilities::LiveTrackAutoStart,
+            "live_track_messaging" => ConnectivityCapabilities::LiveTrackMessaging,
+            "instant_input" => ConnectivityCapabilities::InstantInput,
+            &_ => ConnectivityCapabilities::Value(0),
+        }
+    }
+}
 impl Serialize for ConnectivityCapabilities {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -12877,6 +15120,16 @@ impl convert::From<u8> for WeatherReport {
 impl convert::From<i64> for WeatherReport {
     fn from(value: i64) -> Self {
         WeatherReport::from(value as u8)
+    }
+}
+impl convert::From<&str> for WeatherReport {
+    fn from(value: &str) -> Self {
+        match value {
+            "current" => WeatherReport::Current,
+            "hourly_forecast" => WeatherReport::HourlyForecast,
+            "daily_forecast" => WeatherReport::DailyForecast,
+            &_ => WeatherReport::UnknownVariant(0),
+        }
     }
 }
 impl Serialize for WeatherReport {
@@ -13029,6 +15282,34 @@ impl convert::From<i64> for WeatherStatus {
         WeatherStatus::from(value as u8)
     }
 }
+impl convert::From<&str> for WeatherStatus {
+    fn from(value: &str) -> Self {
+        match value {
+            "clear" => WeatherStatus::Clear,
+            "partly_cloudy" => WeatherStatus::PartlyCloudy,
+            "mostly_cloudy" => WeatherStatus::MostlyCloudy,
+            "rain" => WeatherStatus::Rain,
+            "snow" => WeatherStatus::Snow,
+            "windy" => WeatherStatus::Windy,
+            "thunderstorms" => WeatherStatus::Thunderstorms,
+            "wintry_mix" => WeatherStatus::WintryMix,
+            "fog" => WeatherStatus::Fog,
+            "hazy" => WeatherStatus::Hazy,
+            "hail" => WeatherStatus::Hail,
+            "scattered_showers" => WeatherStatus::ScatteredShowers,
+            "scattered_thunderstorms" => WeatherStatus::ScatteredThunderstorms,
+            "unknown_precipitation" => WeatherStatus::UnknownPrecipitation,
+            "light_rain" => WeatherStatus::LightRain,
+            "heavy_rain" => WeatherStatus::HeavyRain,
+            "light_snow" => WeatherStatus::LightSnow,
+            "heavy_snow" => WeatherStatus::HeavySnow,
+            "light_rain_snow" => WeatherStatus::LightRainSnow,
+            "heavy_rain_snow" => WeatherStatus::HeavyRainSnow,
+            "cloudy" => WeatherStatus::Cloudy,
+            &_ => WeatherStatus::UnknownVariant(0),
+        }
+    }
+}
 impl Serialize for WeatherStatus {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -13091,6 +15372,18 @@ impl convert::From<u8> for WeatherSeverity {
 impl convert::From<i64> for WeatherSeverity {
     fn from(value: i64) -> Self {
         WeatherSeverity::from(value as u8)
+    }
+}
+impl convert::From<&str> for WeatherSeverity {
+    fn from(value: &str) -> Self {
+        match value {
+            "unknown" => WeatherSeverity::Unknown,
+            "warning" => WeatherSeverity::Warning,
+            "watch" => WeatherSeverity::Watch,
+            "advisory" => WeatherSeverity::Advisory,
+            "statement" => WeatherSeverity::Statement,
+            &_ => WeatherSeverity::UnknownVariant(0),
+        }
     }
 }
 impl Serialize for WeatherSeverity {
@@ -13477,6 +15770,98 @@ impl convert::From<i64> for WeatherSevereType {
         WeatherSevereType::from(value as u8)
     }
 }
+impl convert::From<&str> for WeatherSevereType {
+    fn from(value: &str) -> Self {
+        match value {
+            "unspecified" => WeatherSevereType::Unspecified,
+            "tornado" => WeatherSevereType::Tornado,
+            "tsunami" => WeatherSevereType::Tsunami,
+            "hurricane" => WeatherSevereType::Hurricane,
+            "extreme_wind" => WeatherSevereType::ExtremeWind,
+            "typhoon" => WeatherSevereType::Typhoon,
+            "inland_hurricane" => WeatherSevereType::InlandHurricane,
+            "hurricane_force_wind" => WeatherSevereType::HurricaneForceWind,
+            "waterspout" => WeatherSevereType::Waterspout,
+            "severe_thunderstorm" => WeatherSevereType::SevereThunderstorm,
+            "wreckhouse_winds" => WeatherSevereType::WreckhouseWinds,
+            "les_suetes_wind" => WeatherSevereType::LesSuetesWind,
+            "avalanche" => WeatherSevereType::Avalanche,
+            "flash_flood" => WeatherSevereType::FlashFlood,
+            "tropical_storm" => WeatherSevereType::TropicalStorm,
+            "inland_tropical_storm" => WeatherSevereType::InlandTropicalStorm,
+            "blizzard" => WeatherSevereType::Blizzard,
+            "ice_storm" => WeatherSevereType::IceStorm,
+            "freezing_rain" => WeatherSevereType::FreezingRain,
+            "debris_flow" => WeatherSevereType::DebrisFlow,
+            "flash_freeze" => WeatherSevereType::FlashFreeze,
+            "dust_storm" => WeatherSevereType::DustStorm,
+            "high_wind" => WeatherSevereType::HighWind,
+            "winter_storm" => WeatherSevereType::WinterStorm,
+            "heavy_freezing_spray" => WeatherSevereType::HeavyFreezingSpray,
+            "extreme_cold" => WeatherSevereType::ExtremeCold,
+            "wind_chill" => WeatherSevereType::WindChill,
+            "cold_wave" => WeatherSevereType::ColdWave,
+            "heavy_snow_alert" => WeatherSevereType::HeavySnowAlert,
+            "lake_effect_blowing_snow" => WeatherSevereType::LakeEffectBlowingSnow,
+            "snow_squall" => WeatherSevereType::SnowSquall,
+            "lake_effect_snow" => WeatherSevereType::LakeEffectSnow,
+            "winter_weather" => WeatherSevereType::WinterWeather,
+            "sleet" => WeatherSevereType::Sleet,
+            "snowfall" => WeatherSevereType::Snowfall,
+            "snow_and_blowing_snow" => WeatherSevereType::SnowAndBlowingSnow,
+            "blowing_snow" => WeatherSevereType::BlowingSnow,
+            "snow_alert" => WeatherSevereType::SnowAlert,
+            "arctic_outflow" => WeatherSevereType::ArcticOutflow,
+            "freezing_drizzle" => WeatherSevereType::FreezingDrizzle,
+            "storm" => WeatherSevereType::Storm,
+            "storm_surge" => WeatherSevereType::StormSurge,
+            "rainfall" => WeatherSevereType::Rainfall,
+            "areal_flood" => WeatherSevereType::ArealFlood,
+            "coastal_flood" => WeatherSevereType::CoastalFlood,
+            "lakeshore_flood" => WeatherSevereType::LakeshoreFlood,
+            "excessive_heat" => WeatherSevereType::ExcessiveHeat,
+            "heat" => WeatherSevereType::Heat,
+            "weather" => WeatherSevereType::Weather,
+            "high_heat_and_humidity" => WeatherSevereType::HighHeatAndHumidity,
+            "humidex_and_health" => WeatherSevereType::HumidexAndHealth,
+            "humidex" => WeatherSevereType::Humidex,
+            "gale" => WeatherSevereType::Gale,
+            "freezing_spray" => WeatherSevereType::FreezingSpray,
+            "special_marine" => WeatherSevereType::SpecialMarine,
+            "squall" => WeatherSevereType::Squall,
+            "strong_wind" => WeatherSevereType::StrongWind,
+            "lake_wind" => WeatherSevereType::LakeWind,
+            "marine_weather" => WeatherSevereType::MarineWeather,
+            "wind" => WeatherSevereType::Wind,
+            "small_craft_hazardous_seas" => WeatherSevereType::SmallCraftHazardousSeas,
+            "hazardous_seas" => WeatherSevereType::HazardousSeas,
+            "small_craft" => WeatherSevereType::SmallCraft,
+            "small_craft_winds" => WeatherSevereType::SmallCraftWinds,
+            "small_craft_rough_bar" => WeatherSevereType::SmallCraftRoughBar,
+            "high_water_level" => WeatherSevereType::HighWaterLevel,
+            "ashfall" => WeatherSevereType::Ashfall,
+            "freezing_fog" => WeatherSevereType::FreezingFog,
+            "dense_fog" => WeatherSevereType::DenseFog,
+            "dense_smoke" => WeatherSevereType::DenseSmoke,
+            "blowing_dust" => WeatherSevereType::BlowingDust,
+            "hard_freeze" => WeatherSevereType::HardFreeze,
+            "freeze" => WeatherSevereType::Freeze,
+            "frost" => WeatherSevereType::Frost,
+            "fire_weather" => WeatherSevereType::FireWeather,
+            "flood" => WeatherSevereType::Flood,
+            "rip_tide" => WeatherSevereType::RipTide,
+            "high_surf" => WeatherSevereType::HighSurf,
+            "smog" => WeatherSevereType::Smog,
+            "air_quality" => WeatherSevereType::AirQuality,
+            "brisk_wind" => WeatherSevereType::BriskWind,
+            "air_stagnation" => WeatherSevereType::AirStagnation,
+            "low_water" => WeatherSevereType::LowWater,
+            "hydrological" => WeatherSevereType::Hydrological,
+            "special_weather" => WeatherSevereType::SpecialWeather,
+            &_ => WeatherSevereType::UnknownVariant(0),
+        }
+    }
+}
 impl Serialize for WeatherSevereType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -13544,6 +15929,19 @@ impl convert::From<u8> for StrokeType {
 impl convert::From<i64> for StrokeType {
     fn from(value: i64) -> Self {
         StrokeType::from(value as u8)
+    }
+}
+impl convert::From<&str> for StrokeType {
+    fn from(value: &str) -> Self {
+        match value {
+            "no_event" => StrokeType::NoEvent,
+            "other" => StrokeType::Other,
+            "serve" => StrokeType::Serve,
+            "forehand" => StrokeType::Forehand,
+            "backhand" => StrokeType::Backhand,
+            "smash" => StrokeType::Smash,
+            &_ => StrokeType::UnknownVariant(0),
+        }
     }
 }
 impl Serialize for StrokeType {
@@ -13754,6 +16152,53 @@ impl convert::From<i64> for BodyLocation {
         BodyLocation::from(value as u8)
     }
 }
+impl convert::From<&str> for BodyLocation {
+    fn from(value: &str) -> Self {
+        match value {
+            "left_leg" => BodyLocation::LeftLeg,
+            "left_calf" => BodyLocation::LeftCalf,
+            "left_shin" => BodyLocation::LeftShin,
+            "left_hamstring" => BodyLocation::LeftHamstring,
+            "left_quad" => BodyLocation::LeftQuad,
+            "left_glute" => BodyLocation::LeftGlute,
+            "right_leg" => BodyLocation::RightLeg,
+            "right_calf" => BodyLocation::RightCalf,
+            "right_shin" => BodyLocation::RightShin,
+            "right_hamstring" => BodyLocation::RightHamstring,
+            "right_quad" => BodyLocation::RightQuad,
+            "right_glute" => BodyLocation::RightGlute,
+            "torso_back" => BodyLocation::TorsoBack,
+            "left_lower_back" => BodyLocation::LeftLowerBack,
+            "left_upper_back" => BodyLocation::LeftUpperBack,
+            "right_lower_back" => BodyLocation::RightLowerBack,
+            "right_upper_back" => BodyLocation::RightUpperBack,
+            "torso_front" => BodyLocation::TorsoFront,
+            "left_abdomen" => BodyLocation::LeftAbdomen,
+            "left_chest" => BodyLocation::LeftChest,
+            "right_abdomen" => BodyLocation::RightAbdomen,
+            "right_chest" => BodyLocation::RightChest,
+            "left_arm" => BodyLocation::LeftArm,
+            "left_shoulder" => BodyLocation::LeftShoulder,
+            "left_bicep" => BodyLocation::LeftBicep,
+            "left_tricep" => BodyLocation::LeftTricep,
+            "left_brachioradialis" => BodyLocation::LeftBrachioradialis,
+            "left_forearm_extensors" => BodyLocation::LeftForearmExtensors,
+            "right_arm" => BodyLocation::RightArm,
+            "right_shoulder" => BodyLocation::RightShoulder,
+            "right_bicep" => BodyLocation::RightBicep,
+            "right_tricep" => BodyLocation::RightTricep,
+            "right_brachioradialis" => BodyLocation::RightBrachioradialis,
+            "right_forearm_extensors" => BodyLocation::RightForearmExtensors,
+            "neck" => BodyLocation::Neck,
+            "throat" => BodyLocation::Throat,
+            "waist_mid_back" => BodyLocation::WaistMidBack,
+            "waist_front" => BodyLocation::WaistFront,
+            "waist_left" => BodyLocation::WaistLeft,
+            "waist_right" => BodyLocation::WaistRight,
+            &_ => BodyLocation::UnknownVariant(0),
+        }
+    }
+}
 impl Serialize for BodyLocation {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -13804,6 +16249,15 @@ impl convert::From<u8> for SegmentLapStatus {
 impl convert::From<i64> for SegmentLapStatus {
     fn from(value: i64) -> Self {
         SegmentLapStatus::from(value as u8)
+    }
+}
+impl convert::From<&str> for SegmentLapStatus {
+    fn from(value: &str) -> Self {
+        match value {
+            "end" => SegmentLapStatus::End,
+            "fail" => SegmentLapStatus::Fail,
+            &_ => SegmentLapStatus::UnknownVariant(0),
+        }
     }
 }
 impl Serialize for SegmentLapStatus {
@@ -13910,6 +16364,28 @@ impl convert::From<i64> for SegmentLeaderboardType {
         SegmentLeaderboardType::from(value as u8)
     }
 }
+impl convert::From<&str> for SegmentLeaderboardType {
+    fn from(value: &str) -> Self {
+        match value {
+            "overall" => SegmentLeaderboardType::Overall,
+            "personal_best" => SegmentLeaderboardType::PersonalBest,
+            "connections" => SegmentLeaderboardType::Connections,
+            "group" => SegmentLeaderboardType::Group,
+            "challenger" => SegmentLeaderboardType::Challenger,
+            "kom" => SegmentLeaderboardType::Kom,
+            "qom" => SegmentLeaderboardType::Qom,
+            "pr" => SegmentLeaderboardType::Pr,
+            "goal" => SegmentLeaderboardType::Goal,
+            "carrot" => SegmentLeaderboardType::Carrot,
+            "club_leader" => SegmentLeaderboardType::ClubLeader,
+            "rival" => SegmentLeaderboardType::Rival,
+            "last" => SegmentLeaderboardType::Last,
+            "recent_best" => SegmentLeaderboardType::RecentBest,
+            "course_record" => SegmentLeaderboardType::CourseRecord,
+            &_ => SegmentLeaderboardType::UnknownVariant(0),
+        }
+    }
+}
 impl Serialize for SegmentLeaderboardType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -13966,6 +16442,16 @@ impl convert::From<i64> for SegmentDeleteStatus {
         SegmentDeleteStatus::from(value as u8)
     }
 }
+impl convert::From<&str> for SegmentDeleteStatus {
+    fn from(value: &str) -> Self {
+        match value {
+            "do_not_delete" => SegmentDeleteStatus::DoNotDelete,
+            "delete_one" => SegmentDeleteStatus::DeleteOne,
+            "delete_all" => SegmentDeleteStatus::DeleteAll,
+            &_ => SegmentDeleteStatus::UnknownVariant(0),
+        }
+    }
+}
 impl Serialize for SegmentDeleteStatus {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -14016,6 +16502,15 @@ impl convert::From<u8> for SegmentSelectionType {
 impl convert::From<i64> for SegmentSelectionType {
     fn from(value: i64) -> Self {
         SegmentSelectionType::from(value as u8)
+    }
+}
+impl convert::From<&str> for SegmentSelectionType {
+    fn from(value: &str) -> Self {
+        match value {
+            "starred" => SegmentSelectionType::Starred,
+            "suggested" => SegmentSelectionType::Suggested,
+            &_ => SegmentSelectionType::UnknownVariant(0),
+        }
     }
 }
 impl Serialize for SegmentSelectionType {
@@ -14090,6 +16585,19 @@ impl convert::From<u8> for SourceType {
 impl convert::From<i64> for SourceType {
     fn from(value: i64) -> Self {
         SourceType::from(value as u8)
+    }
+}
+impl convert::From<&str> for SourceType {
+    fn from(value: &str) -> Self {
+        match value {
+            "ant" => SourceType::Ant,
+            "antplus" => SourceType::Antplus,
+            "bluetooth" => SourceType::Bluetooth,
+            "bluetooth_low_energy" => SourceType::BluetoothLowEnergy,
+            "wifi" => SourceType::Wifi,
+            "local" => SourceType::Local,
+            &_ => SourceType::UnknownVariant(0),
+        }
     }
 }
 impl Serialize for SourceType {
@@ -14179,6 +16687,21 @@ impl convert::From<i64> for LocalDeviceType {
         LocalDeviceType::from(value as u8)
     }
 }
+impl convert::From<&str> for LocalDeviceType {
+    fn from(value: &str) -> Self {
+        match value {
+            "gps" => LocalDeviceType::Gps,
+            "glonass" => LocalDeviceType::Glonass,
+            "gps_glonass" => LocalDeviceType::GpsGlonass,
+            "accelerometer" => LocalDeviceType::Accelerometer,
+            "barometer" => LocalDeviceType::Barometer,
+            "temperature" => LocalDeviceType::Temperature,
+            "whr" => LocalDeviceType::Whr,
+            "sensor_hub" => LocalDeviceType::SensorHub,
+            &_ => LocalDeviceType::Value(0),
+        }
+    }
+}
 impl Serialize for LocalDeviceType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -14260,6 +16783,21 @@ impl convert::From<i64> for BleDeviceType {
         BleDeviceType::from(value as u8)
     }
 }
+impl convert::From<&str> for BleDeviceType {
+    fn from(value: &str) -> Self {
+        match value {
+            "connected_gps" => BleDeviceType::ConnectedGps,
+            "heart_rate" => BleDeviceType::HeartRate,
+            "bike_power" => BleDeviceType::BikePower,
+            "bike_speed_cadence" => BleDeviceType::BikeSpeedCadence,
+            "bike_speed" => BleDeviceType::BikeSpeed,
+            "bike_cadence" => BleDeviceType::BikeCadence,
+            "footpod" => BleDeviceType::Footpod,
+            "bike_trainer" => BleDeviceType::BikeTrainer,
+            &_ => BleDeviceType::Value(0),
+        }
+    }
+}
 impl Serialize for BleDeviceType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -14325,6 +16863,19 @@ impl convert::From<u32> for AntChannelId {
 impl convert::From<i64> for AntChannelId {
     fn from(value: i64) -> Self {
         AntChannelId::from(value as u32)
+    }
+}
+impl convert::From<&str> for AntChannelId {
+    fn from(value: &str) -> Self {
+        match value {
+            "ant_device_number" => AntChannelId::AntDeviceNumber,
+            "ant_device_type" => AntChannelId::AntDeviceType,
+            "ant_transmission_type_lower_nibble" => AntChannelId::AntTransmissionTypeLowerNibble,
+            "ant_extended_device_number_upper_nibble" => {
+                AntChannelId::AntExtendedDeviceNumberUpperNibble
+            }
+            &_ => AntChannelId::Value(0),
+        }
     }
 }
 impl Serialize for AntChannelId {
@@ -14397,6 +16948,18 @@ impl convert::From<i64> for DisplayOrientation {
         DisplayOrientation::from(value as u8)
     }
 }
+impl convert::From<&str> for DisplayOrientation {
+    fn from(value: &str) -> Self {
+        match value {
+            "auto" => DisplayOrientation::Auto,
+            "portrait" => DisplayOrientation::Portrait,
+            "landscape" => DisplayOrientation::Landscape,
+            "portrait_flipped" => DisplayOrientation::PortraitFlipped,
+            "landscape_flipped" => DisplayOrientation::LandscapeFlipped,
+            &_ => DisplayOrientation::UnknownVariant(0),
+        }
+    }
+}
 impl Serialize for DisplayOrientation {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -14465,6 +17028,19 @@ impl convert::From<i64> for WorkoutEquipment {
         WorkoutEquipment::from(value as u8)
     }
 }
+impl convert::From<&str> for WorkoutEquipment {
+    fn from(value: &str) -> Self {
+        match value {
+            "none" => WorkoutEquipment::None,
+            "swim_fins" => WorkoutEquipment::SwimFins,
+            "swim_kickboard" => WorkoutEquipment::SwimKickboard,
+            "swim_paddles" => WorkoutEquipment::SwimPaddles,
+            "swim_pull_buoy" => WorkoutEquipment::SwimPullBuoy,
+            "swim_snorkel" => WorkoutEquipment::SwimSnorkel,
+            &_ => WorkoutEquipment::UnknownVariant(0),
+        }
+    }
+}
 impl Serialize for WorkoutEquipment {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -14525,6 +17101,17 @@ impl convert::From<i64> for WatchfaceMode {
         WatchfaceMode::from(value as u8)
     }
 }
+impl convert::From<&str> for WatchfaceMode {
+    fn from(value: &str) -> Self {
+        match value {
+            "digital" => WatchfaceMode::Digital,
+            "analog" => WatchfaceMode::Analog,
+            "connect_iq" => WatchfaceMode::ConnectIq,
+            "disabled" => WatchfaceMode::Disabled,
+            &_ => WatchfaceMode::UnknownVariant(0),
+        }
+    }
+}
 impl Serialize for WatchfaceMode {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -14581,6 +17168,16 @@ impl convert::From<i64> for DigitalWatchfaceLayout {
         DigitalWatchfaceLayout::from(value as u8)
     }
 }
+impl convert::From<&str> for DigitalWatchfaceLayout {
+    fn from(value: &str) -> Self {
+        match value {
+            "traditional" => DigitalWatchfaceLayout::Traditional,
+            "modern" => DigitalWatchfaceLayout::Modern,
+            "bold" => DigitalWatchfaceLayout::Bold,
+            &_ => DigitalWatchfaceLayout::UnknownVariant(0),
+        }
+    }
+}
 impl Serialize for DigitalWatchfaceLayout {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -14635,6 +17232,16 @@ impl convert::From<u8> for AnalogWatchfaceLayout {
 impl convert::From<i64> for AnalogWatchfaceLayout {
     fn from(value: i64) -> Self {
         AnalogWatchfaceLayout::from(value as u8)
+    }
+}
+impl convert::From<&str> for AnalogWatchfaceLayout {
+    fn from(value: &str) -> Self {
+        match value {
+            "minimal" => AnalogWatchfaceLayout::Minimal,
+            "traditional" => AnalogWatchfaceLayout::Traditional,
+            "modern" => AnalogWatchfaceLayout::Modern,
+            &_ => AnalogWatchfaceLayout::UnknownVariant(0),
+        }
     }
 }
 impl Serialize for AnalogWatchfaceLayout {
@@ -14697,6 +17304,17 @@ impl convert::From<i64> for RiderPositionType {
         RiderPositionType::from(value as u8)
     }
 }
+impl convert::From<&str> for RiderPositionType {
+    fn from(value: &str) -> Self {
+        match value {
+            "seated" => RiderPositionType::Seated,
+            "standing" => RiderPositionType::Standing,
+            "transition_to_seated" => RiderPositionType::TransitionToSeated,
+            "transition_to_standing" => RiderPositionType::TransitionToStanding,
+            &_ => RiderPositionType::UnknownVariant(0),
+        }
+    }
+}
 impl Serialize for RiderPositionType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -14755,6 +17373,17 @@ impl convert::From<u8> for PowerPhaseType {
 impl convert::From<i64> for PowerPhaseType {
     fn from(value: i64) -> Self {
         PowerPhaseType::from(value as u8)
+    }
+}
+impl convert::From<&str> for PowerPhaseType {
+    fn from(value: &str) -> Self {
+        match value {
+            "power_phase_start_angle" => PowerPhaseType::PowerPhaseStartAngle,
+            "power_phase_end_angle" => PowerPhaseType::PowerPhaseEndAngle,
+            "power_phase_arc_length" => PowerPhaseType::PowerPhaseArcLength,
+            "power_phase_center" => PowerPhaseType::PowerPhaseCenter,
+            &_ => PowerPhaseType::UnknownVariant(0),
+        }
     }
 }
 impl Serialize for PowerPhaseType {
@@ -14876,6 +17505,26 @@ impl convert::From<i64> for CameraEventType {
         CameraEventType::from(value as u8)
     }
 }
+impl convert::From<&str> for CameraEventType {
+    fn from(value: &str) -> Self {
+        match value {
+            "video_start" => CameraEventType::VideoStart,
+            "video_split" => CameraEventType::VideoSplit,
+            "video_end" => CameraEventType::VideoEnd,
+            "photo_taken" => CameraEventType::PhotoTaken,
+            "video_second_stream_start" => CameraEventType::VideoSecondStreamStart,
+            "video_second_stream_split" => CameraEventType::VideoSecondStreamSplit,
+            "video_second_stream_end" => CameraEventType::VideoSecondStreamEnd,
+            "video_split_start" => CameraEventType::VideoSplitStart,
+            "video_second_stream_split_start" => CameraEventType::VideoSecondStreamSplitStart,
+            "video_pause" => CameraEventType::VideoPause,
+            "video_second_stream_pause" => CameraEventType::VideoSecondStreamPause,
+            "video_resume" => CameraEventType::VideoResume,
+            "video_second_stream_resume" => CameraEventType::VideoSecondStreamResume,
+            &_ => CameraEventType::UnknownVariant(0),
+        }
+    }
+}
 impl Serialize for CameraEventType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -14935,6 +17584,17 @@ impl convert::From<u8> for SensorType {
 impl convert::From<i64> for SensorType {
     fn from(value: i64) -> Self {
         SensorType::from(value as u8)
+    }
+}
+impl convert::From<&str> for SensorType {
+    fn from(value: &str) -> Self {
+        match value {
+            "accelerometer" => SensorType::Accelerometer,
+            "gyroscope" => SensorType::Gyroscope,
+            "compass" => SensorType::Compass,
+            "barometer" => SensorType::Barometer,
+            &_ => SensorType::UnknownVariant(0),
+        }
     }
 }
 impl Serialize for SensorType {
@@ -14997,6 +17657,17 @@ impl convert::From<u8> for BikeLightNetworkConfigType {
 impl convert::From<i64> for BikeLightNetworkConfigType {
     fn from(value: i64) -> Self {
         BikeLightNetworkConfigType::from(value as u8)
+    }
+}
+impl convert::From<&str> for BikeLightNetworkConfigType {
+    fn from(value: &str) -> Self {
+        match value {
+            "auto" => BikeLightNetworkConfigType::Auto,
+            "individual" => BikeLightNetworkConfigType::Individual,
+            "high_visibility" => BikeLightNetworkConfigType::HighVisibility,
+            "trail" => BikeLightNetworkConfigType::Trail,
+            &_ => BikeLightNetworkConfigType::UnknownVariant(0),
+        }
     }
 }
 impl Serialize for BikeLightNetworkConfigType {
@@ -15063,6 +17734,17 @@ impl convert::From<i64> for CommTimeoutType {
         CommTimeoutType::from(value as u16)
     }
 }
+impl convert::From<&str> for CommTimeoutType {
+    fn from(value: &str) -> Self {
+        match value {
+            "wildcard_pairing_timeout" => CommTimeoutType::WildcardPairingTimeout,
+            "pairing_timeout" => CommTimeoutType::PairingTimeout,
+            "connection_lost" => CommTimeoutType::ConnectionLost,
+            "connection_timeout" => CommTimeoutType::ConnectionTimeout,
+            &_ => CommTimeoutType::Value(0),
+        }
+    }
+}
 impl Serialize for CommTimeoutType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -15126,6 +17808,17 @@ impl convert::From<i64> for CameraOrientationType {
         CameraOrientationType::from(value as u8)
     }
 }
+impl convert::From<&str> for CameraOrientationType {
+    fn from(value: &str) -> Self {
+        match value {
+            "camera_orientation_0" => CameraOrientationType::CameraOrientation0,
+            "camera_orientation_90" => CameraOrientationType::CameraOrientation90,
+            "camera_orientation_180" => CameraOrientationType::CameraOrientation180,
+            "camera_orientation_270" => CameraOrientationType::CameraOrientation270,
+            &_ => CameraOrientationType::UnknownVariant(0),
+        }
+    }
+}
 impl Serialize for CameraOrientationType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -15184,6 +17877,17 @@ impl convert::From<u8> for AttitudeStage {
 impl convert::From<i64> for AttitudeStage {
     fn from(value: i64) -> Self {
         AttitudeStage::from(value as u8)
+    }
+}
+impl convert::From<&str> for AttitudeStage {
+    fn from(value: &str) -> Self {
+        match value {
+            "failed" => AttitudeStage::Failed,
+            "aligning" => AttitudeStage::Aligning,
+            "degraded" => AttitudeStage::Degraded,
+            "valid" => AttitudeStage::Valid,
+            &_ => AttitudeStage::UnknownVariant(0),
+        }
     }
 }
 impl Serialize for AttitudeStage {
@@ -15296,6 +18000,26 @@ impl convert::From<i64> for AttitudeValidity {
         AttitudeValidity::from(value as u16)
     }
 }
+impl convert::From<&str> for AttitudeValidity {
+    fn from(value: &str) -> Self {
+        match value {
+            "track_angle_heading_valid" => AttitudeValidity::TrackAngleHeadingValid,
+            "pitch_valid" => AttitudeValidity::PitchValid,
+            "roll_valid" => AttitudeValidity::RollValid,
+            "lateral_body_accel_valid" => AttitudeValidity::LateralBodyAccelValid,
+            "normal_body_accel_valid" => AttitudeValidity::NormalBodyAccelValid,
+            "turn_rate_valid" => AttitudeValidity::TurnRateValid,
+            "hw_fail" => AttitudeValidity::HwFail,
+            "mag_invalid" => AttitudeValidity::MagInvalid,
+            "no_gps" => AttitudeValidity::NoGps,
+            "gps_invalid" => AttitudeValidity::GpsInvalid,
+            "solution_coasting" => AttitudeValidity::SolutionCoasting,
+            "true_track_angle" => AttitudeValidity::TrueTrackAngle,
+            "magnetic_heading" => AttitudeValidity::MagneticHeading,
+            &_ => AttitudeValidity::Value(0),
+        }
+    }
+}
 impl Serialize for AttitudeValidity {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -15361,6 +18085,18 @@ impl convert::From<u8> for AutoSyncFrequency {
 impl convert::From<i64> for AutoSyncFrequency {
     fn from(value: i64) -> Self {
         AutoSyncFrequency::from(value as u8)
+    }
+}
+impl convert::From<&str> for AutoSyncFrequency {
+    fn from(value: &str) -> Self {
+        match value {
+            "never" => AutoSyncFrequency::Never,
+            "occasionally" => AutoSyncFrequency::Occasionally,
+            "frequent" => AutoSyncFrequency::Frequent,
+            "once_a_day" => AutoSyncFrequency::OnceADay,
+            "remote" => AutoSyncFrequency::Remote,
+            &_ => AutoSyncFrequency::UnknownVariant(0),
+        }
     }
 }
 impl Serialize for AutoSyncFrequency {
@@ -15442,6 +18178,22 @@ impl convert::From<u8> for ExdLayout {
 impl convert::From<i64> for ExdLayout {
     fn from(value: i64) -> Self {
         ExdLayout::from(value as u8)
+    }
+}
+impl convert::From<&str> for ExdLayout {
+    fn from(value: &str) -> Self {
+        match value {
+            "full_screen" => ExdLayout::FullScreen,
+            "half_vertical" => ExdLayout::HalfVertical,
+            "half_horizontal" => ExdLayout::HalfHorizontal,
+            "half_vertical_right_split" => ExdLayout::HalfVerticalRightSplit,
+            "half_horizontal_bottom_split" => ExdLayout::HalfHorizontalBottomSplit,
+            "full_quarter_split" => ExdLayout::FullQuarterSplit,
+            "half_vertical_left_split" => ExdLayout::HalfVerticalLeftSplit,
+            "half_horizontal_top_split" => ExdLayout::HalfHorizontalTopSplit,
+            "dynamic" => ExdLayout::Dynamic,
+            &_ => ExdLayout::UnknownVariant(0),
+        }
     }
 }
 impl Serialize for ExdLayout {
@@ -15530,6 +18282,24 @@ impl convert::From<u8> for ExdDisplayType {
 impl convert::From<i64> for ExdDisplayType {
     fn from(value: i64) -> Self {
         ExdDisplayType::from(value as u8)
+    }
+}
+impl convert::From<&str> for ExdDisplayType {
+    fn from(value: &str) -> Self {
+        match value {
+            "numerical" => ExdDisplayType::Numerical,
+            "simple" => ExdDisplayType::Simple,
+            "graph" => ExdDisplayType::Graph,
+            "bar" => ExdDisplayType::Bar,
+            "circle_graph" => ExdDisplayType::CircleGraph,
+            "virtual_partner" => ExdDisplayType::VirtualPartner,
+            "balance" => ExdDisplayType::Balance,
+            "string_list" => ExdDisplayType::StringList,
+            "string" => ExdDisplayType::String,
+            "simple_dynamic_icon" => ExdDisplayType::SimpleDynamicIcon,
+            "gauge" => ExdDisplayType::Gauge,
+            &_ => ExdDisplayType::UnknownVariant(0),
+        }
     }
 }
 impl Serialize for ExdDisplayType {
@@ -15778,6 +18548,63 @@ impl convert::From<u8> for ExdDataUnits {
 impl convert::From<i64> for ExdDataUnits {
     fn from(value: i64) -> Self {
         ExdDataUnits::from(value as u8)
+    }
+}
+impl convert::From<&str> for ExdDataUnits {
+    fn from(value: &str) -> Self {
+        match value {
+            "no_units" => ExdDataUnits::NoUnits,
+            "laps" => ExdDataUnits::Laps,
+            "miles_per_hour" => ExdDataUnits::MilesPerHour,
+            "kilometers_per_hour" => ExdDataUnits::KilometersPerHour,
+            "feet_per_hour" => ExdDataUnits::FeetPerHour,
+            "meters_per_hour" => ExdDataUnits::MetersPerHour,
+            "degrees_celsius" => ExdDataUnits::DegreesCelsius,
+            "degrees_farenheit" => ExdDataUnits::DegreesFarenheit,
+            "zone" => ExdDataUnits::Zone,
+            "gear" => ExdDataUnits::Gear,
+            "rpm" => ExdDataUnits::Rpm,
+            "bpm" => ExdDataUnits::Bpm,
+            "degrees" => ExdDataUnits::Degrees,
+            "millimeters" => ExdDataUnits::Millimeters,
+            "meters" => ExdDataUnits::Meters,
+            "kilometers" => ExdDataUnits::Kilometers,
+            "feet" => ExdDataUnits::Feet,
+            "yards" => ExdDataUnits::Yards,
+            "kilofeet" => ExdDataUnits::Kilofeet,
+            "miles" => ExdDataUnits::Miles,
+            "time" => ExdDataUnits::Time,
+            "enum_turn_type" => ExdDataUnits::EnumTurnType,
+            "percent" => ExdDataUnits::Percent,
+            "watts" => ExdDataUnits::Watts,
+            "watts_per_kilogram" => ExdDataUnits::WattsPerKilogram,
+            "enum_battery_status" => ExdDataUnits::EnumBatteryStatus,
+            "enum_bike_light_beam_angle_mode" => ExdDataUnits::EnumBikeLightBeamAngleMode,
+            "enum_bike_light_battery_status" => ExdDataUnits::EnumBikeLightBatteryStatus,
+            "enum_bike_light_network_config_type" => ExdDataUnits::EnumBikeLightNetworkConfigType,
+            "lights" => ExdDataUnits::Lights,
+            "seconds" => ExdDataUnits::Seconds,
+            "minutes" => ExdDataUnits::Minutes,
+            "hours" => ExdDataUnits::Hours,
+            "calories" => ExdDataUnits::Calories,
+            "kilojoules" => ExdDataUnits::Kilojoules,
+            "milliseconds" => ExdDataUnits::Milliseconds,
+            "second_per_mile" => ExdDataUnits::SecondPerMile,
+            "second_per_kilometer" => ExdDataUnits::SecondPerKilometer,
+            "centimeter" => ExdDataUnits::Centimeter,
+            "enum_course_point" => ExdDataUnits::EnumCoursePoint,
+            "bradians" => ExdDataUnits::Bradians,
+            "enum_sport" => ExdDataUnits::EnumSport,
+            "inches_hg" => ExdDataUnits::InchesHg,
+            "mm_hg" => ExdDataUnits::MmHg,
+            "mbars" => ExdDataUnits::Mbars,
+            "hecto_pascals" => ExdDataUnits::HectoPascals,
+            "feet_per_min" => ExdDataUnits::FeetPerMin,
+            "meters_per_min" => ExdDataUnits::MetersPerMin,
+            "meters_per_sec" => ExdDataUnits::MetersPerSec,
+            "eight_cardinal" => ExdDataUnits::EightCardinal,
+            &_ => ExdDataUnits::UnknownVariant(0),
+        }
     }
 }
 impl Serialize for ExdDataUnits {
@@ -16043,6 +18870,57 @@ impl convert::From<u8> for ExdQualifiers {
 impl convert::From<i64> for ExdQualifiers {
     fn from(value: i64) -> Self {
         ExdQualifiers::from(value as u8)
+    }
+}
+impl convert::From<&str> for ExdQualifiers {
+    fn from(value: &str) -> Self {
+        match value {
+            "no_qualifier" => ExdQualifiers::NoQualifier,
+            "instantaneous" => ExdQualifiers::Instantaneous,
+            "average" => ExdQualifiers::Average,
+            "lap" => ExdQualifiers::Lap,
+            "maximum" => ExdQualifiers::Maximum,
+            "maximum_average" => ExdQualifiers::MaximumAverage,
+            "maximum_lap" => ExdQualifiers::MaximumLap,
+            "last_lap" => ExdQualifiers::LastLap,
+            "average_lap" => ExdQualifiers::AverageLap,
+            "to_destination" => ExdQualifiers::ToDestination,
+            "to_go" => ExdQualifiers::ToGo,
+            "to_next" => ExdQualifiers::ToNext,
+            "next_course_point" => ExdQualifiers::NextCoursePoint,
+            "total" => ExdQualifiers::Total,
+            "three_second_average" => ExdQualifiers::ThreeSecondAverage,
+            "ten_second_average" => ExdQualifiers::TenSecondAverage,
+            "thirty_second_average" => ExdQualifiers::ThirtySecondAverage,
+            "percent_maximum" => ExdQualifiers::PercentMaximum,
+            "percent_maximum_average" => ExdQualifiers::PercentMaximumAverage,
+            "lap_percent_maximum" => ExdQualifiers::LapPercentMaximum,
+            "elapsed" => ExdQualifiers::Elapsed,
+            "sunrise" => ExdQualifiers::Sunrise,
+            "sunset" => ExdQualifiers::Sunset,
+            "compared_to_virtual_partner" => ExdQualifiers::ComparedToVirtualPartner,
+            "maximum_24h" => ExdQualifiers::Maximum24h,
+            "minimum_24h" => ExdQualifiers::Minimum24h,
+            "minimum" => ExdQualifiers::Minimum,
+            "first" => ExdQualifiers::First,
+            "second" => ExdQualifiers::Second,
+            "third" => ExdQualifiers::Third,
+            "shifter" => ExdQualifiers::Shifter,
+            "last_sport" => ExdQualifiers::LastSport,
+            "moving" => ExdQualifiers::Moving,
+            "stopped" => ExdQualifiers::Stopped,
+            "estimated_total" => ExdQualifiers::EstimatedTotal,
+            "zone_9" => ExdQualifiers::Zone9,
+            "zone_8" => ExdQualifiers::Zone8,
+            "zone_7" => ExdQualifiers::Zone7,
+            "zone_6" => ExdQualifiers::Zone6,
+            "zone_5" => ExdQualifiers::Zone5,
+            "zone_4" => ExdQualifiers::Zone4,
+            "zone_3" => ExdQualifiers::Zone3,
+            "zone_2" => ExdQualifiers::Zone2,
+            "zone_1" => ExdQualifiers::Zone1,
+            &_ => ExdQualifiers::UnknownVariant(0),
+        }
     }
 }
 impl Serialize for ExdQualifiers {
@@ -16488,6 +19366,112 @@ impl convert::From<i64> for ExdDescriptors {
         ExdDescriptors::from(value as u8)
     }
 }
+impl convert::From<&str> for ExdDescriptors {
+    fn from(value: &str) -> Self {
+        match value {
+            "bike_light_battery_status" => ExdDescriptors::BikeLightBatteryStatus,
+            "beam_angle_status" => ExdDescriptors::BeamAngleStatus,
+            "batery_level" => ExdDescriptors::BateryLevel,
+            "light_network_mode" => ExdDescriptors::LightNetworkMode,
+            "number_lights_connected" => ExdDescriptors::NumberLightsConnected,
+            "cadence" => ExdDescriptors::Cadence,
+            "distance" => ExdDescriptors::Distance,
+            "estimated_time_of_arrival" => ExdDescriptors::EstimatedTimeOfArrival,
+            "heading" => ExdDescriptors::Heading,
+            "time" => ExdDescriptors::Time,
+            "battery_level" => ExdDescriptors::BatteryLevel,
+            "trainer_resistance" => ExdDescriptors::TrainerResistance,
+            "trainer_target_power" => ExdDescriptors::TrainerTargetPower,
+            "time_seated" => ExdDescriptors::TimeSeated,
+            "time_standing" => ExdDescriptors::TimeStanding,
+            "elevation" => ExdDescriptors::Elevation,
+            "grade" => ExdDescriptors::Grade,
+            "ascent" => ExdDescriptors::Ascent,
+            "descent" => ExdDescriptors::Descent,
+            "vertical_speed" => ExdDescriptors::VerticalSpeed,
+            "di2_battery_level" => ExdDescriptors::Di2BatteryLevel,
+            "front_gear" => ExdDescriptors::FrontGear,
+            "rear_gear" => ExdDescriptors::RearGear,
+            "gear_ratio" => ExdDescriptors::GearRatio,
+            "heart_rate" => ExdDescriptors::HeartRate,
+            "heart_rate_zone" => ExdDescriptors::HeartRateZone,
+            "time_in_heart_rate_zone" => ExdDescriptors::TimeInHeartRateZone,
+            "heart_rate_reserve" => ExdDescriptors::HeartRateReserve,
+            "calories" => ExdDescriptors::Calories,
+            "gps_accuracy" => ExdDescriptors::GpsAccuracy,
+            "gps_signal_strength" => ExdDescriptors::GpsSignalStrength,
+            "temperature" => ExdDescriptors::Temperature,
+            "time_of_day" => ExdDescriptors::TimeOfDay,
+            "balance" => ExdDescriptors::Balance,
+            "pedal_smoothness" => ExdDescriptors::PedalSmoothness,
+            "power" => ExdDescriptors::Power,
+            "functional_threshold_power" => ExdDescriptors::FunctionalThresholdPower,
+            "intensity_factor" => ExdDescriptors::IntensityFactor,
+            "work" => ExdDescriptors::Work,
+            "power_ratio" => ExdDescriptors::PowerRatio,
+            "normalized_power" => ExdDescriptors::NormalizedPower,
+            "training_stress_Score" => ExdDescriptors::TrainingStressScore,
+            "time_on_zone" => ExdDescriptors::TimeOnZone,
+            "speed" => ExdDescriptors::Speed,
+            "laps" => ExdDescriptors::Laps,
+            "reps" => ExdDescriptors::Reps,
+            "workout_step" => ExdDescriptors::WorkoutStep,
+            "course_distance" => ExdDescriptors::CourseDistance,
+            "navigation_distance" => ExdDescriptors::NavigationDistance,
+            "course_estimated_time_of_arrival" => ExdDescriptors::CourseEstimatedTimeOfArrival,
+            "navigation_estimated_time_of_arrival" => {
+                ExdDescriptors::NavigationEstimatedTimeOfArrival
+            }
+            "course_time" => ExdDescriptors::CourseTime,
+            "navigation_time" => ExdDescriptors::NavigationTime,
+            "course_heading" => ExdDescriptors::CourseHeading,
+            "navigation_heading" => ExdDescriptors::NavigationHeading,
+            "power_zone" => ExdDescriptors::PowerZone,
+            "torque_effectiveness" => ExdDescriptors::TorqueEffectiveness,
+            "timer_time" => ExdDescriptors::TimerTime,
+            "power_weight_ratio" => ExdDescriptors::PowerWeightRatio,
+            "left_platform_center_offset" => ExdDescriptors::LeftPlatformCenterOffset,
+            "right_platform_center_offset" => ExdDescriptors::RightPlatformCenterOffset,
+            "left_power_phase_start_angle" => ExdDescriptors::LeftPowerPhaseStartAngle,
+            "right_power_phase_start_angle" => ExdDescriptors::RightPowerPhaseStartAngle,
+            "left_power_phase_finish_angle" => ExdDescriptors::LeftPowerPhaseFinishAngle,
+            "right_power_phase_finish_angle" => ExdDescriptors::RightPowerPhaseFinishAngle,
+            "gears" => ExdDescriptors::Gears,
+            "pace" => ExdDescriptors::Pace,
+            "training_effect" => ExdDescriptors::TrainingEffect,
+            "vertical_oscillation" => ExdDescriptors::VerticalOscillation,
+            "vertical_ratio" => ExdDescriptors::VerticalRatio,
+            "ground_contact_time" => ExdDescriptors::GroundContactTime,
+            "left_ground_contact_time_balance" => ExdDescriptors::LeftGroundContactTimeBalance,
+            "right_ground_contact_time_balance" => ExdDescriptors::RightGroundContactTimeBalance,
+            "stride_length" => ExdDescriptors::StrideLength,
+            "running_cadence" => ExdDescriptors::RunningCadence,
+            "performance_condition" => ExdDescriptors::PerformanceCondition,
+            "course_type" => ExdDescriptors::CourseType,
+            "time_in_power_zone" => ExdDescriptors::TimeInPowerZone,
+            "navigation_turn" => ExdDescriptors::NavigationTurn,
+            "course_location" => ExdDescriptors::CourseLocation,
+            "navigation_location" => ExdDescriptors::NavigationLocation,
+            "compass" => ExdDescriptors::Compass,
+            "gear_combo" => ExdDescriptors::GearCombo,
+            "muscle_oxygen" => ExdDescriptors::MuscleOxygen,
+            "icon" => ExdDescriptors::Icon,
+            "compass_heading" => ExdDescriptors::CompassHeading,
+            "gps_heading" => ExdDescriptors::GpsHeading,
+            "gps_elevation" => ExdDescriptors::GpsElevation,
+            "anaerobic_training_effect" => ExdDescriptors::AnaerobicTrainingEffect,
+            "course" => ExdDescriptors::Course,
+            "off_course" => ExdDescriptors::OffCourse,
+            "glide_ratio" => ExdDescriptors::GlideRatio,
+            "vertical_distance" => ExdDescriptors::VerticalDistance,
+            "vmg" => ExdDescriptors::Vmg,
+            "ambient_pressure" => ExdDescriptors::AmbientPressure,
+            "pressure" => ExdDescriptors::Pressure,
+            "vam" => ExdDescriptors::Vam,
+            &_ => ExdDescriptors::UnknownVariant(0),
+        }
+    }
+}
 impl Serialize for ExdDescriptors {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -16558,6 +19542,20 @@ impl convert::From<u32> for AutoActivityDetect {
 impl convert::From<i64> for AutoActivityDetect {
     fn from(value: i64) -> Self {
         AutoActivityDetect::from(value as u32)
+    }
+}
+impl convert::From<&str> for AutoActivityDetect {
+    fn from(value: &str) -> Self {
+        match value {
+            "none" => AutoActivityDetect::None,
+            "running" => AutoActivityDetect::Running,
+            "cycling" => AutoActivityDetect::Cycling,
+            "swimming" => AutoActivityDetect::Swimming,
+            "walking" => AutoActivityDetect::Walking,
+            "elliptical" => AutoActivityDetect::Elliptical,
+            "sedentary" => AutoActivityDetect::Sedentary,
+            &_ => AutoActivityDetect::Value(0),
+        }
     }
 }
 impl Serialize for AutoActivityDetect {
@@ -16648,6 +19646,21 @@ impl convert::From<u32> for SupportedExdScreenLayouts {
 impl convert::From<i64> for SupportedExdScreenLayouts {
     fn from(value: i64) -> Self {
         SupportedExdScreenLayouts::from(value as u32)
+    }
+}
+impl convert::From<&str> for SupportedExdScreenLayouts {
+    fn from(value: &str) -> Self {
+        match value {
+            "full_screen" => SupportedExdScreenLayouts::FullScreen,
+            "half_vertical" => SupportedExdScreenLayouts::HalfVertical,
+            "half_horizontal" => SupportedExdScreenLayouts::HalfHorizontal,
+            "half_vertical_right_split" => SupportedExdScreenLayouts::HalfVerticalRightSplit,
+            "half_horizontal_bottom_split" => SupportedExdScreenLayouts::HalfHorizontalBottomSplit,
+            "full_quarter_split" => SupportedExdScreenLayouts::FullQuarterSplit,
+            "half_vertical_left_split" => SupportedExdScreenLayouts::HalfVerticalLeftSplit,
+            "half_horizontal_top_split" => SupportedExdScreenLayouts::HalfHorizontalTopSplit,
+            &_ => SupportedExdScreenLayouts::Value(0),
+        }
     }
 }
 impl Serialize for SupportedExdScreenLayouts {
@@ -16781,6 +19794,30 @@ impl convert::From<u8> for FitBaseType {
 impl convert::From<i64> for FitBaseType {
     fn from(value: i64) -> Self {
         FitBaseType::from(value as u8)
+    }
+}
+impl convert::From<&str> for FitBaseType {
+    fn from(value: &str) -> Self {
+        match value {
+            "enum" => FitBaseType::Enum,
+            "sint8" => FitBaseType::Sint8,
+            "uint8" => FitBaseType::Uint8,
+            "string" => FitBaseType::String,
+            "uint8z" => FitBaseType::Uint8z,
+            "byte" => FitBaseType::Byte,
+            "sint16" => FitBaseType::Sint16,
+            "uint16" => FitBaseType::Uint16,
+            "sint32" => FitBaseType::Sint32,
+            "uint32" => FitBaseType::Uint32,
+            "float32" => FitBaseType::Float32,
+            "float64" => FitBaseType::Float64,
+            "uint16z" => FitBaseType::Uint16z,
+            "uint32z" => FitBaseType::Uint32z,
+            "sint64" => FitBaseType::Sint64,
+            "uint64" => FitBaseType::Uint64,
+            "uint64z" => FitBaseType::Uint64z,
+            &_ => FitBaseType::Value(0),
+        }
     }
 }
 impl Serialize for FitBaseType {
@@ -16982,6 +20019,51 @@ impl convert::From<i64> for TurnType {
         TurnType::from(value as u8)
     }
 }
+impl convert::From<&str> for TurnType {
+    fn from(value: &str) -> Self {
+        match value {
+            "arriving_idx" => TurnType::ArrivingIdx,
+            "arriving_left_idx" => TurnType::ArrivingLeftIdx,
+            "arriving_right_idx" => TurnType::ArrivingRightIdx,
+            "arriving_via_idx" => TurnType::ArrivingViaIdx,
+            "arriving_via_left_idx" => TurnType::ArrivingViaLeftIdx,
+            "arriving_via_right_idx" => TurnType::ArrivingViaRightIdx,
+            "bear_keep_left_idx" => TurnType::BearKeepLeftIdx,
+            "bear_keep_right_idx" => TurnType::BearKeepRightIdx,
+            "continue_idx" => TurnType::ContinueIdx,
+            "exit_left_idx" => TurnType::ExitLeftIdx,
+            "exit_right_idx" => TurnType::ExitRightIdx,
+            "ferry_idx" => TurnType::FerryIdx,
+            "roundabout_45_idx" => TurnType::Roundabout45Idx,
+            "roundabout_90_idx" => TurnType::Roundabout90Idx,
+            "roundabout_135_idx" => TurnType::Roundabout135Idx,
+            "roundabout_180_idx" => TurnType::Roundabout180Idx,
+            "roundabout_225_idx" => TurnType::Roundabout225Idx,
+            "roundabout_270_idx" => TurnType::Roundabout270Idx,
+            "roundabout_315_idx" => TurnType::Roundabout315Idx,
+            "roundabout_360_idx" => TurnType::Roundabout360Idx,
+            "roundabout_neg_45_idx" => TurnType::RoundaboutNeg45Idx,
+            "roundabout_neg_90_idx" => TurnType::RoundaboutNeg90Idx,
+            "roundabout_neg_135_idx" => TurnType::RoundaboutNeg135Idx,
+            "roundabout_neg_180_idx" => TurnType::RoundaboutNeg180Idx,
+            "roundabout_neg_225_idx" => TurnType::RoundaboutNeg225Idx,
+            "roundabout_neg_270_idx" => TurnType::RoundaboutNeg270Idx,
+            "roundabout_neg_315_idx" => TurnType::RoundaboutNeg315Idx,
+            "roundabout_neg_360_idx" => TurnType::RoundaboutNeg360Idx,
+            "roundabout_generic_idx" => TurnType::RoundaboutGenericIdx,
+            "roundabout_neg_generic_idx" => TurnType::RoundaboutNegGenericIdx,
+            "sharp_turn_left_idx" => TurnType::SharpTurnLeftIdx,
+            "sharp_turn_right_idx" => TurnType::SharpTurnRightIdx,
+            "turn_left_idx" => TurnType::TurnLeftIdx,
+            "turn_right_idx" => TurnType::TurnRightIdx,
+            "uturn_left_idx" => TurnType::UturnLeftIdx,
+            "uturn_right_idx" => TurnType::UturnRightIdx,
+            "icon_inv_idx" => TurnType::IconInvIdx,
+            "icon_idx_cnt" => TurnType::IconIdxCnt,
+            &_ => TurnType::UnknownVariant(0),
+        }
+    }
+}
 impl Serialize for TurnType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -17032,6 +20114,15 @@ impl convert::From<u8> for BikeLightBeamAngleMode {
 impl convert::From<i64> for BikeLightBeamAngleMode {
     fn from(value: i64) -> Self {
         BikeLightBeamAngleMode::from(value as u8)
+    }
+}
+impl convert::From<&str> for BikeLightBeamAngleMode {
+    fn from(value: &str) -> Self {
+        match value {
+            "manual" => BikeLightBeamAngleMode::Manual,
+            "auto" => BikeLightBeamAngleMode::Auto,
+            &_ => BikeLightBeamAngleMode::Value(0),
+        }
     }
 }
 impl Serialize for BikeLightBeamAngleMode {
@@ -17093,6 +20184,16 @@ impl convert::From<i64> for FitBaseUnit {
         FitBaseUnit::from(value as u16)
     }
 }
+impl convert::From<&str> for FitBaseUnit {
+    fn from(value: &str) -> Self {
+        match value {
+            "other" => FitBaseUnit::Other,
+            "kilogram" => FitBaseUnit::Kilogram,
+            "pound" => FitBaseUnit::Pound,
+            &_ => FitBaseUnit::Value(0),
+        }
+    }
+}
 impl Serialize for FitBaseUnit {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -17148,6 +20249,15 @@ impl convert::From<i64> for SetType {
         SetType::from(value as u8)
     }
 }
+impl convert::From<&str> for SetType {
+    fn from(value: &str) -> Self {
+        match value {
+            "rest" => SetType::Rest,
+            "active" => SetType::Active,
+            &_ => SetType::Value(0),
+        }
+    }
+}
 impl Serialize for SetType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -17201,6 +20311,15 @@ impl convert::From<u8> for MaxMetCategory {
 impl convert::From<i64> for MaxMetCategory {
     fn from(value: i64) -> Self {
         MaxMetCategory::from(value as u8)
+    }
+}
+impl convert::From<&str> for MaxMetCategory {
+    fn from(value: &str) -> Self {
+        match value {
+            "generic" => MaxMetCategory::Generic,
+            "cycling" => MaxMetCategory::Cycling,
+            &_ => MaxMetCategory::UnknownVariant(0),
+        }
     }
 }
 impl Serialize for MaxMetCategory {
@@ -17418,6 +20537,47 @@ impl convert::From<i64> for ExerciseCategory {
         ExerciseCategory::from(value as u16)
     }
 }
+impl convert::From<&str> for ExerciseCategory {
+    fn from(value: &str) -> Self {
+        match value {
+            "bench_press" => ExerciseCategory::BenchPress,
+            "calf_raise" => ExerciseCategory::CalfRaise,
+            "cardio" => ExerciseCategory::Cardio,
+            "carry" => ExerciseCategory::Carry,
+            "chop" => ExerciseCategory::Chop,
+            "core" => ExerciseCategory::Core,
+            "crunch" => ExerciseCategory::Crunch,
+            "curl" => ExerciseCategory::Curl,
+            "deadlift" => ExerciseCategory::Deadlift,
+            "flye" => ExerciseCategory::Flye,
+            "hip_raise" => ExerciseCategory::HipRaise,
+            "hip_stability" => ExerciseCategory::HipStability,
+            "hip_swing" => ExerciseCategory::HipSwing,
+            "hyperextension" => ExerciseCategory::Hyperextension,
+            "lateral_raise" => ExerciseCategory::LateralRaise,
+            "leg_curl" => ExerciseCategory::LegCurl,
+            "leg_raise" => ExerciseCategory::LegRaise,
+            "lunge" => ExerciseCategory::Lunge,
+            "olympic_lift" => ExerciseCategory::OlympicLift,
+            "plank" => ExerciseCategory::Plank,
+            "plyo" => ExerciseCategory::Plyo,
+            "pull_up" => ExerciseCategory::PullUp,
+            "push_up" => ExerciseCategory::PushUp,
+            "row" => ExerciseCategory::Row,
+            "shoulder_press" => ExerciseCategory::ShoulderPress,
+            "shoulder_stability" => ExerciseCategory::ShoulderStability,
+            "shrug" => ExerciseCategory::Shrug,
+            "sit_up" => ExerciseCategory::SitUp,
+            "squat" => ExerciseCategory::Squat,
+            "total_body" => ExerciseCategory::TotalBody,
+            "triceps_extension" => ExerciseCategory::TricepsExtension,
+            "warm_up" => ExerciseCategory::WarmUp,
+            "run" => ExerciseCategory::Run,
+            "unknown" => ExerciseCategory::Unknown,
+            &_ => ExerciseCategory::Value(0),
+        }
+    }
+}
 impl Serialize for ExerciseCategory {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -17613,6 +20773,60 @@ impl convert::From<i64> for BenchPressExerciseName {
         BenchPressExerciseName::from(value as u16)
     }
 }
+impl convert::From<&str> for BenchPressExerciseName {
+    fn from(value: &str) -> Self {
+        match value {
+            "alternating_dumbbell_chest_press_on_swiss_ball" => {
+                BenchPressExerciseName::AlternatingDumbbellChestPressOnSwissBall
+            }
+            "barbell_bench_press" => BenchPressExerciseName::BarbellBenchPress,
+            "barbell_board_bench_press" => BenchPressExerciseName::BarbellBoardBenchPress,
+            "barbell_floor_press" => BenchPressExerciseName::BarbellFloorPress,
+            "close_grip_barbell_bench_press" => BenchPressExerciseName::CloseGripBarbellBenchPress,
+            "decline_dumbbell_bench_press" => BenchPressExerciseName::DeclineDumbbellBenchPress,
+            "dumbbell_bench_press" => BenchPressExerciseName::DumbbellBenchPress,
+            "dumbbell_floor_press" => BenchPressExerciseName::DumbbellFloorPress,
+            "incline_barbell_bench_press" => BenchPressExerciseName::InclineBarbellBenchPress,
+            "incline_dumbbell_bench_press" => BenchPressExerciseName::InclineDumbbellBenchPress,
+            "incline_smith_machine_bench_press" => {
+                BenchPressExerciseName::InclineSmithMachineBenchPress
+            }
+            "isometric_barbell_bench_press" => BenchPressExerciseName::IsometricBarbellBenchPress,
+            "kettlebell_chest_press" => BenchPressExerciseName::KettlebellChestPress,
+            "neutral_grip_dumbbell_bench_press" => {
+                BenchPressExerciseName::NeutralGripDumbbellBenchPress
+            }
+            "neutral_grip_dumbbell_incline_bench_press" => {
+                BenchPressExerciseName::NeutralGripDumbbellInclineBenchPress
+            }
+            "one_arm_floor_press" => BenchPressExerciseName::OneArmFloorPress,
+            "weighted_one_arm_floor_press" => BenchPressExerciseName::WeightedOneArmFloorPress,
+            "partial_lockout" => BenchPressExerciseName::PartialLockout,
+            "reverse_grip_barbell_bench_press" => {
+                BenchPressExerciseName::ReverseGripBarbellBenchPress
+            }
+            "reverse_grip_incline_bench_press" => {
+                BenchPressExerciseName::ReverseGripInclineBenchPress
+            }
+            "single_arm_cable_chest_press" => BenchPressExerciseName::SingleArmCableChestPress,
+            "single_arm_dumbbell_bench_press" => {
+                BenchPressExerciseName::SingleArmDumbbellBenchPress
+            }
+            "smith_machine_bench_press" => BenchPressExerciseName::SmithMachineBenchPress,
+            "swiss_ball_dumbbell_chest_press" => {
+                BenchPressExerciseName::SwissBallDumbbellChestPress
+            }
+            "triple_stop_barbell_bench_press" => {
+                BenchPressExerciseName::TripleStopBarbellBenchPress
+            }
+            "wide_grip_barbell_bench_press" => BenchPressExerciseName::WideGripBarbellBenchPress,
+            "alternating_dumbbell_chest_press" => {
+                BenchPressExerciseName::AlternatingDumbbellChestPress
+            }
+            &_ => BenchPressExerciseName::Value(0),
+        }
+    }
+}
 impl Serialize for BenchPressExerciseName {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -17776,6 +20990,44 @@ impl convert::From<i64> for CalfRaiseExerciseName {
         CalfRaiseExerciseName::from(value as u16)
     }
 }
+impl convert::From<&str> for CalfRaiseExerciseName {
+    fn from(value: &str) -> Self {
+        match value {
+            "3_way_calf_raise" => CalfRaiseExerciseName::Name3WayCalfRaise,
+            "3_way_weighted_calf_raise" => CalfRaiseExerciseName::Name3WayWeightedCalfRaise,
+            "3_way_single_leg_calf_raise" => CalfRaiseExerciseName::Name3WaySingleLegCalfRaise,
+            "3_way_weighted_single_leg_calf_raise" => {
+                CalfRaiseExerciseName::Name3WayWeightedSingleLegCalfRaise
+            }
+            "donkey_calf_raise" => CalfRaiseExerciseName::DonkeyCalfRaise,
+            "weighted_donkey_calf_raise" => CalfRaiseExerciseName::WeightedDonkeyCalfRaise,
+            "seated_calf_raise" => CalfRaiseExerciseName::SeatedCalfRaise,
+            "weighted_seated_calf_raise" => CalfRaiseExerciseName::WeightedSeatedCalfRaise,
+            "seated_dumbbell_toe_raise" => CalfRaiseExerciseName::SeatedDumbbellToeRaise,
+            "single_leg_bent_knee_calf_raise" => CalfRaiseExerciseName::SingleLegBentKneeCalfRaise,
+            "weighted_single_leg_bent_knee_calf_raise" => {
+                CalfRaiseExerciseName::WeightedSingleLegBentKneeCalfRaise
+            }
+            "single_leg_decline_push_up" => CalfRaiseExerciseName::SingleLegDeclinePushUp,
+            "single_leg_donkey_calf_raise" => CalfRaiseExerciseName::SingleLegDonkeyCalfRaise,
+            "weighted_single_leg_donkey_calf_raise" => {
+                CalfRaiseExerciseName::WeightedSingleLegDonkeyCalfRaise
+            }
+            "single_leg_hip_raise_with_knee_hold" => {
+                CalfRaiseExerciseName::SingleLegHipRaiseWithKneeHold
+            }
+            "single_leg_standing_calf_raise" => CalfRaiseExerciseName::SingleLegStandingCalfRaise,
+            "single_leg_standing_dumbbell_calf_raise" => {
+                CalfRaiseExerciseName::SingleLegStandingDumbbellCalfRaise
+            }
+            "standing_barbell_calf_raise" => CalfRaiseExerciseName::StandingBarbellCalfRaise,
+            "standing_calf_raise" => CalfRaiseExerciseName::StandingCalfRaise,
+            "weighted_standing_calf_raise" => CalfRaiseExerciseName::WeightedStandingCalfRaise,
+            "standing_dumbbell_calf_raise" => CalfRaiseExerciseName::StandingDumbbellCalfRaise,
+            &_ => CalfRaiseExerciseName::Value(0),
+        }
+    }
+}
 impl Serialize for CalfRaiseExerciseName {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -17915,6 +21167,35 @@ impl convert::From<i64> for CardioExerciseName {
         CardioExerciseName::from(value as u16)
     }
 }
+impl convert::From<&str> for CardioExerciseName {
+    fn from(value: &str) -> Self {
+        match value {
+            "bob_and_weave_circle" => CardioExerciseName::BobAndWeaveCircle,
+            "weighted_bob_and_weave_circle" => CardioExerciseName::WeightedBobAndWeaveCircle,
+            "cardio_core_crawl" => CardioExerciseName::CardioCoreCrawl,
+            "weighted_cardio_core_crawl" => CardioExerciseName::WeightedCardioCoreCrawl,
+            "double_under" => CardioExerciseName::DoubleUnder,
+            "weighted_double_under" => CardioExerciseName::WeightedDoubleUnder,
+            "jump_rope" => CardioExerciseName::JumpRope,
+            "weighted_jump_rope" => CardioExerciseName::WeightedJumpRope,
+            "jump_rope_crossover" => CardioExerciseName::JumpRopeCrossover,
+            "weighted_jump_rope_crossover" => CardioExerciseName::WeightedJumpRopeCrossover,
+            "jump_rope_jog" => CardioExerciseName::JumpRopeJog,
+            "weighted_jump_rope_jog" => CardioExerciseName::WeightedJumpRopeJog,
+            "jumping_jacks" => CardioExerciseName::JumpingJacks,
+            "weighted_jumping_jacks" => CardioExerciseName::WeightedJumpingJacks,
+            "ski_moguls" => CardioExerciseName::SkiMoguls,
+            "weighted_ski_moguls" => CardioExerciseName::WeightedSkiMoguls,
+            "split_jacks" => CardioExerciseName::SplitJacks,
+            "weighted_split_jacks" => CardioExerciseName::WeightedSplitJacks,
+            "squat_jacks" => CardioExerciseName::SquatJacks,
+            "weighted_squat_jacks" => CardioExerciseName::WeightedSquatJacks,
+            "triple_under" => CardioExerciseName::TripleUnder,
+            "weighted_triple_under" => CardioExerciseName::WeightedTripleUnder,
+            &_ => CardioExerciseName::Value(0),
+        }
+    }
+}
 impl Serialize for CardioExerciseName {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -17980,6 +21261,18 @@ impl convert::From<u16> for CarryExerciseName {
 impl convert::From<i64> for CarryExerciseName {
     fn from(value: i64) -> Self {
         CarryExerciseName::from(value as u16)
+    }
+}
+impl convert::From<&str> for CarryExerciseName {
+    fn from(value: &str) -> Self {
+        match value {
+            "bar_holds" => CarryExerciseName::BarHolds,
+            "farmers_walk" => CarryExerciseName::FarmersWalk,
+            "farmers_walk_on_toes" => CarryExerciseName::FarmersWalkOnToes,
+            "hex_dumbbell_hold" => CarryExerciseName::HexDumbbellHold,
+            "overhead_carry" => CarryExerciseName::OverheadCarry,
+            &_ => CarryExerciseName::Value(0),
+        }
     }
 }
 impl Serialize for CarryExerciseName {
@@ -18137,6 +21430,42 @@ impl convert::From<u16> for ChopExerciseName {
 impl convert::From<i64> for ChopExerciseName {
     fn from(value: i64) -> Self {
         ChopExerciseName::from(value as u16)
+    }
+}
+impl convert::From<&str> for ChopExerciseName {
+    fn from(value: &str) -> Self {
+        match value {
+            "cable_pull_through" => ChopExerciseName::CablePullThrough,
+            "cable_rotational_lift" => ChopExerciseName::CableRotationalLift,
+            "cable_woodchop" => ChopExerciseName::CableWoodchop,
+            "cross_chop_to_knee" => ChopExerciseName::CrossChopToKnee,
+            "weighted_cross_chop_to_knee" => ChopExerciseName::WeightedCrossChopToKnee,
+            "dumbbell_chop" => ChopExerciseName::DumbbellChop,
+            "half_kneeling_rotation" => ChopExerciseName::HalfKneelingRotation,
+            "weighted_half_kneeling_rotation" => ChopExerciseName::WeightedHalfKneelingRotation,
+            "half_kneeling_rotational_chop" => ChopExerciseName::HalfKneelingRotationalChop,
+            "half_kneeling_rotational_reverse_chop" => {
+                ChopExerciseName::HalfKneelingRotationalReverseChop
+            }
+            "half_kneeling_stability_chop" => ChopExerciseName::HalfKneelingStabilityChop,
+            "half_kneeling_stability_reverse_chop" => {
+                ChopExerciseName::HalfKneelingStabilityReverseChop
+            }
+            "kneeling_rotational_chop" => ChopExerciseName::KneelingRotationalChop,
+            "kneeling_rotational_reverse_chop" => ChopExerciseName::KneelingRotationalReverseChop,
+            "kneeling_stability_chop" => ChopExerciseName::KneelingStabilityChop,
+            "kneeling_woodchopper" => ChopExerciseName::KneelingWoodchopper,
+            "medicine_ball_wood_chops" => ChopExerciseName::MedicineBallWoodChops,
+            "power_squat_chops" => ChopExerciseName::PowerSquatChops,
+            "weighted_power_squat_chops" => ChopExerciseName::WeightedPowerSquatChops,
+            "standing_rotational_chop" => ChopExerciseName::StandingRotationalChop,
+            "standing_split_rotational_chop" => ChopExerciseName::StandingSplitRotationalChop,
+            "standing_split_rotational_reverse_chop" => {
+                ChopExerciseName::StandingSplitRotationalReverseChop
+            }
+            "standing_stability_reverse_chop" => ChopExerciseName::StandingStabilityReverseChop,
+            &_ => ChopExerciseName::Value(0),
+        }
     }
 }
 impl Serialize for ChopExerciseName {
@@ -18497,6 +21826,88 @@ impl convert::From<u16> for CoreExerciseName {
 impl convert::From<i64> for CoreExerciseName {
     fn from(value: i64) -> Self {
         CoreExerciseName::from(value as u16)
+    }
+}
+impl convert::From<&str> for CoreExerciseName {
+    fn from(value: &str) -> Self {
+        match value {
+            "abs_jabs" => CoreExerciseName::AbsJabs,
+            "weighted_abs_jabs" => CoreExerciseName::WeightedAbsJabs,
+            "alternating_plate_reach" => CoreExerciseName::AlternatingPlateReach,
+            "barbell_rollout" => CoreExerciseName::BarbellRollout,
+            "weighted_barbell_rollout" => CoreExerciseName::WeightedBarbellRollout,
+            "body_bar_oblique_twist" => CoreExerciseName::BodyBarObliqueTwist,
+            "cable_core_press" => CoreExerciseName::CableCorePress,
+            "cable_side_bend" => CoreExerciseName::CableSideBend,
+            "side_bend" => CoreExerciseName::SideBend,
+            "weighted_side_bend" => CoreExerciseName::WeightedSideBend,
+            "crescent_circle" => CoreExerciseName::CrescentCircle,
+            "weighted_crescent_circle" => CoreExerciseName::WeightedCrescentCircle,
+            "cycling_russian_twist" => CoreExerciseName::CyclingRussianTwist,
+            "weighted_cycling_russian_twist" => CoreExerciseName::WeightedCyclingRussianTwist,
+            "elevated_feet_russian_twist" => CoreExerciseName::ElevatedFeetRussianTwist,
+            "weighted_elevated_feet_russian_twist" => {
+                CoreExerciseName::WeightedElevatedFeetRussianTwist
+            }
+            "half_turkish_get_up" => CoreExerciseName::HalfTurkishGetUp,
+            "kettlebell_windmill" => CoreExerciseName::KettlebellWindmill,
+            "kneeling_ab_wheel" => CoreExerciseName::KneelingAbWheel,
+            "weighted_kneeling_ab_wheel" => CoreExerciseName::WeightedKneelingAbWheel,
+            "modified_front_lever" => CoreExerciseName::ModifiedFrontLever,
+            "open_knee_tucks" => CoreExerciseName::OpenKneeTucks,
+            "weighted_open_knee_tucks" => CoreExerciseName::WeightedOpenKneeTucks,
+            "side_abs_leg_lift" => CoreExerciseName::SideAbsLegLift,
+            "weighted_side_abs_leg_lift" => CoreExerciseName::WeightedSideAbsLegLift,
+            "swiss_ball_jackknife" => CoreExerciseName::SwissBallJackknife,
+            "weighted_swiss_ball_jackknife" => CoreExerciseName::WeightedSwissBallJackknife,
+            "swiss_ball_pike" => CoreExerciseName::SwissBallPike,
+            "weighted_swiss_ball_pike" => CoreExerciseName::WeightedSwissBallPike,
+            "swiss_ball_rollout" => CoreExerciseName::SwissBallRollout,
+            "weighted_swiss_ball_rollout" => CoreExerciseName::WeightedSwissBallRollout,
+            "triangle_hip_press" => CoreExerciseName::TriangleHipPress,
+            "weighted_triangle_hip_press" => CoreExerciseName::WeightedTriangleHipPress,
+            "trx_suspended_jackknife" => CoreExerciseName::TrxSuspendedJackknife,
+            "weighted_trx_suspended_jackknife" => CoreExerciseName::WeightedTrxSuspendedJackknife,
+            "u_boat" => CoreExerciseName::UBoat,
+            "weighted_u_boat" => CoreExerciseName::WeightedUBoat,
+            "windmill_switches" => CoreExerciseName::WindmillSwitches,
+            "weighted_windmill_switches" => CoreExerciseName::WeightedWindmillSwitches,
+            "alternating_slide_out" => CoreExerciseName::AlternatingSlideOut,
+            "weighted_alternating_slide_out" => CoreExerciseName::WeightedAlternatingSlideOut,
+            "ghd_back_extensions" => CoreExerciseName::GhdBackExtensions,
+            "weighted_ghd_back_extensions" => CoreExerciseName::WeightedGhdBackExtensions,
+            "overhead_walk" => CoreExerciseName::OverheadWalk,
+            "inchworm" => CoreExerciseName::Inchworm,
+            "weighted_modified_front_lever" => CoreExerciseName::WeightedModifiedFrontLever,
+            "russian_twist" => CoreExerciseName::RussianTwist,
+            "abdominal_leg_rotations" => CoreExerciseName::AbdominalLegRotations,
+            "arm_and_leg_extension_on_knees" => CoreExerciseName::ArmAndLegExtensionOnKnees,
+            "bicycle" => CoreExerciseName::Bicycle,
+            "bicep_curl_with_leg_extension" => CoreExerciseName::BicepCurlWithLegExtension,
+            "cat_cow" => CoreExerciseName::CatCow,
+            "corkscrew" => CoreExerciseName::Corkscrew,
+            "criss_cross" => CoreExerciseName::CrissCross,
+            "criss_cross_with_ball" => CoreExerciseName::CrissCrossWithBall,
+            "double_leg_stretch" => CoreExerciseName::DoubleLegStretch,
+            "knee_folds" => CoreExerciseName::KneeFolds,
+            "lower_lift" => CoreExerciseName::LowerLift,
+            "neck_pull" => CoreExerciseName::NeckPull,
+            "pelvic_clocks" => CoreExerciseName::PelvicClocks,
+            "roll_over" => CoreExerciseName::RollOver,
+            "roll_up" => CoreExerciseName::RollUp,
+            "rolling" => CoreExerciseName::Rolling,
+            "rowing_1" => CoreExerciseName::Rowing1,
+            "rowing_2" => CoreExerciseName::Rowing2,
+            "scissors" => CoreExerciseName::Scissors,
+            "single_leg_circles" => CoreExerciseName::SingleLegCircles,
+            "single_leg_stretch" => CoreExerciseName::SingleLegStretch,
+            "snake_twist_1_and_2" => CoreExerciseName::SnakeTwist1And2,
+            "swan" => CoreExerciseName::Swan,
+            "swimming" => CoreExerciseName::Swimming,
+            "teaser" => CoreExerciseName::Teaser,
+            "the_hundred" => CoreExerciseName::TheHundred,
+            &_ => CoreExerciseName::Value(0),
+        }
     }
 }
 impl Serialize for CoreExerciseName {
@@ -18946,6 +22357,134 @@ impl convert::From<i64> for CrunchExerciseName {
         CrunchExerciseName::from(value as u16)
     }
 }
+impl convert::From<&str> for CrunchExerciseName {
+    fn from(value: &str) -> Self {
+        match value {
+            "bicycle_crunch" => CrunchExerciseName::BicycleCrunch,
+            "cable_crunch" => CrunchExerciseName::CableCrunch,
+            "circular_arm_crunch" => CrunchExerciseName::CircularArmCrunch,
+            "crossed_arms_crunch" => CrunchExerciseName::CrossedArmsCrunch,
+            "weighted_crossed_arms_crunch" => CrunchExerciseName::WeightedCrossedArmsCrunch,
+            "cross_leg_reverse_crunch" => CrunchExerciseName::CrossLegReverseCrunch,
+            "weighted_cross_leg_reverse_crunch" => {
+                CrunchExerciseName::WeightedCrossLegReverseCrunch
+            }
+            "crunch_chop" => CrunchExerciseName::CrunchChop,
+            "weighted_crunch_chop" => CrunchExerciseName::WeightedCrunchChop,
+            "double_crunch" => CrunchExerciseName::DoubleCrunch,
+            "weighted_double_crunch" => CrunchExerciseName::WeightedDoubleCrunch,
+            "elbow_to_knee_crunch" => CrunchExerciseName::ElbowToKneeCrunch,
+            "weighted_elbow_to_knee_crunch" => CrunchExerciseName::WeightedElbowToKneeCrunch,
+            "flutter_kicks" => CrunchExerciseName::FlutterKicks,
+            "weighted_flutter_kicks" => CrunchExerciseName::WeightedFlutterKicks,
+            "foam_roller_reverse_crunch_on_bench" => {
+                CrunchExerciseName::FoamRollerReverseCrunchOnBench
+            }
+            "weighted_foam_roller_reverse_crunch_on_bench" => {
+                CrunchExerciseName::WeightedFoamRollerReverseCrunchOnBench
+            }
+            "foam_roller_reverse_crunch_with_dumbbell" => {
+                CrunchExerciseName::FoamRollerReverseCrunchWithDumbbell
+            }
+            "foam_roller_reverse_crunch_with_medicine_ball" => {
+                CrunchExerciseName::FoamRollerReverseCrunchWithMedicineBall
+            }
+            "frog_press" => CrunchExerciseName::FrogPress,
+            "hanging_knee_raise_oblique_crunch" => {
+                CrunchExerciseName::HangingKneeRaiseObliqueCrunch
+            }
+            "weighted_hanging_knee_raise_oblique_crunch" => {
+                CrunchExerciseName::WeightedHangingKneeRaiseObliqueCrunch
+            }
+            "hip_crossover" => CrunchExerciseName::HipCrossover,
+            "weighted_hip_crossover" => CrunchExerciseName::WeightedHipCrossover,
+            "hollow_rock" => CrunchExerciseName::HollowRock,
+            "weighted_hollow_rock" => CrunchExerciseName::WeightedHollowRock,
+            "incline_reverse_crunch" => CrunchExerciseName::InclineReverseCrunch,
+            "weighted_incline_reverse_crunch" => CrunchExerciseName::WeightedInclineReverseCrunch,
+            "kneeling_cable_crunch" => CrunchExerciseName::KneelingCableCrunch,
+            "kneeling_cross_crunch" => CrunchExerciseName::KneelingCrossCrunch,
+            "weighted_kneeling_cross_crunch" => CrunchExerciseName::WeightedKneelingCrossCrunch,
+            "kneeling_oblique_cable_crunch" => CrunchExerciseName::KneelingObliqueCableCrunch,
+            "knees_to_elbow" => CrunchExerciseName::KneesToElbow,
+            "leg_extensions" => CrunchExerciseName::LegExtensions,
+            "weighted_leg_extensions" => CrunchExerciseName::WeightedLegExtensions,
+            "leg_levers" => CrunchExerciseName::LegLevers,
+            "mcgill_curl_up" => CrunchExerciseName::McgillCurlUp,
+            "weighted_mcgill_curl_up" => CrunchExerciseName::WeightedMcgillCurlUp,
+            "modified_pilates_roll_up_with_ball" => {
+                CrunchExerciseName::ModifiedPilatesRollUpWithBall
+            }
+            "weighted_modified_pilates_roll_up_with_ball" => {
+                CrunchExerciseName::WeightedModifiedPilatesRollUpWithBall
+            }
+            "pilates_crunch" => CrunchExerciseName::PilatesCrunch,
+            "weighted_pilates_crunch" => CrunchExerciseName::WeightedPilatesCrunch,
+            "pilates_roll_up_with_ball" => CrunchExerciseName::PilatesRollUpWithBall,
+            "weighted_pilates_roll_up_with_ball" => {
+                CrunchExerciseName::WeightedPilatesRollUpWithBall
+            }
+            "raised_legs_crunch" => CrunchExerciseName::RaisedLegsCrunch,
+            "weighted_raised_legs_crunch" => CrunchExerciseName::WeightedRaisedLegsCrunch,
+            "reverse_crunch" => CrunchExerciseName::ReverseCrunch,
+            "weighted_reverse_crunch" => CrunchExerciseName::WeightedReverseCrunch,
+            "reverse_crunch_on_a_bench" => CrunchExerciseName::ReverseCrunchOnABench,
+            "weighted_reverse_crunch_on_a_bench" => {
+                CrunchExerciseName::WeightedReverseCrunchOnABench
+            }
+            "reverse_curl_and_lift" => CrunchExerciseName::ReverseCurlAndLift,
+            "weighted_reverse_curl_and_lift" => CrunchExerciseName::WeightedReverseCurlAndLift,
+            "rotational_lift" => CrunchExerciseName::RotationalLift,
+            "weighted_rotational_lift" => CrunchExerciseName::WeightedRotationalLift,
+            "seated_alternating_reverse_crunch" => {
+                CrunchExerciseName::SeatedAlternatingReverseCrunch
+            }
+            "weighted_seated_alternating_reverse_crunch" => {
+                CrunchExerciseName::WeightedSeatedAlternatingReverseCrunch
+            }
+            "seated_leg_u" => CrunchExerciseName::SeatedLegU,
+            "weighted_seated_leg_u" => CrunchExerciseName::WeightedSeatedLegU,
+            "side_to_side_crunch_and_weave" => CrunchExerciseName::SideToSideCrunchAndWeave,
+            "weighted_side_to_side_crunch_and_weave" => {
+                CrunchExerciseName::WeightedSideToSideCrunchAndWeave
+            }
+            "single_leg_reverse_crunch" => CrunchExerciseName::SingleLegReverseCrunch,
+            "weighted_single_leg_reverse_crunch" => {
+                CrunchExerciseName::WeightedSingleLegReverseCrunch
+            }
+            "skater_crunch_cross" => CrunchExerciseName::SkaterCrunchCross,
+            "weighted_skater_crunch_cross" => CrunchExerciseName::WeightedSkaterCrunchCross,
+            "standing_cable_crunch" => CrunchExerciseName::StandingCableCrunch,
+            "standing_side_crunch" => CrunchExerciseName::StandingSideCrunch,
+            "step_climb" => CrunchExerciseName::StepClimb,
+            "weighted_step_climb" => CrunchExerciseName::WeightedStepClimb,
+            "swiss_ball_crunch" => CrunchExerciseName::SwissBallCrunch,
+            "swiss_ball_reverse_crunch" => CrunchExerciseName::SwissBallReverseCrunch,
+            "weighted_swiss_ball_reverse_crunch" => {
+                CrunchExerciseName::WeightedSwissBallReverseCrunch
+            }
+            "swiss_ball_russian_twist" => CrunchExerciseName::SwissBallRussianTwist,
+            "weighted_swiss_ball_russian_twist" => {
+                CrunchExerciseName::WeightedSwissBallRussianTwist
+            }
+            "swiss_ball_side_crunch" => CrunchExerciseName::SwissBallSideCrunch,
+            "weighted_swiss_ball_side_crunch" => CrunchExerciseName::WeightedSwissBallSideCrunch,
+            "thoracic_crunches_on_foam_roller" => CrunchExerciseName::ThoracicCrunchesOnFoamRoller,
+            "weighted_thoracic_crunches_on_foam_roller" => {
+                CrunchExerciseName::WeightedThoracicCrunchesOnFoamRoller
+            }
+            "triceps_crunch" => CrunchExerciseName::TricepsCrunch,
+            "weighted_bicycle_crunch" => CrunchExerciseName::WeightedBicycleCrunch,
+            "weighted_crunch" => CrunchExerciseName::WeightedCrunch,
+            "weighted_swiss_ball_crunch" => CrunchExerciseName::WeightedSwissBallCrunch,
+            "toes_to_bar" => CrunchExerciseName::ToesToBar,
+            "weighted_toes_to_bar" => CrunchExerciseName::WeightedToesToBar,
+            "crunch" => CrunchExerciseName::Crunch,
+            "straight_leg_crunch_with_ball" => CrunchExerciseName::StraightLegCrunchWithBall,
+            &_ => CrunchExerciseName::Value(0),
+        }
+    }
+}
 impl Serialize for CrunchExerciseName {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -19211,6 +22750,77 @@ impl convert::From<i64> for CurlExerciseName {
         CurlExerciseName::from(value as u16)
     }
 }
+impl convert::From<&str> for CurlExerciseName {
+    fn from(value: &str) -> Self {
+        match value {
+            "alternating_dumbbell_biceps_curl" => CurlExerciseName::AlternatingDumbbellBicepsCurl,
+            "alternating_dumbbell_biceps_curl_on_swiss_ball" => {
+                CurlExerciseName::AlternatingDumbbellBicepsCurlOnSwissBall
+            }
+            "alternating_incline_dumbbell_biceps_curl" => {
+                CurlExerciseName::AlternatingInclineDumbbellBicepsCurl
+            }
+            "barbell_biceps_curl" => CurlExerciseName::BarbellBicepsCurl,
+            "barbell_reverse_wrist_curl" => CurlExerciseName::BarbellReverseWristCurl,
+            "barbell_wrist_curl" => CurlExerciseName::BarbellWristCurl,
+            "behind_the_back_barbell_reverse_wrist_curl" => {
+                CurlExerciseName::BehindTheBackBarbellReverseWristCurl
+            }
+            "behind_the_back_one_arm_cable_curl" => CurlExerciseName::BehindTheBackOneArmCableCurl,
+            "cable_biceps_curl" => CurlExerciseName::CableBicepsCurl,
+            "cable_hammer_curl" => CurlExerciseName::CableHammerCurl,
+            "cheating_barbell_biceps_curl" => CurlExerciseName::CheatingBarbellBicepsCurl,
+            "close_grip_ez_bar_biceps_curl" => CurlExerciseName::CloseGripEzBarBicepsCurl,
+            "cross_body_dumbbell_hammer_curl" => CurlExerciseName::CrossBodyDumbbellHammerCurl,
+            "dead_hang_biceps_curl" => CurlExerciseName::DeadHangBicepsCurl,
+            "decline_hammer_curl" => CurlExerciseName::DeclineHammerCurl,
+            "dumbbell_biceps_curl_with_static_hold" => {
+                CurlExerciseName::DumbbellBicepsCurlWithStaticHold
+            }
+            "dumbbell_hammer_curl" => CurlExerciseName::DumbbellHammerCurl,
+            "dumbbell_reverse_wrist_curl" => CurlExerciseName::DumbbellReverseWristCurl,
+            "dumbbell_wrist_curl" => CurlExerciseName::DumbbellWristCurl,
+            "ez_bar_preacher_curl" => CurlExerciseName::EzBarPreacherCurl,
+            "forward_bend_biceps_curl" => CurlExerciseName::ForwardBendBicepsCurl,
+            "hammer_curl_to_press" => CurlExerciseName::HammerCurlToPress,
+            "incline_dumbbell_biceps_curl" => CurlExerciseName::InclineDumbbellBicepsCurl,
+            "incline_offset_thumb_dumbbell_curl" => {
+                CurlExerciseName::InclineOffsetThumbDumbbellCurl
+            }
+            "kettlebell_biceps_curl" => CurlExerciseName::KettlebellBicepsCurl,
+            "lying_concentration_cable_curl" => CurlExerciseName::LyingConcentrationCableCurl,
+            "one_arm_preacher_curl" => CurlExerciseName::OneArmPreacherCurl,
+            "plate_pinch_curl" => CurlExerciseName::PlatePinchCurl,
+            "preacher_curl_with_cable" => CurlExerciseName::PreacherCurlWithCable,
+            "reverse_ez_bar_curl" => CurlExerciseName::ReverseEzBarCurl,
+            "reverse_grip_wrist_curl" => CurlExerciseName::ReverseGripWristCurl,
+            "reverse_grip_barbell_biceps_curl" => CurlExerciseName::ReverseGripBarbellBicepsCurl,
+            "seated_alternating_dumbbell_biceps_curl" => {
+                CurlExerciseName::SeatedAlternatingDumbbellBicepsCurl
+            }
+            "seated_dumbbell_biceps_curl" => CurlExerciseName::SeatedDumbbellBicepsCurl,
+            "seated_reverse_dumbbell_curl" => CurlExerciseName::SeatedReverseDumbbellCurl,
+            "split_stance_offset_pinky_dumbbell_curl" => {
+                CurlExerciseName::SplitStanceOffsetPinkyDumbbellCurl
+            }
+            "standing_alternating_dumbbell_curls" => {
+                CurlExerciseName::StandingAlternatingDumbbellCurls
+            }
+            "standing_dumbbell_biceps_curl" => CurlExerciseName::StandingDumbbellBicepsCurl,
+            "standing_ez_bar_biceps_curl" => CurlExerciseName::StandingEzBarBicepsCurl,
+            "static_curl" => CurlExerciseName::StaticCurl,
+            "swiss_ball_dumbbell_overhead_triceps_extension" => {
+                CurlExerciseName::SwissBallDumbbellOverheadTricepsExtension
+            }
+            "swiss_ball_ez_bar_preacher_curl" => CurlExerciseName::SwissBallEzBarPreacherCurl,
+            "twisting_standing_dumbbell_biceps_curl" => {
+                CurlExerciseName::TwistingStandingDumbbellBicepsCurl
+            }
+            "wide_grip_ez_bar_biceps_curl" => CurlExerciseName::WideGripEzBarBicepsCurl,
+            &_ => CurlExerciseName::Value(0),
+        }
+    }
+}
 impl Serialize for CurlExerciseName {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -19352,6 +22962,42 @@ impl convert::From<i64> for DeadliftExerciseName {
         DeadliftExerciseName::from(value as u16)
     }
 }
+impl convert::From<&str> for DeadliftExerciseName {
+    fn from(value: &str) -> Self {
+        match value {
+            "barbell_deadlift" => DeadliftExerciseName::BarbellDeadlift,
+            "barbell_straight_leg_deadlift" => DeadliftExerciseName::BarbellStraightLegDeadlift,
+            "dumbbell_deadlift" => DeadliftExerciseName::DumbbellDeadlift,
+            "dumbbell_single_leg_deadlift_to_row" => {
+                DeadliftExerciseName::DumbbellSingleLegDeadliftToRow
+            }
+            "dumbbell_straight_leg_deadlift" => DeadliftExerciseName::DumbbellStraightLegDeadlift,
+            "kettlebell_floor_to_shelf" => DeadliftExerciseName::KettlebellFloorToShelf,
+            "one_arm_one_leg_deadlift" => DeadliftExerciseName::OneArmOneLegDeadlift,
+            "rack_pull" => DeadliftExerciseName::RackPull,
+            "rotational_dumbbell_straight_leg_deadlift" => {
+                DeadliftExerciseName::RotationalDumbbellStraightLegDeadlift
+            }
+            "single_arm_deadlift" => DeadliftExerciseName::SingleArmDeadlift,
+            "single_leg_barbell_deadlift" => DeadliftExerciseName::SingleLegBarbellDeadlift,
+            "single_leg_barbell_straight_leg_deadlift" => {
+                DeadliftExerciseName::SingleLegBarbellStraightLegDeadlift
+            }
+            "single_leg_deadlift_with_barbell" => {
+                DeadliftExerciseName::SingleLegDeadliftWithBarbell
+            }
+            "single_leg_rdl_circuit" => DeadliftExerciseName::SingleLegRdlCircuit,
+            "single_leg_romanian_deadlift_with_dumbbell" => {
+                DeadliftExerciseName::SingleLegRomanianDeadliftWithDumbbell
+            }
+            "sumo_deadlift" => DeadliftExerciseName::SumoDeadlift,
+            "sumo_deadlift_high_pull" => DeadliftExerciseName::SumoDeadliftHighPull,
+            "trap_bar_deadlift" => DeadliftExerciseName::TrapBarDeadlift,
+            "wide_grip_barbell_deadlift" => DeadliftExerciseName::WideGripBarbellDeadlift,
+            &_ => DeadliftExerciseName::Value(0),
+        }
+    }
+}
 impl Serialize for DeadliftExerciseName {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -19439,6 +23085,25 @@ impl convert::From<u16> for FlyeExerciseName {
 impl convert::From<i64> for FlyeExerciseName {
     fn from(value: i64) -> Self {
         FlyeExerciseName::from(value as u16)
+    }
+}
+impl convert::From<&str> for FlyeExerciseName {
+    fn from(value: &str) -> Self {
+        match value {
+            "cable_crossover" => FlyeExerciseName::CableCrossover,
+            "decline_dumbbell_flye" => FlyeExerciseName::DeclineDumbbellFlye,
+            "dumbbell_flye" => FlyeExerciseName::DumbbellFlye,
+            "incline_dumbbell_flye" => FlyeExerciseName::InclineDumbbellFlye,
+            "kettlebell_flye" => FlyeExerciseName::KettlebellFlye,
+            "kneeling_rear_flye" => FlyeExerciseName::KneelingRearFlye,
+            "single_arm_standing_cable_reverse_flye" => {
+                FlyeExerciseName::SingleArmStandingCableReverseFlye
+            }
+            "swiss_ball_dumbbell_flye" => FlyeExerciseName::SwissBallDumbbellFlye,
+            "arm_rotations" => FlyeExerciseName::ArmRotations,
+            "hug_a_tree" => FlyeExerciseName::HugATree,
+            &_ => FlyeExerciseName::Value(0),
+        }
     }
 }
 impl Serialize for FlyeExerciseName {
@@ -19759,6 +23424,111 @@ impl convert::From<i64> for HipRaiseExerciseName {
         HipRaiseExerciseName::from(value as u16)
     }
 }
+impl convert::From<&str> for HipRaiseExerciseName {
+    fn from(value: &str) -> Self {
+        match value {
+            "barbell_hip_thrust_on_floor" => HipRaiseExerciseName::BarbellHipThrustOnFloor,
+            "barbell_hip_thrust_with_bench" => HipRaiseExerciseName::BarbellHipThrustWithBench,
+            "bent_knee_swiss_ball_reverse_hip_raise" => {
+                HipRaiseExerciseName::BentKneeSwissBallReverseHipRaise
+            }
+            "weighted_bent_knee_swiss_ball_reverse_hip_raise" => {
+                HipRaiseExerciseName::WeightedBentKneeSwissBallReverseHipRaise
+            }
+            "bridge_with_leg_extension" => HipRaiseExerciseName::BridgeWithLegExtension,
+            "weighted_bridge_with_leg_extension" => {
+                HipRaiseExerciseName::WeightedBridgeWithLegExtension
+            }
+            "clam_bridge" => HipRaiseExerciseName::ClamBridge,
+            "front_kick_tabletop" => HipRaiseExerciseName::FrontKickTabletop,
+            "weighted_front_kick_tabletop" => HipRaiseExerciseName::WeightedFrontKickTabletop,
+            "hip_extension_and_cross" => HipRaiseExerciseName::HipExtensionAndCross,
+            "weighted_hip_extension_and_cross" => {
+                HipRaiseExerciseName::WeightedHipExtensionAndCross
+            }
+            "hip_raise" => HipRaiseExerciseName::HipRaise,
+            "weighted_hip_raise" => HipRaiseExerciseName::WeightedHipRaise,
+            "hip_raise_with_feet_on_swiss_ball" => {
+                HipRaiseExerciseName::HipRaiseWithFeetOnSwissBall
+            }
+            "weighted_hip_raise_with_feet_on_swiss_ball" => {
+                HipRaiseExerciseName::WeightedHipRaiseWithFeetOnSwissBall
+            }
+            "hip_raise_with_head_on_bosu_ball" => HipRaiseExerciseName::HipRaiseWithHeadOnBosuBall,
+            "weighted_hip_raise_with_head_on_bosu_ball" => {
+                HipRaiseExerciseName::WeightedHipRaiseWithHeadOnBosuBall
+            }
+            "hip_raise_with_head_on_swiss_ball" => {
+                HipRaiseExerciseName::HipRaiseWithHeadOnSwissBall
+            }
+            "weighted_hip_raise_with_head_on_swiss_ball" => {
+                HipRaiseExerciseName::WeightedHipRaiseWithHeadOnSwissBall
+            }
+            "hip_raise_with_knee_squeeze" => HipRaiseExerciseName::HipRaiseWithKneeSqueeze,
+            "weighted_hip_raise_with_knee_squeeze" => {
+                HipRaiseExerciseName::WeightedHipRaiseWithKneeSqueeze
+            }
+            "incline_rear_leg_extension" => HipRaiseExerciseName::InclineRearLegExtension,
+            "weighted_incline_rear_leg_extension" => {
+                HipRaiseExerciseName::WeightedInclineRearLegExtension
+            }
+            "kettlebell_swing" => HipRaiseExerciseName::KettlebellSwing,
+            "marching_hip_raise" => HipRaiseExerciseName::MarchingHipRaise,
+            "weighted_marching_hip_raise" => HipRaiseExerciseName::WeightedMarchingHipRaise,
+            "marching_hip_raise_with_feet_on_a_swiss_ball" => {
+                HipRaiseExerciseName::MarchingHipRaiseWithFeetOnASwissBall
+            }
+            "weighted_marching_hip_raise_with_feet_on_a_swiss_ball" => {
+                HipRaiseExerciseName::WeightedMarchingHipRaiseWithFeetOnASwissBall
+            }
+            "reverse_hip_raise" => HipRaiseExerciseName::ReverseHipRaise,
+            "weighted_reverse_hip_raise" => HipRaiseExerciseName::WeightedReverseHipRaise,
+            "single_leg_hip_raise" => HipRaiseExerciseName::SingleLegHipRaise,
+            "weighted_single_leg_hip_raise" => HipRaiseExerciseName::WeightedSingleLegHipRaise,
+            "single_leg_hip_raise_with_foot_on_bench" => {
+                HipRaiseExerciseName::SingleLegHipRaiseWithFootOnBench
+            }
+            "weighted_single_leg_hip_raise_with_foot_on_bench" => {
+                HipRaiseExerciseName::WeightedSingleLegHipRaiseWithFootOnBench
+            }
+            "single_leg_hip_raise_with_foot_on_bosu_ball" => {
+                HipRaiseExerciseName::SingleLegHipRaiseWithFootOnBosuBall
+            }
+            "weighted_single_leg_hip_raise_with_foot_on_bosu_ball" => {
+                HipRaiseExerciseName::WeightedSingleLegHipRaiseWithFootOnBosuBall
+            }
+            "single_leg_hip_raise_with_foot_on_foam_roller" => {
+                HipRaiseExerciseName::SingleLegHipRaiseWithFootOnFoamRoller
+            }
+            "weighted_single_leg_hip_raise_with_foot_on_foam_roller" => {
+                HipRaiseExerciseName::WeightedSingleLegHipRaiseWithFootOnFoamRoller
+            }
+            "single_leg_hip_raise_with_foot_on_medicine_ball" => {
+                HipRaiseExerciseName::SingleLegHipRaiseWithFootOnMedicineBall
+            }
+            "weighted_single_leg_hip_raise_with_foot_on_medicine_ball" => {
+                HipRaiseExerciseName::WeightedSingleLegHipRaiseWithFootOnMedicineBall
+            }
+            "single_leg_hip_raise_with_head_on_bosu_ball" => {
+                HipRaiseExerciseName::SingleLegHipRaiseWithHeadOnBosuBall
+            }
+            "weighted_single_leg_hip_raise_with_head_on_bosu_ball" => {
+                HipRaiseExerciseName::WeightedSingleLegHipRaiseWithHeadOnBosuBall
+            }
+            "weighted_clam_bridge" => HipRaiseExerciseName::WeightedClamBridge,
+            "single_leg_swiss_ball_hip_raise_and_leg_curl" => {
+                HipRaiseExerciseName::SingleLegSwissBallHipRaiseAndLegCurl
+            }
+            "clams" => HipRaiseExerciseName::Clams,
+            "inner_thigh_circles" => HipRaiseExerciseName::InnerThighCircles,
+            "inner_thigh_side_lift" => HipRaiseExerciseName::InnerThighSideLift,
+            "leg_circles" => HipRaiseExerciseName::LegCircles,
+            "leg_lift" => HipRaiseExerciseName::LegLift,
+            "leg_lift_in_external_rotation" => HipRaiseExerciseName::LegLiftInExternalRotation,
+            &_ => HipRaiseExerciseName::Value(0),
+        }
+    }
+}
 impl Serialize for HipRaiseExerciseName {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -19978,6 +23748,63 @@ impl convert::From<i64> for HipStabilityExerciseName {
         HipStabilityExerciseName::from(value as u16)
     }
 }
+impl convert::From<&str> for HipStabilityExerciseName {
+    fn from(value: &str) -> Self {
+        match value {
+            "band_side_lying_leg_raise" => HipStabilityExerciseName::BandSideLyingLegRaise,
+            "dead_bug" => HipStabilityExerciseName::DeadBug,
+            "weighted_dead_bug" => HipStabilityExerciseName::WeightedDeadBug,
+            "external_hip_raise" => HipStabilityExerciseName::ExternalHipRaise,
+            "weighted_external_hip_raise" => HipStabilityExerciseName::WeightedExternalHipRaise,
+            "fire_hydrant_kicks" => HipStabilityExerciseName::FireHydrantKicks,
+            "weighted_fire_hydrant_kicks" => HipStabilityExerciseName::WeightedFireHydrantKicks,
+            "hip_circles" => HipStabilityExerciseName::HipCircles,
+            "weighted_hip_circles" => HipStabilityExerciseName::WeightedHipCircles,
+            "inner_thigh_lift" => HipStabilityExerciseName::InnerThighLift,
+            "weighted_inner_thigh_lift" => HipStabilityExerciseName::WeightedInnerThighLift,
+            "lateral_walks_with_band_at_ankles" => {
+                HipStabilityExerciseName::LateralWalksWithBandAtAnkles
+            }
+            "pretzel_side_kick" => HipStabilityExerciseName::PretzelSideKick,
+            "weighted_pretzel_side_kick" => HipStabilityExerciseName::WeightedPretzelSideKick,
+            "prone_hip_internal_rotation" => HipStabilityExerciseName::ProneHipInternalRotation,
+            "weighted_prone_hip_internal_rotation" => {
+                HipStabilityExerciseName::WeightedProneHipInternalRotation
+            }
+            "quadruped" => HipStabilityExerciseName::Quadruped,
+            "quadruped_hip_extension" => HipStabilityExerciseName::QuadrupedHipExtension,
+            "weighted_quadruped_hip_extension" => {
+                HipStabilityExerciseName::WeightedQuadrupedHipExtension
+            }
+            "quadruped_with_leg_lift" => HipStabilityExerciseName::QuadrupedWithLegLift,
+            "weighted_quadruped_with_leg_lift" => {
+                HipStabilityExerciseName::WeightedQuadrupedWithLegLift
+            }
+            "side_lying_leg_raise" => HipStabilityExerciseName::SideLyingLegRaise,
+            "weighted_side_lying_leg_raise" => HipStabilityExerciseName::WeightedSideLyingLegRaise,
+            "sliding_hip_adduction" => HipStabilityExerciseName::SlidingHipAdduction,
+            "weighted_sliding_hip_adduction" => {
+                HipStabilityExerciseName::WeightedSlidingHipAdduction
+            }
+            "standing_adduction" => HipStabilityExerciseName::StandingAdduction,
+            "weighted_standing_adduction" => HipStabilityExerciseName::WeightedStandingAdduction,
+            "standing_cable_hip_abduction" => HipStabilityExerciseName::StandingCableHipAbduction,
+            "standing_hip_abduction" => HipStabilityExerciseName::StandingHipAbduction,
+            "weighted_standing_hip_abduction" => {
+                HipStabilityExerciseName::WeightedStandingHipAbduction
+            }
+            "standing_rear_leg_raise" => HipStabilityExerciseName::StandingRearLegRaise,
+            "weighted_standing_rear_leg_raise" => {
+                HipStabilityExerciseName::WeightedStandingRearLegRaise
+            }
+            "supine_hip_internal_rotation" => HipStabilityExerciseName::SupineHipInternalRotation,
+            "weighted_supine_hip_internal_rotation" => {
+                HipStabilityExerciseName::WeightedSupineHipInternalRotation
+            }
+            &_ => HipStabilityExerciseName::Value(0),
+        }
+    }
+}
 impl Serialize for HipStabilityExerciseName {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -20037,6 +23864,16 @@ impl convert::From<u16> for HipSwingExerciseName {
 impl convert::From<i64> for HipSwingExerciseName {
     fn from(value: i64) -> Self {
         HipSwingExerciseName::from(value as u16)
+    }
+}
+impl convert::From<&str> for HipSwingExerciseName {
+    fn from(value: &str) -> Self {
+        match value {
+            "single_arm_kettlebell_swing" => HipSwingExerciseName::SingleArmKettlebellSwing,
+            "single_arm_dumbbell_swing" => HipSwingExerciseName::SingleArmDumbbellSwing,
+            "step_out_swing" => HipSwingExerciseName::StepOutSwing,
+            &_ => HipSwingExerciseName::Value(0),
+        }
     }
 }
 impl Serialize for HipSwingExerciseName {
@@ -20289,6 +24126,79 @@ impl convert::From<i64> for HyperextensionExerciseName {
         HyperextensionExerciseName::from(value as u16)
     }
 }
+impl convert::From<&str> for HyperextensionExerciseName {
+    fn from(value: &str) -> Self {
+        match value {
+            "back_extension_with_opposite_arm_and_leg_reach" => {
+                HyperextensionExerciseName::BackExtensionWithOppositeArmAndLegReach
+            }
+            "weighted_back_extension_with_opposite_arm_and_leg_reach" => {
+                HyperextensionExerciseName::WeightedBackExtensionWithOppositeArmAndLegReach
+            }
+            "base_rotations" => HyperextensionExerciseName::BaseRotations,
+            "weighted_base_rotations" => HyperextensionExerciseName::WeightedBaseRotations,
+            "bent_knee_reverse_hyperextension" => {
+                HyperextensionExerciseName::BentKneeReverseHyperextension
+            }
+            "weighted_bent_knee_reverse_hyperextension" => {
+                HyperextensionExerciseName::WeightedBentKneeReverseHyperextension
+            }
+            "hollow_hold_and_roll" => HyperextensionExerciseName::HollowHoldAndRoll,
+            "weighted_hollow_hold_and_roll" => {
+                HyperextensionExerciseName::WeightedHollowHoldAndRoll
+            }
+            "kicks" => HyperextensionExerciseName::Kicks,
+            "weighted_kicks" => HyperextensionExerciseName::WeightedKicks,
+            "knee_raises" => HyperextensionExerciseName::KneeRaises,
+            "weighted_knee_raises" => HyperextensionExerciseName::WeightedKneeRaises,
+            "kneeling_superman" => HyperextensionExerciseName::KneelingSuperman,
+            "weighted_kneeling_superman" => HyperextensionExerciseName::WeightedKneelingSuperman,
+            "lat_pull_down_with_row" => HyperextensionExerciseName::LatPullDownWithRow,
+            "medicine_ball_deadlift_to_reach" => {
+                HyperextensionExerciseName::MedicineBallDeadliftToReach
+            }
+            "one_arm_one_leg_row" => HyperextensionExerciseName::OneArmOneLegRow,
+            "one_arm_row_with_band" => HyperextensionExerciseName::OneArmRowWithBand,
+            "overhead_lunge_with_medicine_ball" => {
+                HyperextensionExerciseName::OverheadLungeWithMedicineBall
+            }
+            "plank_knee_tucks" => HyperextensionExerciseName::PlankKneeTucks,
+            "weighted_plank_knee_tucks" => HyperextensionExerciseName::WeightedPlankKneeTucks,
+            "side_step" => HyperextensionExerciseName::SideStep,
+            "weighted_side_step" => HyperextensionExerciseName::WeightedSideStep,
+            "single_leg_back_extension" => HyperextensionExerciseName::SingleLegBackExtension,
+            "weighted_single_leg_back_extension" => {
+                HyperextensionExerciseName::WeightedSingleLegBackExtension
+            }
+            "spine_extension" => HyperextensionExerciseName::SpineExtension,
+            "weighted_spine_extension" => HyperextensionExerciseName::WeightedSpineExtension,
+            "static_back_extension" => HyperextensionExerciseName::StaticBackExtension,
+            "weighted_static_back_extension" => {
+                HyperextensionExerciseName::WeightedStaticBackExtension
+            }
+            "superman_from_floor" => HyperextensionExerciseName::SupermanFromFloor,
+            "weighted_superman_from_floor" => HyperextensionExerciseName::WeightedSupermanFromFloor,
+            "swiss_ball_back_extension" => HyperextensionExerciseName::SwissBallBackExtension,
+            "weighted_swiss_ball_back_extension" => {
+                HyperextensionExerciseName::WeightedSwissBallBackExtension
+            }
+            "swiss_ball_hyperextension" => HyperextensionExerciseName::SwissBallHyperextension,
+            "weighted_swiss_ball_hyperextension" => {
+                HyperextensionExerciseName::WeightedSwissBallHyperextension
+            }
+            "swiss_ball_opposite_arm_and_leg_lift" => {
+                HyperextensionExerciseName::SwissBallOppositeArmAndLegLift
+            }
+            "weighted_swiss_ball_opposite_arm_and_leg_lift" => {
+                HyperextensionExerciseName::WeightedSwissBallOppositeArmAndLegLift
+            }
+            "superman_on_swiss_ball" => HyperextensionExerciseName::SupermanOnSwissBall,
+            "cobra" => HyperextensionExerciseName::Cobra,
+            "supine_floor_barre" => HyperextensionExerciseName::SupineFloorBarre,
+            &_ => HyperextensionExerciseName::Value(0),
+        }
+    }
+}
 impl Serialize for HyperextensionExerciseName {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -20488,6 +24398,57 @@ impl convert::From<i64> for LateralRaiseExerciseName {
         LateralRaiseExerciseName::from(value as u16)
     }
 }
+impl convert::From<&str> for LateralRaiseExerciseName {
+    fn from(value: &str) -> Self {
+        match value {
+            "45_degree_cable_external_rotation" => {
+                LateralRaiseExerciseName::Name45DegreeCableExternalRotation
+            }
+            "alternating_lateral_raise_with_static_hold" => {
+                LateralRaiseExerciseName::AlternatingLateralRaiseWithStaticHold
+            }
+            "bar_muscle_up" => LateralRaiseExerciseName::BarMuscleUp,
+            "bent_over_lateral_raise" => LateralRaiseExerciseName::BentOverLateralRaise,
+            "cable_diagonal_raise" => LateralRaiseExerciseName::CableDiagonalRaise,
+            "cable_front_raise" => LateralRaiseExerciseName::CableFrontRaise,
+            "calorie_row" => LateralRaiseExerciseName::CalorieRow,
+            "combo_shoulder_raise" => LateralRaiseExerciseName::ComboShoulderRaise,
+            "dumbbell_diagonal_raise" => LateralRaiseExerciseName::DumbbellDiagonalRaise,
+            "dumbbell_v_raise" => LateralRaiseExerciseName::DumbbellVRaise,
+            "front_raise" => LateralRaiseExerciseName::FrontRaise,
+            "leaning_dumbbell_lateral_raise" => {
+                LateralRaiseExerciseName::LeaningDumbbellLateralRaise
+            }
+            "lying_dumbbell_raise" => LateralRaiseExerciseName::LyingDumbbellRaise,
+            "muscle_up" => LateralRaiseExerciseName::MuscleUp,
+            "one_arm_cable_lateral_raise" => LateralRaiseExerciseName::OneArmCableLateralRaise,
+            "overhand_grip_rear_lateral_raise" => {
+                LateralRaiseExerciseName::OverhandGripRearLateralRaise
+            }
+            "plate_raises" => LateralRaiseExerciseName::PlateRaises,
+            "ring_dip" => LateralRaiseExerciseName::RingDip,
+            "weighted_ring_dip" => LateralRaiseExerciseName::WeightedRingDip,
+            "ring_muscle_up" => LateralRaiseExerciseName::RingMuscleUp,
+            "weighted_ring_muscle_up" => LateralRaiseExerciseName::WeightedRingMuscleUp,
+            "rope_climb" => LateralRaiseExerciseName::RopeClimb,
+            "weighted_rope_climb" => LateralRaiseExerciseName::WeightedRopeClimb,
+            "scaption" => LateralRaiseExerciseName::Scaption,
+            "seated_lateral_raise" => LateralRaiseExerciseName::SeatedLateralRaise,
+            "seated_rear_lateral_raise" => LateralRaiseExerciseName::SeatedRearLateralRaise,
+            "side_lying_lateral_raise" => LateralRaiseExerciseName::SideLyingLateralRaise,
+            "standing_lift" => LateralRaiseExerciseName::StandingLift,
+            "suspended_row" => LateralRaiseExerciseName::SuspendedRow,
+            "underhand_grip_rear_lateral_raise" => {
+                LateralRaiseExerciseName::UnderhandGripRearLateralRaise
+            }
+            "wall_slide" => LateralRaiseExerciseName::WallSlide,
+            "weighted_wall_slide" => LateralRaiseExerciseName::WeightedWallSlide,
+            "arm_circles" => LateralRaiseExerciseName::ArmCircles,
+            "shaving_the_head" => LateralRaiseExerciseName::ShavingTheHead,
+            &_ => LateralRaiseExerciseName::Value(0),
+        }
+    }
+}
 impl Serialize for LateralRaiseExerciseName {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -20591,6 +24552,25 @@ impl convert::From<u16> for LegCurlExerciseName {
 impl convert::From<i64> for LegCurlExerciseName {
     fn from(value: i64) -> Self {
         LegCurlExerciseName::from(value as u16)
+    }
+}
+impl convert::From<&str> for LegCurlExerciseName {
+    fn from(value: &str) -> Self {
+        match value {
+            "leg_curl" => LegCurlExerciseName::LegCurl,
+            "weighted_leg_curl" => LegCurlExerciseName::WeightedLegCurl,
+            "good_morning" => LegCurlExerciseName::GoodMorning,
+            "seated_barbell_good_morning" => LegCurlExerciseName::SeatedBarbellGoodMorning,
+            "single_leg_barbell_good_morning" => LegCurlExerciseName::SingleLegBarbellGoodMorning,
+            "single_leg_sliding_leg_curl" => LegCurlExerciseName::SingleLegSlidingLegCurl,
+            "sliding_leg_curl" => LegCurlExerciseName::SlidingLegCurl,
+            "split_barbell_good_morning" => LegCurlExerciseName::SplitBarbellGoodMorning,
+            "split_stance_extension" => LegCurlExerciseName::SplitStanceExtension,
+            "staggered_stance_good_morning" => LegCurlExerciseName::StaggeredStanceGoodMorning,
+            "swiss_ball_hip_raise_and_leg_curl" => LegCurlExerciseName::SwissBallHipRaiseAndLegCurl,
+            "zercher_good_morning" => LegCurlExerciseName::ZercherGoodMorning,
+            &_ => LegCurlExerciseName::Value(0),
+        }
     }
 }
 impl Serialize for LegCurlExerciseName {
@@ -20746,6 +24726,43 @@ impl convert::From<u16> for LegRaiseExerciseName {
 impl convert::From<i64> for LegRaiseExerciseName {
     fn from(value: i64) -> Self {
         LegRaiseExerciseName::from(value as u16)
+    }
+}
+impl convert::From<&str> for LegRaiseExerciseName {
+    fn from(value: &str) -> Self {
+        match value {
+            "hanging_knee_raise" => LegRaiseExerciseName::HangingKneeRaise,
+            "hanging_leg_raise" => LegRaiseExerciseName::HangingLegRaise,
+            "weighted_hanging_leg_raise" => LegRaiseExerciseName::WeightedHangingLegRaise,
+            "hanging_single_leg_raise" => LegRaiseExerciseName::HangingSingleLegRaise,
+            "weighted_hanging_single_leg_raise" => {
+                LegRaiseExerciseName::WeightedHangingSingleLegRaise
+            }
+            "kettlebell_leg_raises" => LegRaiseExerciseName::KettlebellLegRaises,
+            "leg_lowering_drill" => LegRaiseExerciseName::LegLoweringDrill,
+            "weighted_leg_lowering_drill" => LegRaiseExerciseName::WeightedLegLoweringDrill,
+            "lying_straight_leg_raise" => LegRaiseExerciseName::LyingStraightLegRaise,
+            "weighted_lying_straight_leg_raise" => {
+                LegRaiseExerciseName::WeightedLyingStraightLegRaise
+            }
+            "medicine_ball_leg_drops" => LegRaiseExerciseName::MedicineBallLegDrops,
+            "quadruped_leg_raise" => LegRaiseExerciseName::QuadrupedLegRaise,
+            "weighted_quadruped_leg_raise" => LegRaiseExerciseName::WeightedQuadrupedLegRaise,
+            "reverse_leg_raise" => LegRaiseExerciseName::ReverseLegRaise,
+            "weighted_reverse_leg_raise" => LegRaiseExerciseName::WeightedReverseLegRaise,
+            "reverse_leg_raise_on_swiss_ball" => LegRaiseExerciseName::ReverseLegRaiseOnSwissBall,
+            "weighted_reverse_leg_raise_on_swiss_ball" => {
+                LegRaiseExerciseName::WeightedReverseLegRaiseOnSwissBall
+            }
+            "single_leg_lowering_drill" => LegRaiseExerciseName::SingleLegLoweringDrill,
+            "weighted_single_leg_lowering_drill" => {
+                LegRaiseExerciseName::WeightedSingleLegLoweringDrill
+            }
+            "weighted_hanging_knee_raise" => LegRaiseExerciseName::WeightedHangingKneeRaise,
+            "lateral_stepover" => LegRaiseExerciseName::LateralStepover,
+            "weighted_lateral_stepover" => LegRaiseExerciseName::WeightedLateralStepover,
+            &_ => LegRaiseExerciseName::Value(0),
+        }
     }
 }
 impl Serialize for LegRaiseExerciseName {
@@ -21179,6 +25196,124 @@ impl convert::From<i64> for LungeExerciseName {
         LungeExerciseName::from(value as u16)
     }
 }
+impl convert::From<&str> for LungeExerciseName {
+    fn from(value: &str) -> Self {
+        match value {
+            "overhead_lunge" => LungeExerciseName::OverheadLunge,
+            "lunge_matrix" => LungeExerciseName::LungeMatrix,
+            "weighted_lunge_matrix" => LungeExerciseName::WeightedLungeMatrix,
+            "alternating_barbell_forward_lunge" => {
+                LungeExerciseName::AlternatingBarbellForwardLunge
+            }
+            "alternating_dumbbell_lunge_with_reach" => {
+                LungeExerciseName::AlternatingDumbbellLungeWithReach
+            }
+            "back_foot_elevated_dumbbell_split_squat" => {
+                LungeExerciseName::BackFootElevatedDumbbellSplitSquat
+            }
+            "barbell_box_lunge" => LungeExerciseName::BarbellBoxLunge,
+            "barbell_bulgarian_split_squat" => LungeExerciseName::BarbellBulgarianSplitSquat,
+            "barbell_crossover_lunge" => LungeExerciseName::BarbellCrossoverLunge,
+            "barbell_front_split_squat" => LungeExerciseName::BarbellFrontSplitSquat,
+            "barbell_lunge" => LungeExerciseName::BarbellLunge,
+            "barbell_reverse_lunge" => LungeExerciseName::BarbellReverseLunge,
+            "barbell_side_lunge" => LungeExerciseName::BarbellSideLunge,
+            "barbell_split_squat" => LungeExerciseName::BarbellSplitSquat,
+            "core_control_rear_lunge" => LungeExerciseName::CoreControlRearLunge,
+            "diagonal_lunge" => LungeExerciseName::DiagonalLunge,
+            "drop_lunge" => LungeExerciseName::DropLunge,
+            "dumbbell_box_lunge" => LungeExerciseName::DumbbellBoxLunge,
+            "dumbbell_bulgarian_split_squat" => LungeExerciseName::DumbbellBulgarianSplitSquat,
+            "dumbbell_crossover_lunge" => LungeExerciseName::DumbbellCrossoverLunge,
+            "dumbbell_diagonal_lunge" => LungeExerciseName::DumbbellDiagonalLunge,
+            "dumbbell_lunge" => LungeExerciseName::DumbbellLunge,
+            "dumbbell_lunge_and_rotation" => LungeExerciseName::DumbbellLungeAndRotation,
+            "dumbbell_overhead_bulgarian_split_squat" => {
+                LungeExerciseName::DumbbellOverheadBulgarianSplitSquat
+            }
+            "dumbbell_reverse_lunge_to_high_knee_and_press" => {
+                LungeExerciseName::DumbbellReverseLungeToHighKneeAndPress
+            }
+            "dumbbell_side_lunge" => LungeExerciseName::DumbbellSideLunge,
+            "elevated_front_foot_barbell_split_squat" => {
+                LungeExerciseName::ElevatedFrontFootBarbellSplitSquat
+            }
+            "front_foot_elevated_dumbbell_split_squat" => {
+                LungeExerciseName::FrontFootElevatedDumbbellSplitSquat
+            }
+            "gunslinger_lunge" => LungeExerciseName::GunslingerLunge,
+            "lawnmower_lunge" => LungeExerciseName::LawnmowerLunge,
+            "low_lunge_with_isometric_adduction" => {
+                LungeExerciseName::LowLungeWithIsometricAdduction
+            }
+            "low_side_to_side_lunge" => LungeExerciseName::LowSideToSideLunge,
+            "lunge" => LungeExerciseName::Lunge,
+            "weighted_lunge" => LungeExerciseName::WeightedLunge,
+            "lunge_with_arm_reach" => LungeExerciseName::LungeWithArmReach,
+            "lunge_with_diagonal_reach" => LungeExerciseName::LungeWithDiagonalReach,
+            "lunge_with_side_bend" => LungeExerciseName::LungeWithSideBend,
+            "offset_dumbbell_lunge" => LungeExerciseName::OffsetDumbbellLunge,
+            "offset_dumbbell_reverse_lunge" => LungeExerciseName::OffsetDumbbellReverseLunge,
+            "overhead_bulgarian_split_squat" => LungeExerciseName::OverheadBulgarianSplitSquat,
+            "overhead_dumbbell_reverse_lunge" => LungeExerciseName::OverheadDumbbellReverseLunge,
+            "overhead_dumbbell_split_squat" => LungeExerciseName::OverheadDumbbellSplitSquat,
+            "overhead_lunge_with_rotation" => LungeExerciseName::OverheadLungeWithRotation,
+            "reverse_barbell_box_lunge" => LungeExerciseName::ReverseBarbellBoxLunge,
+            "reverse_box_lunge" => LungeExerciseName::ReverseBoxLunge,
+            "reverse_dumbbell_box_lunge" => LungeExerciseName::ReverseDumbbellBoxLunge,
+            "reverse_dumbbell_crossover_lunge" => LungeExerciseName::ReverseDumbbellCrossoverLunge,
+            "reverse_dumbbell_diagonal_lunge" => LungeExerciseName::ReverseDumbbellDiagonalLunge,
+            "reverse_lunge_with_reach_back" => LungeExerciseName::ReverseLungeWithReachBack,
+            "weighted_reverse_lunge_with_reach_back" => {
+                LungeExerciseName::WeightedReverseLungeWithReachBack
+            }
+            "reverse_lunge_with_twist_and_overhead_reach" => {
+                LungeExerciseName::ReverseLungeWithTwistAndOverheadReach
+            }
+            "weighted_reverse_lunge_with_twist_and_overhead_reach" => {
+                LungeExerciseName::WeightedReverseLungeWithTwistAndOverheadReach
+            }
+            "reverse_sliding_box_lunge" => LungeExerciseName::ReverseSlidingBoxLunge,
+            "weighted_reverse_sliding_box_lunge" => {
+                LungeExerciseName::WeightedReverseSlidingBoxLunge
+            }
+            "reverse_sliding_lunge" => LungeExerciseName::ReverseSlidingLunge,
+            "weighted_reverse_sliding_lunge" => LungeExerciseName::WeightedReverseSlidingLunge,
+            "runners_lunge_to_balance" => LungeExerciseName::RunnersLungeToBalance,
+            "weighted_runners_lunge_to_balance" => LungeExerciseName::WeightedRunnersLungeToBalance,
+            "shifting_side_lunge" => LungeExerciseName::ShiftingSideLunge,
+            "side_and_crossover_lunge" => LungeExerciseName::SideAndCrossoverLunge,
+            "weighted_side_and_crossover_lunge" => LungeExerciseName::WeightedSideAndCrossoverLunge,
+            "side_lunge" => LungeExerciseName::SideLunge,
+            "weighted_side_lunge" => LungeExerciseName::WeightedSideLunge,
+            "side_lunge_and_press" => LungeExerciseName::SideLungeAndPress,
+            "side_lunge_jump_off" => LungeExerciseName::SideLungeJumpOff,
+            "side_lunge_sweep" => LungeExerciseName::SideLungeSweep,
+            "weighted_side_lunge_sweep" => LungeExerciseName::WeightedSideLungeSweep,
+            "side_lunge_to_crossover_tap" => LungeExerciseName::SideLungeToCrossoverTap,
+            "weighted_side_lunge_to_crossover_tap" => {
+                LungeExerciseName::WeightedSideLungeToCrossoverTap
+            }
+            "side_to_side_lunge_chops" => LungeExerciseName::SideToSideLungeChops,
+            "weighted_side_to_side_lunge_chops" => LungeExerciseName::WeightedSideToSideLungeChops,
+            "siff_jump_lunge" => LungeExerciseName::SiffJumpLunge,
+            "weighted_siff_jump_lunge" => LungeExerciseName::WeightedSiffJumpLunge,
+            "single_arm_reverse_lunge_and_press" => {
+                LungeExerciseName::SingleArmReverseLungeAndPress
+            }
+            "sliding_lateral_lunge" => LungeExerciseName::SlidingLateralLunge,
+            "weighted_sliding_lateral_lunge" => LungeExerciseName::WeightedSlidingLateralLunge,
+            "walking_barbell_lunge" => LungeExerciseName::WalkingBarbellLunge,
+            "walking_dumbbell_lunge" => LungeExerciseName::WalkingDumbbellLunge,
+            "walking_lunge" => LungeExerciseName::WalkingLunge,
+            "weighted_walking_lunge" => LungeExerciseName::WeightedWalkingLunge,
+            "wide_grip_overhead_barbell_split_squat" => {
+                LungeExerciseName::WideGripOverheadBarbellSplitSquat
+            }
+            &_ => LungeExerciseName::Value(0),
+        }
+    }
+}
 impl Serialize for LungeExerciseName {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -21316,6 +25451,34 @@ impl convert::From<u16> for OlympicLiftExerciseName {
 impl convert::From<i64> for OlympicLiftExerciseName {
     fn from(value: i64) -> Self {
         OlympicLiftExerciseName::from(value as u16)
+    }
+}
+impl convert::From<&str> for OlympicLiftExerciseName {
+    fn from(value: &str) -> Self {
+        match value {
+            "barbell_hang_power_clean" => OlympicLiftExerciseName::BarbellHangPowerClean,
+            "barbell_hang_squat_clean" => OlympicLiftExerciseName::BarbellHangSquatClean,
+            "barbell_power_clean" => OlympicLiftExerciseName::BarbellPowerClean,
+            "barbell_power_snatch" => OlympicLiftExerciseName::BarbellPowerSnatch,
+            "barbell_squat_clean" => OlympicLiftExerciseName::BarbellSquatClean,
+            "clean_and_jerk" => OlympicLiftExerciseName::CleanAndJerk,
+            "barbell_hang_power_snatch" => OlympicLiftExerciseName::BarbellHangPowerSnatch,
+            "barbell_hang_pull" => OlympicLiftExerciseName::BarbellHangPull,
+            "barbell_high_pull" => OlympicLiftExerciseName::BarbellHighPull,
+            "barbell_snatch" => OlympicLiftExerciseName::BarbellSnatch,
+            "barbell_split_jerk" => OlympicLiftExerciseName::BarbellSplitJerk,
+            "clean" => OlympicLiftExerciseName::Clean,
+            "dumbbell_clean" => OlympicLiftExerciseName::DumbbellClean,
+            "dumbbell_hang_pull" => OlympicLiftExerciseName::DumbbellHangPull,
+            "one_hand_dumbbell_split_snatch" => OlympicLiftExerciseName::OneHandDumbbellSplitSnatch,
+            "push_jerk" => OlympicLiftExerciseName::PushJerk,
+            "single_arm_dumbbell_snatch" => OlympicLiftExerciseName::SingleArmDumbbellSnatch,
+            "single_arm_hang_snatch" => OlympicLiftExerciseName::SingleArmHangSnatch,
+            "single_arm_kettlebell_snatch" => OlympicLiftExerciseName::SingleArmKettlebellSnatch,
+            "split_jerk" => OlympicLiftExerciseName::SplitJerk,
+            "squat_clean_and_jerk" => OlympicLiftExerciseName::SquatCleanAndJerk,
+            &_ => OlympicLiftExerciseName::Value(0),
+        }
     }
 }
 impl Serialize for OlympicLiftExerciseName {
@@ -22030,6 +26193,224 @@ impl convert::From<i64> for PlankExerciseName {
         PlankExerciseName::from(value as u16)
     }
 }
+impl convert::From<&str> for PlankExerciseName {
+    fn from(value: &str) -> Self {
+        match value {
+            "45_degree_plank" => PlankExerciseName::Name45DegreePlank,
+            "weighted_45_degree_plank" => PlankExerciseName::Weighted45DegreePlank,
+            "90_degree_static_hold" => PlankExerciseName::Name90DegreeStaticHold,
+            "weighted_90_degree_static_hold" => PlankExerciseName::Weighted90DegreeStaticHold,
+            "bear_crawl" => PlankExerciseName::BearCrawl,
+            "weighted_bear_crawl" => PlankExerciseName::WeightedBearCrawl,
+            "cross_body_mountain_climber" => PlankExerciseName::CrossBodyMountainClimber,
+            "weighted_cross_body_mountain_climber" => {
+                PlankExerciseName::WeightedCrossBodyMountainClimber
+            }
+            "elbow_plank_pike_jacks" => PlankExerciseName::ElbowPlankPikeJacks,
+            "weighted_elbow_plank_pike_jacks" => PlankExerciseName::WeightedElbowPlankPikeJacks,
+            "elevated_feet_plank" => PlankExerciseName::ElevatedFeetPlank,
+            "weighted_elevated_feet_plank" => PlankExerciseName::WeightedElevatedFeetPlank,
+            "elevator_abs" => PlankExerciseName::ElevatorAbs,
+            "weighted_elevator_abs" => PlankExerciseName::WeightedElevatorAbs,
+            "extended_plank" => PlankExerciseName::ExtendedPlank,
+            "weighted_extended_plank" => PlankExerciseName::WeightedExtendedPlank,
+            "full_plank_passe_twist" => PlankExerciseName::FullPlankPasseTwist,
+            "weighted_full_plank_passe_twist" => PlankExerciseName::WeightedFullPlankPasseTwist,
+            "inching_elbow_plank" => PlankExerciseName::InchingElbowPlank,
+            "weighted_inching_elbow_plank" => PlankExerciseName::WeightedInchingElbowPlank,
+            "inchworm_to_side_plank" => PlankExerciseName::InchwormToSidePlank,
+            "weighted_inchworm_to_side_plank" => PlankExerciseName::WeightedInchwormToSidePlank,
+            "kneeling_plank" => PlankExerciseName::KneelingPlank,
+            "weighted_kneeling_plank" => PlankExerciseName::WeightedKneelingPlank,
+            "kneeling_side_plank_with_leg_lift" => PlankExerciseName::KneelingSidePlankWithLegLift,
+            "weighted_kneeling_side_plank_with_leg_lift" => {
+                PlankExerciseName::WeightedKneelingSidePlankWithLegLift
+            }
+            "lateral_roll" => PlankExerciseName::LateralRoll,
+            "weighted_lateral_roll" => PlankExerciseName::WeightedLateralRoll,
+            "lying_reverse_plank" => PlankExerciseName::LyingReversePlank,
+            "weighted_lying_reverse_plank" => PlankExerciseName::WeightedLyingReversePlank,
+            "medicine_ball_mountain_climber" => PlankExerciseName::MedicineBallMountainClimber,
+            "weighted_medicine_ball_mountain_climber" => {
+                PlankExerciseName::WeightedMedicineBallMountainClimber
+            }
+            "modified_mountain_climber_and_extension" => {
+                PlankExerciseName::ModifiedMountainClimberAndExtension
+            }
+            "weighted_modified_mountain_climber_and_extension" => {
+                PlankExerciseName::WeightedModifiedMountainClimberAndExtension
+            }
+            "mountain_climber" => PlankExerciseName::MountainClimber,
+            "weighted_mountain_climber" => PlankExerciseName::WeightedMountainClimber,
+            "mountain_climber_on_sliding_discs" => PlankExerciseName::MountainClimberOnSlidingDiscs,
+            "weighted_mountain_climber_on_sliding_discs" => {
+                PlankExerciseName::WeightedMountainClimberOnSlidingDiscs
+            }
+            "mountain_climber_with_feet_on_bosu_ball" => {
+                PlankExerciseName::MountainClimberWithFeetOnBosuBall
+            }
+            "weighted_mountain_climber_with_feet_on_bosu_ball" => {
+                PlankExerciseName::WeightedMountainClimberWithFeetOnBosuBall
+            }
+            "mountain_climber_with_hands_on_bench" => {
+                PlankExerciseName::MountainClimberWithHandsOnBench
+            }
+            "mountain_climber_with_hands_on_swiss_ball" => {
+                PlankExerciseName::MountainClimberWithHandsOnSwissBall
+            }
+            "weighted_mountain_climber_with_hands_on_swiss_ball" => {
+                PlankExerciseName::WeightedMountainClimberWithHandsOnSwissBall
+            }
+            "plank" => PlankExerciseName::Plank,
+            "plank_jacks_with_feet_on_sliding_discs" => {
+                PlankExerciseName::PlankJacksWithFeetOnSlidingDiscs
+            }
+            "weighted_plank_jacks_with_feet_on_sliding_discs" => {
+                PlankExerciseName::WeightedPlankJacksWithFeetOnSlidingDiscs
+            }
+            "plank_knee_twist" => PlankExerciseName::PlankKneeTwist,
+            "weighted_plank_knee_twist" => PlankExerciseName::WeightedPlankKneeTwist,
+            "plank_pike_jumps" => PlankExerciseName::PlankPikeJumps,
+            "weighted_plank_pike_jumps" => PlankExerciseName::WeightedPlankPikeJumps,
+            "plank_pikes" => PlankExerciseName::PlankPikes,
+            "weighted_plank_pikes" => PlankExerciseName::WeightedPlankPikes,
+            "plank_to_stand_up" => PlankExerciseName::PlankToStandUp,
+            "weighted_plank_to_stand_up" => PlankExerciseName::WeightedPlankToStandUp,
+            "plank_with_arm_raise" => PlankExerciseName::PlankWithArmRaise,
+            "weighted_plank_with_arm_raise" => PlankExerciseName::WeightedPlankWithArmRaise,
+            "plank_with_knee_to_elbow" => PlankExerciseName::PlankWithKneeToElbow,
+            "weighted_plank_with_knee_to_elbow" => PlankExerciseName::WeightedPlankWithKneeToElbow,
+            "plank_with_oblique_crunch" => PlankExerciseName::PlankWithObliqueCrunch,
+            "weighted_plank_with_oblique_crunch" => {
+                PlankExerciseName::WeightedPlankWithObliqueCrunch
+            }
+            "plyometric_side_plank" => PlankExerciseName::PlyometricSidePlank,
+            "weighted_plyometric_side_plank" => PlankExerciseName::WeightedPlyometricSidePlank,
+            "rolling_side_plank" => PlankExerciseName::RollingSidePlank,
+            "weighted_rolling_side_plank" => PlankExerciseName::WeightedRollingSidePlank,
+            "side_kick_plank" => PlankExerciseName::SideKickPlank,
+            "weighted_side_kick_plank" => PlankExerciseName::WeightedSideKickPlank,
+            "side_plank" => PlankExerciseName::SidePlank,
+            "weighted_side_plank" => PlankExerciseName::WeightedSidePlank,
+            "side_plank_and_row" => PlankExerciseName::SidePlankAndRow,
+            "weighted_side_plank_and_row" => PlankExerciseName::WeightedSidePlankAndRow,
+            "side_plank_lift" => PlankExerciseName::SidePlankLift,
+            "weighted_side_plank_lift" => PlankExerciseName::WeightedSidePlankLift,
+            "side_plank_with_elbow_on_bosu_ball" => PlankExerciseName::SidePlankWithElbowOnBosuBall,
+            "weighted_side_plank_with_elbow_on_bosu_ball" => {
+                PlankExerciseName::WeightedSidePlankWithElbowOnBosuBall
+            }
+            "side_plank_with_feet_on_bench" => PlankExerciseName::SidePlankWithFeetOnBench,
+            "weighted_side_plank_with_feet_on_bench" => {
+                PlankExerciseName::WeightedSidePlankWithFeetOnBench
+            }
+            "side_plank_with_knee_circle" => PlankExerciseName::SidePlankWithKneeCircle,
+            "weighted_side_plank_with_knee_circle" => {
+                PlankExerciseName::WeightedSidePlankWithKneeCircle
+            }
+            "side_plank_with_knee_tuck" => PlankExerciseName::SidePlankWithKneeTuck,
+            "weighted_side_plank_with_knee_tuck" => {
+                PlankExerciseName::WeightedSidePlankWithKneeTuck
+            }
+            "side_plank_with_leg_lift" => PlankExerciseName::SidePlankWithLegLift,
+            "weighted_side_plank_with_leg_lift" => PlankExerciseName::WeightedSidePlankWithLegLift,
+            "side_plank_with_reach_under" => PlankExerciseName::SidePlankWithReachUnder,
+            "weighted_side_plank_with_reach_under" => {
+                PlankExerciseName::WeightedSidePlankWithReachUnder
+            }
+            "single_leg_elevated_feet_plank" => PlankExerciseName::SingleLegElevatedFeetPlank,
+            "weighted_single_leg_elevated_feet_plank" => {
+                PlankExerciseName::WeightedSingleLegElevatedFeetPlank
+            }
+            "single_leg_flex_and_extend" => PlankExerciseName::SingleLegFlexAndExtend,
+            "weighted_single_leg_flex_and_extend" => {
+                PlankExerciseName::WeightedSingleLegFlexAndExtend
+            }
+            "single_leg_side_plank" => PlankExerciseName::SingleLegSidePlank,
+            "weighted_single_leg_side_plank" => PlankExerciseName::WeightedSingleLegSidePlank,
+            "spiderman_plank" => PlankExerciseName::SpidermanPlank,
+            "weighted_spiderman_plank" => PlankExerciseName::WeightedSpidermanPlank,
+            "straight_arm_plank" => PlankExerciseName::StraightArmPlank,
+            "weighted_straight_arm_plank" => PlankExerciseName::WeightedStraightArmPlank,
+            "straight_arm_plank_with_shoulder_touch" => {
+                PlankExerciseName::StraightArmPlankWithShoulderTouch
+            }
+            "weighted_straight_arm_plank_with_shoulder_touch" => {
+                PlankExerciseName::WeightedStraightArmPlankWithShoulderTouch
+            }
+            "swiss_ball_plank" => PlankExerciseName::SwissBallPlank,
+            "weighted_swiss_ball_plank" => PlankExerciseName::WeightedSwissBallPlank,
+            "swiss_ball_plank_leg_lift" => PlankExerciseName::SwissBallPlankLegLift,
+            "weighted_swiss_ball_plank_leg_lift" => {
+                PlankExerciseName::WeightedSwissBallPlankLegLift
+            }
+            "swiss_ball_plank_leg_lift_and_hold" => PlankExerciseName::SwissBallPlankLegLiftAndHold,
+            "swiss_ball_plank_with_feet_on_bench" => {
+                PlankExerciseName::SwissBallPlankWithFeetOnBench
+            }
+            "weighted_swiss_ball_plank_with_feet_on_bench" => {
+                PlankExerciseName::WeightedSwissBallPlankWithFeetOnBench
+            }
+            "swiss_ball_prone_jackknife" => PlankExerciseName::SwissBallProneJackknife,
+            "weighted_swiss_ball_prone_jackknife" => {
+                PlankExerciseName::WeightedSwissBallProneJackknife
+            }
+            "swiss_ball_side_plank" => PlankExerciseName::SwissBallSidePlank,
+            "weighted_swiss_ball_side_plank" => PlankExerciseName::WeightedSwissBallSidePlank,
+            "three_way_plank" => PlankExerciseName::ThreeWayPlank,
+            "weighted_three_way_plank" => PlankExerciseName::WeightedThreeWayPlank,
+            "towel_plank_and_knee_in" => PlankExerciseName::TowelPlankAndKneeIn,
+            "weighted_towel_plank_and_knee_in" => PlankExerciseName::WeightedTowelPlankAndKneeIn,
+            "t_stabilization" => PlankExerciseName::TStabilization,
+            "weighted_t_stabilization" => PlankExerciseName::WeightedTStabilization,
+            "turkish_get_up_to_side_plank" => PlankExerciseName::TurkishGetUpToSidePlank,
+            "weighted_turkish_get_up_to_side_plank" => {
+                PlankExerciseName::WeightedTurkishGetUpToSidePlank
+            }
+            "two_point_plank" => PlankExerciseName::TwoPointPlank,
+            "weighted_two_point_plank" => PlankExerciseName::WeightedTwoPointPlank,
+            "weighted_plank" => PlankExerciseName::WeightedPlank,
+            "wide_stance_plank_with_diagonal_arm_lift" => {
+                PlankExerciseName::WideStancePlankWithDiagonalArmLift
+            }
+            "weighted_wide_stance_plank_with_diagonal_arm_lift" => {
+                PlankExerciseName::WeightedWideStancePlankWithDiagonalArmLift
+            }
+            "wide_stance_plank_with_diagonal_leg_lift" => {
+                PlankExerciseName::WideStancePlankWithDiagonalLegLift
+            }
+            "weighted_wide_stance_plank_with_diagonal_leg_lift" => {
+                PlankExerciseName::WeightedWideStancePlankWithDiagonalLegLift
+            }
+            "wide_stance_plank_with_leg_lift" => PlankExerciseName::WideStancePlankWithLegLift,
+            "weighted_wide_stance_plank_with_leg_lift" => {
+                PlankExerciseName::WeightedWideStancePlankWithLegLift
+            }
+            "wide_stance_plank_with_opposite_arm_and_leg_lift" => {
+                PlankExerciseName::WideStancePlankWithOppositeArmAndLegLift
+            }
+            "weighted_mountain_climber_with_hands_on_bench" => {
+                PlankExerciseName::WeightedMountainClimberWithHandsOnBench
+            }
+            "weighted_swiss_ball_plank_leg_lift_and_hold" => {
+                PlankExerciseName::WeightedSwissBallPlankLegLiftAndHold
+            }
+            "weighted_wide_stance_plank_with_opposite_arm_and_leg_lift" => {
+                PlankExerciseName::WeightedWideStancePlankWithOppositeArmAndLegLift
+            }
+            "plank_with_feet_on_swiss_ball" => PlankExerciseName::PlankWithFeetOnSwissBall,
+            "side_plank_to_plank_with_reach_under" => {
+                PlankExerciseName::SidePlankToPlankWithReachUnder
+            }
+            "bridge_with_glute_lower_lift" => PlankExerciseName::BridgeWithGluteLowerLift,
+            "bridge_one_leg_bridge" => PlankExerciseName::BridgeOneLegBridge,
+            "plank_with_arm_variations" => PlankExerciseName::PlankWithArmVariations,
+            "plank_with_leg_lift" => PlankExerciseName::PlankWithLegLift,
+            "reverse_plank_with_leg_pull" => PlankExerciseName::ReversePlankWithLegPull,
+            &_ => PlankExerciseName::Value(0),
+        }
+    }
+}
 impl Serialize for PlankExerciseName {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -22225,6 +26606,50 @@ impl convert::From<u16> for PlyoExerciseName {
 impl convert::From<i64> for PlyoExerciseName {
     fn from(value: i64) -> Self {
         PlyoExerciseName::from(value as u16)
+    }
+}
+impl convert::From<&str> for PlyoExerciseName {
+    fn from(value: &str) -> Self {
+        match value {
+            "alternating_jump_lunge" => PlyoExerciseName::AlternatingJumpLunge,
+            "weighted_alternating_jump_lunge" => PlyoExerciseName::WeightedAlternatingJumpLunge,
+            "barbell_jump_squat" => PlyoExerciseName::BarbellJumpSquat,
+            "body_weight_jump_squat" => PlyoExerciseName::BodyWeightJumpSquat,
+            "weighted_jump_squat" => PlyoExerciseName::WeightedJumpSquat,
+            "cross_knee_strike" => PlyoExerciseName::CrossKneeStrike,
+            "weighted_cross_knee_strike" => PlyoExerciseName::WeightedCrossKneeStrike,
+            "depth_jump" => PlyoExerciseName::DepthJump,
+            "weighted_depth_jump" => PlyoExerciseName::WeightedDepthJump,
+            "dumbbell_jump_squat" => PlyoExerciseName::DumbbellJumpSquat,
+            "dumbbell_split_jump" => PlyoExerciseName::DumbbellSplitJump,
+            "front_knee_strike" => PlyoExerciseName::FrontKneeStrike,
+            "weighted_front_knee_strike" => PlyoExerciseName::WeightedFrontKneeStrike,
+            "high_box_jump" => PlyoExerciseName::HighBoxJump,
+            "weighted_high_box_jump" => PlyoExerciseName::WeightedHighBoxJump,
+            "isometric_explosive_body_weight_jump_squat" => {
+                PlyoExerciseName::IsometricExplosiveBodyWeightJumpSquat
+            }
+            "weighted_isometric_explosive_jump_squat" => {
+                PlyoExerciseName::WeightedIsometricExplosiveJumpSquat
+            }
+            "lateral_leap_and_hop" => PlyoExerciseName::LateralLeapAndHop,
+            "weighted_lateral_leap_and_hop" => PlyoExerciseName::WeightedLateralLeapAndHop,
+            "lateral_plyo_squats" => PlyoExerciseName::LateralPlyoSquats,
+            "weighted_lateral_plyo_squats" => PlyoExerciseName::WeightedLateralPlyoSquats,
+            "lateral_slide" => PlyoExerciseName::LateralSlide,
+            "weighted_lateral_slide" => PlyoExerciseName::WeightedLateralSlide,
+            "medicine_ball_overhead_throws" => PlyoExerciseName::MedicineBallOverheadThrows,
+            "medicine_ball_side_throw" => PlyoExerciseName::MedicineBallSideThrow,
+            "medicine_ball_slam" => PlyoExerciseName::MedicineBallSlam,
+            "side_to_side_medicine_ball_throws" => PlyoExerciseName::SideToSideMedicineBallThrows,
+            "side_to_side_shuffle_jump" => PlyoExerciseName::SideToSideShuffleJump,
+            "weighted_side_to_side_shuffle_jump" => PlyoExerciseName::WeightedSideToSideShuffleJump,
+            "squat_jump_onto_box" => PlyoExerciseName::SquatJumpOntoBox,
+            "weighted_squat_jump_onto_box" => PlyoExerciseName::WeightedSquatJumpOntoBox,
+            "squat_jumps_in_and_out" => PlyoExerciseName::SquatJumpsInAndOut,
+            "weighted_squat_jumps_in_and_out" => PlyoExerciseName::WeightedSquatJumpsInAndOut,
+            &_ => PlyoExerciseName::Value(0),
+        }
     }
 }
 impl Serialize for PlyoExerciseName {
@@ -22430,6 +26855,54 @@ impl convert::From<u16> for PullUpExerciseName {
 impl convert::From<i64> for PullUpExerciseName {
     fn from(value: i64) -> Self {
         PullUpExerciseName::from(value as u16)
+    }
+}
+impl convert::From<&str> for PullUpExerciseName {
+    fn from(value: &str) -> Self {
+        match value {
+            "banded_pull_ups" => PullUpExerciseName::BandedPullUps,
+            "30_degree_lat_pulldown" => PullUpExerciseName::Name30DegreeLatPulldown,
+            "band_assisted_chin_up" => PullUpExerciseName::BandAssistedChinUp,
+            "close_grip_chin_up" => PullUpExerciseName::CloseGripChinUp,
+            "weighted_close_grip_chin_up" => PullUpExerciseName::WeightedCloseGripChinUp,
+            "close_grip_lat_pulldown" => PullUpExerciseName::CloseGripLatPulldown,
+            "crossover_chin_up" => PullUpExerciseName::CrossoverChinUp,
+            "weighted_crossover_chin_up" => PullUpExerciseName::WeightedCrossoverChinUp,
+            "ez_bar_pullover" => PullUpExerciseName::EzBarPullover,
+            "hanging_hurdle" => PullUpExerciseName::HangingHurdle,
+            "weighted_hanging_hurdle" => PullUpExerciseName::WeightedHangingHurdle,
+            "kneeling_lat_pulldown" => PullUpExerciseName::KneelingLatPulldown,
+            "kneeling_underhand_grip_lat_pulldown" => {
+                PullUpExerciseName::KneelingUnderhandGripLatPulldown
+            }
+            "lat_pulldown" => PullUpExerciseName::LatPulldown,
+            "mixed_grip_chin_up" => PullUpExerciseName::MixedGripChinUp,
+            "weighted_mixed_grip_chin_up" => PullUpExerciseName::WeightedMixedGripChinUp,
+            "mixed_grip_pull_up" => PullUpExerciseName::MixedGripPullUp,
+            "weighted_mixed_grip_pull_up" => PullUpExerciseName::WeightedMixedGripPullUp,
+            "reverse_grip_pulldown" => PullUpExerciseName::ReverseGripPulldown,
+            "standing_cable_pullover" => PullUpExerciseName::StandingCablePullover,
+            "straight_arm_pulldown" => PullUpExerciseName::StraightArmPulldown,
+            "swiss_ball_ez_bar_pullover" => PullUpExerciseName::SwissBallEzBarPullover,
+            "towel_pull_up" => PullUpExerciseName::TowelPullUp,
+            "weighted_towel_pull_up" => PullUpExerciseName::WeightedTowelPullUp,
+            "weighted_pull_up" => PullUpExerciseName::WeightedPullUp,
+            "wide_grip_lat_pulldown" => PullUpExerciseName::WideGripLatPulldown,
+            "wide_grip_pull_up" => PullUpExerciseName::WideGripPullUp,
+            "weighted_wide_grip_pull_up" => PullUpExerciseName::WeightedWideGripPullUp,
+            "burpee_pull_up" => PullUpExerciseName::BurpeePullUp,
+            "weighted_burpee_pull_up" => PullUpExerciseName::WeightedBurpeePullUp,
+            "jumping_pull_ups" => PullUpExerciseName::JumpingPullUps,
+            "weighted_jumping_pull_ups" => PullUpExerciseName::WeightedJumpingPullUps,
+            "kipping_pull_up" => PullUpExerciseName::KippingPullUp,
+            "weighted_kipping_pull_up" => PullUpExerciseName::WeightedKippingPullUp,
+            "l_pull_up" => PullUpExerciseName::LPullUp,
+            "weighted_l_pull_up" => PullUpExerciseName::WeightedLPullUp,
+            "suspended_chin_up" => PullUpExerciseName::SuspendedChinUp,
+            "weighted_suspended_chin_up" => PullUpExerciseName::WeightedSuspendedChinUp,
+            "pull_up" => PullUpExerciseName::PullUp,
+            &_ => PullUpExerciseName::Value(0),
+        }
     }
 }
 impl Serialize for PullUpExerciseName {
@@ -22851,6 +27324,118 @@ impl convert::From<i64> for PushUpExerciseName {
         PushUpExerciseName::from(value as u16)
     }
 }
+impl convert::From<&str> for PushUpExerciseName {
+    fn from(value: &str) -> Self {
+        match value {
+            "chest_press_with_band" => PushUpExerciseName::ChestPressWithBand,
+            "alternating_staggered_push_up" => PushUpExerciseName::AlternatingStaggeredPushUp,
+            "weighted_alternating_staggered_push_up" => {
+                PushUpExerciseName::WeightedAlternatingStaggeredPushUp
+            }
+            "alternating_hands_medicine_ball_push_up" => {
+                PushUpExerciseName::AlternatingHandsMedicineBallPushUp
+            }
+            "weighted_alternating_hands_medicine_ball_push_up" => {
+                PushUpExerciseName::WeightedAlternatingHandsMedicineBallPushUp
+            }
+            "bosu_ball_push_up" => PushUpExerciseName::BosuBallPushUp,
+            "weighted_bosu_ball_push_up" => PushUpExerciseName::WeightedBosuBallPushUp,
+            "clapping_push_up" => PushUpExerciseName::ClappingPushUp,
+            "weighted_clapping_push_up" => PushUpExerciseName::WeightedClappingPushUp,
+            "close_grip_medicine_ball_push_up" => PushUpExerciseName::CloseGripMedicineBallPushUp,
+            "weighted_close_grip_medicine_ball_push_up" => {
+                PushUpExerciseName::WeightedCloseGripMedicineBallPushUp
+            }
+            "close_hands_push_up" => PushUpExerciseName::CloseHandsPushUp,
+            "weighted_close_hands_push_up" => PushUpExerciseName::WeightedCloseHandsPushUp,
+            "decline_push_up" => PushUpExerciseName::DeclinePushUp,
+            "weighted_decline_push_up" => PushUpExerciseName::WeightedDeclinePushUp,
+            "diamond_push_up" => PushUpExerciseName::DiamondPushUp,
+            "weighted_diamond_push_up" => PushUpExerciseName::WeightedDiamondPushUp,
+            "explosive_crossover_push_up" => PushUpExerciseName::ExplosiveCrossoverPushUp,
+            "weighted_explosive_crossover_push_up" => {
+                PushUpExerciseName::WeightedExplosiveCrossoverPushUp
+            }
+            "explosive_push_up" => PushUpExerciseName::ExplosivePushUp,
+            "weighted_explosive_push_up" => PushUpExerciseName::WeightedExplosivePushUp,
+            "feet_elevated_side_to_side_push_up" => {
+                PushUpExerciseName::FeetElevatedSideToSidePushUp
+            }
+            "weighted_feet_elevated_side_to_side_push_up" => {
+                PushUpExerciseName::WeightedFeetElevatedSideToSidePushUp
+            }
+            "hand_release_push_up" => PushUpExerciseName::HandReleasePushUp,
+            "weighted_hand_release_push_up" => PushUpExerciseName::WeightedHandReleasePushUp,
+            "handstand_push_up" => PushUpExerciseName::HandstandPushUp,
+            "weighted_handstand_push_up" => PushUpExerciseName::WeightedHandstandPushUp,
+            "incline_push_up" => PushUpExerciseName::InclinePushUp,
+            "weighted_incline_push_up" => PushUpExerciseName::WeightedInclinePushUp,
+            "isometric_explosive_push_up" => PushUpExerciseName::IsometricExplosivePushUp,
+            "weighted_isometric_explosive_push_up" => {
+                PushUpExerciseName::WeightedIsometricExplosivePushUp
+            }
+            "judo_push_up" => PushUpExerciseName::JudoPushUp,
+            "weighted_judo_push_up" => PushUpExerciseName::WeightedJudoPushUp,
+            "kneeling_push_up" => PushUpExerciseName::KneelingPushUp,
+            "weighted_kneeling_push_up" => PushUpExerciseName::WeightedKneelingPushUp,
+            "medicine_ball_chest_pass" => PushUpExerciseName::MedicineBallChestPass,
+            "medicine_ball_push_up" => PushUpExerciseName::MedicineBallPushUp,
+            "weighted_medicine_ball_push_up" => PushUpExerciseName::WeightedMedicineBallPushUp,
+            "one_arm_push_up" => PushUpExerciseName::OneArmPushUp,
+            "weighted_one_arm_push_up" => PushUpExerciseName::WeightedOneArmPushUp,
+            "weighted_push_up" => PushUpExerciseName::WeightedPushUp,
+            "push_up_and_row" => PushUpExerciseName::PushUpAndRow,
+            "weighted_push_up_and_row" => PushUpExerciseName::WeightedPushUpAndRow,
+            "push_up_plus" => PushUpExerciseName::PushUpPlus,
+            "weighted_push_up_plus" => PushUpExerciseName::WeightedPushUpPlus,
+            "push_up_with_feet_on_swiss_ball" => PushUpExerciseName::PushUpWithFeetOnSwissBall,
+            "weighted_push_up_with_feet_on_swiss_ball" => {
+                PushUpExerciseName::WeightedPushUpWithFeetOnSwissBall
+            }
+            "push_up_with_one_hand_on_medicine_ball" => {
+                PushUpExerciseName::PushUpWithOneHandOnMedicineBall
+            }
+            "weighted_push_up_with_one_hand_on_medicine_ball" => {
+                PushUpExerciseName::WeightedPushUpWithOneHandOnMedicineBall
+            }
+            "shoulder_push_up" => PushUpExerciseName::ShoulderPushUp,
+            "weighted_shoulder_push_up" => PushUpExerciseName::WeightedShoulderPushUp,
+            "single_arm_medicine_ball_push_up" => PushUpExerciseName::SingleArmMedicineBallPushUp,
+            "weighted_single_arm_medicine_ball_push_up" => {
+                PushUpExerciseName::WeightedSingleArmMedicineBallPushUp
+            }
+            "spiderman_push_up" => PushUpExerciseName::SpidermanPushUp,
+            "weighted_spiderman_push_up" => PushUpExerciseName::WeightedSpidermanPushUp,
+            "stacked_feet_push_up" => PushUpExerciseName::StackedFeetPushUp,
+            "weighted_stacked_feet_push_up" => PushUpExerciseName::WeightedStackedFeetPushUp,
+            "staggered_hands_push_up" => PushUpExerciseName::StaggeredHandsPushUp,
+            "weighted_staggered_hands_push_up" => PushUpExerciseName::WeightedStaggeredHandsPushUp,
+            "suspended_push_up" => PushUpExerciseName::SuspendedPushUp,
+            "weighted_suspended_push_up" => PushUpExerciseName::WeightedSuspendedPushUp,
+            "swiss_ball_push_up" => PushUpExerciseName::SwissBallPushUp,
+            "weighted_swiss_ball_push_up" => PushUpExerciseName::WeightedSwissBallPushUp,
+            "swiss_ball_push_up_plus" => PushUpExerciseName::SwissBallPushUpPlus,
+            "weighted_swiss_ball_push_up_plus" => PushUpExerciseName::WeightedSwissBallPushUpPlus,
+            "t_push_up" => PushUpExerciseName::TPushUp,
+            "weighted_t_push_up" => PushUpExerciseName::WeightedTPushUp,
+            "triple_stop_push_up" => PushUpExerciseName::TripleStopPushUp,
+            "weighted_triple_stop_push_up" => PushUpExerciseName::WeightedTripleStopPushUp,
+            "wide_hands_push_up" => PushUpExerciseName::WideHandsPushUp,
+            "weighted_wide_hands_push_up" => PushUpExerciseName::WeightedWideHandsPushUp,
+            "parallette_handstand_push_up" => PushUpExerciseName::ParalletteHandstandPushUp,
+            "weighted_parallette_handstand_push_up" => {
+                PushUpExerciseName::WeightedParalletteHandstandPushUp
+            }
+            "ring_handstand_push_up" => PushUpExerciseName::RingHandstandPushUp,
+            "weighted_ring_handstand_push_up" => PushUpExerciseName::WeightedRingHandstandPushUp,
+            "ring_push_up" => PushUpExerciseName::RingPushUp,
+            "weighted_ring_push_up" => PushUpExerciseName::WeightedRingPushUp,
+            "push_up" => PushUpExerciseName::PushUp,
+            "pilates_pushup" => PushUpExerciseName::PilatesPushup,
+            &_ => PushUpExerciseName::Value(0),
+        }
+    }
+}
 impl Serialize for PushUpExerciseName {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -23060,6 +27645,61 @@ impl convert::From<i64> for RowExerciseName {
         RowExerciseName::from(value as u16)
     }
 }
+impl convert::From<&str> for RowExerciseName {
+    fn from(value: &str) -> Self {
+        match value {
+            "barbell_straight_leg_deadlift_to_row" => {
+                RowExerciseName::BarbellStraightLegDeadliftToRow
+            }
+            "cable_row_standing" => RowExerciseName::CableRowStanding,
+            "dumbbell_row" => RowExerciseName::DumbbellRow,
+            "elevated_feet_inverted_row" => RowExerciseName::ElevatedFeetInvertedRow,
+            "weighted_elevated_feet_inverted_row" => {
+                RowExerciseName::WeightedElevatedFeetInvertedRow
+            }
+            "face_pull" => RowExerciseName::FacePull,
+            "face_pull_with_external_rotation" => RowExerciseName::FacePullWithExternalRotation,
+            "inverted_row_with_feet_on_swiss_ball" => {
+                RowExerciseName::InvertedRowWithFeetOnSwissBall
+            }
+            "weighted_inverted_row_with_feet_on_swiss_ball" => {
+                RowExerciseName::WeightedInvertedRowWithFeetOnSwissBall
+            }
+            "kettlebell_row" => RowExerciseName::KettlebellRow,
+            "modified_inverted_row" => RowExerciseName::ModifiedInvertedRow,
+            "weighted_modified_inverted_row" => RowExerciseName::WeightedModifiedInvertedRow,
+            "neutral_grip_alternating_dumbbell_row" => {
+                RowExerciseName::NeutralGripAlternatingDumbbellRow
+            }
+            "one_arm_bent_over_row" => RowExerciseName::OneArmBentOverRow,
+            "one_legged_dumbbell_row" => RowExerciseName::OneLeggedDumbbellRow,
+            "renegade_row" => RowExerciseName::RenegadeRow,
+            "reverse_grip_barbell_row" => RowExerciseName::ReverseGripBarbellRow,
+            "rope_handle_cable_row" => RowExerciseName::RopeHandleCableRow,
+            "seated_cable_row" => RowExerciseName::SeatedCableRow,
+            "seated_dumbbell_row" => RowExerciseName::SeatedDumbbellRow,
+            "single_arm_cable_row" => RowExerciseName::SingleArmCableRow,
+            "single_arm_cable_row_and_rotation" => RowExerciseName::SingleArmCableRowAndRotation,
+            "single_arm_inverted_row" => RowExerciseName::SingleArmInvertedRow,
+            "weighted_single_arm_inverted_row" => RowExerciseName::WeightedSingleArmInvertedRow,
+            "single_arm_neutral_grip_dumbbell_row" => {
+                RowExerciseName::SingleArmNeutralGripDumbbellRow
+            }
+            "single_arm_neutral_grip_dumbbell_row_and_rotation" => {
+                RowExerciseName::SingleArmNeutralGripDumbbellRowAndRotation
+            }
+            "suspended_inverted_row" => RowExerciseName::SuspendedInvertedRow,
+            "weighted_suspended_inverted_row" => RowExerciseName::WeightedSuspendedInvertedRow,
+            "t_bar_row" => RowExerciseName::TBarRow,
+            "towel_grip_inverted_row" => RowExerciseName::TowelGripInvertedRow,
+            "weighted_towel_grip_inverted_row" => RowExerciseName::WeightedTowelGripInvertedRow,
+            "underhand_grip_cable_row" => RowExerciseName::UnderhandGripCableRow,
+            "v_grip_cable_row" => RowExerciseName::VGripCableRow,
+            "wide_grip_seated_cable_row" => RowExerciseName::WideGripSeatedCableRow,
+            &_ => RowExerciseName::Value(0),
+        }
+    }
+}
 impl Serialize for RowExerciseName {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -23235,6 +27875,61 @@ impl convert::From<u16> for ShoulderPressExerciseName {
 impl convert::From<i64> for ShoulderPressExerciseName {
     fn from(value: i64) -> Self {
         ShoulderPressExerciseName::from(value as u16)
+    }
+}
+impl convert::From<&str> for ShoulderPressExerciseName {
+    fn from(value: &str) -> Self {
+        match value {
+            "alternating_dumbbell_shoulder_press" => {
+                ShoulderPressExerciseName::AlternatingDumbbellShoulderPress
+            }
+            "arnold_press" => ShoulderPressExerciseName::ArnoldPress,
+            "barbell_front_squat_to_push_press" => {
+                ShoulderPressExerciseName::BarbellFrontSquatToPushPress
+            }
+            "barbell_push_press" => ShoulderPressExerciseName::BarbellPushPress,
+            "barbell_shoulder_press" => ShoulderPressExerciseName::BarbellShoulderPress,
+            "dead_curl_press" => ShoulderPressExerciseName::DeadCurlPress,
+            "dumbbell_alternating_shoulder_press_and_twist" => {
+                ShoulderPressExerciseName::DumbbellAlternatingShoulderPressAndTwist
+            }
+            "dumbbell_hammer_curl_to_lunge_to_press" => {
+                ShoulderPressExerciseName::DumbbellHammerCurlToLungeToPress
+            }
+            "dumbbell_push_press" => ShoulderPressExerciseName::DumbbellPushPress,
+            "floor_inverted_shoulder_press" => {
+                ShoulderPressExerciseName::FloorInvertedShoulderPress
+            }
+            "weighted_floor_inverted_shoulder_press" => {
+                ShoulderPressExerciseName::WeightedFloorInvertedShoulderPress
+            }
+            "inverted_shoulder_press" => ShoulderPressExerciseName::InvertedShoulderPress,
+            "weighted_inverted_shoulder_press" => {
+                ShoulderPressExerciseName::WeightedInvertedShoulderPress
+            }
+            "one_arm_push_press" => ShoulderPressExerciseName::OneArmPushPress,
+            "overhead_barbell_press" => ShoulderPressExerciseName::OverheadBarbellPress,
+            "overhead_dumbbell_press" => ShoulderPressExerciseName::OverheadDumbbellPress,
+            "seated_barbell_shoulder_press" => {
+                ShoulderPressExerciseName::SeatedBarbellShoulderPress
+            }
+            "seated_dumbbell_shoulder_press" => {
+                ShoulderPressExerciseName::SeatedDumbbellShoulderPress
+            }
+            "single_arm_dumbbell_shoulder_press" => {
+                ShoulderPressExerciseName::SingleArmDumbbellShoulderPress
+            }
+            "single_arm_step_up_and_press" => ShoulderPressExerciseName::SingleArmStepUpAndPress,
+            "smith_machine_overhead_press" => ShoulderPressExerciseName::SmithMachineOverheadPress,
+            "split_stance_hammer_curl_to_press" => {
+                ShoulderPressExerciseName::SplitStanceHammerCurlToPress
+            }
+            "swiss_ball_dumbbell_shoulder_press" => {
+                ShoulderPressExerciseName::SwissBallDumbbellShoulderPress
+            }
+            "weight_plate_front_raise" => ShoulderPressExerciseName::WeightPlateFrontRaise,
+            &_ => ShoulderPressExerciseName::Value(0),
+        }
     }
 }
 impl Serialize for ShoulderPressExerciseName {
@@ -23456,6 +28151,54 @@ impl convert::From<i64> for ShoulderStabilityExerciseName {
         ShoulderStabilityExerciseName::from(value as u16)
     }
 }
+impl convert::From<&str> for ShoulderStabilityExerciseName {
+    fn from(value: &str) -> Self {
+        match value {
+            "90_degree_cable_external_rotation" => {
+                ShoulderStabilityExerciseName::Name90DegreeCableExternalRotation
+            }
+            "band_external_rotation" => ShoulderStabilityExerciseName::BandExternalRotation,
+            "band_internal_rotation" => ShoulderStabilityExerciseName::BandInternalRotation,
+            "bent_arm_lateral_raise_and_external_rotation" => {
+                ShoulderStabilityExerciseName::BentArmLateralRaiseAndExternalRotation
+            }
+            "cable_external_rotation" => ShoulderStabilityExerciseName::CableExternalRotation,
+            "dumbbell_face_pull_with_external_rotation" => {
+                ShoulderStabilityExerciseName::DumbbellFacePullWithExternalRotation
+            }
+            "floor_i_raise" => ShoulderStabilityExerciseName::FloorIRaise,
+            "weighted_floor_i_raise" => ShoulderStabilityExerciseName::WeightedFloorIRaise,
+            "floor_t_raise" => ShoulderStabilityExerciseName::FloorTRaise,
+            "weighted_floor_t_raise" => ShoulderStabilityExerciseName::WeightedFloorTRaise,
+            "floor_y_raise" => ShoulderStabilityExerciseName::FloorYRaise,
+            "weighted_floor_y_raise" => ShoulderStabilityExerciseName::WeightedFloorYRaise,
+            "incline_i_raise" => ShoulderStabilityExerciseName::InclineIRaise,
+            "weighted_incline_i_raise" => ShoulderStabilityExerciseName::WeightedInclineIRaise,
+            "incline_l_raise" => ShoulderStabilityExerciseName::InclineLRaise,
+            "weighted_incline_l_raise" => ShoulderStabilityExerciseName::WeightedInclineLRaise,
+            "incline_t_raise" => ShoulderStabilityExerciseName::InclineTRaise,
+            "weighted_incline_t_raise" => ShoulderStabilityExerciseName::WeightedInclineTRaise,
+            "incline_w_raise" => ShoulderStabilityExerciseName::InclineWRaise,
+            "weighted_incline_w_raise" => ShoulderStabilityExerciseName::WeightedInclineWRaise,
+            "incline_y_raise" => ShoulderStabilityExerciseName::InclineYRaise,
+            "weighted_incline_y_raise" => ShoulderStabilityExerciseName::WeightedInclineYRaise,
+            "lying_external_rotation" => ShoulderStabilityExerciseName::LyingExternalRotation,
+            "seated_dumbbell_external_rotation" => {
+                ShoulderStabilityExerciseName::SeatedDumbbellExternalRotation
+            }
+            "standing_l_raise" => ShoulderStabilityExerciseName::StandingLRaise,
+            "swiss_ball_i_raise" => ShoulderStabilityExerciseName::SwissBallIRaise,
+            "weighted_swiss_ball_i_raise" => ShoulderStabilityExerciseName::WeightedSwissBallIRaise,
+            "swiss_ball_t_raise" => ShoulderStabilityExerciseName::SwissBallTRaise,
+            "weighted_swiss_ball_t_raise" => ShoulderStabilityExerciseName::WeightedSwissBallTRaise,
+            "swiss_ball_w_raise" => ShoulderStabilityExerciseName::SwissBallWRaise,
+            "weighted_swiss_ball_w_raise" => ShoulderStabilityExerciseName::WeightedSwissBallWRaise,
+            "swiss_ball_y_raise" => ShoulderStabilityExerciseName::SwissBallYRaise,
+            "weighted_swiss_ball_y_raise" => ShoulderStabilityExerciseName::WeightedSwissBallYRaise,
+            &_ => ShoulderStabilityExerciseName::Value(0),
+        }
+    }
+}
 impl Serialize for ShoulderStabilityExerciseName {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -23573,6 +28316,32 @@ impl convert::From<u16> for ShrugExerciseName {
 impl convert::From<i64> for ShrugExerciseName {
     fn from(value: i64) -> Self {
         ShrugExerciseName::from(value as u16)
+    }
+}
+impl convert::From<&str> for ShrugExerciseName {
+    fn from(value: &str) -> Self {
+        match value {
+            "barbell_jump_shrug" => ShrugExerciseName::BarbellJumpShrug,
+            "barbell_shrug" => ShrugExerciseName::BarbellShrug,
+            "barbell_upright_row" => ShrugExerciseName::BarbellUprightRow,
+            "behind_the_back_smith_machine_shrug" => {
+                ShrugExerciseName::BehindTheBackSmithMachineShrug
+            }
+            "dumbbell_jump_shrug" => ShrugExerciseName::DumbbellJumpShrug,
+            "dumbbell_shrug" => ShrugExerciseName::DumbbellShrug,
+            "dumbbell_upright_row" => ShrugExerciseName::DumbbellUprightRow,
+            "incline_dumbbell_shrug" => ShrugExerciseName::InclineDumbbellShrug,
+            "overhead_barbell_shrug" => ShrugExerciseName::OverheadBarbellShrug,
+            "overhead_dumbbell_shrug" => ShrugExerciseName::OverheadDumbbellShrug,
+            "scaption_and_shrug" => ShrugExerciseName::ScaptionAndShrug,
+            "scapular_retraction" => ShrugExerciseName::ScapularRetraction,
+            "serratus_chair_shrug" => ShrugExerciseName::SerratusChairShrug,
+            "weighted_serratus_chair_shrug" => ShrugExerciseName::WeightedSerratusChairShrug,
+            "serratus_shrug" => ShrugExerciseName::SerratusShrug,
+            "weighted_serratus_shrug" => ShrugExerciseName::WeightedSerratusShrug,
+            "wide_grip_jump_shrug" => ShrugExerciseName::WideGripJumpShrug,
+            &_ => ShrugExerciseName::Value(0),
+        }
     }
 }
 impl Serialize for ShrugExerciseName {
@@ -23786,6 +28555,55 @@ impl convert::From<u16> for SitUpExerciseName {
 impl convert::From<i64> for SitUpExerciseName {
     fn from(value: i64) -> Self {
         SitUpExerciseName::from(value as u16)
+    }
+}
+impl convert::From<&str> for SitUpExerciseName {
+    fn from(value: &str) -> Self {
+        match value {
+            "alternating_sit_up" => SitUpExerciseName::AlternatingSitUp,
+            "weighted_alternating_sit_up" => SitUpExerciseName::WeightedAlternatingSitUp,
+            "bent_knee_v_up" => SitUpExerciseName::BentKneeVUp,
+            "weighted_bent_knee_v_up" => SitUpExerciseName::WeightedBentKneeVUp,
+            "butterfly_sit_up" => SitUpExerciseName::ButterflySitUp,
+            "weighted_butterfly_situp" => SitUpExerciseName::WeightedButterflySitup,
+            "cross_punch_roll_up" => SitUpExerciseName::CrossPunchRollUp,
+            "weighted_cross_punch_roll_up" => SitUpExerciseName::WeightedCrossPunchRollUp,
+            "crossed_arms_sit_up" => SitUpExerciseName::CrossedArmsSitUp,
+            "weighted_crossed_arms_sit_up" => SitUpExerciseName::WeightedCrossedArmsSitUp,
+            "get_up_sit_up" => SitUpExerciseName::GetUpSitUp,
+            "weighted_get_up_sit_up" => SitUpExerciseName::WeightedGetUpSitUp,
+            "hovering_sit_up" => SitUpExerciseName::HoveringSitUp,
+            "weighted_hovering_sit_up" => SitUpExerciseName::WeightedHoveringSitUp,
+            "kettlebell_sit_up" => SitUpExerciseName::KettlebellSitUp,
+            "medicine_ball_alternating_v_up" => SitUpExerciseName::MedicineBallAlternatingVUp,
+            "medicine_ball_sit_up" => SitUpExerciseName::MedicineBallSitUp,
+            "medicine_ball_v_up" => SitUpExerciseName::MedicineBallVUp,
+            "modified_sit_up" => SitUpExerciseName::ModifiedSitUp,
+            "negative_sit_up" => SitUpExerciseName::NegativeSitUp,
+            "one_arm_full_sit_up" => SitUpExerciseName::OneArmFullSitUp,
+            "reclining_circle" => SitUpExerciseName::RecliningCircle,
+            "weighted_reclining_circle" => SitUpExerciseName::WeightedRecliningCircle,
+            "reverse_curl_up" => SitUpExerciseName::ReverseCurlUp,
+            "weighted_reverse_curl_up" => SitUpExerciseName::WeightedReverseCurlUp,
+            "single_leg_swiss_ball_jackknife" => SitUpExerciseName::SingleLegSwissBallJackknife,
+            "weighted_single_leg_swiss_ball_jackknife" => {
+                SitUpExerciseName::WeightedSingleLegSwissBallJackknife
+            }
+            "the_teaser" => SitUpExerciseName::TheTeaser,
+            "the_teaser_weighted" => SitUpExerciseName::TheTeaserWeighted,
+            "three_part_roll_down" => SitUpExerciseName::ThreePartRollDown,
+            "weighted_three_part_roll_down" => SitUpExerciseName::WeightedThreePartRollDown,
+            "v_up" => SitUpExerciseName::VUp,
+            "weighted_v_up" => SitUpExerciseName::WeightedVUp,
+            "weighted_russian_twist_on_swiss_ball" => {
+                SitUpExerciseName::WeightedRussianTwistOnSwissBall
+            }
+            "weighted_sit_up" => SitUpExerciseName::WeightedSitUp,
+            "x_abs" => SitUpExerciseName::XAbs,
+            "weighted_x_abs" => SitUpExerciseName::WeightedXAbs,
+            "sit_up" => SitUpExerciseName::SitUp,
+            &_ => SitUpExerciseName::Value(0),
+        }
     }
 }
 impl Serialize for SitUpExerciseName {
@@ -24241,6 +29059,117 @@ impl convert::From<i64> for SquatExerciseName {
         SquatExerciseName::from(value as u16)
     }
 }
+impl convert::From<&str> for SquatExerciseName {
+    fn from(value: &str) -> Self {
+        match value {
+            "leg_press" => SquatExerciseName::LegPress,
+            "back_squat_with_body_bar" => SquatExerciseName::BackSquatWithBodyBar,
+            "back_squats" => SquatExerciseName::BackSquats,
+            "weighted_back_squats" => SquatExerciseName::WeightedBackSquats,
+            "balancing_squat" => SquatExerciseName::BalancingSquat,
+            "weighted_balancing_squat" => SquatExerciseName::WeightedBalancingSquat,
+            "barbell_back_squat" => SquatExerciseName::BarbellBackSquat,
+            "barbell_box_squat" => SquatExerciseName::BarbellBoxSquat,
+            "barbell_front_squat" => SquatExerciseName::BarbellFrontSquat,
+            "barbell_hack_squat" => SquatExerciseName::BarbellHackSquat,
+            "barbell_hang_squat_snatch" => SquatExerciseName::BarbellHangSquatSnatch,
+            "barbell_lateral_step_up" => SquatExerciseName::BarbellLateralStepUp,
+            "barbell_quarter_squat" => SquatExerciseName::BarbellQuarterSquat,
+            "barbell_siff_squat" => SquatExerciseName::BarbellSiffSquat,
+            "barbell_squat_snatch" => SquatExerciseName::BarbellSquatSnatch,
+            "barbell_squat_with_heels_raised" => SquatExerciseName::BarbellSquatWithHeelsRaised,
+            "barbell_stepover" => SquatExerciseName::BarbellStepover,
+            "barbell_step_up" => SquatExerciseName::BarbellStepUp,
+            "bench_squat_with_rotational_chop" => SquatExerciseName::BenchSquatWithRotationalChop,
+            "weighted_bench_squat_with_rotational_chop" => {
+                SquatExerciseName::WeightedBenchSquatWithRotationalChop
+            }
+            "body_weight_wall_squat" => SquatExerciseName::BodyWeightWallSquat,
+            "weighted_wall_squat" => SquatExerciseName::WeightedWallSquat,
+            "box_step_squat" => SquatExerciseName::BoxStepSquat,
+            "weighted_box_step_squat" => SquatExerciseName::WeightedBoxStepSquat,
+            "braced_squat" => SquatExerciseName::BracedSquat,
+            "crossed_arm_barbell_front_squat" => SquatExerciseName::CrossedArmBarbellFrontSquat,
+            "crossover_dumbbell_step_up" => SquatExerciseName::CrossoverDumbbellStepUp,
+            "dumbbell_front_squat" => SquatExerciseName::DumbbellFrontSquat,
+            "dumbbell_split_squat" => SquatExerciseName::DumbbellSplitSquat,
+            "dumbbell_squat" => SquatExerciseName::DumbbellSquat,
+            "dumbbell_squat_clean" => SquatExerciseName::DumbbellSquatClean,
+            "dumbbell_stepover" => SquatExerciseName::DumbbellStepover,
+            "dumbbell_step_up" => SquatExerciseName::DumbbellStepUp,
+            "elevated_single_leg_squat" => SquatExerciseName::ElevatedSingleLegSquat,
+            "weighted_elevated_single_leg_squat" => {
+                SquatExerciseName::WeightedElevatedSingleLegSquat
+            }
+            "figure_four_squats" => SquatExerciseName::FigureFourSquats,
+            "weighted_figure_four_squats" => SquatExerciseName::WeightedFigureFourSquats,
+            "goblet_squat" => SquatExerciseName::GobletSquat,
+            "kettlebell_squat" => SquatExerciseName::KettlebellSquat,
+            "kettlebell_swing_overhead" => SquatExerciseName::KettlebellSwingOverhead,
+            "kettlebell_swing_with_flip_to_squat" => {
+                SquatExerciseName::KettlebellSwingWithFlipToSquat
+            }
+            "lateral_dumbbell_step_up" => SquatExerciseName::LateralDumbbellStepUp,
+            "one_legged_squat" => SquatExerciseName::OneLeggedSquat,
+            "overhead_dumbbell_squat" => SquatExerciseName::OverheadDumbbellSquat,
+            "overhead_squat" => SquatExerciseName::OverheadSquat,
+            "partial_single_leg_squat" => SquatExerciseName::PartialSingleLegSquat,
+            "weighted_partial_single_leg_squat" => SquatExerciseName::WeightedPartialSingleLegSquat,
+            "pistol_squat" => SquatExerciseName::PistolSquat,
+            "weighted_pistol_squat" => SquatExerciseName::WeightedPistolSquat,
+            "plie_slides" => SquatExerciseName::PlieSlides,
+            "weighted_plie_slides" => SquatExerciseName::WeightedPlieSlides,
+            "plie_squat" => SquatExerciseName::PlieSquat,
+            "weighted_plie_squat" => SquatExerciseName::WeightedPlieSquat,
+            "prisoner_squat" => SquatExerciseName::PrisonerSquat,
+            "weighted_prisoner_squat" => SquatExerciseName::WeightedPrisonerSquat,
+            "single_leg_bench_get_up" => SquatExerciseName::SingleLegBenchGetUp,
+            "weighted_single_leg_bench_get_up" => SquatExerciseName::WeightedSingleLegBenchGetUp,
+            "single_leg_bench_squat" => SquatExerciseName::SingleLegBenchSquat,
+            "weighted_single_leg_bench_squat" => SquatExerciseName::WeightedSingleLegBenchSquat,
+            "single_leg_squat_on_swiss_ball" => SquatExerciseName::SingleLegSquatOnSwissBall,
+            "weighted_single_leg_squat_on_swiss_ball" => {
+                SquatExerciseName::WeightedSingleLegSquatOnSwissBall
+            }
+            "squat" => SquatExerciseName::Squat,
+            "weighted_squat" => SquatExerciseName::WeightedSquat,
+            "squats_with_band" => SquatExerciseName::SquatsWithBand,
+            "staggered_squat" => SquatExerciseName::StaggeredSquat,
+            "weighted_staggered_squat" => SquatExerciseName::WeightedStaggeredSquat,
+            "step_up" => SquatExerciseName::StepUp,
+            "weighted_step_up" => SquatExerciseName::WeightedStepUp,
+            "suitcase_squats" => SquatExerciseName::SuitcaseSquats,
+            "sumo_squat" => SquatExerciseName::SumoSquat,
+            "sumo_squat_slide_in" => SquatExerciseName::SumoSquatSlideIn,
+            "weighted_sumo_squat_slide_in" => SquatExerciseName::WeightedSumoSquatSlideIn,
+            "sumo_squat_to_high_pull" => SquatExerciseName::SumoSquatToHighPull,
+            "sumo_squat_to_stand" => SquatExerciseName::SumoSquatToStand,
+            "weighted_sumo_squat_to_stand" => SquatExerciseName::WeightedSumoSquatToStand,
+            "sumo_squat_with_rotation" => SquatExerciseName::SumoSquatWithRotation,
+            "weighted_sumo_squat_with_rotation" => SquatExerciseName::WeightedSumoSquatWithRotation,
+            "swiss_ball_body_weight_wall_squat" => SquatExerciseName::SwissBallBodyWeightWallSquat,
+            "weighted_swiss_ball_wall_squat" => SquatExerciseName::WeightedSwissBallWallSquat,
+            "thrusters" => SquatExerciseName::Thrusters,
+            "uneven_squat" => SquatExerciseName::UnevenSquat,
+            "weighted_uneven_squat" => SquatExerciseName::WeightedUnevenSquat,
+            "waist_slimming_squat" => SquatExerciseName::WaistSlimmingSquat,
+            "wall_ball" => SquatExerciseName::WallBall,
+            "wide_stance_barbell_squat" => SquatExerciseName::WideStanceBarbellSquat,
+            "wide_stance_goblet_squat" => SquatExerciseName::WideStanceGobletSquat,
+            "zercher_squat" => SquatExerciseName::ZercherSquat,
+            "kbs_overhead" => SquatExerciseName::KbsOverhead,
+            "squat_and_side_kick" => SquatExerciseName::SquatAndSideKick,
+            "squat_jumps_in_n_out" => SquatExerciseName::SquatJumpsInNOut,
+            "pilates_plie_squats_parallel_turned_out_flat_and_heels" => {
+                SquatExerciseName::PilatesPlieSquatsParallelTurnedOutFlatAndHeels
+            }
+            "releve_straight_leg_and_knee_bent_with_one_leg_variation" => {
+                SquatExerciseName::ReleveStraightLegAndKneeBentWithOneLegVariation
+            }
+            &_ => SquatExerciseName::Value(0),
+        }
+    }
+}
 impl Serialize for SquatExerciseName {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -24344,6 +29273,28 @@ impl convert::From<u16> for TotalBodyExerciseName {
 impl convert::From<i64> for TotalBodyExerciseName {
     fn from(value: i64) -> Self {
         TotalBodyExerciseName::from(value as u16)
+    }
+}
+impl convert::From<&str> for TotalBodyExerciseName {
+    fn from(value: &str) -> Self {
+        match value {
+            "burpee" => TotalBodyExerciseName::Burpee,
+            "weighted_burpee" => TotalBodyExerciseName::WeightedBurpee,
+            "burpee_box_jump" => TotalBodyExerciseName::BurpeeBoxJump,
+            "weighted_burpee_box_jump" => TotalBodyExerciseName::WeightedBurpeeBoxJump,
+            "high_pull_burpee" => TotalBodyExerciseName::HighPullBurpee,
+            "man_makers" => TotalBodyExerciseName::ManMakers,
+            "one_arm_burpee" => TotalBodyExerciseName::OneArmBurpee,
+            "squat_thrusts" => TotalBodyExerciseName::SquatThrusts,
+            "weighted_squat_thrusts" => TotalBodyExerciseName::WeightedSquatThrusts,
+            "squat_plank_push_up" => TotalBodyExerciseName::SquatPlankPushUp,
+            "weighted_squat_plank_push_up" => TotalBodyExerciseName::WeightedSquatPlankPushUp,
+            "standing_t_rotation_balance" => TotalBodyExerciseName::StandingTRotationBalance,
+            "weighted_standing_t_rotation_balance" => {
+                TotalBodyExerciseName::WeightedStandingTRotationBalance
+            }
+            &_ => TotalBodyExerciseName::Value(0),
+        }
     }
 }
 impl Serialize for TotalBodyExerciseName {
@@ -24611,6 +29562,98 @@ impl convert::From<i64> for TricepsExtensionExerciseName {
         TricepsExtensionExerciseName::from(value as u16)
     }
 }
+impl convert::From<&str> for TricepsExtensionExerciseName {
+    fn from(value: &str) -> Self {
+        match value {
+            "bench_dip" => TricepsExtensionExerciseName::BenchDip,
+            "weighted_bench_dip" => TricepsExtensionExerciseName::WeightedBenchDip,
+            "body_weight_dip" => TricepsExtensionExerciseName::BodyWeightDip,
+            "cable_kickback" => TricepsExtensionExerciseName::CableKickback,
+            "cable_lying_triceps_extension" => {
+                TricepsExtensionExerciseName::CableLyingTricepsExtension
+            }
+            "cable_overhead_triceps_extension" => {
+                TricepsExtensionExerciseName::CableOverheadTricepsExtension
+            }
+            "dumbbell_kickback" => TricepsExtensionExerciseName::DumbbellKickback,
+            "dumbbell_lying_triceps_extension" => {
+                TricepsExtensionExerciseName::DumbbellLyingTricepsExtension
+            }
+            "ez_bar_overhead_triceps_extension" => {
+                TricepsExtensionExerciseName::EzBarOverheadTricepsExtension
+            }
+            "incline_dip" => TricepsExtensionExerciseName::InclineDip,
+            "weighted_incline_dip" => TricepsExtensionExerciseName::WeightedInclineDip,
+            "incline_ez_bar_lying_triceps_extension" => {
+                TricepsExtensionExerciseName::InclineEzBarLyingTricepsExtension
+            }
+            "lying_dumbbell_pullover_to_extension" => {
+                TricepsExtensionExerciseName::LyingDumbbellPulloverToExtension
+            }
+            "lying_ez_bar_triceps_extension" => {
+                TricepsExtensionExerciseName::LyingEzBarTricepsExtension
+            }
+            "lying_triceps_extension_to_close_grip_bench_press" => {
+                TricepsExtensionExerciseName::LyingTricepsExtensionToCloseGripBenchPress
+            }
+            "overhead_dumbbell_triceps_extension" => {
+                TricepsExtensionExerciseName::OverheadDumbbellTricepsExtension
+            }
+            "reclining_triceps_press" => TricepsExtensionExerciseName::RecliningTricepsPress,
+            "reverse_grip_pressdown" => TricepsExtensionExerciseName::ReverseGripPressdown,
+            "reverse_grip_triceps_pressdown" => {
+                TricepsExtensionExerciseName::ReverseGripTricepsPressdown
+            }
+            "rope_pressdown" => TricepsExtensionExerciseName::RopePressdown,
+            "seated_barbell_overhead_triceps_extension" => {
+                TricepsExtensionExerciseName::SeatedBarbellOverheadTricepsExtension
+            }
+            "seated_dumbbell_overhead_triceps_extension" => {
+                TricepsExtensionExerciseName::SeatedDumbbellOverheadTricepsExtension
+            }
+            "seated_ez_bar_overhead_triceps_extension" => {
+                TricepsExtensionExerciseName::SeatedEzBarOverheadTricepsExtension
+            }
+            "seated_single_arm_overhead_dumbbell_extension" => {
+                TricepsExtensionExerciseName::SeatedSingleArmOverheadDumbbellExtension
+            }
+            "single_arm_dumbbell_overhead_triceps_extension" => {
+                TricepsExtensionExerciseName::SingleArmDumbbellOverheadTricepsExtension
+            }
+            "single_dumbbell_seated_overhead_triceps_extension" => {
+                TricepsExtensionExerciseName::SingleDumbbellSeatedOverheadTricepsExtension
+            }
+            "single_leg_bench_dip_and_kick" => {
+                TricepsExtensionExerciseName::SingleLegBenchDipAndKick
+            }
+            "weighted_single_leg_bench_dip_and_kick" => {
+                TricepsExtensionExerciseName::WeightedSingleLegBenchDipAndKick
+            }
+            "single_leg_dip" => TricepsExtensionExerciseName::SingleLegDip,
+            "weighted_single_leg_dip" => TricepsExtensionExerciseName::WeightedSingleLegDip,
+            "static_lying_triceps_extension" => {
+                TricepsExtensionExerciseName::StaticLyingTricepsExtension
+            }
+            "suspended_dip" => TricepsExtensionExerciseName::SuspendedDip,
+            "weighted_suspended_dip" => TricepsExtensionExerciseName::WeightedSuspendedDip,
+            "swiss_ball_dumbbell_lying_triceps_extension" => {
+                TricepsExtensionExerciseName::SwissBallDumbbellLyingTricepsExtension
+            }
+            "swiss_ball_ez_bar_lying_triceps_extension" => {
+                TricepsExtensionExerciseName::SwissBallEzBarLyingTricepsExtension
+            }
+            "swiss_ball_ez_bar_overhead_triceps_extension" => {
+                TricepsExtensionExerciseName::SwissBallEzBarOverheadTricepsExtension
+            }
+            "tabletop_dip" => TricepsExtensionExerciseName::TabletopDip,
+            "weighted_tabletop_dip" => TricepsExtensionExerciseName::WeightedTabletopDip,
+            "triceps_extension_on_floor" => TricepsExtensionExerciseName::TricepsExtensionOnFloor,
+            "triceps_pressdown" => TricepsExtensionExerciseName::TricepsPressdown,
+            "weighted_dip" => TricepsExtensionExerciseName::WeightedDip,
+            &_ => TricepsExtensionExerciseName::Value(0),
+        }
+    }
+}
 impl Serialize for TricepsExtensionExerciseName {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -24795,6 +29838,44 @@ impl convert::From<i64> for WarmUpExerciseName {
         WarmUpExerciseName::from(value as u16)
     }
 }
+impl convert::From<&str> for WarmUpExerciseName {
+    fn from(value: &str) -> Self {
+        match value {
+            "quadruped_rocking" => WarmUpExerciseName::QuadrupedRocking,
+            "neck_tilts" => WarmUpExerciseName::NeckTilts,
+            "ankle_circles" => WarmUpExerciseName::AnkleCircles,
+            "ankle_dorsiflexion_with_band" => WarmUpExerciseName::AnkleDorsiflexionWithBand,
+            "ankle_internal_rotation" => WarmUpExerciseName::AnkleInternalRotation,
+            "arm_circles" => WarmUpExerciseName::ArmCircles,
+            "bent_over_reach_to_sky" => WarmUpExerciseName::BentOverReachToSky,
+            "cat_camel" => WarmUpExerciseName::CatCamel,
+            "elbow_to_foot_lunge" => WarmUpExerciseName::ElbowToFootLunge,
+            "forward_and_backward_leg_swings" => WarmUpExerciseName::ForwardAndBackwardLegSwings,
+            "groiners" => WarmUpExerciseName::Groiners,
+            "inverted_hamstring_stretch" => WarmUpExerciseName::InvertedHamstringStretch,
+            "lateral_duck_under" => WarmUpExerciseName::LateralDuckUnder,
+            "neck_rotations" => WarmUpExerciseName::NeckRotations,
+            "opposite_arm_and_leg_balance" => WarmUpExerciseName::OppositeArmAndLegBalance,
+            "reach_roll_and_lift" => WarmUpExerciseName::ReachRollAndLift,
+            "scorpion" => WarmUpExerciseName::Scorpion,
+            "shoulder_circles" => WarmUpExerciseName::ShoulderCircles,
+            "side_to_side_leg_swings" => WarmUpExerciseName::SideToSideLegSwings,
+            "sleeper_stretch" => WarmUpExerciseName::SleeperStretch,
+            "slide_out" => WarmUpExerciseName::SlideOut,
+            "swiss_ball_hip_crossover" => WarmUpExerciseName::SwissBallHipCrossover,
+            "swiss_ball_reach_roll_and_lift" => WarmUpExerciseName::SwissBallReachRollAndLift,
+            "swiss_ball_windshield_wipers" => WarmUpExerciseName::SwissBallWindshieldWipers,
+            "thoracic_rotation" => WarmUpExerciseName::ThoracicRotation,
+            "walking_high_kicks" => WarmUpExerciseName::WalkingHighKicks,
+            "walking_high_knees" => WarmUpExerciseName::WalkingHighKnees,
+            "walking_knee_hugs" => WarmUpExerciseName::WalkingKneeHugs,
+            "walking_leg_cradles" => WarmUpExerciseName::WalkingLegCradles,
+            "walkout" => WarmUpExerciseName::Walkout,
+            "walkout_from_push_up_position" => WarmUpExerciseName::WalkoutFromPushUpPosition,
+            &_ => WarmUpExerciseName::Value(0),
+        }
+    }
+}
 impl Serialize for WarmUpExerciseName {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -24856,6 +29937,17 @@ impl convert::From<u16> for RunExerciseName {
 impl convert::From<i64> for RunExerciseName {
     fn from(value: i64) -> Self {
         RunExerciseName::from(value as u16)
+    }
+}
+impl convert::From<&str> for RunExerciseName {
+    fn from(value: &str) -> Self {
+        match value {
+            "run" => RunExerciseName::Run,
+            "walk" => RunExerciseName::Walk,
+            "jog" => RunExerciseName::Jog,
+            "sprint" => RunExerciseName::Sprint,
+            &_ => RunExerciseName::Value(0),
+        }
     }
 }
 impl Serialize for RunExerciseName {
@@ -24921,6 +30013,17 @@ impl convert::From<i64> for WaterType {
         WaterType::from(value as u8)
     }
 }
+impl convert::From<&str> for WaterType {
+    fn from(value: &str) -> Self {
+        match value {
+            "fresh" => WaterType::Fresh,
+            "salt" => WaterType::Salt,
+            "en13319" => WaterType::En13319,
+            "custom" => WaterType::Custom,
+            &_ => WaterType::UnknownVariant(0),
+        }
+    }
+}
 impl Serialize for WaterType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -24968,6 +30071,14 @@ impl convert::From<u8> for TissueModelType {
 impl convert::From<i64> for TissueModelType {
     fn from(value: i64) -> Self {
         TissueModelType::from(value as u8)
+    }
+}
+impl convert::From<&str> for TissueModelType {
+    fn from(value: &str) -> Self {
+        match value {
+            "zhl_16c" => TissueModelType::Zhl16c,
+            &_ => TissueModelType::UnknownVariant(0),
+        }
     }
 }
 impl Serialize for TissueModelType {
@@ -25024,6 +30135,16 @@ impl convert::From<u8> for DiveGasStatus {
 impl convert::From<i64> for DiveGasStatus {
     fn from(value: i64) -> Self {
         DiveGasStatus::from(value as u8)
+    }
+}
+impl convert::From<&str> for DiveGasStatus {
+    fn from(value: &str) -> Self {
+        match value {
+            "disabled" => DiveGasStatus::Disabled,
+            "enabled" => DiveGasStatus::Enabled,
+            "backup_only" => DiveGasStatus::BackupOnly,
+            &_ => DiveGasStatus::UnknownVariant(0),
+        }
     }
 }
 impl Serialize for DiveGasStatus {
@@ -25273,6 +30394,52 @@ impl convert::From<i64> for DiveAlert {
         DiveAlert::from(value as u8)
     }
 }
+impl convert::From<&str> for DiveAlert {
+    fn from(value: &str) -> Self {
+        match value {
+            "ndl_reached" => DiveAlert::NdlReached,
+            "gas_switch_prompted" => DiveAlert::GasSwitchPrompted,
+            "near_surface" => DiveAlert::NearSurface,
+            "approaching_ndl" => DiveAlert::ApproachingNdl,
+            "po2_warn" => DiveAlert::Po2Warn,
+            "po2_crit_high" => DiveAlert::Po2CritHigh,
+            "po2_crit_low" => DiveAlert::Po2CritLow,
+            "time_alert" => DiveAlert::TimeAlert,
+            "depth_alert" => DiveAlert::DepthAlert,
+            "deco_ceiling_broken" => DiveAlert::DecoCeilingBroken,
+            "deco_complete" => DiveAlert::DecoComplete,
+            "safety_stop_broken" => DiveAlert::SafetyStopBroken,
+            "safety_stop_complete" => DiveAlert::SafetyStopComplete,
+            "cns_warning" => DiveAlert::CnsWarning,
+            "cns_critical" => DiveAlert::CnsCritical,
+            "otu_warning" => DiveAlert::OtuWarning,
+            "otu_critical" => DiveAlert::OtuCritical,
+            "ascent_critical" => DiveAlert::AscentCritical,
+            "alert_dismissed_by_key" => DiveAlert::AlertDismissedByKey,
+            "alert_dismissed_by_timeout" => DiveAlert::AlertDismissedByTimeout,
+            "battery_low" => DiveAlert::BatteryLow,
+            "battery_critical" => DiveAlert::BatteryCritical,
+            "safety_stop_started" => DiveAlert::SafetyStopStarted,
+            "approaching_first_deco_stop" => DiveAlert::ApproachingFirstDecoStop,
+            "setpoint_switch_auto_low" => DiveAlert::SetpointSwitchAutoLow,
+            "setpoint_switch_auto_high" => DiveAlert::SetpointSwitchAutoHigh,
+            "setpoint_switch_manual_low" => DiveAlert::SetpointSwitchManualLow,
+            "setpoint_switch_manual_high" => DiveAlert::SetpointSwitchManualHigh,
+            "auto_setpoint_switch_ignored" => DiveAlert::AutoSetpointSwitchIgnored,
+            "switched_to_open_circuit" => DiveAlert::SwitchedToOpenCircuit,
+            "switched_to_closed_circuit" => DiveAlert::SwitchedToClosedCircuit,
+            "tank_battery_low" => DiveAlert::TankBatteryLow,
+            "po2_ccr_dil_low" => DiveAlert::Po2CcrDilLow,
+            "deco_stop_cleared" => DiveAlert::DecoStopCleared,
+            "apnea_neutral_buoyancy" => DiveAlert::ApneaNeutralBuoyancy,
+            "apnea_target_depth" => DiveAlert::ApneaTargetDepth,
+            "apnea_surface" => DiveAlert::ApneaSurface,
+            "apnea_high_speed" => DiveAlert::ApneaHighSpeed,
+            "apnea_low_speed" => DiveAlert::ApneaLowSpeed,
+            &_ => DiveAlert::UnknownVariant(0),
+        }
+    }
+}
 impl Serialize for DiveAlert {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -25332,6 +30499,16 @@ impl convert::From<i64> for DiveAlarmType {
         DiveAlarmType::from(value as u8)
     }
 }
+impl convert::From<&str> for DiveAlarmType {
+    fn from(value: &str) -> Self {
+        match value {
+            "depth" => DiveAlarmType::Depth,
+            "time" => DiveAlarmType::Time,
+            "speed" => DiveAlarmType::Speed,
+            &_ => DiveAlarmType::UnknownVariant(0),
+        }
+    }
+}
 impl Serialize for DiveAlarmType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -25382,6 +30559,15 @@ impl convert::From<u8> for DiveBacklightMode {
 impl convert::From<i64> for DiveBacklightMode {
     fn from(value: i64) -> Self {
         DiveBacklightMode::from(value as u8)
+    }
+}
+impl convert::From<&str> for DiveBacklightMode {
+    fn from(value: &str) -> Self {
+        match value {
+            "at_depth" => DiveBacklightMode::AtDepth,
+            "always_on" => DiveBacklightMode::AlwaysOn,
+            &_ => DiveBacklightMode::UnknownVariant(0),
+        }
     }
 }
 impl Serialize for DiveBacklightMode {
@@ -25448,6 +30634,18 @@ impl convert::From<i64> for SleepLevel {
         SleepLevel::from(value as u8)
     }
 }
+impl convert::From<&str> for SleepLevel {
+    fn from(value: &str) -> Self {
+        match value {
+            "unmeasurable" => SleepLevel::Unmeasurable,
+            "awake" => SleepLevel::Awake,
+            "light" => SleepLevel::Light,
+            "deep" => SleepLevel::Deep,
+            "rem" => SleepLevel::Rem,
+            &_ => SleepLevel::UnknownVariant(0),
+        }
+    }
+}
 impl Serialize for SleepLevel {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -25508,6 +30706,17 @@ impl convert::From<i64> for Spo2MeasurementType {
         Spo2MeasurementType::from(value as u8)
     }
 }
+impl convert::From<&str> for Spo2MeasurementType {
+    fn from(value: &str) -> Self {
+        match value {
+            "off_wrist" => Spo2MeasurementType::OffWrist,
+            "spot_check" => Spo2MeasurementType::SpotCheck,
+            "continuous_check" => Spo2MeasurementType::ContinuousCheck,
+            "periodic" => Spo2MeasurementType::Periodic,
+            &_ => Spo2MeasurementType::UnknownVariant(0),
+        }
+    }
+}
 impl Serialize for Spo2MeasurementType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -25562,6 +30771,15 @@ impl convert::From<i64> for CcrSetpointSwitchMode {
         CcrSetpointSwitchMode::from(value as u8)
     }
 }
+impl convert::From<&str> for CcrSetpointSwitchMode {
+    fn from(value: &str) -> Self {
+        match value {
+            "manual" => CcrSetpointSwitchMode::Manual,
+            "automatic" => CcrSetpointSwitchMode::Automatic,
+            &_ => CcrSetpointSwitchMode::UnknownVariant(0),
+        }
+    }
+}
 impl Serialize for CcrSetpointSwitchMode {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -25612,6 +30830,15 @@ impl convert::From<u8> for DiveGasMode {
 impl convert::From<i64> for DiveGasMode {
     fn from(value: i64) -> Self {
         DiveGasMode::from(value as u8)
+    }
+}
+impl convert::From<&str> for DiveGasMode {
+    fn from(value: &str) -> Self {
+        match value {
+            "open_circuit" => DiveGasMode::OpenCircuit,
+            "closed_circuit_diluent" => DiveGasMode::ClosedCircuitDiluent,
+            &_ => DiveGasMode::UnknownVariant(0),
+        }
     }
 }
 impl Serialize for DiveGasMode {
@@ -25688,6 +30915,19 @@ impl convert::From<i64> for ProjectileType {
         ProjectileType::from(value as u8)
     }
 }
+impl convert::From<&str> for ProjectileType {
+    fn from(value: &str) -> Self {
+        match value {
+            "arrow" => ProjectileType::Arrow,
+            "rifle_cartridge" => ProjectileType::RifleCartridge,
+            "pistol_cartridge" => ProjectileType::PistolCartridge,
+            "shotshell" => ProjectileType::Shotshell,
+            "air_rifle_pellet" => ProjectileType::AirRiflePellet,
+            "other" => ProjectileType::Other,
+            &_ => ProjectileType::UnknownVariant(0),
+        }
+    }
+}
 impl Serialize for ProjectileType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -25738,6 +30978,15 @@ impl convert::From<u16> for FaveroProduct {
 impl convert::From<i64> for FaveroProduct {
     fn from(value: i64) -> Self {
         FaveroProduct::from(value as u16)
+    }
+}
+impl convert::From<&str> for FaveroProduct {
+    fn from(value: &str) -> Self {
+        match value {
+            "assioma_uno" => FaveroProduct::AssiomaUno,
+            "assioma_duo" => FaveroProduct::AssiomaDuo,
+            &_ => FaveroProduct::Value(0),
+        }
     }
 }
 impl Serialize for FaveroProduct {
@@ -25897,6 +31146,34 @@ impl convert::From<i64> for SplitType {
         SplitType::from(value as u8)
     }
 }
+impl convert::From<&str> for SplitType {
+    fn from(value: &str) -> Self {
+        match value {
+            "ascent_split" => SplitType::AscentSplit,
+            "descent_split" => SplitType::DescentSplit,
+            "interval_active" => SplitType::IntervalActive,
+            "interval_rest" => SplitType::IntervalRest,
+            "interval_warmup" => SplitType::IntervalWarmup,
+            "interval_cooldown" => SplitType::IntervalCooldown,
+            "interval_recovery" => SplitType::IntervalRecovery,
+            "interval_other" => SplitType::IntervalOther,
+            "climb_active" => SplitType::ClimbActive,
+            "climb_rest" => SplitType::ClimbRest,
+            "surf_active" => SplitType::SurfActive,
+            "run_active" => SplitType::RunActive,
+            "run_rest" => SplitType::RunRest,
+            "workout_round" => SplitType::WorkoutRound,
+            "rwd_run" => SplitType::RwdRun,
+            "rwd_walk" => SplitType::RwdWalk,
+            "windsurf_active" => SplitType::WindsurfActive,
+            "rwd_stand" => SplitType::RwdStand,
+            "transition" => SplitType::Transition,
+            "ski_lift_split" => SplitType::SkiLiftSplit,
+            "ski_run_split" => SplitType::SkiRunSplit,
+            &_ => SplitType::UnknownVariant(0),
+        }
+    }
+}
 impl Serialize for SplitType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -25951,6 +31228,16 @@ impl convert::From<u8> for ClimbProEvent {
 impl convert::From<i64> for ClimbProEvent {
     fn from(value: i64) -> Self {
         ClimbProEvent::from(value as u8)
+    }
+}
+impl convert::From<&str> for ClimbProEvent {
+    fn from(value: &str) -> Self {
+        match value {
+            "approach" => ClimbProEvent::Approach,
+            "start" => ClimbProEvent::Start,
+            "complete" => ClimbProEvent::Complete,
+            &_ => ClimbProEvent::UnknownVariant(0),
+        }
     }
 }
 impl Serialize for ClimbProEvent {
@@ -26012,6 +31299,16 @@ impl convert::From<i64> for GasConsumptionRateType {
         GasConsumptionRateType::from(value as u8)
     }
 }
+impl convert::From<&str> for GasConsumptionRateType {
+    fn from(value: &str) -> Self {
+        match value {
+            "pressure_sac" => GasConsumptionRateType::PressureSac,
+            "volume_sac" => GasConsumptionRateType::VolumeSac,
+            "rmv" => GasConsumptionRateType::Rmv,
+            &_ => GasConsumptionRateType::UnknownVariant(0),
+        }
+    }
+}
 impl Serialize for GasConsumptionRateType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -26066,6 +31363,16 @@ impl convert::From<u8> for TapSensitivity {
 impl convert::From<i64> for TapSensitivity {
     fn from(value: i64) -> Self {
         TapSensitivity::from(value as u8)
+    }
+}
+impl convert::From<&str> for TapSensitivity {
+    fn from(value: &str) -> Self {
+        match value {
+            "high" => TapSensitivity::High,
+            "medium" => TapSensitivity::Medium,
+            "low" => TapSensitivity::Low,
+            &_ => TapSensitivity::UnknownVariant(0),
+        }
     }
 }
 impl Serialize for TapSensitivity {
@@ -26128,6 +31435,17 @@ impl convert::From<i64> for RadarThreatLevelType {
         RadarThreatLevelType::from(value as u8)
     }
 }
+impl convert::From<&str> for RadarThreatLevelType {
+    fn from(value: &str) -> Self {
+        match value {
+            "threat_unknown" => RadarThreatLevelType::ThreatUnknown,
+            "threat_none" => RadarThreatLevelType::ThreatNone,
+            "threat_approaching" => RadarThreatLevelType::ThreatApproaching,
+            "threat_approaching_fast" => RadarThreatLevelType::ThreatApproachingFast,
+            &_ => RadarThreatLevelType::UnknownVariant(0),
+        }
+    }
+}
 impl Serialize for RadarThreatLevelType {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -26184,6 +31502,16 @@ impl convert::From<i64> for MaxMetSpeedSource {
         MaxMetSpeedSource::from(value as u8)
     }
 }
+impl convert::From<&str> for MaxMetSpeedSource {
+    fn from(value: &str) -> Self {
+        match value {
+            "onboard_gps" => MaxMetSpeedSource::OnboardGps,
+            "connected_gps" => MaxMetSpeedSource::ConnectedGps,
+            "cadence" => MaxMetSpeedSource::Cadence,
+            &_ => MaxMetSpeedSource::UnknownVariant(0),
+        }
+    }
+}
 impl Serialize for MaxMetSpeedSource {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -26236,6 +31564,15 @@ impl convert::From<u8> for MaxMetHeartRateSource {
 impl convert::From<i64> for MaxMetHeartRateSource {
     fn from(value: i64) -> Self {
         MaxMetHeartRateSource::from(value as u8)
+    }
+}
+impl convert::From<&str> for MaxMetHeartRateSource {
+    fn from(value: &str) -> Self {
+        match value {
+            "whr" => MaxMetHeartRateSource::Whr,
+            "hrm" => MaxMetHeartRateSource::Hrm,
+            &_ => MaxMetHeartRateSource::UnknownVariant(0),
+        }
     }
 }
 impl Serialize for MaxMetHeartRateSource {
@@ -26302,6 +31639,18 @@ impl convert::From<i64> for HrvStatus {
         HrvStatus::from(value as u8)
     }
 }
+impl convert::From<&str> for HrvStatus {
+    fn from(value: &str) -> Self {
+        match value {
+            "none" => HrvStatus::None,
+            "poor" => HrvStatus::Poor,
+            "low" => HrvStatus::Low,
+            "unbalanced" => HrvStatus::Unbalanced,
+            "balanced" => HrvStatus::Balanced,
+            &_ => HrvStatus::UnknownVariant(0),
+        }
+    }
+}
 impl Serialize for HrvStatus {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -26354,6 +31703,15 @@ impl convert::From<u8> for NoFlyTimeMode {
 impl convert::From<i64> for NoFlyTimeMode {
     fn from(value: i64) -> Self {
         NoFlyTimeMode::from(value as u8)
+    }
+}
+impl convert::From<&str> for NoFlyTimeMode {
+    fn from(value: &str) -> Self {
+        match value {
+            "standard" => NoFlyTimeMode::Standard,
+            "flat_24_hours" => NoFlyTimeMode::Flat24Hours,
+            &_ => NoFlyTimeMode::UnknownVariant(0),
+        }
     }
 }
 impl Serialize for NoFlyTimeMode {

@@ -36,7 +36,9 @@
 //! ```
 #![warn(missing_docs)]
 use chrono::{DateTime, Local};
+use profile::field_types::FitBaseType;
 use serde::Serialize;
+use std::collections::HashMap;
 use std::convert;
 use std::fmt;
 
@@ -97,16 +99,24 @@ impl FitDataRecord {
 pub struct FitDataField {
     name: String,
     number: u8,
+    developer_data_index: Option<u8>, // None for built-in fields, for developer fields identifies which developer
     value: Value,
     units: String,
 }
 
 impl FitDataField {
     /// Create a new FitDataField
-    pub fn new(name: String, number: u8, value: Value, units: String) -> Self {
+    pub fn new(
+        name: String,
+        number: u8,
+        developer_data_index: Option<u8>,
+        value: Value,
+        units: String,
+    ) -> Self {
         FitDataField {
             name,
             number,
+            developer_data_index,
             value,
             units,
         }
@@ -355,6 +365,114 @@ impl fmt::Display for ValueWithUnits {
     }
 }
 
+/// Developer fields are fields with properties that are not already defined
+/// by the SDK, but instead the definition is part of the fit file, for more
+/// flexiblity. Since their properties are dynamically defined and cannot be
+/// looked up statically we need to store these properties. This is what the
+/// DeveloperFieldDescription struct is for.
+///
+#[derive(Debug)]
+pub struct DeveloperFieldDescription {
+    developer_data_index: u8,
+    field_definition_number: u8,
+    fit_base_type_id: FitBaseType,
+    field_name: String,
+    scale: f64,
+    offset: f64,
+    units: String,
+}
+
+impl TryFrom<&Vec<FitDataField>> for DeveloperFieldDescription {
+    type Error = ErrorKind;
+
+    /// Create DeveloperFieldDescription from FitDataFields
+    fn try_from(
+        fields: &Vec<FitDataField>,
+    ) -> std::result::Result<DeveloperFieldDescription, error::ErrorKind> {
+        let mut name_to_value = HashMap::new();
+        for field in fields {
+            name_to_value.insert(field.name.clone(), field.value.clone());
+        }
+        let developer_data_index = if let Value::UInt8(developer_data_index) = name_to_value
+            .get("developer_data_index")
+            .ok_or(ErrorKind::ValueError(
+                "developer_data_index is mandatory".to_string(),
+            ))? {
+            *developer_data_index
+        } else {
+            return Err(ErrorKind::ValueError(
+                "developer_data_index must be u8".to_string(),
+            ));
+        };
+        let field_definition_number = if let Value::UInt8(field_definition_number) = name_to_value
+            .get("field_definition_number")
+            .ok_or(ErrorKind::ValueError(
+                "field_definition_number is mandatory".to_string(),
+            ))? {
+            *field_definition_number
+        } else {
+            return Err(ErrorKind::ValueError(
+                "field_definition_number must be u8".to_string(),
+            ));
+        };
+        let fit_base_type_id = if let Value::String(fit_base_type_id) = name_to_value
+            .get("fit_base_type_id")
+            .ok_or(ErrorKind::ValueError(
+                "fit_base_type_id is mandatory".to_string(),
+            ))? {
+            // Since the decoder turns enums to string, we need to undo it to get FitBaseType back
+            FitBaseType::from(fit_base_type_id as &str)
+        } else {
+            return Err(ErrorKind::ValueError(
+                "fit_base_type_id must be string".to_string(),
+            ));
+        };
+        let field_name = if let Value::String(field_name) = name_to_value
+            .get("field_name")
+            .unwrap_or(&Value::String(format!(
+                "unknown_developer_field_{}",
+                field_definition_number
+            ))) {
+            field_name.clone()
+        } else {
+            return Err(ErrorKind::ValueError(
+                "field_name must be string".to_string(),
+            ));
+        };
+        let scale =
+            if let Value::UInt8(scale) = name_to_value.get("scale").unwrap_or(&Value::UInt8(1u8)) {
+                *scale as f64
+            } else {
+                return Err(ErrorKind::ValueError("scale must be u8".to_string()));
+            };
+        let offset = if let Value::SInt8(offset) =
+            name_to_value.get("offset").unwrap_or(&Value::SInt8(0i8))
+        {
+            *offset as f64
+        } else {
+            return Err(ErrorKind::ValueError("offset must be i8".to_string()));
+        };
+        let units = if let Value::String(units) = name_to_value
+            .get("units")
+            .unwrap_or(&Value::String(String::new()))
+        {
+            units.clone()
+        } else {
+            return Err(ErrorKind::ValueError("units must be string".to_string()));
+        };
+
+        Ok(DeveloperFieldDescription {
+            developer_data_index,
+            field_definition_number,
+            fit_base_type_id,
+            field_name,
+            scale,
+            offset,
+            units,
+        })
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -372,6 +490,11 @@ mod tests {
         let data = include_bytes!("../tests/fixtures/DeveloperData.fit").to_vec();
         let fit_data = from_bytes(&data).unwrap();
         assert_eq!(fit_data.len(), 6);
+        // make sure we correctly parsed the dev data
+        assert_eq!(fit_data[3].fields().len(), 5);
+        assert_eq!(fit_data[3].fields()[4].name(), "doughnuts_earned");
+        assert_eq!(fit_data[3].fields()[4].value(), &Value::SInt8(1));
+        assert_eq!(fit_data[3].fields()[4].units(), "doughnuts");
     }
 
     #[test]

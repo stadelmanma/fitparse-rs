@@ -50,15 +50,15 @@ fn decode_function_def(msg: &MessageDefinition) -> TokenStream {
 
     quote! {
         #(#comments)*
-        fn #fn_name(mesg_num: MesgNum, data_map: &mut HashMap<u8, Value>, accumlators: &mut HashMap<u32, Value>, options: &HashSet<DecodeOption>) -> Result<Vec<FitDataField>> {
+        fn #fn_name(mesg_num: MesgNum, data_map: &mut HashMap<u8, Value> , accumlators: &mut HashMap<u32, Value>, options: &HashSet<DecodeOption>) -> Result<Vec<FitDataField>> {
             let mut fields = Vec::new();
             let mut entries: VecDeque<(u8, Value)> = data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
-            while let Some((def_num, value)) = entries.pop_front() {
-                match def_num {
+            while let Some((field_nr, value)) = entries.pop_front() {
+                match field_nr {
                     #(#match_arms)*
                     _ => {
                         if !options.contains(&DecodeOption::DropUnknownFields) {
-                            fields.push(unknown_field(def_num, value));
+                            fields.push(unknown_field(field_nr, value));
                         }
                     }
                 }
@@ -276,11 +276,11 @@ fn create_fn_def(mesg_def: &MessageDefinition, fld_def: &MessageFieldDefinition)
             } else {
                 #name
             };
-            data_field_with_info(#def_number, name, #fld_type, scale, offset, units, value, options)
+            data_field_with_info(#def_number, None, name, #fld_type, scale, offset, units, value, options)
         }
     } else {
         quote! {
-            data_field_with_info(#def_number, #name, #fld_type, scale, offset, units, value, options)
+            data_field_with_info(#def_number, None, #name, #fld_type, scale, offset, units, value, options)
         }
     };
 
@@ -334,7 +334,7 @@ fn unknown_mesg_fn() -> TokenStream {
                 return Ok(Vec::new());
             }
             let fields = data_map.iter()
-                .map(|(k, v)| unknown_field(*k, v.clone()))
+                .map(|(field_def_num, v)| unknown_field(*field_def_num, v.clone()))
                 .collect();
             Ok(fields)
         }
@@ -380,7 +380,7 @@ pub fn write_decode_file(profile: &FitProfile, out: &mut File) -> Result<(), std
             calculate_cumulative_value,
             data_field_with_info,
             extract_component,
-            unknown_field
+            unknown_field,
         };
         use super::field_types::*;
         #[doc = "FIT SDK version used to generate profile decoder"]
