@@ -595,22 +595,16 @@ fn data_field_value(
             _ => le_u8(input).map(|(i, v)| (i, Value::UInt8(v)))?, // Treat unexpected like Byte
         };
         bytes_consumed += base_type.size();
-        values.push(value);
+        if value.is_valid() {
+            values.push(value);
+        }
         input = i;
     }
-
-    // Return either a regular Value or an Array of them
-    let value = if values.len() == 1 {
-        values.swap_remove(0)
-    } else {
-        Value::Array(values)
-    };
-
-    // Only return "something" if it's in the valid range
-    if value.is_valid() {
-        Ok((input, Some(value)))
-    } else {
-        Ok((input, None))
+    // Return None if the values are invalid, a regular Value or an Array of them
+    match values.len(){
+        0 => Ok((input, None)),
+        1 => Ok((input, Some(values.swap_remove(0)))),
+        _ => Ok((input, Some(Value::Array(values))))
     }
 }
 
