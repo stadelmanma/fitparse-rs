@@ -689,7 +689,7 @@ mod tests {
 
     #[test]
     fn data_field_value_test_array_value() {
-        let data = [0x00, 0x01, 0x02, 0x03, 0xFF];
+        let data = [0x00, 0x01, 0x02, 0x03, 0xFF, 0x05];
 
         // parse off a valid byte
         let (rem, val) =
@@ -706,18 +706,24 @@ mod tests {
             ),
             None => panic!("No value returned."),
         }
-        assert_eq!(rem, &[0xFF]);
+        assert_eq!(rem, &[0xFF, 0x05]);
 
         // parse off an invalid byte
         let (rem, val) =
-            data_field_value(&data, FitBaseType::Uint8, Endianness::Native, 5).unwrap();
-        if val.is_some() {
-            panic!("None should be returned for invalid bytes.")
-        }
-        assert_eq!(rem, &[]);
-
-        if val.is_some() {
-            panic!("None should be returned for array with an invalid size.")
+            data_field_value(&data, FitBaseType::Uint8, Endianness::Native, 6).unwrap();
+        match val {
+            Some(v) => assert_eq!(
+                v,
+                Value::Array(vec![
+                    Value::UInt8(0x00),
+                    Value::UInt8(0x01),
+                    Value::UInt8(0x02),
+                    Value::UInt8(0x03),
+                    Value::Invalid,
+                    Value::UInt8(0x05),
+                ])
+            ),
+            None => panic!("No value returned."),
         }
         assert_eq!(rem, &[]);
     }
