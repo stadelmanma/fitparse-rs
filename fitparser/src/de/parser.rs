@@ -567,7 +567,7 @@ fn data_field_value(
 ) -> IResult<&[u8], Option<Value>> {
     let mut input = input;
     let mut bytes_consumed = 0;
-    let mut values: Vec<Value> = Vec::new();
+    let mut values: Vec<Value> = Vec::with_capacity((size / base_type.size()) as _);
 
     while bytes_consumed < size {
         let (i, value) = match base_type {
@@ -616,6 +616,7 @@ fn data_field_value(
     let value = if values.len() == 1 {
         values.swap_remove(0)
     } else {
+        values.shrink_to_fit();
         Value::Array(values)
     };
 
