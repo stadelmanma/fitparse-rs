@@ -12,6 +12,7 @@ use nom::sequence::tuple;
 use nom::{Err, IResult, Needed};
 use std::collections::HashMap;
 use std::convert::From;
+use std::mem::discriminant;
 use std::sync::Arc;
 
 /// Define an is_valid function needed for parsing here, this function is not needed for normal use
@@ -36,9 +37,19 @@ impl Value {
             Value::SInt64(val) => *val != 0x7FFF_FFFF_FFFF_FFFF,
             Value::UInt64(val) => *val != 0xFFFF_FFFF_FFFF_FFFF,
             Value::UInt64z(val) => *val != 0x0,
-            // TODO: I need to check this logic, since for Byte Arrays it's only invalid if
-            // all the values are invalid. Is that the case for all array fields or just "byte arrays"?
-            Value::Array(vals) => !vals.is_empty() && vals.iter().any(|v| v.is_valid()),
+            Value::Array(vals) => {
+                if let Some(first) = vals.first().map(|v| discriminant(v)) {
+                    let mut same_type = true;
+                    let mut any_valid = false;
+                    for v in vals {
+                        same_type &= matches!(v, Value::Invalid) || discriminant(v) == first;
+                        any_valid |= v.is_valid();
+                    }
+                    same_type && any_valid
+                } else {
+                    false
+                }
+            }
             Value::Invalid => false,
         }
     }
