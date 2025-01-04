@@ -38,7 +38,11 @@ impl Value {
             Value::UInt64(val) => *val != 0xFFFF_FFFF_FFFF_FFFF,
             Value::UInt64z(val) => *val != 0x0,
             Value::Array(vals) => {
-                if let Some(first) = vals.first().map(discriminant) {
+                if let Some(first) = vals
+                    .iter()
+                    .find(|&v| !matches!(v, Value::Invalid))
+                    .map(discriminant)
+                {
                     let mut same_type = true;
                     let mut any_valid = false;
                     for v in vals {
@@ -799,5 +803,29 @@ mod tests {
         match data_field_value(&data, FitBaseType::Uint16, Endianness::Native, 255) {
             Ok(..) | Err(..) => {}
         };
+    }
+
+    #[test]
+    fn value_array_is_valid() {
+        let val = Value::Array(vec![Value::UInt8(0xFF), Value::UInt8(42u8)]);
+        assert!(
+            val.is_valid(),
+            "This Value array should be valid since it contains a valid value"
+        );
+        let val = Value::Array(vec![Value::UInt8(0x00), Value::UInt8(42u8)]);
+        assert!(
+            val.is_valid(),
+            "This Value array should be valid since it contains only valid values"
+        );
+        let val = Value::Array(vec![Value::Byte(0xFF), Value::Byte(0xFF)]);
+        assert!(
+            !val.is_valid(),
+            "This Value array should be invalid since it contains no valid values"
+        );
+        let val = Value::Array(vec![Value::Byte(0x12), Value::UInt8(42u8)]);
+        assert!(
+            !val.is_valid(),
+            "This Value array should be invalid since it contains differing discriminants"
+        );
     }
 }
