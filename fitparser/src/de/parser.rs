@@ -812,6 +812,11 @@ mod tests {
             val.is_valid(),
             "This Value array should be valid since it contains a valid value"
         );
+        let val = Value::Array(vec![Value::Invalid, Value::UInt8(42u8)]);
+        assert!(
+            val.is_valid(),
+            "This Value array should be valid since it contains a valid value"
+        );
         let val = Value::Array(vec![Value::UInt8(0x00), Value::UInt8(42u8)]);
         assert!(
             val.is_valid(),
