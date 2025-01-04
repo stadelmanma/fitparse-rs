@@ -597,7 +597,7 @@ fn data_field_value(
             FitBaseType::Uint8z => le_u8(input).map(|(i, v)| (i, Value::UInt8z(v)))?,
             FitBaseType::Uint16z => u16(byte_order)(input).map(|(i, v)| (i, Value::UInt16z(v)))?,
             FitBaseType::Uint32z => u32(byte_order)(input).map(|(i, v)| (i, Value::UInt32z(v)))?,
-            FitBaseType::Byte => le_u8(input).map(|(i, v)| (i, Value::UInt8(v)))?,
+            FitBaseType::Byte => le_u8(input).map(|(i, v)| (i, Value::Byte(v)))?,
             FitBaseType::Sint64 => i64(byte_order)(input).map(|(i, v)| (i, Value::SInt64(v)))?,
             FitBaseType::Uint64 => u64(byte_order)(input).map(|(i, v)| (i, Value::UInt64(v)))?,
             FitBaseType::Uint64z => u64(byte_order)(input).map(|(i, v)| (i, Value::UInt64z(v)))?,
