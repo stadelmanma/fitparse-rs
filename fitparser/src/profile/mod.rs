@@ -36,6 +36,7 @@ impl Value {
             Value::UInt64(val) => val.to_ne_bytes().to_vec(),
             Value::UInt64z(val) => val.to_ne_bytes().to_vec(),
             Value::Array(vals) => vals.iter().flat_map(|v| v.to_ne_bytes()).collect(),
+            Value::Invalid => Vec::new(),
         }
     }
 }
@@ -192,6 +193,9 @@ pub fn calculate_cumulative_value(
                     .into())
                 }
             }
+            Value::Invalid => {
+                Err(ErrorKind::ValueError("Cannot accumlate invalid fields".to_string()).into())
+            }
         }
     } else {
         accumulate_fields.insert(key, value.clone());
@@ -282,7 +286,9 @@ fn convert_value(
 }
 
 fn apply_scale_and_offset(value: Value, scale: f64, offset: f64) -> Result<Value> {
-    if ((scale - 1.0).abs() > f64::EPSILON) || ((offset - 0.0).abs() > f64::EPSILON) {
+    if value != Value::Invalid
+        && (((scale - 1.0).abs() > f64::EPSILON) || ((offset - 0.0).abs() > f64::EPSILON))
+    {
         let val: f64 = value.try_into()?;
         Ok(Value::Float64(val / scale - offset))
     } else {

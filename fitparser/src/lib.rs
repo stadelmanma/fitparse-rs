@@ -201,6 +201,8 @@ pub enum Value {
     /// Array of Values, while this allows nested arrays and mixed types this is not possible
     /// in a properly formatted FIT file
     Array(Vec<Self>),
+    /// Placeholder for invalid values in output
+    Invalid,
 }
 
 impl fmt::Display for Value {
@@ -224,7 +226,8 @@ impl fmt::Display for Value {
             Value::Float32(val) => write!(f, "{}", val),
             Value::Float64(val) => write!(f, "{}", val),
             Value::String(val) => write!(f, "{}", val),
-            Value::Array(vals) => write!(f, "{:?}", vals), // printing arrays is hard
+            Value::Array(vals) => write!(f, "{:?}", vals), // printing arrays is hard,
+            Value::Invalid => write!(f, ""),
         }
     }
 }
@@ -257,6 +260,10 @@ impl convert::TryInto<f64> for Value {
             Value::Array(_) => {
                 Err(ErrorKind::ValueError(format!("cannot convert {} into an f64", self)).into())
             }
+            Value::Invalid => Err(ErrorKind::ValueError(format!(
+                "cannot convert an invalid value into an f64"
+            ))
+            .into()),
         }
     }
 }
@@ -293,6 +300,10 @@ impl convert::TryInto<i64> for Value {
             Value::Array(_) => {
                 Err(ErrorKind::ValueError(format!("cannot convert {} into an i64", self)).into())
             }
+            Value::Invalid => Err(ErrorKind::ValueError(format!(
+                "cannot convert an invalid value into an i64"
+            ))
+            .into()),
         }
     }
 }
@@ -329,6 +340,10 @@ impl convert::TryInto<i64> for &Value {
             Value::Array(_) => {
                 Err(ErrorKind::ValueError(format!("cannot convert {} into an i64", self)).into())
             }
+            Value::Invalid => Err(ErrorKind::ValueError(format!(
+                "cannot convert an invalid value into an i64"
+            ))
+            .into()),
         }
     }
 }

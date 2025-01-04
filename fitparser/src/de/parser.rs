@@ -38,7 +38,8 @@ impl Value {
             Value::UInt64z(val) => *val != 0x0,
             // TODO: I need to check this logic, since for Byte Arrays it's only invalid if
             // all the values are invalid. Is that the case for all array fields or just "byte arrays"?
-            Value::Array(vals) => !vals.is_empty() && vals.iter().all(|v| v.is_valid()),
+            Value::Array(vals) => !vals.is_empty() && vals.iter().any(|v| v.is_valid()),
+            Value::Invalid => false,
         }
     }
 }
@@ -595,7 +596,11 @@ fn data_field_value(
             _ => le_u8(input).map(|(i, v)| (i, Value::UInt8(v)))?, // Treat unexpected like Byte
         };
         bytes_consumed += base_type.size();
-        values.push(value);
+        if value.is_valid() {
+            values.push(value);
+        } else {
+            values.push(Value::Invalid)
+        }
         input = i;
     }
 
@@ -606,7 +611,7 @@ fn data_field_value(
         Value::Array(values)
     };
 
-    // Only return "something" if it's in the valid range
+    // Strip invalid values from the output
     if value.is_valid() {
         Ok((input, Some(value)))
     } else {
