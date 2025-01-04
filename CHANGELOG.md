@@ -1,7 +1,8 @@
 # Changelog
 
-## HEAD
+## v0.8.0
 * Bump packaged FIT SDK version to 21.141.00 (lingepumpe)
+* Implement developer field data parsing (lingepumpe)
 
 
 ## v0.7.0
