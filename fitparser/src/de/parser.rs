@@ -604,7 +604,7 @@ fn data_field_value(
             _ => le_u8(input).map(|(i, v)| (i, Value::UInt8(v)))?, // Treat unexpected like Byte
         };
         bytes_consumed += base_type.size();
-        if value.is_valid() {
+        if matches!(base_type, FitBaseType::Byte) || value.is_valid() {
             values.push(value);
         } else {
             values.push(Value::Invalid)
@@ -734,6 +734,27 @@ mod tests {
             None => panic!("No value returned."),
         }
         assert_eq!(rem, &[]);
+    }
+
+    #[test]
+    fn data_field_value_test_byte_array_value() {
+        let data = [0xFF, 0x01, 0xFF, 0x03, 0xFF, 0x05];
+
+        // parse off a valid byte array containing 0xFF bytes
+        let (rem, val) = data_field_value(&data, FitBaseType::Byte, Endianness::Native, 4).unwrap();
+        match val {
+            Some(v) => assert_eq!(
+                v,
+                Value::Array(vec![
+                    Value::Byte(0xFF),
+                    Value::Byte(0x01),
+                    Value::Byte(0xFF),
+                    Value::Byte(0x03),
+                ])
+            ),
+            None => panic!("No value returned."),
+        }
+        assert_eq!(rem, &[0xFF, 0x05]);
     }
 
     #[test]
