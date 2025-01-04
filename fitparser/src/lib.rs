@@ -260,9 +260,9 @@ impl convert::TryInto<f64> for Value {
             Value::Array(_) => {
                 Err(ErrorKind::ValueError(format!("cannot convert {} into an f64", self)).into())
             }
-            Value::Invalid => Err(ErrorKind::ValueError(format!(
-                "cannot convert an invalid value into an f64"
-            ))
+            Value::Invalid => Err(ErrorKind::ValueError(
+                "cannot convert an invalid value into an f64".to_string(),
+            )
             .into()),
         }
     }
@@ -300,9 +300,9 @@ impl convert::TryInto<i64> for Value {
             Value::Array(_) => {
                 Err(ErrorKind::ValueError(format!("cannot convert {} into an i64", self)).into())
             }
-            Value::Invalid => Err(ErrorKind::ValueError(format!(
-                "cannot convert an invalid value into an i64"
-            ))
+            Value::Invalid => Err(ErrorKind::ValueError(
+                "cannot convert an invalid value into an i64".to_string(),
+            )
             .into()),
         }
     }
@@ -340,9 +340,9 @@ impl convert::TryInto<i64> for &Value {
             Value::Array(_) => {
                 Err(ErrorKind::ValueError(format!("cannot convert {} into an i64", self)).into())
             }
-            Value::Invalid => Err(ErrorKind::ValueError(format!(
-                "cannot convert an invalid value into an i64"
-            ))
+            Value::Invalid => Err(ErrorKind::ValueError(
+                "cannot convert an invalid value into an i64".to_string(),
+            )
             .into()),
         }
     }

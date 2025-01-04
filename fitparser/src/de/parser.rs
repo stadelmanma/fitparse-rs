@@ -38,7 +38,7 @@ impl Value {
             Value::UInt64(val) => *val != 0xFFFF_FFFF_FFFF_FFFF,
             Value::UInt64z(val) => *val != 0x0,
             Value::Array(vals) => {
-                if let Some(first) = vals.first().map(|v| discriminant(v)) {
+                if let Some(first) = vals.first().map(discriminant) {
                     let mut same_type = true;
                     let mut any_valid = false;
                     for v in vals {
