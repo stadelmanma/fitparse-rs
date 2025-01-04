@@ -582,14 +582,11 @@ fn data_field_value(
                 // consume the field as defined by its size and then locate the first NUL byte
                 // and ignore everything after it when converting to a string
                 let (input, field_value) = take(size as usize)(input)?;
-                let mut value = Vec::new();
-                for char in field_value {
-                    if *char == 0u8 {
-                        break;
-                    }
-                    value.push(*char);
-                }
-                if let Ok(value) = String::from_utf8(value) {
+                let field_value = &field_value[0..field_value
+                    .iter()
+                    .position(|v| *v == 0u8)
+                    .unwrap_or(field_value.len())];
+                if let Ok(value) = String::from_utf8(field_value.to_owned()) {
                     return Ok((input, Some(Value::String(value))));
                 } else {
                     return Ok((input, None));
