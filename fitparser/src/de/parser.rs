@@ -12,7 +12,6 @@ use nom::sequence::tuple;
 use nom::{Err, IResult, Needed};
 use std::collections::HashMap;
 use std::convert::From;
-use std::mem::discriminant;
 use std::sync::Arc;
 
 /// Define an is_valid function needed for parsing here, this function is not needed for normal use
@@ -37,23 +36,7 @@ impl Value {
             Value::SInt64(val) => *val != 0x7FFF_FFFF_FFFF_FFFF,
             Value::UInt64(val) => *val != 0xFFFF_FFFF_FFFF_FFFF,
             Value::UInt64z(val) => *val != 0x0,
-            Value::Array(vals) => {
-                if let Some(first) = vals
-                    .iter()
-                    .find(|&v| !matches!(v, Value::Invalid))
-                    .map(discriminant)
-                {
-                    let mut same_type = true;
-                    let mut any_valid = false;
-                    for v in vals {
-                        same_type &= matches!(v, Value::Invalid) || discriminant(v) == first;
-                        any_valid |= v.is_valid();
-                    }
-                    same_type && any_valid
-                } else {
-                    false
-                }
-            }
+            Value::Array(vals) => !vals.is_empty() && vals.iter().any(|v| v.is_valid()),
             Value::Invalid => false,
         }
     }
@@ -826,11 +809,6 @@ mod tests {
         assert!(
             !val.is_valid(),
             "This Value array should be invalid since it contains no valid values"
-        );
-        let val = Value::Array(vec![Value::Byte(0x12), Value::UInt8(42u8)]);
-        assert!(
-            !val.is_valid(),
-            "This Value array should be invalid since it contains differing discriminants"
         );
     }
 }
