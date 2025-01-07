@@ -651,4 +651,51 @@ mod tests {
         let fit_data = de::from_bytes_with_options(&data, &options).unwrap();
         assert_eq!(fit_data.len(), 355);
     }
+
+    #[test]
+    fn hashset_to_bitflags_migration() {
+        #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
+        pub enum OldDecodeOption {
+            DropUnknownFields,
+            DropUnknownMessages,
+            KeepCompositeFields,
+            ReturnNumericEnumValues,
+            SkipHeaderCrcValidation,
+            SkipDataCrcValidation,
+            UseGenericSubFieldName,
+        }
+
+        let mut old = std::collections::HashSet::<OldDecodeOption>::new();
+        let mut new = DecodeOption::empty();
+
+        old.insert(OldDecodeOption::DropUnknownFields);
+        old.insert(OldDecodeOption::DropUnknownMessages);
+        old.insert(OldDecodeOption::KeepCompositeFields);
+        old.insert(OldDecodeOption::ReturnNumericEnumValues);
+        old.insert(OldDecodeOption::SkipHeaderCrcValidation);
+        old.insert(OldDecodeOption::SkipDataCrcValidation);
+        old.insert(OldDecodeOption::UseGenericSubFieldName);
+
+        old.remove(&OldDecodeOption::SkipDataCrcValidation);
+        old.remove(&OldDecodeOption::UseGenericSubFieldName);
+
+        new.insert(DecodeOption::DropUnknownFields);
+        new.insert(DecodeOption::DropUnknownMessages);
+        new.insert(DecodeOption::KeepCompositeFields);
+        new.insert(DecodeOption::ReturnNumericEnumValues);
+        new.insert(DecodeOption::SkipHeaderCrcValidation);
+        new.insert(DecodeOption::SkipDataCrcValidation);
+        new.insert(DecodeOption::UseGenericSubFieldName);
+
+        new.remove(DecodeOption::SkipDataCrcValidation);
+        new.remove(DecodeOption::UseGenericSubFieldName);
+
+        assert_eq!(old.contains(&OldDecodeOption::DropUnknownFields),       new.contains(DecodeOption::DropUnknownFields));
+        assert_eq!(old.contains(&OldDecodeOption::DropUnknownMessages),     new.contains(DecodeOption::DropUnknownMessages));
+        assert_eq!(old.contains(&OldDecodeOption::KeepCompositeFields),     new.contains(DecodeOption::KeepCompositeFields));
+        assert_eq!(old.contains(&OldDecodeOption::ReturnNumericEnumValues), new.contains(DecodeOption::ReturnNumericEnumValues));
+        assert_eq!(old.contains(&OldDecodeOption::SkipHeaderCrcValidation), new.contains(DecodeOption::SkipHeaderCrcValidation));
+        assert_eq!(old.contains(&OldDecodeOption::SkipDataCrcValidation),   new.contains(DecodeOption::SkipDataCrcValidation));
+        assert_eq!(old.contains(&OldDecodeOption::UseGenericSubFieldName),  new.contains(DecodeOption::UseGenericSubFieldName));
+    }
 }
