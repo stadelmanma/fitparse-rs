@@ -1,4 +1,4 @@
-#![doc = "//! Auto generated profile messages from FIT SDK Release: 21.141.00"]
+#![doc = "//! Auto generated profile messages from FIT SDK Release: 21.158.00"]
 #![allow(unused_variables)]
 #![allow(clippy::if_same_then_else, clippy::too_many_arguments)]
 use super::field_types::*;
@@ -9,7 +9,7 @@ use crate::{FitDataField, Value};
 use std::collections::{HashMap, HashSet, VecDeque};
 use std::convert::TryInto;
 #[doc = "FIT SDK version used to generate profile decoder"]
-pub const VERSION: &str = "21.141.00";
+pub const VERSION: &str = "21.158.00";
 #[doc = "Must be first message in file."]
 #[doc = " * time_created: Only set for files that are can be created/erased."]
 #[doc = " * number: Only set for files that are not created/erased."]
@@ -49613,6 +49613,7 @@ fn segment_file_message_message_index_field(
 }
 #[doc = "workout message definition"]
 #[doc = " * num_valid_steps: number of valid steps"]
+#[doc = " * wkt_description: Description of the workout"]
 fn workout_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -49704,6 +49705,19 @@ fn workout_message(
             }
             15u8 => {
                 fields.push(workout_message_pool_length_unit_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "",
+                    value,
+                )?);
+            }
+            17u8 => {
+                fields.push(workout_message_wkt_description_field(
                     mesg_num,
                     accumlators,
                     options,
@@ -49926,6 +49940,34 @@ fn workout_message_pool_length_unit_field(
         None,
         "pool_length_unit",
         FieldDataType::DisplayMeasure,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn workout_message_wkt_description_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 17u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        17u8,
+        None,
+        "wkt_description",
+        FieldDataType::String,
         scale,
         offset,
         units,
@@ -58191,7 +58233,7 @@ fn max_met_data_message_speed_source_field(
 }
 #[doc = "Body battery data used for HSA custom data logging"]
 #[doc = " * processing_interval: Processing interval length in seconds"]
-#[doc = " * level: Body battery level"]
+#[doc = " * level: Body battery level: [0,100] Blank: -16"]
 #[doc = " * charged: Body battery charged value"]
 #[doc = " * uncharged: Body battery uncharged value"]
 fn hsa_body_battery_data_message(
@@ -58420,7 +58462,7 @@ fn hsa_body_battery_data_message_timestamp_field(
     )
 }
 #[doc = "HSA events"]
-#[doc = " * event_id: Event ID"]
+#[doc = " * event_id: Event ID. Health SDK use only"]
 fn hsa_event_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -59152,7 +59194,7 @@ fn hsa_gyroscope_data_message_timestamp_field(
     )
 }
 #[doc = "User's current daily step data used for HSA custom data logging"]
-#[doc = " * processing_interval: Processing interval length in seconds"]
+#[doc = " * processing_interval: Processing interval length in seconds. File start: 0xFFFFFFEF File stop: 0xFFFFFFEE"]
 #[doc = " * steps: Total step sum"]
 fn hsa_step_data_message(
     mesg_num: MesgNum,
@@ -59299,8 +59341,8 @@ fn hsa_step_data_message_timestamp_field(
 }
 #[doc = "User's current SpO2 data used for HSA custom data logging"]
 #[doc = " * processing_interval: Processing interval length in seconds"]
-#[doc = " * reading_spo2: SpO2 Reading"]
-#[doc = " * confidence: SpO2 Confidence"]
+#[doc = " * reading_spo2: SpO2 Reading: [70,100] Blank: 240"]
+#[doc = " * confidence: SpO2 Confidence: [0,254]"]
 fn hsa_spo2_data_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -59487,7 +59529,7 @@ fn hsa_spo2_data_message_timestamp_field(
 }
 #[doc = "User's current stress data used for HSA custom data logging"]
 #[doc = " * processing_interval: Processing interval length in seconds"]
-#[doc = " * stress_level: Stress Level ( 0 - 100 ) -300 indicates invalid -200 indicates large motion -100 indicates off wrist"]
+#[doc = " * stress_level: Stress Level: [0,100] Off wrist: -1 Excess motion: -2 Not enough data: -3 Recovering from exercise: -4 Unidentified: -5 Blank: -16"]
 fn hsa_stress_data_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -59633,7 +59675,7 @@ fn hsa_stress_data_message_timestamp_field(
 }
 #[doc = "User's current respiration data used for HSA custom data logging"]
 #[doc = " * processing_interval: Processing interval length in seconds"]
-#[doc = " * respiration_rate: Breaths * 100 /min -300 indicates invalid -200 indicates large motion -100 indicates off wrist"]
+#[doc = " * respiration_rate: Breaths / min: [1,100] Invalid: 255 Excess motion: 254 Off wrist: 253 Not available: 252 Blank: 2.4"]
 fn hsa_respiration_data_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -59780,7 +59822,7 @@ fn hsa_respiration_data_message_timestamp_field(
 #[doc = "User's current heart rate data used for HSA custom data logging"]
 #[doc = " * processing_interval: Processing interval length in seconds"]
 #[doc = " * status: Status of measurements in buffer - 0 indicates SEARCHING 1 indicates LOCKED"]
-#[doc = " * heart_rate: Beats / min"]
+#[doc = " * heart_rate: Beats / min. Blank: 0"]
 fn hsa_heart_rate_data_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -59966,6 +60008,7 @@ fn hsa_heart_rate_data_message_timestamp_field(
     )
 }
 #[doc = "Configuration data for HSA custom data logging"]
+#[doc = " * data: Encoded configuration data. Health SDK use only"]
 #[doc = " * data_size: Size in bytes of data field"]
 #[doc = " * timestamp: Encoded configuration data"]
 fn hsa_configuration_data_message(
@@ -64374,9 +64417,11 @@ fn hrv_value_message_timestamp_field(
     )
 }
 #[doc = "Raw Beat-to-Beat Interval values"]
-#[doc = " * timestamp_ms: ms since last overnight_raw_bbi message"]
+#[doc = " * timestamp_ms: Millisecond resolution of the timestamp"]
 #[doc = " * data: 1 bit for gap indicator, 1 bit for quality indicator, and 14 bits for Beat-to-Beat interval values in whole-integer millisecond resolution"]
 #[doc = " * time: Array of millisecond times between beats"]
+#[doc = " * quality: 1 = high confidence. 0 = low confidence. N/A when gap = 1"]
+#[doc = " * gap: 1 = gap (time represents ms gap length). 0 = BBI data"]
 fn raw_bbi_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -64934,6 +64979,19 @@ fn chrono_shot_session_message(
                     value,
                 )?);
             }
+            6u8 => {
+                fields.push(chrono_shot_session_message_standard_deviation_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1000f64,
+                    0f64,
+                    "m/s",
+                    value,
+                )?);
+            }
             253u8 => {
                 fields.push(chrono_shot_session_message_timestamp_field(
                     mesg_num,
@@ -65116,6 +65174,34 @@ fn chrono_shot_session_message_grain_weight_field(
         5u8,
         None,
         "grain_weight",
+        FieldDataType::UInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn chrono_shot_session_message_standard_deviation_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 6u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        6u8,
+        None,
+        "standard_deviation",
         FieldDataType::UInt32,
         scale,
         offset,

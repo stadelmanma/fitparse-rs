@@ -1,7 +1,7 @@
 #![allow(missing_docs)]
 #![allow(dead_code)]
 #![allow(clippy::unreadable_literal)]
-#![doc = "Auto generated profile field types from FIT SDK Release: 21.141.00"]
+#![doc = "Auto generated profile field types from FIT SDK Release: 21.158.00"]
 #![doc = "Not all of these may be used by the defined set of FIT messages"]
 use serde::{ser::Serializer, Serialize};
 use std::{convert, fmt};
@@ -6407,11 +6407,15 @@ pub enum AutolapTrigger {
     PositionWaypoint,
     PositionMarked,
     Off,
+    AutoSelect,
     UnknownVariant(u8),
 }
 impl AutolapTrigger {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64..=6i64)
+        matches!(
+            value,
+            0i64 | 1i64 | 2i64 | 3i64 | 4i64 | 5i64 | 6i64 | 13i64
+        )
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -6422,6 +6426,7 @@ impl AutolapTrigger {
             AutolapTrigger::PositionWaypoint => 4,
             AutolapTrigger::PositionMarked => 5,
             AutolapTrigger::Off => 6,
+            AutolapTrigger::AutoSelect => 13,
             AutolapTrigger::UnknownVariant(value) => value,
         }
     }
@@ -6439,6 +6444,7 @@ impl fmt::Display for AutolapTrigger {
             AutolapTrigger::PositionWaypoint => write!(f, "position_waypoint"),
             AutolapTrigger::PositionMarked => write!(f, "position_marked"),
             AutolapTrigger::Off => write!(f, "off"),
+            AutolapTrigger::AutoSelect => write!(f, "auto_select"),
             AutolapTrigger::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
@@ -6453,6 +6459,7 @@ impl convert::From<u8> for AutolapTrigger {
             4 => AutolapTrigger::PositionWaypoint,
             5 => AutolapTrigger::PositionMarked,
             6 => AutolapTrigger::Off,
+            13 => AutolapTrigger::AutoSelect,
             _ => AutolapTrigger::UnknownVariant(value),
         }
     }
@@ -6472,6 +6479,7 @@ impl convert::From<&str> for AutolapTrigger {
             "position_waypoint" => AutolapTrigger::PositionWaypoint,
             "position_marked" => AutolapTrigger::PositionMarked,
             "off" => AutolapTrigger::Off,
+            "auto_select" => AutolapTrigger::AutoSelect,
             &_ => AutolapTrigger::UnknownVariant(0),
         }
     }
@@ -9025,6 +9033,8 @@ pub enum Manufacturer {
     Ezon,
     Laisi,
     Myzone,
+    Abawo,
+    Bafang,
     Development,
     Healthandlife,
     Lezyne,
@@ -9104,6 +9114,9 @@ pub enum Manufacturer {
     Magicshine,
     Ictrainer,
     AbsoluteCycling,
+    EoSwimbetter,
+    Mywhoosh,
+    Ravemen,
     Actigraphcorp,
     Value(u16),
 }
@@ -9258,6 +9271,8 @@ impl Manufacturer {
                 | 148i64
                 | 149i64
                 | 150i64
+                | 151i64
+                | 152i64
                 | 255i64
                 | 257i64
                 | 258i64
@@ -9332,6 +9347,9 @@ impl Manufacturer {
                 | 327i64
                 | 328i64
                 | 329i64
+                | 330i64
+                | 331i64
+                | 332i64
                 | 5759i64
         )
     }
@@ -9485,6 +9503,8 @@ impl Manufacturer {
             Manufacturer::Ezon => 148,
             Manufacturer::Laisi => 149,
             Manufacturer::Myzone => 150,
+            Manufacturer::Abawo => 151,
+            Manufacturer::Bafang => 152,
             Manufacturer::Development => 255,
             Manufacturer::Healthandlife => 257,
             Manufacturer::Lezyne => 258,
@@ -9559,6 +9579,9 @@ impl Manufacturer {
             Manufacturer::Magicshine => 327,
             Manufacturer::Ictrainer => 328,
             Manufacturer::AbsoluteCycling => 329,
+            Manufacturer::EoSwimbetter => 330,
+            Manufacturer::Mywhoosh => 331,
+            Manufacturer::Ravemen => 332,
             Manufacturer::Actigraphcorp => 5759,
             Manufacturer::Value(value) => value,
         }
@@ -9718,6 +9741,8 @@ impl fmt::Display for Manufacturer {
             Manufacturer::Ezon => write!(f, "ezon"),
             Manufacturer::Laisi => write!(f, "laisi"),
             Manufacturer::Myzone => write!(f, "myzone"),
+            Manufacturer::Abawo => write!(f, "abawo"),
+            Manufacturer::Bafang => write!(f, "bafang"),
             Manufacturer::Development => write!(f, "development"),
             Manufacturer::Healthandlife => write!(f, "healthandlife"),
             Manufacturer::Lezyne => write!(f, "lezyne"),
@@ -9792,6 +9817,9 @@ impl fmt::Display for Manufacturer {
             Manufacturer::Magicshine => write!(f, "magicshine"),
             Manufacturer::Ictrainer => write!(f, "ictrainer"),
             Manufacturer::AbsoluteCycling => write!(f, "absolute_cycling"),
+            Manufacturer::EoSwimbetter => write!(f, "eo_swimbetter"),
+            Manufacturer::Mywhoosh => write!(f, "mywhoosh"),
+            Manufacturer::Ravemen => write!(f, "ravemen"),
             Manufacturer::Actigraphcorp => write!(f, "actigraphcorp"),
             Manufacturer::Value(value) => write!(f, "{}", value),
         }
@@ -9948,6 +9976,8 @@ impl convert::From<u16> for Manufacturer {
             148 => Manufacturer::Ezon,
             149 => Manufacturer::Laisi,
             150 => Manufacturer::Myzone,
+            151 => Manufacturer::Abawo,
+            152 => Manufacturer::Bafang,
             255 => Manufacturer::Development,
             257 => Manufacturer::Healthandlife,
             258 => Manufacturer::Lezyne,
@@ -10022,6 +10052,9 @@ impl convert::From<u16> for Manufacturer {
             327 => Manufacturer::Magicshine,
             328 => Manufacturer::Ictrainer,
             329 => Manufacturer::AbsoluteCycling,
+            330 => Manufacturer::EoSwimbetter,
+            331 => Manufacturer::Mywhoosh,
+            332 => Manufacturer::Ravemen,
             5759 => Manufacturer::Actigraphcorp,
             _ => Manufacturer::Value(value),
         }
@@ -10183,6 +10216,8 @@ impl convert::From<&str> for Manufacturer {
             "ezon" => Manufacturer::Ezon,
             "laisi" => Manufacturer::Laisi,
             "myzone" => Manufacturer::Myzone,
+            "abawo" => Manufacturer::Abawo,
+            "bafang" => Manufacturer::Bafang,
             "development" => Manufacturer::Development,
             "healthandlife" => Manufacturer::Healthandlife,
             "lezyne" => Manufacturer::Lezyne,
@@ -10257,6 +10292,9 @@ impl convert::From<&str> for Manufacturer {
             "magicshine" => Manufacturer::Magicshine,
             "ictrainer" => Manufacturer::Ictrainer,
             "absolute_cycling" => Manufacturer::AbsoluteCycling,
+            "eo_swimbetter" => Manufacturer::EoSwimbetter,
+            "mywhoosh" => Manufacturer::Mywhoosh,
+            "ravemen" => Manufacturer::Ravemen,
             "actigraphcorp" => Manufacturer::Actigraphcorp,
             &_ => Manufacturer::Value(0),
         }
@@ -10595,6 +10633,7 @@ pub enum GarminProduct {
     MarqCommanderAsia,
     MarqExpeditionAsia,
     MarqAthleteAsia,
+    IndexSmartScale2,
     InstinctSolar,
     Fr45Asia,
     Vivoactive3Daimler,
@@ -10730,10 +10769,19 @@ pub enum GarminProduct {
     Vivoactive5,
     Fr165,
     Fr165Music,
+    Edge1050,
     DescentT2,
     HrmFit,
     MarqGen2Commander,
+    #[doc = "aka the Lily 2 Active"]
+    LilyAthlete,
+    Fenix8Solar,
+    Fenix8SolarLarge,
+    Fenix8Small,
+    Fenix8,
     D2Mach1Pro,
+    Enduro3,
+    FenixE,
     #[doc = "SDM4 footpod"]
     Sdm4,
     EdgeRemote,
@@ -11050,6 +11098,7 @@ impl GarminProduct {
                 | 3449i64
                 | 3450i64
                 | 3451i64
+                | 3461i64
                 | 3466i64
                 | 3469i64
                 | 3473i64
@@ -11170,10 +11219,18 @@ impl GarminProduct {
                 | 4426i64
                 | 4432i64
                 | 4433i64
+                | 4440i64
                 | 4442i64
                 | 4446i64
                 | 4472i64
+                | 4477i64
+                | 4532i64
+                | 4533i64
+                | 4534i64
+                | 4536i64
                 | 4556i64
+                | 4575i64
+                | 4666i64
                 | 10007i64
                 | 10014i64
                 | 20119i64
@@ -11487,6 +11544,7 @@ impl GarminProduct {
             GarminProduct::MarqCommanderAsia => 3449,
             GarminProduct::MarqExpeditionAsia => 3450,
             GarminProduct::MarqAthleteAsia => 3451,
+            GarminProduct::IndexSmartScale2 => 3461,
             GarminProduct::InstinctSolar => 3466,
             GarminProduct::Fr45Asia => 3469,
             GarminProduct::Vivoactive3Daimler => 3473,
@@ -11607,10 +11665,18 @@ impl GarminProduct {
             GarminProduct::Vivoactive5 => 4426,
             GarminProduct::Fr165 => 4432,
             GarminProduct::Fr165Music => 4433,
+            GarminProduct::Edge1050 => 4440,
             GarminProduct::DescentT2 => 4442,
             GarminProduct::HrmFit => 4446,
             GarminProduct::MarqGen2Commander => 4472,
+            GarminProduct::LilyAthlete => 4477,
+            GarminProduct::Fenix8Solar => 4532,
+            GarminProduct::Fenix8SolarLarge => 4533,
+            GarminProduct::Fenix8Small => 4534,
+            GarminProduct::Fenix8 => 4536,
             GarminProduct::D2Mach1Pro => 4556,
+            GarminProduct::Enduro3 => 4575,
+            GarminProduct::FenixE => 4666,
             GarminProduct::Sdm4 => 10007,
             GarminProduct::EdgeRemote => 10014,
             GarminProduct::TrainingCenter => 20119,
@@ -11936,6 +12002,7 @@ impl fmt::Display for GarminProduct {
             GarminProduct::MarqCommanderAsia => write!(f, "marq_commander_asia"),
             GarminProduct::MarqExpeditionAsia => write!(f, "marq_expedition_asia"),
             GarminProduct::MarqAthleteAsia => write!(f, "marq_athlete_asia"),
+            GarminProduct::IndexSmartScale2 => write!(f, "index_smart_scale_2"),
             GarminProduct::InstinctSolar => write!(f, "instinct_solar"),
             GarminProduct::Fr45Asia => write!(f, "fr45_asia"),
             GarminProduct::Vivoactive3Daimler => write!(f, "vivoactive3_daimler"),
@@ -12056,10 +12123,18 @@ impl fmt::Display for GarminProduct {
             GarminProduct::Vivoactive5 => write!(f, "vivoactive5"),
             GarminProduct::Fr165 => write!(f, "fr165"),
             GarminProduct::Fr165Music => write!(f, "fr165_music"),
+            GarminProduct::Edge1050 => write!(f, "edge_1050"),
             GarminProduct::DescentT2 => write!(f, "descent_t2"),
             GarminProduct::HrmFit => write!(f, "hrm_fit"),
             GarminProduct::MarqGen2Commander => write!(f, "marq_gen2_commander"),
+            GarminProduct::LilyAthlete => write!(f, "lily_athlete"),
+            GarminProduct::Fenix8Solar => write!(f, "fenix8_solar"),
+            GarminProduct::Fenix8SolarLarge => write!(f, "fenix8_solar_large"),
+            GarminProduct::Fenix8Small => write!(f, "fenix8_small"),
+            GarminProduct::Fenix8 => write!(f, "fenix8"),
             GarminProduct::D2Mach1Pro => write!(f, "d2_mach1_pro"),
+            GarminProduct::Enduro3 => write!(f, "enduro3"),
+            GarminProduct::FenixE => write!(f, "fenix_e"),
             GarminProduct::Sdm4 => write!(f, "sdm4"),
             GarminProduct::EdgeRemote => write!(f, "edge_remote"),
             GarminProduct::TrainingCenter => write!(f, "training_center"),
@@ -12378,6 +12453,7 @@ impl convert::From<u16> for GarminProduct {
             3449 => GarminProduct::MarqCommanderAsia,
             3450 => GarminProduct::MarqExpeditionAsia,
             3451 => GarminProduct::MarqAthleteAsia,
+            3461 => GarminProduct::IndexSmartScale2,
             3466 => GarminProduct::InstinctSolar,
             3469 => GarminProduct::Fr45Asia,
             3473 => GarminProduct::Vivoactive3Daimler,
@@ -12498,10 +12574,18 @@ impl convert::From<u16> for GarminProduct {
             4426 => GarminProduct::Vivoactive5,
             4432 => GarminProduct::Fr165,
             4433 => GarminProduct::Fr165Music,
+            4440 => GarminProduct::Edge1050,
             4442 => GarminProduct::DescentT2,
             4446 => GarminProduct::HrmFit,
             4472 => GarminProduct::MarqGen2Commander,
+            4477 => GarminProduct::LilyAthlete,
+            4532 => GarminProduct::Fenix8Solar,
+            4533 => GarminProduct::Fenix8SolarLarge,
+            4534 => GarminProduct::Fenix8Small,
+            4536 => GarminProduct::Fenix8,
             4556 => GarminProduct::D2Mach1Pro,
+            4575 => GarminProduct::Enduro3,
+            4666 => GarminProduct::FenixE,
             10007 => GarminProduct::Sdm4,
             10014 => GarminProduct::EdgeRemote,
             20119 => GarminProduct::TrainingCenter,
@@ -12823,6 +12907,7 @@ impl convert::From<&str> for GarminProduct {
             "marq_commander_asia" => GarminProduct::MarqCommanderAsia,
             "marq_expedition_asia" => GarminProduct::MarqExpeditionAsia,
             "marq_athlete_asia" => GarminProduct::MarqAthleteAsia,
+            "index_smart_scale_2" => GarminProduct::IndexSmartScale2,
             "instinct_solar" => GarminProduct::InstinctSolar,
             "fr45_asia" => GarminProduct::Fr45Asia,
             "vivoactive3_daimler" => GarminProduct::Vivoactive3Daimler,
@@ -12943,10 +13028,18 @@ impl convert::From<&str> for GarminProduct {
             "vivoactive5" => GarminProduct::Vivoactive5,
             "fr165" => GarminProduct::Fr165,
             "fr165_music" => GarminProduct::Fr165Music,
+            "edge_1050" => GarminProduct::Edge1050,
             "descent_t2" => GarminProduct::DescentT2,
             "hrm_fit" => GarminProduct::HrmFit,
             "marq_gen2_commander" => GarminProduct::MarqGen2Commander,
+            "lily_athlete" => GarminProduct::LilyAthlete,
+            "fenix8_solar" => GarminProduct::Fenix8Solar,
+            "fenix8_solar_large" => GarminProduct::Fenix8SolarLarge,
+            "fenix8_small" => GarminProduct::Fenix8Small,
+            "fenix8" => GarminProduct::Fenix8,
             "d2_mach1_pro" => GarminProduct::D2Mach1Pro,
+            "enduro3" => GarminProduct::Enduro3,
+            "fenix_e" => GarminProduct::FenixE,
             "sdm4" => GarminProduct::Sdm4,
             "edge_remote" => GarminProduct::EdgeRemote,
             "training_center" => GarminProduct::TrainingCenter,
