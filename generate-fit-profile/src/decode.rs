@@ -50,14 +50,14 @@ fn decode_function_def(msg: &MessageDefinition) -> TokenStream {
 
     quote! {
         #(#comments)*
-        fn #fn_name(mesg_num: MesgNum, data_map: &mut HashMap<u8, Value> , accumlators: &mut HashMap<u32, Value>, options: &HashSet<DecodeOption>) -> Result<Vec<FitDataField>> {
+        fn #fn_name(mesg_num: MesgNum, data_map: &mut HashMap<u8, Value> , accumlators: &mut HashMap<u32, Value>, options: &DecodeOption) -> Result<Vec<FitDataField>> {
             let mut fields = Vec::new();
             let mut entries: VecDeque<(u8, Value)> = data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
             while let Some((field_nr, value)) = entries.pop_front() {
                 match field_nr {
                     #(#match_arms)*
                     _ => {
-                        if !options.contains(&DecodeOption::DropUnknownFields) {
+                        if !options.contains(DecodeOption::DropUnknownFields) {
                             fields.push(unknown_field(field_nr, value));
                         }
                     }
@@ -212,7 +212,7 @@ fn component_exp(
 
     quote! {
         // if the decode option is present add the parent field prior to expansion
-        if options.contains(&DecodeOption::KeepCompositeFields) {
+        if options.contains(DecodeOption::KeepCompositeFields) {
             fields.push(#keep_comp_fn_call?);
         }
         let input = #val_expr.to_ne_bytes();
@@ -271,7 +271,7 @@ fn create_fn_def(mesg_def: &MessageDefinition, fld_def: &MessageFieldDefinition)
     let data_field_call = if let Some(parent) = fld_def.parent_field() {
         let parent_name = parent.name();
         quote! {
-            let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+            let name = if options.contains(DecodeOption::UseGenericSubFieldName) {
                 #parent_name
             } else {
                 #name
@@ -287,7 +287,7 @@ fn create_fn_def(mesg_def: &MessageDefinition, fld_def: &MessageFieldDefinition)
     quote! {
         fn #field_fn_name(mesg_num: MesgNum,
             accumlators: &mut HashMap<u32, Value>,
-            options: &HashSet<DecodeOption>,
+            options: &DecodeOption,
             data_map: &HashMap<u8, Value>,
             accumulate: bool,
             scale: f64,
@@ -327,10 +327,10 @@ fn unknown_mesg_fn() -> TokenStream {
     quote! {
         fn unknown_message(
             data_map: &HashMap<u8, Value>,
-            options: &HashSet<DecodeOption>,
+            options: &DecodeOption,
         ) -> Result<Vec<FitDataField>> {
             // since it's an unknown message all the fields are unknown
-            if options.contains(&DecodeOption::DropUnknownFields) {
+            if options.contains(DecodeOption::DropUnknownFields) {
                 return Ok(Vec::new());
             }
             let fields = data_map.iter()
@@ -347,7 +347,7 @@ fn mesg_num_to_mesg_decode_fn(messages: &[MessageDefinition]) -> TokenStream {
     quote! {
         impl MesgNum {
             /// Decode the raw values from a FitDataMessage based on the Global Message Number
-            pub fn decode_message(self, data_map: &mut HashMap<u8, Value>, accumlators: &mut HashMap<u32, Value>, options: &HashSet<DecodeOption>) -> Result<Vec<FitDataField>> {
+            pub fn decode_message(self, data_map: &mut HashMap<u8, Value>, accumlators: &mut HashMap<u32, Value>, options: &DecodeOption) -> Result<Vec<FitDataField>> {
                 match self {
                     #(MesgNum::#msg_variants => #fn_names(self, data_map, accumlators, options),)*
                     _ => unknown_message(data_map, options)

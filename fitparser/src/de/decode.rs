@@ -4,7 +4,7 @@ use super::DecodeOption;
 use crate::error::Result;
 use crate::profile::{data_field_with_info, FieldDataType, MesgNum, TimestampField};
 use crate::{DeveloperFieldDescription, ErrorKind, FitDataField, FitDataRecord, Value};
-use std::collections::{HashMap, HashSet, VecDeque};
+use std::collections::{HashMap, VecDeque};
 use std::convert::{From, TryInto};
 
 /// Decodes a raw FitDataMessage using the defined profile. Additional logic is used to handle
@@ -38,7 +38,7 @@ impl Decoder {
     pub fn decode_message(
         &mut self,
         mut message: FitDataMessage,
-        options: &HashSet<DecodeOption>,
+        options: &DecodeOption,
     ) -> Result<FitDataRecord> {
         let mesg_num = MesgNum::from(message.global_message_number());
         let mut record = FitDataRecord::new(mesg_num);
@@ -113,7 +113,7 @@ impl Decoder {
         &self,
         record: &mut FitDataRecord,
         developer_data_map: &HashMap<(u8, u8), Value>,
-        options: &HashSet<DecodeOption>,
+        options: &DecodeOption,
     ) -> Result<()> {
         let mut entries: VecDeque<((u8, u8), Value)> = developer_data_map
             .iter()

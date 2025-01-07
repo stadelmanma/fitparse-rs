@@ -1,7 +1,7 @@
 //! Read one or more FIT files and dump their contents as JSON
 use fitparser::de::{from_reader_with_options, DecodeOption};
 use serde::Serialize;
-use std::collections::{BTreeMap, HashSet};
+use std::collections::BTreeMap;
 use std::error::Error;
 use std::fs::File;
 use std::io;
@@ -118,7 +118,7 @@ fn run() -> Result<(), Box<dyn Error>> {
     let opt = Cli::from_args();
 
     // set any decode options
-    let mut decode_opts = HashSet::new();
+    let mut decode_opts = DecodeOption::empty();
     if opt.drop_unknown {
         decode_opts.insert(DecodeOption::DropUnknownFields);
         decode_opts.insert(DecodeOption::DropUnknownMessages);

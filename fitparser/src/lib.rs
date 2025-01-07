@@ -491,7 +491,7 @@ impl TryFrom<&Vec<FitDataField>> for DeveloperFieldDescription {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use std::collections::HashSet;
+    use de::DecodeOption;
 
     #[test]
     fn parse_activity() {
@@ -615,7 +615,7 @@ mod tests {
         let mut data = include_bytes!("../tests/fixtures/MonitoringFile.fit").to_vec();
         data[12] = 0xFF;
         data[13] = 0xFF;
-        let mut options = HashSet::new();
+        let mut options = DecodeOption::empty();
         match de::from_bytes_with_options(&data, &options) {
             Ok(_) => panic!("This test should fail without the SkipHeaderCrcValidation option."),
             Err(e) => match *e {
@@ -637,7 +637,7 @@ mod tests {
         let leng = data.len();
         data[leng - 2] = 0xFF;
         data[leng - 1] = 0xFF;
-        let mut options = HashSet::new();
+        let mut options = DecodeOption::empty();
         match de::from_bytes_with_options(&data, &options) {
             Ok(_) => panic!("This test should fail without the SkipDataCrcValidation option."),
             Err(e) => match *e {
