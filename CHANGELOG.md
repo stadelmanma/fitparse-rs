@@ -1,6 +1,6 @@
 # Changelog
 
-## HEAD
+## v0.9.0
 * Improve support for array handling (mat-kie)
 * Fix parsing of Byte arrays (mat-kie)
 * Bump packaged FIT SDK version to 21.158.00
