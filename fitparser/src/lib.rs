@@ -586,6 +586,34 @@ mod tests {
     }
 
     #[test]
+    fn parse_activity_with_hrv() {
+        // this test case includes a chained FIT file
+        let data = include_bytes!("../tests/fixtures/hrv-activity.fit").to_vec();
+        let fit_data = from_bytes(&data).unwrap();
+        assert_eq!(fit_data.len(), 2260);
+        // find the first HRV message and check the array
+        // we should see a partial set of bytes
+        let field = fit_data
+            .into_iter()
+            .find(|rec| rec.kind == profile::MesgNum::Hrv)
+            .map(|rec| rec.fields)
+            .expect("We should have at least one HRV message")
+            .into_iter()
+            .find(|fld| fld.name == "time")
+            .expect("We should have at least one time field");
+        assert_eq!(
+            field.value,
+            Value::Array(vec![
+                Value::Float64(0.467),
+                Value::Float64(0.464),
+                Value::Invalid,
+                Value::Invalid,
+                Value::Invalid
+            ])
+        );
+    }
+
+    #[test]
     fn parse_with_header_crc_set_to_zero() {
         // Set header CRC to zero so that the CRC at the EOF includes all bytes
         let mut data = include_bytes!("../tests/fixtures/garmin-fenix-5-bike.fit").to_vec();
