@@ -1,6 +1,6 @@
 # Changelog
 
-## HEAD
+## v0.10.0
 * Bump packaged FIT SDK version to 21.171.00
 * Update dependenies (nom major version update 7->8)
 
