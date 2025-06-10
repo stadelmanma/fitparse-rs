@@ -1,4 +1,4 @@
-#![doc = "//! Auto generated profile messages from FIT SDK Release: 21.158.00"]
+#![doc = "//! Auto generated profile messages from FIT SDK Release: 21.171.00"]
 #![allow(unused_variables)]
 #![allow(clippy::if_same_then_else, clippy::too_many_arguments)]
 use super::field_types::*;
@@ -9,7 +9,7 @@ use crate::{FitDataField, Value};
 use std::collections::{HashMap, HashSet, VecDeque};
 use std::convert::TryInto;
 #[doc = "FIT SDK version used to generate profile decoder"]
-pub const VERSION: &str = "21.158.00";
+pub const VERSION: &str = "21.171.00";
 #[doc = "Must be first message in file."]
 #[doc = " * time_created: Only set for files that are can be created/erased."]
 #[doc = " * number: Only set for files that are not created/erased."]
@@ -9260,6 +9260,192 @@ fn met_zone_message_message_index_field(
         None,
         "message_index",
         FieldDataType::MessageIndex,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+#[doc = "training_settings message definition"]
+#[doc = " * precise_target_speed: A more precise target speed field"]
+fn training_settings_message(
+    mesg_num: MesgNum,
+    data_map: &mut HashMap<u8, Value>,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+) -> Result<Vec<FitDataField>> {
+    let mut fields = Vec::new();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
+    while let Some((field_nr, value)) = entries.pop_front() {
+        match field_nr {
+            31u8 => {
+                fields.push(training_settings_message_target_distance_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    100f64,
+                    0f64,
+                    "m",
+                    value,
+                )?);
+            }
+            32u8 => {
+                fields.push(training_settings_message_target_speed_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1000f64,
+                    0f64,
+                    "m/s",
+                    value,
+                )?);
+            }
+            33u8 => {
+                fields.push(training_settings_message_target_time_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "s",
+                    value,
+                )?);
+            }
+            153u8 => {
+                fields.push(training_settings_message_precise_target_speed_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1000000f64,
+                    0f64,
+                    "m/s",
+                    value,
+                )?);
+            }
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(field_nr, value));
+                }
+            }
+        }
+    }
+    Ok(fields)
+}
+fn training_settings_message_target_distance_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 31u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        31u8,
+        None,
+        "target_distance",
+        FieldDataType::UInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn training_settings_message_target_speed_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 32u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        32u8,
+        None,
+        "target_speed",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn training_settings_message_target_time_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 33u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        33u8,
+        None,
+        "target_time",
+        FieldDataType::UInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn training_settings_message_precise_target_speed_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 153u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        153u8,
+        None,
+        "precise_target_speed",
+        FieldDataType::UInt32,
         scale,
         offset,
         units,
@@ -66649,6 +66835,9 @@ impl MesgNum {
             MesgNum::CadenceZone => cadence_zone_message(self, data_map, accumlators, options),
             MesgNum::PowerZone => power_zone_message(self, data_map, accumlators, options),
             MesgNum::MetZone => met_zone_message(self, data_map, accumlators, options),
+            MesgNum::TrainingSettings => {
+                training_settings_message(self, data_map, accumlators, options)
+            }
             MesgNum::DiveSettings => dive_settings_message(self, data_map, accumlators, options),
             MesgNum::DiveAlarm => dive_alarm_message(self, data_map, accumlators, options),
             MesgNum::DiveApneaAlarm => {
