@@ -8,8 +8,7 @@ use nom::number::streaming::{
     f32, f64, i16, i32, i64, le_i8, le_u16, le_u32, le_u8, u16, u32, u64,
 };
 use nom::number::Endianness;
-use nom::sequence::tuple;
-use nom::{Err, IResult, Needed};
+use nom::{Err, IResult, Needed, Parser};
 use std::collections::HashMap;
 use std::convert::From;
 use std::sync::Arc;
@@ -288,9 +287,9 @@ pub fn fit_file_header(input: &[u8]) -> IResult<&[u8], FitFileHeader> {
 /// Parse the FIT file header, the public function wraps an incomplete error to fix the needed bytes
 fn fit_file_header_impl(input: &[u8]) -> IResult<&[u8], FitFileHeader> {
     let (input, (header_size, proto, prof, data_size)) =
-        tuple((le_u8, le_u8, le_u16, le_u32))(input)?;
-    let (input, _) = tag(".FIT")(input)?;
-    let (input, crc) = cond(header_size > 12, le_u16)(input)?;
+        (le_u8, le_u8, le_u16, le_u32).parse(input)?;
+    let (input, _) = tag(".FIT").parse(input)?;
+    let (input, crc) = cond(header_size > 12, le_u16).parse(input)?;
     let protocol_ver_enc =
         split_decimal_to_float((proto >> 4) as u16, (proto & ((1 << 4) - 1)) as u16);
     let profile_ver_enc = split_decimal_to_float(prof / 100, prof % 100);
@@ -397,19 +396,21 @@ fn definition_message<'a>(
     input: &'a [u8],
     header: &FitMessageHeader,
 ) -> IResult<&'a [u8], FitDefinitionMessage> {
-    let (input, _) = take(1usize)(input)?; // reserved byte, consume it and ignore the value
+    let (input, _) = take(1usize).parse(input)?; // reserved byte, consume it and ignore the value
     let (input, arch_byte) = le_u8(input)?;
     let byte_order = if arch_byte == 1 {
         Endianness::Big
     } else {
         Endianness::Little
     };
-    let (input, global_message_number) = u16(byte_order)(input)?;
+    let (input, global_message_number) = u16(byte_order).parse(input)?;
     let (input, number_of_fields) = le_u8(input)?;
-    let (input, field_definitions) = count(field_definition, number_of_fields as usize)(input)?;
+    let (input, field_definitions) =
+        count(field_definition, number_of_fields as usize).parse(input)?;
     let (input, developer_field_definitions) = if header.contains_developer_data {
         let (input, nflds) = le_u8(input)?;
-        let (input, dev_fld_defs) = count(developer_field_definition, nflds as usize)(input)?;
+        let (input, dev_fld_defs) =
+            count(developer_field_definition, nflds as usize).parse(input)?;
         (input, dev_fld_defs)
     } else {
         (input, Vec::new())
@@ -561,14 +562,22 @@ fn data_field_value(
             FitBaseType::Enum => le_u8(input).map(|(i, v)| (i, Value::Enum(v)))?,
             FitBaseType::Sint8 => le_i8(input).map(|(i, v)| (i, Value::SInt8(v)))?,
             FitBaseType::Uint8 => le_u8(input).map(|(i, v)| (i, Value::UInt8(v)))?,
-            FitBaseType::Sint16 => i16(byte_order)(input).map(|(i, v)| (i, Value::SInt16(v)))?,
-            FitBaseType::Uint16 => u16(byte_order)(input).map(|(i, v)| (i, Value::UInt16(v)))?,
-            FitBaseType::Sint32 => i32(byte_order)(input).map(|(i, v)| (i, Value::SInt32(v)))?,
-            FitBaseType::Uint32 => u32(byte_order)(input).map(|(i, v)| (i, Value::UInt32(v)))?,
+            FitBaseType::Sint16 => i16(byte_order)
+                .parse(input)
+                .map(|(i, v)| (i, Value::SInt16(v)))?,
+            FitBaseType::Uint16 => u16(byte_order)
+                .parse(input)
+                .map(|(i, v)| (i, Value::UInt16(v)))?,
+            FitBaseType::Sint32 => i32(byte_order)
+                .parse(input)
+                .map(|(i, v)| (i, Value::SInt32(v)))?,
+            FitBaseType::Uint32 => u32(byte_order)
+                .parse(input)
+                .map(|(i, v)| (i, Value::UInt32(v)))?,
             FitBaseType::String => {
                 // consume the field as defined by its size and then locate the first NUL byte
                 // and ignore everything after it when converting to a string
-                let (input, field_value) = take(size as usize)(input)?;
+                let (input, field_value) = take(size as usize).parse(input)?;
                 let field_value = &field_value[0..field_value
                     .iter()
                     .position(|v| *v == 0u8)
@@ -579,15 +588,29 @@ fn data_field_value(
                     return Ok((input, None));
                 }
             }
-            FitBaseType::Float32 => f32(byte_order)(input).map(|(i, v)| (i, Value::Float32(v)))?,
-            FitBaseType::Float64 => f64(byte_order)(input).map(|(i, v)| (i, Value::Float64(v)))?,
+            FitBaseType::Float32 => f32(byte_order)
+                .parse(input)
+                .map(|(i, v)| (i, Value::Float32(v)))?,
+            FitBaseType::Float64 => f64(byte_order)
+                .parse(input)
+                .map(|(i, v)| (i, Value::Float64(v)))?,
             FitBaseType::Uint8z => le_u8(input).map(|(i, v)| (i, Value::UInt8z(v)))?,
-            FitBaseType::Uint16z => u16(byte_order)(input).map(|(i, v)| (i, Value::UInt16z(v)))?,
-            FitBaseType::Uint32z => u32(byte_order)(input).map(|(i, v)| (i, Value::UInt32z(v)))?,
+            FitBaseType::Uint16z => u16(byte_order)
+                .parse(input)
+                .map(|(i, v)| (i, Value::UInt16z(v)))?,
+            FitBaseType::Uint32z => u32(byte_order)
+                .parse(input)
+                .map(|(i, v)| (i, Value::UInt32z(v)))?,
             FitBaseType::Byte => le_u8(input).map(|(i, v)| (i, Value::Byte(v)))?,
-            FitBaseType::Sint64 => i64(byte_order)(input).map(|(i, v)| (i, Value::SInt64(v)))?,
-            FitBaseType::Uint64 => u64(byte_order)(input).map(|(i, v)| (i, Value::UInt64(v)))?,
-            FitBaseType::Uint64z => u64(byte_order)(input).map(|(i, v)| (i, Value::UInt64z(v)))?,
+            FitBaseType::Sint64 => i64(byte_order)
+                .parse(input)
+                .map(|(i, v)| (i, Value::SInt64(v)))?,
+            FitBaseType::Uint64 => u64(byte_order)
+                .parse(input)
+                .map(|(i, v)| (i, Value::UInt64(v)))?,
+            FitBaseType::Uint64z => u64(byte_order)
+                .parse(input)
+                .map(|(i, v)| (i, Value::UInt64z(v)))?,
             _ => le_u8(input).map(|(i, v)| (i, Value::UInt8(v)))?, // Treat unexpected like Byte
         };
         bytes_consumed += base_type.size();
