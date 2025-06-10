@@ -1,7 +1,7 @@
 #![allow(missing_docs)]
 #![allow(dead_code)]
 #![allow(clippy::unreadable_literal)]
-#![doc = "Auto generated profile field types from FIT SDK Release: 21.158.00"]
+#![doc = "Auto generated profile field types from FIT SDK Release: 21.171.00"]
 #![doc = "Not all of these may be used by the defined set of FIT messages"]
 use serde::{ser::Serializer, Serialize};
 use std::{convert, fmt};
@@ -182,9 +182,27 @@ pub enum FieldDataType {
     SitUpExerciseName,
     SquatExerciseName,
     TotalBodyExerciseName,
+    MoveExerciseName,
+    PoseExerciseName,
     TricepsExtensionExerciseName,
     WarmUpExerciseName,
     RunExerciseName,
+    BikeExerciseName,
+    BandedExercisesExerciseName,
+    BattleRopeExerciseName,
+    EllipticalExerciseName,
+    FloorClimbExerciseName,
+    IndoorBikeExerciseName,
+    IndoorRowExerciseName,
+    LadderExerciseName,
+    SandbagExerciseName,
+    SledExerciseName,
+    SledgeHammerExerciseName,
+    StairStepperExerciseName,
+    SuspensionExerciseName,
+    TireExerciseName,
+    BikeOutdoorExerciseName,
+    RunIndoorExerciseName,
     WaterType,
     TissueModelType,
     DiveGasStatus,
@@ -362,9 +380,27 @@ impl FieldDataType {
             FieldDataType::SitUpExerciseName => true,
             FieldDataType::SquatExerciseName => true,
             FieldDataType::TotalBodyExerciseName => true,
+            FieldDataType::MoveExerciseName => true,
+            FieldDataType::PoseExerciseName => true,
             FieldDataType::TricepsExtensionExerciseName => true,
             FieldDataType::WarmUpExerciseName => true,
             FieldDataType::RunExerciseName => true,
+            FieldDataType::BikeExerciseName => true,
+            FieldDataType::BandedExercisesExerciseName => true,
+            FieldDataType::BattleRopeExerciseName => true,
+            FieldDataType::EllipticalExerciseName => true,
+            FieldDataType::FloorClimbExerciseName => true,
+            FieldDataType::IndoorBikeExerciseName => true,
+            FieldDataType::IndoorRowExerciseName => true,
+            FieldDataType::LadderExerciseName => true,
+            FieldDataType::SandbagExerciseName => true,
+            FieldDataType::SledExerciseName => true,
+            FieldDataType::SledgeHammerExerciseName => true,
+            FieldDataType::StairStepperExerciseName => true,
+            FieldDataType::SuspensionExerciseName => true,
+            FieldDataType::TireExerciseName => true,
+            FieldDataType::BikeOutdoorExerciseName => true,
+            FieldDataType::RunIndoorExerciseName => true,
             FieldDataType::WaterType => true,
             FieldDataType::TissueModelType => true,
             FieldDataType::DiveGasStatus => true,
@@ -568,11 +604,47 @@ impl FieldDataType {
             FieldDataType::SitUpExerciseName => SitUpExerciseName::is_named_variant(value),
             FieldDataType::SquatExerciseName => SquatExerciseName::is_named_variant(value),
             FieldDataType::TotalBodyExerciseName => TotalBodyExerciseName::is_named_variant(value),
+            FieldDataType::MoveExerciseName => MoveExerciseName::is_named_variant(value),
+            FieldDataType::PoseExerciseName => PoseExerciseName::is_named_variant(value),
             FieldDataType::TricepsExtensionExerciseName => {
                 TricepsExtensionExerciseName::is_named_variant(value)
             }
             FieldDataType::WarmUpExerciseName => WarmUpExerciseName::is_named_variant(value),
             FieldDataType::RunExerciseName => RunExerciseName::is_named_variant(value),
+            FieldDataType::BikeExerciseName => BikeExerciseName::is_named_variant(value),
+            FieldDataType::BandedExercisesExerciseName => {
+                BandedExercisesExerciseName::is_named_variant(value)
+            }
+            FieldDataType::BattleRopeExerciseName => {
+                BattleRopeExerciseName::is_named_variant(value)
+            }
+            FieldDataType::EllipticalExerciseName => {
+                EllipticalExerciseName::is_named_variant(value)
+            }
+            FieldDataType::FloorClimbExerciseName => {
+                FloorClimbExerciseName::is_named_variant(value)
+            }
+            FieldDataType::IndoorBikeExerciseName => {
+                IndoorBikeExerciseName::is_named_variant(value)
+            }
+            FieldDataType::IndoorRowExerciseName => IndoorRowExerciseName::is_named_variant(value),
+            FieldDataType::LadderExerciseName => LadderExerciseName::is_named_variant(value),
+            FieldDataType::SandbagExerciseName => SandbagExerciseName::is_named_variant(value),
+            FieldDataType::SledExerciseName => SledExerciseName::is_named_variant(value),
+            FieldDataType::SledgeHammerExerciseName => {
+                SledgeHammerExerciseName::is_named_variant(value)
+            }
+            FieldDataType::StairStepperExerciseName => {
+                StairStepperExerciseName::is_named_variant(value)
+            }
+            FieldDataType::SuspensionExerciseName => {
+                SuspensionExerciseName::is_named_variant(value)
+            }
+            FieldDataType::TireExerciseName => TireExerciseName::is_named_variant(value),
+            FieldDataType::BikeOutdoorExerciseName => {
+                BikeOutdoorExerciseName::is_named_variant(value)
+            }
+            FieldDataType::RunIndoorExerciseName => RunIndoorExerciseName::is_named_variant(value),
             FieldDataType::WaterType => WaterType::is_named_variant(value),
             FieldDataType::TissueModelType => TissueModelType::is_named_variant(value),
             FieldDataType::DiveGasStatus => DiveGasStatus::is_named_variant(value),
@@ -769,11 +841,35 @@ pub fn get_field_variant_as_string(field_type: FieldDataType, value: i64) -> Str
         FieldDataType::SitUpExerciseName => SitUpExerciseName::from(value).to_string(),
         FieldDataType::SquatExerciseName => SquatExerciseName::from(value).to_string(),
         FieldDataType::TotalBodyExerciseName => TotalBodyExerciseName::from(value).to_string(),
+        FieldDataType::MoveExerciseName => MoveExerciseName::from(value).to_string(),
+        FieldDataType::PoseExerciseName => PoseExerciseName::from(value).to_string(),
         FieldDataType::TricepsExtensionExerciseName => {
             TricepsExtensionExerciseName::from(value).to_string()
         }
         FieldDataType::WarmUpExerciseName => WarmUpExerciseName::from(value).to_string(),
         FieldDataType::RunExerciseName => RunExerciseName::from(value).to_string(),
+        FieldDataType::BikeExerciseName => BikeExerciseName::from(value).to_string(),
+        FieldDataType::BandedExercisesExerciseName => {
+            BandedExercisesExerciseName::from(value).to_string()
+        }
+        FieldDataType::BattleRopeExerciseName => BattleRopeExerciseName::from(value).to_string(),
+        FieldDataType::EllipticalExerciseName => EllipticalExerciseName::from(value).to_string(),
+        FieldDataType::FloorClimbExerciseName => FloorClimbExerciseName::from(value).to_string(),
+        FieldDataType::IndoorBikeExerciseName => IndoorBikeExerciseName::from(value).to_string(),
+        FieldDataType::IndoorRowExerciseName => IndoorRowExerciseName::from(value).to_string(),
+        FieldDataType::LadderExerciseName => LadderExerciseName::from(value).to_string(),
+        FieldDataType::SandbagExerciseName => SandbagExerciseName::from(value).to_string(),
+        FieldDataType::SledExerciseName => SledExerciseName::from(value).to_string(),
+        FieldDataType::SledgeHammerExerciseName => {
+            SledgeHammerExerciseName::from(value).to_string()
+        }
+        FieldDataType::StairStepperExerciseName => {
+            StairStepperExerciseName::from(value).to_string()
+        }
+        FieldDataType::SuspensionExerciseName => SuspensionExerciseName::from(value).to_string(),
+        FieldDataType::TireExerciseName => TireExerciseName::from(value).to_string(),
+        FieldDataType::BikeOutdoorExerciseName => BikeOutdoorExerciseName::from(value).to_string(),
+        FieldDataType::RunIndoorExerciseName => RunIndoorExerciseName::from(value).to_string(),
         FieldDataType::WaterType => WaterType::from(value).to_string(),
         FieldDataType::TissueModelType => TissueModelType::from(value).to_string(),
         FieldDataType::DiveGasStatus => DiveGasStatus::from(value).to_string(),
@@ -1003,6 +1099,7 @@ pub enum MesgNum {
     PowerZone,
     MetZone,
     Sport,
+    TrainingSettings,
     Goal,
     Session,
     Lap,
@@ -1133,6 +1230,7 @@ impl MesgNum {
                 | 9i64
                 | 10i64
                 | 12i64
+                | 13i64
                 | 15i64
                 | 18i64
                 | 19i64
@@ -1259,6 +1357,7 @@ impl MesgNum {
             MesgNum::PowerZone => 9,
             MesgNum::MetZone => 10,
             MesgNum::Sport => 12,
+            MesgNum::TrainingSettings => 13,
             MesgNum::Goal => 15,
             MesgNum::Session => 18,
             MesgNum::Lap => 19,
@@ -1391,6 +1490,7 @@ impl fmt::Display for MesgNum {
             MesgNum::PowerZone => write!(f, "power_zone"),
             MesgNum::MetZone => write!(f, "met_zone"),
             MesgNum::Sport => write!(f, "sport"),
+            MesgNum::TrainingSettings => write!(f, "training_settings"),
             MesgNum::Goal => write!(f, "goal"),
             MesgNum::Session => write!(f, "session"),
             MesgNum::Lap => write!(f, "lap"),
@@ -1520,6 +1620,7 @@ impl convert::From<u16> for MesgNum {
             9 => MesgNum::PowerZone,
             10 => MesgNum::MetZone,
             12 => MesgNum::Sport,
+            13 => MesgNum::TrainingSettings,
             15 => MesgNum::Goal,
             18 => MesgNum::Session,
             19 => MesgNum::Lap,
@@ -1654,6 +1755,7 @@ impl convert::From<&str> for MesgNum {
             "power_zone" => MesgNum::PowerZone,
             "met_zone" => MesgNum::MetZone,
             "sport" => MesgNum::Sport,
+            "training_settings" => MesgNum::TrainingSettings,
             "goal" => MesgNum::Goal,
             "session" => MesgNum::Session,
             "lap" => MesgNum::Lap,
@@ -9035,6 +9137,7 @@ pub enum Manufacturer {
     Myzone,
     Abawo,
     Bafang,
+    LuhongTechnology,
     Development,
     Healthandlife,
     Lezyne,
@@ -9117,6 +9220,9 @@ pub enum Manufacturer {
     EoSwimbetter,
     Mywhoosh,
     Ravemen,
+    TektroRacingProducts,
+    DaradInnovationCorporation,
+    Cycloptim,
     Actigraphcorp,
     Value(u16),
 }
@@ -9273,6 +9379,7 @@ impl Manufacturer {
                 | 150i64
                 | 151i64
                 | 152i64
+                | 153i64
                 | 255i64
                 | 257i64
                 | 258i64
@@ -9350,6 +9457,9 @@ impl Manufacturer {
                 | 330i64
                 | 331i64
                 | 332i64
+                | 333i64
+                | 334i64
+                | 335i64
                 | 5759i64
         )
     }
@@ -9505,6 +9615,7 @@ impl Manufacturer {
             Manufacturer::Myzone => 150,
             Manufacturer::Abawo => 151,
             Manufacturer::Bafang => 152,
+            Manufacturer::LuhongTechnology => 153,
             Manufacturer::Development => 255,
             Manufacturer::Healthandlife => 257,
             Manufacturer::Lezyne => 258,
@@ -9582,6 +9693,9 @@ impl Manufacturer {
             Manufacturer::EoSwimbetter => 330,
             Manufacturer::Mywhoosh => 331,
             Manufacturer::Ravemen => 332,
+            Manufacturer::TektroRacingProducts => 333,
+            Manufacturer::DaradInnovationCorporation => 334,
+            Manufacturer::Cycloptim => 335,
             Manufacturer::Actigraphcorp => 5759,
             Manufacturer::Value(value) => value,
         }
@@ -9743,6 +9857,7 @@ impl fmt::Display for Manufacturer {
             Manufacturer::Myzone => write!(f, "myzone"),
             Manufacturer::Abawo => write!(f, "abawo"),
             Manufacturer::Bafang => write!(f, "bafang"),
+            Manufacturer::LuhongTechnology => write!(f, "luhong_technology"),
             Manufacturer::Development => write!(f, "development"),
             Manufacturer::Healthandlife => write!(f, "healthandlife"),
             Manufacturer::Lezyne => write!(f, "lezyne"),
@@ -9820,6 +9935,9 @@ impl fmt::Display for Manufacturer {
             Manufacturer::EoSwimbetter => write!(f, "eo_swimbetter"),
             Manufacturer::Mywhoosh => write!(f, "mywhoosh"),
             Manufacturer::Ravemen => write!(f, "ravemen"),
+            Manufacturer::TektroRacingProducts => write!(f, "tektro_racing_products"),
+            Manufacturer::DaradInnovationCorporation => write!(f, "darad_innovation_corporation"),
+            Manufacturer::Cycloptim => write!(f, "cycloptim"),
             Manufacturer::Actigraphcorp => write!(f, "actigraphcorp"),
             Manufacturer::Value(value) => write!(f, "{}", value),
         }
@@ -9978,6 +10096,7 @@ impl convert::From<u16> for Manufacturer {
             150 => Manufacturer::Myzone,
             151 => Manufacturer::Abawo,
             152 => Manufacturer::Bafang,
+            153 => Manufacturer::LuhongTechnology,
             255 => Manufacturer::Development,
             257 => Manufacturer::Healthandlife,
             258 => Manufacturer::Lezyne,
@@ -10055,6 +10174,9 @@ impl convert::From<u16> for Manufacturer {
             330 => Manufacturer::EoSwimbetter,
             331 => Manufacturer::Mywhoosh,
             332 => Manufacturer::Ravemen,
+            333 => Manufacturer::TektroRacingProducts,
+            334 => Manufacturer::DaradInnovationCorporation,
+            335 => Manufacturer::Cycloptim,
             5759 => Manufacturer::Actigraphcorp,
             _ => Manufacturer::Value(value),
         }
@@ -10218,6 +10340,7 @@ impl convert::From<&str> for Manufacturer {
             "myzone" => Manufacturer::Myzone,
             "abawo" => Manufacturer::Abawo,
             "bafang" => Manufacturer::Bafang,
+            "luhong_technology" => Manufacturer::LuhongTechnology,
             "development" => Manufacturer::Development,
             "healthandlife" => Manufacturer::Healthandlife,
             "lezyne" => Manufacturer::Lezyne,
@@ -10295,6 +10418,9 @@ impl convert::From<&str> for Manufacturer {
             "eo_swimbetter" => Manufacturer::EoSwimbetter,
             "mywhoosh" => Manufacturer::Mywhoosh,
             "ravemen" => Manufacturer::Ravemen,
+            "tektro_racing_products" => Manufacturer::TektroRacingProducts,
+            "darad_innovation_corporation" => Manufacturer::DaradInnovationCorporation,
+            "cycloptim" => Manufacturer::Cycloptim,
             "actigraphcorp" => Manufacturer::Actigraphcorp,
             &_ => Manufacturer::Value(0),
         }
@@ -10572,6 +10698,8 @@ pub enum GarminProduct {
     Gpsmap66,
     ApproachS10,
     Vivoactive3mL,
+    Fr245,
+    Fr245Music,
     ApproachG80,
     Edge130Asia,
     Edge1030Bontrager,
@@ -10604,6 +10732,7 @@ pub enum GarminProduct {
     MarqExpedition,
     MarqAthlete,
     DescentMk2,
+    Fr45,
     Gpsmap66i,
     Fenix6SSport,
     Fenix6S,
@@ -10656,6 +10785,8 @@ pub enum GarminProduct {
     #[doc = "Rally 100/200 Power Meter Series"]
     Rally200,
     Fr745,
+    VenusqMusic,
+    VenusqMusicV2,
     Venusq,
     Lily,
     MarqAdventurer,
@@ -10680,10 +10811,12 @@ pub enum GarminProduct {
     Edge1040,
     MarqGolferAsia,
     Venu2Plus,
+    #[doc = "Airoha AG3335M Family"]
     Gnss,
     Fr55,
     EnduroAsia,
     Instinct2,
+    Instinct2s,
     Fenix7s,
     Fenix7,
     Fenix7x,
@@ -10781,7 +10914,20 @@ pub enum GarminProduct {
     Fenix8,
     D2Mach1Pro,
     Enduro3,
+    InstinctE40mm,
+    InstinctE45mm,
+    Instinct3Solar45mm,
+    Instinct3Amoled45mm,
+    Instinct3Amoled50mm,
+    DescentG2,
+    Hrm200,
+    Vivoactive6,
+    ApproachS44,
+    ApproachS50,
     FenixE,
+    Instinct3Solar50mm,
+    Tactix8Amoled,
+    Tactix8Solar,
     #[doc = "SDM4 footpod"]
     Sdm4,
     EdgeRemote,
@@ -11041,6 +11187,8 @@ impl GarminProduct {
                 | 3028i64
                 | 3049i64
                 | 3066i64
+                | 3076i64
+                | 3077i64
                 | 3085i64
                 | 3092i64
                 | 3095i64
@@ -11071,6 +11219,7 @@ impl GarminProduct {
                 | 3250i64
                 | 3251i64
                 | 3258i64
+                | 3282i64
                 | 3284i64
                 | 3287i64
                 | 3288i64
@@ -11120,6 +11269,8 @@ impl GarminProduct {
                 | 3570i64
                 | 3578i64
                 | 3589i64
+                | 3596i64
+                | 3599i64
                 | 3600i64
                 | 3615i64
                 | 3624i64
@@ -11147,6 +11298,7 @@ impl GarminProduct {
                 | 3869i64
                 | 3872i64
                 | 3888i64
+                | 3889i64
                 | 3905i64
                 | 3906i64
                 | 3907i64
@@ -11230,7 +11382,20 @@ impl GarminProduct {
                 | 4536i64
                 | 4556i64
                 | 4575i64
+                | 4583i64
+                | 4584i64
+                | 4585i64
+                | 4586i64
+                | 4587i64
+                | 4588i64
+                | 4606i64
+                | 4625i64
+                | 4647i64
+                | 4656i64
                 | 4666i64
+                | 4759i64
+                | 4775i64
+                | 4776i64
                 | 10007i64
                 | 10014i64
                 | 20119i64
@@ -11487,6 +11652,8 @@ impl GarminProduct {
             GarminProduct::Gpsmap66 => 3028,
             GarminProduct::ApproachS10 => 3049,
             GarminProduct::Vivoactive3mL => 3066,
+            GarminProduct::Fr245 => 3076,
+            GarminProduct::Fr245Music => 3077,
             GarminProduct::ApproachG80 => 3085,
             GarminProduct::Edge130Asia => 3092,
             GarminProduct::Edge1030Bontrager => 3095,
@@ -11517,6 +11684,7 @@ impl GarminProduct {
             GarminProduct::MarqExpedition => 3250,
             GarminProduct::MarqAthlete => 3251,
             GarminProduct::DescentMk2 => 3258,
+            GarminProduct::Fr45 => 3282,
             GarminProduct::Gpsmap66i => 3284,
             GarminProduct::Fenix6SSport => 3287,
             GarminProduct::Fenix6S => 3288,
@@ -11566,6 +11734,8 @@ impl GarminProduct {
             GarminProduct::Edge1030Plus => 3570,
             GarminProduct::Rally200 => 3578,
             GarminProduct::Fr745 => 3589,
+            GarminProduct::VenusqMusic => 3596,
+            GarminProduct::VenusqMusicV2 => 3599,
             GarminProduct::Venusq => 3600,
             GarminProduct::Lily => 3615,
             GarminProduct::MarqAdventurer => 3624,
@@ -11593,6 +11763,7 @@ impl GarminProduct {
             GarminProduct::Fr55 => 3869,
             GarminProduct::EnduroAsia => 3872,
             GarminProduct::Instinct2 => 3888,
+            GarminProduct::Instinct2s => 3889,
             GarminProduct::Fenix7s => 3905,
             GarminProduct::Fenix7 => 3906,
             GarminProduct::Fenix7x => 3907,
@@ -11676,7 +11847,20 @@ impl GarminProduct {
             GarminProduct::Fenix8 => 4536,
             GarminProduct::D2Mach1Pro => 4556,
             GarminProduct::Enduro3 => 4575,
+            GarminProduct::InstinctE40mm => 4583,
+            GarminProduct::InstinctE45mm => 4584,
+            GarminProduct::Instinct3Solar45mm => 4585,
+            GarminProduct::Instinct3Amoled45mm => 4586,
+            GarminProduct::Instinct3Amoled50mm => 4587,
+            GarminProduct::DescentG2 => 4588,
+            GarminProduct::Hrm200 => 4606,
+            GarminProduct::Vivoactive6 => 4625,
+            GarminProduct::ApproachS44 => 4647,
+            GarminProduct::ApproachS50 => 4656,
             GarminProduct::FenixE => 4666,
+            GarminProduct::Instinct3Solar50mm => 4759,
+            GarminProduct::Tactix8Amoled => 4775,
+            GarminProduct::Tactix8Solar => 4776,
             GarminProduct::Sdm4 => 10007,
             GarminProduct::EdgeRemote => 10014,
             GarminProduct::TrainingCenter => 20119,
@@ -11945,6 +12129,8 @@ impl fmt::Display for GarminProduct {
             GarminProduct::Gpsmap66 => write!(f, "gpsmap66"),
             GarminProduct::ApproachS10 => write!(f, "approach_s10"),
             GarminProduct::Vivoactive3mL => write!(f, "vivoactive3m_l"),
+            GarminProduct::Fr245 => write!(f, "fr245"),
+            GarminProduct::Fr245Music => write!(f, "fr245_music"),
             GarminProduct::ApproachG80 => write!(f, "approach_g80"),
             GarminProduct::Edge130Asia => write!(f, "edge_130_asia"),
             GarminProduct::Edge1030Bontrager => write!(f, "edge_1030_bontrager"),
@@ -11975,6 +12161,7 @@ impl fmt::Display for GarminProduct {
             GarminProduct::MarqExpedition => write!(f, "marq_expedition"),
             GarminProduct::MarqAthlete => write!(f, "marq_athlete"),
             GarminProduct::DescentMk2 => write!(f, "descent_mk2"),
+            GarminProduct::Fr45 => write!(f, "fr45"),
             GarminProduct::Gpsmap66i => write!(f, "gpsmap66i"),
             GarminProduct::Fenix6SSport => write!(f, "fenix6S_sport"),
             GarminProduct::Fenix6S => write!(f, "fenix6S"),
@@ -12024,6 +12211,8 @@ impl fmt::Display for GarminProduct {
             GarminProduct::Edge1030Plus => write!(f, "edge_1030_plus"),
             GarminProduct::Rally200 => write!(f, "rally_200"),
             GarminProduct::Fr745 => write!(f, "fr745"),
+            GarminProduct::VenusqMusic => write!(f, "venusq_music"),
+            GarminProduct::VenusqMusicV2 => write!(f, "venusq_music_v2"),
             GarminProduct::Venusq => write!(f, "venusq"),
             GarminProduct::Lily => write!(f, "lily"),
             GarminProduct::MarqAdventurer => write!(f, "marq_adventurer"),
@@ -12051,6 +12240,7 @@ impl fmt::Display for GarminProduct {
             GarminProduct::Fr55 => write!(f, "fr55"),
             GarminProduct::EnduroAsia => write!(f, "enduro_asia"),
             GarminProduct::Instinct2 => write!(f, "instinct_2"),
+            GarminProduct::Instinct2s => write!(f, "instinct_2s"),
             GarminProduct::Fenix7s => write!(f, "fenix7s"),
             GarminProduct::Fenix7 => write!(f, "fenix7"),
             GarminProduct::Fenix7x => write!(f, "fenix7x"),
@@ -12134,7 +12324,20 @@ impl fmt::Display for GarminProduct {
             GarminProduct::Fenix8 => write!(f, "fenix8"),
             GarminProduct::D2Mach1Pro => write!(f, "d2_mach1_pro"),
             GarminProduct::Enduro3 => write!(f, "enduro3"),
+            GarminProduct::InstinctE40mm => write!(f, "instinctE_40mm"),
+            GarminProduct::InstinctE45mm => write!(f, "instinctE_45mm"),
+            GarminProduct::Instinct3Solar45mm => write!(f, "instinct3_solar_45mm"),
+            GarminProduct::Instinct3Amoled45mm => write!(f, "instinct3_amoled_45mm"),
+            GarminProduct::Instinct3Amoled50mm => write!(f, "instinct3_amoled_50mm"),
+            GarminProduct::DescentG2 => write!(f, "descent_g2"),
+            GarminProduct::Hrm200 => write!(f, "hrm_200"),
+            GarminProduct::Vivoactive6 => write!(f, "vivoactive6"),
+            GarminProduct::ApproachS44 => write!(f, "approachS44"),
+            GarminProduct::ApproachS50 => write!(f, "approachS50"),
             GarminProduct::FenixE => write!(f, "fenix_e"),
+            GarminProduct::Instinct3Solar50mm => write!(f, "instinct3_solar_50mm"),
+            GarminProduct::Tactix8Amoled => write!(f, "tactix8_amoled"),
+            GarminProduct::Tactix8Solar => write!(f, "tactix8_solar"),
             GarminProduct::Sdm4 => write!(f, "sdm4"),
             GarminProduct::EdgeRemote => write!(f, "edge_remote"),
             GarminProduct::TrainingCenter => write!(f, "training_center"),
@@ -12396,6 +12599,8 @@ impl convert::From<u16> for GarminProduct {
             3028 => GarminProduct::Gpsmap66,
             3049 => GarminProduct::ApproachS10,
             3066 => GarminProduct::Vivoactive3mL,
+            3076 => GarminProduct::Fr245,
+            3077 => GarminProduct::Fr245Music,
             3085 => GarminProduct::ApproachG80,
             3092 => GarminProduct::Edge130Asia,
             3095 => GarminProduct::Edge1030Bontrager,
@@ -12426,6 +12631,7 @@ impl convert::From<u16> for GarminProduct {
             3250 => GarminProduct::MarqExpedition,
             3251 => GarminProduct::MarqAthlete,
             3258 => GarminProduct::DescentMk2,
+            3282 => GarminProduct::Fr45,
             3284 => GarminProduct::Gpsmap66i,
             3287 => GarminProduct::Fenix6SSport,
             3288 => GarminProduct::Fenix6S,
@@ -12475,6 +12681,8 @@ impl convert::From<u16> for GarminProduct {
             3570 => GarminProduct::Edge1030Plus,
             3578 => GarminProduct::Rally200,
             3589 => GarminProduct::Fr745,
+            3596 => GarminProduct::VenusqMusic,
+            3599 => GarminProduct::VenusqMusicV2,
             3600 => GarminProduct::Venusq,
             3615 => GarminProduct::Lily,
             3624 => GarminProduct::MarqAdventurer,
@@ -12502,6 +12710,7 @@ impl convert::From<u16> for GarminProduct {
             3869 => GarminProduct::Fr55,
             3872 => GarminProduct::EnduroAsia,
             3888 => GarminProduct::Instinct2,
+            3889 => GarminProduct::Instinct2s,
             3905 => GarminProduct::Fenix7s,
             3906 => GarminProduct::Fenix7,
             3907 => GarminProduct::Fenix7x,
@@ -12585,7 +12794,20 @@ impl convert::From<u16> for GarminProduct {
             4536 => GarminProduct::Fenix8,
             4556 => GarminProduct::D2Mach1Pro,
             4575 => GarminProduct::Enduro3,
+            4583 => GarminProduct::InstinctE40mm,
+            4584 => GarminProduct::InstinctE45mm,
+            4585 => GarminProduct::Instinct3Solar45mm,
+            4586 => GarminProduct::Instinct3Amoled45mm,
+            4587 => GarminProduct::Instinct3Amoled50mm,
+            4588 => GarminProduct::DescentG2,
+            4606 => GarminProduct::Hrm200,
+            4625 => GarminProduct::Vivoactive6,
+            4647 => GarminProduct::ApproachS44,
+            4656 => GarminProduct::ApproachS50,
             4666 => GarminProduct::FenixE,
+            4759 => GarminProduct::Instinct3Solar50mm,
+            4775 => GarminProduct::Tactix8Amoled,
+            4776 => GarminProduct::Tactix8Solar,
             10007 => GarminProduct::Sdm4,
             10014 => GarminProduct::EdgeRemote,
             20119 => GarminProduct::TrainingCenter,
@@ -12850,6 +13072,8 @@ impl convert::From<&str> for GarminProduct {
             "gpsmap66" => GarminProduct::Gpsmap66,
             "approach_s10" => GarminProduct::ApproachS10,
             "vivoactive3m_l" => GarminProduct::Vivoactive3mL,
+            "fr245" => GarminProduct::Fr245,
+            "fr245_music" => GarminProduct::Fr245Music,
             "approach_g80" => GarminProduct::ApproachG80,
             "edge_130_asia" => GarminProduct::Edge130Asia,
             "edge_1030_bontrager" => GarminProduct::Edge1030Bontrager,
@@ -12880,6 +13104,7 @@ impl convert::From<&str> for GarminProduct {
             "marq_expedition" => GarminProduct::MarqExpedition,
             "marq_athlete" => GarminProduct::MarqAthlete,
             "descent_mk2" => GarminProduct::DescentMk2,
+            "fr45" => GarminProduct::Fr45,
             "gpsmap66i" => GarminProduct::Gpsmap66i,
             "fenix6S_sport" => GarminProduct::Fenix6SSport,
             "fenix6S" => GarminProduct::Fenix6S,
@@ -12929,6 +13154,8 @@ impl convert::From<&str> for GarminProduct {
             "edge_1030_plus" => GarminProduct::Edge1030Plus,
             "rally_200" => GarminProduct::Rally200,
             "fr745" => GarminProduct::Fr745,
+            "venusq_music" => GarminProduct::VenusqMusic,
+            "venusq_music_v2" => GarminProduct::VenusqMusicV2,
             "venusq" => GarminProduct::Venusq,
             "lily" => GarminProduct::Lily,
             "marq_adventurer" => GarminProduct::MarqAdventurer,
@@ -12956,6 +13183,7 @@ impl convert::From<&str> for GarminProduct {
             "fr55" => GarminProduct::Fr55,
             "enduro_asia" => GarminProduct::EnduroAsia,
             "instinct_2" => GarminProduct::Instinct2,
+            "instinct_2s" => GarminProduct::Instinct2s,
             "fenix7s" => GarminProduct::Fenix7s,
             "fenix7" => GarminProduct::Fenix7,
             "fenix7x" => GarminProduct::Fenix7x,
@@ -13039,7 +13267,20 @@ impl convert::From<&str> for GarminProduct {
             "fenix8" => GarminProduct::Fenix8,
             "d2_mach1_pro" => GarminProduct::D2Mach1Pro,
             "enduro3" => GarminProduct::Enduro3,
+            "instinctE_40mm" => GarminProduct::InstinctE40mm,
+            "instinctE_45mm" => GarminProduct::InstinctE45mm,
+            "instinct3_solar_45mm" => GarminProduct::Instinct3Solar45mm,
+            "instinct3_amoled_45mm" => GarminProduct::Instinct3Amoled45mm,
+            "instinct3_amoled_50mm" => GarminProduct::Instinct3Amoled50mm,
+            "descent_g2" => GarminProduct::DescentG2,
+            "hrm_200" => GarminProduct::Hrm200,
+            "vivoactive6" => GarminProduct::Vivoactive6,
+            "approachS44" => GarminProduct::ApproachS44,
+            "approachS50" => GarminProduct::ApproachS50,
             "fenix_e" => GarminProduct::FenixE,
+            "instinct3_solar_50mm" => GarminProduct::Instinct3Solar50mm,
+            "tactix8_amoled" => GarminProduct::Tactix8Amoled,
+            "tactix8_solar" => GarminProduct::Tactix8Solar,
             "sdm4" => GarminProduct::Sdm4,
             "edge_remote" => GarminProduct::EdgeRemote,
             "training_center" => GarminProduct::TrainingCenter,
@@ -14117,11 +14358,15 @@ pub enum SwimStroke {
     Mixed,
     #[doc = "IM is a mixed interval containing the same number of lengths for each of: Butterfly, Backstroke, Breaststroke, Freestyle, swam in that order."]
     Im,
+    #[doc = "For repeated workout steps, a new individual medly stroke is used for each round."]
+    ImByRound,
+    #[doc = "Reverse IM Order"]
+    Rimo,
     UnknownVariant(u8),
 }
 impl SwimStroke {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64..=6i64)
+        matches!(value, 0i64..=8i64)
     }
     pub fn as_u8(self) -> u8 {
         match self {
@@ -14132,6 +14377,8 @@ impl SwimStroke {
             SwimStroke::Drill => 4,
             SwimStroke::Mixed => 5,
             SwimStroke::Im => 6,
+            SwimStroke::ImByRound => 7,
+            SwimStroke::Rimo => 8,
             SwimStroke::UnknownVariant(value) => value,
         }
     }
@@ -14149,6 +14396,8 @@ impl fmt::Display for SwimStroke {
             SwimStroke::Drill => write!(f, "drill"),
             SwimStroke::Mixed => write!(f, "mixed"),
             SwimStroke::Im => write!(f, "im"),
+            SwimStroke::ImByRound => write!(f, "im_by_round"),
+            SwimStroke::Rimo => write!(f, "rimo"),
             SwimStroke::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
     }
@@ -14163,6 +14412,8 @@ impl convert::From<u8> for SwimStroke {
             4 => SwimStroke::Drill,
             5 => SwimStroke::Mixed,
             6 => SwimStroke::Im,
+            7 => SwimStroke::ImByRound,
+            8 => SwimStroke::Rimo,
             _ => SwimStroke::UnknownVariant(value),
         }
     }
@@ -14182,6 +14433,8 @@ impl convert::From<&str> for SwimStroke {
             "drill" => SwimStroke::Drill,
             "mixed" => SwimStroke::Mixed,
             "im" => SwimStroke::Im,
+            "im_by_round" => SwimStroke::ImByRound,
+            "rimo" => SwimStroke::Rimo,
             &_ => SwimStroke::UnknownVariant(0),
         }
     }
@@ -20458,6 +20711,26 @@ pub enum ExerciseCategory {
     TricepsExtension,
     WarmUp,
     Run,
+    Bike,
+    #[doc = "Exercises within workouts that use GPS/sensors rather than rep counting"]
+    CardioSensors,
+    Move,
+    Pose,
+    BandedExercises,
+    BattleRope,
+    Elliptical,
+    FloorClimb,
+    IndoorBike,
+    IndoorRow,
+    Ladder,
+    Sandbag,
+    Sled,
+    SledgeHammer,
+    StairStepper,
+    Suspension,
+    Tire,
+    RunIndoor,
+    BikeOutdoor,
     Unknown,
     Value(u16),
 }
@@ -20497,6 +20770,25 @@ impl ExerciseCategory {
                 | 30i64
                 | 31i64
                 | 32i64
+                | 33i64
+                | 34i64
+                | 35i64
+                | 36i64
+                | 37i64
+                | 38i64
+                | 39i64
+                | 40i64
+                | 41i64
+                | 42i64
+                | 43i64
+                | 44i64
+                | 45i64
+                | 46i64
+                | 47i64
+                | 49i64
+                | 50i64
+                | 52i64
+                | 53i64
                 | 65534i64
         )
     }
@@ -20535,6 +20827,25 @@ impl ExerciseCategory {
             ExerciseCategory::TricepsExtension => 30,
             ExerciseCategory::WarmUp => 31,
             ExerciseCategory::Run => 32,
+            ExerciseCategory::Bike => 33,
+            ExerciseCategory::CardioSensors => 34,
+            ExerciseCategory::Move => 35,
+            ExerciseCategory::Pose => 36,
+            ExerciseCategory::BandedExercises => 37,
+            ExerciseCategory::BattleRope => 38,
+            ExerciseCategory::Elliptical => 39,
+            ExerciseCategory::FloorClimb => 40,
+            ExerciseCategory::IndoorBike => 41,
+            ExerciseCategory::IndoorRow => 42,
+            ExerciseCategory::Ladder => 43,
+            ExerciseCategory::Sandbag => 44,
+            ExerciseCategory::Sled => 45,
+            ExerciseCategory::SledgeHammer => 46,
+            ExerciseCategory::StairStepper => 47,
+            ExerciseCategory::Suspension => 49,
+            ExerciseCategory::Tire => 50,
+            ExerciseCategory::RunIndoor => 52,
+            ExerciseCategory::BikeOutdoor => 53,
             ExerciseCategory::Unknown => 65534,
             ExerciseCategory::Value(value) => value,
         }
@@ -20579,6 +20890,25 @@ impl fmt::Display for ExerciseCategory {
             ExerciseCategory::TricepsExtension => write!(f, "triceps_extension"),
             ExerciseCategory::WarmUp => write!(f, "warm_up"),
             ExerciseCategory::Run => write!(f, "run"),
+            ExerciseCategory::Bike => write!(f, "bike"),
+            ExerciseCategory::CardioSensors => write!(f, "cardio_sensors"),
+            ExerciseCategory::Move => write!(f, "move"),
+            ExerciseCategory::Pose => write!(f, "pose"),
+            ExerciseCategory::BandedExercises => write!(f, "banded_exercises"),
+            ExerciseCategory::BattleRope => write!(f, "battle_rope"),
+            ExerciseCategory::Elliptical => write!(f, "elliptical"),
+            ExerciseCategory::FloorClimb => write!(f, "floor_climb"),
+            ExerciseCategory::IndoorBike => write!(f, "indoor_bike"),
+            ExerciseCategory::IndoorRow => write!(f, "indoor_row"),
+            ExerciseCategory::Ladder => write!(f, "ladder"),
+            ExerciseCategory::Sandbag => write!(f, "sandbag"),
+            ExerciseCategory::Sled => write!(f, "sled"),
+            ExerciseCategory::SledgeHammer => write!(f, "sledge_hammer"),
+            ExerciseCategory::StairStepper => write!(f, "stair_stepper"),
+            ExerciseCategory::Suspension => write!(f, "suspension"),
+            ExerciseCategory::Tire => write!(f, "tire"),
+            ExerciseCategory::RunIndoor => write!(f, "run_indoor"),
+            ExerciseCategory::BikeOutdoor => write!(f, "bike_outdoor"),
             ExerciseCategory::Unknown => write!(f, "unknown"),
             ExerciseCategory::Value(value) => write!(f, "{}", value),
         }
@@ -20620,6 +20950,25 @@ impl convert::From<u16> for ExerciseCategory {
             30 => ExerciseCategory::TricepsExtension,
             31 => ExerciseCategory::WarmUp,
             32 => ExerciseCategory::Run,
+            33 => ExerciseCategory::Bike,
+            34 => ExerciseCategory::CardioSensors,
+            35 => ExerciseCategory::Move,
+            36 => ExerciseCategory::Pose,
+            37 => ExerciseCategory::BandedExercises,
+            38 => ExerciseCategory::BattleRope,
+            39 => ExerciseCategory::Elliptical,
+            40 => ExerciseCategory::FloorClimb,
+            41 => ExerciseCategory::IndoorBike,
+            42 => ExerciseCategory::IndoorRow,
+            43 => ExerciseCategory::Ladder,
+            44 => ExerciseCategory::Sandbag,
+            45 => ExerciseCategory::Sled,
+            46 => ExerciseCategory::SledgeHammer,
+            47 => ExerciseCategory::StairStepper,
+            49 => ExerciseCategory::Suspension,
+            50 => ExerciseCategory::Tire,
+            52 => ExerciseCategory::RunIndoor,
+            53 => ExerciseCategory::BikeOutdoor,
             65534 => ExerciseCategory::Unknown,
             _ => ExerciseCategory::Value(value),
         }
@@ -20666,6 +21015,25 @@ impl convert::From<&str> for ExerciseCategory {
             "triceps_extension" => ExerciseCategory::TricepsExtension,
             "warm_up" => ExerciseCategory::WarmUp,
             "run" => ExerciseCategory::Run,
+            "bike" => ExerciseCategory::Bike,
+            "cardio_sensors" => ExerciseCategory::CardioSensors,
+            "move" => ExerciseCategory::Move,
+            "pose" => ExerciseCategory::Pose,
+            "banded_exercises" => ExerciseCategory::BandedExercises,
+            "battle_rope" => ExerciseCategory::BattleRope,
+            "elliptical" => ExerciseCategory::Elliptical,
+            "floor_climb" => ExerciseCategory::FloorClimb,
+            "indoor_bike" => ExerciseCategory::IndoorBike,
+            "indoor_row" => ExerciseCategory::IndoorRow,
+            "ladder" => ExerciseCategory::Ladder,
+            "sandbag" => ExerciseCategory::Sandbag,
+            "sled" => ExerciseCategory::Sled,
+            "sledge_hammer" => ExerciseCategory::SledgeHammer,
+            "stair_stepper" => ExerciseCategory::StairStepper,
+            "suspension" => ExerciseCategory::Suspension,
+            "tire" => ExerciseCategory::Tire,
+            "run_indoor" => ExerciseCategory::RunIndoor,
+            "bike_outdoor" => ExerciseCategory::BikeOutdoor,
             "unknown" => ExerciseCategory::Unknown,
             &_ => ExerciseCategory::Value(0),
         }
@@ -21156,11 +21524,32 @@ pub enum CardioExerciseName {
     WeightedSquatJacks,
     TripleUnder,
     WeightedTripleUnder,
+    Elliptical,
+    Spinning,
+    PolePaddleForwardWheelchair,
+    PolePaddleBackwardWheelchair,
+    PoleHandcycleForwardWheelchair,
+    PoleHandcycleBackwardWheelchair,
+    PoleRainbowWheelchair,
+    DoublePunchForwardWheelchair,
+    DoublePunchDownWheelchair,
+    DoublePunchSidewaysWheelchair,
+    DoublePunchUpWheelchair,
+    SitSkiWheelchair,
+    SittingJacksWheelchair,
+    PunchForwardWheelchair,
+    PunchDownWheelchair,
+    PunchSidewaysWheelchair,
+    PunchUpWheelchair,
+    PunchBagWheelchair,
+    PoleDdFfUuWheelchair,
+    ButterflyArmsWheelchair,
+    Punch,
     Value(u16),
 }
 impl CardioExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64..=21i64)
+        matches!(value, 0i64..=42i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -21186,6 +21575,27 @@ impl CardioExerciseName {
             CardioExerciseName::WeightedSquatJacks => 19,
             CardioExerciseName::TripleUnder => 20,
             CardioExerciseName::WeightedTripleUnder => 21,
+            CardioExerciseName::Elliptical => 22,
+            CardioExerciseName::Spinning => 23,
+            CardioExerciseName::PolePaddleForwardWheelchair => 24,
+            CardioExerciseName::PolePaddleBackwardWheelchair => 25,
+            CardioExerciseName::PoleHandcycleForwardWheelchair => 26,
+            CardioExerciseName::PoleHandcycleBackwardWheelchair => 27,
+            CardioExerciseName::PoleRainbowWheelchair => 28,
+            CardioExerciseName::DoublePunchForwardWheelchair => 29,
+            CardioExerciseName::DoublePunchDownWheelchair => 30,
+            CardioExerciseName::DoublePunchSidewaysWheelchair => 31,
+            CardioExerciseName::DoublePunchUpWheelchair => 32,
+            CardioExerciseName::SitSkiWheelchair => 33,
+            CardioExerciseName::SittingJacksWheelchair => 34,
+            CardioExerciseName::PunchForwardWheelchair => 35,
+            CardioExerciseName::PunchDownWheelchair => 36,
+            CardioExerciseName::PunchSidewaysWheelchair => 37,
+            CardioExerciseName::PunchUpWheelchair => 38,
+            CardioExerciseName::PunchBagWheelchair => 39,
+            CardioExerciseName::PoleDdFfUuWheelchair => 40,
+            CardioExerciseName::ButterflyArmsWheelchair => 41,
+            CardioExerciseName::Punch => 42,
             CardioExerciseName::Value(value) => value,
         }
     }
@@ -21222,6 +21632,41 @@ impl fmt::Display for CardioExerciseName {
             CardioExerciseName::WeightedSquatJacks => write!(f, "weighted_squat_jacks"),
             CardioExerciseName::TripleUnder => write!(f, "triple_under"),
             CardioExerciseName::WeightedTripleUnder => write!(f, "weighted_triple_under"),
+            CardioExerciseName::Elliptical => write!(f, "elliptical"),
+            CardioExerciseName::Spinning => write!(f, "spinning"),
+            CardioExerciseName::PolePaddleForwardWheelchair => {
+                write!(f, "pole_paddle_forward_wheelchair")
+            }
+            CardioExerciseName::PolePaddleBackwardWheelchair => {
+                write!(f, "pole_paddle_backward_wheelchair")
+            }
+            CardioExerciseName::PoleHandcycleForwardWheelchair => {
+                write!(f, "pole_handcycle_forward_wheelchair")
+            }
+            CardioExerciseName::PoleHandcycleBackwardWheelchair => {
+                write!(f, "pole_handcycle_backward_wheelchair")
+            }
+            CardioExerciseName::PoleRainbowWheelchair => write!(f, "pole_rainbow_wheelchair"),
+            CardioExerciseName::DoublePunchForwardWheelchair => {
+                write!(f, "double_punch_forward_wheelchair")
+            }
+            CardioExerciseName::DoublePunchDownWheelchair => {
+                write!(f, "double_punch_down_wheelchair")
+            }
+            CardioExerciseName::DoublePunchSidewaysWheelchair => {
+                write!(f, "double_punch_sideways_wheelchair")
+            }
+            CardioExerciseName::DoublePunchUpWheelchair => write!(f, "double_punch_up_wheelchair"),
+            CardioExerciseName::SitSkiWheelchair => write!(f, "sit_ski_wheelchair"),
+            CardioExerciseName::SittingJacksWheelchair => write!(f, "sitting_jacks_wheelchair"),
+            CardioExerciseName::PunchForwardWheelchair => write!(f, "punch_forward_wheelchair"),
+            CardioExerciseName::PunchDownWheelchair => write!(f, "punch_down_wheelchair"),
+            CardioExerciseName::PunchSidewaysWheelchair => write!(f, "punch_sideways_wheelchair"),
+            CardioExerciseName::PunchUpWheelchair => write!(f, "punch_up_wheelchair"),
+            CardioExerciseName::PunchBagWheelchair => write!(f, "punch_bag_wheelchair"),
+            CardioExerciseName::PoleDdFfUuWheelchair => write!(f, "pole_dd_ff_uu_wheelchair"),
+            CardioExerciseName::ButterflyArmsWheelchair => write!(f, "butterfly_arms_wheelchair"),
+            CardioExerciseName::Punch => write!(f, "punch"),
             CardioExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
@@ -21251,6 +21696,27 @@ impl convert::From<u16> for CardioExerciseName {
             19 => CardioExerciseName::WeightedSquatJacks,
             20 => CardioExerciseName::TripleUnder,
             21 => CardioExerciseName::WeightedTripleUnder,
+            22 => CardioExerciseName::Elliptical,
+            23 => CardioExerciseName::Spinning,
+            24 => CardioExerciseName::PolePaddleForwardWheelchair,
+            25 => CardioExerciseName::PolePaddleBackwardWheelchair,
+            26 => CardioExerciseName::PoleHandcycleForwardWheelchair,
+            27 => CardioExerciseName::PoleHandcycleBackwardWheelchair,
+            28 => CardioExerciseName::PoleRainbowWheelchair,
+            29 => CardioExerciseName::DoublePunchForwardWheelchair,
+            30 => CardioExerciseName::DoublePunchDownWheelchair,
+            31 => CardioExerciseName::DoublePunchSidewaysWheelchair,
+            32 => CardioExerciseName::DoublePunchUpWheelchair,
+            33 => CardioExerciseName::SitSkiWheelchair,
+            34 => CardioExerciseName::SittingJacksWheelchair,
+            35 => CardioExerciseName::PunchForwardWheelchair,
+            36 => CardioExerciseName::PunchDownWheelchair,
+            37 => CardioExerciseName::PunchSidewaysWheelchair,
+            38 => CardioExerciseName::PunchUpWheelchair,
+            39 => CardioExerciseName::PunchBagWheelchair,
+            40 => CardioExerciseName::PoleDdFfUuWheelchair,
+            41 => CardioExerciseName::ButterflyArmsWheelchair,
+            42 => CardioExerciseName::Punch,
             _ => CardioExerciseName::Value(value),
         }
     }
@@ -21285,6 +21751,31 @@ impl convert::From<&str> for CardioExerciseName {
             "weighted_squat_jacks" => CardioExerciseName::WeightedSquatJacks,
             "triple_under" => CardioExerciseName::TripleUnder,
             "weighted_triple_under" => CardioExerciseName::WeightedTripleUnder,
+            "elliptical" => CardioExerciseName::Elliptical,
+            "spinning" => CardioExerciseName::Spinning,
+            "pole_paddle_forward_wheelchair" => CardioExerciseName::PolePaddleForwardWheelchair,
+            "pole_paddle_backward_wheelchair" => CardioExerciseName::PolePaddleBackwardWheelchair,
+            "pole_handcycle_forward_wheelchair" => {
+                CardioExerciseName::PoleHandcycleForwardWheelchair
+            }
+            "pole_handcycle_backward_wheelchair" => {
+                CardioExerciseName::PoleHandcycleBackwardWheelchair
+            }
+            "pole_rainbow_wheelchair" => CardioExerciseName::PoleRainbowWheelchair,
+            "double_punch_forward_wheelchair" => CardioExerciseName::DoublePunchForwardWheelchair,
+            "double_punch_down_wheelchair" => CardioExerciseName::DoublePunchDownWheelchair,
+            "double_punch_sideways_wheelchair" => CardioExerciseName::DoublePunchSidewaysWheelchair,
+            "double_punch_up_wheelchair" => CardioExerciseName::DoublePunchUpWheelchair,
+            "sit_ski_wheelchair" => CardioExerciseName::SitSkiWheelchair,
+            "sitting_jacks_wheelchair" => CardioExerciseName::SittingJacksWheelchair,
+            "punch_forward_wheelchair" => CardioExerciseName::PunchForwardWheelchair,
+            "punch_down_wheelchair" => CardioExerciseName::PunchDownWheelchair,
+            "punch_sideways_wheelchair" => CardioExerciseName::PunchSidewaysWheelchair,
+            "punch_up_wheelchair" => CardioExerciseName::PunchUpWheelchair,
+            "punch_bag_wheelchair" => CardioExerciseName::PunchBagWheelchair,
+            "pole_dd_ff_uu_wheelchair" => CardioExerciseName::PoleDdFfUuWheelchair,
+            "butterfly_arms_wheelchair" => CardioExerciseName::ButterflyArmsWheelchair,
+            "punch" => CardioExerciseName::Punch,
             &_ => CardioExerciseName::Value(0),
         }
     }
@@ -21307,11 +21798,15 @@ pub enum CarryExerciseName {
     FarmersWalkOnToes,
     HexDumbbellHold,
     OverheadCarry,
+    DumbbellWaiterCarry,
+    FarmersCarryWalkLunge,
+    FarmersCarry,
+    FarmersCarryOnToes,
     Value(u16),
 }
 impl CarryExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64..=4i64)
+        matches!(value, 0i64..=8i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -21320,6 +21815,10 @@ impl CarryExerciseName {
             CarryExerciseName::FarmersWalkOnToes => 2,
             CarryExerciseName::HexDumbbellHold => 3,
             CarryExerciseName::OverheadCarry => 4,
+            CarryExerciseName::DumbbellWaiterCarry => 5,
+            CarryExerciseName::FarmersCarryWalkLunge => 6,
+            CarryExerciseName::FarmersCarry => 7,
+            CarryExerciseName::FarmersCarryOnToes => 8,
             CarryExerciseName::Value(value) => value,
         }
     }
@@ -21335,6 +21834,10 @@ impl fmt::Display for CarryExerciseName {
             CarryExerciseName::FarmersWalkOnToes => write!(f, "farmers_walk_on_toes"),
             CarryExerciseName::HexDumbbellHold => write!(f, "hex_dumbbell_hold"),
             CarryExerciseName::OverheadCarry => write!(f, "overhead_carry"),
+            CarryExerciseName::DumbbellWaiterCarry => write!(f, "dumbbell_waiter_carry"),
+            CarryExerciseName::FarmersCarryWalkLunge => write!(f, "farmers_carry_walk_lunge"),
+            CarryExerciseName::FarmersCarry => write!(f, "farmers_carry"),
+            CarryExerciseName::FarmersCarryOnToes => write!(f, "farmers_carry_on_toes"),
             CarryExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
@@ -21347,6 +21850,10 @@ impl convert::From<u16> for CarryExerciseName {
             2 => CarryExerciseName::FarmersWalkOnToes,
             3 => CarryExerciseName::HexDumbbellHold,
             4 => CarryExerciseName::OverheadCarry,
+            5 => CarryExerciseName::DumbbellWaiterCarry,
+            6 => CarryExerciseName::FarmersCarryWalkLunge,
+            7 => CarryExerciseName::FarmersCarry,
+            8 => CarryExerciseName::FarmersCarryOnToes,
             _ => CarryExerciseName::Value(value),
         }
     }
@@ -21364,6 +21871,10 @@ impl convert::From<&str> for CarryExerciseName {
             "farmers_walk_on_toes" => CarryExerciseName::FarmersWalkOnToes,
             "hex_dumbbell_hold" => CarryExerciseName::HexDumbbellHold,
             "overhead_carry" => CarryExerciseName::OverheadCarry,
+            "dumbbell_waiter_carry" => CarryExerciseName::DumbbellWaiterCarry,
+            "farmers_carry_walk_lunge" => CarryExerciseName::FarmersCarryWalkLunge,
+            "farmers_carry" => CarryExerciseName::FarmersCarry,
+            "farmers_carry_on_toes" => CarryExerciseName::FarmersCarryOnToes,
             &_ => CarryExerciseName::Value(0),
         }
     }
@@ -21650,11 +22161,127 @@ pub enum CoreExerciseName {
     Swimming,
     Teaser,
     TheHundred,
+    BicepCurlWithLegExtensionWithWeights,
+    HangingLSit,
+    LowerLiftWithWeights,
+    RingLSit,
+    Rowing1WithWeights,
+    Rowing2WithWeights,
+    ScissorsWithWeights,
+    SingleLegStretchWithWeights,
+    ToesToElbows,
+    WeightedCrissCross,
+    WeightedDoubleLegStretch,
+    WeightedTheHundred,
+    LSit,
+    TurkishGetUp,
+    WeightedRingLSit,
+    WeightedHangingLSit,
+    WeightedLSit,
+    SideBendLowWheelchair,
+    SideBendMidWheelchair,
+    SideBendHighWheelchair,
+    SeatedSideBend,
     Value(u16),
 }
 impl CoreExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64..=72i64)
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+                | 15i64
+                | 16i64
+                | 17i64
+                | 18i64
+                | 19i64
+                | 20i64
+                | 21i64
+                | 22i64
+                | 23i64
+                | 24i64
+                | 25i64
+                | 26i64
+                | 27i64
+                | 28i64
+                | 29i64
+                | 30i64
+                | 31i64
+                | 32i64
+                | 33i64
+                | 34i64
+                | 35i64
+                | 36i64
+                | 37i64
+                | 38i64
+                | 39i64
+                | 40i64
+                | 41i64
+                | 42i64
+                | 43i64
+                | 44i64
+                | 45i64
+                | 46i64
+                | 47i64
+                | 48i64
+                | 49i64
+                | 50i64
+                | 51i64
+                | 52i64
+                | 53i64
+                | 54i64
+                | 55i64
+                | 56i64
+                | 57i64
+                | 58i64
+                | 59i64
+                | 60i64
+                | 61i64
+                | 62i64
+                | 63i64
+                | 64i64
+                | 65i64
+                | 66i64
+                | 67i64
+                | 68i64
+                | 69i64
+                | 70i64
+                | 71i64
+                | 72i64
+                | 73i64
+                | 75i64
+                | 77i64
+                | 79i64
+                | 80i64
+                | 81i64
+                | 82i64
+                | 83i64
+                | 84i64
+                | 85i64
+                | 86i64
+                | 87i64
+                | 88i64
+                | 89i64
+                | 90i64
+                | 91i64
+                | 92i64
+                | 93i64
+                | 94i64
+                | 95i64
+                | 96i64
+        )
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -21731,6 +22358,27 @@ impl CoreExerciseName {
             CoreExerciseName::Swimming => 70,
             CoreExerciseName::Teaser => 71,
             CoreExerciseName::TheHundred => 72,
+            CoreExerciseName::BicepCurlWithLegExtensionWithWeights => 73,
+            CoreExerciseName::HangingLSit => 75,
+            CoreExerciseName::LowerLiftWithWeights => 77,
+            CoreExerciseName::RingLSit => 79,
+            CoreExerciseName::Rowing1WithWeights => 80,
+            CoreExerciseName::Rowing2WithWeights => 81,
+            CoreExerciseName::ScissorsWithWeights => 82,
+            CoreExerciseName::SingleLegStretchWithWeights => 83,
+            CoreExerciseName::ToesToElbows => 84,
+            CoreExerciseName::WeightedCrissCross => 85,
+            CoreExerciseName::WeightedDoubleLegStretch => 86,
+            CoreExerciseName::WeightedTheHundred => 87,
+            CoreExerciseName::LSit => 88,
+            CoreExerciseName::TurkishGetUp => 89,
+            CoreExerciseName::WeightedRingLSit => 90,
+            CoreExerciseName::WeightedHangingLSit => 91,
+            CoreExerciseName::WeightedLSit => 92,
+            CoreExerciseName::SideBendLowWheelchair => 93,
+            CoreExerciseName::SideBendMidWheelchair => 94,
+            CoreExerciseName::SideBendHighWheelchair => 95,
+            CoreExerciseName::SeatedSideBend => 96,
             CoreExerciseName::Value(value) => value,
         }
     }
@@ -21832,6 +22480,31 @@ impl fmt::Display for CoreExerciseName {
             CoreExerciseName::Swimming => write!(f, "swimming"),
             CoreExerciseName::Teaser => write!(f, "teaser"),
             CoreExerciseName::TheHundred => write!(f, "the_hundred"),
+            CoreExerciseName::BicepCurlWithLegExtensionWithWeights => {
+                write!(f, "bicep_curl_with_leg_extension_with_weights")
+            }
+            CoreExerciseName::HangingLSit => write!(f, "hanging_l_sit"),
+            CoreExerciseName::LowerLiftWithWeights => write!(f, "lower_lift_with_weights"),
+            CoreExerciseName::RingLSit => write!(f, "ring_l_sit"),
+            CoreExerciseName::Rowing1WithWeights => write!(f, "rowing_1_with_weights"),
+            CoreExerciseName::Rowing2WithWeights => write!(f, "rowing_2_with_weights"),
+            CoreExerciseName::ScissorsWithWeights => write!(f, "scissors_with_weights"),
+            CoreExerciseName::SingleLegStretchWithWeights => {
+                write!(f, "single_leg_stretch_with_weights")
+            }
+            CoreExerciseName::ToesToElbows => write!(f, "toes_to_elbows"),
+            CoreExerciseName::WeightedCrissCross => write!(f, "weighted_criss_cross"),
+            CoreExerciseName::WeightedDoubleLegStretch => write!(f, "weighted_double_leg_stretch"),
+            CoreExerciseName::WeightedTheHundred => write!(f, "weighted_the_hundred"),
+            CoreExerciseName::LSit => write!(f, "l_sit"),
+            CoreExerciseName::TurkishGetUp => write!(f, "turkish_get_up"),
+            CoreExerciseName::WeightedRingLSit => write!(f, "weighted_ring_l_sit"),
+            CoreExerciseName::WeightedHangingLSit => write!(f, "weighted_hanging_l_sit"),
+            CoreExerciseName::WeightedLSit => write!(f, "weighted_l_sit"),
+            CoreExerciseName::SideBendLowWheelchair => write!(f, "side_bend_low_wheelchair"),
+            CoreExerciseName::SideBendMidWheelchair => write!(f, "side_bend_mid_wheelchair"),
+            CoreExerciseName::SideBendHighWheelchair => write!(f, "side_bend_high_wheelchair"),
+            CoreExerciseName::SeatedSideBend => write!(f, "seated_side_bend"),
             CoreExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
@@ -21912,6 +22585,27 @@ impl convert::From<u16> for CoreExerciseName {
             70 => CoreExerciseName::Swimming,
             71 => CoreExerciseName::Teaser,
             72 => CoreExerciseName::TheHundred,
+            73 => CoreExerciseName::BicepCurlWithLegExtensionWithWeights,
+            75 => CoreExerciseName::HangingLSit,
+            77 => CoreExerciseName::LowerLiftWithWeights,
+            79 => CoreExerciseName::RingLSit,
+            80 => CoreExerciseName::Rowing1WithWeights,
+            81 => CoreExerciseName::Rowing2WithWeights,
+            82 => CoreExerciseName::ScissorsWithWeights,
+            83 => CoreExerciseName::SingleLegStretchWithWeights,
+            84 => CoreExerciseName::ToesToElbows,
+            85 => CoreExerciseName::WeightedCrissCross,
+            86 => CoreExerciseName::WeightedDoubleLegStretch,
+            87 => CoreExerciseName::WeightedTheHundred,
+            88 => CoreExerciseName::LSit,
+            89 => CoreExerciseName::TurkishGetUp,
+            90 => CoreExerciseName::WeightedRingLSit,
+            91 => CoreExerciseName::WeightedHangingLSit,
+            92 => CoreExerciseName::WeightedLSit,
+            93 => CoreExerciseName::SideBendLowWheelchair,
+            94 => CoreExerciseName::SideBendMidWheelchair,
+            95 => CoreExerciseName::SideBendHighWheelchair,
+            96 => CoreExerciseName::SeatedSideBend,
             _ => CoreExerciseName::Value(value),
         }
     }
@@ -21999,6 +22693,29 @@ impl convert::From<&str> for CoreExerciseName {
             "swimming" => CoreExerciseName::Swimming,
             "teaser" => CoreExerciseName::Teaser,
             "the_hundred" => CoreExerciseName::TheHundred,
+            "bicep_curl_with_leg_extension_with_weights" => {
+                CoreExerciseName::BicepCurlWithLegExtensionWithWeights
+            }
+            "hanging_l_sit" => CoreExerciseName::HangingLSit,
+            "lower_lift_with_weights" => CoreExerciseName::LowerLiftWithWeights,
+            "ring_l_sit" => CoreExerciseName::RingLSit,
+            "rowing_1_with_weights" => CoreExerciseName::Rowing1WithWeights,
+            "rowing_2_with_weights" => CoreExerciseName::Rowing2WithWeights,
+            "scissors_with_weights" => CoreExerciseName::ScissorsWithWeights,
+            "single_leg_stretch_with_weights" => CoreExerciseName::SingleLegStretchWithWeights,
+            "toes_to_elbows" => CoreExerciseName::ToesToElbows,
+            "weighted_criss_cross" => CoreExerciseName::WeightedCrissCross,
+            "weighted_double_leg_stretch" => CoreExerciseName::WeightedDoubleLegStretch,
+            "weighted_the_hundred" => CoreExerciseName::WeightedTheHundred,
+            "l_sit" => CoreExerciseName::LSit,
+            "turkish_get_up" => CoreExerciseName::TurkishGetUp,
+            "weighted_ring_l_sit" => CoreExerciseName::WeightedRingLSit,
+            "weighted_hanging_l_sit" => CoreExerciseName::WeightedHangingLSit,
+            "weighted_l_sit" => CoreExerciseName::WeightedLSit,
+            "side_bend_low_wheelchair" => CoreExerciseName::SideBendLowWheelchair,
+            "side_bend_mid_wheelchair" => CoreExerciseName::SideBendMidWheelchair,
+            "side_bend_high_wheelchair" => CoreExerciseName::SideBendHighWheelchair,
+            "seated_side_bend" => CoreExerciseName::SeatedSideBend,
             &_ => CoreExerciseName::Value(0),
         }
     }
@@ -22101,11 +22818,99 @@ pub enum CrunchExerciseName {
     WeightedToesToBar,
     Crunch,
     StraightLegCrunchWithBall,
+    LegClimbCrunch,
     Value(u16),
 }
 impl CrunchExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64..=84i64)
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+                | 15i64
+                | 16i64
+                | 17i64
+                | 18i64
+                | 19i64
+                | 20i64
+                | 21i64
+                | 22i64
+                | 23i64
+                | 24i64
+                | 25i64
+                | 26i64
+                | 27i64
+                | 28i64
+                | 29i64
+                | 30i64
+                | 31i64
+                | 32i64
+                | 33i64
+                | 34i64
+                | 35i64
+                | 36i64
+                | 37i64
+                | 38i64
+                | 39i64
+                | 40i64
+                | 41i64
+                | 42i64
+                | 43i64
+                | 44i64
+                | 45i64
+                | 46i64
+                | 47i64
+                | 48i64
+                | 49i64
+                | 50i64
+                | 51i64
+                | 52i64
+                | 53i64
+                | 54i64
+                | 55i64
+                | 56i64
+                | 57i64
+                | 58i64
+                | 59i64
+                | 60i64
+                | 61i64
+                | 62i64
+                | 63i64
+                | 64i64
+                | 65i64
+                | 66i64
+                | 67i64
+                | 68i64
+                | 69i64
+                | 70i64
+                | 71i64
+                | 72i64
+                | 73i64
+                | 74i64
+                | 75i64
+                | 76i64
+                | 77i64
+                | 78i64
+                | 79i64
+                | 80i64
+                | 81i64
+                | 82i64
+                | 83i64
+                | 84i64
+                | 86i64
+        )
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -22194,6 +22999,7 @@ impl CrunchExerciseName {
             CrunchExerciseName::WeightedToesToBar => 82,
             CrunchExerciseName::Crunch => 83,
             CrunchExerciseName::StraightLegCrunchWithBall => 84,
+            CrunchExerciseName::LegClimbCrunch => 86,
             CrunchExerciseName::Value(value) => value,
         }
     }
@@ -22349,6 +23155,7 @@ impl fmt::Display for CrunchExerciseName {
             CrunchExerciseName::StraightLegCrunchWithBall => {
                 write!(f, "straight_leg_crunch_with_ball")
             }
+            CrunchExerciseName::LegClimbCrunch => write!(f, "leg_climb_crunch"),
             CrunchExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
@@ -22441,6 +23248,7 @@ impl convert::From<u16> for CrunchExerciseName {
             82 => CrunchExerciseName::WeightedToesToBar,
             83 => CrunchExerciseName::Crunch,
             84 => CrunchExerciseName::StraightLegCrunchWithBall,
+            86 => CrunchExerciseName::LegClimbCrunch,
             _ => CrunchExerciseName::Value(value),
         }
     }
@@ -22574,6 +23382,7 @@ impl convert::From<&str> for CrunchExerciseName {
             "weighted_toes_to_bar" => CrunchExerciseName::WeightedToesToBar,
             "crunch" => CrunchExerciseName::Crunch,
             "straight_leg_crunch_with_ball" => CrunchExerciseName::StraightLegCrunchWithBall,
+            "leg_climb_crunch" => CrunchExerciseName::LegClimbCrunch,
             &_ => CrunchExerciseName::Value(0),
         }
     }
@@ -22635,11 +23444,18 @@ pub enum CurlExerciseName {
     SwissBallEzBarPreacherCurl,
     TwistingStandingDumbbellBicepsCurl,
     WideGripEzBarBicepsCurl,
+    OneArmConcentrationCurl,
+    StandingZottmanBicepsCurl,
+    DumbbellBicepsCurl,
+    DragCurlWheelchair,
+    DumbbellBicepsCurlWheelchair,
+    BottleCurl,
+    SeatedBottleCurl,
     Value(u16),
 }
 impl CurlExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64..=43i64)
+        matches!(value, 0i64..=50i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -22687,6 +23503,13 @@ impl CurlExerciseName {
             CurlExerciseName::SwissBallEzBarPreacherCurl => 41,
             CurlExerciseName::TwistingStandingDumbbellBicepsCurl => 42,
             CurlExerciseName::WideGripEzBarBicepsCurl => 43,
+            CurlExerciseName::OneArmConcentrationCurl => 44,
+            CurlExerciseName::StandingZottmanBicepsCurl => 45,
+            CurlExerciseName::DumbbellBicepsCurl => 46,
+            CurlExerciseName::DragCurlWheelchair => 47,
+            CurlExerciseName::DumbbellBicepsCurlWheelchair => 48,
+            CurlExerciseName::BottleCurl => 49,
+            CurlExerciseName::SeatedBottleCurl => 50,
             CurlExerciseName::Value(value) => value,
         }
     }
@@ -22783,6 +23606,17 @@ impl fmt::Display for CurlExerciseName {
                 write!(f, "twisting_standing_dumbbell_biceps_curl")
             }
             CurlExerciseName::WideGripEzBarBicepsCurl => write!(f, "wide_grip_ez_bar_biceps_curl"),
+            CurlExerciseName::OneArmConcentrationCurl => write!(f, "one_arm_concentration_curl"),
+            CurlExerciseName::StandingZottmanBicepsCurl => {
+                write!(f, "standing_zottman_biceps_curl")
+            }
+            CurlExerciseName::DumbbellBicepsCurl => write!(f, "dumbbell_biceps_curl"),
+            CurlExerciseName::DragCurlWheelchair => write!(f, "drag_curl_wheelchair"),
+            CurlExerciseName::DumbbellBicepsCurlWheelchair => {
+                write!(f, "dumbbell_biceps_curl_wheelchair")
+            }
+            CurlExerciseName::BottleCurl => write!(f, "bottle_curl"),
+            CurlExerciseName::SeatedBottleCurl => write!(f, "seated_bottle_curl"),
             CurlExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
@@ -22834,6 +23668,13 @@ impl convert::From<u16> for CurlExerciseName {
             41 => CurlExerciseName::SwissBallEzBarPreacherCurl,
             42 => CurlExerciseName::TwistingStandingDumbbellBicepsCurl,
             43 => CurlExerciseName::WideGripEzBarBicepsCurl,
+            44 => CurlExerciseName::OneArmConcentrationCurl,
+            45 => CurlExerciseName::StandingZottmanBicepsCurl,
+            46 => CurlExerciseName::DumbbellBicepsCurl,
+            47 => CurlExerciseName::DragCurlWheelchair,
+            48 => CurlExerciseName::DumbbellBicepsCurlWheelchair,
+            49 => CurlExerciseName::BottleCurl,
+            50 => CurlExerciseName::SeatedBottleCurl,
             _ => CurlExerciseName::Value(value),
         }
     }
@@ -22910,6 +23751,13 @@ impl convert::From<&str> for CurlExerciseName {
                 CurlExerciseName::TwistingStandingDumbbellBicepsCurl
             }
             "wide_grip_ez_bar_biceps_curl" => CurlExerciseName::WideGripEzBarBicepsCurl,
+            "one_arm_concentration_curl" => CurlExerciseName::OneArmConcentrationCurl,
+            "standing_zottman_biceps_curl" => CurlExerciseName::StandingZottmanBicepsCurl,
+            "dumbbell_biceps_curl" => CurlExerciseName::DumbbellBicepsCurl,
+            "drag_curl_wheelchair" => CurlExerciseName::DragCurlWheelchair,
+            "dumbbell_biceps_curl_wheelchair" => CurlExerciseName::DumbbellBicepsCurlWheelchair,
+            "bottle_curl" => CurlExerciseName::BottleCurl,
+            "seated_bottle_curl" => CurlExerciseName::SeatedBottleCurl,
             &_ => CurlExerciseName::Value(0),
         }
     }
@@ -22946,11 +23794,41 @@ pub enum DeadliftExerciseName {
     SumoDeadliftHighPull,
     TrapBarDeadlift,
     WideGripBarbellDeadlift,
+    KettlebellDeadlift,
+    KettlebellSumoDeadlift,
+    RomanianDeadlift,
+    SingleLegRomanianDeadliftCircuit,
+    StraightLegDeadlift,
     Value(u16),
 }
 impl DeadliftExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64..=18i64)
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+                | 15i64
+                | 16i64
+                | 17i64
+                | 18i64
+                | 20i64
+                | 21i64
+                | 23i64
+                | 24i64
+                | 25i64
+        )
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -22973,6 +23851,11 @@ impl DeadliftExerciseName {
             DeadliftExerciseName::SumoDeadliftHighPull => 16,
             DeadliftExerciseName::TrapBarDeadlift => 17,
             DeadliftExerciseName::WideGripBarbellDeadlift => 18,
+            DeadliftExerciseName::KettlebellDeadlift => 20,
+            DeadliftExerciseName::KettlebellSumoDeadlift => 21,
+            DeadliftExerciseName::RomanianDeadlift => 23,
+            DeadliftExerciseName::SingleLegRomanianDeadliftCircuit => 24,
+            DeadliftExerciseName::StraightLegDeadlift => 25,
             DeadliftExerciseName::Value(value) => value,
         }
     }
@@ -23020,6 +23903,13 @@ impl fmt::Display for DeadliftExerciseName {
             DeadliftExerciseName::WideGripBarbellDeadlift => {
                 write!(f, "wide_grip_barbell_deadlift")
             }
+            DeadliftExerciseName::KettlebellDeadlift => write!(f, "kettlebell_deadlift"),
+            DeadliftExerciseName::KettlebellSumoDeadlift => write!(f, "kettlebell_sumo_deadlift"),
+            DeadliftExerciseName::RomanianDeadlift => write!(f, "romanian_deadlift"),
+            DeadliftExerciseName::SingleLegRomanianDeadliftCircuit => {
+                write!(f, "single_leg_romanian_deadlift_circuit")
+            }
+            DeadliftExerciseName::StraightLegDeadlift => write!(f, "straight_leg_deadlift"),
             DeadliftExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
@@ -23046,6 +23936,11 @@ impl convert::From<u16> for DeadliftExerciseName {
             16 => DeadliftExerciseName::SumoDeadliftHighPull,
             17 => DeadliftExerciseName::TrapBarDeadlift,
             18 => DeadliftExerciseName::WideGripBarbellDeadlift,
+            20 => DeadliftExerciseName::KettlebellDeadlift,
+            21 => DeadliftExerciseName::KettlebellSumoDeadlift,
+            23 => DeadliftExerciseName::RomanianDeadlift,
+            24 => DeadliftExerciseName::SingleLegRomanianDeadliftCircuit,
+            25 => DeadliftExerciseName::StraightLegDeadlift,
             _ => DeadliftExerciseName::Value(value),
         }
     }
@@ -23087,6 +23982,13 @@ impl convert::From<&str> for DeadliftExerciseName {
             "sumo_deadlift_high_pull" => DeadliftExerciseName::SumoDeadliftHighPull,
             "trap_bar_deadlift" => DeadliftExerciseName::TrapBarDeadlift,
             "wide_grip_barbell_deadlift" => DeadliftExerciseName::WideGripBarbellDeadlift,
+            "kettlebell_deadlift" => DeadliftExerciseName::KettlebellDeadlift,
+            "kettlebell_sumo_deadlift" => DeadliftExerciseName::KettlebellSumoDeadlift,
+            "romanian_deadlift" => DeadliftExerciseName::RomanianDeadlift,
+            "single_leg_romanian_deadlift_circuit" => {
+                DeadliftExerciseName::SingleLegRomanianDeadliftCircuit
+            }
+            "straight_leg_deadlift" => DeadliftExerciseName::StraightLegDeadlift,
             &_ => DeadliftExerciseName::Value(0),
         }
     }
@@ -23114,11 +24016,14 @@ pub enum FlyeExerciseName {
     SwissBallDumbbellFlye,
     ArmRotations,
     HugATree,
+    FaceDownInclineReverseFlye,
+    InclineReverseFlye,
+    RearDeltFlyWheelchair,
     Value(u16),
 }
 impl FlyeExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64..=9i64)
+        matches!(value, 0i64..=12i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -23132,6 +24037,9 @@ impl FlyeExerciseName {
             FlyeExerciseName::SwissBallDumbbellFlye => 7,
             FlyeExerciseName::ArmRotations => 8,
             FlyeExerciseName::HugATree => 9,
+            FlyeExerciseName::FaceDownInclineReverseFlye => 10,
+            FlyeExerciseName::InclineReverseFlye => 11,
+            FlyeExerciseName::RearDeltFlyWheelchair => 12,
             FlyeExerciseName::Value(value) => value,
         }
     }
@@ -23154,6 +24062,11 @@ impl fmt::Display for FlyeExerciseName {
             FlyeExerciseName::SwissBallDumbbellFlye => write!(f, "swiss_ball_dumbbell_flye"),
             FlyeExerciseName::ArmRotations => write!(f, "arm_rotations"),
             FlyeExerciseName::HugATree => write!(f, "hug_a_tree"),
+            FlyeExerciseName::FaceDownInclineReverseFlye => {
+                write!(f, "face_down_incline_reverse_flye")
+            }
+            FlyeExerciseName::InclineReverseFlye => write!(f, "incline_reverse_flye"),
+            FlyeExerciseName::RearDeltFlyWheelchair => write!(f, "rear_delt_fly_wheelchair"),
             FlyeExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
@@ -23171,6 +24084,9 @@ impl convert::From<u16> for FlyeExerciseName {
             7 => FlyeExerciseName::SwissBallDumbbellFlye,
             8 => FlyeExerciseName::ArmRotations,
             9 => FlyeExerciseName::HugATree,
+            10 => FlyeExerciseName::FaceDownInclineReverseFlye,
+            11 => FlyeExerciseName::InclineReverseFlye,
+            12 => FlyeExerciseName::RearDeltFlyWheelchair,
             _ => FlyeExerciseName::Value(value),
         }
     }
@@ -23195,6 +24111,9 @@ impl convert::From<&str> for FlyeExerciseName {
             "swiss_ball_dumbbell_flye" => FlyeExerciseName::SwissBallDumbbellFlye,
             "arm_rotations" => FlyeExerciseName::ArmRotations,
             "hug_a_tree" => FlyeExerciseName::HugATree,
+            "face_down_incline_reverse_flye" => FlyeExerciseName::FaceDownInclineReverseFlye,
+            "incline_reverse_flye" => FlyeExerciseName::InclineReverseFlye,
+            "rear_delt_fly_wheelchair" => FlyeExerciseName::RearDeltFlyWheelchair,
             &_ => FlyeExerciseName::Value(0),
         }
     }
@@ -23669,11 +24588,12 @@ pub enum HipStabilityExerciseName {
     WeightedStandingRearLegRaise,
     SupineHipInternalRotation,
     WeightedSupineHipInternalRotation,
+    LyingAbductionStretch,
     Value(u16),
 }
 impl HipStabilityExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64..=33i64)
+        matches!(value, 0i64..=34i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -23711,6 +24631,7 @@ impl HipStabilityExerciseName {
             HipStabilityExerciseName::WeightedStandingRearLegRaise => 31,
             HipStabilityExerciseName::SupineHipInternalRotation => 32,
             HipStabilityExerciseName::WeightedSupineHipInternalRotation => 33,
+            HipStabilityExerciseName::LyingAbductionStretch => 34,
             HipStabilityExerciseName::Value(value) => value,
         }
     }
@@ -23791,6 +24712,7 @@ impl fmt::Display for HipStabilityExerciseName {
             HipStabilityExerciseName::WeightedSupineHipInternalRotation => {
                 write!(f, "weighted_supine_hip_internal_rotation")
             }
+            HipStabilityExerciseName::LyingAbductionStretch => write!(f, "lying_abduction_stretch"),
             HipStabilityExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
@@ -23832,6 +24754,7 @@ impl convert::From<u16> for HipStabilityExerciseName {
             31 => HipStabilityExerciseName::WeightedStandingRearLegRaise,
             32 => HipStabilityExerciseName::SupineHipInternalRotation,
             33 => HipStabilityExerciseName::WeightedSupineHipInternalRotation,
+            34 => HipStabilityExerciseName::LyingAbductionStretch,
             _ => HipStabilityExerciseName::Value(value),
         }
     }
@@ -23894,6 +24817,7 @@ impl convert::From<&str> for HipStabilityExerciseName {
             "weighted_supine_hip_internal_rotation" => {
                 HipStabilityExerciseName::WeightedSupineHipInternalRotation
             }
+            "lying_abduction_stretch" => HipStabilityExerciseName::LyingAbductionStretch,
             &_ => HipStabilityExerciseName::Value(0),
         }
     }
@@ -23914,17 +24838,19 @@ pub enum HipSwingExerciseName {
     SingleArmKettlebellSwing,
     SingleArmDumbbellSwing,
     StepOutSwing,
+    OneArmSwing,
     Value(u16),
 }
 impl HipSwingExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64..=2i64)
+        matches!(value, 0i64..=3i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
             HipSwingExerciseName::SingleArmKettlebellSwing => 0,
             HipSwingExerciseName::SingleArmDumbbellSwing => 1,
             HipSwingExerciseName::StepOutSwing => 2,
+            HipSwingExerciseName::OneArmSwing => 3,
             HipSwingExerciseName::Value(value) => value,
         }
     }
@@ -23940,6 +24866,7 @@ impl fmt::Display for HipSwingExerciseName {
             }
             HipSwingExerciseName::SingleArmDumbbellSwing => write!(f, "single_arm_dumbbell_swing"),
             HipSwingExerciseName::StepOutSwing => write!(f, "step_out_swing"),
+            HipSwingExerciseName::OneArmSwing => write!(f, "one_arm_swing"),
             HipSwingExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
@@ -23950,6 +24877,7 @@ impl convert::From<u16> for HipSwingExerciseName {
             0 => HipSwingExerciseName::SingleArmKettlebellSwing,
             1 => HipSwingExerciseName::SingleArmDumbbellSwing,
             2 => HipSwingExerciseName::StepOutSwing,
+            3 => HipSwingExerciseName::OneArmSwing,
             _ => HipSwingExerciseName::Value(value),
         }
     }
@@ -23965,6 +24893,7 @@ impl convert::From<&str> for HipSwingExerciseName {
             "single_arm_kettlebell_swing" => HipSwingExerciseName::SingleArmKettlebellSwing,
             "single_arm_dumbbell_swing" => HipSwingExerciseName::SingleArmDumbbellSwing,
             "step_out_swing" => HipSwingExerciseName::StepOutSwing,
+            "one_arm_swing" => HipSwingExerciseName::OneArmSwing,
             &_ => HipSwingExerciseName::Value(0),
         }
     }
@@ -24339,11 +25268,60 @@ pub enum LateralRaiseExerciseName {
     WeightedWallSlide,
     ArmCircles,
     ShavingTheHead,
+    DumbbellLateralRaise,
+    RingDipKipping,
+    WallWalk,
+    DumbbellFrontRaiseWheelchair,
+    DumbbellLateralRaiseWheelchair,
+    PoleDoubleArmOverheadAndForwardWheelchair,
+    PoleStraightArmOverheadWheelchair,
     Value(u16),
 }
 impl LateralRaiseExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64..=33i64)
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+                | 15i64
+                | 16i64
+                | 17i64
+                | 18i64
+                | 19i64
+                | 20i64
+                | 21i64
+                | 22i64
+                | 23i64
+                | 24i64
+                | 25i64
+                | 26i64
+                | 27i64
+                | 28i64
+                | 29i64
+                | 30i64
+                | 31i64
+                | 32i64
+                | 33i64
+                | 34i64
+                | 36i64
+                | 37i64
+                | 38i64
+                | 39i64
+                | 40i64
+                | 41i64
+        )
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -24381,6 +25359,13 @@ impl LateralRaiseExerciseName {
             LateralRaiseExerciseName::WeightedWallSlide => 31,
             LateralRaiseExerciseName::ArmCircles => 32,
             LateralRaiseExerciseName::ShavingTheHead => 33,
+            LateralRaiseExerciseName::DumbbellLateralRaise => 34,
+            LateralRaiseExerciseName::RingDipKipping => 36,
+            LateralRaiseExerciseName::WallWalk => 37,
+            LateralRaiseExerciseName::DumbbellFrontRaiseWheelchair => 38,
+            LateralRaiseExerciseName::DumbbellLateralRaiseWheelchair => 39,
+            LateralRaiseExerciseName::PoleDoubleArmOverheadAndForwardWheelchair => 40,
+            LateralRaiseExerciseName::PoleStraightArmOverheadWheelchair => 41,
             LateralRaiseExerciseName::Value(value) => value,
         }
     }
@@ -24441,6 +25426,21 @@ impl fmt::Display for LateralRaiseExerciseName {
             LateralRaiseExerciseName::WeightedWallSlide => write!(f, "weighted_wall_slide"),
             LateralRaiseExerciseName::ArmCircles => write!(f, "arm_circles"),
             LateralRaiseExerciseName::ShavingTheHead => write!(f, "shaving_the_head"),
+            LateralRaiseExerciseName::DumbbellLateralRaise => write!(f, "dumbbell_lateral_raise"),
+            LateralRaiseExerciseName::RingDipKipping => write!(f, "ring_dip_kipping"),
+            LateralRaiseExerciseName::WallWalk => write!(f, "wall_walk"),
+            LateralRaiseExerciseName::DumbbellFrontRaiseWheelchair => {
+                write!(f, "dumbbell_front_raise_wheelchair")
+            }
+            LateralRaiseExerciseName::DumbbellLateralRaiseWheelchair => {
+                write!(f, "dumbbell_lateral_raise_wheelchair")
+            }
+            LateralRaiseExerciseName::PoleDoubleArmOverheadAndForwardWheelchair => {
+                write!(f, "pole_double_arm_overhead_and_forward_wheelchair")
+            }
+            LateralRaiseExerciseName::PoleStraightArmOverheadWheelchair => {
+                write!(f, "pole_straight_arm_overhead_wheelchair")
+            }
             LateralRaiseExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
@@ -24482,6 +25482,13 @@ impl convert::From<u16> for LateralRaiseExerciseName {
             31 => LateralRaiseExerciseName::WeightedWallSlide,
             32 => LateralRaiseExerciseName::ArmCircles,
             33 => LateralRaiseExerciseName::ShavingTheHead,
+            34 => LateralRaiseExerciseName::DumbbellLateralRaise,
+            36 => LateralRaiseExerciseName::RingDipKipping,
+            37 => LateralRaiseExerciseName::WallWalk,
+            38 => LateralRaiseExerciseName::DumbbellFrontRaiseWheelchair,
+            39 => LateralRaiseExerciseName::DumbbellLateralRaiseWheelchair,
+            40 => LateralRaiseExerciseName::PoleDoubleArmOverheadAndForwardWheelchair,
+            41 => LateralRaiseExerciseName::PoleStraightArmOverheadWheelchair,
             _ => LateralRaiseExerciseName::Value(value),
         }
     }
@@ -24538,6 +25545,21 @@ impl convert::From<&str> for LateralRaiseExerciseName {
             "weighted_wall_slide" => LateralRaiseExerciseName::WeightedWallSlide,
             "arm_circles" => LateralRaiseExerciseName::ArmCircles,
             "shaving_the_head" => LateralRaiseExerciseName::ShavingTheHead,
+            "dumbbell_lateral_raise" => LateralRaiseExerciseName::DumbbellLateralRaise,
+            "ring_dip_kipping" => LateralRaiseExerciseName::RingDipKipping,
+            "wall_walk" => LateralRaiseExerciseName::WallWalk,
+            "dumbbell_front_raise_wheelchair" => {
+                LateralRaiseExerciseName::DumbbellFrontRaiseWheelchair
+            }
+            "dumbbell_lateral_raise_wheelchair" => {
+                LateralRaiseExerciseName::DumbbellLateralRaiseWheelchair
+            }
+            "pole_double_arm_overhead_and_forward_wheelchair" => {
+                LateralRaiseExerciseName::PoleDoubleArmOverheadAndForwardWheelchair
+            }
+            "pole_straight_arm_overhead_wheelchair" => {
+                LateralRaiseExerciseName::PoleStraightArmOverheadWheelchair
+            }
             &_ => LateralRaiseExerciseName::Value(0),
         }
     }
@@ -24567,11 +25589,13 @@ pub enum LegCurlExerciseName {
     StaggeredStanceGoodMorning,
     SwissBallHipRaiseAndLegCurl,
     ZercherGoodMorning,
+    BandGoodMorning,
+    BarGoodMorning,
     Value(u16),
 }
 impl LegCurlExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64..=11i64)
+        matches!(value, 0i64..=13i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -24587,6 +25611,8 @@ impl LegCurlExerciseName {
             LegCurlExerciseName::StaggeredStanceGoodMorning => 9,
             LegCurlExerciseName::SwissBallHipRaiseAndLegCurl => 10,
             LegCurlExerciseName::ZercherGoodMorning => 11,
+            LegCurlExerciseName::BandGoodMorning => 12,
+            LegCurlExerciseName::BarGoodMorning => 13,
             LegCurlExerciseName::Value(value) => value,
         }
     }
@@ -24619,6 +25645,8 @@ impl fmt::Display for LegCurlExerciseName {
                 write!(f, "swiss_ball_hip_raise_and_leg_curl")
             }
             LegCurlExerciseName::ZercherGoodMorning => write!(f, "zercher_good_morning"),
+            LegCurlExerciseName::BandGoodMorning => write!(f, "band_good_morning"),
+            LegCurlExerciseName::BarGoodMorning => write!(f, "bar_good_morning"),
             LegCurlExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
@@ -24638,6 +25666,8 @@ impl convert::From<u16> for LegCurlExerciseName {
             9 => LegCurlExerciseName::StaggeredStanceGoodMorning,
             10 => LegCurlExerciseName::SwissBallHipRaiseAndLegCurl,
             11 => LegCurlExerciseName::ZercherGoodMorning,
+            12 => LegCurlExerciseName::BandGoodMorning,
+            13 => LegCurlExerciseName::BarGoodMorning,
             _ => LegCurlExerciseName::Value(value),
         }
     }
@@ -24662,6 +25692,8 @@ impl convert::From<&str> for LegCurlExerciseName {
             "staggered_stance_good_morning" => LegCurlExerciseName::StaggeredStanceGoodMorning,
             "swiss_ball_hip_raise_and_leg_curl" => LegCurlExerciseName::SwissBallHipRaiseAndLegCurl,
             "zercher_good_morning" => LegCurlExerciseName::ZercherGoodMorning,
+            "band_good_morning" => LegCurlExerciseName::BandGoodMorning,
+            "bar_good_morning" => LegCurlExerciseName::BarGoodMorning,
             &_ => LegCurlExerciseName::Value(0),
         }
     }
@@ -24952,11 +25984,21 @@ pub enum LungeExerciseName {
     WalkingLunge,
     WeightedWalkingLunge,
     WideGripOverheadBarbellSplitSquat,
+    AlternatingDumbbellLunge,
+    DumbbellReverseLunge,
+    OverheadDumbbellLunge,
+    ScissorPowerSwitch,
+    DumbbellOverheadWalkingLunge,
+    CurtsyLunge,
+    WeightedCurtsyLunge,
+    WeightedShiftingSideLunge,
+    WeightedSideLungeAndPress,
+    WeightedSideLungeJumpOff,
     Value(u16),
 }
 impl LungeExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64..=80i64)
+        matches!(value, 0i64..=90i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -25041,6 +26083,16 @@ impl LungeExerciseName {
             LungeExerciseName::WalkingLunge => 78,
             LungeExerciseName::WeightedWalkingLunge => 79,
             LungeExerciseName::WideGripOverheadBarbellSplitSquat => 80,
+            LungeExerciseName::AlternatingDumbbellLunge => 81,
+            LungeExerciseName::DumbbellReverseLunge => 82,
+            LungeExerciseName::OverheadDumbbellLunge => 83,
+            LungeExerciseName::ScissorPowerSwitch => 84,
+            LungeExerciseName::DumbbellOverheadWalkingLunge => 85,
+            LungeExerciseName::CurtsyLunge => 86,
+            LungeExerciseName::WeightedCurtsyLunge => 87,
+            LungeExerciseName::WeightedShiftingSideLunge => 88,
+            LungeExerciseName::WeightedSideLungeAndPress => 89,
+            LungeExerciseName::WeightedSideLungeJumpOff => 90,
             LungeExerciseName::Value(value) => value,
         }
     }
@@ -25192,6 +26244,24 @@ impl fmt::Display for LungeExerciseName {
             LungeExerciseName::WideGripOverheadBarbellSplitSquat => {
                 write!(f, "wide_grip_overhead_barbell_split_squat")
             }
+            LungeExerciseName::AlternatingDumbbellLunge => write!(f, "alternating_dumbbell_lunge"),
+            LungeExerciseName::DumbbellReverseLunge => write!(f, "dumbbell_reverse_lunge"),
+            LungeExerciseName::OverheadDumbbellLunge => write!(f, "overhead_dumbbell_lunge"),
+            LungeExerciseName::ScissorPowerSwitch => write!(f, "scissor_power_switch"),
+            LungeExerciseName::DumbbellOverheadWalkingLunge => {
+                write!(f, "dumbbell_overhead_walking_lunge")
+            }
+            LungeExerciseName::CurtsyLunge => write!(f, "curtsy_lunge"),
+            LungeExerciseName::WeightedCurtsyLunge => write!(f, "weighted_curtsy_lunge"),
+            LungeExerciseName::WeightedShiftingSideLunge => {
+                write!(f, "weighted_shifting_side_lunge")
+            }
+            LungeExerciseName::WeightedSideLungeAndPress => {
+                write!(f, "weighted_side_lunge_and_press")
+            }
+            LungeExerciseName::WeightedSideLungeJumpOff => {
+                write!(f, "weighted_side_lunge_jump_off")
+            }
             LungeExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
@@ -25280,6 +26350,16 @@ impl convert::From<u16> for LungeExerciseName {
             78 => LungeExerciseName::WalkingLunge,
             79 => LungeExerciseName::WeightedWalkingLunge,
             80 => LungeExerciseName::WideGripOverheadBarbellSplitSquat,
+            81 => LungeExerciseName::AlternatingDumbbellLunge,
+            82 => LungeExerciseName::DumbbellReverseLunge,
+            83 => LungeExerciseName::OverheadDumbbellLunge,
+            84 => LungeExerciseName::ScissorPowerSwitch,
+            85 => LungeExerciseName::DumbbellOverheadWalkingLunge,
+            86 => LungeExerciseName::CurtsyLunge,
+            87 => LungeExerciseName::WeightedCurtsyLunge,
+            88 => LungeExerciseName::WeightedShiftingSideLunge,
+            89 => LungeExerciseName::WeightedSideLungeAndPress,
+            90 => LungeExerciseName::WeightedSideLungeJumpOff,
             _ => LungeExerciseName::Value(value),
         }
     }
@@ -25403,6 +26483,16 @@ impl convert::From<&str> for LungeExerciseName {
             "wide_grip_overhead_barbell_split_squat" => {
                 LungeExerciseName::WideGripOverheadBarbellSplitSquat
             }
+            "alternating_dumbbell_lunge" => LungeExerciseName::AlternatingDumbbellLunge,
+            "dumbbell_reverse_lunge" => LungeExerciseName::DumbbellReverseLunge,
+            "overhead_dumbbell_lunge" => LungeExerciseName::OverheadDumbbellLunge,
+            "scissor_power_switch" => LungeExerciseName::ScissorPowerSwitch,
+            "dumbbell_overhead_walking_lunge" => LungeExerciseName::DumbbellOverheadWalkingLunge,
+            "curtsy_lunge" => LungeExerciseName::CurtsyLunge,
+            "weighted_curtsy_lunge" => LungeExerciseName::WeightedCurtsyLunge,
+            "weighted_shifting_side_lunge" => LungeExerciseName::WeightedShiftingSideLunge,
+            "weighted_side_lunge_and_press" => LungeExerciseName::WeightedSideLungeAndPress,
+            "weighted_side_lunge_jump_off" => LungeExerciseName::WeightedSideLungeJumpOff,
             &_ => LungeExerciseName::Value(0),
         }
     }
@@ -25441,11 +26531,19 @@ pub enum OlympicLiftExerciseName {
     SingleArmKettlebellSnatch,
     SplitJerk,
     SquatCleanAndJerk,
+    DumbbellHangSnatch,
+    DumbbellPowerCleanAndJerk,
+    DumbbellPowerCleanAndPushPress,
+    DumbbellPowerCleanAndStrictPress,
+    DumbbellSnatch,
+    MedicineBallClean,
+    CleanAndPress,
+    Snatch,
     Value(u16),
 }
 impl OlympicLiftExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64..=20i64)
+        matches!(value, 0i64..=28i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -25470,6 +26568,14 @@ impl OlympicLiftExerciseName {
             OlympicLiftExerciseName::SingleArmKettlebellSnatch => 18,
             OlympicLiftExerciseName::SplitJerk => 19,
             OlympicLiftExerciseName::SquatCleanAndJerk => 20,
+            OlympicLiftExerciseName::DumbbellHangSnatch => 21,
+            OlympicLiftExerciseName::DumbbellPowerCleanAndJerk => 22,
+            OlympicLiftExerciseName::DumbbellPowerCleanAndPushPress => 23,
+            OlympicLiftExerciseName::DumbbellPowerCleanAndStrictPress => 24,
+            OlympicLiftExerciseName::DumbbellSnatch => 25,
+            OlympicLiftExerciseName::MedicineBallClean => 26,
+            OlympicLiftExerciseName::CleanAndPress => 27,
+            OlympicLiftExerciseName::Snatch => 28,
             OlympicLiftExerciseName::Value(value) => value,
         }
     }
@@ -25509,6 +26615,20 @@ impl fmt::Display for OlympicLiftExerciseName {
             }
             OlympicLiftExerciseName::SplitJerk => write!(f, "split_jerk"),
             OlympicLiftExerciseName::SquatCleanAndJerk => write!(f, "squat_clean_and_jerk"),
+            OlympicLiftExerciseName::DumbbellHangSnatch => write!(f, "dumbbell_hang_snatch"),
+            OlympicLiftExerciseName::DumbbellPowerCleanAndJerk => {
+                write!(f, "dumbbell_power_clean_and_jerk")
+            }
+            OlympicLiftExerciseName::DumbbellPowerCleanAndPushPress => {
+                write!(f, "dumbbell_power_clean_and_push_press")
+            }
+            OlympicLiftExerciseName::DumbbellPowerCleanAndStrictPress => {
+                write!(f, "dumbbell_power_clean_and_strict_press")
+            }
+            OlympicLiftExerciseName::DumbbellSnatch => write!(f, "dumbbell_snatch"),
+            OlympicLiftExerciseName::MedicineBallClean => write!(f, "medicine_ball_clean"),
+            OlympicLiftExerciseName::CleanAndPress => write!(f, "clean_and_press"),
+            OlympicLiftExerciseName::Snatch => write!(f, "snatch"),
             OlympicLiftExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
@@ -25537,6 +26657,14 @@ impl convert::From<u16> for OlympicLiftExerciseName {
             18 => OlympicLiftExerciseName::SingleArmKettlebellSnatch,
             19 => OlympicLiftExerciseName::SplitJerk,
             20 => OlympicLiftExerciseName::SquatCleanAndJerk,
+            21 => OlympicLiftExerciseName::DumbbellHangSnatch,
+            22 => OlympicLiftExerciseName::DumbbellPowerCleanAndJerk,
+            23 => OlympicLiftExerciseName::DumbbellPowerCleanAndPushPress,
+            24 => OlympicLiftExerciseName::DumbbellPowerCleanAndStrictPress,
+            25 => OlympicLiftExerciseName::DumbbellSnatch,
+            26 => OlympicLiftExerciseName::MedicineBallClean,
+            27 => OlympicLiftExerciseName::CleanAndPress,
+            28 => OlympicLiftExerciseName::Snatch,
             _ => OlympicLiftExerciseName::Value(value),
         }
     }
@@ -25570,6 +26698,18 @@ impl convert::From<&str> for OlympicLiftExerciseName {
             "single_arm_kettlebell_snatch" => OlympicLiftExerciseName::SingleArmKettlebellSnatch,
             "split_jerk" => OlympicLiftExerciseName::SplitJerk,
             "squat_clean_and_jerk" => OlympicLiftExerciseName::SquatCleanAndJerk,
+            "dumbbell_hang_snatch" => OlympicLiftExerciseName::DumbbellHangSnatch,
+            "dumbbell_power_clean_and_jerk" => OlympicLiftExerciseName::DumbbellPowerCleanAndJerk,
+            "dumbbell_power_clean_and_push_press" => {
+                OlympicLiftExerciseName::DumbbellPowerCleanAndPushPress
+            }
+            "dumbbell_power_clean_and_strict_press" => {
+                OlympicLiftExerciseName::DumbbellPowerCleanAndStrictPress
+            }
+            "dumbbell_snatch" => OlympicLiftExerciseName::DumbbellSnatch,
+            "medicine_ball_clean" => OlympicLiftExerciseName::MedicineBallClean,
+            "clean_and_press" => OlympicLiftExerciseName::CleanAndPress,
+            "snatch" => OlympicLiftExerciseName::Snatch,
             &_ => OlympicLiftExerciseName::Value(0),
         }
     }
@@ -25722,11 +26862,12 @@ pub enum PlankExerciseName {
     PlankWithArmVariations,
     PlankWithLegLift,
     ReversePlankWithLegPull,
+    RingPlankSprawls,
     Value(u16),
 }
 impl PlankExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64..=134i64)
+        matches!(value, 0i64..=135i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -25865,6 +27006,7 @@ impl PlankExerciseName {
             PlankExerciseName::PlankWithArmVariations => 132,
             PlankExerciseName::PlankWithLegLift => 133,
             PlankExerciseName::ReversePlankWithLegPull => 134,
+            PlankExerciseName::RingPlankSprawls => 135,
             PlankExerciseName::Value(value) => value,
         }
     }
@@ -26135,6 +27277,7 @@ impl fmt::Display for PlankExerciseName {
             PlankExerciseName::PlankWithArmVariations => write!(f, "plank_with_arm_variations"),
             PlankExerciseName::PlankWithLegLift => write!(f, "plank_with_leg_lift"),
             PlankExerciseName::ReversePlankWithLegPull => write!(f, "reverse_plank_with_leg_pull"),
+            PlankExerciseName::RingPlankSprawls => write!(f, "ring_plank_sprawls"),
             PlankExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
@@ -26277,6 +27420,7 @@ impl convert::From<u16> for PlankExerciseName {
             132 => PlankExerciseName::PlankWithArmVariations,
             133 => PlankExerciseName::PlankWithLegLift,
             134 => PlankExerciseName::ReversePlankWithLegPull,
+            135 => PlankExerciseName::RingPlankSprawls,
             _ => PlankExerciseName::Value(value),
         }
     }
@@ -26500,6 +27644,7 @@ impl convert::From<&str> for PlankExerciseName {
             "plank_with_arm_variations" => PlankExerciseName::PlankWithArmVariations,
             "plank_with_leg_lift" => PlankExerciseName::PlankWithLegLift,
             "reverse_plank_with_leg_pull" => PlankExerciseName::ReversePlankWithLegPull,
+            "ring_plank_sprawls" => PlankExerciseName::RingPlankSprawls,
             &_ => PlankExerciseName::Value(0),
         }
     }
@@ -26550,11 +27695,16 @@ pub enum PlyoExerciseName {
     WeightedSquatJumpOntoBox,
     SquatJumpsInAndOut,
     WeightedSquatJumpsInAndOut,
+    BoxJump,
+    BoxJumpOvers,
+    BoxJumpOversOverTheBox,
+    StarJumpSquats,
+    JumpSquat,
     Value(u16),
 }
 impl PlyoExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64..=32i64)
+        matches!(value, 0i64..=37i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -26591,6 +27741,11 @@ impl PlyoExerciseName {
             PlyoExerciseName::WeightedSquatJumpOntoBox => 30,
             PlyoExerciseName::SquatJumpsInAndOut => 31,
             PlyoExerciseName::WeightedSquatJumpsInAndOut => 32,
+            PlyoExerciseName::BoxJump => 33,
+            PlyoExerciseName::BoxJumpOvers => 34,
+            PlyoExerciseName::BoxJumpOversOverTheBox => 35,
+            PlyoExerciseName::StarJumpSquats => 36,
+            PlyoExerciseName::JumpSquat => 37,
             PlyoExerciseName::Value(value) => value,
         }
     }
@@ -26652,6 +27807,11 @@ impl fmt::Display for PlyoExerciseName {
             PlyoExerciseName::WeightedSquatJumpsInAndOut => {
                 write!(f, "weighted_squat_jumps_in_and_out")
             }
+            PlyoExerciseName::BoxJump => write!(f, "box_jump"),
+            PlyoExerciseName::BoxJumpOvers => write!(f, "box_jump_overs"),
+            PlyoExerciseName::BoxJumpOversOverTheBox => write!(f, "box_jump_overs_over_the_box"),
+            PlyoExerciseName::StarJumpSquats => write!(f, "star_jump_squats"),
+            PlyoExerciseName::JumpSquat => write!(f, "jump_squat"),
             PlyoExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
@@ -26692,6 +27852,11 @@ impl convert::From<u16> for PlyoExerciseName {
             30 => PlyoExerciseName::WeightedSquatJumpOntoBox,
             31 => PlyoExerciseName::SquatJumpsInAndOut,
             32 => PlyoExerciseName::WeightedSquatJumpsInAndOut,
+            33 => PlyoExerciseName::BoxJump,
+            34 => PlyoExerciseName::BoxJumpOvers,
+            35 => PlyoExerciseName::BoxJumpOversOverTheBox,
+            36 => PlyoExerciseName::StarJumpSquats,
+            37 => PlyoExerciseName::JumpSquat,
             _ => PlyoExerciseName::Value(value),
         }
     }
@@ -26741,6 +27906,11 @@ impl convert::From<&str> for PlyoExerciseName {
             "weighted_squat_jump_onto_box" => PlyoExerciseName::WeightedSquatJumpOntoBox,
             "squat_jumps_in_and_out" => PlyoExerciseName::SquatJumpsInAndOut,
             "weighted_squat_jumps_in_and_out" => PlyoExerciseName::WeightedSquatJumpsInAndOut,
+            "box_jump" => PlyoExerciseName::BoxJump,
+            "box_jump_overs" => PlyoExerciseName::BoxJumpOvers,
+            "box_jump_overs_over_the_box" => PlyoExerciseName::BoxJumpOversOverTheBox,
+            "star_jump_squats" => PlyoExerciseName::StarJumpSquats,
+            "jump_squat" => PlyoExerciseName::JumpSquat,
             &_ => PlyoExerciseName::Value(0),
         }
     }
@@ -26797,11 +27967,18 @@ pub enum PullUpExerciseName {
     SuspendedChinUp,
     WeightedSuspendedChinUp,
     PullUp,
+    ChinUp,
+    NeutralGripChinUp,
+    WeightedChinUp,
+    BandAssistedPullUp,
+    NeutralGripPullUp,
+    WeightedNeutralGripChinUp,
+    WeightedNeutralGripPullUp,
     Value(u16),
 }
 impl PullUpExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64..=38i64)
+        matches!(value, 0i64..=45i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -26844,6 +28021,13 @@ impl PullUpExerciseName {
             PullUpExerciseName::SuspendedChinUp => 36,
             PullUpExerciseName::WeightedSuspendedChinUp => 37,
             PullUpExerciseName::PullUp => 38,
+            PullUpExerciseName::ChinUp => 39,
+            PullUpExerciseName::NeutralGripChinUp => 40,
+            PullUpExerciseName::WeightedChinUp => 41,
+            PullUpExerciseName::BandAssistedPullUp => 42,
+            PullUpExerciseName::NeutralGripPullUp => 43,
+            PullUpExerciseName::WeightedNeutralGripChinUp => 44,
+            PullUpExerciseName::WeightedNeutralGripPullUp => 45,
             PullUpExerciseName::Value(value) => value,
         }
     }
@@ -26895,6 +28079,17 @@ impl fmt::Display for PullUpExerciseName {
             PullUpExerciseName::SuspendedChinUp => write!(f, "suspended_chin_up"),
             PullUpExerciseName::WeightedSuspendedChinUp => write!(f, "weighted_suspended_chin_up"),
             PullUpExerciseName::PullUp => write!(f, "pull_up"),
+            PullUpExerciseName::ChinUp => write!(f, "chin_up"),
+            PullUpExerciseName::NeutralGripChinUp => write!(f, "neutral_grip_chin_up"),
+            PullUpExerciseName::WeightedChinUp => write!(f, "weighted_chin_up"),
+            PullUpExerciseName::BandAssistedPullUp => write!(f, "band_assisted_pull_up"),
+            PullUpExerciseName::NeutralGripPullUp => write!(f, "neutral_grip_pull_up"),
+            PullUpExerciseName::WeightedNeutralGripChinUp => {
+                write!(f, "weighted_neutral_grip_chin_up")
+            }
+            PullUpExerciseName::WeightedNeutralGripPullUp => {
+                write!(f, "weighted_neutral_grip_pull_up")
+            }
             PullUpExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
@@ -26941,6 +28136,13 @@ impl convert::From<u16> for PullUpExerciseName {
             36 => PullUpExerciseName::SuspendedChinUp,
             37 => PullUpExerciseName::WeightedSuspendedChinUp,
             38 => PullUpExerciseName::PullUp,
+            39 => PullUpExerciseName::ChinUp,
+            40 => PullUpExerciseName::NeutralGripChinUp,
+            41 => PullUpExerciseName::WeightedChinUp,
+            42 => PullUpExerciseName::BandAssistedPullUp,
+            43 => PullUpExerciseName::NeutralGripPullUp,
+            44 => PullUpExerciseName::WeightedNeutralGripChinUp,
+            45 => PullUpExerciseName::WeightedNeutralGripPullUp,
             _ => PullUpExerciseName::Value(value),
         }
     }
@@ -26994,6 +28196,13 @@ impl convert::From<&str> for PullUpExerciseName {
             "suspended_chin_up" => PullUpExerciseName::SuspendedChinUp,
             "weighted_suspended_chin_up" => PullUpExerciseName::WeightedSuspendedChinUp,
             "pull_up" => PullUpExerciseName::PullUp,
+            "chin_up" => PullUpExerciseName::ChinUp,
+            "neutral_grip_chin_up" => PullUpExerciseName::NeutralGripChinUp,
+            "weighted_chin_up" => PullUpExerciseName::WeightedChinUp,
+            "band_assisted_pull_up" => PullUpExerciseName::BandAssistedPullUp,
+            "neutral_grip_pull_up" => PullUpExerciseName::NeutralGripPullUp,
+            "weighted_neutral_grip_chin_up" => PullUpExerciseName::WeightedNeutralGripChinUp,
+            "weighted_neutral_grip_pull_up" => PullUpExerciseName::WeightedNeutralGripPullUp,
             &_ => PullUpExerciseName::Value(0),
         }
     }
@@ -27090,11 +28299,23 @@ pub enum PushUpExerciseName {
     WeightedRingPushUp,
     PushUp,
     PilatesPushup,
+    DynamicPushUp,
+    KippingHandstandPushUp,
+    ShoulderTappingPushUp,
+    BicepsPushUp,
+    HinduPushUp,
+    PikePushUp,
+    WideGripPushUp,
+    WeightedBicepsPushUp,
+    WeightedHinduPushUp,
+    WeightedPikePushUp,
+    KippingParalletteHandstandPushUp,
+    WallPushUp,
     Value(u16),
 }
 impl PushUpExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64..=78i64)
+        matches!(value, 0i64..=90i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -27177,6 +28398,18 @@ impl PushUpExerciseName {
             PushUpExerciseName::WeightedRingPushUp => 76,
             PushUpExerciseName::PushUp => 77,
             PushUpExerciseName::PilatesPushup => 78,
+            PushUpExerciseName::DynamicPushUp => 79,
+            PushUpExerciseName::KippingHandstandPushUp => 80,
+            PushUpExerciseName::ShoulderTappingPushUp => 81,
+            PushUpExerciseName::BicepsPushUp => 82,
+            PushUpExerciseName::HinduPushUp => 83,
+            PushUpExerciseName::PikePushUp => 84,
+            PushUpExerciseName::WideGripPushUp => 85,
+            PushUpExerciseName::WeightedBicepsPushUp => 86,
+            PushUpExerciseName::WeightedHinduPushUp => 87,
+            PushUpExerciseName::WeightedPikePushUp => 88,
+            PushUpExerciseName::KippingParalletteHandstandPushUp => 89,
+            PushUpExerciseName::WallPushUp => 90,
             PushUpExerciseName::Value(value) => value,
         }
     }
@@ -27322,6 +28555,20 @@ impl fmt::Display for PushUpExerciseName {
             PushUpExerciseName::WeightedRingPushUp => write!(f, "weighted_ring_push_up"),
             PushUpExerciseName::PushUp => write!(f, "push_up"),
             PushUpExerciseName::PilatesPushup => write!(f, "pilates_pushup"),
+            PushUpExerciseName::DynamicPushUp => write!(f, "dynamic_push_up"),
+            PushUpExerciseName::KippingHandstandPushUp => write!(f, "kipping_handstand_push_up"),
+            PushUpExerciseName::ShoulderTappingPushUp => write!(f, "shoulder_tapping_push_up"),
+            PushUpExerciseName::BicepsPushUp => write!(f, "biceps_push_up"),
+            PushUpExerciseName::HinduPushUp => write!(f, "hindu_push_up"),
+            PushUpExerciseName::PikePushUp => write!(f, "pike_push_up"),
+            PushUpExerciseName::WideGripPushUp => write!(f, "wide_grip_push_up"),
+            PushUpExerciseName::WeightedBicepsPushUp => write!(f, "weighted_biceps_push_up"),
+            PushUpExerciseName::WeightedHinduPushUp => write!(f, "weighted_hindu_push_up"),
+            PushUpExerciseName::WeightedPikePushUp => write!(f, "weighted_pike_push_up"),
+            PushUpExerciseName::KippingParalletteHandstandPushUp => {
+                write!(f, "kipping_parallette_handstand_push_up")
+            }
+            PushUpExerciseName::WallPushUp => write!(f, "wall_push_up"),
             PushUpExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
@@ -27408,6 +28655,18 @@ impl convert::From<u16> for PushUpExerciseName {
             76 => PushUpExerciseName::WeightedRingPushUp,
             77 => PushUpExerciseName::PushUp,
             78 => PushUpExerciseName::PilatesPushup,
+            79 => PushUpExerciseName::DynamicPushUp,
+            80 => PushUpExerciseName::KippingHandstandPushUp,
+            81 => PushUpExerciseName::ShoulderTappingPushUp,
+            82 => PushUpExerciseName::BicepsPushUp,
+            83 => PushUpExerciseName::HinduPushUp,
+            84 => PushUpExerciseName::PikePushUp,
+            85 => PushUpExerciseName::WideGripPushUp,
+            86 => PushUpExerciseName::WeightedBicepsPushUp,
+            87 => PushUpExerciseName::WeightedHinduPushUp,
+            88 => PushUpExerciseName::WeightedPikePushUp,
+            89 => PushUpExerciseName::KippingParalletteHandstandPushUp,
+            90 => PushUpExerciseName::WallPushUp,
             _ => PushUpExerciseName::Value(value),
         }
     }
@@ -27525,6 +28784,20 @@ impl convert::From<&str> for PushUpExerciseName {
             "weighted_ring_push_up" => PushUpExerciseName::WeightedRingPushUp,
             "push_up" => PushUpExerciseName::PushUp,
             "pilates_pushup" => PushUpExerciseName::PilatesPushup,
+            "dynamic_push_up" => PushUpExerciseName::DynamicPushUp,
+            "kipping_handstand_push_up" => PushUpExerciseName::KippingHandstandPushUp,
+            "shoulder_tapping_push_up" => PushUpExerciseName::ShoulderTappingPushUp,
+            "biceps_push_up" => PushUpExerciseName::BicepsPushUp,
+            "hindu_push_up" => PushUpExerciseName::HinduPushUp,
+            "pike_push_up" => PushUpExerciseName::PikePushUp,
+            "wide_grip_push_up" => PushUpExerciseName::WideGripPushUp,
+            "weighted_biceps_push_up" => PushUpExerciseName::WeightedBicepsPushUp,
+            "weighted_hindu_push_up" => PushUpExerciseName::WeightedHinduPushUp,
+            "weighted_pike_push_up" => PushUpExerciseName::WeightedPikePushUp,
+            "kipping_parallette_handstand_push_up" => {
+                PushUpExerciseName::KippingParalletteHandstandPushUp
+            }
+            "wall_push_up" => PushUpExerciseName::WallPushUp,
             &_ => PushUpExerciseName::Value(0),
         }
     }
@@ -27576,11 +28849,30 @@ pub enum RowExerciseName {
     UnderhandGripCableRow,
     VGripCableRow,
     WideGripSeatedCableRow,
+    AlternatingDumbbellRow,
+    InvertedRow,
+    Row,
+    WeightedRow,
+    IndoorRow,
+    BandedFacePulls,
+    ChestSupportedDumbbellRow,
+    DeclineRingRow,
+    ElevatedRingRow,
+    RdlBentOverRowWithBarbellDumbbell,
+    RingRow,
+    BarbellRow,
+    BentOverRowWithBarbell,
+    BentOverRowWithDumbell,
+    SeatedUnderhandGripCableRow,
+    TrxInvertedRow,
+    WeightedInvertedRow,
+    WeightedTrxInvertedRow,
+    DumbbellRowWheelchair,
     Value(u16),
 }
 impl RowExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64..=33i64)
+        matches!(value, 0i64..=52i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -27618,6 +28910,25 @@ impl RowExerciseName {
             RowExerciseName::UnderhandGripCableRow => 31,
             RowExerciseName::VGripCableRow => 32,
             RowExerciseName::WideGripSeatedCableRow => 33,
+            RowExerciseName::AlternatingDumbbellRow => 34,
+            RowExerciseName::InvertedRow => 35,
+            RowExerciseName::Row => 36,
+            RowExerciseName::WeightedRow => 37,
+            RowExerciseName::IndoorRow => 38,
+            RowExerciseName::BandedFacePulls => 39,
+            RowExerciseName::ChestSupportedDumbbellRow => 40,
+            RowExerciseName::DeclineRingRow => 41,
+            RowExerciseName::ElevatedRingRow => 42,
+            RowExerciseName::RdlBentOverRowWithBarbellDumbbell => 43,
+            RowExerciseName::RingRow => 44,
+            RowExerciseName::BarbellRow => 45,
+            RowExerciseName::BentOverRowWithBarbell => 46,
+            RowExerciseName::BentOverRowWithDumbell => 47,
+            RowExerciseName::SeatedUnderhandGripCableRow => 48,
+            RowExerciseName::TrxInvertedRow => 49,
+            RowExerciseName::WeightedInvertedRow => 50,
+            RowExerciseName::WeightedTrxInvertedRow => 51,
+            RowExerciseName::DumbbellRowWheelchair => 52,
             RowExerciseName::Value(value) => value,
         }
     }
@@ -27688,6 +28999,29 @@ impl fmt::Display for RowExerciseName {
             RowExerciseName::UnderhandGripCableRow => write!(f, "underhand_grip_cable_row"),
             RowExerciseName::VGripCableRow => write!(f, "v_grip_cable_row"),
             RowExerciseName::WideGripSeatedCableRow => write!(f, "wide_grip_seated_cable_row"),
+            RowExerciseName::AlternatingDumbbellRow => write!(f, "alternating_dumbbell_row"),
+            RowExerciseName::InvertedRow => write!(f, "inverted_row"),
+            RowExerciseName::Row => write!(f, "row"),
+            RowExerciseName::WeightedRow => write!(f, "weighted_row"),
+            RowExerciseName::IndoorRow => write!(f, "indoor_row"),
+            RowExerciseName::BandedFacePulls => write!(f, "banded_face_pulls"),
+            RowExerciseName::ChestSupportedDumbbellRow => write!(f, "chest_supported_dumbbell_row"),
+            RowExerciseName::DeclineRingRow => write!(f, "decline_ring_row"),
+            RowExerciseName::ElevatedRingRow => write!(f, "elevated_ring_row"),
+            RowExerciseName::RdlBentOverRowWithBarbellDumbbell => {
+                write!(f, "rdl_bent_over_row_with_barbell_dumbbell")
+            }
+            RowExerciseName::RingRow => write!(f, "ring_row"),
+            RowExerciseName::BarbellRow => write!(f, "barbell_row"),
+            RowExerciseName::BentOverRowWithBarbell => write!(f, "bent_over_row_with_barbell"),
+            RowExerciseName::BentOverRowWithDumbell => write!(f, "bent_over_row_with_dumbell"),
+            RowExerciseName::SeatedUnderhandGripCableRow => {
+                write!(f, "seated_underhand_grip_cable_row")
+            }
+            RowExerciseName::TrxInvertedRow => write!(f, "trx_inverted_row"),
+            RowExerciseName::WeightedInvertedRow => write!(f, "weighted_inverted_row"),
+            RowExerciseName::WeightedTrxInvertedRow => write!(f, "weighted_trx_inverted_row"),
+            RowExerciseName::DumbbellRowWheelchair => write!(f, "dumbbell_row_wheelchair"),
             RowExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
@@ -27729,6 +29063,25 @@ impl convert::From<u16> for RowExerciseName {
             31 => RowExerciseName::UnderhandGripCableRow,
             32 => RowExerciseName::VGripCableRow,
             33 => RowExerciseName::WideGripSeatedCableRow,
+            34 => RowExerciseName::AlternatingDumbbellRow,
+            35 => RowExerciseName::InvertedRow,
+            36 => RowExerciseName::Row,
+            37 => RowExerciseName::WeightedRow,
+            38 => RowExerciseName::IndoorRow,
+            39 => RowExerciseName::BandedFacePulls,
+            40 => RowExerciseName::ChestSupportedDumbbellRow,
+            41 => RowExerciseName::DeclineRingRow,
+            42 => RowExerciseName::ElevatedRingRow,
+            43 => RowExerciseName::RdlBentOverRowWithBarbellDumbbell,
+            44 => RowExerciseName::RingRow,
+            45 => RowExerciseName::BarbellRow,
+            46 => RowExerciseName::BentOverRowWithBarbell,
+            47 => RowExerciseName::BentOverRowWithDumbell,
+            48 => RowExerciseName::SeatedUnderhandGripCableRow,
+            49 => RowExerciseName::TrxInvertedRow,
+            50 => RowExerciseName::WeightedInvertedRow,
+            51 => RowExerciseName::WeightedTrxInvertedRow,
+            52 => RowExerciseName::DumbbellRowWheelchair,
             _ => RowExerciseName::Value(value),
         }
     }
@@ -27789,6 +29142,27 @@ impl convert::From<&str> for RowExerciseName {
             "underhand_grip_cable_row" => RowExerciseName::UnderhandGripCableRow,
             "v_grip_cable_row" => RowExerciseName::VGripCableRow,
             "wide_grip_seated_cable_row" => RowExerciseName::WideGripSeatedCableRow,
+            "alternating_dumbbell_row" => RowExerciseName::AlternatingDumbbellRow,
+            "inverted_row" => RowExerciseName::InvertedRow,
+            "row" => RowExerciseName::Row,
+            "weighted_row" => RowExerciseName::WeightedRow,
+            "indoor_row" => RowExerciseName::IndoorRow,
+            "banded_face_pulls" => RowExerciseName::BandedFacePulls,
+            "chest_supported_dumbbell_row" => RowExerciseName::ChestSupportedDumbbellRow,
+            "decline_ring_row" => RowExerciseName::DeclineRingRow,
+            "elevated_ring_row" => RowExerciseName::ElevatedRingRow,
+            "rdl_bent_over_row_with_barbell_dumbbell" => {
+                RowExerciseName::RdlBentOverRowWithBarbellDumbbell
+            }
+            "ring_row" => RowExerciseName::RingRow,
+            "barbell_row" => RowExerciseName::BarbellRow,
+            "bent_over_row_with_barbell" => RowExerciseName::BentOverRowWithBarbell,
+            "bent_over_row_with_dumbell" => RowExerciseName::BentOverRowWithDumbell,
+            "seated_underhand_grip_cable_row" => RowExerciseName::SeatedUnderhandGripCableRow,
+            "trx_inverted_row" => RowExerciseName::TrxInvertedRow,
+            "weighted_inverted_row" => RowExerciseName::WeightedInvertedRow,
+            "weighted_trx_inverted_row" => RowExerciseName::WeightedTrxInvertedRow,
+            "dumbbell_row_wheelchair" => RowExerciseName::DumbbellRowWheelchair,
             &_ => RowExerciseName::Value(0),
         }
     }
@@ -27830,11 +29204,50 @@ pub enum ShoulderPressExerciseName {
     SplitStanceHammerCurlToPress,
     SwissBallDumbbellShoulderPress,
     WeightPlateFrontRaise,
+    DumbbellShoulderPress,
+    MilitaryPress,
+    StrictPress,
+    DumbbellFrontRaise,
+    DumbbellCurlToOverheadPressWheelchair,
+    ArnoldPressWheelchair,
+    OverheadDumbbellPressWheelchair,
     Value(u16),
 }
 impl ShoulderPressExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64..=23i64)
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+                | 15i64
+                | 16i64
+                | 17i64
+                | 18i64
+                | 19i64
+                | 20i64
+                | 21i64
+                | 22i64
+                | 23i64
+                | 24i64
+                | 25i64
+                | 27i64
+                | 28i64
+                | 29i64
+                | 30i64
+                | 31i64
+        )
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -27862,6 +29275,13 @@ impl ShoulderPressExerciseName {
             ShoulderPressExerciseName::SplitStanceHammerCurlToPress => 21,
             ShoulderPressExerciseName::SwissBallDumbbellShoulderPress => 22,
             ShoulderPressExerciseName::WeightPlateFrontRaise => 23,
+            ShoulderPressExerciseName::DumbbellShoulderPress => 24,
+            ShoulderPressExerciseName::MilitaryPress => 25,
+            ShoulderPressExerciseName::StrictPress => 27,
+            ShoulderPressExerciseName::DumbbellFrontRaise => 28,
+            ShoulderPressExerciseName::DumbbellCurlToOverheadPressWheelchair => 29,
+            ShoulderPressExerciseName::ArnoldPressWheelchair => 30,
+            ShoulderPressExerciseName::OverheadDumbbellPressWheelchair => 31,
             ShoulderPressExerciseName::Value(value) => value,
         }
     }
@@ -27930,6 +29350,21 @@ impl fmt::Display for ShoulderPressExerciseName {
             ShoulderPressExerciseName::WeightPlateFrontRaise => {
                 write!(f, "weight_plate_front_raise")
             }
+            ShoulderPressExerciseName::DumbbellShoulderPress => {
+                write!(f, "dumbbell_shoulder_press")
+            }
+            ShoulderPressExerciseName::MilitaryPress => write!(f, "military_press"),
+            ShoulderPressExerciseName::StrictPress => write!(f, "strict_press"),
+            ShoulderPressExerciseName::DumbbellFrontRaise => write!(f, "dumbbell_front_raise"),
+            ShoulderPressExerciseName::DumbbellCurlToOverheadPressWheelchair => {
+                write!(f, "dumbbell_curl_to_overhead_press_wheelchair")
+            }
+            ShoulderPressExerciseName::ArnoldPressWheelchair => {
+                write!(f, "arnold_press_wheelchair")
+            }
+            ShoulderPressExerciseName::OverheadDumbbellPressWheelchair => {
+                write!(f, "overhead_dumbbell_press_wheelchair")
+            }
             ShoulderPressExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
@@ -27961,6 +29396,13 @@ impl convert::From<u16> for ShoulderPressExerciseName {
             21 => ShoulderPressExerciseName::SplitStanceHammerCurlToPress,
             22 => ShoulderPressExerciseName::SwissBallDumbbellShoulderPress,
             23 => ShoulderPressExerciseName::WeightPlateFrontRaise,
+            24 => ShoulderPressExerciseName::DumbbellShoulderPress,
+            25 => ShoulderPressExerciseName::MilitaryPress,
+            27 => ShoulderPressExerciseName::StrictPress,
+            28 => ShoulderPressExerciseName::DumbbellFrontRaise,
+            29 => ShoulderPressExerciseName::DumbbellCurlToOverheadPressWheelchair,
+            30 => ShoulderPressExerciseName::ArnoldPressWheelchair,
+            31 => ShoulderPressExerciseName::OverheadDumbbellPressWheelchair,
             _ => ShoulderPressExerciseName::Value(value),
         }
     }
@@ -28021,6 +29463,17 @@ impl convert::From<&str> for ShoulderPressExerciseName {
                 ShoulderPressExerciseName::SwissBallDumbbellShoulderPress
             }
             "weight_plate_front_raise" => ShoulderPressExerciseName::WeightPlateFrontRaise,
+            "dumbbell_shoulder_press" => ShoulderPressExerciseName::DumbbellShoulderPress,
+            "military_press" => ShoulderPressExerciseName::MilitaryPress,
+            "strict_press" => ShoulderPressExerciseName::StrictPress,
+            "dumbbell_front_raise" => ShoulderPressExerciseName::DumbbellFrontRaise,
+            "dumbbell_curl_to_overhead_press_wheelchair" => {
+                ShoulderPressExerciseName::DumbbellCurlToOverheadPressWheelchair
+            }
+            "arnold_press_wheelchair" => ShoulderPressExerciseName::ArnoldPressWheelchair,
+            "overhead_dumbbell_press_wheelchair" => {
+                ShoulderPressExerciseName::OverheadDumbbellPressWheelchair
+            }
             &_ => ShoulderPressExerciseName::Value(0),
         }
     }
@@ -28071,11 +29524,14 @@ pub enum ShoulderStabilityExerciseName {
     WeightedSwissBallWRaise,
     SwissBallYRaise,
     WeightedSwissBallYRaise,
+    CableInternalRotation,
+    LyingInternalRotation,
+    SeatedDumbbellInternalRotation,
     Value(u16),
 }
 impl ShoulderStabilityExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64..=32i64)
+        matches!(value, 0i64..=35i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -28112,6 +29568,9 @@ impl ShoulderStabilityExerciseName {
             ShoulderStabilityExerciseName::WeightedSwissBallWRaise => 30,
             ShoulderStabilityExerciseName::SwissBallYRaise => 31,
             ShoulderStabilityExerciseName::WeightedSwissBallYRaise => 32,
+            ShoulderStabilityExerciseName::CableInternalRotation => 33,
+            ShoulderStabilityExerciseName::LyingInternalRotation => 34,
+            ShoulderStabilityExerciseName::SeatedDumbbellInternalRotation => 35,
             ShoulderStabilityExerciseName::Value(value) => value,
         }
     }
@@ -28195,6 +29654,15 @@ impl fmt::Display for ShoulderStabilityExerciseName {
             ShoulderStabilityExerciseName::WeightedSwissBallYRaise => {
                 write!(f, "weighted_swiss_ball_y_raise")
             }
+            ShoulderStabilityExerciseName::CableInternalRotation => {
+                write!(f, "cable_internal_rotation")
+            }
+            ShoulderStabilityExerciseName::LyingInternalRotation => {
+                write!(f, "lying_internal_rotation")
+            }
+            ShoulderStabilityExerciseName::SeatedDumbbellInternalRotation => {
+                write!(f, "seated_dumbbell_internal_rotation")
+            }
             ShoulderStabilityExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
@@ -28235,6 +29703,9 @@ impl convert::From<u16> for ShoulderStabilityExerciseName {
             30 => ShoulderStabilityExerciseName::WeightedSwissBallWRaise,
             31 => ShoulderStabilityExerciseName::SwissBallYRaise,
             32 => ShoulderStabilityExerciseName::WeightedSwissBallYRaise,
+            33 => ShoulderStabilityExerciseName::CableInternalRotation,
+            34 => ShoulderStabilityExerciseName::LyingInternalRotation,
+            35 => ShoulderStabilityExerciseName::SeatedDumbbellInternalRotation,
             _ => ShoulderStabilityExerciseName::Value(value),
         }
     }
@@ -28288,6 +29759,11 @@ impl convert::From<&str> for ShoulderStabilityExerciseName {
             "weighted_swiss_ball_w_raise" => ShoulderStabilityExerciseName::WeightedSwissBallWRaise,
             "swiss_ball_y_raise" => ShoulderStabilityExerciseName::SwissBallYRaise,
             "weighted_swiss_ball_y_raise" => ShoulderStabilityExerciseName::WeightedSwissBallYRaise,
+            "cable_internal_rotation" => ShoulderStabilityExerciseName::CableInternalRotation,
+            "lying_internal_rotation" => ShoulderStabilityExerciseName::LyingInternalRotation,
+            "seated_dumbbell_internal_rotation" => {
+                ShoulderStabilityExerciseName::SeatedDumbbellInternalRotation
+            }
             &_ => ShoulderStabilityExerciseName::Value(0),
         }
     }
@@ -28322,11 +29798,19 @@ pub enum ShrugExerciseName {
     SerratusShrug,
     WeightedSerratusShrug,
     WideGripJumpShrug,
+    WideGripBarbellShrug,
+    BehindTheBackShrug,
+    DumbbellShrugWheelchair,
+    ShrugWheelchair,
+    ShrugArmDownWheelchair,
+    ShrugArmMidWheelchair,
+    ShrugArmUpWheelchair,
+    UprightRow,
     Value(u16),
 }
 impl ShrugExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64..=16i64)
+        matches!(value, 0i64..=24i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -28347,6 +29831,14 @@ impl ShrugExerciseName {
             ShrugExerciseName::SerratusShrug => 14,
             ShrugExerciseName::WeightedSerratusShrug => 15,
             ShrugExerciseName::WideGripJumpShrug => 16,
+            ShrugExerciseName::WideGripBarbellShrug => 17,
+            ShrugExerciseName::BehindTheBackShrug => 18,
+            ShrugExerciseName::DumbbellShrugWheelchair => 19,
+            ShrugExerciseName::ShrugWheelchair => 20,
+            ShrugExerciseName::ShrugArmDownWheelchair => 21,
+            ShrugExerciseName::ShrugArmMidWheelchair => 22,
+            ShrugExerciseName::ShrugArmUpWheelchair => 23,
+            ShrugExerciseName::UprightRow => 24,
             ShrugExerciseName::Value(value) => value,
         }
     }
@@ -28378,6 +29870,14 @@ impl fmt::Display for ShrugExerciseName {
             ShrugExerciseName::SerratusShrug => write!(f, "serratus_shrug"),
             ShrugExerciseName::WeightedSerratusShrug => write!(f, "weighted_serratus_shrug"),
             ShrugExerciseName::WideGripJumpShrug => write!(f, "wide_grip_jump_shrug"),
+            ShrugExerciseName::WideGripBarbellShrug => write!(f, "wide_grip_barbell_shrug"),
+            ShrugExerciseName::BehindTheBackShrug => write!(f, "behind_the_back_shrug"),
+            ShrugExerciseName::DumbbellShrugWheelchair => write!(f, "dumbbell_shrug_wheelchair"),
+            ShrugExerciseName::ShrugWheelchair => write!(f, "shrug_wheelchair"),
+            ShrugExerciseName::ShrugArmDownWheelchair => write!(f, "shrug_arm_down_wheelchair"),
+            ShrugExerciseName::ShrugArmMidWheelchair => write!(f, "shrug_arm_mid_wheelchair"),
+            ShrugExerciseName::ShrugArmUpWheelchair => write!(f, "shrug_arm_up_wheelchair"),
+            ShrugExerciseName::UprightRow => write!(f, "upright_row"),
             ShrugExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
@@ -28402,6 +29902,14 @@ impl convert::From<u16> for ShrugExerciseName {
             14 => ShrugExerciseName::SerratusShrug,
             15 => ShrugExerciseName::WeightedSerratusShrug,
             16 => ShrugExerciseName::WideGripJumpShrug,
+            17 => ShrugExerciseName::WideGripBarbellShrug,
+            18 => ShrugExerciseName::BehindTheBackShrug,
+            19 => ShrugExerciseName::DumbbellShrugWheelchair,
+            20 => ShrugExerciseName::ShrugWheelchair,
+            21 => ShrugExerciseName::ShrugArmDownWheelchair,
+            22 => ShrugExerciseName::ShrugArmMidWheelchair,
+            23 => ShrugExerciseName::ShrugArmUpWheelchair,
+            24 => ShrugExerciseName::UprightRow,
             _ => ShrugExerciseName::Value(value),
         }
     }
@@ -28433,6 +29941,14 @@ impl convert::From<&str> for ShrugExerciseName {
             "serratus_shrug" => ShrugExerciseName::SerratusShrug,
             "weighted_serratus_shrug" => ShrugExerciseName::WeightedSerratusShrug,
             "wide_grip_jump_shrug" => ShrugExerciseName::WideGripJumpShrug,
+            "wide_grip_barbell_shrug" => ShrugExerciseName::WideGripBarbellShrug,
+            "behind_the_back_shrug" => ShrugExerciseName::BehindTheBackShrug,
+            "dumbbell_shrug_wheelchair" => ShrugExerciseName::DumbbellShrugWheelchair,
+            "shrug_wheelchair" => ShrugExerciseName::ShrugWheelchair,
+            "shrug_arm_down_wheelchair" => ShrugExerciseName::ShrugArmDownWheelchair,
+            "shrug_arm_mid_wheelchair" => ShrugExerciseName::ShrugArmMidWheelchair,
+            "shrug_arm_up_wheelchair" => ShrugExerciseName::ShrugArmUpWheelchair,
+            "upright_row" => ShrugExerciseName::UprightRow,
             &_ => ShrugExerciseName::Value(0),
         }
     }
@@ -28488,11 +30004,14 @@ pub enum SitUpExerciseName {
     XAbs,
     WeightedXAbs,
     SitUp,
+    GhdSitUps,
+    SitUpTurkishGetUp,
+    RussianTwistOnSwissBall,
     Value(u16),
 }
 impl SitUpExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64..=37i64)
+        matches!(value, 0i64..=40i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -28534,6 +30053,9 @@ impl SitUpExerciseName {
             SitUpExerciseName::XAbs => 35,
             SitUpExerciseName::WeightedXAbs => 36,
             SitUpExerciseName::SitUp => 37,
+            SitUpExerciseName::GhdSitUps => 38,
+            SitUpExerciseName::SitUpTurkishGetUp => 39,
+            SitUpExerciseName::RussianTwistOnSwissBall => 40,
             SitUpExerciseName::Value(value) => value,
         }
     }
@@ -28596,6 +30118,9 @@ impl fmt::Display for SitUpExerciseName {
             SitUpExerciseName::XAbs => write!(f, "x_abs"),
             SitUpExerciseName::WeightedXAbs => write!(f, "weighted_x_abs"),
             SitUpExerciseName::SitUp => write!(f, "sit_up"),
+            SitUpExerciseName::GhdSitUps => write!(f, "ghd_sit_ups"),
+            SitUpExerciseName::SitUpTurkishGetUp => write!(f, "sit_up_turkish_get_up"),
+            SitUpExerciseName::RussianTwistOnSwissBall => write!(f, "russian_twist_on_swiss_ball"),
             SitUpExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
@@ -28641,6 +30166,9 @@ impl convert::From<u16> for SitUpExerciseName {
             35 => SitUpExerciseName::XAbs,
             36 => SitUpExerciseName::WeightedXAbs,
             37 => SitUpExerciseName::SitUp,
+            38 => SitUpExerciseName::GhdSitUps,
+            39 => SitUpExerciseName::SitUpTurkishGetUp,
+            40 => SitUpExerciseName::RussianTwistOnSwissBall,
             _ => SitUpExerciseName::Value(value),
         }
     }
@@ -28695,6 +30223,9 @@ impl convert::From<&str> for SitUpExerciseName {
             "x_abs" => SitUpExerciseName::XAbs,
             "weighted_x_abs" => SitUpExerciseName::WeightedXAbs,
             "sit_up" => SitUpExerciseName::SitUp,
+            "ghd_sit_ups" => SitUpExerciseName::GhdSitUps,
+            "sit_up_turkish_get_up" => SitUpExerciseName::SitUpTurkishGetUp,
+            "russian_twist_on_swiss_ball" => SitUpExerciseName::RussianTwistOnSwissBall,
             &_ => SitUpExerciseName::Value(0),
         }
     }
@@ -28805,11 +30336,122 @@ pub enum SquatExerciseName {
     SquatJumpsInNOut,
     PilatesPlieSquatsParallelTurnedOutFlatAndHeels,
     ReleveStraightLegAndKneeBentWithOneLegVariation,
+    AlternatingBoxDumbbellStepUps,
+    DumbbellOverheadSquatSingleArm,
+    DumbbellSquatSnatch,
+    MedicineBallSquat,
+    WallBallSquatAndPress,
+    SquatAmericanSwing,
+    AirSquat,
+    DumbbellThrusters,
+    OverheadBarbellSquat,
     Value(u16),
 }
 impl SquatExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64..=91i64)
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+                | 15i64
+                | 16i64
+                | 17i64
+                | 18i64
+                | 19i64
+                | 20i64
+                | 21i64
+                | 22i64
+                | 23i64
+                | 24i64
+                | 25i64
+                | 26i64
+                | 27i64
+                | 28i64
+                | 29i64
+                | 30i64
+                | 31i64
+                | 32i64
+                | 33i64
+                | 34i64
+                | 35i64
+                | 36i64
+                | 37i64
+                | 38i64
+                | 39i64
+                | 40i64
+                | 41i64
+                | 42i64
+                | 43i64
+                | 44i64
+                | 45i64
+                | 46i64
+                | 47i64
+                | 48i64
+                | 49i64
+                | 50i64
+                | 51i64
+                | 52i64
+                | 53i64
+                | 54i64
+                | 55i64
+                | 56i64
+                | 57i64
+                | 58i64
+                | 59i64
+                | 60i64
+                | 61i64
+                | 62i64
+                | 63i64
+                | 64i64
+                | 65i64
+                | 66i64
+                | 67i64
+                | 68i64
+                | 69i64
+                | 70i64
+                | 71i64
+                | 72i64
+                | 73i64
+                | 74i64
+                | 75i64
+                | 76i64
+                | 77i64
+                | 78i64
+                | 79i64
+                | 80i64
+                | 81i64
+                | 82i64
+                | 83i64
+                | 84i64
+                | 85i64
+                | 86i64
+                | 87i64
+                | 88i64
+                | 89i64
+                | 90i64
+                | 91i64
+                | 92i64
+                | 93i64
+                | 94i64
+                | 95i64
+                | 97i64
+                | 98i64
+                | 100i64
+                | 101i64
+                | 102i64
+        )
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -28905,6 +30547,15 @@ impl SquatExerciseName {
             SquatExerciseName::SquatJumpsInNOut => 89,
             SquatExerciseName::PilatesPlieSquatsParallelTurnedOutFlatAndHeels => 90,
             SquatExerciseName::ReleveStraightLegAndKneeBentWithOneLegVariation => 91,
+            SquatExerciseName::AlternatingBoxDumbbellStepUps => 92,
+            SquatExerciseName::DumbbellOverheadSquatSingleArm => 93,
+            SquatExerciseName::DumbbellSquatSnatch => 94,
+            SquatExerciseName::MedicineBallSquat => 95,
+            SquatExerciseName::WallBallSquatAndPress => 97,
+            SquatExerciseName::SquatAmericanSwing => 98,
+            SquatExerciseName::AirSquat => 100,
+            SquatExerciseName::DumbbellThrusters => 101,
+            SquatExerciseName::OverheadBarbellSquat => 102,
             SquatExerciseName::Value(value) => value,
         }
     }
@@ -29044,6 +30695,19 @@ impl fmt::Display for SquatExerciseName {
                 f,
                 "releve_straight_leg_and_knee_bent_with_one_leg_variation"
             ),
+            SquatExerciseName::AlternatingBoxDumbbellStepUps => {
+                write!(f, "alternating_box_dumbbell_step_ups")
+            }
+            SquatExerciseName::DumbbellOverheadSquatSingleArm => {
+                write!(f, "dumbbell_overhead_squat_single_arm")
+            }
+            SquatExerciseName::DumbbellSquatSnatch => write!(f, "dumbbell_squat_snatch"),
+            SquatExerciseName::MedicineBallSquat => write!(f, "medicine_ball_squat"),
+            SquatExerciseName::WallBallSquatAndPress => write!(f, "wall_ball_squat_and_press"),
+            SquatExerciseName::SquatAmericanSwing => write!(f, "squat_american_swing"),
+            SquatExerciseName::AirSquat => write!(f, "air_squat"),
+            SquatExerciseName::DumbbellThrusters => write!(f, "dumbbell_thrusters"),
+            SquatExerciseName::OverheadBarbellSquat => write!(f, "overhead_barbell_squat"),
             SquatExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
@@ -29143,6 +30807,15 @@ impl convert::From<u16> for SquatExerciseName {
             89 => SquatExerciseName::SquatJumpsInNOut,
             90 => SquatExerciseName::PilatesPlieSquatsParallelTurnedOutFlatAndHeels,
             91 => SquatExerciseName::ReleveStraightLegAndKneeBentWithOneLegVariation,
+            92 => SquatExerciseName::AlternatingBoxDumbbellStepUps,
+            93 => SquatExerciseName::DumbbellOverheadSquatSingleArm,
+            94 => SquatExerciseName::DumbbellSquatSnatch,
+            95 => SquatExerciseName::MedicineBallSquat,
+            97 => SquatExerciseName::WallBallSquatAndPress,
+            98 => SquatExerciseName::SquatAmericanSwing,
+            100 => SquatExerciseName::AirSquat,
+            101 => SquatExerciseName::DumbbellThrusters,
+            102 => SquatExerciseName::OverheadBarbellSquat,
             _ => SquatExerciseName::Value(value),
         }
     }
@@ -29259,6 +30932,17 @@ impl convert::From<&str> for SquatExerciseName {
             "releve_straight_leg_and_knee_bent_with_one_leg_variation" => {
                 SquatExerciseName::ReleveStraightLegAndKneeBentWithOneLegVariation
             }
+            "alternating_box_dumbbell_step_ups" => SquatExerciseName::AlternatingBoxDumbbellStepUps,
+            "dumbbell_overhead_squat_single_arm" => {
+                SquatExerciseName::DumbbellOverheadSquatSingleArm
+            }
+            "dumbbell_squat_snatch" => SquatExerciseName::DumbbellSquatSnatch,
+            "medicine_ball_squat" => SquatExerciseName::MedicineBallSquat,
+            "wall_ball_squat_and_press" => SquatExerciseName::WallBallSquatAndPress,
+            "squat_american_swing" => SquatExerciseName::SquatAmericanSwing,
+            "air_squat" => SquatExerciseName::AirSquat,
+            "dumbbell_thrusters" => SquatExerciseName::DumbbellThrusters,
+            "overhead_barbell_squat" => SquatExerciseName::OverheadBarbellSquat,
             &_ => SquatExerciseName::Value(0),
         }
     }
@@ -29289,11 +30973,39 @@ pub enum TotalBodyExerciseName {
     WeightedSquatPlankPushUp,
     StandingTRotationBalance,
     WeightedStandingTRotationBalance,
+    BarbellBurpee,
+    BurpeeBoxJumpOverYesLiterallyJumpingOverTheBox,
+    BurpeeBoxJumpStepUpOver,
+    LateralBarbellBurpee,
+    TotalBodyBurpeeOverBar,
+    BurpeeBoxJumpOver,
+    BurpeeWheelchair,
     Value(u16),
 }
 impl TotalBodyExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64..=12i64)
+        matches!(
+            value,
+            0i64 | 1i64
+                | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 15i64
+                | 16i64
+                | 17i64
+                | 18i64
+                | 19i64
+                | 20i64
+        )
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -29310,6 +31022,13 @@ impl TotalBodyExerciseName {
             TotalBodyExerciseName::WeightedSquatPlankPushUp => 10,
             TotalBodyExerciseName::StandingTRotationBalance => 11,
             TotalBodyExerciseName::WeightedStandingTRotationBalance => 12,
+            TotalBodyExerciseName::BarbellBurpee => 13,
+            TotalBodyExerciseName::BurpeeBoxJumpOverYesLiterallyJumpingOverTheBox => 15,
+            TotalBodyExerciseName::BurpeeBoxJumpStepUpOver => 16,
+            TotalBodyExerciseName::LateralBarbellBurpee => 17,
+            TotalBodyExerciseName::TotalBodyBurpeeOverBar => 18,
+            TotalBodyExerciseName::BurpeeBoxJumpOver => 19,
+            TotalBodyExerciseName::BurpeeWheelchair => 20,
             TotalBodyExerciseName::Value(value) => value,
         }
     }
@@ -29339,6 +31058,19 @@ impl fmt::Display for TotalBodyExerciseName {
             TotalBodyExerciseName::WeightedStandingTRotationBalance => {
                 write!(f, "weighted_standing_t_rotation_balance")
             }
+            TotalBodyExerciseName::BarbellBurpee => write!(f, "barbell_burpee"),
+            TotalBodyExerciseName::BurpeeBoxJumpOverYesLiterallyJumpingOverTheBox => {
+                write!(f, "burpee_box_jump_over_yes_literally_jumping_over_the_box")
+            }
+            TotalBodyExerciseName::BurpeeBoxJumpStepUpOver => {
+                write!(f, "burpee_box_jump_step_up_over")
+            }
+            TotalBodyExerciseName::LateralBarbellBurpee => write!(f, "lateral_barbell_burpee"),
+            TotalBodyExerciseName::TotalBodyBurpeeOverBar => {
+                write!(f, "total_body_burpee_over_bar")
+            }
+            TotalBodyExerciseName::BurpeeBoxJumpOver => write!(f, "burpee_box_jump_over"),
+            TotalBodyExerciseName::BurpeeWheelchair => write!(f, "burpee_wheelchair"),
             TotalBodyExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
@@ -29359,6 +31091,13 @@ impl convert::From<u16> for TotalBodyExerciseName {
             10 => TotalBodyExerciseName::WeightedSquatPlankPushUp,
             11 => TotalBodyExerciseName::StandingTRotationBalance,
             12 => TotalBodyExerciseName::WeightedStandingTRotationBalance,
+            13 => TotalBodyExerciseName::BarbellBurpee,
+            15 => TotalBodyExerciseName::BurpeeBoxJumpOverYesLiterallyJumpingOverTheBox,
+            16 => TotalBodyExerciseName::BurpeeBoxJumpStepUpOver,
+            17 => TotalBodyExerciseName::LateralBarbellBurpee,
+            18 => TotalBodyExerciseName::TotalBodyBurpeeOverBar,
+            19 => TotalBodyExerciseName::BurpeeBoxJumpOver,
+            20 => TotalBodyExerciseName::BurpeeWheelchair,
             _ => TotalBodyExerciseName::Value(value),
         }
     }
@@ -29386,6 +31125,15 @@ impl convert::From<&str> for TotalBodyExerciseName {
             "weighted_standing_t_rotation_balance" => {
                 TotalBodyExerciseName::WeightedStandingTRotationBalance
             }
+            "barbell_burpee" => TotalBodyExerciseName::BarbellBurpee,
+            "burpee_box_jump_over_yes_literally_jumping_over_the_box" => {
+                TotalBodyExerciseName::BurpeeBoxJumpOverYesLiterallyJumpingOverTheBox
+            }
+            "burpee_box_jump_step_up_over" => TotalBodyExerciseName::BurpeeBoxJumpStepUpOver,
+            "lateral_barbell_burpee" => TotalBodyExerciseName::LateralBarbellBurpee,
+            "total_body_burpee_over_bar" => TotalBodyExerciseName::TotalBodyBurpeeOverBar,
+            "burpee_box_jump_over" => TotalBodyExerciseName::BurpeeBoxJumpOver,
+            "burpee_wheelchair" => TotalBodyExerciseName::BurpeeWheelchair,
             &_ => TotalBodyExerciseName::Value(0),
         }
     }
@@ -29397,6 +31145,1264 @@ impl Serialize for TotalBodyExerciseName {
     {
         match &self {
             TotalBodyExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
+    }
+}
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
+pub enum MoveExerciseName {
+    ArchAndCurl,
+    ArmCirclesWithBallBandAndWeight,
+    ArmStretch,
+    BackMassage,
+    BellyBreathing,
+    BridgeWithBall,
+    DiamondLegCrunch,
+    DiamondLegLift,
+    EightPointShoulderOpener,
+    FootRolling,
+    Footwork,
+    FootworkOnDisc,
+    ForwardFold,
+    FrogWithBand,
+    HalfRollUp,
+    HamstringCurl,
+    HamstringStretch,
+    HipStretch,
+    HugATreeWithBallBandAndWeight,
+    KneeCircles,
+    KneeFoldsOnDisc,
+    LateralFlexion,
+    LegStretchWithBand,
+    LegStretchWithLegCircles,
+    LowerLiftOnDisc,
+    LungeSquat,
+    LungesWithKneeLift,
+    MermaidStretch,
+    NeutralPelvicPosition,
+    PelvicClocksOnDisc,
+    PilatesPlieSquatsParallelTurnedOutFlatAndHeelsWithChair,
+    PiriformisStretch,
+    PlankKneeCrosses,
+    PlankKneePulls,
+    PlankUpDowns,
+    PrayerMudra,
+    PsoasLungeStretch,
+    RibcageBreathing,
+    RollDown,
+    RollUpWithWeightAndBand,
+    Saw,
+    ScapularStabilization,
+    ScissorsOnDisc,
+    SeatedHipStretchup,
+    SeatedTwist,
+    ShavingTheHeadWithBallBandAndWeight,
+    SpinalTwist,
+    SpinalTwistStretch,
+    SpineStretchForward,
+    SquatOpenArmTwistPose,
+    SquatsWithBall,
+    StandAndHang,
+    StandingSideStretch,
+    StandingSingleLegForwardBendWithItBandOpener,
+    StraightLegCrunchWithLegLift,
+    StraightLegCrunchWithLegLiftWithBall,
+    StraightLegCrunchWithLegsCrossed,
+    StraightLegCrunchWithLegsCrossedWithBall,
+    StraightLegDiagonalCrunch,
+    StraightLegDiagonalCrunchWithBall,
+    TailboneCurl,
+    ThroatLock,
+    TickTockSideRoll,
+    Twist,
+    VLegCrunches,
+    VSit,
+    ForwardFoldWheelchair,
+    ForwardFoldPlusWheelchair,
+    ArmCirclesLowForwardWheelchair,
+    ArmCirclesMidForwardWheelchair,
+    ArmCirclesHighForwardWheelchair,
+    ArmCirclesLowBackwardWheelchair,
+    ArmCirclesMidBackwardWheelchair,
+    ArmCirclesHighBackwardWheelchair,
+    CoreTwistsWheelchair,
+    ArmRaiseWheelchair,
+    ChestExpandWheelchair,
+    ArmExtendWheelchair,
+    ForwardBendWheelchair,
+    ToeTouchWheelchair,
+    ExtendedToeTouchWheelchair,
+    SeatedArmCircles,
+    TrunkRotations,
+    SeatedTrunkRotations,
+    ToeTouch,
+    Value(u16),
+}
+impl MoveExerciseName {
+    pub fn is_named_variant(value: i64) -> bool {
+        matches!(value, 0i64..=84i64)
+    }
+    pub fn as_u16(self) -> u16 {
+        match self {
+            MoveExerciseName::ArchAndCurl => 0,
+            MoveExerciseName::ArmCirclesWithBallBandAndWeight => 1,
+            MoveExerciseName::ArmStretch => 2,
+            MoveExerciseName::BackMassage => 3,
+            MoveExerciseName::BellyBreathing => 4,
+            MoveExerciseName::BridgeWithBall => 5,
+            MoveExerciseName::DiamondLegCrunch => 6,
+            MoveExerciseName::DiamondLegLift => 7,
+            MoveExerciseName::EightPointShoulderOpener => 8,
+            MoveExerciseName::FootRolling => 9,
+            MoveExerciseName::Footwork => 10,
+            MoveExerciseName::FootworkOnDisc => 11,
+            MoveExerciseName::ForwardFold => 12,
+            MoveExerciseName::FrogWithBand => 13,
+            MoveExerciseName::HalfRollUp => 14,
+            MoveExerciseName::HamstringCurl => 15,
+            MoveExerciseName::HamstringStretch => 16,
+            MoveExerciseName::HipStretch => 17,
+            MoveExerciseName::HugATreeWithBallBandAndWeight => 18,
+            MoveExerciseName::KneeCircles => 19,
+            MoveExerciseName::KneeFoldsOnDisc => 20,
+            MoveExerciseName::LateralFlexion => 21,
+            MoveExerciseName::LegStretchWithBand => 22,
+            MoveExerciseName::LegStretchWithLegCircles => 23,
+            MoveExerciseName::LowerLiftOnDisc => 24,
+            MoveExerciseName::LungeSquat => 25,
+            MoveExerciseName::LungesWithKneeLift => 26,
+            MoveExerciseName::MermaidStretch => 27,
+            MoveExerciseName::NeutralPelvicPosition => 28,
+            MoveExerciseName::PelvicClocksOnDisc => 29,
+            MoveExerciseName::PilatesPlieSquatsParallelTurnedOutFlatAndHeelsWithChair => 30,
+            MoveExerciseName::PiriformisStretch => 31,
+            MoveExerciseName::PlankKneeCrosses => 32,
+            MoveExerciseName::PlankKneePulls => 33,
+            MoveExerciseName::PlankUpDowns => 34,
+            MoveExerciseName::PrayerMudra => 35,
+            MoveExerciseName::PsoasLungeStretch => 36,
+            MoveExerciseName::RibcageBreathing => 37,
+            MoveExerciseName::RollDown => 38,
+            MoveExerciseName::RollUpWithWeightAndBand => 39,
+            MoveExerciseName::Saw => 40,
+            MoveExerciseName::ScapularStabilization => 41,
+            MoveExerciseName::ScissorsOnDisc => 42,
+            MoveExerciseName::SeatedHipStretchup => 43,
+            MoveExerciseName::SeatedTwist => 44,
+            MoveExerciseName::ShavingTheHeadWithBallBandAndWeight => 45,
+            MoveExerciseName::SpinalTwist => 46,
+            MoveExerciseName::SpinalTwistStretch => 47,
+            MoveExerciseName::SpineStretchForward => 48,
+            MoveExerciseName::SquatOpenArmTwistPose => 49,
+            MoveExerciseName::SquatsWithBall => 50,
+            MoveExerciseName::StandAndHang => 51,
+            MoveExerciseName::StandingSideStretch => 52,
+            MoveExerciseName::StandingSingleLegForwardBendWithItBandOpener => 53,
+            MoveExerciseName::StraightLegCrunchWithLegLift => 54,
+            MoveExerciseName::StraightLegCrunchWithLegLiftWithBall => 55,
+            MoveExerciseName::StraightLegCrunchWithLegsCrossed => 56,
+            MoveExerciseName::StraightLegCrunchWithLegsCrossedWithBall => 57,
+            MoveExerciseName::StraightLegDiagonalCrunch => 58,
+            MoveExerciseName::StraightLegDiagonalCrunchWithBall => 59,
+            MoveExerciseName::TailboneCurl => 60,
+            MoveExerciseName::ThroatLock => 61,
+            MoveExerciseName::TickTockSideRoll => 62,
+            MoveExerciseName::Twist => 63,
+            MoveExerciseName::VLegCrunches => 64,
+            MoveExerciseName::VSit => 65,
+            MoveExerciseName::ForwardFoldWheelchair => 66,
+            MoveExerciseName::ForwardFoldPlusWheelchair => 67,
+            MoveExerciseName::ArmCirclesLowForwardWheelchair => 68,
+            MoveExerciseName::ArmCirclesMidForwardWheelchair => 69,
+            MoveExerciseName::ArmCirclesHighForwardWheelchair => 70,
+            MoveExerciseName::ArmCirclesLowBackwardWheelchair => 71,
+            MoveExerciseName::ArmCirclesMidBackwardWheelchair => 72,
+            MoveExerciseName::ArmCirclesHighBackwardWheelchair => 73,
+            MoveExerciseName::CoreTwistsWheelchair => 74,
+            MoveExerciseName::ArmRaiseWheelchair => 75,
+            MoveExerciseName::ChestExpandWheelchair => 76,
+            MoveExerciseName::ArmExtendWheelchair => 77,
+            MoveExerciseName::ForwardBendWheelchair => 78,
+            MoveExerciseName::ToeTouchWheelchair => 79,
+            MoveExerciseName::ExtendedToeTouchWheelchair => 80,
+            MoveExerciseName::SeatedArmCircles => 81,
+            MoveExerciseName::TrunkRotations => 82,
+            MoveExerciseName::SeatedTrunkRotations => 83,
+            MoveExerciseName::ToeTouch => 84,
+            MoveExerciseName::Value(value) => value,
+        }
+    }
+    pub fn as_i64(self) -> i64 {
+        self.as_u16() as i64
+    }
+}
+impl fmt::Display for MoveExerciseName {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match &self {
+            MoveExerciseName::ArchAndCurl => write!(f, "arch_and_curl"),
+            MoveExerciseName::ArmCirclesWithBallBandAndWeight => {
+                write!(f, "arm_circles_with_ball_band_and_weight")
+            }
+            MoveExerciseName::ArmStretch => write!(f, "arm_stretch"),
+            MoveExerciseName::BackMassage => write!(f, "back_massage"),
+            MoveExerciseName::BellyBreathing => write!(f, "belly_breathing"),
+            MoveExerciseName::BridgeWithBall => write!(f, "bridge_with_ball"),
+            MoveExerciseName::DiamondLegCrunch => write!(f, "diamond_leg_crunch"),
+            MoveExerciseName::DiamondLegLift => write!(f, "diamond_leg_lift"),
+            MoveExerciseName::EightPointShoulderOpener => write!(f, "eight_point_shoulder_opener"),
+            MoveExerciseName::FootRolling => write!(f, "foot_rolling"),
+            MoveExerciseName::Footwork => write!(f, "footwork"),
+            MoveExerciseName::FootworkOnDisc => write!(f, "footwork_on_disc"),
+            MoveExerciseName::ForwardFold => write!(f, "forward_fold"),
+            MoveExerciseName::FrogWithBand => write!(f, "frog_with_band"),
+            MoveExerciseName::HalfRollUp => write!(f, "half_roll_up"),
+            MoveExerciseName::HamstringCurl => write!(f, "hamstring_curl"),
+            MoveExerciseName::HamstringStretch => write!(f, "hamstring_stretch"),
+            MoveExerciseName::HipStretch => write!(f, "hip_stretch"),
+            MoveExerciseName::HugATreeWithBallBandAndWeight => {
+                write!(f, "hug_a_tree_with_ball_band_and_weight")
+            }
+            MoveExerciseName::KneeCircles => write!(f, "knee_circles"),
+            MoveExerciseName::KneeFoldsOnDisc => write!(f, "knee_folds_on_disc"),
+            MoveExerciseName::LateralFlexion => write!(f, "lateral_flexion"),
+            MoveExerciseName::LegStretchWithBand => write!(f, "leg_stretch_with_band"),
+            MoveExerciseName::LegStretchWithLegCircles => write!(f, "leg_stretch_with_leg_circles"),
+            MoveExerciseName::LowerLiftOnDisc => write!(f, "lower_lift_on_disc"),
+            MoveExerciseName::LungeSquat => write!(f, "lunge_squat"),
+            MoveExerciseName::LungesWithKneeLift => write!(f, "lunges_with_knee_lift"),
+            MoveExerciseName::MermaidStretch => write!(f, "mermaid_stretch"),
+            MoveExerciseName::NeutralPelvicPosition => write!(f, "neutral_pelvic_position"),
+            MoveExerciseName::PelvicClocksOnDisc => write!(f, "pelvic_clocks_on_disc"),
+            MoveExerciseName::PilatesPlieSquatsParallelTurnedOutFlatAndHeelsWithChair => write!(
+                f,
+                "pilates_plie_squats_parallel_turned_out_flat_and_heels_with_chair"
+            ),
+            MoveExerciseName::PiriformisStretch => write!(f, "piriformis_stretch"),
+            MoveExerciseName::PlankKneeCrosses => write!(f, "plank_knee_crosses"),
+            MoveExerciseName::PlankKneePulls => write!(f, "plank_knee_pulls"),
+            MoveExerciseName::PlankUpDowns => write!(f, "plank_up_downs"),
+            MoveExerciseName::PrayerMudra => write!(f, "prayer_mudra"),
+            MoveExerciseName::PsoasLungeStretch => write!(f, "psoas_lunge_stretch"),
+            MoveExerciseName::RibcageBreathing => write!(f, "ribcage_breathing"),
+            MoveExerciseName::RollDown => write!(f, "roll_down"),
+            MoveExerciseName::RollUpWithWeightAndBand => write!(f, "roll_up_with_weight_and_band"),
+            MoveExerciseName::Saw => write!(f, "saw"),
+            MoveExerciseName::ScapularStabilization => write!(f, "scapular_stabilization"),
+            MoveExerciseName::ScissorsOnDisc => write!(f, "scissors_on_disc"),
+            MoveExerciseName::SeatedHipStretchup => write!(f, "seated_hip_stretchup"),
+            MoveExerciseName::SeatedTwist => write!(f, "seated_twist"),
+            MoveExerciseName::ShavingTheHeadWithBallBandAndWeight => {
+                write!(f, "shaving_the_head_with_ball_band_and_weight")
+            }
+            MoveExerciseName::SpinalTwist => write!(f, "spinal_twist"),
+            MoveExerciseName::SpinalTwistStretch => write!(f, "spinal_twist_stretch"),
+            MoveExerciseName::SpineStretchForward => write!(f, "spine_stretch_forward"),
+            MoveExerciseName::SquatOpenArmTwistPose => write!(f, "squat_open_arm_twist_pose"),
+            MoveExerciseName::SquatsWithBall => write!(f, "squats_with_ball"),
+            MoveExerciseName::StandAndHang => write!(f, "stand_and_hang"),
+            MoveExerciseName::StandingSideStretch => write!(f, "standing_side_stretch"),
+            MoveExerciseName::StandingSingleLegForwardBendWithItBandOpener => {
+                write!(f, "standing_single_leg_forward_bend_with_it_band_opener")
+            }
+            MoveExerciseName::StraightLegCrunchWithLegLift => {
+                write!(f, "straight_leg_crunch_with_leg_lift")
+            }
+            MoveExerciseName::StraightLegCrunchWithLegLiftWithBall => {
+                write!(f, "straight_leg_crunch_with_leg_lift_with_ball")
+            }
+            MoveExerciseName::StraightLegCrunchWithLegsCrossed => {
+                write!(f, "straight_leg_crunch_with_legs_crossed")
+            }
+            MoveExerciseName::StraightLegCrunchWithLegsCrossedWithBall => {
+                write!(f, "straight_leg_crunch_with_legs_crossed_with_ball")
+            }
+            MoveExerciseName::StraightLegDiagonalCrunch => {
+                write!(f, "straight_leg_diagonal_crunch")
+            }
+            MoveExerciseName::StraightLegDiagonalCrunchWithBall => {
+                write!(f, "straight_leg_diagonal_crunch_with_ball")
+            }
+            MoveExerciseName::TailboneCurl => write!(f, "tailbone_curl"),
+            MoveExerciseName::ThroatLock => write!(f, "throat_lock"),
+            MoveExerciseName::TickTockSideRoll => write!(f, "tick_tock_side_roll"),
+            MoveExerciseName::Twist => write!(f, "twist"),
+            MoveExerciseName::VLegCrunches => write!(f, "v_leg_crunches"),
+            MoveExerciseName::VSit => write!(f, "v_sit"),
+            MoveExerciseName::ForwardFoldWheelchair => write!(f, "forward_fold_wheelchair"),
+            MoveExerciseName::ForwardFoldPlusWheelchair => {
+                write!(f, "forward_fold_plus_wheelchair")
+            }
+            MoveExerciseName::ArmCirclesLowForwardWheelchair => {
+                write!(f, "arm_circles_low_forward_wheelchair")
+            }
+            MoveExerciseName::ArmCirclesMidForwardWheelchair => {
+                write!(f, "arm_circles_mid_forward_wheelchair")
+            }
+            MoveExerciseName::ArmCirclesHighForwardWheelchair => {
+                write!(f, "arm_circles_high_forward_wheelchair")
+            }
+            MoveExerciseName::ArmCirclesLowBackwardWheelchair => {
+                write!(f, "arm_circles_low_backward_wheelchair")
+            }
+            MoveExerciseName::ArmCirclesMidBackwardWheelchair => {
+                write!(f, "arm_circles_mid_backward_wheelchair")
+            }
+            MoveExerciseName::ArmCirclesHighBackwardWheelchair => {
+                write!(f, "arm_circles_high_backward_wheelchair")
+            }
+            MoveExerciseName::CoreTwistsWheelchair => write!(f, "core_twists_wheelchair"),
+            MoveExerciseName::ArmRaiseWheelchair => write!(f, "arm_raise_wheelchair"),
+            MoveExerciseName::ChestExpandWheelchair => write!(f, "chest_expand_wheelchair"),
+            MoveExerciseName::ArmExtendWheelchair => write!(f, "arm_extend_wheelchair"),
+            MoveExerciseName::ForwardBendWheelchair => write!(f, "forward_bend_wheelchair"),
+            MoveExerciseName::ToeTouchWheelchair => write!(f, "toe_touch_wheelchair"),
+            MoveExerciseName::ExtendedToeTouchWheelchair => {
+                write!(f, "extended_toe_touch_wheelchair")
+            }
+            MoveExerciseName::SeatedArmCircles => write!(f, "seated_arm_circles"),
+            MoveExerciseName::TrunkRotations => write!(f, "trunk_rotations"),
+            MoveExerciseName::SeatedTrunkRotations => write!(f, "seated_trunk_rotations"),
+            MoveExerciseName::ToeTouch => write!(f, "toe_touch"),
+            MoveExerciseName::Value(value) => write!(f, "{}", value),
+        }
+    }
+}
+impl convert::From<u16> for MoveExerciseName {
+    fn from(value: u16) -> Self {
+        match value {
+            0 => MoveExerciseName::ArchAndCurl,
+            1 => MoveExerciseName::ArmCirclesWithBallBandAndWeight,
+            2 => MoveExerciseName::ArmStretch,
+            3 => MoveExerciseName::BackMassage,
+            4 => MoveExerciseName::BellyBreathing,
+            5 => MoveExerciseName::BridgeWithBall,
+            6 => MoveExerciseName::DiamondLegCrunch,
+            7 => MoveExerciseName::DiamondLegLift,
+            8 => MoveExerciseName::EightPointShoulderOpener,
+            9 => MoveExerciseName::FootRolling,
+            10 => MoveExerciseName::Footwork,
+            11 => MoveExerciseName::FootworkOnDisc,
+            12 => MoveExerciseName::ForwardFold,
+            13 => MoveExerciseName::FrogWithBand,
+            14 => MoveExerciseName::HalfRollUp,
+            15 => MoveExerciseName::HamstringCurl,
+            16 => MoveExerciseName::HamstringStretch,
+            17 => MoveExerciseName::HipStretch,
+            18 => MoveExerciseName::HugATreeWithBallBandAndWeight,
+            19 => MoveExerciseName::KneeCircles,
+            20 => MoveExerciseName::KneeFoldsOnDisc,
+            21 => MoveExerciseName::LateralFlexion,
+            22 => MoveExerciseName::LegStretchWithBand,
+            23 => MoveExerciseName::LegStretchWithLegCircles,
+            24 => MoveExerciseName::LowerLiftOnDisc,
+            25 => MoveExerciseName::LungeSquat,
+            26 => MoveExerciseName::LungesWithKneeLift,
+            27 => MoveExerciseName::MermaidStretch,
+            28 => MoveExerciseName::NeutralPelvicPosition,
+            29 => MoveExerciseName::PelvicClocksOnDisc,
+            30 => MoveExerciseName::PilatesPlieSquatsParallelTurnedOutFlatAndHeelsWithChair,
+            31 => MoveExerciseName::PiriformisStretch,
+            32 => MoveExerciseName::PlankKneeCrosses,
+            33 => MoveExerciseName::PlankKneePulls,
+            34 => MoveExerciseName::PlankUpDowns,
+            35 => MoveExerciseName::PrayerMudra,
+            36 => MoveExerciseName::PsoasLungeStretch,
+            37 => MoveExerciseName::RibcageBreathing,
+            38 => MoveExerciseName::RollDown,
+            39 => MoveExerciseName::RollUpWithWeightAndBand,
+            40 => MoveExerciseName::Saw,
+            41 => MoveExerciseName::ScapularStabilization,
+            42 => MoveExerciseName::ScissorsOnDisc,
+            43 => MoveExerciseName::SeatedHipStretchup,
+            44 => MoveExerciseName::SeatedTwist,
+            45 => MoveExerciseName::ShavingTheHeadWithBallBandAndWeight,
+            46 => MoveExerciseName::SpinalTwist,
+            47 => MoveExerciseName::SpinalTwistStretch,
+            48 => MoveExerciseName::SpineStretchForward,
+            49 => MoveExerciseName::SquatOpenArmTwistPose,
+            50 => MoveExerciseName::SquatsWithBall,
+            51 => MoveExerciseName::StandAndHang,
+            52 => MoveExerciseName::StandingSideStretch,
+            53 => MoveExerciseName::StandingSingleLegForwardBendWithItBandOpener,
+            54 => MoveExerciseName::StraightLegCrunchWithLegLift,
+            55 => MoveExerciseName::StraightLegCrunchWithLegLiftWithBall,
+            56 => MoveExerciseName::StraightLegCrunchWithLegsCrossed,
+            57 => MoveExerciseName::StraightLegCrunchWithLegsCrossedWithBall,
+            58 => MoveExerciseName::StraightLegDiagonalCrunch,
+            59 => MoveExerciseName::StraightLegDiagonalCrunchWithBall,
+            60 => MoveExerciseName::TailboneCurl,
+            61 => MoveExerciseName::ThroatLock,
+            62 => MoveExerciseName::TickTockSideRoll,
+            63 => MoveExerciseName::Twist,
+            64 => MoveExerciseName::VLegCrunches,
+            65 => MoveExerciseName::VSit,
+            66 => MoveExerciseName::ForwardFoldWheelchair,
+            67 => MoveExerciseName::ForwardFoldPlusWheelchair,
+            68 => MoveExerciseName::ArmCirclesLowForwardWheelchair,
+            69 => MoveExerciseName::ArmCirclesMidForwardWheelchair,
+            70 => MoveExerciseName::ArmCirclesHighForwardWheelchair,
+            71 => MoveExerciseName::ArmCirclesLowBackwardWheelchair,
+            72 => MoveExerciseName::ArmCirclesMidBackwardWheelchair,
+            73 => MoveExerciseName::ArmCirclesHighBackwardWheelchair,
+            74 => MoveExerciseName::CoreTwistsWheelchair,
+            75 => MoveExerciseName::ArmRaiseWheelchair,
+            76 => MoveExerciseName::ChestExpandWheelchair,
+            77 => MoveExerciseName::ArmExtendWheelchair,
+            78 => MoveExerciseName::ForwardBendWheelchair,
+            79 => MoveExerciseName::ToeTouchWheelchair,
+            80 => MoveExerciseName::ExtendedToeTouchWheelchair,
+            81 => MoveExerciseName::SeatedArmCircles,
+            82 => MoveExerciseName::TrunkRotations,
+            83 => MoveExerciseName::SeatedTrunkRotations,
+            84 => MoveExerciseName::ToeTouch,
+            _ => MoveExerciseName::Value(value),
+        }
+    }
+}
+impl convert::From<i64> for MoveExerciseName {
+    fn from(value: i64) -> Self {
+        MoveExerciseName::from(value as u16)
+    }
+}
+impl convert::From<&str> for MoveExerciseName {
+    fn from(value: &str) -> Self {
+        match value {
+            "arch_and_curl" => MoveExerciseName::ArchAndCurl,
+            "arm_circles_with_ball_band_and_weight" => {
+                MoveExerciseName::ArmCirclesWithBallBandAndWeight
+            }
+            "arm_stretch" => MoveExerciseName::ArmStretch,
+            "back_massage" => MoveExerciseName::BackMassage,
+            "belly_breathing" => MoveExerciseName::BellyBreathing,
+            "bridge_with_ball" => MoveExerciseName::BridgeWithBall,
+            "diamond_leg_crunch" => MoveExerciseName::DiamondLegCrunch,
+            "diamond_leg_lift" => MoveExerciseName::DiamondLegLift,
+            "eight_point_shoulder_opener" => MoveExerciseName::EightPointShoulderOpener,
+            "foot_rolling" => MoveExerciseName::FootRolling,
+            "footwork" => MoveExerciseName::Footwork,
+            "footwork_on_disc" => MoveExerciseName::FootworkOnDisc,
+            "forward_fold" => MoveExerciseName::ForwardFold,
+            "frog_with_band" => MoveExerciseName::FrogWithBand,
+            "half_roll_up" => MoveExerciseName::HalfRollUp,
+            "hamstring_curl" => MoveExerciseName::HamstringCurl,
+            "hamstring_stretch" => MoveExerciseName::HamstringStretch,
+            "hip_stretch" => MoveExerciseName::HipStretch,
+            "hug_a_tree_with_ball_band_and_weight" => {
+                MoveExerciseName::HugATreeWithBallBandAndWeight
+            }
+            "knee_circles" => MoveExerciseName::KneeCircles,
+            "knee_folds_on_disc" => MoveExerciseName::KneeFoldsOnDisc,
+            "lateral_flexion" => MoveExerciseName::LateralFlexion,
+            "leg_stretch_with_band" => MoveExerciseName::LegStretchWithBand,
+            "leg_stretch_with_leg_circles" => MoveExerciseName::LegStretchWithLegCircles,
+            "lower_lift_on_disc" => MoveExerciseName::LowerLiftOnDisc,
+            "lunge_squat" => MoveExerciseName::LungeSquat,
+            "lunges_with_knee_lift" => MoveExerciseName::LungesWithKneeLift,
+            "mermaid_stretch" => MoveExerciseName::MermaidStretch,
+            "neutral_pelvic_position" => MoveExerciseName::NeutralPelvicPosition,
+            "pelvic_clocks_on_disc" => MoveExerciseName::PelvicClocksOnDisc,
+            "pilates_plie_squats_parallel_turned_out_flat_and_heels_with_chair" => {
+                MoveExerciseName::PilatesPlieSquatsParallelTurnedOutFlatAndHeelsWithChair
+            }
+            "piriformis_stretch" => MoveExerciseName::PiriformisStretch,
+            "plank_knee_crosses" => MoveExerciseName::PlankKneeCrosses,
+            "plank_knee_pulls" => MoveExerciseName::PlankKneePulls,
+            "plank_up_downs" => MoveExerciseName::PlankUpDowns,
+            "prayer_mudra" => MoveExerciseName::PrayerMudra,
+            "psoas_lunge_stretch" => MoveExerciseName::PsoasLungeStretch,
+            "ribcage_breathing" => MoveExerciseName::RibcageBreathing,
+            "roll_down" => MoveExerciseName::RollDown,
+            "roll_up_with_weight_and_band" => MoveExerciseName::RollUpWithWeightAndBand,
+            "saw" => MoveExerciseName::Saw,
+            "scapular_stabilization" => MoveExerciseName::ScapularStabilization,
+            "scissors_on_disc" => MoveExerciseName::ScissorsOnDisc,
+            "seated_hip_stretchup" => MoveExerciseName::SeatedHipStretchup,
+            "seated_twist" => MoveExerciseName::SeatedTwist,
+            "shaving_the_head_with_ball_band_and_weight" => {
+                MoveExerciseName::ShavingTheHeadWithBallBandAndWeight
+            }
+            "spinal_twist" => MoveExerciseName::SpinalTwist,
+            "spinal_twist_stretch" => MoveExerciseName::SpinalTwistStretch,
+            "spine_stretch_forward" => MoveExerciseName::SpineStretchForward,
+            "squat_open_arm_twist_pose" => MoveExerciseName::SquatOpenArmTwistPose,
+            "squats_with_ball" => MoveExerciseName::SquatsWithBall,
+            "stand_and_hang" => MoveExerciseName::StandAndHang,
+            "standing_side_stretch" => MoveExerciseName::StandingSideStretch,
+            "standing_single_leg_forward_bend_with_it_band_opener" => {
+                MoveExerciseName::StandingSingleLegForwardBendWithItBandOpener
+            }
+            "straight_leg_crunch_with_leg_lift" => MoveExerciseName::StraightLegCrunchWithLegLift,
+            "straight_leg_crunch_with_leg_lift_with_ball" => {
+                MoveExerciseName::StraightLegCrunchWithLegLiftWithBall
+            }
+            "straight_leg_crunch_with_legs_crossed" => {
+                MoveExerciseName::StraightLegCrunchWithLegsCrossed
+            }
+            "straight_leg_crunch_with_legs_crossed_with_ball" => {
+                MoveExerciseName::StraightLegCrunchWithLegsCrossedWithBall
+            }
+            "straight_leg_diagonal_crunch" => MoveExerciseName::StraightLegDiagonalCrunch,
+            "straight_leg_diagonal_crunch_with_ball" => {
+                MoveExerciseName::StraightLegDiagonalCrunchWithBall
+            }
+            "tailbone_curl" => MoveExerciseName::TailboneCurl,
+            "throat_lock" => MoveExerciseName::ThroatLock,
+            "tick_tock_side_roll" => MoveExerciseName::TickTockSideRoll,
+            "twist" => MoveExerciseName::Twist,
+            "v_leg_crunches" => MoveExerciseName::VLegCrunches,
+            "v_sit" => MoveExerciseName::VSit,
+            "forward_fold_wheelchair" => MoveExerciseName::ForwardFoldWheelchair,
+            "forward_fold_plus_wheelchair" => MoveExerciseName::ForwardFoldPlusWheelchair,
+            "arm_circles_low_forward_wheelchair" => {
+                MoveExerciseName::ArmCirclesLowForwardWheelchair
+            }
+            "arm_circles_mid_forward_wheelchair" => {
+                MoveExerciseName::ArmCirclesMidForwardWheelchair
+            }
+            "arm_circles_high_forward_wheelchair" => {
+                MoveExerciseName::ArmCirclesHighForwardWheelchair
+            }
+            "arm_circles_low_backward_wheelchair" => {
+                MoveExerciseName::ArmCirclesLowBackwardWheelchair
+            }
+            "arm_circles_mid_backward_wheelchair" => {
+                MoveExerciseName::ArmCirclesMidBackwardWheelchair
+            }
+            "arm_circles_high_backward_wheelchair" => {
+                MoveExerciseName::ArmCirclesHighBackwardWheelchair
+            }
+            "core_twists_wheelchair" => MoveExerciseName::CoreTwistsWheelchair,
+            "arm_raise_wheelchair" => MoveExerciseName::ArmRaiseWheelchair,
+            "chest_expand_wheelchair" => MoveExerciseName::ChestExpandWheelchair,
+            "arm_extend_wheelchair" => MoveExerciseName::ArmExtendWheelchair,
+            "forward_bend_wheelchair" => MoveExerciseName::ForwardBendWheelchair,
+            "toe_touch_wheelchair" => MoveExerciseName::ToeTouchWheelchair,
+            "extended_toe_touch_wheelchair" => MoveExerciseName::ExtendedToeTouchWheelchair,
+            "seated_arm_circles" => MoveExerciseName::SeatedArmCircles,
+            "trunk_rotations" => MoveExerciseName::TrunkRotations,
+            "seated_trunk_rotations" => MoveExerciseName::SeatedTrunkRotations,
+            "toe_touch" => MoveExerciseName::ToeTouch,
+            &_ => MoveExerciseName::Value(0),
+        }
+    }
+}
+impl Serialize for MoveExerciseName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match &self {
+            MoveExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
+    }
+}
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
+pub enum PoseExerciseName {
+    AllFours,
+    AnkleToKnee,
+    BabyCobra,
+    Boat,
+    BoundAngle,
+    BoundSeatedSingleLegForwardBend,
+    Bow,
+    BowedHalfMoon,
+    Bridge,
+    Cat,
+    Chair,
+    Childs,
+    Corpse,
+    CowFace,
+    Cow,
+    DevotionalWarrior,
+    DolphinPlank,
+    Dolphin,
+    DownDogKneeToNose,
+    DownDogSplit,
+    DownDogSplitOpenHipBentKnee,
+    DownwardFacingDog,
+    Eagle,
+    EasySeated,
+    ExtendedPuppy,
+    ExtendedSideAngle,
+    Fish,
+    FourLimbedStaff,
+    FullSplit,
+    Gate,
+    HalfChairHalfAnkleToKnee,
+    HalfMoon,
+    HeadToKnee,
+    Heron,
+    Heros,
+    HighLunge,
+    KneesChestChin,
+    Lizard,
+    Locust,
+    LowLunge,
+    LowLungeTwist,
+    LowLungeWithKneeDown,
+    Mermaid,
+    Mountain,
+    OneLeggedDownwardFacingPoseOpenHipBentKnee,
+    OneLeggedPigeon,
+    PeacefulWarrior,
+    Plank,
+    Plow,
+    ReclinedHandToFoot,
+    RevolvedHalfMoon,
+    RevolvedHeadToKnee,
+    RevolvedTriangle,
+    RunnersLunge,
+    SeatedEasySideBend,
+    SeatedEasyTwist,
+    SeatedLongLegForwardBend,
+    SeatedWideLegForwardBend,
+    ShoulderStand,
+    SideBoat,
+    SidePlank,
+    Sphinx,
+    SquatOpenArmTwist,
+    SquatPalmPress,
+    Staff,
+    StandingArmsUp,
+    StandingForwardBendHalfwayUp,
+    StandingForwardBend,
+    StandingSideOpener,
+    StandingSingleLegForwardBend,
+    StandingSplit,
+    StandingWideLegForwardBend,
+    StandingWideLegForwardBendWithTwist,
+    SupineSpinalTwist,
+    TableTop,
+    ThreadTheNeedle,
+    Thunderbolt,
+    ThunderboltPoseBothSidesArmStretch,
+    Tree,
+    Triangle,
+    UpDog,
+    UpwardFacingPlank,
+    WarriorOne,
+    WarriorThree,
+    WarriorTwo,
+    Wheel,
+    WideSideLunge,
+    DeepBreathingWheelchair,
+    DeepBreathingLowWheelchair,
+    DeepBreathingMidWheelchair,
+    DeepBreathingHighWheelchair,
+    PrayerWheelchair,
+    OverheadPrayerWheelchair,
+    CactusWheelchair,
+    BreathingPunchesWheelchair,
+    BreathingPunchesExtendedWheelchair,
+    BreathingPunchesOverheadWheelchair,
+    BreathingPunchesOverheadAndDownWheelchair,
+    BreathingPunchesSideWheelchair,
+    BreathingPunchesExtendedSideWheelchair,
+    BreathingPunchesOverheadSideWheelchair,
+    BreathingPunchesOverheadAndDownSideWheelchair,
+    LeftHandBackWheelchair,
+    TriangleWheelchair,
+    ThreadTheNeedleWheelchair,
+    NeckFlexionAndExtensionWheelchair,
+    NeckLateralFlexionWheelchair,
+    SpineFlexionAndExtensionWheelchair,
+    SpineRotationWheelchair,
+    SpineLateralFlexionWheelchair,
+    AlternativeSkiingWheelchair,
+    ReachForwardWheelchair,
+    WarriorWheelchair,
+    ReverseWarriorWheelchair,
+    DownwardFacingDogToCobra,
+    SeatedCatCow,
+    Value(u16),
+}
+impl PoseExerciseName {
+    pub fn is_named_variant(value: i64) -> bool {
+        matches!(value, 0i64..=115i64)
+    }
+    pub fn as_u16(self) -> u16 {
+        match self {
+            PoseExerciseName::AllFours => 0,
+            PoseExerciseName::AnkleToKnee => 1,
+            PoseExerciseName::BabyCobra => 2,
+            PoseExerciseName::Boat => 3,
+            PoseExerciseName::BoundAngle => 4,
+            PoseExerciseName::BoundSeatedSingleLegForwardBend => 5,
+            PoseExerciseName::Bow => 6,
+            PoseExerciseName::BowedHalfMoon => 7,
+            PoseExerciseName::Bridge => 8,
+            PoseExerciseName::Cat => 9,
+            PoseExerciseName::Chair => 10,
+            PoseExerciseName::Childs => 11,
+            PoseExerciseName::Corpse => 12,
+            PoseExerciseName::CowFace => 13,
+            PoseExerciseName::Cow => 14,
+            PoseExerciseName::DevotionalWarrior => 15,
+            PoseExerciseName::DolphinPlank => 16,
+            PoseExerciseName::Dolphin => 17,
+            PoseExerciseName::DownDogKneeToNose => 18,
+            PoseExerciseName::DownDogSplit => 19,
+            PoseExerciseName::DownDogSplitOpenHipBentKnee => 20,
+            PoseExerciseName::DownwardFacingDog => 21,
+            PoseExerciseName::Eagle => 22,
+            PoseExerciseName::EasySeated => 23,
+            PoseExerciseName::ExtendedPuppy => 24,
+            PoseExerciseName::ExtendedSideAngle => 25,
+            PoseExerciseName::Fish => 26,
+            PoseExerciseName::FourLimbedStaff => 27,
+            PoseExerciseName::FullSplit => 28,
+            PoseExerciseName::Gate => 29,
+            PoseExerciseName::HalfChairHalfAnkleToKnee => 30,
+            PoseExerciseName::HalfMoon => 31,
+            PoseExerciseName::HeadToKnee => 32,
+            PoseExerciseName::Heron => 33,
+            PoseExerciseName::Heros => 34,
+            PoseExerciseName::HighLunge => 35,
+            PoseExerciseName::KneesChestChin => 36,
+            PoseExerciseName::Lizard => 37,
+            PoseExerciseName::Locust => 38,
+            PoseExerciseName::LowLunge => 39,
+            PoseExerciseName::LowLungeTwist => 40,
+            PoseExerciseName::LowLungeWithKneeDown => 41,
+            PoseExerciseName::Mermaid => 42,
+            PoseExerciseName::Mountain => 43,
+            PoseExerciseName::OneLeggedDownwardFacingPoseOpenHipBentKnee => 44,
+            PoseExerciseName::OneLeggedPigeon => 45,
+            PoseExerciseName::PeacefulWarrior => 46,
+            PoseExerciseName::Plank => 47,
+            PoseExerciseName::Plow => 48,
+            PoseExerciseName::ReclinedHandToFoot => 49,
+            PoseExerciseName::RevolvedHalfMoon => 50,
+            PoseExerciseName::RevolvedHeadToKnee => 51,
+            PoseExerciseName::RevolvedTriangle => 52,
+            PoseExerciseName::RunnersLunge => 53,
+            PoseExerciseName::SeatedEasySideBend => 54,
+            PoseExerciseName::SeatedEasyTwist => 55,
+            PoseExerciseName::SeatedLongLegForwardBend => 56,
+            PoseExerciseName::SeatedWideLegForwardBend => 57,
+            PoseExerciseName::ShoulderStand => 58,
+            PoseExerciseName::SideBoat => 59,
+            PoseExerciseName::SidePlank => 60,
+            PoseExerciseName::Sphinx => 61,
+            PoseExerciseName::SquatOpenArmTwist => 62,
+            PoseExerciseName::SquatPalmPress => 63,
+            PoseExerciseName::Staff => 64,
+            PoseExerciseName::StandingArmsUp => 65,
+            PoseExerciseName::StandingForwardBendHalfwayUp => 66,
+            PoseExerciseName::StandingForwardBend => 67,
+            PoseExerciseName::StandingSideOpener => 68,
+            PoseExerciseName::StandingSingleLegForwardBend => 69,
+            PoseExerciseName::StandingSplit => 70,
+            PoseExerciseName::StandingWideLegForwardBend => 71,
+            PoseExerciseName::StandingWideLegForwardBendWithTwist => 72,
+            PoseExerciseName::SupineSpinalTwist => 73,
+            PoseExerciseName::TableTop => 74,
+            PoseExerciseName::ThreadTheNeedle => 75,
+            PoseExerciseName::Thunderbolt => 76,
+            PoseExerciseName::ThunderboltPoseBothSidesArmStretch => 77,
+            PoseExerciseName::Tree => 78,
+            PoseExerciseName::Triangle => 79,
+            PoseExerciseName::UpDog => 80,
+            PoseExerciseName::UpwardFacingPlank => 81,
+            PoseExerciseName::WarriorOne => 82,
+            PoseExerciseName::WarriorThree => 83,
+            PoseExerciseName::WarriorTwo => 84,
+            PoseExerciseName::Wheel => 85,
+            PoseExerciseName::WideSideLunge => 86,
+            PoseExerciseName::DeepBreathingWheelchair => 87,
+            PoseExerciseName::DeepBreathingLowWheelchair => 88,
+            PoseExerciseName::DeepBreathingMidWheelchair => 89,
+            PoseExerciseName::DeepBreathingHighWheelchair => 90,
+            PoseExerciseName::PrayerWheelchair => 91,
+            PoseExerciseName::OverheadPrayerWheelchair => 92,
+            PoseExerciseName::CactusWheelchair => 93,
+            PoseExerciseName::BreathingPunchesWheelchair => 94,
+            PoseExerciseName::BreathingPunchesExtendedWheelchair => 95,
+            PoseExerciseName::BreathingPunchesOverheadWheelchair => 96,
+            PoseExerciseName::BreathingPunchesOverheadAndDownWheelchair => 97,
+            PoseExerciseName::BreathingPunchesSideWheelchair => 98,
+            PoseExerciseName::BreathingPunchesExtendedSideWheelchair => 99,
+            PoseExerciseName::BreathingPunchesOverheadSideWheelchair => 100,
+            PoseExerciseName::BreathingPunchesOverheadAndDownSideWheelchair => 101,
+            PoseExerciseName::LeftHandBackWheelchair => 102,
+            PoseExerciseName::TriangleWheelchair => 103,
+            PoseExerciseName::ThreadTheNeedleWheelchair => 104,
+            PoseExerciseName::NeckFlexionAndExtensionWheelchair => 105,
+            PoseExerciseName::NeckLateralFlexionWheelchair => 106,
+            PoseExerciseName::SpineFlexionAndExtensionWheelchair => 107,
+            PoseExerciseName::SpineRotationWheelchair => 108,
+            PoseExerciseName::SpineLateralFlexionWheelchair => 109,
+            PoseExerciseName::AlternativeSkiingWheelchair => 110,
+            PoseExerciseName::ReachForwardWheelchair => 111,
+            PoseExerciseName::WarriorWheelchair => 112,
+            PoseExerciseName::ReverseWarriorWheelchair => 113,
+            PoseExerciseName::DownwardFacingDogToCobra => 114,
+            PoseExerciseName::SeatedCatCow => 115,
+            PoseExerciseName::Value(value) => value,
+        }
+    }
+    pub fn as_i64(self) -> i64 {
+        self.as_u16() as i64
+    }
+}
+impl fmt::Display for PoseExerciseName {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match &self {
+            PoseExerciseName::AllFours => write!(f, "all_fours"),
+            PoseExerciseName::AnkleToKnee => write!(f, "ankle_to_knee"),
+            PoseExerciseName::BabyCobra => write!(f, "baby_cobra"),
+            PoseExerciseName::Boat => write!(f, "boat"),
+            PoseExerciseName::BoundAngle => write!(f, "bound_angle"),
+            PoseExerciseName::BoundSeatedSingleLegForwardBend => {
+                write!(f, "bound_seated_single_leg_forward_bend")
+            }
+            PoseExerciseName::Bow => write!(f, "bow"),
+            PoseExerciseName::BowedHalfMoon => write!(f, "bowed_half_moon"),
+            PoseExerciseName::Bridge => write!(f, "bridge"),
+            PoseExerciseName::Cat => write!(f, "cat"),
+            PoseExerciseName::Chair => write!(f, "chair"),
+            PoseExerciseName::Childs => write!(f, "childs"),
+            PoseExerciseName::Corpse => write!(f, "corpse"),
+            PoseExerciseName::CowFace => write!(f, "cow_face"),
+            PoseExerciseName::Cow => write!(f, "cow"),
+            PoseExerciseName::DevotionalWarrior => write!(f, "devotional_warrior"),
+            PoseExerciseName::DolphinPlank => write!(f, "dolphin_plank"),
+            PoseExerciseName::Dolphin => write!(f, "dolphin"),
+            PoseExerciseName::DownDogKneeToNose => write!(f, "down_dog_knee_to_nose"),
+            PoseExerciseName::DownDogSplit => write!(f, "down_dog_split"),
+            PoseExerciseName::DownDogSplitOpenHipBentKnee => {
+                write!(f, "down_dog_split_open_hip_bent_knee")
+            }
+            PoseExerciseName::DownwardFacingDog => write!(f, "downward_facing_dog"),
+            PoseExerciseName::Eagle => write!(f, "eagle"),
+            PoseExerciseName::EasySeated => write!(f, "easy_seated"),
+            PoseExerciseName::ExtendedPuppy => write!(f, "extended_puppy"),
+            PoseExerciseName::ExtendedSideAngle => write!(f, "extended_side_angle"),
+            PoseExerciseName::Fish => write!(f, "fish"),
+            PoseExerciseName::FourLimbedStaff => write!(f, "four_limbed_staff"),
+            PoseExerciseName::FullSplit => write!(f, "full_split"),
+            PoseExerciseName::Gate => write!(f, "gate"),
+            PoseExerciseName::HalfChairHalfAnkleToKnee => {
+                write!(f, "half_chair_half_ankle_to_knee")
+            }
+            PoseExerciseName::HalfMoon => write!(f, "half_moon"),
+            PoseExerciseName::HeadToKnee => write!(f, "head_to_knee"),
+            PoseExerciseName::Heron => write!(f, "heron"),
+            PoseExerciseName::Heros => write!(f, "heros"),
+            PoseExerciseName::HighLunge => write!(f, "high_lunge"),
+            PoseExerciseName::KneesChestChin => write!(f, "knees_chest_chin"),
+            PoseExerciseName::Lizard => write!(f, "lizard"),
+            PoseExerciseName::Locust => write!(f, "locust"),
+            PoseExerciseName::LowLunge => write!(f, "low_lunge"),
+            PoseExerciseName::LowLungeTwist => write!(f, "low_lunge_twist"),
+            PoseExerciseName::LowLungeWithKneeDown => write!(f, "low_lunge_with_knee_down"),
+            PoseExerciseName::Mermaid => write!(f, "mermaid"),
+            PoseExerciseName::Mountain => write!(f, "mountain"),
+            PoseExerciseName::OneLeggedDownwardFacingPoseOpenHipBentKnee => {
+                write!(f, "one_legged_downward_facing_pose_open_hip_bent_knee")
+            }
+            PoseExerciseName::OneLeggedPigeon => write!(f, "one_legged_pigeon"),
+            PoseExerciseName::PeacefulWarrior => write!(f, "peaceful_warrior"),
+            PoseExerciseName::Plank => write!(f, "plank"),
+            PoseExerciseName::Plow => write!(f, "plow"),
+            PoseExerciseName::ReclinedHandToFoot => write!(f, "reclined_hand_to_foot"),
+            PoseExerciseName::RevolvedHalfMoon => write!(f, "revolved_half_moon"),
+            PoseExerciseName::RevolvedHeadToKnee => write!(f, "revolved_head_to_knee"),
+            PoseExerciseName::RevolvedTriangle => write!(f, "revolved_triangle"),
+            PoseExerciseName::RunnersLunge => write!(f, "runners_lunge"),
+            PoseExerciseName::SeatedEasySideBend => write!(f, "seated_easy_side_bend"),
+            PoseExerciseName::SeatedEasyTwist => write!(f, "seated_easy_twist"),
+            PoseExerciseName::SeatedLongLegForwardBend => write!(f, "seated_long_leg_forward_bend"),
+            PoseExerciseName::SeatedWideLegForwardBend => write!(f, "seated_wide_leg_forward_bend"),
+            PoseExerciseName::ShoulderStand => write!(f, "shoulder_stand"),
+            PoseExerciseName::SideBoat => write!(f, "side_boat"),
+            PoseExerciseName::SidePlank => write!(f, "side_plank"),
+            PoseExerciseName::Sphinx => write!(f, "sphinx"),
+            PoseExerciseName::SquatOpenArmTwist => write!(f, "squat_open_arm_twist"),
+            PoseExerciseName::SquatPalmPress => write!(f, "squat_palm_press"),
+            PoseExerciseName::Staff => write!(f, "staff"),
+            PoseExerciseName::StandingArmsUp => write!(f, "standing_arms_up"),
+            PoseExerciseName::StandingForwardBendHalfwayUp => {
+                write!(f, "standing_forward_bend_halfway_up")
+            }
+            PoseExerciseName::StandingForwardBend => write!(f, "standing_forward_bend"),
+            PoseExerciseName::StandingSideOpener => write!(f, "standing_side_opener"),
+            PoseExerciseName::StandingSingleLegForwardBend => {
+                write!(f, "standing_single_leg_forward_bend")
+            }
+            PoseExerciseName::StandingSplit => write!(f, "standing_split"),
+            PoseExerciseName::StandingWideLegForwardBend => {
+                write!(f, "standing_wide_leg_forward_bend")
+            }
+            PoseExerciseName::StandingWideLegForwardBendWithTwist => {
+                write!(f, "standing_wide_leg_forward_bend_with_twist")
+            }
+            PoseExerciseName::SupineSpinalTwist => write!(f, "supine_spinal_twist"),
+            PoseExerciseName::TableTop => write!(f, "table_top"),
+            PoseExerciseName::ThreadTheNeedle => write!(f, "thread_the_needle"),
+            PoseExerciseName::Thunderbolt => write!(f, "thunderbolt"),
+            PoseExerciseName::ThunderboltPoseBothSidesArmStretch => {
+                write!(f, "thunderbolt_pose_both_sides_arm_stretch")
+            }
+            PoseExerciseName::Tree => write!(f, "tree"),
+            PoseExerciseName::Triangle => write!(f, "triangle"),
+            PoseExerciseName::UpDog => write!(f, "up_dog"),
+            PoseExerciseName::UpwardFacingPlank => write!(f, "upward_facing_plank"),
+            PoseExerciseName::WarriorOne => write!(f, "warrior_one"),
+            PoseExerciseName::WarriorThree => write!(f, "warrior_three"),
+            PoseExerciseName::WarriorTwo => write!(f, "warrior_two"),
+            PoseExerciseName::Wheel => write!(f, "wheel"),
+            PoseExerciseName::WideSideLunge => write!(f, "wide_side_lunge"),
+            PoseExerciseName::DeepBreathingWheelchair => write!(f, "deep_breathing_wheelchair"),
+            PoseExerciseName::DeepBreathingLowWheelchair => {
+                write!(f, "deep_breathing_low_wheelchair")
+            }
+            PoseExerciseName::DeepBreathingMidWheelchair => {
+                write!(f, "deep_breathing_mid_wheelchair")
+            }
+            PoseExerciseName::DeepBreathingHighWheelchair => {
+                write!(f, "deep_breathing_high_wheelchair")
+            }
+            PoseExerciseName::PrayerWheelchair => write!(f, "prayer_wheelchair"),
+            PoseExerciseName::OverheadPrayerWheelchair => write!(f, "overhead_prayer_wheelchair"),
+            PoseExerciseName::CactusWheelchair => write!(f, "cactus_wheelchair"),
+            PoseExerciseName::BreathingPunchesWheelchair => {
+                write!(f, "breathing_punches_wheelchair")
+            }
+            PoseExerciseName::BreathingPunchesExtendedWheelchair => {
+                write!(f, "breathing_punches_extended_wheelchair")
+            }
+            PoseExerciseName::BreathingPunchesOverheadWheelchair => {
+                write!(f, "breathing_punches_overhead_wheelchair")
+            }
+            PoseExerciseName::BreathingPunchesOverheadAndDownWheelchair => {
+                write!(f, "breathing_punches_overhead_and_down_wheelchair")
+            }
+            PoseExerciseName::BreathingPunchesSideWheelchair => {
+                write!(f, "breathing_punches_side_wheelchair")
+            }
+            PoseExerciseName::BreathingPunchesExtendedSideWheelchair => {
+                write!(f, "breathing_punches_extended_side_wheelchair")
+            }
+            PoseExerciseName::BreathingPunchesOverheadSideWheelchair => {
+                write!(f, "breathing_punches_overhead_side_wheelchair")
+            }
+            PoseExerciseName::BreathingPunchesOverheadAndDownSideWheelchair => {
+                write!(f, "breathing_punches_overhead_and_down_side_wheelchair")
+            }
+            PoseExerciseName::LeftHandBackWheelchair => write!(f, "left_hand_back_wheelchair"),
+            PoseExerciseName::TriangleWheelchair => write!(f, "triangle_wheelchair"),
+            PoseExerciseName::ThreadTheNeedleWheelchair => {
+                write!(f, "thread_the_needle_wheelchair")
+            }
+            PoseExerciseName::NeckFlexionAndExtensionWheelchair => {
+                write!(f, "neck_flexion_and_extension_wheelchair")
+            }
+            PoseExerciseName::NeckLateralFlexionWheelchair => {
+                write!(f, "neck_lateral_flexion_wheelchair")
+            }
+            PoseExerciseName::SpineFlexionAndExtensionWheelchair => {
+                write!(f, "spine_flexion_and_extension_wheelchair")
+            }
+            PoseExerciseName::SpineRotationWheelchair => write!(f, "spine_rotation_wheelchair"),
+            PoseExerciseName::SpineLateralFlexionWheelchair => {
+                write!(f, "spine_lateral_flexion_wheelchair")
+            }
+            PoseExerciseName::AlternativeSkiingWheelchair => {
+                write!(f, "alternative_skiing_wheelchair")
+            }
+            PoseExerciseName::ReachForwardWheelchair => write!(f, "reach_forward_wheelchair"),
+            PoseExerciseName::WarriorWheelchair => write!(f, "warrior_wheelchair"),
+            PoseExerciseName::ReverseWarriorWheelchair => write!(f, "reverse_warrior_wheelchair"),
+            PoseExerciseName::DownwardFacingDogToCobra => write!(f, "downward_facing_dog_to_cobra"),
+            PoseExerciseName::SeatedCatCow => write!(f, "seated_cat_cow"),
+            PoseExerciseName::Value(value) => write!(f, "{}", value),
+        }
+    }
+}
+impl convert::From<u16> for PoseExerciseName {
+    fn from(value: u16) -> Self {
+        match value {
+            0 => PoseExerciseName::AllFours,
+            1 => PoseExerciseName::AnkleToKnee,
+            2 => PoseExerciseName::BabyCobra,
+            3 => PoseExerciseName::Boat,
+            4 => PoseExerciseName::BoundAngle,
+            5 => PoseExerciseName::BoundSeatedSingleLegForwardBend,
+            6 => PoseExerciseName::Bow,
+            7 => PoseExerciseName::BowedHalfMoon,
+            8 => PoseExerciseName::Bridge,
+            9 => PoseExerciseName::Cat,
+            10 => PoseExerciseName::Chair,
+            11 => PoseExerciseName::Childs,
+            12 => PoseExerciseName::Corpse,
+            13 => PoseExerciseName::CowFace,
+            14 => PoseExerciseName::Cow,
+            15 => PoseExerciseName::DevotionalWarrior,
+            16 => PoseExerciseName::DolphinPlank,
+            17 => PoseExerciseName::Dolphin,
+            18 => PoseExerciseName::DownDogKneeToNose,
+            19 => PoseExerciseName::DownDogSplit,
+            20 => PoseExerciseName::DownDogSplitOpenHipBentKnee,
+            21 => PoseExerciseName::DownwardFacingDog,
+            22 => PoseExerciseName::Eagle,
+            23 => PoseExerciseName::EasySeated,
+            24 => PoseExerciseName::ExtendedPuppy,
+            25 => PoseExerciseName::ExtendedSideAngle,
+            26 => PoseExerciseName::Fish,
+            27 => PoseExerciseName::FourLimbedStaff,
+            28 => PoseExerciseName::FullSplit,
+            29 => PoseExerciseName::Gate,
+            30 => PoseExerciseName::HalfChairHalfAnkleToKnee,
+            31 => PoseExerciseName::HalfMoon,
+            32 => PoseExerciseName::HeadToKnee,
+            33 => PoseExerciseName::Heron,
+            34 => PoseExerciseName::Heros,
+            35 => PoseExerciseName::HighLunge,
+            36 => PoseExerciseName::KneesChestChin,
+            37 => PoseExerciseName::Lizard,
+            38 => PoseExerciseName::Locust,
+            39 => PoseExerciseName::LowLunge,
+            40 => PoseExerciseName::LowLungeTwist,
+            41 => PoseExerciseName::LowLungeWithKneeDown,
+            42 => PoseExerciseName::Mermaid,
+            43 => PoseExerciseName::Mountain,
+            44 => PoseExerciseName::OneLeggedDownwardFacingPoseOpenHipBentKnee,
+            45 => PoseExerciseName::OneLeggedPigeon,
+            46 => PoseExerciseName::PeacefulWarrior,
+            47 => PoseExerciseName::Plank,
+            48 => PoseExerciseName::Plow,
+            49 => PoseExerciseName::ReclinedHandToFoot,
+            50 => PoseExerciseName::RevolvedHalfMoon,
+            51 => PoseExerciseName::RevolvedHeadToKnee,
+            52 => PoseExerciseName::RevolvedTriangle,
+            53 => PoseExerciseName::RunnersLunge,
+            54 => PoseExerciseName::SeatedEasySideBend,
+            55 => PoseExerciseName::SeatedEasyTwist,
+            56 => PoseExerciseName::SeatedLongLegForwardBend,
+            57 => PoseExerciseName::SeatedWideLegForwardBend,
+            58 => PoseExerciseName::ShoulderStand,
+            59 => PoseExerciseName::SideBoat,
+            60 => PoseExerciseName::SidePlank,
+            61 => PoseExerciseName::Sphinx,
+            62 => PoseExerciseName::SquatOpenArmTwist,
+            63 => PoseExerciseName::SquatPalmPress,
+            64 => PoseExerciseName::Staff,
+            65 => PoseExerciseName::StandingArmsUp,
+            66 => PoseExerciseName::StandingForwardBendHalfwayUp,
+            67 => PoseExerciseName::StandingForwardBend,
+            68 => PoseExerciseName::StandingSideOpener,
+            69 => PoseExerciseName::StandingSingleLegForwardBend,
+            70 => PoseExerciseName::StandingSplit,
+            71 => PoseExerciseName::StandingWideLegForwardBend,
+            72 => PoseExerciseName::StandingWideLegForwardBendWithTwist,
+            73 => PoseExerciseName::SupineSpinalTwist,
+            74 => PoseExerciseName::TableTop,
+            75 => PoseExerciseName::ThreadTheNeedle,
+            76 => PoseExerciseName::Thunderbolt,
+            77 => PoseExerciseName::ThunderboltPoseBothSidesArmStretch,
+            78 => PoseExerciseName::Tree,
+            79 => PoseExerciseName::Triangle,
+            80 => PoseExerciseName::UpDog,
+            81 => PoseExerciseName::UpwardFacingPlank,
+            82 => PoseExerciseName::WarriorOne,
+            83 => PoseExerciseName::WarriorThree,
+            84 => PoseExerciseName::WarriorTwo,
+            85 => PoseExerciseName::Wheel,
+            86 => PoseExerciseName::WideSideLunge,
+            87 => PoseExerciseName::DeepBreathingWheelchair,
+            88 => PoseExerciseName::DeepBreathingLowWheelchair,
+            89 => PoseExerciseName::DeepBreathingMidWheelchair,
+            90 => PoseExerciseName::DeepBreathingHighWheelchair,
+            91 => PoseExerciseName::PrayerWheelchair,
+            92 => PoseExerciseName::OverheadPrayerWheelchair,
+            93 => PoseExerciseName::CactusWheelchair,
+            94 => PoseExerciseName::BreathingPunchesWheelchair,
+            95 => PoseExerciseName::BreathingPunchesExtendedWheelchair,
+            96 => PoseExerciseName::BreathingPunchesOverheadWheelchair,
+            97 => PoseExerciseName::BreathingPunchesOverheadAndDownWheelchair,
+            98 => PoseExerciseName::BreathingPunchesSideWheelchair,
+            99 => PoseExerciseName::BreathingPunchesExtendedSideWheelchair,
+            100 => PoseExerciseName::BreathingPunchesOverheadSideWheelchair,
+            101 => PoseExerciseName::BreathingPunchesOverheadAndDownSideWheelchair,
+            102 => PoseExerciseName::LeftHandBackWheelchair,
+            103 => PoseExerciseName::TriangleWheelchair,
+            104 => PoseExerciseName::ThreadTheNeedleWheelchair,
+            105 => PoseExerciseName::NeckFlexionAndExtensionWheelchair,
+            106 => PoseExerciseName::NeckLateralFlexionWheelchair,
+            107 => PoseExerciseName::SpineFlexionAndExtensionWheelchair,
+            108 => PoseExerciseName::SpineRotationWheelchair,
+            109 => PoseExerciseName::SpineLateralFlexionWheelchair,
+            110 => PoseExerciseName::AlternativeSkiingWheelchair,
+            111 => PoseExerciseName::ReachForwardWheelchair,
+            112 => PoseExerciseName::WarriorWheelchair,
+            113 => PoseExerciseName::ReverseWarriorWheelchair,
+            114 => PoseExerciseName::DownwardFacingDogToCobra,
+            115 => PoseExerciseName::SeatedCatCow,
+            _ => PoseExerciseName::Value(value),
+        }
+    }
+}
+impl convert::From<i64> for PoseExerciseName {
+    fn from(value: i64) -> Self {
+        PoseExerciseName::from(value as u16)
+    }
+}
+impl convert::From<&str> for PoseExerciseName {
+    fn from(value: &str) -> Self {
+        match value {
+            "all_fours" => PoseExerciseName::AllFours,
+            "ankle_to_knee" => PoseExerciseName::AnkleToKnee,
+            "baby_cobra" => PoseExerciseName::BabyCobra,
+            "boat" => PoseExerciseName::Boat,
+            "bound_angle" => PoseExerciseName::BoundAngle,
+            "bound_seated_single_leg_forward_bend" => {
+                PoseExerciseName::BoundSeatedSingleLegForwardBend
+            }
+            "bow" => PoseExerciseName::Bow,
+            "bowed_half_moon" => PoseExerciseName::BowedHalfMoon,
+            "bridge" => PoseExerciseName::Bridge,
+            "cat" => PoseExerciseName::Cat,
+            "chair" => PoseExerciseName::Chair,
+            "childs" => PoseExerciseName::Childs,
+            "corpse" => PoseExerciseName::Corpse,
+            "cow_face" => PoseExerciseName::CowFace,
+            "cow" => PoseExerciseName::Cow,
+            "devotional_warrior" => PoseExerciseName::DevotionalWarrior,
+            "dolphin_plank" => PoseExerciseName::DolphinPlank,
+            "dolphin" => PoseExerciseName::Dolphin,
+            "down_dog_knee_to_nose" => PoseExerciseName::DownDogKneeToNose,
+            "down_dog_split" => PoseExerciseName::DownDogSplit,
+            "down_dog_split_open_hip_bent_knee" => PoseExerciseName::DownDogSplitOpenHipBentKnee,
+            "downward_facing_dog" => PoseExerciseName::DownwardFacingDog,
+            "eagle" => PoseExerciseName::Eagle,
+            "easy_seated" => PoseExerciseName::EasySeated,
+            "extended_puppy" => PoseExerciseName::ExtendedPuppy,
+            "extended_side_angle" => PoseExerciseName::ExtendedSideAngle,
+            "fish" => PoseExerciseName::Fish,
+            "four_limbed_staff" => PoseExerciseName::FourLimbedStaff,
+            "full_split" => PoseExerciseName::FullSplit,
+            "gate" => PoseExerciseName::Gate,
+            "half_chair_half_ankle_to_knee" => PoseExerciseName::HalfChairHalfAnkleToKnee,
+            "half_moon" => PoseExerciseName::HalfMoon,
+            "head_to_knee" => PoseExerciseName::HeadToKnee,
+            "heron" => PoseExerciseName::Heron,
+            "heros" => PoseExerciseName::Heros,
+            "high_lunge" => PoseExerciseName::HighLunge,
+            "knees_chest_chin" => PoseExerciseName::KneesChestChin,
+            "lizard" => PoseExerciseName::Lizard,
+            "locust" => PoseExerciseName::Locust,
+            "low_lunge" => PoseExerciseName::LowLunge,
+            "low_lunge_twist" => PoseExerciseName::LowLungeTwist,
+            "low_lunge_with_knee_down" => PoseExerciseName::LowLungeWithKneeDown,
+            "mermaid" => PoseExerciseName::Mermaid,
+            "mountain" => PoseExerciseName::Mountain,
+            "one_legged_downward_facing_pose_open_hip_bent_knee" => {
+                PoseExerciseName::OneLeggedDownwardFacingPoseOpenHipBentKnee
+            }
+            "one_legged_pigeon" => PoseExerciseName::OneLeggedPigeon,
+            "peaceful_warrior" => PoseExerciseName::PeacefulWarrior,
+            "plank" => PoseExerciseName::Plank,
+            "plow" => PoseExerciseName::Plow,
+            "reclined_hand_to_foot" => PoseExerciseName::ReclinedHandToFoot,
+            "revolved_half_moon" => PoseExerciseName::RevolvedHalfMoon,
+            "revolved_head_to_knee" => PoseExerciseName::RevolvedHeadToKnee,
+            "revolved_triangle" => PoseExerciseName::RevolvedTriangle,
+            "runners_lunge" => PoseExerciseName::RunnersLunge,
+            "seated_easy_side_bend" => PoseExerciseName::SeatedEasySideBend,
+            "seated_easy_twist" => PoseExerciseName::SeatedEasyTwist,
+            "seated_long_leg_forward_bend" => PoseExerciseName::SeatedLongLegForwardBend,
+            "seated_wide_leg_forward_bend" => PoseExerciseName::SeatedWideLegForwardBend,
+            "shoulder_stand" => PoseExerciseName::ShoulderStand,
+            "side_boat" => PoseExerciseName::SideBoat,
+            "side_plank" => PoseExerciseName::SidePlank,
+            "sphinx" => PoseExerciseName::Sphinx,
+            "squat_open_arm_twist" => PoseExerciseName::SquatOpenArmTwist,
+            "squat_palm_press" => PoseExerciseName::SquatPalmPress,
+            "staff" => PoseExerciseName::Staff,
+            "standing_arms_up" => PoseExerciseName::StandingArmsUp,
+            "standing_forward_bend_halfway_up" => PoseExerciseName::StandingForwardBendHalfwayUp,
+            "standing_forward_bend" => PoseExerciseName::StandingForwardBend,
+            "standing_side_opener" => PoseExerciseName::StandingSideOpener,
+            "standing_single_leg_forward_bend" => PoseExerciseName::StandingSingleLegForwardBend,
+            "standing_split" => PoseExerciseName::StandingSplit,
+            "standing_wide_leg_forward_bend" => PoseExerciseName::StandingWideLegForwardBend,
+            "standing_wide_leg_forward_bend_with_twist" => {
+                PoseExerciseName::StandingWideLegForwardBendWithTwist
+            }
+            "supine_spinal_twist" => PoseExerciseName::SupineSpinalTwist,
+            "table_top" => PoseExerciseName::TableTop,
+            "thread_the_needle" => PoseExerciseName::ThreadTheNeedle,
+            "thunderbolt" => PoseExerciseName::Thunderbolt,
+            "thunderbolt_pose_both_sides_arm_stretch" => {
+                PoseExerciseName::ThunderboltPoseBothSidesArmStretch
+            }
+            "tree" => PoseExerciseName::Tree,
+            "triangle" => PoseExerciseName::Triangle,
+            "up_dog" => PoseExerciseName::UpDog,
+            "upward_facing_plank" => PoseExerciseName::UpwardFacingPlank,
+            "warrior_one" => PoseExerciseName::WarriorOne,
+            "warrior_three" => PoseExerciseName::WarriorThree,
+            "warrior_two" => PoseExerciseName::WarriorTwo,
+            "wheel" => PoseExerciseName::Wheel,
+            "wide_side_lunge" => PoseExerciseName::WideSideLunge,
+            "deep_breathing_wheelchair" => PoseExerciseName::DeepBreathingWheelchair,
+            "deep_breathing_low_wheelchair" => PoseExerciseName::DeepBreathingLowWheelchair,
+            "deep_breathing_mid_wheelchair" => PoseExerciseName::DeepBreathingMidWheelchair,
+            "deep_breathing_high_wheelchair" => PoseExerciseName::DeepBreathingHighWheelchair,
+            "prayer_wheelchair" => PoseExerciseName::PrayerWheelchair,
+            "overhead_prayer_wheelchair" => PoseExerciseName::OverheadPrayerWheelchair,
+            "cactus_wheelchair" => PoseExerciseName::CactusWheelchair,
+            "breathing_punches_wheelchair" => PoseExerciseName::BreathingPunchesWheelchair,
+            "breathing_punches_extended_wheelchair" => {
+                PoseExerciseName::BreathingPunchesExtendedWheelchair
+            }
+            "breathing_punches_overhead_wheelchair" => {
+                PoseExerciseName::BreathingPunchesOverheadWheelchair
+            }
+            "breathing_punches_overhead_and_down_wheelchair" => {
+                PoseExerciseName::BreathingPunchesOverheadAndDownWheelchair
+            }
+            "breathing_punches_side_wheelchair" => PoseExerciseName::BreathingPunchesSideWheelchair,
+            "breathing_punches_extended_side_wheelchair" => {
+                PoseExerciseName::BreathingPunchesExtendedSideWheelchair
+            }
+            "breathing_punches_overhead_side_wheelchair" => {
+                PoseExerciseName::BreathingPunchesOverheadSideWheelchair
+            }
+            "breathing_punches_overhead_and_down_side_wheelchair" => {
+                PoseExerciseName::BreathingPunchesOverheadAndDownSideWheelchair
+            }
+            "left_hand_back_wheelchair" => PoseExerciseName::LeftHandBackWheelchair,
+            "triangle_wheelchair" => PoseExerciseName::TriangleWheelchair,
+            "thread_the_needle_wheelchair" => PoseExerciseName::ThreadTheNeedleWheelchair,
+            "neck_flexion_and_extension_wheelchair" => {
+                PoseExerciseName::NeckFlexionAndExtensionWheelchair
+            }
+            "neck_lateral_flexion_wheelchair" => PoseExerciseName::NeckLateralFlexionWheelchair,
+            "spine_flexion_and_extension_wheelchair" => {
+                PoseExerciseName::SpineFlexionAndExtensionWheelchair
+            }
+            "spine_rotation_wheelchair" => PoseExerciseName::SpineRotationWheelchair,
+            "spine_lateral_flexion_wheelchair" => PoseExerciseName::SpineLateralFlexionWheelchair,
+            "alternative_skiing_wheelchair" => PoseExerciseName::AlternativeSkiingWheelchair,
+            "reach_forward_wheelchair" => PoseExerciseName::ReachForwardWheelchair,
+            "warrior_wheelchair" => PoseExerciseName::WarriorWheelchair,
+            "reverse_warrior_wheelchair" => PoseExerciseName::ReverseWarriorWheelchair,
+            "downward_facing_dog_to_cobra" => PoseExerciseName::DownwardFacingDogToCobra,
+            "seated_cat_cow" => PoseExerciseName::SeatedCatCow,
+            &_ => PoseExerciseName::Value(0),
+        }
+    }
+}
+impl Serialize for PoseExerciseName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match &self {
+            PoseExerciseName::Value(value) => serializer.serialize_u16(*value),
             _ => serializer.serialize_str(&self.to_string()),
         }
     }
@@ -29444,11 +32450,15 @@ pub enum TricepsExtensionExerciseName {
     TricepsExtensionOnFloor,
     TricepsPressdown,
     WeightedDip,
+    AlternatingDumbbellLyingTricepsExtension,
+    TricepsPress,
+    DumbbellKickbackWheelchair,
+    OverheadDumbbellTricepsExtensionWheelchair,
     Value(u16),
 }
 impl TricepsExtensionExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64..=40i64)
+        matches!(value, 0i64..=44i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -29493,6 +32503,10 @@ impl TricepsExtensionExerciseName {
             TricepsExtensionExerciseName::TricepsExtensionOnFloor => 38,
             TricepsExtensionExerciseName::TricepsPressdown => 39,
             TricepsExtensionExerciseName::WeightedDip => 40,
+            TricepsExtensionExerciseName::AlternatingDumbbellLyingTricepsExtension => 41,
+            TricepsExtensionExerciseName::TricepsPress => 42,
+            TricepsExtensionExerciseName::DumbbellKickbackWheelchair => 43,
+            TricepsExtensionExerciseName::OverheadDumbbellTricepsExtensionWheelchair => 44,
             TricepsExtensionExerciseName::Value(value) => value,
         }
     }
@@ -29598,6 +32612,16 @@ impl fmt::Display for TricepsExtensionExerciseName {
             }
             TricepsExtensionExerciseName::TricepsPressdown => write!(f, "triceps_pressdown"),
             TricepsExtensionExerciseName::WeightedDip => write!(f, "weighted_dip"),
+            TricepsExtensionExerciseName::AlternatingDumbbellLyingTricepsExtension => {
+                write!(f, "alternating_dumbbell_lying_triceps_extension")
+            }
+            TricepsExtensionExerciseName::TricepsPress => write!(f, "triceps_press"),
+            TricepsExtensionExerciseName::DumbbellKickbackWheelchair => {
+                write!(f, "dumbbell_kickback_wheelchair")
+            }
+            TricepsExtensionExerciseName::OverheadDumbbellTricepsExtensionWheelchair => {
+                write!(f, "overhead_dumbbell_triceps_extension_wheelchair")
+            }
             TricepsExtensionExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
@@ -29646,6 +32670,10 @@ impl convert::From<u16> for TricepsExtensionExerciseName {
             38 => TricepsExtensionExerciseName::TricepsExtensionOnFloor,
             39 => TricepsExtensionExerciseName::TricepsPressdown,
             40 => TricepsExtensionExerciseName::WeightedDip,
+            41 => TricepsExtensionExerciseName::AlternatingDumbbellLyingTricepsExtension,
+            42 => TricepsExtensionExerciseName::TricepsPress,
+            43 => TricepsExtensionExerciseName::DumbbellKickbackWheelchair,
+            44 => TricepsExtensionExerciseName::OverheadDumbbellTricepsExtensionWheelchair,
             _ => TricepsExtensionExerciseName::Value(value),
         }
     }
@@ -29743,6 +32771,16 @@ impl convert::From<&str> for TricepsExtensionExerciseName {
             "triceps_extension_on_floor" => TricepsExtensionExerciseName::TricepsExtensionOnFloor,
             "triceps_pressdown" => TricepsExtensionExerciseName::TricepsPressdown,
             "weighted_dip" => TricepsExtensionExerciseName::WeightedDip,
+            "alternating_dumbbell_lying_triceps_extension" => {
+                TricepsExtensionExerciseName::AlternatingDumbbellLyingTricepsExtension
+            }
+            "triceps_press" => TricepsExtensionExerciseName::TricepsPress,
+            "dumbbell_kickback_wheelchair" => {
+                TricepsExtensionExerciseName::DumbbellKickbackWheelchair
+            }
+            "overhead_dumbbell_triceps_extension_wheelchair" => {
+                TricepsExtensionExerciseName::OverheadDumbbellTricepsExtensionWheelchair
+            }
             &_ => TricepsExtensionExerciseName::Value(0),
         }
     }
@@ -29792,11 +32830,72 @@ pub enum WarmUpExerciseName {
     WalkingLegCradles,
     Walkout,
     WalkoutFromPushUpPosition,
+    BicepsStretch,
+    GlutesStretch,
+    StandingHamstringStretch,
+    Stretch9090,
+    StretchAbs,
+    StretchButterfly,
+    StretchCalf,
+    StretchCatCow,
+    StretchChildsPose,
+    StretchCobra,
+    StretchForearms,
+    StretchForwardGlutes,
+    StretchFrontSplit,
+    StretchHamstring,
+    StretchHipFlexorAndQuad,
+    StretchLat,
+    StretchLevatorScapulae,
+    StretchLungeWithSpinalTwist,
+    StretchLungingHipFlexor,
+    StretchLyingAbduction,
+    StretchLyingItBand,
+    StretchLyingKneeToChest,
+    StretchLyingPiriformis,
+    StretchLyingSpinalTwist,
+    StretchNeck,
+    StretchObliques,
+    StretchOverUnderShoulder,
+    StretchPectoral,
+    StretchPigeonPose,
+    StretchPiriformis,
+    StretchQuad,
+    StretchScorpion,
+    StretchShoulder,
+    StretchSide,
+    StretchSideLunge,
+    StretchSideSplit,
+    StretchStandingItBand,
+    StretchStraddle,
+    StretchTriceps,
+    StretchWallChestAndShoulder,
+    NeckRotationsWheelchair,
+    HalfKneelingArmRotation,
+    ThreeWayAnkleMobilization,
+    #[doc = "90_90_hip_switch"]
+    NinetyNinetyHipSwitch,
+    ActiveFrog,
+    ShoulderSweeps,
+    AnkleLunges,
+    BackRollFoamRoller,
+    BearCrawl,
+    LatissimusDorsiFoamRoll,
+    ReverseTHipOpener,
+    ShoulderRolls,
+    ChestOpeners,
+    TricepsStretch,
+    UpperBackStretch,
+    HipCircles,
+    AnkleStretch,
+    MarchingInPlace,
+    TricepsStretchWheelchair,
+    UpperBackStretchWheelchair,
     Value(u16),
 }
 impl WarmUpExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64..=30i64)
+        matches!(value, 0i64..=90i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -29831,6 +32930,66 @@ impl WarmUpExerciseName {
             WarmUpExerciseName::WalkingLegCradles => 28,
             WarmUpExerciseName::Walkout => 29,
             WarmUpExerciseName::WalkoutFromPushUpPosition => 30,
+            WarmUpExerciseName::BicepsStretch => 31,
+            WarmUpExerciseName::GlutesStretch => 32,
+            WarmUpExerciseName::StandingHamstringStretch => 33,
+            WarmUpExerciseName::Stretch9090 => 34,
+            WarmUpExerciseName::StretchAbs => 35,
+            WarmUpExerciseName::StretchButterfly => 36,
+            WarmUpExerciseName::StretchCalf => 37,
+            WarmUpExerciseName::StretchCatCow => 38,
+            WarmUpExerciseName::StretchChildsPose => 39,
+            WarmUpExerciseName::StretchCobra => 40,
+            WarmUpExerciseName::StretchForearms => 41,
+            WarmUpExerciseName::StretchForwardGlutes => 42,
+            WarmUpExerciseName::StretchFrontSplit => 43,
+            WarmUpExerciseName::StretchHamstring => 44,
+            WarmUpExerciseName::StretchHipFlexorAndQuad => 45,
+            WarmUpExerciseName::StretchLat => 46,
+            WarmUpExerciseName::StretchLevatorScapulae => 47,
+            WarmUpExerciseName::StretchLungeWithSpinalTwist => 48,
+            WarmUpExerciseName::StretchLungingHipFlexor => 49,
+            WarmUpExerciseName::StretchLyingAbduction => 50,
+            WarmUpExerciseName::StretchLyingItBand => 51,
+            WarmUpExerciseName::StretchLyingKneeToChest => 52,
+            WarmUpExerciseName::StretchLyingPiriformis => 53,
+            WarmUpExerciseName::StretchLyingSpinalTwist => 54,
+            WarmUpExerciseName::StretchNeck => 55,
+            WarmUpExerciseName::StretchObliques => 56,
+            WarmUpExerciseName::StretchOverUnderShoulder => 57,
+            WarmUpExerciseName::StretchPectoral => 58,
+            WarmUpExerciseName::StretchPigeonPose => 59,
+            WarmUpExerciseName::StretchPiriformis => 60,
+            WarmUpExerciseName::StretchQuad => 61,
+            WarmUpExerciseName::StretchScorpion => 62,
+            WarmUpExerciseName::StretchShoulder => 63,
+            WarmUpExerciseName::StretchSide => 64,
+            WarmUpExerciseName::StretchSideLunge => 65,
+            WarmUpExerciseName::StretchSideSplit => 66,
+            WarmUpExerciseName::StretchStandingItBand => 67,
+            WarmUpExerciseName::StretchStraddle => 68,
+            WarmUpExerciseName::StretchTriceps => 69,
+            WarmUpExerciseName::StretchWallChestAndShoulder => 70,
+            WarmUpExerciseName::NeckRotationsWheelchair => 71,
+            WarmUpExerciseName::HalfKneelingArmRotation => 72,
+            WarmUpExerciseName::ThreeWayAnkleMobilization => 73,
+            WarmUpExerciseName::NinetyNinetyHipSwitch => 74,
+            WarmUpExerciseName::ActiveFrog => 75,
+            WarmUpExerciseName::ShoulderSweeps => 76,
+            WarmUpExerciseName::AnkleLunges => 77,
+            WarmUpExerciseName::BackRollFoamRoller => 78,
+            WarmUpExerciseName::BearCrawl => 79,
+            WarmUpExerciseName::LatissimusDorsiFoamRoll => 80,
+            WarmUpExerciseName::ReverseTHipOpener => 81,
+            WarmUpExerciseName::ShoulderRolls => 82,
+            WarmUpExerciseName::ChestOpeners => 83,
+            WarmUpExerciseName::TricepsStretch => 84,
+            WarmUpExerciseName::UpperBackStretch => 85,
+            WarmUpExerciseName::HipCircles => 86,
+            WarmUpExerciseName::AnkleStretch => 87,
+            WarmUpExerciseName::MarchingInPlace => 88,
+            WarmUpExerciseName::TricepsStretchWheelchair => 89,
+            WarmUpExerciseName::UpperBackStretchWheelchair => 90,
             WarmUpExerciseName::Value(value) => value,
         }
     }
@@ -29884,6 +33043,76 @@ impl fmt::Display for WarmUpExerciseName {
             WarmUpExerciseName::WalkoutFromPushUpPosition => {
                 write!(f, "walkout_from_push_up_position")
             }
+            WarmUpExerciseName::BicepsStretch => write!(f, "biceps_stretch"),
+            WarmUpExerciseName::GlutesStretch => write!(f, "glutes_stretch"),
+            WarmUpExerciseName::StandingHamstringStretch => write!(f, "standing_hamstring_stretch"),
+            WarmUpExerciseName::Stretch9090 => write!(f, "stretch_90_90"),
+            WarmUpExerciseName::StretchAbs => write!(f, "stretch_abs"),
+            WarmUpExerciseName::StretchButterfly => write!(f, "stretch_butterfly"),
+            WarmUpExerciseName::StretchCalf => write!(f, "stretch_calf"),
+            WarmUpExerciseName::StretchCatCow => write!(f, "stretch_cat_cow"),
+            WarmUpExerciseName::StretchChildsPose => write!(f, "stretch_childs_pose"),
+            WarmUpExerciseName::StretchCobra => write!(f, "stretch_cobra"),
+            WarmUpExerciseName::StretchForearms => write!(f, "stretch_forearms"),
+            WarmUpExerciseName::StretchForwardGlutes => write!(f, "stretch_forward_glutes"),
+            WarmUpExerciseName::StretchFrontSplit => write!(f, "stretch_front_split"),
+            WarmUpExerciseName::StretchHamstring => write!(f, "stretch_hamstring"),
+            WarmUpExerciseName::StretchHipFlexorAndQuad => write!(f, "stretch_hip_flexor_and_quad"),
+            WarmUpExerciseName::StretchLat => write!(f, "stretch_lat"),
+            WarmUpExerciseName::StretchLevatorScapulae => write!(f, "stretch_levator_scapulae"),
+            WarmUpExerciseName::StretchLungeWithSpinalTwist => {
+                write!(f, "stretch_lunge_with_spinal_twist")
+            }
+            WarmUpExerciseName::StretchLungingHipFlexor => write!(f, "stretch_lunging_hip_flexor"),
+            WarmUpExerciseName::StretchLyingAbduction => write!(f, "stretch_lying_abduction"),
+            WarmUpExerciseName::StretchLyingItBand => write!(f, "stretch_lying_it_band"),
+            WarmUpExerciseName::StretchLyingKneeToChest => write!(f, "stretch_lying_knee_to_chest"),
+            WarmUpExerciseName::StretchLyingPiriformis => write!(f, "stretch_lying_piriformis"),
+            WarmUpExerciseName::StretchLyingSpinalTwist => write!(f, "stretch_lying_spinal_twist"),
+            WarmUpExerciseName::StretchNeck => write!(f, "stretch_neck"),
+            WarmUpExerciseName::StretchObliques => write!(f, "stretch_obliques"),
+            WarmUpExerciseName::StretchOverUnderShoulder => {
+                write!(f, "stretch_over_under_shoulder")
+            }
+            WarmUpExerciseName::StretchPectoral => write!(f, "stretch_pectoral"),
+            WarmUpExerciseName::StretchPigeonPose => write!(f, "stretch_pigeon_pose"),
+            WarmUpExerciseName::StretchPiriformis => write!(f, "stretch_piriformis"),
+            WarmUpExerciseName::StretchQuad => write!(f, "stretch_quad"),
+            WarmUpExerciseName::StretchScorpion => write!(f, "stretch_scorpion"),
+            WarmUpExerciseName::StretchShoulder => write!(f, "stretch_shoulder"),
+            WarmUpExerciseName::StretchSide => write!(f, "stretch_side"),
+            WarmUpExerciseName::StretchSideLunge => write!(f, "stretch_side_lunge"),
+            WarmUpExerciseName::StretchSideSplit => write!(f, "stretch_side_split"),
+            WarmUpExerciseName::StretchStandingItBand => write!(f, "stretch_standing_it_band"),
+            WarmUpExerciseName::StretchStraddle => write!(f, "stretch_straddle"),
+            WarmUpExerciseName::StretchTriceps => write!(f, "stretch_triceps"),
+            WarmUpExerciseName::StretchWallChestAndShoulder => {
+                write!(f, "stretch_wall_chest_and_shoulder")
+            }
+            WarmUpExerciseName::NeckRotationsWheelchair => write!(f, "neck_rotations_wheelchair"),
+            WarmUpExerciseName::HalfKneelingArmRotation => write!(f, "half_kneeling_arm_rotation"),
+            WarmUpExerciseName::ThreeWayAnkleMobilization => {
+                write!(f, "three_way_ankle_mobilization")
+            }
+            WarmUpExerciseName::NinetyNinetyHipSwitch => write!(f, "ninety_ninety_hip_switch"),
+            WarmUpExerciseName::ActiveFrog => write!(f, "active_frog"),
+            WarmUpExerciseName::ShoulderSweeps => write!(f, "shoulder_sweeps"),
+            WarmUpExerciseName::AnkleLunges => write!(f, "ankle_lunges"),
+            WarmUpExerciseName::BackRollFoamRoller => write!(f, "back_roll_foam_roller"),
+            WarmUpExerciseName::BearCrawl => write!(f, "bear_crawl"),
+            WarmUpExerciseName::LatissimusDorsiFoamRoll => write!(f, "latissimus_dorsi_foam_roll"),
+            WarmUpExerciseName::ReverseTHipOpener => write!(f, "reverse_t_hip_opener"),
+            WarmUpExerciseName::ShoulderRolls => write!(f, "shoulder_rolls"),
+            WarmUpExerciseName::ChestOpeners => write!(f, "chest_openers"),
+            WarmUpExerciseName::TricepsStretch => write!(f, "triceps_stretch"),
+            WarmUpExerciseName::UpperBackStretch => write!(f, "upper_back_stretch"),
+            WarmUpExerciseName::HipCircles => write!(f, "hip_circles"),
+            WarmUpExerciseName::AnkleStretch => write!(f, "ankle_stretch"),
+            WarmUpExerciseName::MarchingInPlace => write!(f, "marching_in_place"),
+            WarmUpExerciseName::TricepsStretchWheelchair => write!(f, "triceps_stretch_wheelchair"),
+            WarmUpExerciseName::UpperBackStretchWheelchair => {
+                write!(f, "upper_back_stretch_wheelchair")
+            }
             WarmUpExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
@@ -29922,6 +33151,66 @@ impl convert::From<u16> for WarmUpExerciseName {
             28 => WarmUpExerciseName::WalkingLegCradles,
             29 => WarmUpExerciseName::Walkout,
             30 => WarmUpExerciseName::WalkoutFromPushUpPosition,
+            31 => WarmUpExerciseName::BicepsStretch,
+            32 => WarmUpExerciseName::GlutesStretch,
+            33 => WarmUpExerciseName::StandingHamstringStretch,
+            34 => WarmUpExerciseName::Stretch9090,
+            35 => WarmUpExerciseName::StretchAbs,
+            36 => WarmUpExerciseName::StretchButterfly,
+            37 => WarmUpExerciseName::StretchCalf,
+            38 => WarmUpExerciseName::StretchCatCow,
+            39 => WarmUpExerciseName::StretchChildsPose,
+            40 => WarmUpExerciseName::StretchCobra,
+            41 => WarmUpExerciseName::StretchForearms,
+            42 => WarmUpExerciseName::StretchForwardGlutes,
+            43 => WarmUpExerciseName::StretchFrontSplit,
+            44 => WarmUpExerciseName::StretchHamstring,
+            45 => WarmUpExerciseName::StretchHipFlexorAndQuad,
+            46 => WarmUpExerciseName::StretchLat,
+            47 => WarmUpExerciseName::StretchLevatorScapulae,
+            48 => WarmUpExerciseName::StretchLungeWithSpinalTwist,
+            49 => WarmUpExerciseName::StretchLungingHipFlexor,
+            50 => WarmUpExerciseName::StretchLyingAbduction,
+            51 => WarmUpExerciseName::StretchLyingItBand,
+            52 => WarmUpExerciseName::StretchLyingKneeToChest,
+            53 => WarmUpExerciseName::StretchLyingPiriformis,
+            54 => WarmUpExerciseName::StretchLyingSpinalTwist,
+            55 => WarmUpExerciseName::StretchNeck,
+            56 => WarmUpExerciseName::StretchObliques,
+            57 => WarmUpExerciseName::StretchOverUnderShoulder,
+            58 => WarmUpExerciseName::StretchPectoral,
+            59 => WarmUpExerciseName::StretchPigeonPose,
+            60 => WarmUpExerciseName::StretchPiriformis,
+            61 => WarmUpExerciseName::StretchQuad,
+            62 => WarmUpExerciseName::StretchScorpion,
+            63 => WarmUpExerciseName::StretchShoulder,
+            64 => WarmUpExerciseName::StretchSide,
+            65 => WarmUpExerciseName::StretchSideLunge,
+            66 => WarmUpExerciseName::StretchSideSplit,
+            67 => WarmUpExerciseName::StretchStandingItBand,
+            68 => WarmUpExerciseName::StretchStraddle,
+            69 => WarmUpExerciseName::StretchTriceps,
+            70 => WarmUpExerciseName::StretchWallChestAndShoulder,
+            71 => WarmUpExerciseName::NeckRotationsWheelchair,
+            72 => WarmUpExerciseName::HalfKneelingArmRotation,
+            73 => WarmUpExerciseName::ThreeWayAnkleMobilization,
+            74 => WarmUpExerciseName::NinetyNinetyHipSwitch,
+            75 => WarmUpExerciseName::ActiveFrog,
+            76 => WarmUpExerciseName::ShoulderSweeps,
+            77 => WarmUpExerciseName::AnkleLunges,
+            78 => WarmUpExerciseName::BackRollFoamRoller,
+            79 => WarmUpExerciseName::BearCrawl,
+            80 => WarmUpExerciseName::LatissimusDorsiFoamRoll,
+            81 => WarmUpExerciseName::ReverseTHipOpener,
+            82 => WarmUpExerciseName::ShoulderRolls,
+            83 => WarmUpExerciseName::ChestOpeners,
+            84 => WarmUpExerciseName::TricepsStretch,
+            85 => WarmUpExerciseName::UpperBackStretch,
+            86 => WarmUpExerciseName::HipCircles,
+            87 => WarmUpExerciseName::AnkleStretch,
+            88 => WarmUpExerciseName::MarchingInPlace,
+            89 => WarmUpExerciseName::TricepsStretchWheelchair,
+            90 => WarmUpExerciseName::UpperBackStretchWheelchair,
             _ => WarmUpExerciseName::Value(value),
         }
     }
@@ -29965,6 +33254,66 @@ impl convert::From<&str> for WarmUpExerciseName {
             "walking_leg_cradles" => WarmUpExerciseName::WalkingLegCradles,
             "walkout" => WarmUpExerciseName::Walkout,
             "walkout_from_push_up_position" => WarmUpExerciseName::WalkoutFromPushUpPosition,
+            "biceps_stretch" => WarmUpExerciseName::BicepsStretch,
+            "glutes_stretch" => WarmUpExerciseName::GlutesStretch,
+            "standing_hamstring_stretch" => WarmUpExerciseName::StandingHamstringStretch,
+            "stretch_90_90" => WarmUpExerciseName::Stretch9090,
+            "stretch_abs" => WarmUpExerciseName::StretchAbs,
+            "stretch_butterfly" => WarmUpExerciseName::StretchButterfly,
+            "stretch_calf" => WarmUpExerciseName::StretchCalf,
+            "stretch_cat_cow" => WarmUpExerciseName::StretchCatCow,
+            "stretch_childs_pose" => WarmUpExerciseName::StretchChildsPose,
+            "stretch_cobra" => WarmUpExerciseName::StretchCobra,
+            "stretch_forearms" => WarmUpExerciseName::StretchForearms,
+            "stretch_forward_glutes" => WarmUpExerciseName::StretchForwardGlutes,
+            "stretch_front_split" => WarmUpExerciseName::StretchFrontSplit,
+            "stretch_hamstring" => WarmUpExerciseName::StretchHamstring,
+            "stretch_hip_flexor_and_quad" => WarmUpExerciseName::StretchHipFlexorAndQuad,
+            "stretch_lat" => WarmUpExerciseName::StretchLat,
+            "stretch_levator_scapulae" => WarmUpExerciseName::StretchLevatorScapulae,
+            "stretch_lunge_with_spinal_twist" => WarmUpExerciseName::StretchLungeWithSpinalTwist,
+            "stretch_lunging_hip_flexor" => WarmUpExerciseName::StretchLungingHipFlexor,
+            "stretch_lying_abduction" => WarmUpExerciseName::StretchLyingAbduction,
+            "stretch_lying_it_band" => WarmUpExerciseName::StretchLyingItBand,
+            "stretch_lying_knee_to_chest" => WarmUpExerciseName::StretchLyingKneeToChest,
+            "stretch_lying_piriformis" => WarmUpExerciseName::StretchLyingPiriformis,
+            "stretch_lying_spinal_twist" => WarmUpExerciseName::StretchLyingSpinalTwist,
+            "stretch_neck" => WarmUpExerciseName::StretchNeck,
+            "stretch_obliques" => WarmUpExerciseName::StretchObliques,
+            "stretch_over_under_shoulder" => WarmUpExerciseName::StretchOverUnderShoulder,
+            "stretch_pectoral" => WarmUpExerciseName::StretchPectoral,
+            "stretch_pigeon_pose" => WarmUpExerciseName::StretchPigeonPose,
+            "stretch_piriformis" => WarmUpExerciseName::StretchPiriformis,
+            "stretch_quad" => WarmUpExerciseName::StretchQuad,
+            "stretch_scorpion" => WarmUpExerciseName::StretchScorpion,
+            "stretch_shoulder" => WarmUpExerciseName::StretchShoulder,
+            "stretch_side" => WarmUpExerciseName::StretchSide,
+            "stretch_side_lunge" => WarmUpExerciseName::StretchSideLunge,
+            "stretch_side_split" => WarmUpExerciseName::StretchSideSplit,
+            "stretch_standing_it_band" => WarmUpExerciseName::StretchStandingItBand,
+            "stretch_straddle" => WarmUpExerciseName::StretchStraddle,
+            "stretch_triceps" => WarmUpExerciseName::StretchTriceps,
+            "stretch_wall_chest_and_shoulder" => WarmUpExerciseName::StretchWallChestAndShoulder,
+            "neck_rotations_wheelchair" => WarmUpExerciseName::NeckRotationsWheelchair,
+            "half_kneeling_arm_rotation" => WarmUpExerciseName::HalfKneelingArmRotation,
+            "three_way_ankle_mobilization" => WarmUpExerciseName::ThreeWayAnkleMobilization,
+            "ninety_ninety_hip_switch" => WarmUpExerciseName::NinetyNinetyHipSwitch,
+            "active_frog" => WarmUpExerciseName::ActiveFrog,
+            "shoulder_sweeps" => WarmUpExerciseName::ShoulderSweeps,
+            "ankle_lunges" => WarmUpExerciseName::AnkleLunges,
+            "back_roll_foam_roller" => WarmUpExerciseName::BackRollFoamRoller,
+            "bear_crawl" => WarmUpExerciseName::BearCrawl,
+            "latissimus_dorsi_foam_roll" => WarmUpExerciseName::LatissimusDorsiFoamRoll,
+            "reverse_t_hip_opener" => WarmUpExerciseName::ReverseTHipOpener,
+            "shoulder_rolls" => WarmUpExerciseName::ShoulderRolls,
+            "chest_openers" => WarmUpExerciseName::ChestOpeners,
+            "triceps_stretch" => WarmUpExerciseName::TricepsStretch,
+            "upper_back_stretch" => WarmUpExerciseName::UpperBackStretch,
+            "hip_circles" => WarmUpExerciseName::HipCircles,
+            "ankle_stretch" => WarmUpExerciseName::AnkleStretch,
+            "marching_in_place" => WarmUpExerciseName::MarchingInPlace,
+            "triceps_stretch_wheelchair" => WarmUpExerciseName::TricepsStretchWheelchair,
+            "upper_back_stretch_wheelchair" => WarmUpExerciseName::UpperBackStretchWheelchair,
             &_ => WarmUpExerciseName::Value(0),
         }
     }
@@ -29986,11 +33335,14 @@ pub enum RunExerciseName {
     Walk,
     Jog,
     Sprint,
+    RunOrWalk,
+    SpeedWalk,
+    WarmUp,
     Value(u16),
 }
 impl RunExerciseName {
     pub fn is_named_variant(value: i64) -> bool {
-        matches!(value, 0i64..=3i64)
+        matches!(value, 0i64..=6i64)
     }
     pub fn as_u16(self) -> u16 {
         match self {
@@ -29998,6 +33350,9 @@ impl RunExerciseName {
             RunExerciseName::Walk => 1,
             RunExerciseName::Jog => 2,
             RunExerciseName::Sprint => 3,
+            RunExerciseName::RunOrWalk => 4,
+            RunExerciseName::SpeedWalk => 5,
+            RunExerciseName::WarmUp => 6,
             RunExerciseName::Value(value) => value,
         }
     }
@@ -30012,6 +33367,9 @@ impl fmt::Display for RunExerciseName {
             RunExerciseName::Walk => write!(f, "walk"),
             RunExerciseName::Jog => write!(f, "jog"),
             RunExerciseName::Sprint => write!(f, "sprint"),
+            RunExerciseName::RunOrWalk => write!(f, "run_or_walk"),
+            RunExerciseName::SpeedWalk => write!(f, "speed_walk"),
+            RunExerciseName::WarmUp => write!(f, "warm_up"),
             RunExerciseName::Value(value) => write!(f, "{}", value),
         }
     }
@@ -30023,6 +33381,9 @@ impl convert::From<u16> for RunExerciseName {
             1 => RunExerciseName::Walk,
             2 => RunExerciseName::Jog,
             3 => RunExerciseName::Sprint,
+            4 => RunExerciseName::RunOrWalk,
+            5 => RunExerciseName::SpeedWalk,
+            6 => RunExerciseName::WarmUp,
             _ => RunExerciseName::Value(value),
         }
     }
@@ -30039,6 +33400,9 @@ impl convert::From<&str> for RunExerciseName {
             "walk" => RunExerciseName::Walk,
             "jog" => RunExerciseName::Jog,
             "sprint" => RunExerciseName::Sprint,
+            "run_or_walk" => RunExerciseName::RunOrWalk,
+            "speed_walk" => RunExerciseName::SpeedWalk,
+            "warm_up" => RunExerciseName::WarmUp,
             &_ => RunExerciseName::Value(0),
         }
     }
@@ -30050,6 +33414,1814 @@ impl Serialize for RunExerciseName {
     {
         match &self {
             RunExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
+    }
+}
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
+pub enum BikeExerciseName {
+    Bike,
+    Ride,
+    Sprint,
+    Value(u16),
+}
+impl BikeExerciseName {
+    pub fn is_named_variant(value: i64) -> bool {
+        matches!(value, 0i64..=2i64)
+    }
+    pub fn as_u16(self) -> u16 {
+        match self {
+            BikeExerciseName::Bike => 0,
+            BikeExerciseName::Ride => 1,
+            BikeExerciseName::Sprint => 2,
+            BikeExerciseName::Value(value) => value,
+        }
+    }
+    pub fn as_i64(self) -> i64 {
+        self.as_u16() as i64
+    }
+}
+impl fmt::Display for BikeExerciseName {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match &self {
+            BikeExerciseName::Bike => write!(f, "bike"),
+            BikeExerciseName::Ride => write!(f, "ride"),
+            BikeExerciseName::Sprint => write!(f, "sprint"),
+            BikeExerciseName::Value(value) => write!(f, "{}", value),
+        }
+    }
+}
+impl convert::From<u16> for BikeExerciseName {
+    fn from(value: u16) -> Self {
+        match value {
+            0 => BikeExerciseName::Bike,
+            1 => BikeExerciseName::Ride,
+            2 => BikeExerciseName::Sprint,
+            _ => BikeExerciseName::Value(value),
+        }
+    }
+}
+impl convert::From<i64> for BikeExerciseName {
+    fn from(value: i64) -> Self {
+        BikeExerciseName::from(value as u16)
+    }
+}
+impl convert::From<&str> for BikeExerciseName {
+    fn from(value: &str) -> Self {
+        match value {
+            "bike" => BikeExerciseName::Bike,
+            "ride" => BikeExerciseName::Ride,
+            "sprint" => BikeExerciseName::Sprint,
+            &_ => BikeExerciseName::Value(0),
+        }
+    }
+}
+impl Serialize for BikeExerciseName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match &self {
+            BikeExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
+    }
+}
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
+pub enum BandedExercisesExerciseName {
+    AbTwist,
+    BackExtension,
+    BicycleCrunch,
+    CalfRaises,
+    ChestPress,
+    ClamShells,
+    Curl,
+    Deadbug,
+    Deadlift,
+    DonkeyKick,
+    ExternalRotation,
+    ExternalRotationAt90DegreeAbduction,
+    FacePull,
+    FireHydrant,
+    Fly,
+    FrontRaise,
+    GluteBridge,
+    HamstringCurls,
+    HighPlankLegLifts,
+    HipExtension,
+    InternalRotation,
+    JumpingJack,
+    KneelingCrunch,
+    LateralBandWalks,
+    LateralRaise,
+    Latpull,
+    LegAbduction,
+    LegAdduction,
+    LegExtension,
+    Lunge,
+    Plank,
+    PullApart,
+    PushUps,
+    ReverseCrunch,
+    Row,
+    ShoulderAbduction,
+    ShoulderExtension,
+    ShoulderExternalRotation,
+    ShoulderFlexionTo90Degrees,
+    SidePlankLegLifts,
+    SideRaise,
+    Squat,
+    SquatToPress,
+    TricepExtension,
+    TricepKickback,
+    UprightRow,
+    WallCrawlWithExternalRotation,
+    LateralRaiseWheelchair,
+    TricepsExtensionWheelchair,
+    ChestFlyInclineWheelchair,
+    ChestFlyDeclineWheelchair,
+    PullDownWheelchair,
+    StraightArmPullDownWheelchair,
+    CurlWheelchair,
+    OverheadCurlWheelchair,
+    FacePullWheelchair,
+    AroundTheWorldWheelchair,
+    PullApartWheelchair,
+    SideCurlWheelchair,
+    OverheadPressWheelchair,
+    Value(u16),
+}
+impl BandedExercisesExerciseName {
+    pub fn is_named_variant(value: i64) -> bool {
+        matches!(
+            value,
+            1i64 | 2i64
+                | 3i64
+                | 4i64
+                | 5i64
+                | 6i64
+                | 7i64
+                | 8i64
+                | 9i64
+                | 10i64
+                | 11i64
+                | 12i64
+                | 13i64
+                | 14i64
+                | 15i64
+                | 16i64
+                | 17i64
+                | 18i64
+                | 19i64
+                | 20i64
+                | 21i64
+                | 22i64
+                | 23i64
+                | 24i64
+                | 25i64
+                | 26i64
+                | 27i64
+                | 28i64
+                | 29i64
+                | 30i64
+                | 31i64
+                | 32i64
+                | 33i64
+                | 34i64
+                | 35i64
+                | 36i64
+                | 37i64
+                | 38i64
+                | 39i64
+                | 40i64
+                | 41i64
+                | 42i64
+                | 43i64
+                | 44i64
+                | 45i64
+                | 46i64
+                | 47i64
+                | 49i64
+                | 50i64
+                | 51i64
+                | 52i64
+                | 53i64
+                | 54i64
+                | 55i64
+                | 56i64
+                | 57i64
+                | 58i64
+                | 59i64
+                | 60i64
+                | 61i64
+        )
+    }
+    pub fn as_u16(self) -> u16 {
+        match self {
+            BandedExercisesExerciseName::AbTwist => 1,
+            BandedExercisesExerciseName::BackExtension => 2,
+            BandedExercisesExerciseName::BicycleCrunch => 3,
+            BandedExercisesExerciseName::CalfRaises => 4,
+            BandedExercisesExerciseName::ChestPress => 5,
+            BandedExercisesExerciseName::ClamShells => 6,
+            BandedExercisesExerciseName::Curl => 7,
+            BandedExercisesExerciseName::Deadbug => 8,
+            BandedExercisesExerciseName::Deadlift => 9,
+            BandedExercisesExerciseName::DonkeyKick => 10,
+            BandedExercisesExerciseName::ExternalRotation => 11,
+            BandedExercisesExerciseName::ExternalRotationAt90DegreeAbduction => 12,
+            BandedExercisesExerciseName::FacePull => 13,
+            BandedExercisesExerciseName::FireHydrant => 14,
+            BandedExercisesExerciseName::Fly => 15,
+            BandedExercisesExerciseName::FrontRaise => 16,
+            BandedExercisesExerciseName::GluteBridge => 17,
+            BandedExercisesExerciseName::HamstringCurls => 18,
+            BandedExercisesExerciseName::HighPlankLegLifts => 19,
+            BandedExercisesExerciseName::HipExtension => 20,
+            BandedExercisesExerciseName::InternalRotation => 21,
+            BandedExercisesExerciseName::JumpingJack => 22,
+            BandedExercisesExerciseName::KneelingCrunch => 23,
+            BandedExercisesExerciseName::LateralBandWalks => 24,
+            BandedExercisesExerciseName::LateralRaise => 25,
+            BandedExercisesExerciseName::Latpull => 26,
+            BandedExercisesExerciseName::LegAbduction => 27,
+            BandedExercisesExerciseName::LegAdduction => 28,
+            BandedExercisesExerciseName::LegExtension => 29,
+            BandedExercisesExerciseName::Lunge => 30,
+            BandedExercisesExerciseName::Plank => 31,
+            BandedExercisesExerciseName::PullApart => 32,
+            BandedExercisesExerciseName::PushUps => 33,
+            BandedExercisesExerciseName::ReverseCrunch => 34,
+            BandedExercisesExerciseName::Row => 35,
+            BandedExercisesExerciseName::ShoulderAbduction => 36,
+            BandedExercisesExerciseName::ShoulderExtension => 37,
+            BandedExercisesExerciseName::ShoulderExternalRotation => 38,
+            BandedExercisesExerciseName::ShoulderFlexionTo90Degrees => 39,
+            BandedExercisesExerciseName::SidePlankLegLifts => 40,
+            BandedExercisesExerciseName::SideRaise => 41,
+            BandedExercisesExerciseName::Squat => 42,
+            BandedExercisesExerciseName::SquatToPress => 43,
+            BandedExercisesExerciseName::TricepExtension => 44,
+            BandedExercisesExerciseName::TricepKickback => 45,
+            BandedExercisesExerciseName::UprightRow => 46,
+            BandedExercisesExerciseName::WallCrawlWithExternalRotation => 47,
+            BandedExercisesExerciseName::LateralRaiseWheelchair => 49,
+            BandedExercisesExerciseName::TricepsExtensionWheelchair => 50,
+            BandedExercisesExerciseName::ChestFlyInclineWheelchair => 51,
+            BandedExercisesExerciseName::ChestFlyDeclineWheelchair => 52,
+            BandedExercisesExerciseName::PullDownWheelchair => 53,
+            BandedExercisesExerciseName::StraightArmPullDownWheelchair => 54,
+            BandedExercisesExerciseName::CurlWheelchair => 55,
+            BandedExercisesExerciseName::OverheadCurlWheelchair => 56,
+            BandedExercisesExerciseName::FacePullWheelchair => 57,
+            BandedExercisesExerciseName::AroundTheWorldWheelchair => 58,
+            BandedExercisesExerciseName::PullApartWheelchair => 59,
+            BandedExercisesExerciseName::SideCurlWheelchair => 60,
+            BandedExercisesExerciseName::OverheadPressWheelchair => 61,
+            BandedExercisesExerciseName::Value(value) => value,
+        }
+    }
+    pub fn as_i64(self) -> i64 {
+        self.as_u16() as i64
+    }
+}
+impl fmt::Display for BandedExercisesExerciseName {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match &self {
+            BandedExercisesExerciseName::AbTwist => write!(f, "ab_twist"),
+            BandedExercisesExerciseName::BackExtension => write!(f, "back_extension"),
+            BandedExercisesExerciseName::BicycleCrunch => write!(f, "bicycle_crunch"),
+            BandedExercisesExerciseName::CalfRaises => write!(f, "calf_raises"),
+            BandedExercisesExerciseName::ChestPress => write!(f, "chest_press"),
+            BandedExercisesExerciseName::ClamShells => write!(f, "clam_shells"),
+            BandedExercisesExerciseName::Curl => write!(f, "curl"),
+            BandedExercisesExerciseName::Deadbug => write!(f, "deadbug"),
+            BandedExercisesExerciseName::Deadlift => write!(f, "deadlift"),
+            BandedExercisesExerciseName::DonkeyKick => write!(f, "donkey_kick"),
+            BandedExercisesExerciseName::ExternalRotation => write!(f, "external_rotation"),
+            BandedExercisesExerciseName::ExternalRotationAt90DegreeAbduction => {
+                write!(f, "external_rotation_at_90_degree_abduction")
+            }
+            BandedExercisesExerciseName::FacePull => write!(f, "face_pull"),
+            BandedExercisesExerciseName::FireHydrant => write!(f, "fire_hydrant"),
+            BandedExercisesExerciseName::Fly => write!(f, "fly"),
+            BandedExercisesExerciseName::FrontRaise => write!(f, "front_raise"),
+            BandedExercisesExerciseName::GluteBridge => write!(f, "glute_bridge"),
+            BandedExercisesExerciseName::HamstringCurls => write!(f, "hamstring_curls"),
+            BandedExercisesExerciseName::HighPlankLegLifts => write!(f, "high_plank_leg_lifts"),
+            BandedExercisesExerciseName::HipExtension => write!(f, "hip_extension"),
+            BandedExercisesExerciseName::InternalRotation => write!(f, "internal_rotation"),
+            BandedExercisesExerciseName::JumpingJack => write!(f, "jumping_jack"),
+            BandedExercisesExerciseName::KneelingCrunch => write!(f, "kneeling_crunch"),
+            BandedExercisesExerciseName::LateralBandWalks => write!(f, "lateral_band_walks"),
+            BandedExercisesExerciseName::LateralRaise => write!(f, "lateral_raise"),
+            BandedExercisesExerciseName::Latpull => write!(f, "latpull"),
+            BandedExercisesExerciseName::LegAbduction => write!(f, "leg_abduction"),
+            BandedExercisesExerciseName::LegAdduction => write!(f, "leg_adduction"),
+            BandedExercisesExerciseName::LegExtension => write!(f, "leg_extension"),
+            BandedExercisesExerciseName::Lunge => write!(f, "lunge"),
+            BandedExercisesExerciseName::Plank => write!(f, "plank"),
+            BandedExercisesExerciseName::PullApart => write!(f, "pull_apart"),
+            BandedExercisesExerciseName::PushUps => write!(f, "push_ups"),
+            BandedExercisesExerciseName::ReverseCrunch => write!(f, "reverse_crunch"),
+            BandedExercisesExerciseName::Row => write!(f, "row"),
+            BandedExercisesExerciseName::ShoulderAbduction => write!(f, "shoulder_abduction"),
+            BandedExercisesExerciseName::ShoulderExtension => write!(f, "shoulder_extension"),
+            BandedExercisesExerciseName::ShoulderExternalRotation => {
+                write!(f, "shoulder_external_rotation")
+            }
+            BandedExercisesExerciseName::ShoulderFlexionTo90Degrees => {
+                write!(f, "shoulder_flexion_to_90_degrees")
+            }
+            BandedExercisesExerciseName::SidePlankLegLifts => write!(f, "side_plank_leg_lifts"),
+            BandedExercisesExerciseName::SideRaise => write!(f, "side_raise"),
+            BandedExercisesExerciseName::Squat => write!(f, "squat"),
+            BandedExercisesExerciseName::SquatToPress => write!(f, "squat_to_press"),
+            BandedExercisesExerciseName::TricepExtension => write!(f, "tricep_extension"),
+            BandedExercisesExerciseName::TricepKickback => write!(f, "tricep_kickback"),
+            BandedExercisesExerciseName::UprightRow => write!(f, "upright_row"),
+            BandedExercisesExerciseName::WallCrawlWithExternalRotation => {
+                write!(f, "wall_crawl_with_external_rotation")
+            }
+            BandedExercisesExerciseName::LateralRaiseWheelchair => {
+                write!(f, "lateral_raise_wheelchair")
+            }
+            BandedExercisesExerciseName::TricepsExtensionWheelchair => {
+                write!(f, "triceps_extension_wheelchair")
+            }
+            BandedExercisesExerciseName::ChestFlyInclineWheelchair => {
+                write!(f, "chest_fly_incline_wheelchair")
+            }
+            BandedExercisesExerciseName::ChestFlyDeclineWheelchair => {
+                write!(f, "chest_fly_decline_wheelchair")
+            }
+            BandedExercisesExerciseName::PullDownWheelchair => write!(f, "pull_down_wheelchair"),
+            BandedExercisesExerciseName::StraightArmPullDownWheelchair => {
+                write!(f, "straight_arm_pull_down_wheelchair")
+            }
+            BandedExercisesExerciseName::CurlWheelchair => write!(f, "curl_wheelchair"),
+            BandedExercisesExerciseName::OverheadCurlWheelchair => {
+                write!(f, "overhead_curl_wheelchair")
+            }
+            BandedExercisesExerciseName::FacePullWheelchair => write!(f, "face_pull_wheelchair"),
+            BandedExercisesExerciseName::AroundTheWorldWheelchair => {
+                write!(f, "around_the_world_wheelchair")
+            }
+            BandedExercisesExerciseName::PullApartWheelchair => write!(f, "pull_apart_wheelchair"),
+            BandedExercisesExerciseName::SideCurlWheelchair => write!(f, "side_curl_wheelchair"),
+            BandedExercisesExerciseName::OverheadPressWheelchair => {
+                write!(f, "overhead_press_wheelchair")
+            }
+            BandedExercisesExerciseName::Value(value) => write!(f, "{}", value),
+        }
+    }
+}
+impl convert::From<u16> for BandedExercisesExerciseName {
+    fn from(value: u16) -> Self {
+        match value {
+            1 => BandedExercisesExerciseName::AbTwist,
+            2 => BandedExercisesExerciseName::BackExtension,
+            3 => BandedExercisesExerciseName::BicycleCrunch,
+            4 => BandedExercisesExerciseName::CalfRaises,
+            5 => BandedExercisesExerciseName::ChestPress,
+            6 => BandedExercisesExerciseName::ClamShells,
+            7 => BandedExercisesExerciseName::Curl,
+            8 => BandedExercisesExerciseName::Deadbug,
+            9 => BandedExercisesExerciseName::Deadlift,
+            10 => BandedExercisesExerciseName::DonkeyKick,
+            11 => BandedExercisesExerciseName::ExternalRotation,
+            12 => BandedExercisesExerciseName::ExternalRotationAt90DegreeAbduction,
+            13 => BandedExercisesExerciseName::FacePull,
+            14 => BandedExercisesExerciseName::FireHydrant,
+            15 => BandedExercisesExerciseName::Fly,
+            16 => BandedExercisesExerciseName::FrontRaise,
+            17 => BandedExercisesExerciseName::GluteBridge,
+            18 => BandedExercisesExerciseName::HamstringCurls,
+            19 => BandedExercisesExerciseName::HighPlankLegLifts,
+            20 => BandedExercisesExerciseName::HipExtension,
+            21 => BandedExercisesExerciseName::InternalRotation,
+            22 => BandedExercisesExerciseName::JumpingJack,
+            23 => BandedExercisesExerciseName::KneelingCrunch,
+            24 => BandedExercisesExerciseName::LateralBandWalks,
+            25 => BandedExercisesExerciseName::LateralRaise,
+            26 => BandedExercisesExerciseName::Latpull,
+            27 => BandedExercisesExerciseName::LegAbduction,
+            28 => BandedExercisesExerciseName::LegAdduction,
+            29 => BandedExercisesExerciseName::LegExtension,
+            30 => BandedExercisesExerciseName::Lunge,
+            31 => BandedExercisesExerciseName::Plank,
+            32 => BandedExercisesExerciseName::PullApart,
+            33 => BandedExercisesExerciseName::PushUps,
+            34 => BandedExercisesExerciseName::ReverseCrunch,
+            35 => BandedExercisesExerciseName::Row,
+            36 => BandedExercisesExerciseName::ShoulderAbduction,
+            37 => BandedExercisesExerciseName::ShoulderExtension,
+            38 => BandedExercisesExerciseName::ShoulderExternalRotation,
+            39 => BandedExercisesExerciseName::ShoulderFlexionTo90Degrees,
+            40 => BandedExercisesExerciseName::SidePlankLegLifts,
+            41 => BandedExercisesExerciseName::SideRaise,
+            42 => BandedExercisesExerciseName::Squat,
+            43 => BandedExercisesExerciseName::SquatToPress,
+            44 => BandedExercisesExerciseName::TricepExtension,
+            45 => BandedExercisesExerciseName::TricepKickback,
+            46 => BandedExercisesExerciseName::UprightRow,
+            47 => BandedExercisesExerciseName::WallCrawlWithExternalRotation,
+            49 => BandedExercisesExerciseName::LateralRaiseWheelchair,
+            50 => BandedExercisesExerciseName::TricepsExtensionWheelchair,
+            51 => BandedExercisesExerciseName::ChestFlyInclineWheelchair,
+            52 => BandedExercisesExerciseName::ChestFlyDeclineWheelchair,
+            53 => BandedExercisesExerciseName::PullDownWheelchair,
+            54 => BandedExercisesExerciseName::StraightArmPullDownWheelchair,
+            55 => BandedExercisesExerciseName::CurlWheelchair,
+            56 => BandedExercisesExerciseName::OverheadCurlWheelchair,
+            57 => BandedExercisesExerciseName::FacePullWheelchair,
+            58 => BandedExercisesExerciseName::AroundTheWorldWheelchair,
+            59 => BandedExercisesExerciseName::PullApartWheelchair,
+            60 => BandedExercisesExerciseName::SideCurlWheelchair,
+            61 => BandedExercisesExerciseName::OverheadPressWheelchair,
+            _ => BandedExercisesExerciseName::Value(value),
+        }
+    }
+}
+impl convert::From<i64> for BandedExercisesExerciseName {
+    fn from(value: i64) -> Self {
+        BandedExercisesExerciseName::from(value as u16)
+    }
+}
+impl convert::From<&str> for BandedExercisesExerciseName {
+    fn from(value: &str) -> Self {
+        match value {
+            "ab_twist" => BandedExercisesExerciseName::AbTwist,
+            "back_extension" => BandedExercisesExerciseName::BackExtension,
+            "bicycle_crunch" => BandedExercisesExerciseName::BicycleCrunch,
+            "calf_raises" => BandedExercisesExerciseName::CalfRaises,
+            "chest_press" => BandedExercisesExerciseName::ChestPress,
+            "clam_shells" => BandedExercisesExerciseName::ClamShells,
+            "curl" => BandedExercisesExerciseName::Curl,
+            "deadbug" => BandedExercisesExerciseName::Deadbug,
+            "deadlift" => BandedExercisesExerciseName::Deadlift,
+            "donkey_kick" => BandedExercisesExerciseName::DonkeyKick,
+            "external_rotation" => BandedExercisesExerciseName::ExternalRotation,
+            "external_rotation_at_90_degree_abduction" => {
+                BandedExercisesExerciseName::ExternalRotationAt90DegreeAbduction
+            }
+            "face_pull" => BandedExercisesExerciseName::FacePull,
+            "fire_hydrant" => BandedExercisesExerciseName::FireHydrant,
+            "fly" => BandedExercisesExerciseName::Fly,
+            "front_raise" => BandedExercisesExerciseName::FrontRaise,
+            "glute_bridge" => BandedExercisesExerciseName::GluteBridge,
+            "hamstring_curls" => BandedExercisesExerciseName::HamstringCurls,
+            "high_plank_leg_lifts" => BandedExercisesExerciseName::HighPlankLegLifts,
+            "hip_extension" => BandedExercisesExerciseName::HipExtension,
+            "internal_rotation" => BandedExercisesExerciseName::InternalRotation,
+            "jumping_jack" => BandedExercisesExerciseName::JumpingJack,
+            "kneeling_crunch" => BandedExercisesExerciseName::KneelingCrunch,
+            "lateral_band_walks" => BandedExercisesExerciseName::LateralBandWalks,
+            "lateral_raise" => BandedExercisesExerciseName::LateralRaise,
+            "latpull" => BandedExercisesExerciseName::Latpull,
+            "leg_abduction" => BandedExercisesExerciseName::LegAbduction,
+            "leg_adduction" => BandedExercisesExerciseName::LegAdduction,
+            "leg_extension" => BandedExercisesExerciseName::LegExtension,
+            "lunge" => BandedExercisesExerciseName::Lunge,
+            "plank" => BandedExercisesExerciseName::Plank,
+            "pull_apart" => BandedExercisesExerciseName::PullApart,
+            "push_ups" => BandedExercisesExerciseName::PushUps,
+            "reverse_crunch" => BandedExercisesExerciseName::ReverseCrunch,
+            "row" => BandedExercisesExerciseName::Row,
+            "shoulder_abduction" => BandedExercisesExerciseName::ShoulderAbduction,
+            "shoulder_extension" => BandedExercisesExerciseName::ShoulderExtension,
+            "shoulder_external_rotation" => BandedExercisesExerciseName::ShoulderExternalRotation,
+            "shoulder_flexion_to_90_degrees" => {
+                BandedExercisesExerciseName::ShoulderFlexionTo90Degrees
+            }
+            "side_plank_leg_lifts" => BandedExercisesExerciseName::SidePlankLegLifts,
+            "side_raise" => BandedExercisesExerciseName::SideRaise,
+            "squat" => BandedExercisesExerciseName::Squat,
+            "squat_to_press" => BandedExercisesExerciseName::SquatToPress,
+            "tricep_extension" => BandedExercisesExerciseName::TricepExtension,
+            "tricep_kickback" => BandedExercisesExerciseName::TricepKickback,
+            "upright_row" => BandedExercisesExerciseName::UprightRow,
+            "wall_crawl_with_external_rotation" => {
+                BandedExercisesExerciseName::WallCrawlWithExternalRotation
+            }
+            "lateral_raise_wheelchair" => BandedExercisesExerciseName::LateralRaiseWheelchair,
+            "triceps_extension_wheelchair" => {
+                BandedExercisesExerciseName::TricepsExtensionWheelchair
+            }
+            "chest_fly_incline_wheelchair" => {
+                BandedExercisesExerciseName::ChestFlyInclineWheelchair
+            }
+            "chest_fly_decline_wheelchair" => {
+                BandedExercisesExerciseName::ChestFlyDeclineWheelchair
+            }
+            "pull_down_wheelchair" => BandedExercisesExerciseName::PullDownWheelchair,
+            "straight_arm_pull_down_wheelchair" => {
+                BandedExercisesExerciseName::StraightArmPullDownWheelchair
+            }
+            "curl_wheelchair" => BandedExercisesExerciseName::CurlWheelchair,
+            "overhead_curl_wheelchair" => BandedExercisesExerciseName::OverheadCurlWheelchair,
+            "face_pull_wheelchair" => BandedExercisesExerciseName::FacePullWheelchair,
+            "around_the_world_wheelchair" => BandedExercisesExerciseName::AroundTheWorldWheelchair,
+            "pull_apart_wheelchair" => BandedExercisesExerciseName::PullApartWheelchair,
+            "side_curl_wheelchair" => BandedExercisesExerciseName::SideCurlWheelchair,
+            "overhead_press_wheelchair" => BandedExercisesExerciseName::OverheadPressWheelchair,
+            &_ => BandedExercisesExerciseName::Value(0),
+        }
+    }
+}
+impl Serialize for BandedExercisesExerciseName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match &self {
+            BandedExercisesExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
+    }
+}
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
+pub enum BattleRopeExerciseName {
+    AlternatingFigureEight,
+    AlternatingJumpWave,
+    AlternatingKneelingToStandingWave,
+    AlternatingLungeWave,
+    AlternatingSquatWave,
+    AlternatingWave,
+    AlternatingWaveWithLateralShuffle,
+    ClapWave,
+    DoubleArmFigureEight,
+    DoubleArmSideToSideSnake,
+    DoubleArmSideWave,
+    DoubleArmSlam,
+    DoubleArmWave,
+    GrapplerToss,
+    HipToss,
+    InAndOutWave,
+    InsideCircle,
+    JumpingJacks,
+    OutsideCircle,
+    Rainbow,
+    SidePlankWave,
+    Sidewinder,
+    SittingRussianTwist,
+    SnakeWave,
+    SplitJack,
+    StageCoach,
+    UltimateWarrior,
+    UpperCuts,
+    Value(u16),
+}
+impl BattleRopeExerciseName {
+    pub fn is_named_variant(value: i64) -> bool {
+        matches!(value, 0i64..=27i64)
+    }
+    pub fn as_u16(self) -> u16 {
+        match self {
+            BattleRopeExerciseName::AlternatingFigureEight => 0,
+            BattleRopeExerciseName::AlternatingJumpWave => 1,
+            BattleRopeExerciseName::AlternatingKneelingToStandingWave => 2,
+            BattleRopeExerciseName::AlternatingLungeWave => 3,
+            BattleRopeExerciseName::AlternatingSquatWave => 4,
+            BattleRopeExerciseName::AlternatingWave => 5,
+            BattleRopeExerciseName::AlternatingWaveWithLateralShuffle => 6,
+            BattleRopeExerciseName::ClapWave => 7,
+            BattleRopeExerciseName::DoubleArmFigureEight => 8,
+            BattleRopeExerciseName::DoubleArmSideToSideSnake => 9,
+            BattleRopeExerciseName::DoubleArmSideWave => 10,
+            BattleRopeExerciseName::DoubleArmSlam => 11,
+            BattleRopeExerciseName::DoubleArmWave => 12,
+            BattleRopeExerciseName::GrapplerToss => 13,
+            BattleRopeExerciseName::HipToss => 14,
+            BattleRopeExerciseName::InAndOutWave => 15,
+            BattleRopeExerciseName::InsideCircle => 16,
+            BattleRopeExerciseName::JumpingJacks => 17,
+            BattleRopeExerciseName::OutsideCircle => 18,
+            BattleRopeExerciseName::Rainbow => 19,
+            BattleRopeExerciseName::SidePlankWave => 20,
+            BattleRopeExerciseName::Sidewinder => 21,
+            BattleRopeExerciseName::SittingRussianTwist => 22,
+            BattleRopeExerciseName::SnakeWave => 23,
+            BattleRopeExerciseName::SplitJack => 24,
+            BattleRopeExerciseName::StageCoach => 25,
+            BattleRopeExerciseName::UltimateWarrior => 26,
+            BattleRopeExerciseName::UpperCuts => 27,
+            BattleRopeExerciseName::Value(value) => value,
+        }
+    }
+    pub fn as_i64(self) -> i64 {
+        self.as_u16() as i64
+    }
+}
+impl fmt::Display for BattleRopeExerciseName {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match &self {
+            BattleRopeExerciseName::AlternatingFigureEight => write!(f, "alternating_figure_eight"),
+            BattleRopeExerciseName::AlternatingJumpWave => write!(f, "alternating_jump_wave"),
+            BattleRopeExerciseName::AlternatingKneelingToStandingWave => {
+                write!(f, "alternating_kneeling_to_standing_wave")
+            }
+            BattleRopeExerciseName::AlternatingLungeWave => write!(f, "alternating_lunge_wave"),
+            BattleRopeExerciseName::AlternatingSquatWave => write!(f, "alternating_squat_wave"),
+            BattleRopeExerciseName::AlternatingWave => write!(f, "alternating_wave"),
+            BattleRopeExerciseName::AlternatingWaveWithLateralShuffle => {
+                write!(f, "alternating_wave_with_lateral_shuffle")
+            }
+            BattleRopeExerciseName::ClapWave => write!(f, "clap_wave"),
+            BattleRopeExerciseName::DoubleArmFigureEight => write!(f, "double_arm_figure_eight"),
+            BattleRopeExerciseName::DoubleArmSideToSideSnake => {
+                write!(f, "double_arm_side_to_side_snake")
+            }
+            BattleRopeExerciseName::DoubleArmSideWave => write!(f, "double_arm_side_wave"),
+            BattleRopeExerciseName::DoubleArmSlam => write!(f, "double_arm_slam"),
+            BattleRopeExerciseName::DoubleArmWave => write!(f, "double_arm_wave"),
+            BattleRopeExerciseName::GrapplerToss => write!(f, "grappler_toss"),
+            BattleRopeExerciseName::HipToss => write!(f, "hip_toss"),
+            BattleRopeExerciseName::InAndOutWave => write!(f, "in_and_out_wave"),
+            BattleRopeExerciseName::InsideCircle => write!(f, "inside_circle"),
+            BattleRopeExerciseName::JumpingJacks => write!(f, "jumping_jacks"),
+            BattleRopeExerciseName::OutsideCircle => write!(f, "outside_circle"),
+            BattleRopeExerciseName::Rainbow => write!(f, "rainbow"),
+            BattleRopeExerciseName::SidePlankWave => write!(f, "side_plank_wave"),
+            BattleRopeExerciseName::Sidewinder => write!(f, "sidewinder"),
+            BattleRopeExerciseName::SittingRussianTwist => write!(f, "sitting_russian_twist"),
+            BattleRopeExerciseName::SnakeWave => write!(f, "snake_wave"),
+            BattleRopeExerciseName::SplitJack => write!(f, "split_jack"),
+            BattleRopeExerciseName::StageCoach => write!(f, "stage_coach"),
+            BattleRopeExerciseName::UltimateWarrior => write!(f, "ultimate_warrior"),
+            BattleRopeExerciseName::UpperCuts => write!(f, "upper_cuts"),
+            BattleRopeExerciseName::Value(value) => write!(f, "{}", value),
+        }
+    }
+}
+impl convert::From<u16> for BattleRopeExerciseName {
+    fn from(value: u16) -> Self {
+        match value {
+            0 => BattleRopeExerciseName::AlternatingFigureEight,
+            1 => BattleRopeExerciseName::AlternatingJumpWave,
+            2 => BattleRopeExerciseName::AlternatingKneelingToStandingWave,
+            3 => BattleRopeExerciseName::AlternatingLungeWave,
+            4 => BattleRopeExerciseName::AlternatingSquatWave,
+            5 => BattleRopeExerciseName::AlternatingWave,
+            6 => BattleRopeExerciseName::AlternatingWaveWithLateralShuffle,
+            7 => BattleRopeExerciseName::ClapWave,
+            8 => BattleRopeExerciseName::DoubleArmFigureEight,
+            9 => BattleRopeExerciseName::DoubleArmSideToSideSnake,
+            10 => BattleRopeExerciseName::DoubleArmSideWave,
+            11 => BattleRopeExerciseName::DoubleArmSlam,
+            12 => BattleRopeExerciseName::DoubleArmWave,
+            13 => BattleRopeExerciseName::GrapplerToss,
+            14 => BattleRopeExerciseName::HipToss,
+            15 => BattleRopeExerciseName::InAndOutWave,
+            16 => BattleRopeExerciseName::InsideCircle,
+            17 => BattleRopeExerciseName::JumpingJacks,
+            18 => BattleRopeExerciseName::OutsideCircle,
+            19 => BattleRopeExerciseName::Rainbow,
+            20 => BattleRopeExerciseName::SidePlankWave,
+            21 => BattleRopeExerciseName::Sidewinder,
+            22 => BattleRopeExerciseName::SittingRussianTwist,
+            23 => BattleRopeExerciseName::SnakeWave,
+            24 => BattleRopeExerciseName::SplitJack,
+            25 => BattleRopeExerciseName::StageCoach,
+            26 => BattleRopeExerciseName::UltimateWarrior,
+            27 => BattleRopeExerciseName::UpperCuts,
+            _ => BattleRopeExerciseName::Value(value),
+        }
+    }
+}
+impl convert::From<i64> for BattleRopeExerciseName {
+    fn from(value: i64) -> Self {
+        BattleRopeExerciseName::from(value as u16)
+    }
+}
+impl convert::From<&str> for BattleRopeExerciseName {
+    fn from(value: &str) -> Self {
+        match value {
+            "alternating_figure_eight" => BattleRopeExerciseName::AlternatingFigureEight,
+            "alternating_jump_wave" => BattleRopeExerciseName::AlternatingJumpWave,
+            "alternating_kneeling_to_standing_wave" => {
+                BattleRopeExerciseName::AlternatingKneelingToStandingWave
+            }
+            "alternating_lunge_wave" => BattleRopeExerciseName::AlternatingLungeWave,
+            "alternating_squat_wave" => BattleRopeExerciseName::AlternatingSquatWave,
+            "alternating_wave" => BattleRopeExerciseName::AlternatingWave,
+            "alternating_wave_with_lateral_shuffle" => {
+                BattleRopeExerciseName::AlternatingWaveWithLateralShuffle
+            }
+            "clap_wave" => BattleRopeExerciseName::ClapWave,
+            "double_arm_figure_eight" => BattleRopeExerciseName::DoubleArmFigureEight,
+            "double_arm_side_to_side_snake" => BattleRopeExerciseName::DoubleArmSideToSideSnake,
+            "double_arm_side_wave" => BattleRopeExerciseName::DoubleArmSideWave,
+            "double_arm_slam" => BattleRopeExerciseName::DoubleArmSlam,
+            "double_arm_wave" => BattleRopeExerciseName::DoubleArmWave,
+            "grappler_toss" => BattleRopeExerciseName::GrapplerToss,
+            "hip_toss" => BattleRopeExerciseName::HipToss,
+            "in_and_out_wave" => BattleRopeExerciseName::InAndOutWave,
+            "inside_circle" => BattleRopeExerciseName::InsideCircle,
+            "jumping_jacks" => BattleRopeExerciseName::JumpingJacks,
+            "outside_circle" => BattleRopeExerciseName::OutsideCircle,
+            "rainbow" => BattleRopeExerciseName::Rainbow,
+            "side_plank_wave" => BattleRopeExerciseName::SidePlankWave,
+            "sidewinder" => BattleRopeExerciseName::Sidewinder,
+            "sitting_russian_twist" => BattleRopeExerciseName::SittingRussianTwist,
+            "snake_wave" => BattleRopeExerciseName::SnakeWave,
+            "split_jack" => BattleRopeExerciseName::SplitJack,
+            "stage_coach" => BattleRopeExerciseName::StageCoach,
+            "ultimate_warrior" => BattleRopeExerciseName::UltimateWarrior,
+            "upper_cuts" => BattleRopeExerciseName::UpperCuts,
+            &_ => BattleRopeExerciseName::Value(0),
+        }
+    }
+}
+impl Serialize for BattleRopeExerciseName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match &self {
+            BattleRopeExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
+    }
+}
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
+pub enum EllipticalExerciseName {
+    Elliptical,
+    Value(u16),
+}
+impl EllipticalExerciseName {
+    pub fn is_named_variant(value: i64) -> bool {
+        matches!(value, 0i64)
+    }
+    pub fn as_u16(self) -> u16 {
+        match self {
+            EllipticalExerciseName::Elliptical => 0,
+            EllipticalExerciseName::Value(value) => value,
+        }
+    }
+    pub fn as_i64(self) -> i64 {
+        self.as_u16() as i64
+    }
+}
+impl fmt::Display for EllipticalExerciseName {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match &self {
+            EllipticalExerciseName::Elliptical => write!(f, "elliptical"),
+            EllipticalExerciseName::Value(value) => write!(f, "{}", value),
+        }
+    }
+}
+impl convert::From<u16> for EllipticalExerciseName {
+    fn from(value: u16) -> Self {
+        match value {
+            0 => EllipticalExerciseName::Elliptical,
+            _ => EllipticalExerciseName::Value(value),
+        }
+    }
+}
+impl convert::From<i64> for EllipticalExerciseName {
+    fn from(value: i64) -> Self {
+        EllipticalExerciseName::from(value as u16)
+    }
+}
+impl convert::From<&str> for EllipticalExerciseName {
+    fn from(value: &str) -> Self {
+        match value {
+            "elliptical" => EllipticalExerciseName::Elliptical,
+            &_ => EllipticalExerciseName::Value(0),
+        }
+    }
+}
+impl Serialize for EllipticalExerciseName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match &self {
+            EllipticalExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
+    }
+}
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
+pub enum FloorClimbExerciseName {
+    FloorClimb,
+    Value(u16),
+}
+impl FloorClimbExerciseName {
+    pub fn is_named_variant(value: i64) -> bool {
+        matches!(value, 0i64)
+    }
+    pub fn as_u16(self) -> u16 {
+        match self {
+            FloorClimbExerciseName::FloorClimb => 0,
+            FloorClimbExerciseName::Value(value) => value,
+        }
+    }
+    pub fn as_i64(self) -> i64 {
+        self.as_u16() as i64
+    }
+}
+impl fmt::Display for FloorClimbExerciseName {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match &self {
+            FloorClimbExerciseName::FloorClimb => write!(f, "floor_climb"),
+            FloorClimbExerciseName::Value(value) => write!(f, "{}", value),
+        }
+    }
+}
+impl convert::From<u16> for FloorClimbExerciseName {
+    fn from(value: u16) -> Self {
+        match value {
+            0 => FloorClimbExerciseName::FloorClimb,
+            _ => FloorClimbExerciseName::Value(value),
+        }
+    }
+}
+impl convert::From<i64> for FloorClimbExerciseName {
+    fn from(value: i64) -> Self {
+        FloorClimbExerciseName::from(value as u16)
+    }
+}
+impl convert::From<&str> for FloorClimbExerciseName {
+    fn from(value: &str) -> Self {
+        match value {
+            "floor_climb" => FloorClimbExerciseName::FloorClimb,
+            &_ => FloorClimbExerciseName::Value(0),
+        }
+    }
+}
+impl Serialize for FloorClimbExerciseName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match &self {
+            FloorClimbExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
+    }
+}
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
+pub enum IndoorBikeExerciseName {
+    AirBike,
+    AssaultBike,
+    StationaryBike,
+    Value(u16),
+}
+impl IndoorBikeExerciseName {
+    pub fn is_named_variant(value: i64) -> bool {
+        matches!(value, 0i64 | 1i64 | 3i64)
+    }
+    pub fn as_u16(self) -> u16 {
+        match self {
+            IndoorBikeExerciseName::AirBike => 0,
+            IndoorBikeExerciseName::AssaultBike => 1,
+            IndoorBikeExerciseName::StationaryBike => 3,
+            IndoorBikeExerciseName::Value(value) => value,
+        }
+    }
+    pub fn as_i64(self) -> i64 {
+        self.as_u16() as i64
+    }
+}
+impl fmt::Display for IndoorBikeExerciseName {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match &self {
+            IndoorBikeExerciseName::AirBike => write!(f, "air_bike"),
+            IndoorBikeExerciseName::AssaultBike => write!(f, "assault_bike"),
+            IndoorBikeExerciseName::StationaryBike => write!(f, "stationary_bike"),
+            IndoorBikeExerciseName::Value(value) => write!(f, "{}", value),
+        }
+    }
+}
+impl convert::From<u16> for IndoorBikeExerciseName {
+    fn from(value: u16) -> Self {
+        match value {
+            0 => IndoorBikeExerciseName::AirBike,
+            1 => IndoorBikeExerciseName::AssaultBike,
+            3 => IndoorBikeExerciseName::StationaryBike,
+            _ => IndoorBikeExerciseName::Value(value),
+        }
+    }
+}
+impl convert::From<i64> for IndoorBikeExerciseName {
+    fn from(value: i64) -> Self {
+        IndoorBikeExerciseName::from(value as u16)
+    }
+}
+impl convert::From<&str> for IndoorBikeExerciseName {
+    fn from(value: &str) -> Self {
+        match value {
+            "air_bike" => IndoorBikeExerciseName::AirBike,
+            "assault_bike" => IndoorBikeExerciseName::AssaultBike,
+            "stationary_bike" => IndoorBikeExerciseName::StationaryBike,
+            &_ => IndoorBikeExerciseName::Value(0),
+        }
+    }
+}
+impl Serialize for IndoorBikeExerciseName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match &self {
+            IndoorBikeExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
+    }
+}
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
+pub enum IndoorRowExerciseName {
+    RowingMachine,
+    Value(u16),
+}
+impl IndoorRowExerciseName {
+    pub fn is_named_variant(value: i64) -> bool {
+        matches!(value, 0i64)
+    }
+    pub fn as_u16(self) -> u16 {
+        match self {
+            IndoorRowExerciseName::RowingMachine => 0,
+            IndoorRowExerciseName::Value(value) => value,
+        }
+    }
+    pub fn as_i64(self) -> i64 {
+        self.as_u16() as i64
+    }
+}
+impl fmt::Display for IndoorRowExerciseName {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match &self {
+            IndoorRowExerciseName::RowingMachine => write!(f, "rowing_machine"),
+            IndoorRowExerciseName::Value(value) => write!(f, "{}", value),
+        }
+    }
+}
+impl convert::From<u16> for IndoorRowExerciseName {
+    fn from(value: u16) -> Self {
+        match value {
+            0 => IndoorRowExerciseName::RowingMachine,
+            _ => IndoorRowExerciseName::Value(value),
+        }
+    }
+}
+impl convert::From<i64> for IndoorRowExerciseName {
+    fn from(value: i64) -> Self {
+        IndoorRowExerciseName::from(value as u16)
+    }
+}
+impl convert::From<&str> for IndoorRowExerciseName {
+    fn from(value: &str) -> Self {
+        match value {
+            "rowing_machine" => IndoorRowExerciseName::RowingMachine,
+            &_ => IndoorRowExerciseName::Value(0),
+        }
+    }
+}
+impl Serialize for IndoorRowExerciseName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match &self {
+            IndoorRowExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
+    }
+}
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
+pub enum LadderExerciseName {
+    Agility,
+    Speed,
+    Value(u16),
+}
+impl LadderExerciseName {
+    pub fn is_named_variant(value: i64) -> bool {
+        matches!(value, 0i64 | 1i64)
+    }
+    pub fn as_u16(self) -> u16 {
+        match self {
+            LadderExerciseName::Agility => 0,
+            LadderExerciseName::Speed => 1,
+            LadderExerciseName::Value(value) => value,
+        }
+    }
+    pub fn as_i64(self) -> i64 {
+        self.as_u16() as i64
+    }
+}
+impl fmt::Display for LadderExerciseName {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match &self {
+            LadderExerciseName::Agility => write!(f, "agility"),
+            LadderExerciseName::Speed => write!(f, "speed"),
+            LadderExerciseName::Value(value) => write!(f, "{}", value),
+        }
+    }
+}
+impl convert::From<u16> for LadderExerciseName {
+    fn from(value: u16) -> Self {
+        match value {
+            0 => LadderExerciseName::Agility,
+            1 => LadderExerciseName::Speed,
+            _ => LadderExerciseName::Value(value),
+        }
+    }
+}
+impl convert::From<i64> for LadderExerciseName {
+    fn from(value: i64) -> Self {
+        LadderExerciseName::from(value as u16)
+    }
+}
+impl convert::From<&str> for LadderExerciseName {
+    fn from(value: &str) -> Self {
+        match value {
+            "agility" => LadderExerciseName::Agility,
+            "speed" => LadderExerciseName::Speed,
+            &_ => LadderExerciseName::Value(0),
+        }
+    }
+}
+impl Serialize for LadderExerciseName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match &self {
+            LadderExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
+    }
+}
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
+pub enum SandbagExerciseName {
+    AroundTheWorld,
+    BackSquat,
+    BearCrawlPullThrough,
+    BearHugSquat,
+    Clean,
+    CleanAndPress,
+    Curl,
+    FrontCarry,
+    FrontSquat,
+    Lunge,
+    OverheadPress,
+    PlankPullThrough,
+    RotationalLunge,
+    Row,
+    RussianTwist,
+    Shouldering,
+    Shoveling,
+    SideLunge,
+    Sprint,
+    ZercherSquat,
+    Value(u16),
+}
+impl SandbagExerciseName {
+    pub fn is_named_variant(value: i64) -> bool {
+        matches!(value, 0i64..=19i64)
+    }
+    pub fn as_u16(self) -> u16 {
+        match self {
+            SandbagExerciseName::AroundTheWorld => 0,
+            SandbagExerciseName::BackSquat => 1,
+            SandbagExerciseName::BearCrawlPullThrough => 2,
+            SandbagExerciseName::BearHugSquat => 3,
+            SandbagExerciseName::Clean => 4,
+            SandbagExerciseName::CleanAndPress => 5,
+            SandbagExerciseName::Curl => 6,
+            SandbagExerciseName::FrontCarry => 7,
+            SandbagExerciseName::FrontSquat => 8,
+            SandbagExerciseName::Lunge => 9,
+            SandbagExerciseName::OverheadPress => 10,
+            SandbagExerciseName::PlankPullThrough => 11,
+            SandbagExerciseName::RotationalLunge => 12,
+            SandbagExerciseName::Row => 13,
+            SandbagExerciseName::RussianTwist => 14,
+            SandbagExerciseName::Shouldering => 15,
+            SandbagExerciseName::Shoveling => 16,
+            SandbagExerciseName::SideLunge => 17,
+            SandbagExerciseName::Sprint => 18,
+            SandbagExerciseName::ZercherSquat => 19,
+            SandbagExerciseName::Value(value) => value,
+        }
+    }
+    pub fn as_i64(self) -> i64 {
+        self.as_u16() as i64
+    }
+}
+impl fmt::Display for SandbagExerciseName {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match &self {
+            SandbagExerciseName::AroundTheWorld => write!(f, "around_the_world"),
+            SandbagExerciseName::BackSquat => write!(f, "back_squat"),
+            SandbagExerciseName::BearCrawlPullThrough => write!(f, "bear_crawl_pull_through"),
+            SandbagExerciseName::BearHugSquat => write!(f, "bear_hug_squat"),
+            SandbagExerciseName::Clean => write!(f, "clean"),
+            SandbagExerciseName::CleanAndPress => write!(f, "clean_and_press"),
+            SandbagExerciseName::Curl => write!(f, "curl"),
+            SandbagExerciseName::FrontCarry => write!(f, "front_carry"),
+            SandbagExerciseName::FrontSquat => write!(f, "front_squat"),
+            SandbagExerciseName::Lunge => write!(f, "lunge"),
+            SandbagExerciseName::OverheadPress => write!(f, "overhead_press"),
+            SandbagExerciseName::PlankPullThrough => write!(f, "plank_pull_through"),
+            SandbagExerciseName::RotationalLunge => write!(f, "rotational_lunge"),
+            SandbagExerciseName::Row => write!(f, "row"),
+            SandbagExerciseName::RussianTwist => write!(f, "russian_twist"),
+            SandbagExerciseName::Shouldering => write!(f, "shouldering"),
+            SandbagExerciseName::Shoveling => write!(f, "shoveling"),
+            SandbagExerciseName::SideLunge => write!(f, "side_lunge"),
+            SandbagExerciseName::Sprint => write!(f, "sprint"),
+            SandbagExerciseName::ZercherSquat => write!(f, "zercher_squat"),
+            SandbagExerciseName::Value(value) => write!(f, "{}", value),
+        }
+    }
+}
+impl convert::From<u16> for SandbagExerciseName {
+    fn from(value: u16) -> Self {
+        match value {
+            0 => SandbagExerciseName::AroundTheWorld,
+            1 => SandbagExerciseName::BackSquat,
+            2 => SandbagExerciseName::BearCrawlPullThrough,
+            3 => SandbagExerciseName::BearHugSquat,
+            4 => SandbagExerciseName::Clean,
+            5 => SandbagExerciseName::CleanAndPress,
+            6 => SandbagExerciseName::Curl,
+            7 => SandbagExerciseName::FrontCarry,
+            8 => SandbagExerciseName::FrontSquat,
+            9 => SandbagExerciseName::Lunge,
+            10 => SandbagExerciseName::OverheadPress,
+            11 => SandbagExerciseName::PlankPullThrough,
+            12 => SandbagExerciseName::RotationalLunge,
+            13 => SandbagExerciseName::Row,
+            14 => SandbagExerciseName::RussianTwist,
+            15 => SandbagExerciseName::Shouldering,
+            16 => SandbagExerciseName::Shoveling,
+            17 => SandbagExerciseName::SideLunge,
+            18 => SandbagExerciseName::Sprint,
+            19 => SandbagExerciseName::ZercherSquat,
+            _ => SandbagExerciseName::Value(value),
+        }
+    }
+}
+impl convert::From<i64> for SandbagExerciseName {
+    fn from(value: i64) -> Self {
+        SandbagExerciseName::from(value as u16)
+    }
+}
+impl convert::From<&str> for SandbagExerciseName {
+    fn from(value: &str) -> Self {
+        match value {
+            "around_the_world" => SandbagExerciseName::AroundTheWorld,
+            "back_squat" => SandbagExerciseName::BackSquat,
+            "bear_crawl_pull_through" => SandbagExerciseName::BearCrawlPullThrough,
+            "bear_hug_squat" => SandbagExerciseName::BearHugSquat,
+            "clean" => SandbagExerciseName::Clean,
+            "clean_and_press" => SandbagExerciseName::CleanAndPress,
+            "curl" => SandbagExerciseName::Curl,
+            "front_carry" => SandbagExerciseName::FrontCarry,
+            "front_squat" => SandbagExerciseName::FrontSquat,
+            "lunge" => SandbagExerciseName::Lunge,
+            "overhead_press" => SandbagExerciseName::OverheadPress,
+            "plank_pull_through" => SandbagExerciseName::PlankPullThrough,
+            "rotational_lunge" => SandbagExerciseName::RotationalLunge,
+            "row" => SandbagExerciseName::Row,
+            "russian_twist" => SandbagExerciseName::RussianTwist,
+            "shouldering" => SandbagExerciseName::Shouldering,
+            "shoveling" => SandbagExerciseName::Shoveling,
+            "side_lunge" => SandbagExerciseName::SideLunge,
+            "sprint" => SandbagExerciseName::Sprint,
+            "zercher_squat" => SandbagExerciseName::ZercherSquat,
+            &_ => SandbagExerciseName::Value(0),
+        }
+    }
+}
+impl Serialize for SandbagExerciseName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match &self {
+            SandbagExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
+    }
+}
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
+pub enum SledExerciseName {
+    BackwardDrag,
+    ChestPress,
+    ForwardDrag,
+    LowPush,
+    Push,
+    Row,
+    Value(u16),
+}
+impl SledExerciseName {
+    pub fn is_named_variant(value: i64) -> bool {
+        matches!(value, 0i64..=5i64)
+    }
+    pub fn as_u16(self) -> u16 {
+        match self {
+            SledExerciseName::BackwardDrag => 0,
+            SledExerciseName::ChestPress => 1,
+            SledExerciseName::ForwardDrag => 2,
+            SledExerciseName::LowPush => 3,
+            SledExerciseName::Push => 4,
+            SledExerciseName::Row => 5,
+            SledExerciseName::Value(value) => value,
+        }
+    }
+    pub fn as_i64(self) -> i64 {
+        self.as_u16() as i64
+    }
+}
+impl fmt::Display for SledExerciseName {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match &self {
+            SledExerciseName::BackwardDrag => write!(f, "backward_drag"),
+            SledExerciseName::ChestPress => write!(f, "chest_press"),
+            SledExerciseName::ForwardDrag => write!(f, "forward_drag"),
+            SledExerciseName::LowPush => write!(f, "low_push"),
+            SledExerciseName::Push => write!(f, "push"),
+            SledExerciseName::Row => write!(f, "row"),
+            SledExerciseName::Value(value) => write!(f, "{}", value),
+        }
+    }
+}
+impl convert::From<u16> for SledExerciseName {
+    fn from(value: u16) -> Self {
+        match value {
+            0 => SledExerciseName::BackwardDrag,
+            1 => SledExerciseName::ChestPress,
+            2 => SledExerciseName::ForwardDrag,
+            3 => SledExerciseName::LowPush,
+            4 => SledExerciseName::Push,
+            5 => SledExerciseName::Row,
+            _ => SledExerciseName::Value(value),
+        }
+    }
+}
+impl convert::From<i64> for SledExerciseName {
+    fn from(value: i64) -> Self {
+        SledExerciseName::from(value as u16)
+    }
+}
+impl convert::From<&str> for SledExerciseName {
+    fn from(value: &str) -> Self {
+        match value {
+            "backward_drag" => SledExerciseName::BackwardDrag,
+            "chest_press" => SledExerciseName::ChestPress,
+            "forward_drag" => SledExerciseName::ForwardDrag,
+            "low_push" => SledExerciseName::LowPush,
+            "push" => SledExerciseName::Push,
+            "row" => SledExerciseName::Row,
+            &_ => SledExerciseName::Value(0),
+        }
+    }
+}
+impl Serialize for SledExerciseName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match &self {
+            SledExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
+    }
+}
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
+pub enum SledgeHammerExerciseName {
+    LateralSwing,
+    HammerSlam,
+    Value(u16),
+}
+impl SledgeHammerExerciseName {
+    pub fn is_named_variant(value: i64) -> bool {
+        matches!(value, 0i64 | 1i64)
+    }
+    pub fn as_u16(self) -> u16 {
+        match self {
+            SledgeHammerExerciseName::LateralSwing => 0,
+            SledgeHammerExerciseName::HammerSlam => 1,
+            SledgeHammerExerciseName::Value(value) => value,
+        }
+    }
+    pub fn as_i64(self) -> i64 {
+        self.as_u16() as i64
+    }
+}
+impl fmt::Display for SledgeHammerExerciseName {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match &self {
+            SledgeHammerExerciseName::LateralSwing => write!(f, "lateral_swing"),
+            SledgeHammerExerciseName::HammerSlam => write!(f, "hammer_slam"),
+            SledgeHammerExerciseName::Value(value) => write!(f, "{}", value),
+        }
+    }
+}
+impl convert::From<u16> for SledgeHammerExerciseName {
+    fn from(value: u16) -> Self {
+        match value {
+            0 => SledgeHammerExerciseName::LateralSwing,
+            1 => SledgeHammerExerciseName::HammerSlam,
+            _ => SledgeHammerExerciseName::Value(value),
+        }
+    }
+}
+impl convert::From<i64> for SledgeHammerExerciseName {
+    fn from(value: i64) -> Self {
+        SledgeHammerExerciseName::from(value as u16)
+    }
+}
+impl convert::From<&str> for SledgeHammerExerciseName {
+    fn from(value: &str) -> Self {
+        match value {
+            "lateral_swing" => SledgeHammerExerciseName::LateralSwing,
+            "hammer_slam" => SledgeHammerExerciseName::HammerSlam,
+            &_ => SledgeHammerExerciseName::Value(0),
+        }
+    }
+}
+impl Serialize for SledgeHammerExerciseName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match &self {
+            SledgeHammerExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
+    }
+}
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
+pub enum StairStepperExerciseName {
+    StairStepper,
+    Value(u16),
+}
+impl StairStepperExerciseName {
+    pub fn is_named_variant(value: i64) -> bool {
+        matches!(value, 0i64)
+    }
+    pub fn as_u16(self) -> u16 {
+        match self {
+            StairStepperExerciseName::StairStepper => 0,
+            StairStepperExerciseName::Value(value) => value,
+        }
+    }
+    pub fn as_i64(self) -> i64 {
+        self.as_u16() as i64
+    }
+}
+impl fmt::Display for StairStepperExerciseName {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match &self {
+            StairStepperExerciseName::StairStepper => write!(f, "stair_stepper"),
+            StairStepperExerciseName::Value(value) => write!(f, "{}", value),
+        }
+    }
+}
+impl convert::From<u16> for StairStepperExerciseName {
+    fn from(value: u16) -> Self {
+        match value {
+            0 => StairStepperExerciseName::StairStepper,
+            _ => StairStepperExerciseName::Value(value),
+        }
+    }
+}
+impl convert::From<i64> for StairStepperExerciseName {
+    fn from(value: i64) -> Self {
+        StairStepperExerciseName::from(value as u16)
+    }
+}
+impl convert::From<&str> for StairStepperExerciseName {
+    fn from(value: &str) -> Self {
+        match value {
+            "stair_stepper" => StairStepperExerciseName::StairStepper,
+            &_ => StairStepperExerciseName::Value(0),
+        }
+    }
+}
+impl Serialize for StairStepperExerciseName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match &self {
+            StairStepperExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
+    }
+}
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
+pub enum SuspensionExerciseName {
+    ChestFly,
+    ChestPress,
+    Crunch,
+    Curl,
+    Dip,
+    FacePull,
+    GluteBridge,
+    HamstringCurl,
+    HipDrop,
+    InvertedRow,
+    KneeDriveJump,
+    KneeToChest,
+    LatPullover,
+    Lunge,
+    MountainClimber,
+    Pendulum,
+    Pike,
+    Plank,
+    PowerPull,
+    PullUp,
+    PushUp,
+    ReverseMountainClimber,
+    ReversePlank,
+    Rollout,
+    Row,
+    SideLunge,
+    SidePlank,
+    SingleLegDeadlift,
+    SingleLegSquat,
+    SitUp,
+    Split,
+    Squat,
+    SquatJump,
+    TricepPress,
+    YFly,
+    Value(u16),
+}
+impl SuspensionExerciseName {
+    pub fn is_named_variant(value: i64) -> bool {
+        matches!(value, 0i64..=34i64)
+    }
+    pub fn as_u16(self) -> u16 {
+        match self {
+            SuspensionExerciseName::ChestFly => 0,
+            SuspensionExerciseName::ChestPress => 1,
+            SuspensionExerciseName::Crunch => 2,
+            SuspensionExerciseName::Curl => 3,
+            SuspensionExerciseName::Dip => 4,
+            SuspensionExerciseName::FacePull => 5,
+            SuspensionExerciseName::GluteBridge => 6,
+            SuspensionExerciseName::HamstringCurl => 7,
+            SuspensionExerciseName::HipDrop => 8,
+            SuspensionExerciseName::InvertedRow => 9,
+            SuspensionExerciseName::KneeDriveJump => 10,
+            SuspensionExerciseName::KneeToChest => 11,
+            SuspensionExerciseName::LatPullover => 12,
+            SuspensionExerciseName::Lunge => 13,
+            SuspensionExerciseName::MountainClimber => 14,
+            SuspensionExerciseName::Pendulum => 15,
+            SuspensionExerciseName::Pike => 16,
+            SuspensionExerciseName::Plank => 17,
+            SuspensionExerciseName::PowerPull => 18,
+            SuspensionExerciseName::PullUp => 19,
+            SuspensionExerciseName::PushUp => 20,
+            SuspensionExerciseName::ReverseMountainClimber => 21,
+            SuspensionExerciseName::ReversePlank => 22,
+            SuspensionExerciseName::Rollout => 23,
+            SuspensionExerciseName::Row => 24,
+            SuspensionExerciseName::SideLunge => 25,
+            SuspensionExerciseName::SidePlank => 26,
+            SuspensionExerciseName::SingleLegDeadlift => 27,
+            SuspensionExerciseName::SingleLegSquat => 28,
+            SuspensionExerciseName::SitUp => 29,
+            SuspensionExerciseName::Split => 30,
+            SuspensionExerciseName::Squat => 31,
+            SuspensionExerciseName::SquatJump => 32,
+            SuspensionExerciseName::TricepPress => 33,
+            SuspensionExerciseName::YFly => 34,
+            SuspensionExerciseName::Value(value) => value,
+        }
+    }
+    pub fn as_i64(self) -> i64 {
+        self.as_u16() as i64
+    }
+}
+impl fmt::Display for SuspensionExerciseName {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match &self {
+            SuspensionExerciseName::ChestFly => write!(f, "chest_fly"),
+            SuspensionExerciseName::ChestPress => write!(f, "chest_press"),
+            SuspensionExerciseName::Crunch => write!(f, "crunch"),
+            SuspensionExerciseName::Curl => write!(f, "curl"),
+            SuspensionExerciseName::Dip => write!(f, "dip"),
+            SuspensionExerciseName::FacePull => write!(f, "face_pull"),
+            SuspensionExerciseName::GluteBridge => write!(f, "glute_bridge"),
+            SuspensionExerciseName::HamstringCurl => write!(f, "hamstring_curl"),
+            SuspensionExerciseName::HipDrop => write!(f, "hip_drop"),
+            SuspensionExerciseName::InvertedRow => write!(f, "inverted_row"),
+            SuspensionExerciseName::KneeDriveJump => write!(f, "knee_drive_jump"),
+            SuspensionExerciseName::KneeToChest => write!(f, "knee_to_chest"),
+            SuspensionExerciseName::LatPullover => write!(f, "lat_pullover"),
+            SuspensionExerciseName::Lunge => write!(f, "lunge"),
+            SuspensionExerciseName::MountainClimber => write!(f, "mountain_climber"),
+            SuspensionExerciseName::Pendulum => write!(f, "pendulum"),
+            SuspensionExerciseName::Pike => write!(f, "pike"),
+            SuspensionExerciseName::Plank => write!(f, "plank"),
+            SuspensionExerciseName::PowerPull => write!(f, "power_pull"),
+            SuspensionExerciseName::PullUp => write!(f, "pull_up"),
+            SuspensionExerciseName::PushUp => write!(f, "push_up"),
+            SuspensionExerciseName::ReverseMountainClimber => write!(f, "reverse_mountain_climber"),
+            SuspensionExerciseName::ReversePlank => write!(f, "reverse_plank"),
+            SuspensionExerciseName::Rollout => write!(f, "rollout"),
+            SuspensionExerciseName::Row => write!(f, "row"),
+            SuspensionExerciseName::SideLunge => write!(f, "side_lunge"),
+            SuspensionExerciseName::SidePlank => write!(f, "side_plank"),
+            SuspensionExerciseName::SingleLegDeadlift => write!(f, "single_leg_deadlift"),
+            SuspensionExerciseName::SingleLegSquat => write!(f, "single_leg_squat"),
+            SuspensionExerciseName::SitUp => write!(f, "sit_up"),
+            SuspensionExerciseName::Split => write!(f, "split"),
+            SuspensionExerciseName::Squat => write!(f, "squat"),
+            SuspensionExerciseName::SquatJump => write!(f, "squat_jump"),
+            SuspensionExerciseName::TricepPress => write!(f, "tricep_press"),
+            SuspensionExerciseName::YFly => write!(f, "y_fly"),
+            SuspensionExerciseName::Value(value) => write!(f, "{}", value),
+        }
+    }
+}
+impl convert::From<u16> for SuspensionExerciseName {
+    fn from(value: u16) -> Self {
+        match value {
+            0 => SuspensionExerciseName::ChestFly,
+            1 => SuspensionExerciseName::ChestPress,
+            2 => SuspensionExerciseName::Crunch,
+            3 => SuspensionExerciseName::Curl,
+            4 => SuspensionExerciseName::Dip,
+            5 => SuspensionExerciseName::FacePull,
+            6 => SuspensionExerciseName::GluteBridge,
+            7 => SuspensionExerciseName::HamstringCurl,
+            8 => SuspensionExerciseName::HipDrop,
+            9 => SuspensionExerciseName::InvertedRow,
+            10 => SuspensionExerciseName::KneeDriveJump,
+            11 => SuspensionExerciseName::KneeToChest,
+            12 => SuspensionExerciseName::LatPullover,
+            13 => SuspensionExerciseName::Lunge,
+            14 => SuspensionExerciseName::MountainClimber,
+            15 => SuspensionExerciseName::Pendulum,
+            16 => SuspensionExerciseName::Pike,
+            17 => SuspensionExerciseName::Plank,
+            18 => SuspensionExerciseName::PowerPull,
+            19 => SuspensionExerciseName::PullUp,
+            20 => SuspensionExerciseName::PushUp,
+            21 => SuspensionExerciseName::ReverseMountainClimber,
+            22 => SuspensionExerciseName::ReversePlank,
+            23 => SuspensionExerciseName::Rollout,
+            24 => SuspensionExerciseName::Row,
+            25 => SuspensionExerciseName::SideLunge,
+            26 => SuspensionExerciseName::SidePlank,
+            27 => SuspensionExerciseName::SingleLegDeadlift,
+            28 => SuspensionExerciseName::SingleLegSquat,
+            29 => SuspensionExerciseName::SitUp,
+            30 => SuspensionExerciseName::Split,
+            31 => SuspensionExerciseName::Squat,
+            32 => SuspensionExerciseName::SquatJump,
+            33 => SuspensionExerciseName::TricepPress,
+            34 => SuspensionExerciseName::YFly,
+            _ => SuspensionExerciseName::Value(value),
+        }
+    }
+}
+impl convert::From<i64> for SuspensionExerciseName {
+    fn from(value: i64) -> Self {
+        SuspensionExerciseName::from(value as u16)
+    }
+}
+impl convert::From<&str> for SuspensionExerciseName {
+    fn from(value: &str) -> Self {
+        match value {
+            "chest_fly" => SuspensionExerciseName::ChestFly,
+            "chest_press" => SuspensionExerciseName::ChestPress,
+            "crunch" => SuspensionExerciseName::Crunch,
+            "curl" => SuspensionExerciseName::Curl,
+            "dip" => SuspensionExerciseName::Dip,
+            "face_pull" => SuspensionExerciseName::FacePull,
+            "glute_bridge" => SuspensionExerciseName::GluteBridge,
+            "hamstring_curl" => SuspensionExerciseName::HamstringCurl,
+            "hip_drop" => SuspensionExerciseName::HipDrop,
+            "inverted_row" => SuspensionExerciseName::InvertedRow,
+            "knee_drive_jump" => SuspensionExerciseName::KneeDriveJump,
+            "knee_to_chest" => SuspensionExerciseName::KneeToChest,
+            "lat_pullover" => SuspensionExerciseName::LatPullover,
+            "lunge" => SuspensionExerciseName::Lunge,
+            "mountain_climber" => SuspensionExerciseName::MountainClimber,
+            "pendulum" => SuspensionExerciseName::Pendulum,
+            "pike" => SuspensionExerciseName::Pike,
+            "plank" => SuspensionExerciseName::Plank,
+            "power_pull" => SuspensionExerciseName::PowerPull,
+            "pull_up" => SuspensionExerciseName::PullUp,
+            "push_up" => SuspensionExerciseName::PushUp,
+            "reverse_mountain_climber" => SuspensionExerciseName::ReverseMountainClimber,
+            "reverse_plank" => SuspensionExerciseName::ReversePlank,
+            "rollout" => SuspensionExerciseName::Rollout,
+            "row" => SuspensionExerciseName::Row,
+            "side_lunge" => SuspensionExerciseName::SideLunge,
+            "side_plank" => SuspensionExerciseName::SidePlank,
+            "single_leg_deadlift" => SuspensionExerciseName::SingleLegDeadlift,
+            "single_leg_squat" => SuspensionExerciseName::SingleLegSquat,
+            "sit_up" => SuspensionExerciseName::SitUp,
+            "split" => SuspensionExerciseName::Split,
+            "squat" => SuspensionExerciseName::Squat,
+            "squat_jump" => SuspensionExerciseName::SquatJump,
+            "tricep_press" => SuspensionExerciseName::TricepPress,
+            "y_fly" => SuspensionExerciseName::YFly,
+            &_ => SuspensionExerciseName::Value(0),
+        }
+    }
+}
+impl Serialize for SuspensionExerciseName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match &self {
+            SuspensionExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
+    }
+}
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
+pub enum TireExerciseName {
+    Flip,
+    Value(u16),
+}
+impl TireExerciseName {
+    pub fn is_named_variant(value: i64) -> bool {
+        matches!(value, 0i64)
+    }
+    pub fn as_u16(self) -> u16 {
+        match self {
+            TireExerciseName::Flip => 0,
+            TireExerciseName::Value(value) => value,
+        }
+    }
+    pub fn as_i64(self) -> i64 {
+        self.as_u16() as i64
+    }
+}
+impl fmt::Display for TireExerciseName {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match &self {
+            TireExerciseName::Flip => write!(f, "flip"),
+            TireExerciseName::Value(value) => write!(f, "{}", value),
+        }
+    }
+}
+impl convert::From<u16> for TireExerciseName {
+    fn from(value: u16) -> Self {
+        match value {
+            0 => TireExerciseName::Flip,
+            _ => TireExerciseName::Value(value),
+        }
+    }
+}
+impl convert::From<i64> for TireExerciseName {
+    fn from(value: i64) -> Self {
+        TireExerciseName::from(value as u16)
+    }
+}
+impl convert::From<&str> for TireExerciseName {
+    fn from(value: &str) -> Self {
+        match value {
+            "flip" => TireExerciseName::Flip,
+            &_ => TireExerciseName::Value(0),
+        }
+    }
+}
+impl Serialize for TireExerciseName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match &self {
+            TireExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
+    }
+}
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
+pub enum BikeOutdoorExerciseName {
+    Bike,
+    Value(u16),
+}
+impl BikeOutdoorExerciseName {
+    pub fn is_named_variant(value: i64) -> bool {
+        matches!(value, 0i64)
+    }
+    pub fn as_u16(self) -> u16 {
+        match self {
+            BikeOutdoorExerciseName::Bike => 0,
+            BikeOutdoorExerciseName::Value(value) => value,
+        }
+    }
+    pub fn as_i64(self) -> i64 {
+        self.as_u16() as i64
+    }
+}
+impl fmt::Display for BikeOutdoorExerciseName {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match &self {
+            BikeOutdoorExerciseName::Bike => write!(f, "bike"),
+            BikeOutdoorExerciseName::Value(value) => write!(f, "{}", value),
+        }
+    }
+}
+impl convert::From<u16> for BikeOutdoorExerciseName {
+    fn from(value: u16) -> Self {
+        match value {
+            0 => BikeOutdoorExerciseName::Bike,
+            _ => BikeOutdoorExerciseName::Value(value),
+        }
+    }
+}
+impl convert::From<i64> for BikeOutdoorExerciseName {
+    fn from(value: i64) -> Self {
+        BikeOutdoorExerciseName::from(value as u16)
+    }
+}
+impl convert::From<&str> for BikeOutdoorExerciseName {
+    fn from(value: &str) -> Self {
+        match value {
+            "bike" => BikeOutdoorExerciseName::Bike,
+            &_ => BikeOutdoorExerciseName::Value(0),
+        }
+    }
+}
+impl Serialize for BikeOutdoorExerciseName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match &self {
+            BikeOutdoorExerciseName::Value(value) => serializer.serialize_u16(*value),
+            _ => serializer.serialize_str(&self.to_string()),
+        }
+    }
+}
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
+pub enum RunIndoorExerciseName {
+    IndoorTrackRun,
+    Treadmill,
+    Value(u16),
+}
+impl RunIndoorExerciseName {
+    pub fn is_named_variant(value: i64) -> bool {
+        matches!(value, 0i64 | 1i64)
+    }
+    pub fn as_u16(self) -> u16 {
+        match self {
+            RunIndoorExerciseName::IndoorTrackRun => 0,
+            RunIndoorExerciseName::Treadmill => 1,
+            RunIndoorExerciseName::Value(value) => value,
+        }
+    }
+    pub fn as_i64(self) -> i64 {
+        self.as_u16() as i64
+    }
+}
+impl fmt::Display for RunIndoorExerciseName {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match &self {
+            RunIndoorExerciseName::IndoorTrackRun => write!(f, "indoor_track_run"),
+            RunIndoorExerciseName::Treadmill => write!(f, "treadmill"),
+            RunIndoorExerciseName::Value(value) => write!(f, "{}", value),
+        }
+    }
+}
+impl convert::From<u16> for RunIndoorExerciseName {
+    fn from(value: u16) -> Self {
+        match value {
+            0 => RunIndoorExerciseName::IndoorTrackRun,
+            1 => RunIndoorExerciseName::Treadmill,
+            _ => RunIndoorExerciseName::Value(value),
+        }
+    }
+}
+impl convert::From<i64> for RunIndoorExerciseName {
+    fn from(value: i64) -> Self {
+        RunIndoorExerciseName::from(value as u16)
+    }
+}
+impl convert::From<&str> for RunIndoorExerciseName {
+    fn from(value: &str) -> Self {
+        match value {
+            "indoor_track_run" => RunIndoorExerciseName::IndoorTrackRun,
+            "treadmill" => RunIndoorExerciseName::Treadmill,
+            &_ => RunIndoorExerciseName::Value(0),
+        }
+    }
+}
+impl Serialize for RunIndoorExerciseName {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match &self {
+            RunIndoorExerciseName::Value(value) => serializer.serialize_u16(*value),
             _ => serializer.serialize_str(&self.to_string()),
         }
     }
