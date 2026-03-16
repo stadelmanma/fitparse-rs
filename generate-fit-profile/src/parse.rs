@@ -1,5 +1,5 @@
 //! Code used to parse the Profile.xlsx file into useful data structures
-use calamine::{open_workbook, DataType, Range, Reader, Xlsx};
+use calamine::{open_workbook, Data, DataType, Range, Reader, Xlsx};
 use proc_macro2::{Ident, Literal, Span, TokenStream};
 use quote::{format_ident, quote};
 use std::collections::{BTreeMap, HashMap};
@@ -318,13 +318,13 @@ impl MessageFieldComponent {
     }
 }
 
-macro_rules! split_csv_string ( ($value:expr) => ( {$value.split(',').map(|v| v.trim().to_string())} ););
+macro_rules! split_csv_string ( ($value:expr) => ( {$value.split(',').map(|v: &str| v.trim().to_string())} ););
 
-fn optional_trimmed_string(value: &DataType) -> Option<&str> {
+fn optional_trimmed_string(value: &Data) -> Option<&str> {
     value.get_string().map(str::trim).filter(|v| !v.is_empty())
 }
 
-fn required_trimmed_string<'a>(value: &'a DataType, row: &[DataType], label: &str) -> &'a str {
+fn required_trimmed_string<'a>(value: &'a Data, row: &[Data], label: &str) -> &'a str {
     optional_trimmed_string(value).unwrap_or_else(|| panic!("{label} must be a string, row={row:?}."))
 }
 
@@ -397,32 +397,32 @@ fn parse_enum_variant_value(value: &str) -> i64 {
     }
 }
 
-fn parse_u8_cell(value: &DataType, row: &[DataType], label: &str) -> u8 {
+fn parse_u8_cell(value: &Data, row: &[Data], label: &str) -> u8 {
     parse_u8_cell_opt(value).unwrap_or_else(|| panic!("{label} must be an integer, row={row:?}."))
 }
 
-fn parse_u8_cell_opt(value: &DataType) -> Option<u8> {
+fn parse_u8_cell_opt(value: &Data) -> Option<u8> {
     match value {
-        DataType::Float(v) => Some(*v as u8),
-        DataType::Int(v) => Some(*v as u8),
-        DataType::String(v) => v.trim().parse::<u8>().ok(),
+        Data::Float(v) => Some(*v as u8),
+        Data::Int(v) => Some(*v as u8),
+        Data::String(v) => v.trim().parse::<u8>().ok(),
         _ => None,
     }
 }
 
-fn parse_f64_cell(value: &DataType) -> Option<f64> {
+fn parse_f64_cell(value: &Data) -> Option<f64> {
     match value {
-        DataType::Float(v) => Some(*v),
-        DataType::Int(v) => Some(*v as f64),
-        DataType::String(v) => v.trim().parse::<f64>().ok(),
+        Data::Float(v) => Some(*v),
+        Data::Int(v) => Some(*v as f64),
+        Data::String(v) => v.trim().parse::<f64>().ok(),
         _ => None,
     }
 }
 
-fn cell_is_blank(value: &DataType) -> bool {
+fn cell_is_blank(value: &Data) -> bool {
     match value {
-        DataType::Empty => true,
-        DataType::String(v) => v.trim().is_empty(),
+        Data::Empty => true,
+        Data::String(v) => v.trim().is_empty(),
         _ => false,
     }
 }
@@ -436,7 +436,7 @@ fn doc_comment(comment: Option<String>) -> TokenStream {
 }
 
 #[allow(clippy::cast_possible_truncation)]
-fn process_types(sheet: &Range<DataType>) -> Vec<FieldTypeDefintion> {
+fn process_types(sheet: &Range<Data>) -> Vec<FieldTypeDefintion> {
     let mut field_types: Vec<FieldTypeDefintion> = Vec::new();
 
     for row in sheet.rows().skip(1) {
@@ -453,9 +453,9 @@ fn process_types(sheet: &Range<DataType>) -> Vec<FieldTypeDefintion> {
             // add enum variant
             // handle mix of numeric and hex string data values
             let value = match &row[3] {
-                DataType::Float(v) => *v as i64,
-                DataType::Int(v) => *v,
-                DataType::String(v) => parse_enum_variant_value(v),
+                Data::Float(v) => *v as i64,
+                Data::Int(v) => *v,
+                Data::String(v) => parse_enum_variant_value(v),
                 _ => {
                     panic!("Unsupported enum variant value data type row={row:?}.");
                 }
@@ -470,7 +470,7 @@ fn process_types(sheet: &Range<DataType>) -> Vec<FieldTypeDefintion> {
     field_types
 }
 
-fn parse_message_field_components(row: &[DataType]) -> Vec<MessageFieldComponent> {
+fn parse_message_field_components(row: &[Data]) -> Vec<MessageFieldComponent> {
     let mut components = Vec::new();
 
     // parse out the fields into iterators
@@ -580,7 +580,7 @@ fn process_components(
 }
 
 #[allow(clippy::cast_possible_truncation, clippy::cast_sign_loss)]
-fn new_message_field_definition(row: &[DataType]) -> MessageFieldDefinition {
+fn new_message_field_definition(row: &[Data]) -> MessageFieldDefinition {
     let def_number = parse_u8_cell(&row[1], row, "Field defintiton number");
     let name = required_trimmed_string(&row[2], row, "Field name");
     let ftype = required_trimmed_string(&row[3], row, "Field type");
@@ -601,7 +601,7 @@ fn new_message_field_definition(row: &[DataType]) -> MessageFieldDefinition {
     )
 }
 
-fn process_messages(sheet: &Range<DataType>) -> Vec<MessageDefinition> {
+fn process_messages(sheet: &Range<Data>) -> Vec<MessageDefinition> {
     let mut rows = sheet.rows().skip(1);
     let mut messages: Vec<MessageDefinition> = Vec::new();
     let mut msg: MessageDefinition;
@@ -641,8 +641,8 @@ fn process_messages(sheet: &Range<DataType>) -> Vec<MessageDefinition> {
                 .field_map
                 .get_mut(&last_def_number)
                 .expect("No parent field defined for subfield!");
-            let mut temp_row: Vec<DataType> = Vec::from(row);
-            temp_row[1] = DataType::Int(i64::from(last_def_number));
+            let mut temp_row: Vec<Data> = Vec::from(row);
+            temp_row[1] = Data::Int(i64::from(last_def_number));
             field = new_message_field_definition(&temp_row);
             // store subfield ref_field, ref_field_value and defintion, if multiple values can
             // trigger this subfield we simply duplicate them
@@ -674,18 +674,16 @@ pub fn parse_profile(
     let mut excel: Xlsx<_> = open_workbook(profile_fname)?;
 
     // process Types sheet
-    let field_types = if let Some(Ok(sheet)) = excel.worksheet_range("Types") {
-        process_types(&sheet)
-    } else {
-        panic!("Could not access workbook sheet 'Types'");
-    };
+    let field_types = excel
+        .worksheet_range("Types")
+        .map(|sheet| process_types(&sheet))
+        .expect("Could not access workbook sheet 'Types'");
 
     // process Messages sheet
-    let messages = if let Some(Ok(sheet)) = excel.worksheet_range("Messages") {
-        process_messages(&sheet)
-    } else {
-        panic!("Could not access workbook sheet 'Messages'");
-    };
+    let messages = excel
+        .worksheet_range("Messages")
+        .map(|sheet| process_messages(&sheet))
+        .expect("Could not access workbook sheet 'Messages'");
 
     Ok(FitProfile {
         version,
