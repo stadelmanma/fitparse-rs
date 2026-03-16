@@ -1,7 +1,7 @@
 #![allow(missing_docs)]
 #![allow(dead_code)]
 #![allow(clippy::unreadable_literal)]
-#![doc = "Auto generated profile field types from FIT SDK Release: 21.171.00"]
+#![doc = "Auto generated profile field types from FIT SDK Release: 21.195.0"]
 #![doc = "Not all of these may be used by the defined set of FIT messages"]
 use serde::{ser::Serializer, Serialize};
 use std::{convert, fmt};
@@ -220,6 +220,7 @@ pub enum FieldDataType {
     GasConsumptionRateType,
     TapSensitivity,
     RadarThreatLevelType,
+    SleepDisruptionSeverity,
     MaxMetSpeedSource,
     MaxMetHeartRateSource,
     HrvStatus,
@@ -418,6 +419,7 @@ impl FieldDataType {
             FieldDataType::GasConsumptionRateType => true,
             FieldDataType::TapSensitivity => true,
             FieldDataType::RadarThreatLevelType => true,
+            FieldDataType::SleepDisruptionSeverity => true,
             FieldDataType::MaxMetSpeedSource => true,
             FieldDataType::MaxMetHeartRateSource => true,
             FieldDataType::HrvStatus => true,
@@ -664,6 +666,9 @@ impl FieldDataType {
             }
             FieldDataType::TapSensitivity => TapSensitivity::is_named_variant(value),
             FieldDataType::RadarThreatLevelType => RadarThreatLevelType::is_named_variant(value),
+            FieldDataType::SleepDisruptionSeverity => {
+                SleepDisruptionSeverity::is_named_variant(value)
+            }
             FieldDataType::MaxMetSpeedSource => MaxMetSpeedSource::is_named_variant(value),
             FieldDataType::MaxMetHeartRateSource => MaxMetHeartRateSource::is_named_variant(value),
             FieldDataType::HrvStatus => HrvStatus::is_named_variant(value),
@@ -887,6 +892,7 @@ pub fn get_field_variant_as_string(field_type: FieldDataType, value: i64) -> Str
         FieldDataType::GasConsumptionRateType => GasConsumptionRateType::from(value).to_string(),
         FieldDataType::TapSensitivity => TapSensitivity::from(value).to_string(),
         FieldDataType::RadarThreatLevelType => RadarThreatLevelType::from(value).to_string(),
+        FieldDataType::SleepDisruptionSeverity => SleepDisruptionSeverity::from(value).to_string(),
         FieldDataType::MaxMetSpeedSource => MaxMetSpeedSource::from(value).to_string(),
         FieldDataType::MaxMetHeartRateSource => MaxMetHeartRateSource::from(value).to_string(),
         FieldDataType::HrvStatus => HrvStatus::from(value).to_string(),
@@ -1209,6 +1215,8 @@ pub enum MesgNum {
     SkinTempOvernight,
     #[doc = "Message number for the HSA wrist temperature data message"]
     HsaWristTemperatureData,
+    SleepDisruptionSeverityPeriod,
+    SleepDisruptionOvernightSeverity,
     #[doc = "0xFF00 - 0xFFFE reserved for manufacturer specific messages"]
     MfgRangeMin,
     #[doc = "0xFF00 - 0xFFFE reserved for manufacturer specific messages"]
@@ -1339,6 +1347,8 @@ impl MesgNum {
                 | 393i64
                 | 398i64
                 | 409i64
+                | 470i64
+                | 471i64
                 | 65280i64
                 | 65534i64
         )
@@ -1466,6 +1476,8 @@ impl MesgNum {
             MesgNum::DiveApneaAlarm => 393,
             MesgNum::SkinTempOvernight => 398,
             MesgNum::HsaWristTemperatureData => 409,
+            MesgNum::SleepDisruptionSeverityPeriod => 470,
+            MesgNum::SleepDisruptionOvernightSeverity => 471,
             MesgNum::MfgRangeMin => 65280,
             MesgNum::MfgRangeMax => 65534,
             MesgNum::Value(value) => value,
@@ -1599,6 +1611,10 @@ impl fmt::Display for MesgNum {
             MesgNum::DiveApneaAlarm => write!(f, "dive_apnea_alarm"),
             MesgNum::SkinTempOvernight => write!(f, "skin_temp_overnight"),
             MesgNum::HsaWristTemperatureData => write!(f, "hsa_wrist_temperature_data"),
+            MesgNum::SleepDisruptionSeverityPeriod => write!(f, "sleep_disruption_severity_period"),
+            MesgNum::SleepDisruptionOvernightSeverity => {
+                write!(f, "sleep_disruption_overnight_severity")
+            }
             MesgNum::MfgRangeMin => write!(f, "mfg_range_min"),
             MesgNum::MfgRangeMax => write!(f, "mfg_range_max"),
             MesgNum::Value(value) => write!(f, "{}", value),
@@ -1729,6 +1745,8 @@ impl convert::From<u16> for MesgNum {
             393 => MesgNum::DiveApneaAlarm,
             398 => MesgNum::SkinTempOvernight,
             409 => MesgNum::HsaWristTemperatureData,
+            470 => MesgNum::SleepDisruptionSeverityPeriod,
+            471 => MesgNum::SleepDisruptionOvernightSeverity,
             65280 => MesgNum::MfgRangeMin,
             65534 => MesgNum::MfgRangeMax,
             _ => MesgNum::Value(value),
@@ -1864,6 +1882,8 @@ impl convert::From<&str> for MesgNum {
             "dive_apnea_alarm" => MesgNum::DiveApneaAlarm,
             "skin_temp_overnight" => MesgNum::SkinTempOvernight,
             "hsa_wrist_temperature_data" => MesgNum::HsaWristTemperatureData,
+            "sleep_disruption_severity_period" => MesgNum::SleepDisruptionSeverityPeriod,
+            "sleep_disruption_overnight_severity" => MesgNum::SleepDisruptionOvernightSeverity,
             "mfg_range_min" => MesgNum::MfgRangeMin,
             "mfg_range_max" => MesgNum::MfgRangeMax,
             &_ => MesgNum::Value(0),
@@ -9223,6 +9243,12 @@ pub enum Manufacturer {
     TektroRacingProducts,
     DaradInnovationCorporation,
     Cycloptim,
+    Runna,
+    Zepp,
+    Peloton,
+    Carv,
+    Tissot,
+    RealVelo,
     Actigraphcorp,
     Value(u16),
 }
@@ -9460,6 +9486,12 @@ impl Manufacturer {
                 | 333i64
                 | 334i64
                 | 335i64
+                | 337i64
+                | 339i64
+                | 340i64
+                | 341i64
+                | 342i64
+                | 345i64
                 | 5759i64
         )
     }
@@ -9696,6 +9728,12 @@ impl Manufacturer {
             Manufacturer::TektroRacingProducts => 333,
             Manufacturer::DaradInnovationCorporation => 334,
             Manufacturer::Cycloptim => 335,
+            Manufacturer::Runna => 337,
+            Manufacturer::Zepp => 339,
+            Manufacturer::Peloton => 340,
+            Manufacturer::Carv => 341,
+            Manufacturer::Tissot => 342,
+            Manufacturer::RealVelo => 345,
             Manufacturer::Actigraphcorp => 5759,
             Manufacturer::Value(value) => value,
         }
@@ -9938,6 +9976,12 @@ impl fmt::Display for Manufacturer {
             Manufacturer::TektroRacingProducts => write!(f, "tektro_racing_products"),
             Manufacturer::DaradInnovationCorporation => write!(f, "darad_innovation_corporation"),
             Manufacturer::Cycloptim => write!(f, "cycloptim"),
+            Manufacturer::Runna => write!(f, "runna"),
+            Manufacturer::Zepp => write!(f, "zepp"),
+            Manufacturer::Peloton => write!(f, "peloton"),
+            Manufacturer::Carv => write!(f, "carv"),
+            Manufacturer::Tissot => write!(f, "tissot"),
+            Manufacturer::RealVelo => write!(f, "real_velo"),
             Manufacturer::Actigraphcorp => write!(f, "actigraphcorp"),
             Manufacturer::Value(value) => write!(f, "{}", value),
         }
@@ -10177,6 +10221,12 @@ impl convert::From<u16> for Manufacturer {
             333 => Manufacturer::TektroRacingProducts,
             334 => Manufacturer::DaradInnovationCorporation,
             335 => Manufacturer::Cycloptim,
+            337 => Manufacturer::Runna,
+            339 => Manufacturer::Zepp,
+            340 => Manufacturer::Peloton,
+            341 => Manufacturer::Carv,
+            342 => Manufacturer::Tissot,
+            345 => Manufacturer::RealVelo,
             5759 => Manufacturer::Actigraphcorp,
             _ => Manufacturer::Value(value),
         }
@@ -10421,6 +10471,12 @@ impl convert::From<&str> for Manufacturer {
             "tektro_racing_products" => Manufacturer::TektroRacingProducts,
             "darad_innovation_corporation" => Manufacturer::DaradInnovationCorporation,
             "cycloptim" => Manufacturer::Cycloptim,
+            "runna" => Manufacturer::Runna,
+            "zepp" => Manufacturer::Zepp,
+            "peloton" => Manufacturer::Peloton,
+            "carv" => Manufacturer::Carv,
+            "tissot" => Manufacturer::Tissot,
+            "real_velo" => Manufacturer::RealVelo,
             "actigraphcorp" => Manufacturer::Actigraphcorp,
             &_ => Manufacturer::Value(0),
         }
@@ -10439,7 +10495,7 @@ impl Serialize for Manufacturer {
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum GarminProduct {
-    ApproachG12Asia,
+    Hrm1,
     #[doc = "AXH01 HRM chipset"]
     Axh01,
     Axb01,
@@ -10607,7 +10663,6 @@ pub enum GarminProduct {
     Hrm4Run,
     EpixJapan,
     VivoActiveHr,
-    ApproachG12,
     VivoSmartGpsHr,
     VivoSmartHr,
     VivoSmartHrAsia,
@@ -10823,6 +10878,7 @@ pub enum GarminProduct {
     Fenix7sApac,
     Fenix7Apac,
     Fenix7xApac,
+    ApproachG12,
     DescentMk2sAsia,
     ApproachS42,
     EpixGen2,
@@ -10837,6 +10893,7 @@ pub enum GarminProduct {
     Fr255SmallMusic,
     Fr255,
     Fr255Small,
+    ApproachG12Asia,
     ApproachS42Asia,
     DescentG1,
     Venu2PlusAsia,
@@ -10908,6 +10965,8 @@ pub enum GarminProduct {
     MarqGen2Commander,
     #[doc = "aka the Lily 2 Active"]
     LilyAthlete,
+    #[doc = "Rally 110/210"]
+    RallyX10,
     Fenix8Solar,
     Fenix8SolarLarge,
     Fenix8Small,
@@ -10920,14 +10979,26 @@ pub enum GarminProduct {
     Instinct3Amoled45mm,
     Instinct3Amoled50mm,
     DescentG2,
+    VenuX1,
     Hrm200,
     Vivoactive6,
+    Fenix8Pro,
+    Edge550,
+    Edge850,
+    Venu4,
+    Venu4s,
     ApproachS44,
+    EdgeMtb,
     ApproachS50,
     FenixE,
+    InstinctCrossoverAmoled,
+    Bounce2,
     Instinct3Solar50mm,
     Tactix8Amoled,
     Tactix8Solar,
+    ApproachJ1,
+    D2Mach2,
+    D2AirX15,
     #[doc = "SDM4 footpod"]
     Sdm4,
     EdgeRemote,
@@ -11097,7 +11168,6 @@ impl GarminProduct {
                 | 2327i64
                 | 2332i64
                 | 2337i64
-                | 2343i64
                 | 2347i64
                 | 2348i64
                 | 2361i64
@@ -11305,6 +11375,7 @@ impl GarminProduct {
                 | 3908i64
                 | 3909i64
                 | 3910i64
+                | 3927i64
                 | 3930i64
                 | 3934i64
                 | 3943i64
@@ -11319,6 +11390,7 @@ impl GarminProduct {
                 | 3991i64
                 | 3992i64
                 | 3993i64
+                | 4001i64
                 | 4002i64
                 | 4005i64
                 | 4017i64
@@ -11376,6 +11448,7 @@ impl GarminProduct {
                 | 4446i64
                 | 4472i64
                 | 4477i64
+                | 4525i64
                 | 4532i64
                 | 4533i64
                 | 4534i64
@@ -11388,14 +11461,26 @@ impl GarminProduct {
                 | 4586i64
                 | 4587i64
                 | 4588i64
+                | 4603i64
                 | 4606i64
                 | 4625i64
+                | 4631i64
+                | 4633i64
+                | 4634i64
+                | 4643i64
+                | 4644i64
                 | 4647i64
+                | 4655i64
                 | 4656i64
                 | 4666i64
+                | 4678i64
+                | 4745i64
                 | 4759i64
                 | 4775i64
                 | 4776i64
+                | 4825i64
+                | 4879i64
+                | 4944i64
                 | 10007i64
                 | 10014i64
                 | 20119i64
@@ -11412,7 +11497,7 @@ impl GarminProduct {
     }
     pub fn as_u16(self) -> u16 {
         match self {
-            GarminProduct::ApproachG12Asia => 1,
+            GarminProduct::Hrm1 => 1,
             GarminProduct::Axh01 => 2,
             GarminProduct::Axb01 => 3,
             GarminProduct::Axb02 => 4,
@@ -11562,7 +11647,6 @@ impl GarminProduct {
             GarminProduct::Hrm4Run => 2327,
             GarminProduct::EpixJapan => 2332,
             GarminProduct::VivoActiveHr => 2337,
-            GarminProduct::ApproachG12 => 2343,
             GarminProduct::VivoSmartGpsHr => 2347,
             GarminProduct::VivoSmartHr => 2348,
             GarminProduct::VivoSmartHrAsia => 2361,
@@ -11770,6 +11854,7 @@ impl GarminProduct {
             GarminProduct::Fenix7sApac => 3908,
             GarminProduct::Fenix7Apac => 3909,
             GarminProduct::Fenix7xApac => 3910,
+            GarminProduct::ApproachG12 => 3927,
             GarminProduct::DescentMk2sAsia => 3930,
             GarminProduct::ApproachS42 => 3934,
             GarminProduct::EpixGen2 => 3943,
@@ -11784,6 +11869,7 @@ impl GarminProduct {
             GarminProduct::Fr255SmallMusic => 3991,
             GarminProduct::Fr255 => 3992,
             GarminProduct::Fr255Small => 3993,
+            GarminProduct::ApproachG12Asia => 4001,
             GarminProduct::ApproachS42Asia => 4002,
             GarminProduct::DescentG1 => 4005,
             GarminProduct::Venu2PlusAsia => 4017,
@@ -11841,6 +11927,7 @@ impl GarminProduct {
             GarminProduct::HrmFit => 4446,
             GarminProduct::MarqGen2Commander => 4472,
             GarminProduct::LilyAthlete => 4477,
+            GarminProduct::RallyX10 => 4525,
             GarminProduct::Fenix8Solar => 4532,
             GarminProduct::Fenix8SolarLarge => 4533,
             GarminProduct::Fenix8Small => 4534,
@@ -11853,14 +11940,26 @@ impl GarminProduct {
             GarminProduct::Instinct3Amoled45mm => 4586,
             GarminProduct::Instinct3Amoled50mm => 4587,
             GarminProduct::DescentG2 => 4588,
+            GarminProduct::VenuX1 => 4603,
             GarminProduct::Hrm200 => 4606,
             GarminProduct::Vivoactive6 => 4625,
+            GarminProduct::Fenix8Pro => 4631,
+            GarminProduct::Edge550 => 4633,
+            GarminProduct::Edge850 => 4634,
+            GarminProduct::Venu4 => 4643,
+            GarminProduct::Venu4s => 4644,
             GarminProduct::ApproachS44 => 4647,
+            GarminProduct::EdgeMtb => 4655,
             GarminProduct::ApproachS50 => 4656,
             GarminProduct::FenixE => 4666,
+            GarminProduct::InstinctCrossoverAmoled => 4678,
+            GarminProduct::Bounce2 => 4745,
             GarminProduct::Instinct3Solar50mm => 4759,
             GarminProduct::Tactix8Amoled => 4775,
             GarminProduct::Tactix8Solar => 4776,
+            GarminProduct::ApproachJ1 => 4825,
+            GarminProduct::D2Mach2 => 4879,
+            GarminProduct::D2AirX15 => 4944,
             GarminProduct::Sdm4 => 10007,
             GarminProduct::EdgeRemote => 10014,
             GarminProduct::TrainingCenter => 20119,
@@ -11883,7 +11982,7 @@ impl GarminProduct {
 impl fmt::Display for GarminProduct {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match &self {
-            GarminProduct::ApproachG12Asia => write!(f, "approach_g12_asia"),
+            GarminProduct::Hrm1 => write!(f, "hrm1"),
             GarminProduct::Axh01 => write!(f, "axh01"),
             GarminProduct::Axb01 => write!(f, "axb01"),
             GarminProduct::Axb02 => write!(f, "axb02"),
@@ -12039,7 +12138,6 @@ impl fmt::Display for GarminProduct {
             GarminProduct::Hrm4Run => write!(f, "hrm4_run"),
             GarminProduct::EpixJapan => write!(f, "epix_japan"),
             GarminProduct::VivoActiveHr => write!(f, "vivo_active_hr"),
-            GarminProduct::ApproachG12 => write!(f, "approach_g12"),
             GarminProduct::VivoSmartGpsHr => write!(f, "vivo_smart_gps_hr"),
             GarminProduct::VivoSmartHr => write!(f, "vivo_smart_hr"),
             GarminProduct::VivoSmartHrAsia => write!(f, "vivo_smart_hr_asia"),
@@ -12247,6 +12345,7 @@ impl fmt::Display for GarminProduct {
             GarminProduct::Fenix7sApac => write!(f, "fenix7s_apac"),
             GarminProduct::Fenix7Apac => write!(f, "fenix7_apac"),
             GarminProduct::Fenix7xApac => write!(f, "fenix7x_apac"),
+            GarminProduct::ApproachG12 => write!(f, "approach_g12"),
             GarminProduct::DescentMk2sAsia => write!(f, "descent_mk2s_asia"),
             GarminProduct::ApproachS42 => write!(f, "approach_s42"),
             GarminProduct::EpixGen2 => write!(f, "epix_gen2"),
@@ -12261,6 +12360,7 @@ impl fmt::Display for GarminProduct {
             GarminProduct::Fr255SmallMusic => write!(f, "fr255_small_music"),
             GarminProduct::Fr255 => write!(f, "fr255"),
             GarminProduct::Fr255Small => write!(f, "fr255_small"),
+            GarminProduct::ApproachG12Asia => write!(f, "approach_g12_asia"),
             GarminProduct::ApproachS42Asia => write!(f, "approach_s42_asia"),
             GarminProduct::DescentG1 => write!(f, "descent_g1"),
             GarminProduct::Venu2PlusAsia => write!(f, "venu2_plus_asia"),
@@ -12318,6 +12418,7 @@ impl fmt::Display for GarminProduct {
             GarminProduct::HrmFit => write!(f, "hrm_fit"),
             GarminProduct::MarqGen2Commander => write!(f, "marq_gen2_commander"),
             GarminProduct::LilyAthlete => write!(f, "lily_athlete"),
+            GarminProduct::RallyX10 => write!(f, "rally_x10"),
             GarminProduct::Fenix8Solar => write!(f, "fenix8_solar"),
             GarminProduct::Fenix8SolarLarge => write!(f, "fenix8_solar_large"),
             GarminProduct::Fenix8Small => write!(f, "fenix8_small"),
@@ -12330,14 +12431,26 @@ impl fmt::Display for GarminProduct {
             GarminProduct::Instinct3Amoled45mm => write!(f, "instinct3_amoled_45mm"),
             GarminProduct::Instinct3Amoled50mm => write!(f, "instinct3_amoled_50mm"),
             GarminProduct::DescentG2 => write!(f, "descent_g2"),
+            GarminProduct::VenuX1 => write!(f, "venu_x1"),
             GarminProduct::Hrm200 => write!(f, "hrm_200"),
             GarminProduct::Vivoactive6 => write!(f, "vivoactive6"),
+            GarminProduct::Fenix8Pro => write!(f, "fenix8_pro"),
+            GarminProduct::Edge550 => write!(f, "edge_550"),
+            GarminProduct::Edge850 => write!(f, "edge_850"),
+            GarminProduct::Venu4 => write!(f, "venu4"),
+            GarminProduct::Venu4s => write!(f, "venu4s"),
             GarminProduct::ApproachS44 => write!(f, "approachS44"),
+            GarminProduct::EdgeMtb => write!(f, "edge_mtb"),
             GarminProduct::ApproachS50 => write!(f, "approachS50"),
             GarminProduct::FenixE => write!(f, "fenix_e"),
+            GarminProduct::InstinctCrossoverAmoled => write!(f, "instinct_crossover_amoled"),
+            GarminProduct::Bounce2 => write!(f, "bounce2"),
             GarminProduct::Instinct3Solar50mm => write!(f, "instinct3_solar_50mm"),
             GarminProduct::Tactix8Amoled => write!(f, "tactix8_amoled"),
             GarminProduct::Tactix8Solar => write!(f, "tactix8_solar"),
+            GarminProduct::ApproachJ1 => write!(f, "approach_j1"),
+            GarminProduct::D2Mach2 => write!(f, "d2_mach2"),
+            GarminProduct::D2AirX15 => write!(f, "d2_air_x15"),
             GarminProduct::Sdm4 => write!(f, "sdm4"),
             GarminProduct::EdgeRemote => write!(f, "edge_remote"),
             GarminProduct::TrainingCenter => write!(f, "training_center"),
@@ -12359,7 +12472,7 @@ impl fmt::Display for GarminProduct {
 impl convert::From<u16> for GarminProduct {
     fn from(value: u16) -> Self {
         match value {
-            1 => GarminProduct::ApproachG12Asia,
+            1 => GarminProduct::Hrm1,
             2 => GarminProduct::Axh01,
             3 => GarminProduct::Axb01,
             4 => GarminProduct::Axb02,
@@ -12509,7 +12622,6 @@ impl convert::From<u16> for GarminProduct {
             2327 => GarminProduct::Hrm4Run,
             2332 => GarminProduct::EpixJapan,
             2337 => GarminProduct::VivoActiveHr,
-            2343 => GarminProduct::ApproachG12,
             2347 => GarminProduct::VivoSmartGpsHr,
             2348 => GarminProduct::VivoSmartHr,
             2361 => GarminProduct::VivoSmartHrAsia,
@@ -12717,6 +12829,7 @@ impl convert::From<u16> for GarminProduct {
             3908 => GarminProduct::Fenix7sApac,
             3909 => GarminProduct::Fenix7Apac,
             3910 => GarminProduct::Fenix7xApac,
+            3927 => GarminProduct::ApproachG12,
             3930 => GarminProduct::DescentMk2sAsia,
             3934 => GarminProduct::ApproachS42,
             3943 => GarminProduct::EpixGen2,
@@ -12731,6 +12844,7 @@ impl convert::From<u16> for GarminProduct {
             3991 => GarminProduct::Fr255SmallMusic,
             3992 => GarminProduct::Fr255,
             3993 => GarminProduct::Fr255Small,
+            4001 => GarminProduct::ApproachG12Asia,
             4002 => GarminProduct::ApproachS42Asia,
             4005 => GarminProduct::DescentG1,
             4017 => GarminProduct::Venu2PlusAsia,
@@ -12788,6 +12902,7 @@ impl convert::From<u16> for GarminProduct {
             4446 => GarminProduct::HrmFit,
             4472 => GarminProduct::MarqGen2Commander,
             4477 => GarminProduct::LilyAthlete,
+            4525 => GarminProduct::RallyX10,
             4532 => GarminProduct::Fenix8Solar,
             4533 => GarminProduct::Fenix8SolarLarge,
             4534 => GarminProduct::Fenix8Small,
@@ -12800,14 +12915,26 @@ impl convert::From<u16> for GarminProduct {
             4586 => GarminProduct::Instinct3Amoled45mm,
             4587 => GarminProduct::Instinct3Amoled50mm,
             4588 => GarminProduct::DescentG2,
+            4603 => GarminProduct::VenuX1,
             4606 => GarminProduct::Hrm200,
             4625 => GarminProduct::Vivoactive6,
+            4631 => GarminProduct::Fenix8Pro,
+            4633 => GarminProduct::Edge550,
+            4634 => GarminProduct::Edge850,
+            4643 => GarminProduct::Venu4,
+            4644 => GarminProduct::Venu4s,
             4647 => GarminProduct::ApproachS44,
+            4655 => GarminProduct::EdgeMtb,
             4656 => GarminProduct::ApproachS50,
             4666 => GarminProduct::FenixE,
+            4678 => GarminProduct::InstinctCrossoverAmoled,
+            4745 => GarminProduct::Bounce2,
             4759 => GarminProduct::Instinct3Solar50mm,
             4775 => GarminProduct::Tactix8Amoled,
             4776 => GarminProduct::Tactix8Solar,
+            4825 => GarminProduct::ApproachJ1,
+            4879 => GarminProduct::D2Mach2,
+            4944 => GarminProduct::D2AirX15,
             10007 => GarminProduct::Sdm4,
             10014 => GarminProduct::EdgeRemote,
             20119 => GarminProduct::TrainingCenter,
@@ -12832,7 +12959,7 @@ impl convert::From<i64> for GarminProduct {
 impl convert::From<&str> for GarminProduct {
     fn from(value: &str) -> Self {
         match value {
-            "approach_g12_asia" => GarminProduct::ApproachG12Asia,
+            "hrm1" => GarminProduct::Hrm1,
             "axh01" => GarminProduct::Axh01,
             "axb01" => GarminProduct::Axb01,
             "axb02" => GarminProduct::Axb02,
@@ -12982,7 +13109,6 @@ impl convert::From<&str> for GarminProduct {
             "hrm4_run" => GarminProduct::Hrm4Run,
             "epix_japan" => GarminProduct::EpixJapan,
             "vivo_active_hr" => GarminProduct::VivoActiveHr,
-            "approach_g12" => GarminProduct::ApproachG12,
             "vivo_smart_gps_hr" => GarminProduct::VivoSmartGpsHr,
             "vivo_smart_hr" => GarminProduct::VivoSmartHr,
             "vivo_smart_hr_asia" => GarminProduct::VivoSmartHrAsia,
@@ -13190,6 +13316,7 @@ impl convert::From<&str> for GarminProduct {
             "fenix7s_apac" => GarminProduct::Fenix7sApac,
             "fenix7_apac" => GarminProduct::Fenix7Apac,
             "fenix7x_apac" => GarminProduct::Fenix7xApac,
+            "approach_g12" => GarminProduct::ApproachG12,
             "descent_mk2s_asia" => GarminProduct::DescentMk2sAsia,
             "approach_s42" => GarminProduct::ApproachS42,
             "epix_gen2" => GarminProduct::EpixGen2,
@@ -13204,6 +13331,7 @@ impl convert::From<&str> for GarminProduct {
             "fr255_small_music" => GarminProduct::Fr255SmallMusic,
             "fr255" => GarminProduct::Fr255,
             "fr255_small" => GarminProduct::Fr255Small,
+            "approach_g12_asia" => GarminProduct::ApproachG12Asia,
             "approach_s42_asia" => GarminProduct::ApproachS42Asia,
             "descent_g1" => GarminProduct::DescentG1,
             "venu2_plus_asia" => GarminProduct::Venu2PlusAsia,
@@ -13261,6 +13389,7 @@ impl convert::From<&str> for GarminProduct {
             "hrm_fit" => GarminProduct::HrmFit,
             "marq_gen2_commander" => GarminProduct::MarqGen2Commander,
             "lily_athlete" => GarminProduct::LilyAthlete,
+            "rally_x10" => GarminProduct::RallyX10,
             "fenix8_solar" => GarminProduct::Fenix8Solar,
             "fenix8_solar_large" => GarminProduct::Fenix8SolarLarge,
             "fenix8_small" => GarminProduct::Fenix8Small,
@@ -13273,14 +13402,26 @@ impl convert::From<&str> for GarminProduct {
             "instinct3_amoled_45mm" => GarminProduct::Instinct3Amoled45mm,
             "instinct3_amoled_50mm" => GarminProduct::Instinct3Amoled50mm,
             "descent_g2" => GarminProduct::DescentG2,
+            "venu_x1" => GarminProduct::VenuX1,
             "hrm_200" => GarminProduct::Hrm200,
             "vivoactive6" => GarminProduct::Vivoactive6,
+            "fenix8_pro" => GarminProduct::Fenix8Pro,
+            "edge_550" => GarminProduct::Edge550,
+            "edge_850" => GarminProduct::Edge850,
+            "venu4" => GarminProduct::Venu4,
+            "venu4s" => GarminProduct::Venu4s,
             "approachS44" => GarminProduct::ApproachS44,
+            "edge_mtb" => GarminProduct::EdgeMtb,
             "approachS50" => GarminProduct::ApproachS50,
             "fenix_e" => GarminProduct::FenixE,
+            "instinct_crossover_amoled" => GarminProduct::InstinctCrossoverAmoled,
+            "bounce2" => GarminProduct::Bounce2,
             "instinct3_solar_50mm" => GarminProduct::Instinct3Solar50mm,
             "tactix8_amoled" => GarminProduct::Tactix8Amoled,
             "tactix8_solar" => GarminProduct::Tactix8Solar,
+            "approach_j1" => GarminProduct::ApproachJ1,
+            "d2_mach2" => GarminProduct::D2Mach2,
+            "d2_air_x15" => GarminProduct::D2AirX15,
             "sdm4" => GarminProduct::Sdm4,
             "edge_remote" => GarminProduct::EdgeRemote,
             "training_center" => GarminProduct::TrainingCenter,
@@ -36712,6 +36853,79 @@ impl convert::From<&str> for RadarThreatLevelType {
     }
 }
 impl Serialize for RadarThreatLevelType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
+pub enum SleepDisruptionSeverity {
+    None,
+    Low,
+    Medium,
+    High,
+    UnknownVariant(u8),
+}
+impl SleepDisruptionSeverity {
+    pub fn is_named_variant(value: i64) -> bool {
+        matches!(value, 0i64..=3i64)
+    }
+    pub fn as_u8(self) -> u8 {
+        match self {
+            SleepDisruptionSeverity::None => 0,
+            SleepDisruptionSeverity::Low => 1,
+            SleepDisruptionSeverity::Medium => 2,
+            SleepDisruptionSeverity::High => 3,
+            SleepDisruptionSeverity::UnknownVariant(value) => value,
+        }
+    }
+    pub fn as_i64(self) -> i64 {
+        self.as_u8() as i64
+    }
+}
+impl fmt::Display for SleepDisruptionSeverity {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match &self {
+            SleepDisruptionSeverity::None => write!(f, "none"),
+            SleepDisruptionSeverity::Low => write!(f, "low"),
+            SleepDisruptionSeverity::Medium => write!(f, "medium"),
+            SleepDisruptionSeverity::High => write!(f, "high"),
+            SleepDisruptionSeverity::UnknownVariant(value) => {
+                write!(f, "unknown_variant_{}", value)
+            }
+        }
+    }
+}
+impl convert::From<u8> for SleepDisruptionSeverity {
+    fn from(value: u8) -> Self {
+        match value {
+            0 => SleepDisruptionSeverity::None,
+            1 => SleepDisruptionSeverity::Low,
+            2 => SleepDisruptionSeverity::Medium,
+            3 => SleepDisruptionSeverity::High,
+            _ => SleepDisruptionSeverity::UnknownVariant(value),
+        }
+    }
+}
+impl convert::From<i64> for SleepDisruptionSeverity {
+    fn from(value: i64) -> Self {
+        SleepDisruptionSeverity::from(value as u8)
+    }
+}
+impl convert::From<&str> for SleepDisruptionSeverity {
+    fn from(value: &str) -> Self {
+        match value {
+            "none" => SleepDisruptionSeverity::None,
+            "low" => SleepDisruptionSeverity::Low,
+            "medium" => SleepDisruptionSeverity::Medium,
+            "high" => SleepDisruptionSeverity::High,
+            &_ => SleepDisruptionSeverity::UnknownVariant(0),
+        }
+    }
+}
+impl Serialize for SleepDisruptionSeverity {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,

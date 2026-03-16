@@ -1,4 +1,4 @@
-#![doc = "//! Auto generated profile messages from FIT SDK Release: 21.171.00"]
+#![doc = "//! Auto generated profile messages from FIT SDK Release: 21.195.0"]
 #![allow(unused_variables)]
 #![allow(clippy::if_same_then_else, clippy::too_many_arguments)]
 use super::field_types::*;
@@ -9,7 +9,7 @@ use crate::{FitDataField, Value};
 use std::collections::{HashMap, HashSet, VecDeque};
 use std::convert::TryInto;
 #[doc = "FIT SDK version used to generate profile decoder"]
-pub const VERSION: &str = "21.171.00";
+pub const VERSION: &str = "21.195.0";
 #[doc = "Must be first message in file."]
 #[doc = " * time_created: Only set for files that are can be created/erased."]
 #[doc = " * number: Only set for files that are not created/erased."]
@@ -5446,7 +5446,7 @@ fn bike_profile_message(
                     data_map,
                     false,
                     2f64,
-                    0f64,
+                    -110f64,
                     "mm",
                     value,
                 )?);
@@ -13351,7 +13351,6 @@ fn activity_message_timestamp_field(
 #[doc = " * rmssd_hrv: Root mean square successive difference (RMSSD) - Heart rate variability measure most useful for athletes"]
 #[doc = " * total_fractional_ascent: fractional part of total_ascent"]
 #[doc = " * total_fractional_descent: fractional part of total_descent"]
-#[doc = " * timestamp: Sesson end time."]
 #[doc = " * message_index: Selected bit is set for the current session."]
 fn session_message(
     mesg_num: MesgNum,
@@ -15548,6 +15547,19 @@ fn session_message(
                     1f64,
                     0f64,
                     "percent",
+                    value,
+                )?);
+            }
+            196u8 => {
+                fields.push(session_message_metabolic_calories_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "kcal",
                     value,
                 )?);
             }
@@ -19925,6 +19937,34 @@ fn session_message_avg_stress_field(
         options,
     )
 }
+fn session_message_metabolic_calories_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 196u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        196u8,
+        None,
+        "metabolic_calories",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
 fn session_message_sdrr_hrv_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
@@ -20219,7 +20259,6 @@ fn session_message_message_index_field(
 #[doc = " * avg_flow: The flow score estimates how long distance wise a cyclist deaccelerates over intervals where deacceleration is unnecessary such as smooth turns or small grade angle intervals."]
 #[doc = " * total_fractional_ascent: fractional part of total_ascent"]
 #[doc = " * total_fractional_descent: fractional part of total_descent"]
-#[doc = " * timestamp: Lap end time."]
 fn lap_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -45380,7 +45419,6 @@ fn segment_point_message_message_index_field(
 #[doc = " * avg_flow: The flow score estimates how long distance wise a cyclist deaccelerates over intervals where deacceleration is unnecessary such as smooth turns or small grade angle intervals."]
 #[doc = " * total_fractional_ascent: fractional part of total_ascent"]
 #[doc = " * total_fractional_descent: fractional part of total_descent"]
-#[doc = " * timestamp: Lap end time."]
 fn segment_lap_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -66547,6 +66585,255 @@ fn sleep_assessment_message_average_stress_during_sleep_field(
         options,
     )
 }
+#[doc = "sleep_disruption_severity_period message definition"]
+fn sleep_disruption_severity_period_message(
+    mesg_num: MesgNum,
+    data_map: &mut HashMap<u8, Value>,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+) -> Result<Vec<FitDataField>> {
+    let mut fields = Vec::new();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
+    while let Some((field_nr, value)) = entries.pop_front() {
+        match field_nr {
+            0u8 => {
+                fields.push(sleep_disruption_severity_period_message_severity_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "",
+                    value,
+                )?);
+            }
+            253u8 => {
+                fields.push(sleep_disruption_severity_period_message_timestamp_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "",
+                    value,
+                )?);
+            }
+            254u8 => {
+                fields.push(
+                    sleep_disruption_severity_period_message_message_index_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "",
+                        value,
+                    )?,
+                );
+            }
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(field_nr, value));
+                }
+            }
+        }
+    }
+    Ok(fields)
+}
+fn sleep_disruption_severity_period_message_severity_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 0u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        0u8,
+        None,
+        "severity",
+        FieldDataType::SleepDisruptionSeverity,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn sleep_disruption_severity_period_message_timestamp_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 253u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        253u8,
+        None,
+        "timestamp",
+        FieldDataType::DateTime,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn sleep_disruption_severity_period_message_message_index_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 254u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        254u8,
+        None,
+        "message_index",
+        FieldDataType::MessageIndex,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+#[doc = "sleep_disruption_overnight_severity message definition"]
+fn sleep_disruption_overnight_severity_message(
+    mesg_num: MesgNum,
+    data_map: &mut HashMap<u8, Value>,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+) -> Result<Vec<FitDataField>> {
+    let mut fields = Vec::new();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
+    while let Some((field_nr, value)) = entries.pop_front() {
+        match field_nr {
+            0u8 => {
+                fields.push(sleep_disruption_overnight_severity_message_severity_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "",
+                    value,
+                )?);
+            }
+            253u8 => {
+                fields.push(sleep_disruption_overnight_severity_message_timestamp_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "",
+                    value,
+                )?);
+            }
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(field_nr, value));
+                }
+            }
+        }
+    }
+    Ok(fields)
+}
+fn sleep_disruption_overnight_severity_message_severity_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 0u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        0u8,
+        None,
+        "severity",
+        FieldDataType::SleepDisruptionSeverity,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn sleep_disruption_overnight_severity_message_timestamp_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 253u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        253u8,
+        None,
+        "timestamp",
+        FieldDataType::DateTime,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
 #[doc = "skin_temp_overnight message definition"]
 #[doc = " * average_deviation: The average overnight deviation from baseline temperature in degrees C"]
 #[doc = " * average_7_day_deviation: The average 7 day overnight deviation from baseline temperature in degrees C"]
@@ -66992,6 +67279,12 @@ impl MesgNum {
             MesgNum::TankSummary => tank_summary_message(self, data_map, accumlators, options),
             MesgNum::SleepAssessment => {
                 sleep_assessment_message(self, data_map, accumlators, options)
+            }
+            MesgNum::SleepDisruptionSeverityPeriod => {
+                sleep_disruption_severity_period_message(self, data_map, accumlators, options)
+            }
+            MesgNum::SleepDisruptionOvernightSeverity => {
+                sleep_disruption_overnight_severity_message(self, data_map, accumlators, options)
             }
             MesgNum::SkinTempOvernight => {
                 skin_temp_overnight_message(self, data_map, accumlators, options)
