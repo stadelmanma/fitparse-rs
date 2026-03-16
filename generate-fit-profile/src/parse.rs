@@ -320,9 +320,17 @@ impl MessageFieldComponent {
 
 macro_rules! split_csv_string ( ($value:expr) => ( {$value.split(',').map(|v| v.trim().to_string())} ););
 
+fn optional_trimmed_string(value: &DataType) -> Option<&str> {
+    value.get_string().map(str::trim).filter(|v| !v.is_empty())
+}
+
+fn required_trimmed_string<'a>(value: &'a DataType, row: &[DataType], label: &str) -> &'a str {
+    optional_trimmed_string(value).unwrap_or_else(|| panic!("{label} must be a string, row={row:?}."))
+}
+
 /// Match a base type string to a rust type for enum generation
 fn base_type_to_rust_type(base_type_str: &str) -> &'static str {
-    match base_type_str {
+    match base_type_str.trim() {
         "enum" => "enum", // "pseduo-type" we use to detect real enums, changed to u8 later on
         "sint8" => "i8",
         "uint8" | "uint8z" => "u8",
@@ -336,7 +344,7 @@ fn base_type_to_rust_type(base_type_str: &str) -> &'static str {
 
 /// match the field type string to a simple type or an enum
 fn field_type_str_to_field_type(field_type_str: &str) -> Ident {
-    let typ_str = match field_type_str {
+    let typ_str = match field_type_str.trim() {
         "sint8" => "SInt8".to_string(),
         "uint8" => "UInt8".to_string(),
         "sint16" => "SInt16".to_string(),
@@ -377,8 +385,50 @@ fn bare_number_literal(value: i64) -> Literal {
     Literal::i64_unsuffixed(value)
 }
 
+fn parse_enum_variant_value(value: &str) -> i64 {
+    let trimmed = value.trim();
+    if let Some(hex) = trimmed
+        .strip_prefix("0x")
+        .or_else(|| trimmed.strip_prefix("0X"))
+    {
+        i64::from_str_radix(hex, 16).expect("Failed to parse hex string to i64")
+    } else {
+        trimmed.parse::<i64>().expect("Failed to parse integer string to i64")
+    }
+}
+
+fn parse_u8_cell(value: &DataType, row: &[DataType], label: &str) -> u8 {
+    parse_u8_cell_opt(value).unwrap_or_else(|| panic!("{label} must be an integer, row={row:?}."))
+}
+
+fn parse_u8_cell_opt(value: &DataType) -> Option<u8> {
+    match value {
+        DataType::Float(v) => Some(*v as u8),
+        DataType::Int(v) => Some(*v as u8),
+        DataType::String(v) => v.trim().parse::<u8>().ok(),
+        _ => None,
+    }
+}
+
+fn parse_f64_cell(value: &DataType) -> Option<f64> {
+    match value {
+        DataType::Float(v) => Some(*v),
+        DataType::Int(v) => Some(*v as f64),
+        DataType::String(v) => v.trim().parse::<f64>().ok(),
+        _ => None,
+    }
+}
+
+fn cell_is_blank(value: &DataType) -> bool {
+    match value {
+        DataType::Empty => true,
+        DataType::String(v) => v.trim().is_empty(),
+        _ => false,
+    }
+}
+
 fn doc_comment(comment: Option<String>) -> TokenStream {
-    if let Some(v) = comment {
+    if let Some(v) = comment.filter(|v| !v.trim().is_empty()) {
         quote!(#[doc = #v])
     } else {
         TokenStream::new()
@@ -390,47 +440,30 @@ fn process_types(sheet: &Range<DataType>) -> Vec<FieldTypeDefintion> {
     let mut field_types: Vec<FieldTypeDefintion> = Vec::new();
 
     for row in sheet.rows().skip(1) {
-        if !row[0].is_empty() {
-            // extract enum name
-            let enum_name = row[0].get_string().map_or_else(
-                || panic!("Enum type name must be a string row={row:?}."),
-                std::string::ToString::to_string,
-            );
-
-            // extract base type and convert to its rust equivalent
-            let rust_type = row[1].get_string().map_or_else(
-                || panic!("Base type name must be a string row={row:?}."),
-                base_type_to_rust_type,
-            );
-            let comment = row[4].get_string().map(std::string::ToString::to_string);
-            field_types.push(FieldTypeDefintion::new(&enum_name, rust_type, comment));
-        } else if !row[2].is_empty() {
+        if let Some(enum_name) = optional_trimmed_string(&row[0]) {
+            let rust_type =
+                base_type_to_rust_type(required_trimmed_string(&row[1], row, "Base type name"));
+            let comment = optional_trimmed_string(&row[4]).map(str::to_owned);
+            field_types.push(FieldTypeDefintion::new(enum_name, rust_type, comment));
+        } else if let Some(name) = optional_trimmed_string(&row[2]) {
             let Some(field_type) = field_types.last_mut() else {
                 panic!("field_types vector was empty!")
             };
 
             // add enum variant
-            // extract enum name
-            let name = row[2].get_string().map_or_else(
-                || panic!("Enum variant name must be a string row={row:?}."),
-                std::string::ToString::to_string,
-            );
-
             // handle mix of numeric and hex string data values
             let value = match &row[3] {
                 DataType::Float(v) => *v as i64,
                 DataType::Int(v) => *v,
-                DataType::String(v) => {
-                    i64::from_str_radix(&v[2..], 16).expect("Failed to parse hex string to i64")
-                }
+                DataType::String(v) => parse_enum_variant_value(v),
                 _ => {
                     panic!("Unsupported enum variant value data type row={row:?}.");
                 }
             };
-            let comment = row[4].get_string().map(std::string::ToString::to_string);
+            let comment = optional_trimmed_string(&row[4]).map(str::to_owned);
             field_type
                 .variant_map
-                .insert(value, FieldTypeVariant::new(name, value, comment));
+                .insert(value, FieldTypeVariant::new(name.to_string(), value, comment));
         }
     }
 
@@ -441,8 +474,10 @@ fn parse_message_field_components(row: &[DataType]) -> Vec<MessageFieldComponent
     let mut components = Vec::new();
 
     // parse out the fields into iterators
-    let names: Vec<String> = match row[5].get_string() {
-        Some(v) => split_csv_string!(v).collect(),
+    let names: Vec<String> = match optional_trimmed_string(&row[5]) {
+        Some(v) => split_csv_string!(v)
+            .filter(|name| !name.is_empty())
+            .collect(),
         None => {
             return components;
         }
@@ -546,29 +581,21 @@ fn process_components(
 
 #[allow(clippy::cast_possible_truncation, clippy::cast_sign_loss)]
 fn new_message_field_definition(row: &[DataType]) -> MessageFieldDefinition {
-    let def_number = match row[1] {
-        DataType::Float(v) => v as u8,
-        DataType::Int(v) => v as u8,
-        _ => panic!("Field defintiton number must be an integer, row={row:?}."),
-    };
-    let name = row[2]
-        .get_string()
-        .unwrap_or_else(|| panic!("Field name must be a string, row={row:?}."));
-    let ftype = row[3]
-        .get_string()
-        .unwrap_or_else(|| panic!("Field type must be a string, row={row:?}."));
+    let def_number = parse_u8_cell(&row[1], row, "Field defintiton number");
+    let name = required_trimmed_string(&row[2], row, "Field name");
+    let ftype = required_trimmed_string(&row[3], row, "Field type");
     let components = parse_message_field_components(row);
-    let comment = row[13].get_string().map(std::string::ToString::to_string);
+    let comment = optional_trimmed_string(&row[13]).map(str::to_owned);
 
     MessageFieldDefinition::new(
         def_number,
         name,
         ftype,
-        row[4].is_empty(),
-        row[6].get_float().unwrap_or(1.0),
-        row[7].get_float().unwrap_or(0.0),
-        row[8].get_string().unwrap_or(""),
-        row[10].as_string().map_or(false, |v| v == "1"),
+        cell_is_blank(&row[4]),
+        parse_f64_cell(&row[6]).unwrap_or(1.0),
+        parse_f64_cell(&row[7]).unwrap_or(0.0),
+        row[8].get_string().map(str::trim).unwrap_or(""),
+        optional_trimmed_string(&row[10]).is_some_and(|v| v == "1"),
         components,
         comment,
     )
@@ -586,10 +613,10 @@ fn process_messages(sheet: &Range<DataType>) -> Vec<MessageDefinition> {
     // let row = rows.next().unwrap();
     let row = rows.next().expect("No rows in sheet.");
 
-    if let Some(v) = row[0].get_string() {
+    if let Some(v) = optional_trimmed_string(&row[0]) {
         msg = MessageDefinition::new(
             v,
-            row[13].get_string().map(std::string::ToString::to_string),
+            optional_trimmed_string(&row[13]).map(str::to_owned),
         );
     } else {
         panic!("Message name must be a string row={row:?}.");
@@ -598,21 +625,17 @@ fn process_messages(sheet: &Range<DataType>) -> Vec<MessageDefinition> {
     // process messages and fields
     for row in rows {
         // begin new message function
-        if !row[0].is_empty() {
-            if let Some(v) = row[0].get_string() {
-                messages.push(msg);
-                msg = MessageDefinition::new(
-                    v,
-                    row[13].get_string().map(std::string::ToString::to_string),
-                );
-            } else {
-                panic!("Message name must be a string row={row:?}.");
-            }
-        } else if !row[1].is_empty() {
+        if let Some(v) = optional_trimmed_string(&row[0]) {
+            messages.push(msg);
+            msg = MessageDefinition::new(
+                v,
+                optional_trimmed_string(&row[13]).map(str::to_owned),
+            );
+        } else if parse_u8_cell_opt(&row[1]).is_some() {
             field = new_message_field_definition(row);
             last_def_number = field.def_number;
             msg.field_map.insert(field.def_number, field);
-        } else if !row[2].is_empty() {
+        } else if optional_trimmed_string(&row[2]).is_some() {
             // process sub field
             let parent = msg
                 .field_map
@@ -623,8 +646,10 @@ fn process_messages(sheet: &Range<DataType>) -> Vec<MessageDefinition> {
             field = new_message_field_definition(&temp_row);
             // store subfield ref_field, ref_field_value and defintion, if multiple values can
             // trigger this subfield we simply duplicate them
-            let ref_field_names = row[11].get_string().expect("No reference field name(s)");
-            let ref_field_vals = row[12].get_string().expect("No reference field value(s)");
+            let ref_field_names =
+                required_trimmed_string(&row[11], row, "Reference field name(s)");
+            let ref_field_vals =
+                required_trimmed_string(&row[12], row, "Reference field value(s)");
             for (name, value) in
                 split_csv_string!(ref_field_names).zip(split_csv_string!(ref_field_vals))
             {
