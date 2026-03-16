@@ -56,7 +56,7 @@ fn run() -> Result<(), Box<dyn std::error::Error>> {
     );
     assert!(
         profile_vers.chars().all(|c| c.is_ascii_digit() || c == '.'),
-        "Could not determine version from Profile.xslx path: '{profile_fname:?}' - %{profile_vers}%"
+        "Could not determine version from Profile.xlsx path: '{profile_fname:?}' -> '{profile_vers}'. Pass --sdk-version <VERSION>."
     );
 
     // process excel file and output
