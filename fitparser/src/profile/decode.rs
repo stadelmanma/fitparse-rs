@@ -1,4 +1,4 @@
-#![doc = "//! Auto generated profile messages from FIT SDK Release: 21.195.0"]
+#![doc = "//! Auto generated profile messages from FIT SDK Release: 21.202.0"]
 #![allow(unused_variables)]
 #![allow(clippy::if_same_then_else, clippy::too_many_arguments)]
 use super::field_types::*;
@@ -9,7 +9,7 @@ use crate::{FitDataField, Value};
 use std::collections::{HashMap, HashSet, VecDeque};
 use std::convert::TryInto;
 #[doc = "FIT SDK version used to generate profile decoder"]
-pub const VERSION: &str = "21.195.0";
+pub const VERSION: &str = "21.202.0";
 #[doc = "Must be first message in file."]
 #[doc = " * time_created: Only set for files that are can be created/erased."]
 #[doc = " * number: Only set for files that are not created/erased."]
@@ -14498,6 +14498,19 @@ fn session_message(
                     enhanced_min_altitude,
                 )?);
             }
+            78u8 => {
+                fields.push(session_message_active_time_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1000f64,
+                    0f64,
+                    "s",
+                    value,
+                )?);
+            }
             82u8 => {
                 fields.push(session_message_player_score_field(
                     mesg_num,
@@ -17774,6 +17787,34 @@ fn session_message_min_altitude_field(
         None,
         "min_altitude",
         FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn session_message_active_time_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 78u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        78u8,
+        None,
+        "active_time",
+        FieldDataType::UInt32,
         scale,
         offset,
         units,
@@ -21249,6 +21290,19 @@ fn lap_message(
                     value,
                 )?);
             }
+            70u8 => {
+                fields.push(lap_message_active_time_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1000f64,
+                    0f64,
+                    "s",
+                    value,
+                )?);
+            }
             71u8 => {
                 fields.push(lap_message_wkt_step_index_field(
                     mesg_num,
@@ -23886,6 +23940,34 @@ fn lap_message_min_heart_rate_field(
         None,
         "min_heart_rate",
         FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn lap_message_active_time_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 70u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        70u8,
+        None,
+        "active_time",
+        FieldDataType::UInt32,
         scale,
         offset,
         units,
@@ -41289,6 +41371,7 @@ fn jump_message_timestamp_field(
     )
 }
 #[doc = "split message definition"]
+#[doc = " * active_time: Active time of split rounds"]
 fn split_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -41518,6 +41601,19 @@ fn split_message(
                     5f64,
                     500f64,
                     "m",
+                    value,
+                )?);
+            }
+            78u8 => {
+                fields.push(split_message_active_time_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1000f64,
+                    0f64,
+                    "s",
                     value,
                 )?);
             }
@@ -42032,6 +42128,34 @@ fn split_message_start_elevation_field(
         options,
     )
 }
+fn split_message_active_time_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 78u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        78u8,
+        None,
+        "active_time",
+        FieldDataType::UInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
 fn split_message_total_moving_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
@@ -42089,6 +42213,7 @@ fn split_message_message_index_field(
     )
 }
 #[doc = "split_summary message definition"]
+#[doc = " * active_time: total active time in all split rounds"]
 fn split_summary_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -42253,6 +42378,19 @@ fn split_summary_message(
                     1f64,
                     0f64,
                     "kcal",
+                    value,
+                )?);
+            }
+            65u8 => {
+                fields.push(split_summary_message_active_time_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1000f64,
+                    0f64,
+                    "s",
                     value,
                 )?);
             }
@@ -42619,6 +42757,34 @@ fn split_summary_message_total_calories_field(
         13u8,
         None,
         "total_calories",
+        FieldDataType::UInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_active_time_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 65u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        65u8,
+        None,
+        "active_time",
         FieldDataType::UInt32,
         scale,
         offset,
@@ -66834,6 +67000,438 @@ fn sleep_disruption_overnight_severity_message_timestamp_field(
         options,
     )
 }
+#[doc = "nap_event message definition"]
+#[doc = " * update_timestamp: The timestamp representing when this nap event was last updated"]
+fn nap_event_message(
+    mesg_num: MesgNum,
+    data_map: &mut HashMap<u8, Value>,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+) -> Result<Vec<FitDataField>> {
+    let mut fields = Vec::new();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
+    while let Some((field_nr, value)) = entries.pop_front() {
+        match field_nr {
+            0u8 => {
+                fields.push(nap_event_message_start_time_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "seconds",
+                    value,
+                )?);
+            }
+            1u8 => {
+                fields.push(nap_event_message_start_timezone_offset_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "minutes",
+                    value,
+                )?);
+            }
+            2u8 => {
+                fields.push(nap_event_message_end_time_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "seconds",
+                    value,
+                )?);
+            }
+            3u8 => {
+                fields.push(nap_event_message_end_timezone_offset_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "minutes",
+                    value,
+                )?);
+            }
+            4u8 => {
+                fields.push(nap_event_message_feedback_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "",
+                    value,
+                )?);
+            }
+            5u8 => {
+                fields.push(nap_event_message_is_deleted_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "",
+                    value,
+                )?);
+            }
+            6u8 => {
+                fields.push(nap_event_message_source_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "",
+                    value,
+                )?);
+            }
+            7u8 => {
+                fields.push(nap_event_message_update_timestamp_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "",
+                    value,
+                )?);
+            }
+            253u8 => {
+                fields.push(nap_event_message_timestamp_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "",
+                    value,
+                )?);
+            }
+            254u8 => {
+                fields.push(nap_event_message_message_index_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "",
+                    value,
+                )?);
+            }
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(field_nr, value));
+                }
+            }
+        }
+    }
+    Ok(fields)
+}
+fn nap_event_message_start_time_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 0u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        0u8,
+        None,
+        "start_time",
+        FieldDataType::DateTime,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn nap_event_message_start_timezone_offset_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 1u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        1u8,
+        None,
+        "start_timezone_offset",
+        FieldDataType::SInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn nap_event_message_end_time_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 2u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        2u8,
+        None,
+        "end_time",
+        FieldDataType::DateTime,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn nap_event_message_end_timezone_offset_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 3u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        3u8,
+        None,
+        "end_timezone_offset",
+        FieldDataType::SInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn nap_event_message_feedback_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 4u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        4u8,
+        None,
+        "feedback",
+        FieldDataType::NapPeriodFeedback,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn nap_event_message_is_deleted_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 5u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        5u8,
+        None,
+        "is_deleted",
+        FieldDataType::Bool,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn nap_event_message_source_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 6u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        6u8,
+        None,
+        "source",
+        FieldDataType::NapSource,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn nap_event_message_update_timestamp_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 7u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        7u8,
+        None,
+        "update_timestamp",
+        FieldDataType::DateTime,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn nap_event_message_timestamp_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 253u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        253u8,
+        None,
+        "timestamp",
+        FieldDataType::DateTime,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn nap_event_message_message_index_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 254u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        254u8,
+        None,
+        "message_index",
+        FieldDataType::MessageIndex,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
 #[doc = "skin_temp_overnight message definition"]
 #[doc = " * average_deviation: The average overnight deviation from baseline temperature in degrees C"]
 #[doc = " * average_7_day_deviation: The average 7 day overnight deviation from baseline temperature in degrees C"]
@@ -67286,6 +67884,7 @@ impl MesgNum {
             MesgNum::SleepDisruptionOvernightSeverity => {
                 sleep_disruption_overnight_severity_message(self, data_map, accumlators, options)
             }
+            MesgNum::NapEvent => nap_event_message(self, data_map, accumlators, options),
             MesgNum::SkinTempOvernight => {
                 skin_temp_overnight_message(self, data_map, accumlators, options)
             }

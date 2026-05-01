@@ -1,7 +1,7 @@
 #![allow(missing_docs)]
 #![allow(dead_code)]
 #![allow(clippy::unreadable_literal)]
-#![doc = "Auto generated profile field types from FIT SDK Release: 21.195.0"]
+#![doc = "Auto generated profile field types from FIT SDK Release: 21.202.0"]
 #![doc = "Not all of these may be used by the defined set of FIT messages"]
 use serde::{ser::Serializer, Serialize};
 use std::{convert, fmt};
@@ -221,6 +221,8 @@ pub enum FieldDataType {
     TapSensitivity,
     RadarThreatLevelType,
     SleepDisruptionSeverity,
+    NapPeriodFeedback,
+    NapSource,
     MaxMetSpeedSource,
     MaxMetHeartRateSource,
     HrvStatus,
@@ -420,6 +422,8 @@ impl FieldDataType {
             FieldDataType::TapSensitivity => true,
             FieldDataType::RadarThreatLevelType => true,
             FieldDataType::SleepDisruptionSeverity => true,
+            FieldDataType::NapPeriodFeedback => true,
+            FieldDataType::NapSource => true,
             FieldDataType::MaxMetSpeedSource => true,
             FieldDataType::MaxMetHeartRateSource => true,
             FieldDataType::HrvStatus => true,
@@ -669,6 +673,8 @@ impl FieldDataType {
             FieldDataType::SleepDisruptionSeverity => {
                 SleepDisruptionSeverity::is_named_variant(value)
             }
+            FieldDataType::NapPeriodFeedback => NapPeriodFeedback::is_named_variant(value),
+            FieldDataType::NapSource => NapSource::is_named_variant(value),
             FieldDataType::MaxMetSpeedSource => MaxMetSpeedSource::is_named_variant(value),
             FieldDataType::MaxMetHeartRateSource => MaxMetHeartRateSource::is_named_variant(value),
             FieldDataType::HrvStatus => HrvStatus::is_named_variant(value),
@@ -893,6 +899,8 @@ pub fn get_field_variant_as_string(field_type: FieldDataType, value: i64) -> Str
         FieldDataType::TapSensitivity => TapSensitivity::from(value).to_string(),
         FieldDataType::RadarThreatLevelType => RadarThreatLevelType::from(value).to_string(),
         FieldDataType::SleepDisruptionSeverity => SleepDisruptionSeverity::from(value).to_string(),
+        FieldDataType::NapPeriodFeedback => NapPeriodFeedback::from(value).to_string(),
+        FieldDataType::NapSource => NapSource::from(value).to_string(),
         FieldDataType::MaxMetSpeedSource => MaxMetSpeedSource::from(value).to_string(),
         FieldDataType::MaxMetHeartRateSource => MaxMetHeartRateSource::from(value).to_string(),
         FieldDataType::HrvStatus => HrvStatus::from(value).to_string(),
@@ -1215,6 +1223,7 @@ pub enum MesgNum {
     SkinTempOvernight,
     #[doc = "Message number for the HSA wrist temperature data message"]
     HsaWristTemperatureData,
+    NapEvent,
     SleepDisruptionSeverityPeriod,
     SleepDisruptionOvernightSeverity,
     #[doc = "0xFF00 - 0xFFFE reserved for manufacturer specific messages"]
@@ -1347,6 +1356,7 @@ impl MesgNum {
                 | 393i64
                 | 398i64
                 | 409i64
+                | 412i64
                 | 470i64
                 | 471i64
                 | 65280i64
@@ -1476,6 +1486,7 @@ impl MesgNum {
             MesgNum::DiveApneaAlarm => 393,
             MesgNum::SkinTempOvernight => 398,
             MesgNum::HsaWristTemperatureData => 409,
+            MesgNum::NapEvent => 412,
             MesgNum::SleepDisruptionSeverityPeriod => 470,
             MesgNum::SleepDisruptionOvernightSeverity => 471,
             MesgNum::MfgRangeMin => 65280,
@@ -1611,6 +1622,7 @@ impl fmt::Display for MesgNum {
             MesgNum::DiveApneaAlarm => write!(f, "dive_apnea_alarm"),
             MesgNum::SkinTempOvernight => write!(f, "skin_temp_overnight"),
             MesgNum::HsaWristTemperatureData => write!(f, "hsa_wrist_temperature_data"),
+            MesgNum::NapEvent => write!(f, "nap_event"),
             MesgNum::SleepDisruptionSeverityPeriod => write!(f, "sleep_disruption_severity_period"),
             MesgNum::SleepDisruptionOvernightSeverity => {
                 write!(f, "sleep_disruption_overnight_severity")
@@ -1745,6 +1757,7 @@ impl convert::From<u16> for MesgNum {
             393 => MesgNum::DiveApneaAlarm,
             398 => MesgNum::SkinTempOvernight,
             409 => MesgNum::HsaWristTemperatureData,
+            412 => MesgNum::NapEvent,
             470 => MesgNum::SleepDisruptionSeverityPeriod,
             471 => MesgNum::SleepDisruptionOvernightSeverity,
             65280 => MesgNum::MfgRangeMin,
@@ -1882,6 +1895,7 @@ impl convert::From<&str> for MesgNum {
             "dive_apnea_alarm" => MesgNum::DiveApneaAlarm,
             "skin_temp_overnight" => MesgNum::SkinTempOvernight,
             "hsa_wrist_temperature_data" => MesgNum::HsaWristTemperatureData,
+            "nap_event" => MesgNum::NapEvent,
             "sleep_disruption_severity_period" => MesgNum::SleepDisruptionSeverityPeriod,
             "sleep_disruption_overnight_severity" => MesgNum::SleepDisruptionOvernightSeverity,
             "mfg_range_min" => MesgNum::MfgRangeMin,
@@ -4480,12 +4494,20 @@ pub enum Sport {
     FloorClimbing,
     Baseball,
     Diving,
+    #[doc = "Sport Shooting bits, set here for sport_bits alignment"]
+    Shooting,
+    WinterSport,
+    #[doc = "Sailing position, operating manual winches to power boat controls"]
+    Grinding,
     Hiit,
+    VideoGaming,
     Racket,
     WheelchairPushWalk,
     WheelchairPushRun,
     Meditation,
+    ParaSport,
     DiscGolf,
+    TeamSport,
     Cricket,
     Rugby,
     Hockey,
@@ -4493,10 +4515,17 @@ pub enum Sport {
     Volleyball,
     WaterTubing,
     Wakesurfing,
+    WaterSport,
+    Archery,
     MixedMartialArts,
+    MotorSports,
     Snorkeling,
     Dance,
     JumpRope,
+    PoolApnea,
+    Mobility,
+    Geocaching,
+    Canoeing,
     #[doc = "All is for goals only to include all sports."]
     All,
     UnknownVariant(u8),
@@ -4555,12 +4584,18 @@ impl Sport {
                 | 48i64
                 | 49i64
                 | 53i64
+                | 56i64
+                | 58i64
+                | 59i64
                 | 62i64
+                | 63i64
                 | 64i64
                 | 65i64
                 | 66i64
                 | 67i64
+                | 68i64
                 | 69i64
+                | 70i64
                 | 71i64
                 | 72i64
                 | 73i64
@@ -4568,10 +4603,17 @@ impl Sport {
                 | 75i64
                 | 76i64
                 | 77i64
+                | 78i64
+                | 79i64
                 | 80i64
+                | 81i64
                 | 82i64
                 | 83i64
                 | 84i64
+                | 85i64
+                | 86i64
+                | 87i64
+                | 88i64
                 | 254i64
         )
     }
@@ -4628,12 +4670,18 @@ impl Sport {
             Sport::FloorClimbing => 48,
             Sport::Baseball => 49,
             Sport::Diving => 53,
+            Sport::Shooting => 56,
+            Sport::WinterSport => 58,
+            Sport::Grinding => 59,
             Sport::Hiit => 62,
+            Sport::VideoGaming => 63,
             Sport::Racket => 64,
             Sport::WheelchairPushWalk => 65,
             Sport::WheelchairPushRun => 66,
             Sport::Meditation => 67,
+            Sport::ParaSport => 68,
             Sport::DiscGolf => 69,
+            Sport::TeamSport => 70,
             Sport::Cricket => 71,
             Sport::Rugby => 72,
             Sport::Hockey => 73,
@@ -4641,10 +4689,17 @@ impl Sport {
             Sport::Volleyball => 75,
             Sport::WaterTubing => 76,
             Sport::Wakesurfing => 77,
+            Sport::WaterSport => 78,
+            Sport::Archery => 79,
             Sport::MixedMartialArts => 80,
+            Sport::MotorSports => 81,
             Sport::Snorkeling => 82,
             Sport::Dance => 83,
             Sport::JumpRope => 84,
+            Sport::PoolApnea => 85,
+            Sport::Mobility => 86,
+            Sport::Geocaching => 87,
+            Sport::Canoeing => 88,
             Sport::All => 254,
             Sport::UnknownVariant(value) => value,
         }
@@ -4707,12 +4762,18 @@ impl fmt::Display for Sport {
             Sport::FloorClimbing => write!(f, "floor_climbing"),
             Sport::Baseball => write!(f, "baseball"),
             Sport::Diving => write!(f, "diving"),
+            Sport::Shooting => write!(f, "shooting"),
+            Sport::WinterSport => write!(f, "winter_sport"),
+            Sport::Grinding => write!(f, "grinding"),
             Sport::Hiit => write!(f, "hiit"),
+            Sport::VideoGaming => write!(f, "video_gaming"),
             Sport::Racket => write!(f, "racket"),
             Sport::WheelchairPushWalk => write!(f, "wheelchair_push_walk"),
             Sport::WheelchairPushRun => write!(f, "wheelchair_push_run"),
             Sport::Meditation => write!(f, "meditation"),
+            Sport::ParaSport => write!(f, "para_sport"),
             Sport::DiscGolf => write!(f, "disc_golf"),
+            Sport::TeamSport => write!(f, "team_sport"),
             Sport::Cricket => write!(f, "cricket"),
             Sport::Rugby => write!(f, "rugby"),
             Sport::Hockey => write!(f, "hockey"),
@@ -4720,10 +4781,17 @@ impl fmt::Display for Sport {
             Sport::Volleyball => write!(f, "volleyball"),
             Sport::WaterTubing => write!(f, "water_tubing"),
             Sport::Wakesurfing => write!(f, "wakesurfing"),
+            Sport::WaterSport => write!(f, "water_sport"),
+            Sport::Archery => write!(f, "archery"),
             Sport::MixedMartialArts => write!(f, "mixed_martial_arts"),
+            Sport::MotorSports => write!(f, "motor_sports"),
             Sport::Snorkeling => write!(f, "snorkeling"),
             Sport::Dance => write!(f, "dance"),
             Sport::JumpRope => write!(f, "jump_rope"),
+            Sport::PoolApnea => write!(f, "pool_apnea"),
+            Sport::Mobility => write!(f, "mobility"),
+            Sport::Geocaching => write!(f, "geocaching"),
+            Sport::Canoeing => write!(f, "canoeing"),
             Sport::All => write!(f, "all"),
             Sport::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
@@ -4783,12 +4851,18 @@ impl convert::From<u8> for Sport {
             48 => Sport::FloorClimbing,
             49 => Sport::Baseball,
             53 => Sport::Diving,
+            56 => Sport::Shooting,
+            58 => Sport::WinterSport,
+            59 => Sport::Grinding,
             62 => Sport::Hiit,
+            63 => Sport::VideoGaming,
             64 => Sport::Racket,
             65 => Sport::WheelchairPushWalk,
             66 => Sport::WheelchairPushRun,
             67 => Sport::Meditation,
+            68 => Sport::ParaSport,
             69 => Sport::DiscGolf,
+            70 => Sport::TeamSport,
             71 => Sport::Cricket,
             72 => Sport::Rugby,
             73 => Sport::Hockey,
@@ -4796,10 +4870,17 @@ impl convert::From<u8> for Sport {
             75 => Sport::Volleyball,
             76 => Sport::WaterTubing,
             77 => Sport::Wakesurfing,
+            78 => Sport::WaterSport,
+            79 => Sport::Archery,
             80 => Sport::MixedMartialArts,
+            81 => Sport::MotorSports,
             82 => Sport::Snorkeling,
             83 => Sport::Dance,
             84 => Sport::JumpRope,
+            85 => Sport::PoolApnea,
+            86 => Sport::Mobility,
+            87 => Sport::Geocaching,
+            88 => Sport::Canoeing,
             254 => Sport::All,
             _ => Sport::UnknownVariant(value),
         }
@@ -4864,12 +4945,18 @@ impl convert::From<&str> for Sport {
             "floor_climbing" => Sport::FloorClimbing,
             "baseball" => Sport::Baseball,
             "diving" => Sport::Diving,
+            "shooting" => Sport::Shooting,
+            "winter_sport" => Sport::WinterSport,
+            "grinding" => Sport::Grinding,
             "hiit" => Sport::Hiit,
+            "video_gaming" => Sport::VideoGaming,
             "racket" => Sport::Racket,
             "wheelchair_push_walk" => Sport::WheelchairPushWalk,
             "wheelchair_push_run" => Sport::WheelchairPushRun,
             "meditation" => Sport::Meditation,
+            "para_sport" => Sport::ParaSport,
             "disc_golf" => Sport::DiscGolf,
+            "team_sport" => Sport::TeamSport,
             "cricket" => Sport::Cricket,
             "rugby" => Sport::Rugby,
             "hockey" => Sport::Hockey,
@@ -4877,10 +4964,17 @@ impl convert::From<&str> for Sport {
             "volleyball" => Sport::Volleyball,
             "water_tubing" => Sport::WaterTubing,
             "wakesurfing" => Sport::Wakesurfing,
+            "water_sport" => Sport::WaterSport,
+            "archery" => Sport::Archery,
             "mixed_martial_arts" => Sport::MixedMartialArts,
+            "motor_sports" => Sport::MotorSports,
             "snorkeling" => Sport::Snorkeling,
             "dance" => Sport::Dance,
             "jump_rope" => Sport::JumpRope,
+            "pool_apnea" => Sport::PoolApnea,
+            "mobility" => Sport::Mobility,
+            "geocaching" => Sport::Geocaching,
+            "canoeing" => Sport::Canoeing,
             "all" => Sport::All,
             &_ => Sport::UnknownVariant(0),
         }
@@ -5660,8 +5754,12 @@ pub enum SubSport {
     #[doc = "Used for events where participants run, crawl through mud, climb over walls, etc."]
     Obstacle,
     Breathing,
+    #[doc = "Diving w/ closed circuit rebreather"]
+    CcrDiving,
     #[doc = "Sailing"]
     SailRace,
+    #[doc = "Generic"]
+    Expedition,
     #[doc = "Ultramarathon"]
     Ultra,
     #[doc = "Climbing"]
@@ -5670,12 +5768,30 @@ pub enum SubSport {
     Bouldering,
     #[doc = "High Intensity Interval Training"]
     Hiit,
+    #[doc = "Sailing position, operating manual winches to power boat controls"]
+    IndoorGrinding,
+    #[doc = "Hunting"]
+    HuntingWithDogs,
     #[doc = "HIIT"]
     Amrap,
     #[doc = "HIIT"]
     Emom,
     #[doc = "HIIT"]
     Tabata,
+    #[doc = "Video Gaming, Cycling, etc."]
+    Esport,
+    #[doc = "Multisport"]
+    Triathlon,
+    #[doc = "Multisport"]
+    Duathlon,
+    #[doc = "Multisport"]
+    Brick,
+    #[doc = "Multisport"]
+    SwimRun,
+    #[doc = "Multisport"]
+    AdventureRace,
+    #[doc = "DEZL trucker workout training sport"]
+    TruckerWorkout,
     #[doc = "Racket"]
     Pickleball,
     #[doc = "Racket"]
@@ -5683,10 +5799,25 @@ pub enum SubSport {
     IndoorWheelchairWalk,
     IndoorWheelchairRun,
     IndoorHandCycling,
+    #[doc = "Hockey"]
+    Field,
+    #[doc = "Hockey"]
+    Ice,
+    #[doc = "Disc"]
+    Ultimate,
+    #[doc = "Racket"]
+    Platform,
+    #[doc = "Racket"]
     Squash,
+    #[doc = "Racket"]
     Badminton,
+    #[doc = "Racket"]
     Racquetball,
+    #[doc = "Racket"]
     TableTennis,
+    Overland,
+    #[doc = "Generic"]
+    TrollingMotor,
     #[doc = "Flying"]
     FlyCanopy,
     #[doc = "Flying"]
@@ -5707,6 +5838,17 @@ pub enum SubSport {
     FlyVfr,
     #[doc = "Flying"]
     FlyIfr,
+    DynamicApnea,
+    #[doc = "Cycling"]
+    Enduro,
+    #[doc = "Hiking"]
+    Rucking,
+    #[doc = "Motor sports"]
+    Rally,
+    #[doc = "Multisport"]
+    PoolTriathlon,
+    #[doc = "Cycling"]
+    EBikeEnduro,
     All,
     UnknownVariant(u8),
 }
@@ -5774,23 +5916,40 @@ impl SubSport {
                 | 58i64
                 | 59i64
                 | 62i64
+                | 63i64
                 | 65i64
+                | 66i64
                 | 67i64
                 | 68i64
                 | 69i64
                 | 70i64
+                | 71i64
+                | 72i64
                 | 73i64
                 | 74i64
                 | 75i64
+                | 77i64
+                | 78i64
+                | 79i64
+                | 80i64
+                | 81i64
+                | 82i64
+                | 83i64
                 | 84i64
                 | 85i64
                 | 86i64
                 | 87i64
                 | 88i64
+                | 90i64
+                | 91i64
+                | 92i64
+                | 93i64
                 | 94i64
                 | 95i64
                 | 96i64
                 | 97i64
+                | 98i64
+                | 99i64
                 | 110i64
                 | 111i64
                 | 112i64
@@ -5801,6 +5960,12 @@ impl SubSport {
                 | 117i64
                 | 118i64
                 | 119i64
+                | 121i64
+                | 123i64
+                | 124i64
+                | 125i64
+                | 126i64
+                | 127i64
                 | 254i64
         )
     }
@@ -5867,23 +6032,40 @@ impl SubSport {
             SubSport::VirtualActivity => 58,
             SubSport::Obstacle => 59,
             SubSport::Breathing => 62,
+            SubSport::CcrDiving => 63,
             SubSport::SailRace => 65,
+            SubSport::Expedition => 66,
             SubSport::Ultra => 67,
             SubSport::IndoorClimbing => 68,
             SubSport::Bouldering => 69,
             SubSport::Hiit => 70,
+            SubSport::IndoorGrinding => 71,
+            SubSport::HuntingWithDogs => 72,
             SubSport::Amrap => 73,
             SubSport::Emom => 74,
             SubSport::Tabata => 75,
+            SubSport::Esport => 77,
+            SubSport::Triathlon => 78,
+            SubSport::Duathlon => 79,
+            SubSport::Brick => 80,
+            SubSport::SwimRun => 81,
+            SubSport::AdventureRace => 82,
+            SubSport::TruckerWorkout => 83,
             SubSport::Pickleball => 84,
             SubSport::Padel => 85,
             SubSport::IndoorWheelchairWalk => 86,
             SubSport::IndoorWheelchairRun => 87,
             SubSport::IndoorHandCycling => 88,
+            SubSport::Field => 90,
+            SubSport::Ice => 91,
+            SubSport::Ultimate => 92,
+            SubSport::Platform => 93,
             SubSport::Squash => 94,
             SubSport::Badminton => 95,
             SubSport::Racquetball => 96,
             SubSport::TableTennis => 97,
+            SubSport::Overland => 98,
+            SubSport::TrollingMotor => 99,
             SubSport::FlyCanopy => 110,
             SubSport::FlyParaglide => 111,
             SubSport::FlyParamotor => 112,
@@ -5894,6 +6076,12 @@ impl SubSport {
             SubSport::FlyWx => 117,
             SubSport::FlyVfr => 118,
             SubSport::FlyIfr => 119,
+            SubSport::DynamicApnea => 121,
+            SubSport::Enduro => 123,
+            SubSport::Rucking => 124,
+            SubSport::Rally => 125,
+            SubSport::PoolTriathlon => 126,
+            SubSport::EBikeEnduro => 127,
             SubSport::All => 254,
             SubSport::UnknownVariant(value) => value,
         }
@@ -5966,23 +6154,40 @@ impl fmt::Display for SubSport {
             SubSport::VirtualActivity => write!(f, "virtual_activity"),
             SubSport::Obstacle => write!(f, "obstacle"),
             SubSport::Breathing => write!(f, "breathing"),
+            SubSport::CcrDiving => write!(f, "ccr_diving"),
             SubSport::SailRace => write!(f, "sail_race"),
+            SubSport::Expedition => write!(f, "expedition"),
             SubSport::Ultra => write!(f, "ultra"),
             SubSport::IndoorClimbing => write!(f, "indoor_climbing"),
             SubSport::Bouldering => write!(f, "bouldering"),
             SubSport::Hiit => write!(f, "hiit"),
+            SubSport::IndoorGrinding => write!(f, "indoor_grinding"),
+            SubSport::HuntingWithDogs => write!(f, "hunting_with_dogs"),
             SubSport::Amrap => write!(f, "amrap"),
             SubSport::Emom => write!(f, "emom"),
             SubSport::Tabata => write!(f, "tabata"),
+            SubSport::Esport => write!(f, "esport"),
+            SubSport::Triathlon => write!(f, "triathlon"),
+            SubSport::Duathlon => write!(f, "duathlon"),
+            SubSport::Brick => write!(f, "brick"),
+            SubSport::SwimRun => write!(f, "swim_run"),
+            SubSport::AdventureRace => write!(f, "adventure_race"),
+            SubSport::TruckerWorkout => write!(f, "trucker_workout"),
             SubSport::Pickleball => write!(f, "pickleball"),
             SubSport::Padel => write!(f, "padel"),
             SubSport::IndoorWheelchairWalk => write!(f, "indoor_wheelchair_walk"),
             SubSport::IndoorWheelchairRun => write!(f, "indoor_wheelchair_run"),
             SubSport::IndoorHandCycling => write!(f, "indoor_hand_cycling"),
+            SubSport::Field => write!(f, "field"),
+            SubSport::Ice => write!(f, "ice"),
+            SubSport::Ultimate => write!(f, "ultimate"),
+            SubSport::Platform => write!(f, "platform"),
             SubSport::Squash => write!(f, "squash"),
             SubSport::Badminton => write!(f, "badminton"),
             SubSport::Racquetball => write!(f, "racquetball"),
             SubSport::TableTennis => write!(f, "table_tennis"),
+            SubSport::Overland => write!(f, "overland"),
+            SubSport::TrollingMotor => write!(f, "trolling_motor"),
             SubSport::FlyCanopy => write!(f, "fly_canopy"),
             SubSport::FlyParaglide => write!(f, "fly_paraglide"),
             SubSport::FlyParamotor => write!(f, "fly_paramotor"),
@@ -5993,6 +6198,12 @@ impl fmt::Display for SubSport {
             SubSport::FlyWx => write!(f, "fly_wx"),
             SubSport::FlyVfr => write!(f, "fly_vfr"),
             SubSport::FlyIfr => write!(f, "fly_ifr"),
+            SubSport::DynamicApnea => write!(f, "dynamic_apnea"),
+            SubSport::Enduro => write!(f, "enduro"),
+            SubSport::Rucking => write!(f, "rucking"),
+            SubSport::Rally => write!(f, "rally"),
+            SubSport::PoolTriathlon => write!(f, "pool_triathlon"),
+            SubSport::EBikeEnduro => write!(f, "e_bike_enduro"),
             SubSport::All => write!(f, "all"),
             SubSport::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
@@ -6062,23 +6273,40 @@ impl convert::From<u8> for SubSport {
             58 => SubSport::VirtualActivity,
             59 => SubSport::Obstacle,
             62 => SubSport::Breathing,
+            63 => SubSport::CcrDiving,
             65 => SubSport::SailRace,
+            66 => SubSport::Expedition,
             67 => SubSport::Ultra,
             68 => SubSport::IndoorClimbing,
             69 => SubSport::Bouldering,
             70 => SubSport::Hiit,
+            71 => SubSport::IndoorGrinding,
+            72 => SubSport::HuntingWithDogs,
             73 => SubSport::Amrap,
             74 => SubSport::Emom,
             75 => SubSport::Tabata,
+            77 => SubSport::Esport,
+            78 => SubSport::Triathlon,
+            79 => SubSport::Duathlon,
+            80 => SubSport::Brick,
+            81 => SubSport::SwimRun,
+            82 => SubSport::AdventureRace,
+            83 => SubSport::TruckerWorkout,
             84 => SubSport::Pickleball,
             85 => SubSport::Padel,
             86 => SubSport::IndoorWheelchairWalk,
             87 => SubSport::IndoorWheelchairRun,
             88 => SubSport::IndoorHandCycling,
+            90 => SubSport::Field,
+            91 => SubSport::Ice,
+            92 => SubSport::Ultimate,
+            93 => SubSport::Platform,
             94 => SubSport::Squash,
             95 => SubSport::Badminton,
             96 => SubSport::Racquetball,
             97 => SubSport::TableTennis,
+            98 => SubSport::Overland,
+            99 => SubSport::TrollingMotor,
             110 => SubSport::FlyCanopy,
             111 => SubSport::FlyParaglide,
             112 => SubSport::FlyParamotor,
@@ -6089,6 +6317,12 @@ impl convert::From<u8> for SubSport {
             117 => SubSport::FlyWx,
             118 => SubSport::FlyVfr,
             119 => SubSport::FlyIfr,
+            121 => SubSport::DynamicApnea,
+            123 => SubSport::Enduro,
+            124 => SubSport::Rucking,
+            125 => SubSport::Rally,
+            126 => SubSport::PoolTriathlon,
+            127 => SubSport::EBikeEnduro,
             254 => SubSport::All,
             _ => SubSport::UnknownVariant(value),
         }
@@ -6163,23 +6397,40 @@ impl convert::From<&str> for SubSport {
             "virtual_activity" => SubSport::VirtualActivity,
             "obstacle" => SubSport::Obstacle,
             "breathing" => SubSport::Breathing,
+            "ccr_diving" => SubSport::CcrDiving,
             "sail_race" => SubSport::SailRace,
+            "expedition" => SubSport::Expedition,
             "ultra" => SubSport::Ultra,
             "indoor_climbing" => SubSport::IndoorClimbing,
             "bouldering" => SubSport::Bouldering,
             "hiit" => SubSport::Hiit,
+            "indoor_grinding" => SubSport::IndoorGrinding,
+            "hunting_with_dogs" => SubSport::HuntingWithDogs,
             "amrap" => SubSport::Amrap,
             "emom" => SubSport::Emom,
             "tabata" => SubSport::Tabata,
+            "esport" => SubSport::Esport,
+            "triathlon" => SubSport::Triathlon,
+            "duathlon" => SubSport::Duathlon,
+            "brick" => SubSport::Brick,
+            "swim_run" => SubSport::SwimRun,
+            "adventure_race" => SubSport::AdventureRace,
+            "trucker_workout" => SubSport::TruckerWorkout,
             "pickleball" => SubSport::Pickleball,
             "padel" => SubSport::Padel,
             "indoor_wheelchair_walk" => SubSport::IndoorWheelchairWalk,
             "indoor_wheelchair_run" => SubSport::IndoorWheelchairRun,
             "indoor_hand_cycling" => SubSport::IndoorHandCycling,
+            "field" => SubSport::Field,
+            "ice" => SubSport::Ice,
+            "ultimate" => SubSport::Ultimate,
+            "platform" => SubSport::Platform,
             "squash" => SubSport::Squash,
             "badminton" => SubSport::Badminton,
             "racquetball" => SubSport::Racquetball,
             "table_tennis" => SubSport::TableTennis,
+            "overland" => SubSport::Overland,
+            "trolling_motor" => SubSport::TrollingMotor,
             "fly_canopy" => SubSport::FlyCanopy,
             "fly_paraglide" => SubSport::FlyParaglide,
             "fly_paramotor" => SubSport::FlyParamotor,
@@ -6190,6 +6441,12 @@ impl convert::From<&str> for SubSport {
             "fly_wx" => SubSport::FlyWx,
             "fly_vfr" => SubSport::FlyVfr,
             "fly_ifr" => SubSport::FlyIfr,
+            "dynamic_apnea" => SubSport::DynamicApnea,
+            "enduro" => SubSport::Enduro,
+            "rucking" => SubSport::Rucking,
+            "rally" => SubSport::Rally,
+            "pool_triathlon" => SubSport::PoolTriathlon,
+            "e_bike_enduro" => SubSport::EBikeEnduro,
             "all" => SubSport::All,
             &_ => SubSport::UnknownVariant(0),
         }
@@ -9249,6 +9506,11 @@ pub enum Manufacturer {
     Carv,
     Tissot,
     RealVelo,
+    Wetech,
+    Jespr,
+    Huawei,
+    Gotoes,
+    CadenceApp,
     Actigraphcorp,
     Value(u16),
 }
@@ -9492,6 +9754,11 @@ impl Manufacturer {
                 | 341i64
                 | 342i64
                 | 345i64
+                | 346i64
+                | 347i64
+                | 348i64
+                | 349i64
+                | 350i64
                 | 5759i64
         )
     }
@@ -9734,6 +10001,11 @@ impl Manufacturer {
             Manufacturer::Carv => 341,
             Manufacturer::Tissot => 342,
             Manufacturer::RealVelo => 345,
+            Manufacturer::Wetech => 346,
+            Manufacturer::Jespr => 347,
+            Manufacturer::Huawei => 348,
+            Manufacturer::Gotoes => 349,
+            Manufacturer::CadenceApp => 350,
             Manufacturer::Actigraphcorp => 5759,
             Manufacturer::Value(value) => value,
         }
@@ -9982,6 +10254,11 @@ impl fmt::Display for Manufacturer {
             Manufacturer::Carv => write!(f, "carv"),
             Manufacturer::Tissot => write!(f, "tissot"),
             Manufacturer::RealVelo => write!(f, "real_velo"),
+            Manufacturer::Wetech => write!(f, "wetech"),
+            Manufacturer::Jespr => write!(f, "jespr"),
+            Manufacturer::Huawei => write!(f, "huawei"),
+            Manufacturer::Gotoes => write!(f, "gotoes"),
+            Manufacturer::CadenceApp => write!(f, "cadence_app"),
             Manufacturer::Actigraphcorp => write!(f, "actigraphcorp"),
             Manufacturer::Value(value) => write!(f, "{}", value),
         }
@@ -10227,6 +10504,11 @@ impl convert::From<u16> for Manufacturer {
             341 => Manufacturer::Carv,
             342 => Manufacturer::Tissot,
             345 => Manufacturer::RealVelo,
+            346 => Manufacturer::Wetech,
+            347 => Manufacturer::Jespr,
+            348 => Manufacturer::Huawei,
+            349 => Manufacturer::Gotoes,
+            350 => Manufacturer::CadenceApp,
             5759 => Manufacturer::Actigraphcorp,
             _ => Manufacturer::Value(value),
         }
@@ -10477,6 +10759,11 @@ impl convert::From<&str> for Manufacturer {
             "carv" => Manufacturer::Carv,
             "tissot" => Manufacturer::Tissot,
             "real_velo" => Manufacturer::RealVelo,
+            "wetech" => Manufacturer::Wetech,
+            "jespr" => Manufacturer::Jespr,
+            "huawei" => Manufacturer::Huawei,
+            "gotoes" => Manufacturer::Gotoes,
+            "cadence_app" => Manufacturer::CadenceApp,
             "actigraphcorp" => Manufacturer::Actigraphcorp,
             &_ => Manufacturer::Value(0),
         }
@@ -36926,6 +37213,255 @@ impl convert::From<&str> for SleepDisruptionSeverity {
     }
 }
 impl Serialize for SleepDisruptionSeverity {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
+pub enum NapPeriodFeedback {
+    None,
+    MultipleNapsDuringDay,
+    JetlagIdealTimingIdealDuration,
+    JetlagIdealTimingLongDuration,
+    JetlagLateTimingIdealDuration,
+    JetlagLateTimingLongDuration,
+    IdealTimingIdealDurationLowNeed,
+    IdealTimingIdealDurationHighNeed,
+    IdealTimingLongDurationLowNeed,
+    IdealTimingLongDurationHighNeed,
+    LateTimingIdealDurationLowNeed,
+    LateTimingIdealDurationHighNeed,
+    LateTimingLongDurationLowNeed,
+    LateTimingLongDurationHighNeed,
+    IdealDurationLowNeed,
+    IdealDurationHighNeed,
+    LongDurationLowNeed,
+    LongDurationHighNeed,
+    UnknownVariant(u8),
+}
+impl NapPeriodFeedback {
+    pub fn is_named_variant(value: i64) -> bool {
+        matches!(value, 0i64..=17i64)
+    }
+    pub fn as_u8(self) -> u8 {
+        match self {
+            NapPeriodFeedback::None => 0,
+            NapPeriodFeedback::MultipleNapsDuringDay => 1,
+            NapPeriodFeedback::JetlagIdealTimingIdealDuration => 2,
+            NapPeriodFeedback::JetlagIdealTimingLongDuration => 3,
+            NapPeriodFeedback::JetlagLateTimingIdealDuration => 4,
+            NapPeriodFeedback::JetlagLateTimingLongDuration => 5,
+            NapPeriodFeedback::IdealTimingIdealDurationLowNeed => 6,
+            NapPeriodFeedback::IdealTimingIdealDurationHighNeed => 7,
+            NapPeriodFeedback::IdealTimingLongDurationLowNeed => 8,
+            NapPeriodFeedback::IdealTimingLongDurationHighNeed => 9,
+            NapPeriodFeedback::LateTimingIdealDurationLowNeed => 10,
+            NapPeriodFeedback::LateTimingIdealDurationHighNeed => 11,
+            NapPeriodFeedback::LateTimingLongDurationLowNeed => 12,
+            NapPeriodFeedback::LateTimingLongDurationHighNeed => 13,
+            NapPeriodFeedback::IdealDurationLowNeed => 14,
+            NapPeriodFeedback::IdealDurationHighNeed => 15,
+            NapPeriodFeedback::LongDurationLowNeed => 16,
+            NapPeriodFeedback::LongDurationHighNeed => 17,
+            NapPeriodFeedback::UnknownVariant(value) => value,
+        }
+    }
+    pub fn as_i64(self) -> i64 {
+        self.as_u8() as i64
+    }
+}
+impl fmt::Display for NapPeriodFeedback {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match &self {
+            NapPeriodFeedback::None => write!(f, "none"),
+            NapPeriodFeedback::MultipleNapsDuringDay => write!(f, "multiple_naps_during_day"),
+            NapPeriodFeedback::JetlagIdealTimingIdealDuration => {
+                write!(f, "jetlag_ideal_timing_ideal_duration")
+            }
+            NapPeriodFeedback::JetlagIdealTimingLongDuration => {
+                write!(f, "jetlag_ideal_timing_long_duration")
+            }
+            NapPeriodFeedback::JetlagLateTimingIdealDuration => {
+                write!(f, "jetlag_late_timing_ideal_duration")
+            }
+            NapPeriodFeedback::JetlagLateTimingLongDuration => {
+                write!(f, "jetlag_late_timing_long_duration")
+            }
+            NapPeriodFeedback::IdealTimingIdealDurationLowNeed => {
+                write!(f, "ideal_timing_ideal_duration_low_need")
+            }
+            NapPeriodFeedback::IdealTimingIdealDurationHighNeed => {
+                write!(f, "ideal_timing_ideal_duration_high_need")
+            }
+            NapPeriodFeedback::IdealTimingLongDurationLowNeed => {
+                write!(f, "ideal_timing_long_duration_low_need")
+            }
+            NapPeriodFeedback::IdealTimingLongDurationHighNeed => {
+                write!(f, "ideal_timing_long_duration_high_need")
+            }
+            NapPeriodFeedback::LateTimingIdealDurationLowNeed => {
+                write!(f, "late_timing_ideal_duration_low_need")
+            }
+            NapPeriodFeedback::LateTimingIdealDurationHighNeed => {
+                write!(f, "late_timing_ideal_duration_high_need")
+            }
+            NapPeriodFeedback::LateTimingLongDurationLowNeed => {
+                write!(f, "late_timing_long_duration_low_need")
+            }
+            NapPeriodFeedback::LateTimingLongDurationHighNeed => {
+                write!(f, "late_timing_long_duration_high_need")
+            }
+            NapPeriodFeedback::IdealDurationLowNeed => write!(f, "ideal_duration_low_need"),
+            NapPeriodFeedback::IdealDurationHighNeed => write!(f, "ideal_duration_high_need"),
+            NapPeriodFeedback::LongDurationLowNeed => write!(f, "long_duration_low_need"),
+            NapPeriodFeedback::LongDurationHighNeed => write!(f, "long_duration_high_need"),
+            NapPeriodFeedback::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
+        }
+    }
+}
+impl convert::From<u8> for NapPeriodFeedback {
+    fn from(value: u8) -> Self {
+        match value {
+            0 => NapPeriodFeedback::None,
+            1 => NapPeriodFeedback::MultipleNapsDuringDay,
+            2 => NapPeriodFeedback::JetlagIdealTimingIdealDuration,
+            3 => NapPeriodFeedback::JetlagIdealTimingLongDuration,
+            4 => NapPeriodFeedback::JetlagLateTimingIdealDuration,
+            5 => NapPeriodFeedback::JetlagLateTimingLongDuration,
+            6 => NapPeriodFeedback::IdealTimingIdealDurationLowNeed,
+            7 => NapPeriodFeedback::IdealTimingIdealDurationHighNeed,
+            8 => NapPeriodFeedback::IdealTimingLongDurationLowNeed,
+            9 => NapPeriodFeedback::IdealTimingLongDurationHighNeed,
+            10 => NapPeriodFeedback::LateTimingIdealDurationLowNeed,
+            11 => NapPeriodFeedback::LateTimingIdealDurationHighNeed,
+            12 => NapPeriodFeedback::LateTimingLongDurationLowNeed,
+            13 => NapPeriodFeedback::LateTimingLongDurationHighNeed,
+            14 => NapPeriodFeedback::IdealDurationLowNeed,
+            15 => NapPeriodFeedback::IdealDurationHighNeed,
+            16 => NapPeriodFeedback::LongDurationLowNeed,
+            17 => NapPeriodFeedback::LongDurationHighNeed,
+            _ => NapPeriodFeedback::UnknownVariant(value),
+        }
+    }
+}
+impl convert::From<i64> for NapPeriodFeedback {
+    fn from(value: i64) -> Self {
+        NapPeriodFeedback::from(value as u8)
+    }
+}
+impl convert::From<&str> for NapPeriodFeedback {
+    fn from(value: &str) -> Self {
+        match value {
+            "none" => NapPeriodFeedback::None,
+            "multiple_naps_during_day" => NapPeriodFeedback::MultipleNapsDuringDay,
+            "jetlag_ideal_timing_ideal_duration" => {
+                NapPeriodFeedback::JetlagIdealTimingIdealDuration
+            }
+            "jetlag_ideal_timing_long_duration" => NapPeriodFeedback::JetlagIdealTimingLongDuration,
+            "jetlag_late_timing_ideal_duration" => NapPeriodFeedback::JetlagLateTimingIdealDuration,
+            "jetlag_late_timing_long_duration" => NapPeriodFeedback::JetlagLateTimingLongDuration,
+            "ideal_timing_ideal_duration_low_need" => {
+                NapPeriodFeedback::IdealTimingIdealDurationLowNeed
+            }
+            "ideal_timing_ideal_duration_high_need" => {
+                NapPeriodFeedback::IdealTimingIdealDurationHighNeed
+            }
+            "ideal_timing_long_duration_low_need" => {
+                NapPeriodFeedback::IdealTimingLongDurationLowNeed
+            }
+            "ideal_timing_long_duration_high_need" => {
+                NapPeriodFeedback::IdealTimingLongDurationHighNeed
+            }
+            "late_timing_ideal_duration_low_need" => {
+                NapPeriodFeedback::LateTimingIdealDurationLowNeed
+            }
+            "late_timing_ideal_duration_high_need" => {
+                NapPeriodFeedback::LateTimingIdealDurationHighNeed
+            }
+            "late_timing_long_duration_low_need" => {
+                NapPeriodFeedback::LateTimingLongDurationLowNeed
+            }
+            "late_timing_long_duration_high_need" => {
+                NapPeriodFeedback::LateTimingLongDurationHighNeed
+            }
+            "ideal_duration_low_need" => NapPeriodFeedback::IdealDurationLowNeed,
+            "ideal_duration_high_need" => NapPeriodFeedback::IdealDurationHighNeed,
+            "long_duration_low_need" => NapPeriodFeedback::LongDurationLowNeed,
+            "long_duration_high_need" => NapPeriodFeedback::LongDurationHighNeed,
+            &_ => NapPeriodFeedback::UnknownVariant(0),
+        }
+    }
+}
+impl Serialize for NapPeriodFeedback {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
+pub enum NapSource {
+    Automatic,
+    ManualDevice,
+    ManualGc,
+    UnknownVariant(u8),
+}
+impl NapSource {
+    pub fn is_named_variant(value: i64) -> bool {
+        matches!(value, 0i64..=2i64)
+    }
+    pub fn as_u8(self) -> u8 {
+        match self {
+            NapSource::Automatic => 0,
+            NapSource::ManualDevice => 1,
+            NapSource::ManualGc => 2,
+            NapSource::UnknownVariant(value) => value,
+        }
+    }
+    pub fn as_i64(self) -> i64 {
+        self.as_u8() as i64
+    }
+}
+impl fmt::Display for NapSource {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match &self {
+            NapSource::Automatic => write!(f, "automatic"),
+            NapSource::ManualDevice => write!(f, "manual_device"),
+            NapSource::ManualGc => write!(f, "manual_gc"),
+            NapSource::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
+        }
+    }
+}
+impl convert::From<u8> for NapSource {
+    fn from(value: u8) -> Self {
+        match value {
+            0 => NapSource::Automatic,
+            1 => NapSource::ManualDevice,
+            2 => NapSource::ManualGc,
+            _ => NapSource::UnknownVariant(value),
+        }
+    }
+}
+impl convert::From<i64> for NapSource {
+    fn from(value: i64) -> Self {
+        NapSource::from(value as u8)
+    }
+}
+impl convert::From<&str> for NapSource {
+    fn from(value: &str) -> Self {
+        match value {
+            "automatic" => NapSource::Automatic,
+            "manual_device" => NapSource::ManualDevice,
+            "manual_gc" => NapSource::ManualGc,
+            &_ => NapSource::UnknownVariant(0),
+        }
+    }
+}
+impl Serialize for NapSource {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,

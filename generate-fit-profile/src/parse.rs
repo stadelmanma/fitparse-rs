@@ -325,7 +325,8 @@ fn optional_trimmed_string(value: &DataType) -> Option<&str> {
 }
 
 fn required_trimmed_string<'a>(value: &'a DataType, row: &[DataType], label: &str) -> &'a str {
-    optional_trimmed_string(value).unwrap_or_else(|| panic!("{label} must be a string, row={row:?}."))
+    optional_trimmed_string(value)
+        .unwrap_or_else(|| panic!("{label} must be a string, row={row:?}."))
 }
 
 /// Match a base type string to a rust type for enum generation
@@ -393,7 +394,9 @@ fn parse_enum_variant_value(value: &str) -> i64 {
     {
         i64::from_str_radix(hex, 16).expect("Failed to parse hex string to i64")
     } else {
-        trimmed.parse::<i64>().expect("Failed to parse integer string to i64")
+        trimmed
+            .parse::<i64>()
+            .expect("Failed to parse integer string to i64")
     }
 }
 
@@ -461,9 +464,10 @@ fn process_types(sheet: &Range<DataType>) -> Vec<FieldTypeDefintion> {
                 }
             };
             let comment = optional_trimmed_string(&row[4]).map(str::to_owned);
-            field_type
-                .variant_map
-                .insert(value, FieldTypeVariant::new(name.to_string(), value, comment));
+            field_type.variant_map.insert(
+                value,
+                FieldTypeVariant::new(name.to_string(), value, comment),
+            );
         }
     }
 
@@ -614,10 +618,7 @@ fn process_messages(sheet: &Range<DataType>) -> Vec<MessageDefinition> {
     let row = rows.next().expect("No rows in sheet.");
 
     if let Some(v) = optional_trimmed_string(&row[0]) {
-        msg = MessageDefinition::new(
-            v,
-            optional_trimmed_string(&row[13]).map(str::to_owned),
-        );
+        msg = MessageDefinition::new(v, optional_trimmed_string(&row[13]).map(str::to_owned));
     } else {
         panic!("Message name must be a string row={row:?}.");
     }
@@ -627,10 +628,7 @@ fn process_messages(sheet: &Range<DataType>) -> Vec<MessageDefinition> {
         // begin new message function
         if let Some(v) = optional_trimmed_string(&row[0]) {
             messages.push(msg);
-            msg = MessageDefinition::new(
-                v,
-                optional_trimmed_string(&row[13]).map(str::to_owned),
-            );
+            msg = MessageDefinition::new(v, optional_trimmed_string(&row[13]).map(str::to_owned));
         } else if parse_u8_cell_opt(&row[1]).is_some() {
             field = new_message_field_definition(row);
             last_def_number = field.def_number;
@@ -646,10 +644,8 @@ fn process_messages(sheet: &Range<DataType>) -> Vec<MessageDefinition> {
             field = new_message_field_definition(&temp_row);
             // store subfield ref_field, ref_field_value and defintion, if multiple values can
             // trigger this subfield we simply duplicate them
-            let ref_field_names =
-                required_trimmed_string(&row[11], row, "Reference field name(s)");
-            let ref_field_vals =
-                required_trimmed_string(&row[12], row, "Reference field value(s)");
+            let ref_field_names = required_trimmed_string(&row[11], row, "Reference field name(s)");
+            let ref_field_vals = required_trimmed_string(&row[12], row, "Reference field value(s)");
             for (name, value) in
                 split_csv_string!(ref_field_names).zip(split_csv_string!(ref_field_vals))
             {
