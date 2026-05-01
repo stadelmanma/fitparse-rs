@@ -70,7 +70,7 @@ impl fmt::Display for ErrorKind {
                     exp_val, calc_val
                 ),
             },
-            ErrorKind::Io(ref ioerr) => write!(fmt, "io error: {}", ioerr),
+            ErrorKind::Io(ioerr) => write!(fmt, "io error: {}", ioerr),
             ErrorKind::TrailingBytes(rem) => {
                 write!(fmt, "{} bytes remain past expected EOF location", rem)
             }
@@ -79,7 +79,7 @@ impl fmt::Display for ErrorKind {
                 "No definition found for local message number {} at position {:#x}",
                 local_number, position
             ),
-            ErrorKind::ParseError(pos, ref err) => write!(
+            ErrorKind::ParseError(pos, err) => write!(
                 fmt,
                 "parser error: '{}' at position: {:#x}",
                 err.description(),
@@ -91,7 +91,7 @@ impl fmt::Display for ErrorKind {
             ErrorKind::UnexpectedEof(nom::Needed::Unknown) => {
                 write!(fmt, "parser error: requires more data")
             }
-            ErrorKind::ValueError(ref message) => write!(fmt, "value error: {}", message),
+            ErrorKind::ValueError(message) => write!(fmt, "value error: {}", message),
             ErrorKind::MissingDeveloperDefinitionMessage() => {
                 write!(fmt, "developer field referenced before being defined")
             }
