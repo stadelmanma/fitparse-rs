@@ -8,7 +8,7 @@ use std::collections::{HashMap, HashSet};
 use std::convert::TryInto;
 
 pub mod field_types;
-pub use field_types::{get_field_variant_as_string, FieldDataType, MesgNum};
+pub use field_types::{FieldDataType, MesgNum, get_field_variant_as_string};
 
 pub mod decode;
 pub use decode::VERSION;

@@ -3,7 +3,7 @@
 #![allow(clippy::unreadable_literal)]
 #![doc = "Auto generated profile field types from FIT SDK Release: 21.202.0"]
 #![doc = "Not all of these may be used by the defined set of FIT messages"]
-use serde::{ser::Serializer, Serialize};
+use serde::{Serialize, ser::Serializer};
 use std::{convert, fmt};
 #[doc = r" Describe all possible data types of a field"]
 #[doc = r""]

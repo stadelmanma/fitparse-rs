@@ -1,8 +1,8 @@
 //! Helper functions and structures needed to decode a FIT file using the defined profile.
-use super::parser::FitDataMessage;
 use super::DecodeOption;
+use super::parser::FitDataMessage;
 use crate::error::Result;
-use crate::profile::{data_field_with_info, FieldDataType, MesgNum, TimestampField};
+use crate::profile::{FieldDataType, MesgNum, TimestampField, data_field_with_info};
 use crate::{DeveloperFieldDescription, ErrorKind, FitDataField, FitDataRecord, Value};
 use std::collections::{HashMap, HashSet, VecDeque};
 use std::convert::{From, TryInto};

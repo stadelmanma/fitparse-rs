@@ -4,10 +4,10 @@ use crate::{DeveloperFieldDescription, Value};
 use nom::bytes::streaming::{tag, take};
 use nom::combinator::cond;
 use nom::multi::count;
-use nom::number::streaming::{
-    f32, f64, i16, i32, i64, le_i8, le_u16, le_u32, le_u8, u16, u32, u64,
-};
 use nom::number::Endianness;
+use nom::number::streaming::{
+    f32, f64, i16, i32, i64, le_i8, le_u8, le_u16, le_u32, u16, u32, u64,
+};
 use nom::{Err, IResult, Needed, Parser};
 use std::collections::HashMap;
 use std::convert::From;

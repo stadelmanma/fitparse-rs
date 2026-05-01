@@ -1,5 +1,5 @@
 //! Read one or more FIT files and dump their contents as JSON
-use fitparser::de::{from_reader_with_options, DecodeOption};
+use fitparser::de::{DecodeOption, from_reader_with_options};
 use serde::Serialize;
 use std::collections::{BTreeMap, HashSet};
 use std::error::Error;

@@ -1,8 +1,8 @@
 [package]
 name = "fitparser"
-version = "0.10.0"
+version = "0.11.0"
 authors = ["Matthew Stadelman <stadelmanma@gmail.com>"]
-edition = "2021"
+edition = "2024"
 description = "A utility to parse ANT .FIT files and allow their contents to be serialized with serde."
 license = "MIT"
 repository = "https://github.com/stadelmanma/fitparse-rs"

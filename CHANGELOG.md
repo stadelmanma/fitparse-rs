@@ -1,6 +1,6 @@
 # Changelog
 
-## HEAD
+## v0.11.0
 * Profile parser fixes for FIT SDK 21.195.0 and onward (richyo-codes)
 * Fixes to allow generate-fit-profile to use latest calamine version (richyo-codes)
 * Bump packaged FIT SDK version to 21.195.0 (richyo-codes)
