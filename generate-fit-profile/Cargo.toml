@@ -1,8 +1,8 @@
 [package]
 name = "generate-fit-profile"
-version = "0.0.2"
+version = "0.0.3"
 authors = ["Matthew Stadelman <stadelmanma@gmail.com>"]
-edition = "2021"
+edition = "2024"
 description = "A private crate used to parse the FIT-SDK Profile.xlsx file to generate Rust code."
 license = "MIT"
 repository = "https://github.com/stadelmanma/fitparse-rs"
@@ -11,7 +11,7 @@ keywords = ["ant", "fit", "garmin"]
 
 [dependencies]
 calamine = "0.34"
-proc-macro2 = "1.0.95"
-quote = "1.0.40"
+proc-macro2 = "1.0.106"
+quote = "1.0.45"
 structopt = "0.3"
 syn = "2.0"
