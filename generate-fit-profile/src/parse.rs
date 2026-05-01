@@ -1,5 +1,5 @@
 //! Code used to parse the Profile.xlsx file into useful data structures
-use calamine::{open_workbook, Data, DataType, Range, Reader, Xlsx};
+use calamine::{Data, DataType, Range, Reader, Xlsx, open_workbook};
 use proc_macro2::{Ident, Literal, Span, TokenStream};
 use quote::{format_ident, quote};
 use std::collections::{BTreeMap, HashMap};

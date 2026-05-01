@@ -1,7 +1,7 @@
 //! Functions to generate the message decoding functions from the fit profile.
 use crate::parse::{FitProfile, MessageDefinition, MessageFieldDefinition};
 use proc_macro2::{Ident, Literal, Span, TokenStream};
-use quote::{format_ident, quote, ToTokens};
+use quote::{ToTokens, format_ident, quote};
 use std::collections::{HashMap, HashSet};
 use std::fs::File;
 use std::io::prelude::*;
