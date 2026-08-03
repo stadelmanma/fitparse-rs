@@ -430,17 +430,25 @@ impl TryFrom<&Vec<FitDataField>> for DeveloperFieldDescription {
                 "field_definition_number must be u8".to_string(),
             ));
         };
-        let fit_base_type_id = if let Value::String(fit_base_type_id) = name_to_value
-            .get("fit_base_type_id")
-            .ok_or(ErrorKind::ValueError(
-                "fit_base_type_id is mandatory".to_string(),
-            ))? {
+
+        let fit_base_type_id = match name_to_value.get("fit_base_type_id") {
             // Since the decoder turns enums to string, we need to undo it to get FitBaseType back
-            FitBaseType::from(fit_base_type_id as &str)
-        } else {
-            return Err(ErrorKind::ValueError(
-                "fit_base_type_id must be string".to_string(),
-            ));
+            Some(Value::String(s)) => FitBaseType::from(s.as_str()),
+
+            // With DecodeOption::ReturnNumericEnumValues it'll already be an int
+            Some(Value::SInt64(i)) => FitBaseType::from(*i),
+
+            Some(_) => {
+                return Err(ErrorKind::ValueError(
+                    "fit_base_type_id must be string".to_string(),
+                ));
+            }
+
+            None => {
+                return Err(ErrorKind::ValueError(
+                    "fit_base_type_id is mandatory".to_string(),
+                ));
+            }
         };
         let field_name = if let Value::String(field_name) = name_to_value
             .get("field_name")
@@ -678,5 +686,28 @@ mod tests {
         options.insert(de::DecodeOption::SkipDataCrcValidation);
         let fit_data = de::from_bytes_with_options(&data, &options).unwrap();
         assert_eq!(fit_data.len(), 355);
+    }
+
+    #[test]
+    fn parse_developer_data_with_numeric_enums() {
+        let data = include_bytes!("../tests/fixtures/DeveloperData.fit");
+        let options = [de::DecodeOption::ReturnNumericEnumValues].into();
+
+        let records = de::from_bytes_with_options(data, &options).expect("parse DeveloperData.fit");
+
+        let dev_field_values: Vec<_> = records
+            .into_iter()
+            .filter_map(|rec| {
+                rec.fields()
+                    .into_iter()
+                    .find(|field| field.name == "doughnuts_earned")
+                    .map(|field| field.value.clone())
+            })
+            .collect();
+
+        assert_eq!(
+            vec![Value::SInt8(1), Value::SInt8(2), Value::SInt8(3)],
+            dev_field_values
+        );
     }
 }
