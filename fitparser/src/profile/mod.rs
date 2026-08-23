@@ -237,6 +237,26 @@ pub fn unknown_field(field_def_num: u8, value: Value) -> FitDataField {
     )
 }
 
+/// Create an "unknown" developer field as a placeholder when no field_description
+/// message has been seen for it. The value is the field's raw bytes, since without
+/// a description its base type, scale, offset and units are all unknown.
+pub fn unknown_developer_field(
+    developer_data_index: u8,
+    field_def_num: u8,
+    value: Value,
+) -> FitDataField {
+    FitDataField::new(
+        format!(
+            "unknown_dev_field_{}_{}",
+            developer_data_index, field_def_num
+        ),
+        field_def_num,
+        Some(developer_data_index),
+        value,
+        String::new(),
+    )
+}
+
 /// Applies any necessary value conversions based on the field specification
 fn convert_value(
     field_type: FieldDataType,
