@@ -2,8 +2,10 @@
 use super::DecodeOption;
 use super::parser::FitDataMessage;
 use crate::error::Result;
-use crate::profile::{FieldDataType, MesgNum, TimestampField, data_field_with_info};
-use crate::{DeveloperFieldDescription, ErrorKind, FitDataField, FitDataRecord, Value};
+use crate::profile::{
+    FieldDataType, MesgNum, TimestampField, data_field_with_info, unknown_developer_field,
+};
+use crate::{DeveloperFieldDescription, FitDataField, FitDataRecord, Value};
 use std::collections::{HashMap, HashSet, VecDeque};
 use std::convert::{From, TryInto};
 
@@ -120,10 +122,20 @@ impl Decoder {
             .map(|(k, v)| (*k, v.clone()))
             .collect();
         while let Some(((dev_data_idx, field_nr), value)) = entries.pop_front() {
-            let dev_definition = self
+            let Some(dev_definition) = self
                 .developer_field_descriptions
                 .get(&(dev_data_idx, field_nr))
-                .ok_or(ErrorKind::MissingDeveloperDefinitionMessage())?;
+            else {
+                // No field_description has been seen for this field. The value
+                // is its raw bytes; surface it under a placeholder name the way
+                // an unrecognised native field is surfaced, and honour the same
+                // opt-out. Failing here would discard the whole message — and
+                // every other message in the file — over one absent description.
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    record.push(unknown_developer_field(dev_data_idx, field_nr, value));
+                }
+                continue;
+            };
             record.push(data_field_with_info(
                 dev_definition.field_definition_number,
                 Some(dev_definition.developer_data_index),

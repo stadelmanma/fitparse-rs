@@ -516,20 +516,15 @@ fn data_message_fields_impl<'a>(
     }
     // handle developer fields analogously to fixed fields
     for field_def in &def_mesg.developer_field_definitions {
-        let dev_field_description = developer_field_descriptions
+        // The field_description that names this field may not have been seen
+        // yet. The definition message still carries the field's width, so the
+        // value can be read as raw bytes and the rest of the message decoded;
+        // `decode_developer_fields` then surfaces it the way an unrecognised
+        // native field is surfaced, rather than failing the whole file.
+        let base_type = developer_field_descriptions
             .get(&(field_def.developer_data_index, field_def.field_number))
-            .ok_or({
-                nom::Err::Error(nom::error::Error {
-                    input,
-                    code: nom::error::ErrorKind::Fail,
-                })
-            })?;
-        let (i, value) = data_field_value(
-            input,
-            dev_field_description.fit_base_type_id,
-            def_mesg.byte_order,
-            field_def.size,
-        )?;
+            .map_or(FitBaseType::Byte, |desc| desc.fit_base_type_id);
+        let (i, value) = data_field_value(input, base_type, def_mesg.byte_order, field_def.size)?;
         if let Some(value) = value {
             developer_fields.insert(
                 (field_def.developer_data_index, field_def.field_number),
