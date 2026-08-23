@@ -513,6 +513,51 @@ mod tests {
     }
 
     #[test]
+    fn parse_developer_data_with_a_late_field_description() {
+        // Same file as `parse_developer_data`, with the field_description moved
+        // behind the record messages that refer to it. The spec asks for the
+        // description first, but recorders exist that emit the definition ahead
+        // of it — Hammerhead's Karoo writes the record definition before the
+        // tail of its field_description block. Such a file is otherwise well
+        // formed, CRCs included, and used to fail to parse outright.
+        let data = include_bytes!("../tests/fixtures/DeveloperDataLateDescription.fit").to_vec();
+        let fit_data = from_bytes(&data).unwrap();
+        assert_eq!(fit_data.len(), 6);
+
+        // The field is kept under a placeholder name carrying its raw bytes,
+        // mirroring how an unrecognised native field is surfaced.
+        let record = &fit_data[2];
+        assert_eq!(record.fields().len(), 5);
+        let dev = record.fields().last().unwrap();
+        assert_eq!(dev.name(), "unknown_dev_field_0_0");
+        assert_eq!(dev.value(), &Value::Byte(1));
+        assert_eq!(dev.units(), "");
+
+        // Every native field of that record is unaffected.
+        let native: Vec<_> = record.fields()[..4].iter().map(|f| f.name()).collect();
+        assert_eq!(
+            native,
+            vec!["heart_rate", "cadence", "distance", "enhanced_speed"]
+        );
+    }
+
+    #[test]
+    fn drop_unknown_fields_also_drops_undescribed_developer_fields() {
+        let data = include_bytes!("../tests/fixtures/DeveloperDataLateDescription.fit").to_vec();
+        let mut options = HashSet::new();
+        options.insert(de::DecodeOption::DropUnknownFields);
+        let fit_data = de::from_bytes_with_options(&data, &options).unwrap();
+
+        assert_eq!(fit_data[2].fields().len(), 4);
+        assert!(
+            fit_data[2]
+                .fields()
+                .iter()
+                .all(|f| !f.name().starts_with("unknown_dev_field"))
+        );
+    }
+
+    #[test]
     fn parse_monitoring_file() {
         let data = include_bytes!("../tests/fixtures/MonitoringFile.fit").to_vec();
         let fit_data = from_bytes(&data).unwrap();
