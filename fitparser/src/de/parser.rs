@@ -407,6 +407,7 @@ fn definition_message<'a>(
     let (input, number_of_fields) = le_u8(input)?;
     let (input, field_definitions) =
         count(field_definition, number_of_fields as usize).parse(input)?;
+    let field_definitions = widen_repeated_fields(field_definitions);
     let (input, developer_field_definitions) = if header.contains_developer_data {
         let (input, nflds) = le_u8(input)?;
         let (input, dev_fld_defs) =
@@ -426,6 +427,46 @@ fn definition_message<'a>(
             developer_field_definitions,
         },
     ))
+}
+
+/// Reconcile a definition message that names the same field more than once with
+/// disagreeing sizes, giving every occurrence the widest declared size.
+///
+/// A repeated field definition number is already unusual; repeated with two
+/// different sizes it cannot be honoured as written, because the sizes are what
+/// place every later field in the record. Encoders exist that size a string
+/// field from one value and then write a longer one, leaving the record wider
+/// than its own definition claims — read as written, the next record header is
+/// taken from the middle of this record and the stream derails several messages
+/// later, far from the mistake.
+///
+/// The widest declaration is the one the record was actually written to, so it
+/// is the one that places the following fields. Where the repeated sizes already
+/// agree — which is the common shape — this is a no-op, as it is for any
+/// definition naming each field once.
+///
+/// A guess that is wrong cannot pass silently: sizes that do not match the bytes
+/// leave the reader misaligned at the end of the section, where the data size
+/// from the file header and the section CRC both reject it.
+fn widen_repeated_fields(field_definitions: Vec<FieldDefinition>) -> Vec<FieldDefinition> {
+    let mut widest: HashMap<u8, u8> = HashMap::new();
+    for field in &field_definitions {
+        widest
+            .entry(field.field_definition_number)
+            .and_modify(|size| *size = (*size).max(field.size))
+            .or_insert(field.size);
+    }
+    if widest.len() == field_definitions.len() {
+        return field_definitions;
+    }
+
+    field_definitions
+        .into_iter()
+        .map(|field| FieldDefinition {
+            size: widest[&field.field_definition_number],
+            ..field
+        })
+        .collect()
 }
 
 fn field_definition(input: &[u8]) -> IResult<&[u8], FieldDefinition> {
@@ -655,6 +696,73 @@ mod tests {
         assert_eq!(hdr.profile_ver_enc, 1.0);
         assert_eq!(hdr.data_size, 757);
         assert_eq!(hdr.crc, None);
+    }
+
+    /// A definition naming `descriptor` (19) twice, 14 bytes then 7, around a
+    /// `product_name` (27) named twice at a consistent 10. Big-endian, global
+    /// message 23 (`device_info`), which is the shape a real encoder emits when
+    /// it sizes a string from one value and writes a longer one.
+    const REPEATED_FIELD_DEFINITION: &[u8] = &[
+        0x42, // definition message, local message number 2
+        0x00, // reserved
+        0x01, // big endian
+        0x00, 0x17, // global message number 23
+        0x09, // nine field definitions
+        0xFD, 0x04, 0x86, // timestamp, 4, uint32
+        0x00, 0x01, 0x02, // device_index, 1, uint8
+        0x13, 0x0E, 0x07, // descriptor, 14, string
+        0x1B, 0x0A, 0x07, // product_name, 10, string
+        0x13, 0x07, 0x07, // descriptor AGAIN, 7 — the defect
+        0x19, 0x01, 0x00, // source_type, 1, enum
+        0x02, 0x02, 0x84, // manufacturer, 2, uint16
+        0x1B, 0x0A, 0x07, // product_name AGAIN, 10 — consistent
+        0x03, 0x04, 0x8C, // serial_number, 4, uint32z
+    ];
+
+    #[test]
+    fn repeated_field_definitions_take_the_widest_size() {
+        let (_, hdr) = message_header(REPEATED_FIELD_DEFINITION).unwrap();
+        let (_, def) = definition_message(&REPEATED_FIELD_DEFINITION[1..], &hdr).unwrap();
+
+        let sizes: Vec<u8> = def
+            .field_definitions
+            .iter()
+            .map(|field| field.size)
+            .collect();
+        // Both occurrences of field 19 widen to 14; field 27 already agreed.
+        assert_eq!(sizes, vec![4, 1, 14, 10, 14, 1, 2, 10, 4]);
+        // 7 bytes wider than the 53 the file declares, which is the whole point:
+        // it is what puts the next record header in the right place. The extra
+        // byte over the 60 field bytes is the message header, which
+        // `data_message_size` counts.
+        assert_eq!(def.data_message_size(), 61);
+    }
+
+    #[test]
+    fn field_definitions_named_once_are_left_alone() {
+        // The ordinary case: every field named once, so nothing is reconciled.
+        let data = include_bytes!("../../tests/fixtures/Activity.fit");
+        let sl = &data[12..];
+        let (_, hdr) = message_header(sl).unwrap();
+        let (_, def) = definition_message(&sl[1..], &hdr).unwrap();
+
+        let mut seen: Vec<u8> = def
+            .field_definitions
+            .iter()
+            .map(|field| field.field_definition_number)
+            .collect();
+        let before = seen.len();
+        seen.sort_unstable();
+        seen.dedup();
+        assert_eq!(seen.len(), before, "fixture should name each field once");
+        assert_eq!(
+            def.data_message_size(),
+            def.field_definitions
+                .iter()
+                .map(|field| field.size as usize)
+                .sum::<usize>()
+                + 1 // the message header byte
+        );
     }
 
     #[test]
