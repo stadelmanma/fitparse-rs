@@ -1,7 +1,7 @@
 #![allow(missing_docs)]
 #![allow(dead_code)]
 #![allow(clippy::unreadable_literal)]
-#![doc = "Auto generated profile field types from FIT SDK Release: 21.202.0"]
+#![doc = "Auto generated profile field types from FIT SDK Release: 21.218.00"]
 #![doc = "Not all of these may be used by the defined set of FIT messages"]
 use serde::{Serialize, ser::Serializer};
 use std::{convert, fmt};
@@ -218,6 +218,19 @@ pub enum FieldDataType {
     SplitType,
     ClimbProEvent,
     GasConsumptionRateType,
+    ClimbGradingScale,
+    YdsGradingScale,
+    UiaaGradingScale,
+    FrenchGradingScale,
+    BritishAdjectivalGradingScale,
+    BritishTechnicalGradingScale,
+    EwbankGradingScale,
+    BrazilianGradingScale,
+    SaxonGradingScale,
+    VerminGradingScale,
+    FontGradingScale,
+    DankyuGradingScale,
+    SplitStatus,
     TapSensitivity,
     RadarThreatLevelType,
     SleepDisruptionSeverity,
@@ -227,6 +240,8 @@ pub enum FieldDataType {
     MaxMetHeartRateSource,
     HrvStatus,
     NoFlyTimeMode,
+    DiveSectionType,
+    ApneaDiscipline,
 }
 impl FieldDataType {
     #[allow(clippy::match_like_matches_macro)]
@@ -419,6 +434,19 @@ impl FieldDataType {
             FieldDataType::SplitType => true,
             FieldDataType::ClimbProEvent => true,
             FieldDataType::GasConsumptionRateType => true,
+            FieldDataType::ClimbGradingScale => true,
+            FieldDataType::YdsGradingScale => true,
+            FieldDataType::UiaaGradingScale => true,
+            FieldDataType::FrenchGradingScale => true,
+            FieldDataType::BritishAdjectivalGradingScale => true,
+            FieldDataType::BritishTechnicalGradingScale => true,
+            FieldDataType::EwbankGradingScale => true,
+            FieldDataType::BrazilianGradingScale => true,
+            FieldDataType::SaxonGradingScale => true,
+            FieldDataType::VerminGradingScale => true,
+            FieldDataType::FontGradingScale => true,
+            FieldDataType::DankyuGradingScale => true,
+            FieldDataType::SplitStatus => true,
             FieldDataType::TapSensitivity => true,
             FieldDataType::RadarThreatLevelType => true,
             FieldDataType::SleepDisruptionSeverity => true,
@@ -428,6 +456,8 @@ impl FieldDataType {
             FieldDataType::MaxMetHeartRateSource => true,
             FieldDataType::HrvStatus => true,
             FieldDataType::NoFlyTimeMode => true,
+            FieldDataType::DiveSectionType => true,
+            FieldDataType::ApneaDiscipline => true,
             _ => false,
         }
     }
@@ -668,6 +698,23 @@ impl FieldDataType {
             FieldDataType::GasConsumptionRateType => {
                 GasConsumptionRateType::is_named_variant(value)
             }
+            FieldDataType::ClimbGradingScale => ClimbGradingScale::is_named_variant(value),
+            FieldDataType::YdsGradingScale => YdsGradingScale::is_named_variant(value),
+            FieldDataType::UiaaGradingScale => UiaaGradingScale::is_named_variant(value),
+            FieldDataType::FrenchGradingScale => FrenchGradingScale::is_named_variant(value),
+            FieldDataType::BritishAdjectivalGradingScale => {
+                BritishAdjectivalGradingScale::is_named_variant(value)
+            }
+            FieldDataType::BritishTechnicalGradingScale => {
+                BritishTechnicalGradingScale::is_named_variant(value)
+            }
+            FieldDataType::EwbankGradingScale => EwbankGradingScale::is_named_variant(value),
+            FieldDataType::BrazilianGradingScale => BrazilianGradingScale::is_named_variant(value),
+            FieldDataType::SaxonGradingScale => SaxonGradingScale::is_named_variant(value),
+            FieldDataType::VerminGradingScale => VerminGradingScale::is_named_variant(value),
+            FieldDataType::FontGradingScale => FontGradingScale::is_named_variant(value),
+            FieldDataType::DankyuGradingScale => DankyuGradingScale::is_named_variant(value),
+            FieldDataType::SplitStatus => SplitStatus::is_named_variant(value),
             FieldDataType::TapSensitivity => TapSensitivity::is_named_variant(value),
             FieldDataType::RadarThreatLevelType => RadarThreatLevelType::is_named_variant(value),
             FieldDataType::SleepDisruptionSeverity => {
@@ -679,6 +726,8 @@ impl FieldDataType {
             FieldDataType::MaxMetHeartRateSource => MaxMetHeartRateSource::is_named_variant(value),
             FieldDataType::HrvStatus => HrvStatus::is_named_variant(value),
             FieldDataType::NoFlyTimeMode => NoFlyTimeMode::is_named_variant(value),
+            FieldDataType::DiveSectionType => DiveSectionType::is_named_variant(value),
+            FieldDataType::ApneaDiscipline => ApneaDiscipline::is_named_variant(value),
             _ => false,
         }
     }
@@ -896,6 +945,23 @@ pub fn get_field_variant_as_string(field_type: FieldDataType, value: i64) -> Str
         FieldDataType::SplitType => SplitType::from(value).to_string(),
         FieldDataType::ClimbProEvent => ClimbProEvent::from(value).to_string(),
         FieldDataType::GasConsumptionRateType => GasConsumptionRateType::from(value).to_string(),
+        FieldDataType::ClimbGradingScale => ClimbGradingScale::from(value).to_string(),
+        FieldDataType::YdsGradingScale => YdsGradingScale::from(value).to_string(),
+        FieldDataType::UiaaGradingScale => UiaaGradingScale::from(value).to_string(),
+        FieldDataType::FrenchGradingScale => FrenchGradingScale::from(value).to_string(),
+        FieldDataType::BritishAdjectivalGradingScale => {
+            BritishAdjectivalGradingScale::from(value).to_string()
+        }
+        FieldDataType::BritishTechnicalGradingScale => {
+            BritishTechnicalGradingScale::from(value).to_string()
+        }
+        FieldDataType::EwbankGradingScale => EwbankGradingScale::from(value).to_string(),
+        FieldDataType::BrazilianGradingScale => BrazilianGradingScale::from(value).to_string(),
+        FieldDataType::SaxonGradingScale => SaxonGradingScale::from(value).to_string(),
+        FieldDataType::VerminGradingScale => VerminGradingScale::from(value).to_string(),
+        FieldDataType::FontGradingScale => FontGradingScale::from(value).to_string(),
+        FieldDataType::DankyuGradingScale => DankyuGradingScale::from(value).to_string(),
+        FieldDataType::SplitStatus => SplitStatus::from(value).to_string(),
         FieldDataType::TapSensitivity => TapSensitivity::from(value).to_string(),
         FieldDataType::RadarThreatLevelType => RadarThreatLevelType::from(value).to_string(),
         FieldDataType::SleepDisruptionSeverity => SleepDisruptionSeverity::from(value).to_string(),
@@ -905,6 +971,8 @@ pub fn get_field_variant_as_string(field_type: FieldDataType, value: i64) -> Str
         FieldDataType::MaxMetHeartRateSource => MaxMetHeartRateSource::from(value).to_string(),
         FieldDataType::HrvStatus => HrvStatus::from(value).to_string(),
         FieldDataType::NoFlyTimeMode => NoFlyTimeMode::from(value).to_string(),
+        FieldDataType::DiveSectionType => DiveSectionType::from(value).to_string(),
+        FieldDataType::ApneaDiscipline => ApneaDiscipline::from(value).to_string(),
         _ => format!("Undefined{}", value),
     }
 }
@@ -1143,6 +1211,7 @@ pub enum MesgNum {
     AntChannelId,
     Length,
     MonitoringInfo,
+    Battery,
     Pad,
     SlaveDevice,
     Connectivity,
@@ -1277,6 +1346,7 @@ impl MesgNum {
                 | 82i64
                 | 101i64
                 | 103i64
+                | 104i64
                 | 105i64
                 | 106i64
                 | 127i64
@@ -1407,6 +1477,7 @@ impl MesgNum {
             MesgNum::AntChannelId => 82,
             MesgNum::Length => 101,
             MesgNum::MonitoringInfo => 103,
+            MesgNum::Battery => 104,
             MesgNum::Pad => 105,
             MesgNum::SlaveDevice => 106,
             MesgNum::Connectivity => 127,
@@ -1543,6 +1614,7 @@ impl fmt::Display for MesgNum {
             MesgNum::AntChannelId => write!(f, "ant_channel_id"),
             MesgNum::Length => write!(f, "length"),
             MesgNum::MonitoringInfo => write!(f, "monitoring_info"),
+            MesgNum::Battery => write!(f, "battery"),
             MesgNum::Pad => write!(f, "pad"),
             MesgNum::SlaveDevice => write!(f, "slave_device"),
             MesgNum::Connectivity => write!(f, "connectivity"),
@@ -1678,6 +1750,7 @@ impl convert::From<u16> for MesgNum {
             82 => MesgNum::AntChannelId,
             101 => MesgNum::Length,
             103 => MesgNum::MonitoringInfo,
+            104 => MesgNum::Battery,
             105 => MesgNum::Pad,
             106 => MesgNum::SlaveDevice,
             127 => MesgNum::Connectivity,
@@ -1816,6 +1889,7 @@ impl convert::From<&str> for MesgNum {
             "ant_channel_id" => MesgNum::AntChannelId,
             "length" => MesgNum::Length,
             "monitoring_info" => MesgNum::MonitoringInfo,
+            "battery" => MesgNum::Battery,
             "pad" => MesgNum::Pad,
             "slave_device" => MesgNum::SlaveDevice,
             "connectivity" => MesgNum::Connectivity,
@@ -5788,7 +5862,7 @@ pub enum SubSport {
     Brick,
     #[doc = "Multisport"]
     SwimRun,
-    #[doc = "Multisport"]
+    #[doc = "Multisport/Running"]
     AdventureRace,
     #[doc = "DEZL trucker workout training sport"]
     TruckerWorkout,
@@ -9511,6 +9585,10 @@ pub enum Manufacturer {
     Huawei,
     Gotoes,
     CadenceApp,
+    UnaWatch,
+    Tymewear,
+    ExposureLights,
+    FortoCycling,
     Actigraphcorp,
     Value(u16),
 }
@@ -9759,6 +9837,10 @@ impl Manufacturer {
                 | 348i64
                 | 349i64
                 | 350i64
+                | 351i64
+                | 352i64
+                | 353i64
+                | 354i64
                 | 5759i64
         )
     }
@@ -10006,6 +10088,10 @@ impl Manufacturer {
             Manufacturer::Huawei => 348,
             Manufacturer::Gotoes => 349,
             Manufacturer::CadenceApp => 350,
+            Manufacturer::UnaWatch => 351,
+            Manufacturer::Tymewear => 352,
+            Manufacturer::ExposureLights => 353,
+            Manufacturer::FortoCycling => 354,
             Manufacturer::Actigraphcorp => 5759,
             Manufacturer::Value(value) => value,
         }
@@ -10259,6 +10345,10 @@ impl fmt::Display for Manufacturer {
             Manufacturer::Huawei => write!(f, "huawei"),
             Manufacturer::Gotoes => write!(f, "gotoes"),
             Manufacturer::CadenceApp => write!(f, "cadence_app"),
+            Manufacturer::UnaWatch => write!(f, "una_watch"),
+            Manufacturer::Tymewear => write!(f, "tymewear"),
+            Manufacturer::ExposureLights => write!(f, "exposure_lights"),
+            Manufacturer::FortoCycling => write!(f, "forto_cycling"),
             Manufacturer::Actigraphcorp => write!(f, "actigraphcorp"),
             Manufacturer::Value(value) => write!(f, "{}", value),
         }
@@ -10509,6 +10599,10 @@ impl convert::From<u16> for Manufacturer {
             348 => Manufacturer::Huawei,
             349 => Manufacturer::Gotoes,
             350 => Manufacturer::CadenceApp,
+            351 => Manufacturer::UnaWatch,
+            352 => Manufacturer::Tymewear,
+            353 => Manufacturer::ExposureLights,
+            354 => Manufacturer::FortoCycling,
             5759 => Manufacturer::Actigraphcorp,
             _ => Manufacturer::Value(value),
         }
@@ -10764,6 +10858,10 @@ impl convert::From<&str> for Manufacturer {
             "huawei" => Manufacturer::Huawei,
             "gotoes" => Manufacturer::Gotoes,
             "cadence_app" => Manufacturer::CadenceApp,
+            "una_watch" => Manufacturer::UnaWatch,
+            "tymewear" => Manufacturer::Tymewear,
+            "exposure_lights" => Manufacturer::ExposureLights,
+            "forto_cycling" => Manufacturer::FortoCycling,
             "actigraphcorp" => Manufacturer::Actigraphcorp,
             &_ => Manufacturer::Value(0),
         }
@@ -11259,6 +11357,9 @@ pub enum GarminProduct {
     Fenix8Small,
     Fenix8,
     D2Mach1Pro,
+    Fr970,
+    Fr570Large,
+    Fr570Small,
     Enduro3,
     InstinctE40mm,
     InstinctE45mm,
@@ -11266,6 +11367,7 @@ pub enum GarminProduct {
     Instinct3Amoled45mm,
     Instinct3Amoled50mm,
     DescentG2,
+    Fenix7ProSolarNoWifi,
     VenuX1,
     Hrm200,
     Vivoactive6,
@@ -11283,9 +11385,25 @@ pub enum GarminProduct {
     Instinct3Solar50mm,
     Tactix8Amoled,
     Tactix8Solar,
+    Fr170Music,
+    Fr170,
     ApproachJ1,
+    ApproachS7243mm,
+    ApproachS7247mm,
     D2Mach2,
+    Fr702026,
     D2AirX15,
+    Fenix9Pro43mm,
+    Fenix9Pro47mm,
+    Fenix9Pro51mm,
+    Fenix9ProSolar47mm,
+    Fenix9ProSolar51mm,
+    CirqaSmartBand,
+    D2Mach2Pro,
+    Fenix943mm,
+    #[doc = "47mm & 57mm"]
+    Fenix9,
+    Enduro4,
     #[doc = "SDM4 footpod"]
     Sdm4,
     EdgeRemote,
@@ -11296,6 +11414,11 @@ pub enum GarminProduct {
     TacxTrainingAppAndroid,
     TacxTrainingAppIos,
     TacxTrainingAppLegacy,
+    TrainingPeaksVirtualIos,
+    TrainingPeaksVirtualAndroid,
+    TrainingPeaksVirtualWindows,
+    TrainingPeaksVirtualMacOs,
+    TrainingPeaksVirtualAppleTv,
     ConnectiqSimulator,
     AndroidAntplusPlugin,
     #[doc = "Garmin Connect website"]
@@ -11741,6 +11864,9 @@ impl GarminProduct {
                 | 4534i64
                 | 4536i64
                 | 4556i64
+                | 4565i64
+                | 4570i64
+                | 4574i64
                 | 4575i64
                 | 4583i64
                 | 4584i64
@@ -11748,6 +11874,7 @@ impl GarminProduct {
                 | 4586i64
                 | 4587i64
                 | 4588i64
+                | 4595i64
                 | 4603i64
                 | 4606i64
                 | 4625i64
@@ -11765,9 +11892,24 @@ impl GarminProduct {
                 | 4759i64
                 | 4775i64
                 | 4776i64
+                | 4814i64
+                | 4815i64
                 | 4825i64
+                | 4874i64
+                | 4875i64
                 | 4879i64
+                | 4916i64
                 | 4944i64
+                | 4952i64
+                | 4953i64
+                | 4954i64
+                | 4955i64
+                | 4956i64
+                | 5019i64
+                | 5056i64
+                | 5133i64
+                | 5134i64
+                | 5169i64
                 | 10007i64
                 | 10014i64
                 | 20119i64
@@ -11777,6 +11919,11 @@ impl GarminProduct {
                 | 30045i64
                 | 30046i64
                 | 30047i64
+                | 30059i64
+                | 30060i64
+                | 30061i64
+                | 30062i64
+                | 30063i64
                 | 65531i64
                 | 65532i64
                 | 65534i64
@@ -12220,6 +12367,9 @@ impl GarminProduct {
             GarminProduct::Fenix8Small => 4534,
             GarminProduct::Fenix8 => 4536,
             GarminProduct::D2Mach1Pro => 4556,
+            GarminProduct::Fr970 => 4565,
+            GarminProduct::Fr570Large => 4570,
+            GarminProduct::Fr570Small => 4574,
             GarminProduct::Enduro3 => 4575,
             GarminProduct::InstinctE40mm => 4583,
             GarminProduct::InstinctE45mm => 4584,
@@ -12227,6 +12377,7 @@ impl GarminProduct {
             GarminProduct::Instinct3Amoled45mm => 4586,
             GarminProduct::Instinct3Amoled50mm => 4587,
             GarminProduct::DescentG2 => 4588,
+            GarminProduct::Fenix7ProSolarNoWifi => 4595,
             GarminProduct::VenuX1 => 4603,
             GarminProduct::Hrm200 => 4606,
             GarminProduct::Vivoactive6 => 4625,
@@ -12244,9 +12395,24 @@ impl GarminProduct {
             GarminProduct::Instinct3Solar50mm => 4759,
             GarminProduct::Tactix8Amoled => 4775,
             GarminProduct::Tactix8Solar => 4776,
+            GarminProduct::Fr170Music => 4814,
+            GarminProduct::Fr170 => 4815,
             GarminProduct::ApproachJ1 => 4825,
+            GarminProduct::ApproachS7243mm => 4874,
+            GarminProduct::ApproachS7247mm => 4875,
             GarminProduct::D2Mach2 => 4879,
+            GarminProduct::Fr702026 => 4916,
             GarminProduct::D2AirX15 => 4944,
+            GarminProduct::Fenix9Pro43mm => 4952,
+            GarminProduct::Fenix9Pro47mm => 4953,
+            GarminProduct::Fenix9Pro51mm => 4954,
+            GarminProduct::Fenix9ProSolar47mm => 4955,
+            GarminProduct::Fenix9ProSolar51mm => 4956,
+            GarminProduct::CirqaSmartBand => 5019,
+            GarminProduct::D2Mach2Pro => 5056,
+            GarminProduct::Fenix943mm => 5133,
+            GarminProduct::Fenix9 => 5134,
+            GarminProduct::Enduro4 => 5169,
             GarminProduct::Sdm4 => 10007,
             GarminProduct::EdgeRemote => 10014,
             GarminProduct::TrainingCenter => 20119,
@@ -12256,6 +12422,11 @@ impl GarminProduct {
             GarminProduct::TacxTrainingAppAndroid => 30045,
             GarminProduct::TacxTrainingAppIos => 30046,
             GarminProduct::TacxTrainingAppLegacy => 30047,
+            GarminProduct::TrainingPeaksVirtualIos => 30059,
+            GarminProduct::TrainingPeaksVirtualAndroid => 30060,
+            GarminProduct::TrainingPeaksVirtualWindows => 30061,
+            GarminProduct::TrainingPeaksVirtualMacOs => 30062,
+            GarminProduct::TrainingPeaksVirtualAppleTv => 30063,
             GarminProduct::ConnectiqSimulator => 65531,
             GarminProduct::AndroidAntplusPlugin => 65532,
             GarminProduct::Connect => 65534,
@@ -12711,6 +12882,9 @@ impl fmt::Display for GarminProduct {
             GarminProduct::Fenix8Small => write!(f, "fenix8_small"),
             GarminProduct::Fenix8 => write!(f, "fenix8"),
             GarminProduct::D2Mach1Pro => write!(f, "d2_mach1_pro"),
+            GarminProduct::Fr970 => write!(f, "fr970"),
+            GarminProduct::Fr570Large => write!(f, "fr570_large"),
+            GarminProduct::Fr570Small => write!(f, "fr570_small"),
             GarminProduct::Enduro3 => write!(f, "enduro3"),
             GarminProduct::InstinctE40mm => write!(f, "instinctE_40mm"),
             GarminProduct::InstinctE45mm => write!(f, "instinctE_45mm"),
@@ -12718,6 +12892,7 @@ impl fmt::Display for GarminProduct {
             GarminProduct::Instinct3Amoled45mm => write!(f, "instinct3_amoled_45mm"),
             GarminProduct::Instinct3Amoled50mm => write!(f, "instinct3_amoled_50mm"),
             GarminProduct::DescentG2 => write!(f, "descent_g2"),
+            GarminProduct::Fenix7ProSolarNoWifi => write!(f, "fenix7_pro_solar_no_wifi"),
             GarminProduct::VenuX1 => write!(f, "venu_x1"),
             GarminProduct::Hrm200 => write!(f, "hrm_200"),
             GarminProduct::Vivoactive6 => write!(f, "vivoactive6"),
@@ -12735,9 +12910,24 @@ impl fmt::Display for GarminProduct {
             GarminProduct::Instinct3Solar50mm => write!(f, "instinct3_solar_50mm"),
             GarminProduct::Tactix8Amoled => write!(f, "tactix8_amoled"),
             GarminProduct::Tactix8Solar => write!(f, "tactix8_solar"),
+            GarminProduct::Fr170Music => write!(f, "fr170_music"),
+            GarminProduct::Fr170 => write!(f, "fr170"),
             GarminProduct::ApproachJ1 => write!(f, "approach_j1"),
+            GarminProduct::ApproachS7243mm => write!(f, "approach_s72_43mm"),
+            GarminProduct::ApproachS7247mm => write!(f, "approach_s72_47mm"),
             GarminProduct::D2Mach2 => write!(f, "d2_mach2"),
+            GarminProduct::Fr702026 => write!(f, "fr70_2026"),
             GarminProduct::D2AirX15 => write!(f, "d2_air_x15"),
+            GarminProduct::Fenix9Pro43mm => write!(f, "fenix9_pro_43mm"),
+            GarminProduct::Fenix9Pro47mm => write!(f, "fenix9_pro_47mm"),
+            GarminProduct::Fenix9Pro51mm => write!(f, "fenix9_pro_51mm"),
+            GarminProduct::Fenix9ProSolar47mm => write!(f, "fenix9_pro_solar_47mm"),
+            GarminProduct::Fenix9ProSolar51mm => write!(f, "fenix9_pro_solar_51mm"),
+            GarminProduct::CirqaSmartBand => write!(f, "cirqa_smart_band"),
+            GarminProduct::D2Mach2Pro => write!(f, "d2_mach2_pro"),
+            GarminProduct::Fenix943mm => write!(f, "fenix9_43mm"),
+            GarminProduct::Fenix9 => write!(f, "fenix9"),
+            GarminProduct::Enduro4 => write!(f, "enduro4"),
             GarminProduct::Sdm4 => write!(f, "sdm4"),
             GarminProduct::EdgeRemote => write!(f, "edge_remote"),
             GarminProduct::TrainingCenter => write!(f, "training_center"),
@@ -12749,6 +12939,17 @@ impl fmt::Display for GarminProduct {
             GarminProduct::TacxTrainingAppAndroid => write!(f, "tacx_training_app_android"),
             GarminProduct::TacxTrainingAppIos => write!(f, "tacx_training_app_ios"),
             GarminProduct::TacxTrainingAppLegacy => write!(f, "tacx_training_app_legacy"),
+            GarminProduct::TrainingPeaksVirtualIos => write!(f, "training_peaks_virtual_ios"),
+            GarminProduct::TrainingPeaksVirtualAndroid => {
+                write!(f, "training_peaks_virtual_android")
+            }
+            GarminProduct::TrainingPeaksVirtualWindows => {
+                write!(f, "training_peaks_virtual_windows")
+            }
+            GarminProduct::TrainingPeaksVirtualMacOs => write!(f, "training_peaks_virtual_mac_os"),
+            GarminProduct::TrainingPeaksVirtualAppleTv => {
+                write!(f, "training_peaks_virtual_apple_tv")
+            }
             GarminProduct::ConnectiqSimulator => write!(f, "connectiq_simulator"),
             GarminProduct::AndroidAntplusPlugin => write!(f, "android_antplus_plugin"),
             GarminProduct::Connect => write!(f, "connect"),
@@ -13195,6 +13396,9 @@ impl convert::From<u16> for GarminProduct {
             4534 => GarminProduct::Fenix8Small,
             4536 => GarminProduct::Fenix8,
             4556 => GarminProduct::D2Mach1Pro,
+            4565 => GarminProduct::Fr970,
+            4570 => GarminProduct::Fr570Large,
+            4574 => GarminProduct::Fr570Small,
             4575 => GarminProduct::Enduro3,
             4583 => GarminProduct::InstinctE40mm,
             4584 => GarminProduct::InstinctE45mm,
@@ -13202,6 +13406,7 @@ impl convert::From<u16> for GarminProduct {
             4586 => GarminProduct::Instinct3Amoled45mm,
             4587 => GarminProduct::Instinct3Amoled50mm,
             4588 => GarminProduct::DescentG2,
+            4595 => GarminProduct::Fenix7ProSolarNoWifi,
             4603 => GarminProduct::VenuX1,
             4606 => GarminProduct::Hrm200,
             4625 => GarminProduct::Vivoactive6,
@@ -13219,9 +13424,24 @@ impl convert::From<u16> for GarminProduct {
             4759 => GarminProduct::Instinct3Solar50mm,
             4775 => GarminProduct::Tactix8Amoled,
             4776 => GarminProduct::Tactix8Solar,
+            4814 => GarminProduct::Fr170Music,
+            4815 => GarminProduct::Fr170,
             4825 => GarminProduct::ApproachJ1,
+            4874 => GarminProduct::ApproachS7243mm,
+            4875 => GarminProduct::ApproachS7247mm,
             4879 => GarminProduct::D2Mach2,
+            4916 => GarminProduct::Fr702026,
             4944 => GarminProduct::D2AirX15,
+            4952 => GarminProduct::Fenix9Pro43mm,
+            4953 => GarminProduct::Fenix9Pro47mm,
+            4954 => GarminProduct::Fenix9Pro51mm,
+            4955 => GarminProduct::Fenix9ProSolar47mm,
+            4956 => GarminProduct::Fenix9ProSolar51mm,
+            5019 => GarminProduct::CirqaSmartBand,
+            5056 => GarminProduct::D2Mach2Pro,
+            5133 => GarminProduct::Fenix943mm,
+            5134 => GarminProduct::Fenix9,
+            5169 => GarminProduct::Enduro4,
             10007 => GarminProduct::Sdm4,
             10014 => GarminProduct::EdgeRemote,
             20119 => GarminProduct::TrainingCenter,
@@ -13231,6 +13451,11 @@ impl convert::From<u16> for GarminProduct {
             30045 => GarminProduct::TacxTrainingAppAndroid,
             30046 => GarminProduct::TacxTrainingAppIos,
             30047 => GarminProduct::TacxTrainingAppLegacy,
+            30059 => GarminProduct::TrainingPeaksVirtualIos,
+            30060 => GarminProduct::TrainingPeaksVirtualAndroid,
+            30061 => GarminProduct::TrainingPeaksVirtualWindows,
+            30062 => GarminProduct::TrainingPeaksVirtualMacOs,
+            30063 => GarminProduct::TrainingPeaksVirtualAppleTv,
             65531 => GarminProduct::ConnectiqSimulator,
             65532 => GarminProduct::AndroidAntplusPlugin,
             65534 => GarminProduct::Connect,
@@ -13682,6 +13907,9 @@ impl convert::From<&str> for GarminProduct {
             "fenix8_small" => GarminProduct::Fenix8Small,
             "fenix8" => GarminProduct::Fenix8,
             "d2_mach1_pro" => GarminProduct::D2Mach1Pro,
+            "fr970" => GarminProduct::Fr970,
+            "fr570_large" => GarminProduct::Fr570Large,
+            "fr570_small" => GarminProduct::Fr570Small,
             "enduro3" => GarminProduct::Enduro3,
             "instinctE_40mm" => GarminProduct::InstinctE40mm,
             "instinctE_45mm" => GarminProduct::InstinctE45mm,
@@ -13689,6 +13917,7 @@ impl convert::From<&str> for GarminProduct {
             "instinct3_amoled_45mm" => GarminProduct::Instinct3Amoled45mm,
             "instinct3_amoled_50mm" => GarminProduct::Instinct3Amoled50mm,
             "descent_g2" => GarminProduct::DescentG2,
+            "fenix7_pro_solar_no_wifi" => GarminProduct::Fenix7ProSolarNoWifi,
             "venu_x1" => GarminProduct::VenuX1,
             "hrm_200" => GarminProduct::Hrm200,
             "vivoactive6" => GarminProduct::Vivoactive6,
@@ -13706,9 +13935,24 @@ impl convert::From<&str> for GarminProduct {
             "instinct3_solar_50mm" => GarminProduct::Instinct3Solar50mm,
             "tactix8_amoled" => GarminProduct::Tactix8Amoled,
             "tactix8_solar" => GarminProduct::Tactix8Solar,
+            "fr170_music" => GarminProduct::Fr170Music,
+            "fr170" => GarminProduct::Fr170,
             "approach_j1" => GarminProduct::ApproachJ1,
+            "approach_s72_43mm" => GarminProduct::ApproachS7243mm,
+            "approach_s72_47mm" => GarminProduct::ApproachS7247mm,
             "d2_mach2" => GarminProduct::D2Mach2,
+            "fr70_2026" => GarminProduct::Fr702026,
             "d2_air_x15" => GarminProduct::D2AirX15,
+            "fenix9_pro_43mm" => GarminProduct::Fenix9Pro43mm,
+            "fenix9_pro_47mm" => GarminProduct::Fenix9Pro47mm,
+            "fenix9_pro_51mm" => GarminProduct::Fenix9Pro51mm,
+            "fenix9_pro_solar_47mm" => GarminProduct::Fenix9ProSolar47mm,
+            "fenix9_pro_solar_51mm" => GarminProduct::Fenix9ProSolar51mm,
+            "cirqa_smart_band" => GarminProduct::CirqaSmartBand,
+            "d2_mach2_pro" => GarminProduct::D2Mach2Pro,
+            "fenix9_43mm" => GarminProduct::Fenix943mm,
+            "fenix9" => GarminProduct::Fenix9,
+            "enduro4" => GarminProduct::Enduro4,
             "sdm4" => GarminProduct::Sdm4,
             "edge_remote" => GarminProduct::EdgeRemote,
             "training_center" => GarminProduct::TrainingCenter,
@@ -13718,6 +13962,11 @@ impl convert::From<&str> for GarminProduct {
             "tacx_training_app_android" => GarminProduct::TacxTrainingAppAndroid,
             "tacx_training_app_ios" => GarminProduct::TacxTrainingAppIos,
             "tacx_training_app_legacy" => GarminProduct::TacxTrainingAppLegacy,
+            "training_peaks_virtual_ios" => GarminProduct::TrainingPeaksVirtualIos,
+            "training_peaks_virtual_android" => GarminProduct::TrainingPeaksVirtualAndroid,
+            "training_peaks_virtual_windows" => GarminProduct::TrainingPeaksVirtualWindows,
+            "training_peaks_virtual_mac_os" => GarminProduct::TrainingPeaksVirtualMacOs,
+            "training_peaks_virtual_apple_tv" => GarminProduct::TrainingPeaksVirtualAppleTv,
             "connectiq_simulator" => GarminProduct::ConnectiqSimulator,
             "android_antplus_plugin" => GarminProduct::AndroidAntplusPlugin,
             "connect" => GarminProduct::Connect,
@@ -14886,6 +15135,7 @@ pub enum ActivityType {
     Swimming,
     Walking,
     Sedentary,
+    WheelchairPushing,
     #[doc = "All is for goals only to include all sports."]
     All,
     UnknownVariant(u8),
@@ -14894,7 +15144,7 @@ impl ActivityType {
     pub fn is_named_variant(value: i64) -> bool {
         matches!(
             value,
-            0i64 | 1i64 | 2i64 | 3i64 | 4i64 | 5i64 | 6i64 | 8i64 | 254i64
+            0i64 | 1i64 | 2i64 | 3i64 | 4i64 | 5i64 | 6i64 | 8i64 | 13i64 | 254i64
         )
     }
     pub fn as_u8(self) -> u8 {
@@ -14907,6 +15157,7 @@ impl ActivityType {
             ActivityType::Swimming => 5,
             ActivityType::Walking => 6,
             ActivityType::Sedentary => 8,
+            ActivityType::WheelchairPushing => 13,
             ActivityType::All => 254,
             ActivityType::UnknownVariant(value) => value,
         }
@@ -14926,6 +15177,7 @@ impl fmt::Display for ActivityType {
             ActivityType::Swimming => write!(f, "swimming"),
             ActivityType::Walking => write!(f, "walking"),
             ActivityType::Sedentary => write!(f, "sedentary"),
+            ActivityType::WheelchairPushing => write!(f, "wheelchair_pushing"),
             ActivityType::All => write!(f, "all"),
             ActivityType::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
         }
@@ -14942,6 +15194,7 @@ impl convert::From<u8> for ActivityType {
             5 => ActivityType::Swimming,
             6 => ActivityType::Walking,
             8 => ActivityType::Sedentary,
+            13 => ActivityType::WheelchairPushing,
             254 => ActivityType::All,
             _ => ActivityType::UnknownVariant(value),
         }
@@ -14963,6 +15216,7 @@ impl convert::From<&str> for ActivityType {
             "swimming" => ActivityType::Swimming,
             "walking" => ActivityType::Walking,
             "sedentary" => ActivityType::Sedentary,
+            "wheelchair_pushing" => ActivityType::WheelchairPushing,
             "all" => ActivityType::All,
             &_ => ActivityType::UnknownVariant(0),
         }
@@ -37011,6 +37265,2591 @@ impl Serialize for GasConsumptionRateType {
     }
 }
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
+pub enum ClimbGradingScale {
+    Yds,
+    Uiaa,
+    French,
+    BritishAdjectival,
+    BritishTechnical,
+    Ewbank,
+    Brazilian,
+    Saxon,
+    Vermin,
+    Font,
+    Dankyu,
+    #[doc = "YDS Plus Minus Grading Scale"]
+    YdsPm,
+    UnknownVariant(u8),
+}
+impl ClimbGradingScale {
+    pub fn is_named_variant(value: i64) -> bool {
+        matches!(value, 0i64..=11i64)
+    }
+    pub fn as_u8(self) -> u8 {
+        match self {
+            ClimbGradingScale::Yds => 0,
+            ClimbGradingScale::Uiaa => 1,
+            ClimbGradingScale::French => 2,
+            ClimbGradingScale::BritishAdjectival => 3,
+            ClimbGradingScale::BritishTechnical => 4,
+            ClimbGradingScale::Ewbank => 5,
+            ClimbGradingScale::Brazilian => 6,
+            ClimbGradingScale::Saxon => 7,
+            ClimbGradingScale::Vermin => 8,
+            ClimbGradingScale::Font => 9,
+            ClimbGradingScale::Dankyu => 10,
+            ClimbGradingScale::YdsPm => 11,
+            ClimbGradingScale::UnknownVariant(value) => value,
+        }
+    }
+    pub fn as_i64(self) -> i64 {
+        self.as_u8() as i64
+    }
+}
+impl fmt::Display for ClimbGradingScale {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match &self {
+            ClimbGradingScale::Yds => write!(f, "yds"),
+            ClimbGradingScale::Uiaa => write!(f, "uiaa"),
+            ClimbGradingScale::French => write!(f, "french"),
+            ClimbGradingScale::BritishAdjectival => write!(f, "british_adjectival"),
+            ClimbGradingScale::BritishTechnical => write!(f, "british_technical"),
+            ClimbGradingScale::Ewbank => write!(f, "ewbank"),
+            ClimbGradingScale::Brazilian => write!(f, "brazilian"),
+            ClimbGradingScale::Saxon => write!(f, "saxon"),
+            ClimbGradingScale::Vermin => write!(f, "vermin"),
+            ClimbGradingScale::Font => write!(f, "font"),
+            ClimbGradingScale::Dankyu => write!(f, "dankyu"),
+            ClimbGradingScale::YdsPm => write!(f, "yds_pm"),
+            ClimbGradingScale::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
+        }
+    }
+}
+impl convert::From<u8> for ClimbGradingScale {
+    fn from(value: u8) -> Self {
+        match value {
+            0 => ClimbGradingScale::Yds,
+            1 => ClimbGradingScale::Uiaa,
+            2 => ClimbGradingScale::French,
+            3 => ClimbGradingScale::BritishAdjectival,
+            4 => ClimbGradingScale::BritishTechnical,
+            5 => ClimbGradingScale::Ewbank,
+            6 => ClimbGradingScale::Brazilian,
+            7 => ClimbGradingScale::Saxon,
+            8 => ClimbGradingScale::Vermin,
+            9 => ClimbGradingScale::Font,
+            10 => ClimbGradingScale::Dankyu,
+            11 => ClimbGradingScale::YdsPm,
+            _ => ClimbGradingScale::UnknownVariant(value),
+        }
+    }
+}
+impl convert::From<i64> for ClimbGradingScale {
+    fn from(value: i64) -> Self {
+        ClimbGradingScale::from(value as u8)
+    }
+}
+impl convert::From<&str> for ClimbGradingScale {
+    fn from(value: &str) -> Self {
+        match value {
+            "yds" => ClimbGradingScale::Yds,
+            "uiaa" => ClimbGradingScale::Uiaa,
+            "french" => ClimbGradingScale::French,
+            "british_adjectival" => ClimbGradingScale::BritishAdjectival,
+            "british_technical" => ClimbGradingScale::BritishTechnical,
+            "ewbank" => ClimbGradingScale::Ewbank,
+            "brazilian" => ClimbGradingScale::Brazilian,
+            "saxon" => ClimbGradingScale::Saxon,
+            "vermin" => ClimbGradingScale::Vermin,
+            "font" => ClimbGradingScale::Font,
+            "dankyu" => ClimbGradingScale::Dankyu,
+            "yds_pm" => ClimbGradingScale::YdsPm,
+            &_ => ClimbGradingScale::UnknownVariant(0),
+        }
+    }
+}
+impl Serialize for ClimbGradingScale {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
+pub enum YdsGradingScale {
+    #[doc = "5.1"]
+    Name51,
+    #[doc = "5.2"]
+    Name52,
+    #[doc = "5.3"]
+    Name53,
+    #[doc = "5.4"]
+    Name54,
+    #[doc = "5.5"]
+    Name55,
+    #[doc = "5.6"]
+    Name56,
+    #[doc = "5.7"]
+    Name57,
+    #[doc = "5.8"]
+    Name58,
+    #[doc = "5.9"]
+    Name59,
+    #[doc = "5.1"]
+    Name510,
+    #[doc = "5.10a"]
+    Name510a,
+    #[doc = "5.10b"]
+    Name510b,
+    #[doc = "5.10c"]
+    Name510c,
+    #[doc = "5.10d"]
+    Name510d,
+    #[doc = "5.11"]
+    Name511,
+    #[doc = "5.11a"]
+    Name511a,
+    #[doc = "5.11b"]
+    Name511b,
+    #[doc = "5.11c"]
+    Name511c,
+    #[doc = "5.11d"]
+    Name511d,
+    #[doc = "5.12"]
+    Name512,
+    #[doc = "5.12a"]
+    Name512a,
+    #[doc = "5.12b"]
+    Name512b,
+    #[doc = "5.12c"]
+    Name512c,
+    #[doc = "5.12d"]
+    Name512d,
+    #[doc = "5.13"]
+    Name513,
+    #[doc = "5.13a"]
+    Name513a,
+    #[doc = "5.13b"]
+    Name513b,
+    #[doc = "5.13c"]
+    Name513c,
+    #[doc = "5.13d"]
+    Name513d,
+    #[doc = "5.14"]
+    Name514,
+    #[doc = "5.14a"]
+    Name514a,
+    #[doc = "5.14b"]
+    Name514b,
+    #[doc = "5.14c"]
+    Name514c,
+    #[doc = "5.14d"]
+    Name514d,
+    #[doc = "5.15"]
+    Name515,
+    #[doc = "5.15a"]
+    Name515a,
+    #[doc = "5.15b"]
+    Name515b,
+    #[doc = "5.15c"]
+    Name515c,
+    #[doc = "5.15d"]
+    Name515d,
+    #[doc = "5.1-"]
+    Name51Minus,
+    #[doc = "5.1+"]
+    Name51Plus,
+    #[doc = "5.2-"]
+    Name52Minus,
+    #[doc = "5.2+"]
+    Name52Plus,
+    #[doc = "5.3-"]
+    Name53Minus,
+    #[doc = "5.3+"]
+    Name53Plus,
+    #[doc = "5.4-"]
+    Name54Minus,
+    #[doc = "5.4+"]
+    Name54Plus,
+    #[doc = "5.5-"]
+    Name55Minus,
+    #[doc = "5.5+"]
+    Name55Plus,
+    #[doc = "5.6-"]
+    Name56Minus,
+    #[doc = "5.6+"]
+    Name56Plus,
+    #[doc = "5.7-"]
+    Name57Minus,
+    #[doc = "5.7+"]
+    Name57Plus,
+    #[doc = "5.8-"]
+    Name58Minus,
+    #[doc = "5.8+"]
+    Name58Plus,
+    #[doc = "5.9-"]
+    Name59Minus,
+    #[doc = "5.9+"]
+    Name59Plus,
+    #[doc = "5.10-"]
+    Name510Minus,
+    #[doc = "5.10+"]
+    Name510Plus,
+    #[doc = "5.11-"]
+    Name511Minus,
+    #[doc = "5.11+"]
+    Name511Plus,
+    #[doc = "5.12-"]
+    Name512Minus,
+    #[doc = "5.12+"]
+    Name512Plus,
+    #[doc = "5.13-"]
+    Name513Minus,
+    #[doc = "5.13+"]
+    Name513Plus,
+    #[doc = "5.14-"]
+    Name514Minus,
+    #[doc = "5.14+"]
+    Name514Plus,
+    #[doc = "5.15-"]
+    Name515Minus,
+    #[doc = "5.15+"]
+    Name515Plus,
+    UnknownVariant(u8),
+}
+impl YdsGradingScale {
+    pub fn is_named_variant(value: i64) -> bool {
+        matches!(value, 0i64..=68i64)
+    }
+    pub fn as_u8(self) -> u8 {
+        match self {
+            YdsGradingScale::Name51 => 0,
+            YdsGradingScale::Name52 => 1,
+            YdsGradingScale::Name53 => 2,
+            YdsGradingScale::Name54 => 3,
+            YdsGradingScale::Name55 => 4,
+            YdsGradingScale::Name56 => 5,
+            YdsGradingScale::Name57 => 6,
+            YdsGradingScale::Name58 => 7,
+            YdsGradingScale::Name59 => 8,
+            YdsGradingScale::Name510 => 9,
+            YdsGradingScale::Name510a => 10,
+            YdsGradingScale::Name510b => 11,
+            YdsGradingScale::Name510c => 12,
+            YdsGradingScale::Name510d => 13,
+            YdsGradingScale::Name511 => 14,
+            YdsGradingScale::Name511a => 15,
+            YdsGradingScale::Name511b => 16,
+            YdsGradingScale::Name511c => 17,
+            YdsGradingScale::Name511d => 18,
+            YdsGradingScale::Name512 => 19,
+            YdsGradingScale::Name512a => 20,
+            YdsGradingScale::Name512b => 21,
+            YdsGradingScale::Name512c => 22,
+            YdsGradingScale::Name512d => 23,
+            YdsGradingScale::Name513 => 24,
+            YdsGradingScale::Name513a => 25,
+            YdsGradingScale::Name513b => 26,
+            YdsGradingScale::Name513c => 27,
+            YdsGradingScale::Name513d => 28,
+            YdsGradingScale::Name514 => 29,
+            YdsGradingScale::Name514a => 30,
+            YdsGradingScale::Name514b => 31,
+            YdsGradingScale::Name514c => 32,
+            YdsGradingScale::Name514d => 33,
+            YdsGradingScale::Name515 => 34,
+            YdsGradingScale::Name515a => 35,
+            YdsGradingScale::Name515b => 36,
+            YdsGradingScale::Name515c => 37,
+            YdsGradingScale::Name515d => 38,
+            YdsGradingScale::Name51Minus => 39,
+            YdsGradingScale::Name51Plus => 40,
+            YdsGradingScale::Name52Minus => 41,
+            YdsGradingScale::Name52Plus => 42,
+            YdsGradingScale::Name53Minus => 43,
+            YdsGradingScale::Name53Plus => 44,
+            YdsGradingScale::Name54Minus => 45,
+            YdsGradingScale::Name54Plus => 46,
+            YdsGradingScale::Name55Minus => 47,
+            YdsGradingScale::Name55Plus => 48,
+            YdsGradingScale::Name56Minus => 49,
+            YdsGradingScale::Name56Plus => 50,
+            YdsGradingScale::Name57Minus => 51,
+            YdsGradingScale::Name57Plus => 52,
+            YdsGradingScale::Name58Minus => 53,
+            YdsGradingScale::Name58Plus => 54,
+            YdsGradingScale::Name59Minus => 55,
+            YdsGradingScale::Name59Plus => 56,
+            YdsGradingScale::Name510Minus => 57,
+            YdsGradingScale::Name510Plus => 58,
+            YdsGradingScale::Name511Minus => 59,
+            YdsGradingScale::Name511Plus => 60,
+            YdsGradingScale::Name512Minus => 61,
+            YdsGradingScale::Name512Plus => 62,
+            YdsGradingScale::Name513Minus => 63,
+            YdsGradingScale::Name513Plus => 64,
+            YdsGradingScale::Name514Minus => 65,
+            YdsGradingScale::Name514Plus => 66,
+            YdsGradingScale::Name515Minus => 67,
+            YdsGradingScale::Name515Plus => 68,
+            YdsGradingScale::UnknownVariant(value) => value,
+        }
+    }
+    pub fn as_i64(self) -> i64 {
+        self.as_u8() as i64
+    }
+}
+impl fmt::Display for YdsGradingScale {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match &self {
+            YdsGradingScale::Name51 => write!(f, "5_1"),
+            YdsGradingScale::Name52 => write!(f, "5_2"),
+            YdsGradingScale::Name53 => write!(f, "5_3"),
+            YdsGradingScale::Name54 => write!(f, "5_4"),
+            YdsGradingScale::Name55 => write!(f, "5_5"),
+            YdsGradingScale::Name56 => write!(f, "5_6"),
+            YdsGradingScale::Name57 => write!(f, "5_7"),
+            YdsGradingScale::Name58 => write!(f, "5_8"),
+            YdsGradingScale::Name59 => write!(f, "5_9"),
+            YdsGradingScale::Name510 => write!(f, "5_10"),
+            YdsGradingScale::Name510a => write!(f, "5_10a"),
+            YdsGradingScale::Name510b => write!(f, "5_10b"),
+            YdsGradingScale::Name510c => write!(f, "5_10c"),
+            YdsGradingScale::Name510d => write!(f, "5_10d"),
+            YdsGradingScale::Name511 => write!(f, "5_11"),
+            YdsGradingScale::Name511a => write!(f, "5_11a"),
+            YdsGradingScale::Name511b => write!(f, "5_11b"),
+            YdsGradingScale::Name511c => write!(f, "5_11c"),
+            YdsGradingScale::Name511d => write!(f, "5_11d"),
+            YdsGradingScale::Name512 => write!(f, "5_12"),
+            YdsGradingScale::Name512a => write!(f, "5_12a"),
+            YdsGradingScale::Name512b => write!(f, "5_12b"),
+            YdsGradingScale::Name512c => write!(f, "5_12c"),
+            YdsGradingScale::Name512d => write!(f, "5_12d"),
+            YdsGradingScale::Name513 => write!(f, "5_13"),
+            YdsGradingScale::Name513a => write!(f, "5_13a"),
+            YdsGradingScale::Name513b => write!(f, "5_13b"),
+            YdsGradingScale::Name513c => write!(f, "5_13c"),
+            YdsGradingScale::Name513d => write!(f, "5_13d"),
+            YdsGradingScale::Name514 => write!(f, "5_14"),
+            YdsGradingScale::Name514a => write!(f, "5_14a"),
+            YdsGradingScale::Name514b => write!(f, "5_14b"),
+            YdsGradingScale::Name514c => write!(f, "5_14c"),
+            YdsGradingScale::Name514d => write!(f, "5_14d"),
+            YdsGradingScale::Name515 => write!(f, "5_15"),
+            YdsGradingScale::Name515a => write!(f, "5_15a"),
+            YdsGradingScale::Name515b => write!(f, "5_15b"),
+            YdsGradingScale::Name515c => write!(f, "5_15c"),
+            YdsGradingScale::Name515d => write!(f, "5_15d"),
+            YdsGradingScale::Name51Minus => write!(f, "5_1_minus"),
+            YdsGradingScale::Name51Plus => write!(f, "5_1_plus"),
+            YdsGradingScale::Name52Minus => write!(f, "5_2_minus"),
+            YdsGradingScale::Name52Plus => write!(f, "5_2_plus"),
+            YdsGradingScale::Name53Minus => write!(f, "5_3_minus"),
+            YdsGradingScale::Name53Plus => write!(f, "5_3_plus"),
+            YdsGradingScale::Name54Minus => write!(f, "5_4_minus"),
+            YdsGradingScale::Name54Plus => write!(f, "5_4_plus"),
+            YdsGradingScale::Name55Minus => write!(f, "5_5_minus"),
+            YdsGradingScale::Name55Plus => write!(f, "5_5_plus"),
+            YdsGradingScale::Name56Minus => write!(f, "5_6_minus"),
+            YdsGradingScale::Name56Plus => write!(f, "5_6_plus"),
+            YdsGradingScale::Name57Minus => write!(f, "5_7_minus"),
+            YdsGradingScale::Name57Plus => write!(f, "5_7_plus"),
+            YdsGradingScale::Name58Minus => write!(f, "5_8_minus"),
+            YdsGradingScale::Name58Plus => write!(f, "5_8_plus"),
+            YdsGradingScale::Name59Minus => write!(f, "5_9_minus"),
+            YdsGradingScale::Name59Plus => write!(f, "5_9_plus"),
+            YdsGradingScale::Name510Minus => write!(f, "5_10_minus"),
+            YdsGradingScale::Name510Plus => write!(f, "5_10_plus"),
+            YdsGradingScale::Name511Minus => write!(f, "5_11_minus"),
+            YdsGradingScale::Name511Plus => write!(f, "5_11_plus"),
+            YdsGradingScale::Name512Minus => write!(f, "5_12_minus"),
+            YdsGradingScale::Name512Plus => write!(f, "5_12_plus"),
+            YdsGradingScale::Name513Minus => write!(f, "5_13_minus"),
+            YdsGradingScale::Name513Plus => write!(f, "5_13_plus"),
+            YdsGradingScale::Name514Minus => write!(f, "5_14_minus"),
+            YdsGradingScale::Name514Plus => write!(f, "5_14_plus"),
+            YdsGradingScale::Name515Minus => write!(f, "5_15_minus"),
+            YdsGradingScale::Name515Plus => write!(f, "5_15_plus"),
+            YdsGradingScale::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
+        }
+    }
+}
+impl convert::From<u8> for YdsGradingScale {
+    fn from(value: u8) -> Self {
+        match value {
+            0 => YdsGradingScale::Name51,
+            1 => YdsGradingScale::Name52,
+            2 => YdsGradingScale::Name53,
+            3 => YdsGradingScale::Name54,
+            4 => YdsGradingScale::Name55,
+            5 => YdsGradingScale::Name56,
+            6 => YdsGradingScale::Name57,
+            7 => YdsGradingScale::Name58,
+            8 => YdsGradingScale::Name59,
+            9 => YdsGradingScale::Name510,
+            10 => YdsGradingScale::Name510a,
+            11 => YdsGradingScale::Name510b,
+            12 => YdsGradingScale::Name510c,
+            13 => YdsGradingScale::Name510d,
+            14 => YdsGradingScale::Name511,
+            15 => YdsGradingScale::Name511a,
+            16 => YdsGradingScale::Name511b,
+            17 => YdsGradingScale::Name511c,
+            18 => YdsGradingScale::Name511d,
+            19 => YdsGradingScale::Name512,
+            20 => YdsGradingScale::Name512a,
+            21 => YdsGradingScale::Name512b,
+            22 => YdsGradingScale::Name512c,
+            23 => YdsGradingScale::Name512d,
+            24 => YdsGradingScale::Name513,
+            25 => YdsGradingScale::Name513a,
+            26 => YdsGradingScale::Name513b,
+            27 => YdsGradingScale::Name513c,
+            28 => YdsGradingScale::Name513d,
+            29 => YdsGradingScale::Name514,
+            30 => YdsGradingScale::Name514a,
+            31 => YdsGradingScale::Name514b,
+            32 => YdsGradingScale::Name514c,
+            33 => YdsGradingScale::Name514d,
+            34 => YdsGradingScale::Name515,
+            35 => YdsGradingScale::Name515a,
+            36 => YdsGradingScale::Name515b,
+            37 => YdsGradingScale::Name515c,
+            38 => YdsGradingScale::Name515d,
+            39 => YdsGradingScale::Name51Minus,
+            40 => YdsGradingScale::Name51Plus,
+            41 => YdsGradingScale::Name52Minus,
+            42 => YdsGradingScale::Name52Plus,
+            43 => YdsGradingScale::Name53Minus,
+            44 => YdsGradingScale::Name53Plus,
+            45 => YdsGradingScale::Name54Minus,
+            46 => YdsGradingScale::Name54Plus,
+            47 => YdsGradingScale::Name55Minus,
+            48 => YdsGradingScale::Name55Plus,
+            49 => YdsGradingScale::Name56Minus,
+            50 => YdsGradingScale::Name56Plus,
+            51 => YdsGradingScale::Name57Minus,
+            52 => YdsGradingScale::Name57Plus,
+            53 => YdsGradingScale::Name58Minus,
+            54 => YdsGradingScale::Name58Plus,
+            55 => YdsGradingScale::Name59Minus,
+            56 => YdsGradingScale::Name59Plus,
+            57 => YdsGradingScale::Name510Minus,
+            58 => YdsGradingScale::Name510Plus,
+            59 => YdsGradingScale::Name511Minus,
+            60 => YdsGradingScale::Name511Plus,
+            61 => YdsGradingScale::Name512Minus,
+            62 => YdsGradingScale::Name512Plus,
+            63 => YdsGradingScale::Name513Minus,
+            64 => YdsGradingScale::Name513Plus,
+            65 => YdsGradingScale::Name514Minus,
+            66 => YdsGradingScale::Name514Plus,
+            67 => YdsGradingScale::Name515Minus,
+            68 => YdsGradingScale::Name515Plus,
+            _ => YdsGradingScale::UnknownVariant(value),
+        }
+    }
+}
+impl convert::From<i64> for YdsGradingScale {
+    fn from(value: i64) -> Self {
+        YdsGradingScale::from(value as u8)
+    }
+}
+impl convert::From<&str> for YdsGradingScale {
+    fn from(value: &str) -> Self {
+        match value {
+            "5_1" => YdsGradingScale::Name51,
+            "5_2" => YdsGradingScale::Name52,
+            "5_3" => YdsGradingScale::Name53,
+            "5_4" => YdsGradingScale::Name54,
+            "5_5" => YdsGradingScale::Name55,
+            "5_6" => YdsGradingScale::Name56,
+            "5_7" => YdsGradingScale::Name57,
+            "5_8" => YdsGradingScale::Name58,
+            "5_9" => YdsGradingScale::Name59,
+            "5_10" => YdsGradingScale::Name510,
+            "5_10a" => YdsGradingScale::Name510a,
+            "5_10b" => YdsGradingScale::Name510b,
+            "5_10c" => YdsGradingScale::Name510c,
+            "5_10d" => YdsGradingScale::Name510d,
+            "5_11" => YdsGradingScale::Name511,
+            "5_11a" => YdsGradingScale::Name511a,
+            "5_11b" => YdsGradingScale::Name511b,
+            "5_11c" => YdsGradingScale::Name511c,
+            "5_11d" => YdsGradingScale::Name511d,
+            "5_12" => YdsGradingScale::Name512,
+            "5_12a" => YdsGradingScale::Name512a,
+            "5_12b" => YdsGradingScale::Name512b,
+            "5_12c" => YdsGradingScale::Name512c,
+            "5_12d" => YdsGradingScale::Name512d,
+            "5_13" => YdsGradingScale::Name513,
+            "5_13a" => YdsGradingScale::Name513a,
+            "5_13b" => YdsGradingScale::Name513b,
+            "5_13c" => YdsGradingScale::Name513c,
+            "5_13d" => YdsGradingScale::Name513d,
+            "5_14" => YdsGradingScale::Name514,
+            "5_14a" => YdsGradingScale::Name514a,
+            "5_14b" => YdsGradingScale::Name514b,
+            "5_14c" => YdsGradingScale::Name514c,
+            "5_14d" => YdsGradingScale::Name514d,
+            "5_15" => YdsGradingScale::Name515,
+            "5_15a" => YdsGradingScale::Name515a,
+            "5_15b" => YdsGradingScale::Name515b,
+            "5_15c" => YdsGradingScale::Name515c,
+            "5_15d" => YdsGradingScale::Name515d,
+            "5_1_minus" => YdsGradingScale::Name51Minus,
+            "5_1_plus" => YdsGradingScale::Name51Plus,
+            "5_2_minus" => YdsGradingScale::Name52Minus,
+            "5_2_plus" => YdsGradingScale::Name52Plus,
+            "5_3_minus" => YdsGradingScale::Name53Minus,
+            "5_3_plus" => YdsGradingScale::Name53Plus,
+            "5_4_minus" => YdsGradingScale::Name54Minus,
+            "5_4_plus" => YdsGradingScale::Name54Plus,
+            "5_5_minus" => YdsGradingScale::Name55Minus,
+            "5_5_plus" => YdsGradingScale::Name55Plus,
+            "5_6_minus" => YdsGradingScale::Name56Minus,
+            "5_6_plus" => YdsGradingScale::Name56Plus,
+            "5_7_minus" => YdsGradingScale::Name57Minus,
+            "5_7_plus" => YdsGradingScale::Name57Plus,
+            "5_8_minus" => YdsGradingScale::Name58Minus,
+            "5_8_plus" => YdsGradingScale::Name58Plus,
+            "5_9_minus" => YdsGradingScale::Name59Minus,
+            "5_9_plus" => YdsGradingScale::Name59Plus,
+            "5_10_minus" => YdsGradingScale::Name510Minus,
+            "5_10_plus" => YdsGradingScale::Name510Plus,
+            "5_11_minus" => YdsGradingScale::Name511Minus,
+            "5_11_plus" => YdsGradingScale::Name511Plus,
+            "5_12_minus" => YdsGradingScale::Name512Minus,
+            "5_12_plus" => YdsGradingScale::Name512Plus,
+            "5_13_minus" => YdsGradingScale::Name513Minus,
+            "5_13_plus" => YdsGradingScale::Name513Plus,
+            "5_14_minus" => YdsGradingScale::Name514Minus,
+            "5_14_plus" => YdsGradingScale::Name514Plus,
+            "5_15_minus" => YdsGradingScale::Name515Minus,
+            "5_15_plus" => YdsGradingScale::Name515Plus,
+            &_ => YdsGradingScale::UnknownVariant(0),
+        }
+    }
+}
+impl Serialize for YdsGradingScale {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
+pub enum UiaaGradingScale {
+    #[doc = "I"]
+    I,
+    #[doc = "II"]
+    II,
+    #[doc = "III"]
+    III,
+    #[doc = "IV-"]
+    IVMinus,
+    #[doc = "IV"]
+    IV,
+    #[doc = "IV+"]
+    IVPlus,
+    #[doc = "V-"]
+    VMinus,
+    #[doc = "V"]
+    V,
+    #[doc = "V+"]
+    VPlus,
+    #[doc = "VI-"]
+    VIMinus,
+    #[doc = "VI"]
+    VI,
+    #[doc = "VI+"]
+    VIPlus,
+    #[doc = "VII-"]
+    VIIMinus,
+    #[doc = "VII"]
+    VII,
+    #[doc = "VII+"]
+    VIIPlus,
+    #[doc = "VIII-"]
+    VIIIMinus,
+    #[doc = "VIII"]
+    VIII,
+    #[doc = "VIII+"]
+    VIIIPlus,
+    #[doc = "IX-"]
+    IXMinus,
+    #[doc = "IX"]
+    IX,
+    #[doc = "IX+"]
+    IXPlus,
+    #[doc = "X-"]
+    XMinus,
+    #[doc = "X"]
+    X,
+    #[doc = "X+"]
+    XPlus,
+    #[doc = "XI-"]
+    XIMinus,
+    #[doc = "XI"]
+    XI,
+    #[doc = "XI+"]
+    XIPlus,
+    #[doc = "XII-"]
+    XIIMinus,
+    UnknownVariant(u8),
+}
+impl UiaaGradingScale {
+    pub fn is_named_variant(value: i64) -> bool {
+        matches!(value, 0i64..=27i64)
+    }
+    pub fn as_u8(self) -> u8 {
+        match self {
+            UiaaGradingScale::I => 0,
+            UiaaGradingScale::II => 1,
+            UiaaGradingScale::III => 2,
+            UiaaGradingScale::IVMinus => 3,
+            UiaaGradingScale::IV => 4,
+            UiaaGradingScale::IVPlus => 5,
+            UiaaGradingScale::VMinus => 6,
+            UiaaGradingScale::V => 7,
+            UiaaGradingScale::VPlus => 8,
+            UiaaGradingScale::VIMinus => 9,
+            UiaaGradingScale::VI => 10,
+            UiaaGradingScale::VIPlus => 11,
+            UiaaGradingScale::VIIMinus => 12,
+            UiaaGradingScale::VII => 13,
+            UiaaGradingScale::VIIPlus => 14,
+            UiaaGradingScale::VIIIMinus => 15,
+            UiaaGradingScale::VIII => 16,
+            UiaaGradingScale::VIIIPlus => 17,
+            UiaaGradingScale::IXMinus => 18,
+            UiaaGradingScale::IX => 19,
+            UiaaGradingScale::IXPlus => 20,
+            UiaaGradingScale::XMinus => 21,
+            UiaaGradingScale::X => 22,
+            UiaaGradingScale::XPlus => 23,
+            UiaaGradingScale::XIMinus => 24,
+            UiaaGradingScale::XI => 25,
+            UiaaGradingScale::XIPlus => 26,
+            UiaaGradingScale::XIIMinus => 27,
+            UiaaGradingScale::UnknownVariant(value) => value,
+        }
+    }
+    pub fn as_i64(self) -> i64 {
+        self.as_u8() as i64
+    }
+}
+impl fmt::Display for UiaaGradingScale {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match &self {
+            UiaaGradingScale::I => write!(f, "I"),
+            UiaaGradingScale::II => write!(f, "II"),
+            UiaaGradingScale::III => write!(f, "III"),
+            UiaaGradingScale::IVMinus => write!(f, "IV_minus"),
+            UiaaGradingScale::IV => write!(f, "IV"),
+            UiaaGradingScale::IVPlus => write!(f, "IV_plus"),
+            UiaaGradingScale::VMinus => write!(f, "V_minus"),
+            UiaaGradingScale::V => write!(f, "V"),
+            UiaaGradingScale::VPlus => write!(f, "V_plus"),
+            UiaaGradingScale::VIMinus => write!(f, "VI_minus"),
+            UiaaGradingScale::VI => write!(f, "VI"),
+            UiaaGradingScale::VIPlus => write!(f, "VI_plus"),
+            UiaaGradingScale::VIIMinus => write!(f, "VII_minus"),
+            UiaaGradingScale::VII => write!(f, "VII"),
+            UiaaGradingScale::VIIPlus => write!(f, "VII_plus"),
+            UiaaGradingScale::VIIIMinus => write!(f, "VIII_minus"),
+            UiaaGradingScale::VIII => write!(f, "VIII"),
+            UiaaGradingScale::VIIIPlus => write!(f, "VIII_plus"),
+            UiaaGradingScale::IXMinus => write!(f, "IX_minus"),
+            UiaaGradingScale::IX => write!(f, "IX"),
+            UiaaGradingScale::IXPlus => write!(f, "IX_plus"),
+            UiaaGradingScale::XMinus => write!(f, "X_minus"),
+            UiaaGradingScale::X => write!(f, "X"),
+            UiaaGradingScale::XPlus => write!(f, "X_plus"),
+            UiaaGradingScale::XIMinus => write!(f, "XI_minus"),
+            UiaaGradingScale::XI => write!(f, "XI"),
+            UiaaGradingScale::XIPlus => write!(f, "XI_plus"),
+            UiaaGradingScale::XIIMinus => write!(f, "XII_minus"),
+            UiaaGradingScale::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
+        }
+    }
+}
+impl convert::From<u8> for UiaaGradingScale {
+    fn from(value: u8) -> Self {
+        match value {
+            0 => UiaaGradingScale::I,
+            1 => UiaaGradingScale::II,
+            2 => UiaaGradingScale::III,
+            3 => UiaaGradingScale::IVMinus,
+            4 => UiaaGradingScale::IV,
+            5 => UiaaGradingScale::IVPlus,
+            6 => UiaaGradingScale::VMinus,
+            7 => UiaaGradingScale::V,
+            8 => UiaaGradingScale::VPlus,
+            9 => UiaaGradingScale::VIMinus,
+            10 => UiaaGradingScale::VI,
+            11 => UiaaGradingScale::VIPlus,
+            12 => UiaaGradingScale::VIIMinus,
+            13 => UiaaGradingScale::VII,
+            14 => UiaaGradingScale::VIIPlus,
+            15 => UiaaGradingScale::VIIIMinus,
+            16 => UiaaGradingScale::VIII,
+            17 => UiaaGradingScale::VIIIPlus,
+            18 => UiaaGradingScale::IXMinus,
+            19 => UiaaGradingScale::IX,
+            20 => UiaaGradingScale::IXPlus,
+            21 => UiaaGradingScale::XMinus,
+            22 => UiaaGradingScale::X,
+            23 => UiaaGradingScale::XPlus,
+            24 => UiaaGradingScale::XIMinus,
+            25 => UiaaGradingScale::XI,
+            26 => UiaaGradingScale::XIPlus,
+            27 => UiaaGradingScale::XIIMinus,
+            _ => UiaaGradingScale::UnknownVariant(value),
+        }
+    }
+}
+impl convert::From<i64> for UiaaGradingScale {
+    fn from(value: i64) -> Self {
+        UiaaGradingScale::from(value as u8)
+    }
+}
+impl convert::From<&str> for UiaaGradingScale {
+    fn from(value: &str) -> Self {
+        match value {
+            "I" => UiaaGradingScale::I,
+            "II" => UiaaGradingScale::II,
+            "III" => UiaaGradingScale::III,
+            "IV_minus" => UiaaGradingScale::IVMinus,
+            "IV" => UiaaGradingScale::IV,
+            "IV_plus" => UiaaGradingScale::IVPlus,
+            "V_minus" => UiaaGradingScale::VMinus,
+            "V" => UiaaGradingScale::V,
+            "V_plus" => UiaaGradingScale::VPlus,
+            "VI_minus" => UiaaGradingScale::VIMinus,
+            "VI" => UiaaGradingScale::VI,
+            "VI_plus" => UiaaGradingScale::VIPlus,
+            "VII_minus" => UiaaGradingScale::VIIMinus,
+            "VII" => UiaaGradingScale::VII,
+            "VII_plus" => UiaaGradingScale::VIIPlus,
+            "VIII_minus" => UiaaGradingScale::VIIIMinus,
+            "VIII" => UiaaGradingScale::VIII,
+            "VIII_plus" => UiaaGradingScale::VIIIPlus,
+            "IX_minus" => UiaaGradingScale::IXMinus,
+            "IX" => UiaaGradingScale::IX,
+            "IX_plus" => UiaaGradingScale::IXPlus,
+            "X_minus" => UiaaGradingScale::XMinus,
+            "X" => UiaaGradingScale::X,
+            "X_plus" => UiaaGradingScale::XPlus,
+            "XI_minus" => UiaaGradingScale::XIMinus,
+            "XI" => UiaaGradingScale::XI,
+            "XI_plus" => UiaaGradingScale::XIPlus,
+            "XII_minus" => UiaaGradingScale::XIIMinus,
+            &_ => UiaaGradingScale::UnknownVariant(0),
+        }
+    }
+}
+impl Serialize for UiaaGradingScale {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
+pub enum FrenchGradingScale {
+    #[doc = "1"]
+    Name1,
+    #[doc = "2"]
+    Name2,
+    #[doc = "3"]
+    Name3,
+    #[doc = "4a"]
+    Name4a,
+    #[doc = "4b"]
+    Name4b,
+    #[doc = "4c"]
+    Name4c,
+    #[doc = "5a"]
+    Name5a,
+    #[doc = "5b"]
+    Name5b,
+    #[doc = "5c"]
+    Name5c,
+    #[doc = "6a"]
+    Name6a,
+    #[doc = "6a+"]
+    Name6aPlus,
+    #[doc = "6b"]
+    Name6b,
+    #[doc = "6b+"]
+    Name6bPlus,
+    #[doc = "6c"]
+    Name6c,
+    #[doc = "6c+"]
+    Name6cPlus,
+    #[doc = "7a"]
+    Name7a,
+    #[doc = "7a+"]
+    Name7aPlus,
+    #[doc = "7b"]
+    Name7b,
+    #[doc = "7b+"]
+    Name7bPlus,
+    #[doc = "7c"]
+    Name7c,
+    #[doc = "7c+"]
+    Name7cPlus,
+    #[doc = "8a"]
+    Name8a,
+    #[doc = "8a+"]
+    Name8aPlus,
+    #[doc = "8b"]
+    Name8b,
+    #[doc = "8b+"]
+    Name8bPlus,
+    #[doc = "8c"]
+    Name8c,
+    #[doc = "8c+"]
+    Name8cPlus,
+    #[doc = "9a"]
+    Name9a,
+    #[doc = "9a+"]
+    Name9aPlus,
+    #[doc = "9b"]
+    Name9b,
+    UnknownVariant(u8),
+}
+impl FrenchGradingScale {
+    pub fn is_named_variant(value: i64) -> bool {
+        matches!(value, 0i64..=29i64)
+    }
+    pub fn as_u8(self) -> u8 {
+        match self {
+            FrenchGradingScale::Name1 => 0,
+            FrenchGradingScale::Name2 => 1,
+            FrenchGradingScale::Name3 => 2,
+            FrenchGradingScale::Name4a => 3,
+            FrenchGradingScale::Name4b => 4,
+            FrenchGradingScale::Name4c => 5,
+            FrenchGradingScale::Name5a => 6,
+            FrenchGradingScale::Name5b => 7,
+            FrenchGradingScale::Name5c => 8,
+            FrenchGradingScale::Name6a => 9,
+            FrenchGradingScale::Name6aPlus => 10,
+            FrenchGradingScale::Name6b => 11,
+            FrenchGradingScale::Name6bPlus => 12,
+            FrenchGradingScale::Name6c => 13,
+            FrenchGradingScale::Name6cPlus => 14,
+            FrenchGradingScale::Name7a => 15,
+            FrenchGradingScale::Name7aPlus => 16,
+            FrenchGradingScale::Name7b => 17,
+            FrenchGradingScale::Name7bPlus => 18,
+            FrenchGradingScale::Name7c => 19,
+            FrenchGradingScale::Name7cPlus => 20,
+            FrenchGradingScale::Name8a => 21,
+            FrenchGradingScale::Name8aPlus => 22,
+            FrenchGradingScale::Name8b => 23,
+            FrenchGradingScale::Name8bPlus => 24,
+            FrenchGradingScale::Name8c => 25,
+            FrenchGradingScale::Name8cPlus => 26,
+            FrenchGradingScale::Name9a => 27,
+            FrenchGradingScale::Name9aPlus => 28,
+            FrenchGradingScale::Name9b => 29,
+            FrenchGradingScale::UnknownVariant(value) => value,
+        }
+    }
+    pub fn as_i64(self) -> i64 {
+        self.as_u8() as i64
+    }
+}
+impl fmt::Display for FrenchGradingScale {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match &self {
+            FrenchGradingScale::Name1 => write!(f, "1"),
+            FrenchGradingScale::Name2 => write!(f, "2"),
+            FrenchGradingScale::Name3 => write!(f, "3"),
+            FrenchGradingScale::Name4a => write!(f, "4a"),
+            FrenchGradingScale::Name4b => write!(f, "4b"),
+            FrenchGradingScale::Name4c => write!(f, "4c"),
+            FrenchGradingScale::Name5a => write!(f, "5a"),
+            FrenchGradingScale::Name5b => write!(f, "5b"),
+            FrenchGradingScale::Name5c => write!(f, "5c"),
+            FrenchGradingScale::Name6a => write!(f, "6a"),
+            FrenchGradingScale::Name6aPlus => write!(f, "6a_plus"),
+            FrenchGradingScale::Name6b => write!(f, "6b"),
+            FrenchGradingScale::Name6bPlus => write!(f, "6b_plus"),
+            FrenchGradingScale::Name6c => write!(f, "6c"),
+            FrenchGradingScale::Name6cPlus => write!(f, "6c_plus"),
+            FrenchGradingScale::Name7a => write!(f, "7a"),
+            FrenchGradingScale::Name7aPlus => write!(f, "7a_plus"),
+            FrenchGradingScale::Name7b => write!(f, "7b"),
+            FrenchGradingScale::Name7bPlus => write!(f, "7b_plus"),
+            FrenchGradingScale::Name7c => write!(f, "7c"),
+            FrenchGradingScale::Name7cPlus => write!(f, "7c_plus"),
+            FrenchGradingScale::Name8a => write!(f, "8a"),
+            FrenchGradingScale::Name8aPlus => write!(f, "8a_plus"),
+            FrenchGradingScale::Name8b => write!(f, "8b"),
+            FrenchGradingScale::Name8bPlus => write!(f, "8b_plus"),
+            FrenchGradingScale::Name8c => write!(f, "8c"),
+            FrenchGradingScale::Name8cPlus => write!(f, "8c_plus"),
+            FrenchGradingScale::Name9a => write!(f, "9a"),
+            FrenchGradingScale::Name9aPlus => write!(f, "9a_plus"),
+            FrenchGradingScale::Name9b => write!(f, "9b"),
+            FrenchGradingScale::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
+        }
+    }
+}
+impl convert::From<u8> for FrenchGradingScale {
+    fn from(value: u8) -> Self {
+        match value {
+            0 => FrenchGradingScale::Name1,
+            1 => FrenchGradingScale::Name2,
+            2 => FrenchGradingScale::Name3,
+            3 => FrenchGradingScale::Name4a,
+            4 => FrenchGradingScale::Name4b,
+            5 => FrenchGradingScale::Name4c,
+            6 => FrenchGradingScale::Name5a,
+            7 => FrenchGradingScale::Name5b,
+            8 => FrenchGradingScale::Name5c,
+            9 => FrenchGradingScale::Name6a,
+            10 => FrenchGradingScale::Name6aPlus,
+            11 => FrenchGradingScale::Name6b,
+            12 => FrenchGradingScale::Name6bPlus,
+            13 => FrenchGradingScale::Name6c,
+            14 => FrenchGradingScale::Name6cPlus,
+            15 => FrenchGradingScale::Name7a,
+            16 => FrenchGradingScale::Name7aPlus,
+            17 => FrenchGradingScale::Name7b,
+            18 => FrenchGradingScale::Name7bPlus,
+            19 => FrenchGradingScale::Name7c,
+            20 => FrenchGradingScale::Name7cPlus,
+            21 => FrenchGradingScale::Name8a,
+            22 => FrenchGradingScale::Name8aPlus,
+            23 => FrenchGradingScale::Name8b,
+            24 => FrenchGradingScale::Name8bPlus,
+            25 => FrenchGradingScale::Name8c,
+            26 => FrenchGradingScale::Name8cPlus,
+            27 => FrenchGradingScale::Name9a,
+            28 => FrenchGradingScale::Name9aPlus,
+            29 => FrenchGradingScale::Name9b,
+            _ => FrenchGradingScale::UnknownVariant(value),
+        }
+    }
+}
+impl convert::From<i64> for FrenchGradingScale {
+    fn from(value: i64) -> Self {
+        FrenchGradingScale::from(value as u8)
+    }
+}
+impl convert::From<&str> for FrenchGradingScale {
+    fn from(value: &str) -> Self {
+        match value {
+            "1" => FrenchGradingScale::Name1,
+            "2" => FrenchGradingScale::Name2,
+            "3" => FrenchGradingScale::Name3,
+            "4a" => FrenchGradingScale::Name4a,
+            "4b" => FrenchGradingScale::Name4b,
+            "4c" => FrenchGradingScale::Name4c,
+            "5a" => FrenchGradingScale::Name5a,
+            "5b" => FrenchGradingScale::Name5b,
+            "5c" => FrenchGradingScale::Name5c,
+            "6a" => FrenchGradingScale::Name6a,
+            "6a_plus" => FrenchGradingScale::Name6aPlus,
+            "6b" => FrenchGradingScale::Name6b,
+            "6b_plus" => FrenchGradingScale::Name6bPlus,
+            "6c" => FrenchGradingScale::Name6c,
+            "6c_plus" => FrenchGradingScale::Name6cPlus,
+            "7a" => FrenchGradingScale::Name7a,
+            "7a_plus" => FrenchGradingScale::Name7aPlus,
+            "7b" => FrenchGradingScale::Name7b,
+            "7b_plus" => FrenchGradingScale::Name7bPlus,
+            "7c" => FrenchGradingScale::Name7c,
+            "7c_plus" => FrenchGradingScale::Name7cPlus,
+            "8a" => FrenchGradingScale::Name8a,
+            "8a_plus" => FrenchGradingScale::Name8aPlus,
+            "8b" => FrenchGradingScale::Name8b,
+            "8b_plus" => FrenchGradingScale::Name8bPlus,
+            "8c" => FrenchGradingScale::Name8c,
+            "8c_plus" => FrenchGradingScale::Name8cPlus,
+            "9a" => FrenchGradingScale::Name9a,
+            "9a_plus" => FrenchGradingScale::Name9aPlus,
+            "9b" => FrenchGradingScale::Name9b,
+            &_ => FrenchGradingScale::UnknownVariant(0),
+        }
+    }
+}
+impl Serialize for FrenchGradingScale {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
+pub enum BritishAdjectivalGradingScale {
+    #[doc = "M"]
+    M,
+    #[doc = "D"]
+    D,
+    #[doc = "HD"]
+    HD,
+    #[doc = "VD"]
+    VD,
+    #[doc = "MS"]
+    MS,
+    #[doc = "S"]
+    S,
+    #[doc = "HS"]
+    HS,
+    #[doc = "MVS"]
+    MVS,
+    #[doc = "VS"]
+    VS,
+    #[doc = "HVS"]
+    HVS,
+    #[doc = "E1"]
+    E1,
+    #[doc = "E2"]
+    E2,
+    #[doc = "E3"]
+    E3,
+    #[doc = "E4"]
+    E4,
+    #[doc = "E5"]
+    E5,
+    #[doc = "E6"]
+    E6,
+    #[doc = "E7"]
+    E7,
+    #[doc = "E8"]
+    E8,
+    #[doc = "E9"]
+    E9,
+    #[doc = "E10"]
+    E10,
+    #[doc = "E11"]
+    E11,
+    UnknownVariant(u8),
+}
+impl BritishAdjectivalGradingScale {
+    pub fn is_named_variant(value: i64) -> bool {
+        matches!(value, 0i64..=20i64)
+    }
+    pub fn as_u8(self) -> u8 {
+        match self {
+            BritishAdjectivalGradingScale::M => 0,
+            BritishAdjectivalGradingScale::D => 1,
+            BritishAdjectivalGradingScale::HD => 2,
+            BritishAdjectivalGradingScale::VD => 3,
+            BritishAdjectivalGradingScale::MS => 4,
+            BritishAdjectivalGradingScale::S => 5,
+            BritishAdjectivalGradingScale::HS => 6,
+            BritishAdjectivalGradingScale::MVS => 7,
+            BritishAdjectivalGradingScale::VS => 8,
+            BritishAdjectivalGradingScale::HVS => 9,
+            BritishAdjectivalGradingScale::E1 => 10,
+            BritishAdjectivalGradingScale::E2 => 11,
+            BritishAdjectivalGradingScale::E3 => 12,
+            BritishAdjectivalGradingScale::E4 => 13,
+            BritishAdjectivalGradingScale::E5 => 14,
+            BritishAdjectivalGradingScale::E6 => 15,
+            BritishAdjectivalGradingScale::E7 => 16,
+            BritishAdjectivalGradingScale::E8 => 17,
+            BritishAdjectivalGradingScale::E9 => 18,
+            BritishAdjectivalGradingScale::E10 => 19,
+            BritishAdjectivalGradingScale::E11 => 20,
+            BritishAdjectivalGradingScale::UnknownVariant(value) => value,
+        }
+    }
+    pub fn as_i64(self) -> i64 {
+        self.as_u8() as i64
+    }
+}
+impl fmt::Display for BritishAdjectivalGradingScale {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match &self {
+            BritishAdjectivalGradingScale::M => write!(f, "M"),
+            BritishAdjectivalGradingScale::D => write!(f, "D"),
+            BritishAdjectivalGradingScale::HD => write!(f, "HD"),
+            BritishAdjectivalGradingScale::VD => write!(f, "VD"),
+            BritishAdjectivalGradingScale::MS => write!(f, "MS"),
+            BritishAdjectivalGradingScale::S => write!(f, "S"),
+            BritishAdjectivalGradingScale::HS => write!(f, "HS"),
+            BritishAdjectivalGradingScale::MVS => write!(f, "MVS"),
+            BritishAdjectivalGradingScale::VS => write!(f, "VS"),
+            BritishAdjectivalGradingScale::HVS => write!(f, "HVS"),
+            BritishAdjectivalGradingScale::E1 => write!(f, "E1"),
+            BritishAdjectivalGradingScale::E2 => write!(f, "E2"),
+            BritishAdjectivalGradingScale::E3 => write!(f, "E3"),
+            BritishAdjectivalGradingScale::E4 => write!(f, "E4"),
+            BritishAdjectivalGradingScale::E5 => write!(f, "E5"),
+            BritishAdjectivalGradingScale::E6 => write!(f, "E6"),
+            BritishAdjectivalGradingScale::E7 => write!(f, "E7"),
+            BritishAdjectivalGradingScale::E8 => write!(f, "E8"),
+            BritishAdjectivalGradingScale::E9 => write!(f, "E9"),
+            BritishAdjectivalGradingScale::E10 => write!(f, "E10"),
+            BritishAdjectivalGradingScale::E11 => write!(f, "E11"),
+            BritishAdjectivalGradingScale::UnknownVariant(value) => {
+                write!(f, "unknown_variant_{}", value)
+            }
+        }
+    }
+}
+impl convert::From<u8> for BritishAdjectivalGradingScale {
+    fn from(value: u8) -> Self {
+        match value {
+            0 => BritishAdjectivalGradingScale::M,
+            1 => BritishAdjectivalGradingScale::D,
+            2 => BritishAdjectivalGradingScale::HD,
+            3 => BritishAdjectivalGradingScale::VD,
+            4 => BritishAdjectivalGradingScale::MS,
+            5 => BritishAdjectivalGradingScale::S,
+            6 => BritishAdjectivalGradingScale::HS,
+            7 => BritishAdjectivalGradingScale::MVS,
+            8 => BritishAdjectivalGradingScale::VS,
+            9 => BritishAdjectivalGradingScale::HVS,
+            10 => BritishAdjectivalGradingScale::E1,
+            11 => BritishAdjectivalGradingScale::E2,
+            12 => BritishAdjectivalGradingScale::E3,
+            13 => BritishAdjectivalGradingScale::E4,
+            14 => BritishAdjectivalGradingScale::E5,
+            15 => BritishAdjectivalGradingScale::E6,
+            16 => BritishAdjectivalGradingScale::E7,
+            17 => BritishAdjectivalGradingScale::E8,
+            18 => BritishAdjectivalGradingScale::E9,
+            19 => BritishAdjectivalGradingScale::E10,
+            20 => BritishAdjectivalGradingScale::E11,
+            _ => BritishAdjectivalGradingScale::UnknownVariant(value),
+        }
+    }
+}
+impl convert::From<i64> for BritishAdjectivalGradingScale {
+    fn from(value: i64) -> Self {
+        BritishAdjectivalGradingScale::from(value as u8)
+    }
+}
+impl convert::From<&str> for BritishAdjectivalGradingScale {
+    fn from(value: &str) -> Self {
+        match value {
+            "M" => BritishAdjectivalGradingScale::M,
+            "D" => BritishAdjectivalGradingScale::D,
+            "HD" => BritishAdjectivalGradingScale::HD,
+            "VD" => BritishAdjectivalGradingScale::VD,
+            "MS" => BritishAdjectivalGradingScale::MS,
+            "S" => BritishAdjectivalGradingScale::S,
+            "HS" => BritishAdjectivalGradingScale::HS,
+            "MVS" => BritishAdjectivalGradingScale::MVS,
+            "VS" => BritishAdjectivalGradingScale::VS,
+            "HVS" => BritishAdjectivalGradingScale::HVS,
+            "E1" => BritishAdjectivalGradingScale::E1,
+            "E2" => BritishAdjectivalGradingScale::E2,
+            "E3" => BritishAdjectivalGradingScale::E3,
+            "E4" => BritishAdjectivalGradingScale::E4,
+            "E5" => BritishAdjectivalGradingScale::E5,
+            "E6" => BritishAdjectivalGradingScale::E6,
+            "E7" => BritishAdjectivalGradingScale::E7,
+            "E8" => BritishAdjectivalGradingScale::E8,
+            "E9" => BritishAdjectivalGradingScale::E9,
+            "E10" => BritishAdjectivalGradingScale::E10,
+            "E11" => BritishAdjectivalGradingScale::E11,
+            &_ => BritishAdjectivalGradingScale::UnknownVariant(0),
+        }
+    }
+}
+impl Serialize for BritishAdjectivalGradingScale {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
+pub enum BritishTechnicalGradingScale {
+    #[doc = "1"]
+    Name1,
+    #[doc = "2"]
+    Name2,
+    #[doc = "3"]
+    Name3,
+    #[doc = "4a"]
+    Name4a,
+    #[doc = "4b"]
+    Name4b,
+    #[doc = "4c"]
+    Name4c,
+    #[doc = "5a"]
+    Name5a,
+    #[doc = "5b"]
+    Name5b,
+    #[doc = "5c"]
+    Name5c,
+    #[doc = "6a"]
+    Name6a,
+    #[doc = "6b"]
+    Name6b,
+    #[doc = "6c"]
+    Name6c,
+    #[doc = "7a"]
+    Name7a,
+    #[doc = "7b"]
+    Name7b,
+    #[doc = "7c"]
+    Name7c,
+    UnknownVariant(u8),
+}
+impl BritishTechnicalGradingScale {
+    pub fn is_named_variant(value: i64) -> bool {
+        matches!(value, 0i64..=14i64)
+    }
+    pub fn as_u8(self) -> u8 {
+        match self {
+            BritishTechnicalGradingScale::Name1 => 0,
+            BritishTechnicalGradingScale::Name2 => 1,
+            BritishTechnicalGradingScale::Name3 => 2,
+            BritishTechnicalGradingScale::Name4a => 3,
+            BritishTechnicalGradingScale::Name4b => 4,
+            BritishTechnicalGradingScale::Name4c => 5,
+            BritishTechnicalGradingScale::Name5a => 6,
+            BritishTechnicalGradingScale::Name5b => 7,
+            BritishTechnicalGradingScale::Name5c => 8,
+            BritishTechnicalGradingScale::Name6a => 9,
+            BritishTechnicalGradingScale::Name6b => 10,
+            BritishTechnicalGradingScale::Name6c => 11,
+            BritishTechnicalGradingScale::Name7a => 12,
+            BritishTechnicalGradingScale::Name7b => 13,
+            BritishTechnicalGradingScale::Name7c => 14,
+            BritishTechnicalGradingScale::UnknownVariant(value) => value,
+        }
+    }
+    pub fn as_i64(self) -> i64 {
+        self.as_u8() as i64
+    }
+}
+impl fmt::Display for BritishTechnicalGradingScale {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match &self {
+            BritishTechnicalGradingScale::Name1 => write!(f, "1"),
+            BritishTechnicalGradingScale::Name2 => write!(f, "2"),
+            BritishTechnicalGradingScale::Name3 => write!(f, "3"),
+            BritishTechnicalGradingScale::Name4a => write!(f, "4a"),
+            BritishTechnicalGradingScale::Name4b => write!(f, "4b"),
+            BritishTechnicalGradingScale::Name4c => write!(f, "4c"),
+            BritishTechnicalGradingScale::Name5a => write!(f, "5a"),
+            BritishTechnicalGradingScale::Name5b => write!(f, "5b"),
+            BritishTechnicalGradingScale::Name5c => write!(f, "5c"),
+            BritishTechnicalGradingScale::Name6a => write!(f, "6a"),
+            BritishTechnicalGradingScale::Name6b => write!(f, "6b"),
+            BritishTechnicalGradingScale::Name6c => write!(f, "6c"),
+            BritishTechnicalGradingScale::Name7a => write!(f, "7a"),
+            BritishTechnicalGradingScale::Name7b => write!(f, "7b"),
+            BritishTechnicalGradingScale::Name7c => write!(f, "7c"),
+            BritishTechnicalGradingScale::UnknownVariant(value) => {
+                write!(f, "unknown_variant_{}", value)
+            }
+        }
+    }
+}
+impl convert::From<u8> for BritishTechnicalGradingScale {
+    fn from(value: u8) -> Self {
+        match value {
+            0 => BritishTechnicalGradingScale::Name1,
+            1 => BritishTechnicalGradingScale::Name2,
+            2 => BritishTechnicalGradingScale::Name3,
+            3 => BritishTechnicalGradingScale::Name4a,
+            4 => BritishTechnicalGradingScale::Name4b,
+            5 => BritishTechnicalGradingScale::Name4c,
+            6 => BritishTechnicalGradingScale::Name5a,
+            7 => BritishTechnicalGradingScale::Name5b,
+            8 => BritishTechnicalGradingScale::Name5c,
+            9 => BritishTechnicalGradingScale::Name6a,
+            10 => BritishTechnicalGradingScale::Name6b,
+            11 => BritishTechnicalGradingScale::Name6c,
+            12 => BritishTechnicalGradingScale::Name7a,
+            13 => BritishTechnicalGradingScale::Name7b,
+            14 => BritishTechnicalGradingScale::Name7c,
+            _ => BritishTechnicalGradingScale::UnknownVariant(value),
+        }
+    }
+}
+impl convert::From<i64> for BritishTechnicalGradingScale {
+    fn from(value: i64) -> Self {
+        BritishTechnicalGradingScale::from(value as u8)
+    }
+}
+impl convert::From<&str> for BritishTechnicalGradingScale {
+    fn from(value: &str) -> Self {
+        match value {
+            "1" => BritishTechnicalGradingScale::Name1,
+            "2" => BritishTechnicalGradingScale::Name2,
+            "3" => BritishTechnicalGradingScale::Name3,
+            "4a" => BritishTechnicalGradingScale::Name4a,
+            "4b" => BritishTechnicalGradingScale::Name4b,
+            "4c" => BritishTechnicalGradingScale::Name4c,
+            "5a" => BritishTechnicalGradingScale::Name5a,
+            "5b" => BritishTechnicalGradingScale::Name5b,
+            "5c" => BritishTechnicalGradingScale::Name5c,
+            "6a" => BritishTechnicalGradingScale::Name6a,
+            "6b" => BritishTechnicalGradingScale::Name6b,
+            "6c" => BritishTechnicalGradingScale::Name6c,
+            "7a" => BritishTechnicalGradingScale::Name7a,
+            "7b" => BritishTechnicalGradingScale::Name7b,
+            "7c" => BritishTechnicalGradingScale::Name7c,
+            &_ => BritishTechnicalGradingScale::UnknownVariant(0),
+        }
+    }
+}
+impl Serialize for BritishTechnicalGradingScale {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
+pub enum EwbankGradingScale {
+    #[doc = "4"]
+    Name4,
+    #[doc = "5"]
+    Name5,
+    #[doc = "6"]
+    Name6,
+    #[doc = "7"]
+    Name7,
+    #[doc = "8"]
+    Name8,
+    #[doc = "9"]
+    Name9,
+    #[doc = "10"]
+    Name10,
+    #[doc = "11"]
+    Name11,
+    #[doc = "12"]
+    Name12,
+    #[doc = "13"]
+    Name13,
+    #[doc = "14"]
+    Name14,
+    #[doc = "15"]
+    Name15,
+    #[doc = "16"]
+    Name16,
+    #[doc = "17"]
+    Name17,
+    #[doc = "18"]
+    Name18,
+    #[doc = "19"]
+    Name19,
+    #[doc = "20"]
+    Name20,
+    #[doc = "21"]
+    Name21,
+    #[doc = "22"]
+    Name22,
+    #[doc = "23"]
+    Name23,
+    #[doc = "24"]
+    Name24,
+    #[doc = "25"]
+    Name25,
+    #[doc = "26"]
+    Name26,
+    #[doc = "27"]
+    Name27,
+    #[doc = "28"]
+    Name28,
+    #[doc = "29"]
+    Name29,
+    #[doc = "30"]
+    Name30,
+    #[doc = "31"]
+    Name31,
+    #[doc = "32"]
+    Name32,
+    #[doc = "33"]
+    Name33,
+    #[doc = "34"]
+    Name34,
+    #[doc = "35"]
+    Name35,
+    #[doc = "36"]
+    Name36,
+    #[doc = "37"]
+    Name37,
+    #[doc = "38"]
+    Name38,
+    UnknownVariant(u8),
+}
+impl EwbankGradingScale {
+    pub fn is_named_variant(value: i64) -> bool {
+        matches!(value, 0i64..=34i64)
+    }
+    pub fn as_u8(self) -> u8 {
+        match self {
+            EwbankGradingScale::Name4 => 0,
+            EwbankGradingScale::Name5 => 1,
+            EwbankGradingScale::Name6 => 2,
+            EwbankGradingScale::Name7 => 3,
+            EwbankGradingScale::Name8 => 4,
+            EwbankGradingScale::Name9 => 5,
+            EwbankGradingScale::Name10 => 6,
+            EwbankGradingScale::Name11 => 7,
+            EwbankGradingScale::Name12 => 8,
+            EwbankGradingScale::Name13 => 9,
+            EwbankGradingScale::Name14 => 10,
+            EwbankGradingScale::Name15 => 11,
+            EwbankGradingScale::Name16 => 12,
+            EwbankGradingScale::Name17 => 13,
+            EwbankGradingScale::Name18 => 14,
+            EwbankGradingScale::Name19 => 15,
+            EwbankGradingScale::Name20 => 16,
+            EwbankGradingScale::Name21 => 17,
+            EwbankGradingScale::Name22 => 18,
+            EwbankGradingScale::Name23 => 19,
+            EwbankGradingScale::Name24 => 20,
+            EwbankGradingScale::Name25 => 21,
+            EwbankGradingScale::Name26 => 22,
+            EwbankGradingScale::Name27 => 23,
+            EwbankGradingScale::Name28 => 24,
+            EwbankGradingScale::Name29 => 25,
+            EwbankGradingScale::Name30 => 26,
+            EwbankGradingScale::Name31 => 27,
+            EwbankGradingScale::Name32 => 28,
+            EwbankGradingScale::Name33 => 29,
+            EwbankGradingScale::Name34 => 30,
+            EwbankGradingScale::Name35 => 31,
+            EwbankGradingScale::Name36 => 32,
+            EwbankGradingScale::Name37 => 33,
+            EwbankGradingScale::Name38 => 34,
+            EwbankGradingScale::UnknownVariant(value) => value,
+        }
+    }
+    pub fn as_i64(self) -> i64 {
+        self.as_u8() as i64
+    }
+}
+impl fmt::Display for EwbankGradingScale {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match &self {
+            EwbankGradingScale::Name4 => write!(f, "4"),
+            EwbankGradingScale::Name5 => write!(f, "5"),
+            EwbankGradingScale::Name6 => write!(f, "6"),
+            EwbankGradingScale::Name7 => write!(f, "7"),
+            EwbankGradingScale::Name8 => write!(f, "8"),
+            EwbankGradingScale::Name9 => write!(f, "9"),
+            EwbankGradingScale::Name10 => write!(f, "10"),
+            EwbankGradingScale::Name11 => write!(f, "11"),
+            EwbankGradingScale::Name12 => write!(f, "12"),
+            EwbankGradingScale::Name13 => write!(f, "13"),
+            EwbankGradingScale::Name14 => write!(f, "14"),
+            EwbankGradingScale::Name15 => write!(f, "15"),
+            EwbankGradingScale::Name16 => write!(f, "16"),
+            EwbankGradingScale::Name17 => write!(f, "17"),
+            EwbankGradingScale::Name18 => write!(f, "18"),
+            EwbankGradingScale::Name19 => write!(f, "19"),
+            EwbankGradingScale::Name20 => write!(f, "20"),
+            EwbankGradingScale::Name21 => write!(f, "21"),
+            EwbankGradingScale::Name22 => write!(f, "22"),
+            EwbankGradingScale::Name23 => write!(f, "23"),
+            EwbankGradingScale::Name24 => write!(f, "24"),
+            EwbankGradingScale::Name25 => write!(f, "25"),
+            EwbankGradingScale::Name26 => write!(f, "26"),
+            EwbankGradingScale::Name27 => write!(f, "27"),
+            EwbankGradingScale::Name28 => write!(f, "28"),
+            EwbankGradingScale::Name29 => write!(f, "29"),
+            EwbankGradingScale::Name30 => write!(f, "30"),
+            EwbankGradingScale::Name31 => write!(f, "31"),
+            EwbankGradingScale::Name32 => write!(f, "32"),
+            EwbankGradingScale::Name33 => write!(f, "33"),
+            EwbankGradingScale::Name34 => write!(f, "34"),
+            EwbankGradingScale::Name35 => write!(f, "35"),
+            EwbankGradingScale::Name36 => write!(f, "36"),
+            EwbankGradingScale::Name37 => write!(f, "37"),
+            EwbankGradingScale::Name38 => write!(f, "38"),
+            EwbankGradingScale::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
+        }
+    }
+}
+impl convert::From<u8> for EwbankGradingScale {
+    fn from(value: u8) -> Self {
+        match value {
+            0 => EwbankGradingScale::Name4,
+            1 => EwbankGradingScale::Name5,
+            2 => EwbankGradingScale::Name6,
+            3 => EwbankGradingScale::Name7,
+            4 => EwbankGradingScale::Name8,
+            5 => EwbankGradingScale::Name9,
+            6 => EwbankGradingScale::Name10,
+            7 => EwbankGradingScale::Name11,
+            8 => EwbankGradingScale::Name12,
+            9 => EwbankGradingScale::Name13,
+            10 => EwbankGradingScale::Name14,
+            11 => EwbankGradingScale::Name15,
+            12 => EwbankGradingScale::Name16,
+            13 => EwbankGradingScale::Name17,
+            14 => EwbankGradingScale::Name18,
+            15 => EwbankGradingScale::Name19,
+            16 => EwbankGradingScale::Name20,
+            17 => EwbankGradingScale::Name21,
+            18 => EwbankGradingScale::Name22,
+            19 => EwbankGradingScale::Name23,
+            20 => EwbankGradingScale::Name24,
+            21 => EwbankGradingScale::Name25,
+            22 => EwbankGradingScale::Name26,
+            23 => EwbankGradingScale::Name27,
+            24 => EwbankGradingScale::Name28,
+            25 => EwbankGradingScale::Name29,
+            26 => EwbankGradingScale::Name30,
+            27 => EwbankGradingScale::Name31,
+            28 => EwbankGradingScale::Name32,
+            29 => EwbankGradingScale::Name33,
+            30 => EwbankGradingScale::Name34,
+            31 => EwbankGradingScale::Name35,
+            32 => EwbankGradingScale::Name36,
+            33 => EwbankGradingScale::Name37,
+            34 => EwbankGradingScale::Name38,
+            _ => EwbankGradingScale::UnknownVariant(value),
+        }
+    }
+}
+impl convert::From<i64> for EwbankGradingScale {
+    fn from(value: i64) -> Self {
+        EwbankGradingScale::from(value as u8)
+    }
+}
+impl convert::From<&str> for EwbankGradingScale {
+    fn from(value: &str) -> Self {
+        match value {
+            "4" => EwbankGradingScale::Name4,
+            "5" => EwbankGradingScale::Name5,
+            "6" => EwbankGradingScale::Name6,
+            "7" => EwbankGradingScale::Name7,
+            "8" => EwbankGradingScale::Name8,
+            "9" => EwbankGradingScale::Name9,
+            "10" => EwbankGradingScale::Name10,
+            "11" => EwbankGradingScale::Name11,
+            "12" => EwbankGradingScale::Name12,
+            "13" => EwbankGradingScale::Name13,
+            "14" => EwbankGradingScale::Name14,
+            "15" => EwbankGradingScale::Name15,
+            "16" => EwbankGradingScale::Name16,
+            "17" => EwbankGradingScale::Name17,
+            "18" => EwbankGradingScale::Name18,
+            "19" => EwbankGradingScale::Name19,
+            "20" => EwbankGradingScale::Name20,
+            "21" => EwbankGradingScale::Name21,
+            "22" => EwbankGradingScale::Name22,
+            "23" => EwbankGradingScale::Name23,
+            "24" => EwbankGradingScale::Name24,
+            "25" => EwbankGradingScale::Name25,
+            "26" => EwbankGradingScale::Name26,
+            "27" => EwbankGradingScale::Name27,
+            "28" => EwbankGradingScale::Name28,
+            "29" => EwbankGradingScale::Name29,
+            "30" => EwbankGradingScale::Name30,
+            "31" => EwbankGradingScale::Name31,
+            "32" => EwbankGradingScale::Name32,
+            "33" => EwbankGradingScale::Name33,
+            "34" => EwbankGradingScale::Name34,
+            "35" => EwbankGradingScale::Name35,
+            "36" => EwbankGradingScale::Name36,
+            "37" => EwbankGradingScale::Name37,
+            "38" => EwbankGradingScale::Name38,
+            &_ => EwbankGradingScale::UnknownVariant(0),
+        }
+    }
+}
+impl Serialize for EwbankGradingScale {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
+pub enum BrazilianGradingScale {
+    #[doc = "2"]
+    Name2,
+    #[doc = "3"]
+    Name3,
+    #[doc = "3c"]
+    Name3c,
+    #[doc = "4"]
+    Name4,
+    #[doc = "5a"]
+    Name5a,
+    #[doc = "5b"]
+    Name5b,
+    #[doc = "5c"]
+    Name5c,
+    #[doc = "6a"]
+    Name6a,
+    #[doc = "6b"]
+    Name6b,
+    #[doc = "6c"]
+    Name6c,
+    #[doc = "7a"]
+    Name7a,
+    #[doc = "7b"]
+    Name7b,
+    #[doc = "7c"]
+    Name7c,
+    #[doc = "8a"]
+    Name8a,
+    #[doc = "8b"]
+    Name8b,
+    #[doc = "8c"]
+    Name8c,
+    #[doc = "9a"]
+    Name9a,
+    #[doc = "9b"]
+    Name9b,
+    #[doc = "9c"]
+    Name9c,
+    #[doc = "10a"]
+    Name10a,
+    #[doc = "10b"]
+    Name10b,
+    #[doc = "10c"]
+    Name10c,
+    #[doc = "11a"]
+    Name11a,
+    #[doc = "11b"]
+    Name11b,
+    #[doc = "11c"]
+    Name11c,
+    #[doc = "12a"]
+    Name12a,
+    #[doc = "12b"]
+    Name12b,
+    UnknownVariant(u8),
+}
+impl BrazilianGradingScale {
+    pub fn is_named_variant(value: i64) -> bool {
+        matches!(value, 0i64..=26i64)
+    }
+    pub fn as_u8(self) -> u8 {
+        match self {
+            BrazilianGradingScale::Name2 => 0,
+            BrazilianGradingScale::Name3 => 1,
+            BrazilianGradingScale::Name3c => 2,
+            BrazilianGradingScale::Name4 => 3,
+            BrazilianGradingScale::Name5a => 4,
+            BrazilianGradingScale::Name5b => 5,
+            BrazilianGradingScale::Name5c => 6,
+            BrazilianGradingScale::Name6a => 7,
+            BrazilianGradingScale::Name6b => 8,
+            BrazilianGradingScale::Name6c => 9,
+            BrazilianGradingScale::Name7a => 10,
+            BrazilianGradingScale::Name7b => 11,
+            BrazilianGradingScale::Name7c => 12,
+            BrazilianGradingScale::Name8a => 13,
+            BrazilianGradingScale::Name8b => 14,
+            BrazilianGradingScale::Name8c => 15,
+            BrazilianGradingScale::Name9a => 16,
+            BrazilianGradingScale::Name9b => 17,
+            BrazilianGradingScale::Name9c => 18,
+            BrazilianGradingScale::Name10a => 19,
+            BrazilianGradingScale::Name10b => 20,
+            BrazilianGradingScale::Name10c => 21,
+            BrazilianGradingScale::Name11a => 22,
+            BrazilianGradingScale::Name11b => 23,
+            BrazilianGradingScale::Name11c => 24,
+            BrazilianGradingScale::Name12a => 25,
+            BrazilianGradingScale::Name12b => 26,
+            BrazilianGradingScale::UnknownVariant(value) => value,
+        }
+    }
+    pub fn as_i64(self) -> i64 {
+        self.as_u8() as i64
+    }
+}
+impl fmt::Display for BrazilianGradingScale {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match &self {
+            BrazilianGradingScale::Name2 => write!(f, "2"),
+            BrazilianGradingScale::Name3 => write!(f, "3"),
+            BrazilianGradingScale::Name3c => write!(f, "3c"),
+            BrazilianGradingScale::Name4 => write!(f, "4"),
+            BrazilianGradingScale::Name5a => write!(f, "5a"),
+            BrazilianGradingScale::Name5b => write!(f, "5b"),
+            BrazilianGradingScale::Name5c => write!(f, "5c"),
+            BrazilianGradingScale::Name6a => write!(f, "6a"),
+            BrazilianGradingScale::Name6b => write!(f, "6b"),
+            BrazilianGradingScale::Name6c => write!(f, "6c"),
+            BrazilianGradingScale::Name7a => write!(f, "7a"),
+            BrazilianGradingScale::Name7b => write!(f, "7b"),
+            BrazilianGradingScale::Name7c => write!(f, "7c"),
+            BrazilianGradingScale::Name8a => write!(f, "8a"),
+            BrazilianGradingScale::Name8b => write!(f, "8b"),
+            BrazilianGradingScale::Name8c => write!(f, "8c"),
+            BrazilianGradingScale::Name9a => write!(f, "9a"),
+            BrazilianGradingScale::Name9b => write!(f, "9b"),
+            BrazilianGradingScale::Name9c => write!(f, "9c"),
+            BrazilianGradingScale::Name10a => write!(f, "10a"),
+            BrazilianGradingScale::Name10b => write!(f, "10b"),
+            BrazilianGradingScale::Name10c => write!(f, "10c"),
+            BrazilianGradingScale::Name11a => write!(f, "11a"),
+            BrazilianGradingScale::Name11b => write!(f, "11b"),
+            BrazilianGradingScale::Name11c => write!(f, "11c"),
+            BrazilianGradingScale::Name12a => write!(f, "12a"),
+            BrazilianGradingScale::Name12b => write!(f, "12b"),
+            BrazilianGradingScale::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
+        }
+    }
+}
+impl convert::From<u8> for BrazilianGradingScale {
+    fn from(value: u8) -> Self {
+        match value {
+            0 => BrazilianGradingScale::Name2,
+            1 => BrazilianGradingScale::Name3,
+            2 => BrazilianGradingScale::Name3c,
+            3 => BrazilianGradingScale::Name4,
+            4 => BrazilianGradingScale::Name5a,
+            5 => BrazilianGradingScale::Name5b,
+            6 => BrazilianGradingScale::Name5c,
+            7 => BrazilianGradingScale::Name6a,
+            8 => BrazilianGradingScale::Name6b,
+            9 => BrazilianGradingScale::Name6c,
+            10 => BrazilianGradingScale::Name7a,
+            11 => BrazilianGradingScale::Name7b,
+            12 => BrazilianGradingScale::Name7c,
+            13 => BrazilianGradingScale::Name8a,
+            14 => BrazilianGradingScale::Name8b,
+            15 => BrazilianGradingScale::Name8c,
+            16 => BrazilianGradingScale::Name9a,
+            17 => BrazilianGradingScale::Name9b,
+            18 => BrazilianGradingScale::Name9c,
+            19 => BrazilianGradingScale::Name10a,
+            20 => BrazilianGradingScale::Name10b,
+            21 => BrazilianGradingScale::Name10c,
+            22 => BrazilianGradingScale::Name11a,
+            23 => BrazilianGradingScale::Name11b,
+            24 => BrazilianGradingScale::Name11c,
+            25 => BrazilianGradingScale::Name12a,
+            26 => BrazilianGradingScale::Name12b,
+            _ => BrazilianGradingScale::UnknownVariant(value),
+        }
+    }
+}
+impl convert::From<i64> for BrazilianGradingScale {
+    fn from(value: i64) -> Self {
+        BrazilianGradingScale::from(value as u8)
+    }
+}
+impl convert::From<&str> for BrazilianGradingScale {
+    fn from(value: &str) -> Self {
+        match value {
+            "2" => BrazilianGradingScale::Name2,
+            "3" => BrazilianGradingScale::Name3,
+            "3c" => BrazilianGradingScale::Name3c,
+            "4" => BrazilianGradingScale::Name4,
+            "5a" => BrazilianGradingScale::Name5a,
+            "5b" => BrazilianGradingScale::Name5b,
+            "5c" => BrazilianGradingScale::Name5c,
+            "6a" => BrazilianGradingScale::Name6a,
+            "6b" => BrazilianGradingScale::Name6b,
+            "6c" => BrazilianGradingScale::Name6c,
+            "7a" => BrazilianGradingScale::Name7a,
+            "7b" => BrazilianGradingScale::Name7b,
+            "7c" => BrazilianGradingScale::Name7c,
+            "8a" => BrazilianGradingScale::Name8a,
+            "8b" => BrazilianGradingScale::Name8b,
+            "8c" => BrazilianGradingScale::Name8c,
+            "9a" => BrazilianGradingScale::Name9a,
+            "9b" => BrazilianGradingScale::Name9b,
+            "9c" => BrazilianGradingScale::Name9c,
+            "10a" => BrazilianGradingScale::Name10a,
+            "10b" => BrazilianGradingScale::Name10b,
+            "10c" => BrazilianGradingScale::Name10c,
+            "11a" => BrazilianGradingScale::Name11a,
+            "11b" => BrazilianGradingScale::Name11b,
+            "11c" => BrazilianGradingScale::Name11c,
+            "12a" => BrazilianGradingScale::Name12a,
+            "12b" => BrazilianGradingScale::Name12b,
+            &_ => BrazilianGradingScale::UnknownVariant(0),
+        }
+    }
+}
+impl Serialize for BrazilianGradingScale {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
+pub enum SaxonGradingScale {
+    #[doc = "I"]
+    I,
+    #[doc = "II"]
+    II,
+    #[doc = "III"]
+    III,
+    #[doc = "IV"]
+    IV,
+    #[doc = "V"]
+    V,
+    #[doc = "VI"]
+    VI,
+    #[doc = "VIIa"]
+    VIIA,
+    #[doc = "VIIb"]
+    VIIB,
+    #[doc = "VIIc"]
+    VIIC,
+    #[doc = "VIIIa"]
+    VIIIA,
+    #[doc = "VIIIb"]
+    VIIIB,
+    #[doc = "VIIIc"]
+    VIIIC,
+    #[doc = "IXa"]
+    IXA,
+    #[doc = "IXb"]
+    IXB,
+    #[doc = "IXc"]
+    IXC,
+    #[doc = "Xa"]
+    XA,
+    #[doc = "Xb"]
+    XB,
+    #[doc = "Xc"]
+    XC,
+    #[doc = "XIa"]
+    XIA,
+    #[doc = "XIb"]
+    XIB,
+    #[doc = "XIc"]
+    XIC,
+    #[doc = "XIIa"]
+    XIIA,
+    #[doc = "XIIb"]
+    XIIB,
+    #[doc = "XIIc"]
+    XIIC,
+    UnknownVariant(u8),
+}
+impl SaxonGradingScale {
+    pub fn is_named_variant(value: i64) -> bool {
+        matches!(value, 0i64..=23i64)
+    }
+    pub fn as_u8(self) -> u8 {
+        match self {
+            SaxonGradingScale::I => 0,
+            SaxonGradingScale::II => 1,
+            SaxonGradingScale::III => 2,
+            SaxonGradingScale::IV => 3,
+            SaxonGradingScale::V => 4,
+            SaxonGradingScale::VI => 5,
+            SaxonGradingScale::VIIA => 6,
+            SaxonGradingScale::VIIB => 7,
+            SaxonGradingScale::VIIC => 8,
+            SaxonGradingScale::VIIIA => 9,
+            SaxonGradingScale::VIIIB => 10,
+            SaxonGradingScale::VIIIC => 11,
+            SaxonGradingScale::IXA => 12,
+            SaxonGradingScale::IXB => 13,
+            SaxonGradingScale::IXC => 14,
+            SaxonGradingScale::XA => 15,
+            SaxonGradingScale::XB => 16,
+            SaxonGradingScale::XC => 17,
+            SaxonGradingScale::XIA => 18,
+            SaxonGradingScale::XIB => 19,
+            SaxonGradingScale::XIC => 20,
+            SaxonGradingScale::XIIA => 21,
+            SaxonGradingScale::XIIB => 22,
+            SaxonGradingScale::XIIC => 23,
+            SaxonGradingScale::UnknownVariant(value) => value,
+        }
+    }
+    pub fn as_i64(self) -> i64 {
+        self.as_u8() as i64
+    }
+}
+impl fmt::Display for SaxonGradingScale {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match &self {
+            SaxonGradingScale::I => write!(f, "I"),
+            SaxonGradingScale::II => write!(f, "II"),
+            SaxonGradingScale::III => write!(f, "III"),
+            SaxonGradingScale::IV => write!(f, "IV"),
+            SaxonGradingScale::V => write!(f, "V"),
+            SaxonGradingScale::VI => write!(f, "VI"),
+            SaxonGradingScale::VIIA => write!(f, "VII_a"),
+            SaxonGradingScale::VIIB => write!(f, "VII_b"),
+            SaxonGradingScale::VIIC => write!(f, "VII_c"),
+            SaxonGradingScale::VIIIA => write!(f, "VIII_a"),
+            SaxonGradingScale::VIIIB => write!(f, "VIII_b"),
+            SaxonGradingScale::VIIIC => write!(f, "VIII_c"),
+            SaxonGradingScale::IXA => write!(f, "IX_a"),
+            SaxonGradingScale::IXB => write!(f, "IX_b"),
+            SaxonGradingScale::IXC => write!(f, "IX_c"),
+            SaxonGradingScale::XA => write!(f, "X_a"),
+            SaxonGradingScale::XB => write!(f, "X_b"),
+            SaxonGradingScale::XC => write!(f, "X_c"),
+            SaxonGradingScale::XIA => write!(f, "XI_a"),
+            SaxonGradingScale::XIB => write!(f, "XI_b"),
+            SaxonGradingScale::XIC => write!(f, "XI_c"),
+            SaxonGradingScale::XIIA => write!(f, "XII_a"),
+            SaxonGradingScale::XIIB => write!(f, "XII_b"),
+            SaxonGradingScale::XIIC => write!(f, "XII_c"),
+            SaxonGradingScale::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
+        }
+    }
+}
+impl convert::From<u8> for SaxonGradingScale {
+    fn from(value: u8) -> Self {
+        match value {
+            0 => SaxonGradingScale::I,
+            1 => SaxonGradingScale::II,
+            2 => SaxonGradingScale::III,
+            3 => SaxonGradingScale::IV,
+            4 => SaxonGradingScale::V,
+            5 => SaxonGradingScale::VI,
+            6 => SaxonGradingScale::VIIA,
+            7 => SaxonGradingScale::VIIB,
+            8 => SaxonGradingScale::VIIC,
+            9 => SaxonGradingScale::VIIIA,
+            10 => SaxonGradingScale::VIIIB,
+            11 => SaxonGradingScale::VIIIC,
+            12 => SaxonGradingScale::IXA,
+            13 => SaxonGradingScale::IXB,
+            14 => SaxonGradingScale::IXC,
+            15 => SaxonGradingScale::XA,
+            16 => SaxonGradingScale::XB,
+            17 => SaxonGradingScale::XC,
+            18 => SaxonGradingScale::XIA,
+            19 => SaxonGradingScale::XIB,
+            20 => SaxonGradingScale::XIC,
+            21 => SaxonGradingScale::XIIA,
+            22 => SaxonGradingScale::XIIB,
+            23 => SaxonGradingScale::XIIC,
+            _ => SaxonGradingScale::UnknownVariant(value),
+        }
+    }
+}
+impl convert::From<i64> for SaxonGradingScale {
+    fn from(value: i64) -> Self {
+        SaxonGradingScale::from(value as u8)
+    }
+}
+impl convert::From<&str> for SaxonGradingScale {
+    fn from(value: &str) -> Self {
+        match value {
+            "I" => SaxonGradingScale::I,
+            "II" => SaxonGradingScale::II,
+            "III" => SaxonGradingScale::III,
+            "IV" => SaxonGradingScale::IV,
+            "V" => SaxonGradingScale::V,
+            "VI" => SaxonGradingScale::VI,
+            "VII_a" => SaxonGradingScale::VIIA,
+            "VII_b" => SaxonGradingScale::VIIB,
+            "VII_c" => SaxonGradingScale::VIIC,
+            "VIII_a" => SaxonGradingScale::VIIIA,
+            "VIII_b" => SaxonGradingScale::VIIIB,
+            "VIII_c" => SaxonGradingScale::VIIIC,
+            "IX_a" => SaxonGradingScale::IXA,
+            "IX_b" => SaxonGradingScale::IXB,
+            "IX_c" => SaxonGradingScale::IXC,
+            "X_a" => SaxonGradingScale::XA,
+            "X_b" => SaxonGradingScale::XB,
+            "X_c" => SaxonGradingScale::XC,
+            "XI_a" => SaxonGradingScale::XIA,
+            "XI_b" => SaxonGradingScale::XIB,
+            "XI_c" => SaxonGradingScale::XIC,
+            "XII_a" => SaxonGradingScale::XIIA,
+            "XII_b" => SaxonGradingScale::XIIB,
+            "XII_c" => SaxonGradingScale::XIIC,
+            &_ => SaxonGradingScale::UnknownVariant(0),
+        }
+    }
+}
+impl Serialize for SaxonGradingScale {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
+pub enum VerminGradingScale {
+    #[doc = "VB"]
+    Vb,
+    #[doc = "V0"]
+    V0,
+    #[doc = "V1"]
+    V1,
+    #[doc = "V2"]
+    V2,
+    #[doc = "V3"]
+    V3,
+    #[doc = "V4"]
+    V4,
+    #[doc = "V5"]
+    V5,
+    #[doc = "V6"]
+    V6,
+    #[doc = "V7"]
+    V7,
+    #[doc = "V8"]
+    V8,
+    #[doc = "V9"]
+    V9,
+    #[doc = "V10"]
+    V10,
+    #[doc = "V11"]
+    V11,
+    #[doc = "V12"]
+    V12,
+    #[doc = "V13"]
+    V13,
+    #[doc = "V14"]
+    V14,
+    #[doc = "V15"]
+    V15,
+    #[doc = "V16"]
+    V16,
+    #[doc = "V17"]
+    V17,
+    UnknownVariant(u8),
+}
+impl VerminGradingScale {
+    pub fn is_named_variant(value: i64) -> bool {
+        matches!(value, 0i64..=18i64)
+    }
+    pub fn as_u8(self) -> u8 {
+        match self {
+            VerminGradingScale::Vb => 0,
+            VerminGradingScale::V0 => 1,
+            VerminGradingScale::V1 => 2,
+            VerminGradingScale::V2 => 3,
+            VerminGradingScale::V3 => 4,
+            VerminGradingScale::V4 => 5,
+            VerminGradingScale::V5 => 6,
+            VerminGradingScale::V6 => 7,
+            VerminGradingScale::V7 => 8,
+            VerminGradingScale::V8 => 9,
+            VerminGradingScale::V9 => 10,
+            VerminGradingScale::V10 => 11,
+            VerminGradingScale::V11 => 12,
+            VerminGradingScale::V12 => 13,
+            VerminGradingScale::V13 => 14,
+            VerminGradingScale::V14 => 15,
+            VerminGradingScale::V15 => 16,
+            VerminGradingScale::V16 => 17,
+            VerminGradingScale::V17 => 18,
+            VerminGradingScale::UnknownVariant(value) => value,
+        }
+    }
+    pub fn as_i64(self) -> i64 {
+        self.as_u8() as i64
+    }
+}
+impl fmt::Display for VerminGradingScale {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match &self {
+            VerminGradingScale::Vb => write!(f, "vb"),
+            VerminGradingScale::V0 => write!(f, "v0"),
+            VerminGradingScale::V1 => write!(f, "v1"),
+            VerminGradingScale::V2 => write!(f, "v2"),
+            VerminGradingScale::V3 => write!(f, "v3"),
+            VerminGradingScale::V4 => write!(f, "v4"),
+            VerminGradingScale::V5 => write!(f, "v5"),
+            VerminGradingScale::V6 => write!(f, "v6"),
+            VerminGradingScale::V7 => write!(f, "v7"),
+            VerminGradingScale::V8 => write!(f, "v8"),
+            VerminGradingScale::V9 => write!(f, "v9"),
+            VerminGradingScale::V10 => write!(f, "v10"),
+            VerminGradingScale::V11 => write!(f, "v11"),
+            VerminGradingScale::V12 => write!(f, "v12"),
+            VerminGradingScale::V13 => write!(f, "v13"),
+            VerminGradingScale::V14 => write!(f, "v14"),
+            VerminGradingScale::V15 => write!(f, "v15"),
+            VerminGradingScale::V16 => write!(f, "v16"),
+            VerminGradingScale::V17 => write!(f, "v17"),
+            VerminGradingScale::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
+        }
+    }
+}
+impl convert::From<u8> for VerminGradingScale {
+    fn from(value: u8) -> Self {
+        match value {
+            0 => VerminGradingScale::Vb,
+            1 => VerminGradingScale::V0,
+            2 => VerminGradingScale::V1,
+            3 => VerminGradingScale::V2,
+            4 => VerminGradingScale::V3,
+            5 => VerminGradingScale::V4,
+            6 => VerminGradingScale::V5,
+            7 => VerminGradingScale::V6,
+            8 => VerminGradingScale::V7,
+            9 => VerminGradingScale::V8,
+            10 => VerminGradingScale::V9,
+            11 => VerminGradingScale::V10,
+            12 => VerminGradingScale::V11,
+            13 => VerminGradingScale::V12,
+            14 => VerminGradingScale::V13,
+            15 => VerminGradingScale::V14,
+            16 => VerminGradingScale::V15,
+            17 => VerminGradingScale::V16,
+            18 => VerminGradingScale::V17,
+            _ => VerminGradingScale::UnknownVariant(value),
+        }
+    }
+}
+impl convert::From<i64> for VerminGradingScale {
+    fn from(value: i64) -> Self {
+        VerminGradingScale::from(value as u8)
+    }
+}
+impl convert::From<&str> for VerminGradingScale {
+    fn from(value: &str) -> Self {
+        match value {
+            "vb" => VerminGradingScale::Vb,
+            "v0" => VerminGradingScale::V0,
+            "v1" => VerminGradingScale::V1,
+            "v2" => VerminGradingScale::V2,
+            "v3" => VerminGradingScale::V3,
+            "v4" => VerminGradingScale::V4,
+            "v5" => VerminGradingScale::V5,
+            "v6" => VerminGradingScale::V6,
+            "v7" => VerminGradingScale::V7,
+            "v8" => VerminGradingScale::V8,
+            "v9" => VerminGradingScale::V9,
+            "v10" => VerminGradingScale::V10,
+            "v11" => VerminGradingScale::V11,
+            "v12" => VerminGradingScale::V12,
+            "v13" => VerminGradingScale::V13,
+            "v14" => VerminGradingScale::V14,
+            "v15" => VerminGradingScale::V15,
+            "v16" => VerminGradingScale::V16,
+            "v17" => VerminGradingScale::V17,
+            &_ => VerminGradingScale::UnknownVariant(0),
+        }
+    }
+}
+impl Serialize for VerminGradingScale {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
+pub enum FontGradingScale {
+    #[doc = "1"]
+    Name1,
+    #[doc = "2"]
+    Name2,
+    #[doc = "3"]
+    Name3,
+    #[doc = "4"]
+    Name4,
+    #[doc = "4+"]
+    Name4Plus,
+    #[doc = "5"]
+    Name5,
+    #[doc = "5+"]
+    Name5Plus,
+    #[doc = "6A"]
+    Name6a,
+    #[doc = "6A+"]
+    Name6aPlus,
+    #[doc = "6B"]
+    Name6b,
+    #[doc = "6B+"]
+    Name6bPlus,
+    #[doc = "6C"]
+    Name6c,
+    #[doc = "6C+"]
+    Name6cPlus,
+    #[doc = "7A"]
+    Name7a,
+    #[doc = "7A+"]
+    Name7aPlus,
+    #[doc = "7B"]
+    Name7b,
+    #[doc = "7B+"]
+    Name7bPlus,
+    #[doc = "7C"]
+    Name7c,
+    #[doc = "7C+"]
+    Name7cPlus,
+    #[doc = "8A"]
+    Name8a,
+    #[doc = "8A+"]
+    Name8aPlus,
+    #[doc = "8B"]
+    Name8b,
+    #[doc = "8B+"]
+    Name8bPlus,
+    #[doc = "8C"]
+    Name8c,
+    #[doc = "8C+"]
+    Name8cPlus,
+    #[doc = "9A"]
+    Name9a,
+    UnknownVariant(u8),
+}
+impl FontGradingScale {
+    pub fn is_named_variant(value: i64) -> bool {
+        matches!(value, 0i64..=25i64)
+    }
+    pub fn as_u8(self) -> u8 {
+        match self {
+            FontGradingScale::Name1 => 0,
+            FontGradingScale::Name2 => 1,
+            FontGradingScale::Name3 => 2,
+            FontGradingScale::Name4 => 3,
+            FontGradingScale::Name4Plus => 4,
+            FontGradingScale::Name5 => 5,
+            FontGradingScale::Name5Plus => 6,
+            FontGradingScale::Name6a => 7,
+            FontGradingScale::Name6aPlus => 8,
+            FontGradingScale::Name6b => 9,
+            FontGradingScale::Name6bPlus => 10,
+            FontGradingScale::Name6c => 11,
+            FontGradingScale::Name6cPlus => 12,
+            FontGradingScale::Name7a => 13,
+            FontGradingScale::Name7aPlus => 14,
+            FontGradingScale::Name7b => 15,
+            FontGradingScale::Name7bPlus => 16,
+            FontGradingScale::Name7c => 17,
+            FontGradingScale::Name7cPlus => 18,
+            FontGradingScale::Name8a => 19,
+            FontGradingScale::Name8aPlus => 20,
+            FontGradingScale::Name8b => 21,
+            FontGradingScale::Name8bPlus => 22,
+            FontGradingScale::Name8c => 23,
+            FontGradingScale::Name8cPlus => 24,
+            FontGradingScale::Name9a => 25,
+            FontGradingScale::UnknownVariant(value) => value,
+        }
+    }
+    pub fn as_i64(self) -> i64 {
+        self.as_u8() as i64
+    }
+}
+impl fmt::Display for FontGradingScale {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match &self {
+            FontGradingScale::Name1 => write!(f, "1"),
+            FontGradingScale::Name2 => write!(f, "2"),
+            FontGradingScale::Name3 => write!(f, "3"),
+            FontGradingScale::Name4 => write!(f, "4"),
+            FontGradingScale::Name4Plus => write!(f, "4_plus"),
+            FontGradingScale::Name5 => write!(f, "5"),
+            FontGradingScale::Name5Plus => write!(f, "5_plus"),
+            FontGradingScale::Name6a => write!(f, "6a"),
+            FontGradingScale::Name6aPlus => write!(f, "6a_plus"),
+            FontGradingScale::Name6b => write!(f, "6b"),
+            FontGradingScale::Name6bPlus => write!(f, "6b_plus"),
+            FontGradingScale::Name6c => write!(f, "6c"),
+            FontGradingScale::Name6cPlus => write!(f, "6c_plus"),
+            FontGradingScale::Name7a => write!(f, "7a"),
+            FontGradingScale::Name7aPlus => write!(f, "7a_plus"),
+            FontGradingScale::Name7b => write!(f, "7b"),
+            FontGradingScale::Name7bPlus => write!(f, "7b_plus"),
+            FontGradingScale::Name7c => write!(f, "7c"),
+            FontGradingScale::Name7cPlus => write!(f, "7c_plus"),
+            FontGradingScale::Name8a => write!(f, "8a"),
+            FontGradingScale::Name8aPlus => write!(f, "8a_plus"),
+            FontGradingScale::Name8b => write!(f, "8b"),
+            FontGradingScale::Name8bPlus => write!(f, "8b_plus"),
+            FontGradingScale::Name8c => write!(f, "8c"),
+            FontGradingScale::Name8cPlus => write!(f, "8c_plus"),
+            FontGradingScale::Name9a => write!(f, "9a"),
+            FontGradingScale::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
+        }
+    }
+}
+impl convert::From<u8> for FontGradingScale {
+    fn from(value: u8) -> Self {
+        match value {
+            0 => FontGradingScale::Name1,
+            1 => FontGradingScale::Name2,
+            2 => FontGradingScale::Name3,
+            3 => FontGradingScale::Name4,
+            4 => FontGradingScale::Name4Plus,
+            5 => FontGradingScale::Name5,
+            6 => FontGradingScale::Name5Plus,
+            7 => FontGradingScale::Name6a,
+            8 => FontGradingScale::Name6aPlus,
+            9 => FontGradingScale::Name6b,
+            10 => FontGradingScale::Name6bPlus,
+            11 => FontGradingScale::Name6c,
+            12 => FontGradingScale::Name6cPlus,
+            13 => FontGradingScale::Name7a,
+            14 => FontGradingScale::Name7aPlus,
+            15 => FontGradingScale::Name7b,
+            16 => FontGradingScale::Name7bPlus,
+            17 => FontGradingScale::Name7c,
+            18 => FontGradingScale::Name7cPlus,
+            19 => FontGradingScale::Name8a,
+            20 => FontGradingScale::Name8aPlus,
+            21 => FontGradingScale::Name8b,
+            22 => FontGradingScale::Name8bPlus,
+            23 => FontGradingScale::Name8c,
+            24 => FontGradingScale::Name8cPlus,
+            25 => FontGradingScale::Name9a,
+            _ => FontGradingScale::UnknownVariant(value),
+        }
+    }
+}
+impl convert::From<i64> for FontGradingScale {
+    fn from(value: i64) -> Self {
+        FontGradingScale::from(value as u8)
+    }
+}
+impl convert::From<&str> for FontGradingScale {
+    fn from(value: &str) -> Self {
+        match value {
+            "1" => FontGradingScale::Name1,
+            "2" => FontGradingScale::Name2,
+            "3" => FontGradingScale::Name3,
+            "4" => FontGradingScale::Name4,
+            "4_plus" => FontGradingScale::Name4Plus,
+            "5" => FontGradingScale::Name5,
+            "5_plus" => FontGradingScale::Name5Plus,
+            "6a" => FontGradingScale::Name6a,
+            "6a_plus" => FontGradingScale::Name6aPlus,
+            "6b" => FontGradingScale::Name6b,
+            "6b_plus" => FontGradingScale::Name6bPlus,
+            "6c" => FontGradingScale::Name6c,
+            "6c_plus" => FontGradingScale::Name6cPlus,
+            "7a" => FontGradingScale::Name7a,
+            "7a_plus" => FontGradingScale::Name7aPlus,
+            "7b" => FontGradingScale::Name7b,
+            "7b_plus" => FontGradingScale::Name7bPlus,
+            "7c" => FontGradingScale::Name7c,
+            "7c_plus" => FontGradingScale::Name7cPlus,
+            "8a" => FontGradingScale::Name8a,
+            "8a_plus" => FontGradingScale::Name8aPlus,
+            "8b" => FontGradingScale::Name8b,
+            "8b_plus" => FontGradingScale::Name8bPlus,
+            "8c" => FontGradingScale::Name8c,
+            "8c_plus" => FontGradingScale::Name8cPlus,
+            "9a" => FontGradingScale::Name9a,
+            &_ => FontGradingScale::UnknownVariant(0),
+        }
+    }
+}
+impl Serialize for FontGradingScale {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
+pub enum DankyuGradingScale {
+    #[doc = "7 kyuu"]
+    Name7Kyuu,
+    #[doc = "6 kyuu"]
+    Name6Kyuu,
+    #[doc = "5 kyuu"]
+    Name5Kyuu,
+    #[doc = "4 kyuu"]
+    Name4Kyuu,
+    #[doc = "3 kyuu"]
+    Name3Kyuu,
+    #[doc = "2 kyuu"]
+    Name2Kyuu,
+    #[doc = "1 kyuu"]
+    Name1Kyuu,
+    #[doc = "1 dan"]
+    Name1Dan,
+    #[doc = "2 dan"]
+    Name2Dan,
+    #[doc = "3 dan"]
+    Name3Dan,
+    #[doc = "4 dan"]
+    Name4Dan,
+    #[doc = "5 dan"]
+    Name5Dan,
+    UnknownVariant(u8),
+}
+impl DankyuGradingScale {
+    pub fn is_named_variant(value: i64) -> bool {
+        matches!(value, 0i64..=11i64)
+    }
+    pub fn as_u8(self) -> u8 {
+        match self {
+            DankyuGradingScale::Name7Kyuu => 0,
+            DankyuGradingScale::Name6Kyuu => 1,
+            DankyuGradingScale::Name5Kyuu => 2,
+            DankyuGradingScale::Name4Kyuu => 3,
+            DankyuGradingScale::Name3Kyuu => 4,
+            DankyuGradingScale::Name2Kyuu => 5,
+            DankyuGradingScale::Name1Kyuu => 6,
+            DankyuGradingScale::Name1Dan => 7,
+            DankyuGradingScale::Name2Dan => 8,
+            DankyuGradingScale::Name3Dan => 9,
+            DankyuGradingScale::Name4Dan => 10,
+            DankyuGradingScale::Name5Dan => 11,
+            DankyuGradingScale::UnknownVariant(value) => value,
+        }
+    }
+    pub fn as_i64(self) -> i64 {
+        self.as_u8() as i64
+    }
+}
+impl fmt::Display for DankyuGradingScale {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match &self {
+            DankyuGradingScale::Name7Kyuu => write!(f, "7_kyuu"),
+            DankyuGradingScale::Name6Kyuu => write!(f, "6_kyuu"),
+            DankyuGradingScale::Name5Kyuu => write!(f, "5_kyuu"),
+            DankyuGradingScale::Name4Kyuu => write!(f, "4_kyuu"),
+            DankyuGradingScale::Name3Kyuu => write!(f, "3_kyuu"),
+            DankyuGradingScale::Name2Kyuu => write!(f, "2_kyuu"),
+            DankyuGradingScale::Name1Kyuu => write!(f, "1_kyuu"),
+            DankyuGradingScale::Name1Dan => write!(f, "1_dan"),
+            DankyuGradingScale::Name2Dan => write!(f, "2_dan"),
+            DankyuGradingScale::Name3Dan => write!(f, "3_dan"),
+            DankyuGradingScale::Name4Dan => write!(f, "4_dan"),
+            DankyuGradingScale::Name5Dan => write!(f, "5_dan"),
+            DankyuGradingScale::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
+        }
+    }
+}
+impl convert::From<u8> for DankyuGradingScale {
+    fn from(value: u8) -> Self {
+        match value {
+            0 => DankyuGradingScale::Name7Kyuu,
+            1 => DankyuGradingScale::Name6Kyuu,
+            2 => DankyuGradingScale::Name5Kyuu,
+            3 => DankyuGradingScale::Name4Kyuu,
+            4 => DankyuGradingScale::Name3Kyuu,
+            5 => DankyuGradingScale::Name2Kyuu,
+            6 => DankyuGradingScale::Name1Kyuu,
+            7 => DankyuGradingScale::Name1Dan,
+            8 => DankyuGradingScale::Name2Dan,
+            9 => DankyuGradingScale::Name3Dan,
+            10 => DankyuGradingScale::Name4Dan,
+            11 => DankyuGradingScale::Name5Dan,
+            _ => DankyuGradingScale::UnknownVariant(value),
+        }
+    }
+}
+impl convert::From<i64> for DankyuGradingScale {
+    fn from(value: i64) -> Self {
+        DankyuGradingScale::from(value as u8)
+    }
+}
+impl convert::From<&str> for DankyuGradingScale {
+    fn from(value: &str) -> Self {
+        match value {
+            "7_kyuu" => DankyuGradingScale::Name7Kyuu,
+            "6_kyuu" => DankyuGradingScale::Name6Kyuu,
+            "5_kyuu" => DankyuGradingScale::Name5Kyuu,
+            "4_kyuu" => DankyuGradingScale::Name4Kyuu,
+            "3_kyuu" => DankyuGradingScale::Name3Kyuu,
+            "2_kyuu" => DankyuGradingScale::Name2Kyuu,
+            "1_kyuu" => DankyuGradingScale::Name1Kyuu,
+            "1_dan" => DankyuGradingScale::Name1Dan,
+            "2_dan" => DankyuGradingScale::Name2Dan,
+            "3_dan" => DankyuGradingScale::Name3Dan,
+            "4_dan" => DankyuGradingScale::Name4Dan,
+            "5_dan" => DankyuGradingScale::Name5Dan,
+            &_ => DankyuGradingScale::UnknownVariant(0),
+        }
+    }
+}
+impl Serialize for DankyuGradingScale {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
+#[doc = "Use with indoor climbing activities only"]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
+pub enum SplitStatus {
+    Failure,
+    Success,
+    ClimbAttempted,
+    ClimbCompleted,
+    UnknownVariant(u8),
+}
+impl SplitStatus {
+    pub fn is_named_variant(value: i64) -> bool {
+        matches!(value, 0i64..=3i64)
+    }
+    pub fn as_u8(self) -> u8 {
+        match self {
+            SplitStatus::Failure => 0,
+            SplitStatus::Success => 1,
+            SplitStatus::ClimbAttempted => 2,
+            SplitStatus::ClimbCompleted => 3,
+            SplitStatus::UnknownVariant(value) => value,
+        }
+    }
+    pub fn as_i64(self) -> i64 {
+        self.as_u8() as i64
+    }
+}
+impl fmt::Display for SplitStatus {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match &self {
+            SplitStatus::Failure => write!(f, "failure"),
+            SplitStatus::Success => write!(f, "success"),
+            SplitStatus::ClimbAttempted => write!(f, "climb_attempted"),
+            SplitStatus::ClimbCompleted => write!(f, "climb_completed"),
+            SplitStatus::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
+        }
+    }
+}
+impl convert::From<u8> for SplitStatus {
+    fn from(value: u8) -> Self {
+        match value {
+            0 => SplitStatus::Failure,
+            1 => SplitStatus::Success,
+            2 => SplitStatus::ClimbAttempted,
+            3 => SplitStatus::ClimbCompleted,
+            _ => SplitStatus::UnknownVariant(value),
+        }
+    }
+}
+impl convert::From<i64> for SplitStatus {
+    fn from(value: i64) -> Self {
+        SplitStatus::from(value as u8)
+    }
+}
+impl convert::From<&str> for SplitStatus {
+    fn from(value: &str) -> Self {
+        match value {
+            "failure" => SplitStatus::Failure,
+            "success" => SplitStatus::Success,
+            "climb_attempted" => SplitStatus::ClimbAttempted,
+            "climb_completed" => SplitStatus::ClimbCompleted,
+            &_ => SplitStatus::UnknownVariant(0),
+        }
+    }
+}
+impl Serialize for SplitStatus {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
 pub enum TapSensitivity {
     High,
     Medium,
@@ -37730,6 +40569,178 @@ impl convert::From<&str> for NoFlyTimeMode {
     }
 }
 impl Serialize for NoFlyTimeMode {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
+pub enum DiveSectionType {
+    Ascent,
+    Descent,
+    Hang,
+    UnknownVariant(u8),
+}
+impl DiveSectionType {
+    pub fn is_named_variant(value: i64) -> bool {
+        matches!(value, 0i64..=2i64)
+    }
+    pub fn as_u8(self) -> u8 {
+        match self {
+            DiveSectionType::Ascent => 0,
+            DiveSectionType::Descent => 1,
+            DiveSectionType::Hang => 2,
+            DiveSectionType::UnknownVariant(value) => value,
+        }
+    }
+    pub fn as_i64(self) -> i64 {
+        self.as_u8() as i64
+    }
+}
+impl fmt::Display for DiveSectionType {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match &self {
+            DiveSectionType::Ascent => write!(f, "ascent"),
+            DiveSectionType::Descent => write!(f, "descent"),
+            DiveSectionType::Hang => write!(f, "hang"),
+            DiveSectionType::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
+        }
+    }
+}
+impl convert::From<u8> for DiveSectionType {
+    fn from(value: u8) -> Self {
+        match value {
+            0 => DiveSectionType::Ascent,
+            1 => DiveSectionType::Descent,
+            2 => DiveSectionType::Hang,
+            _ => DiveSectionType::UnknownVariant(value),
+        }
+    }
+}
+impl convert::From<i64> for DiveSectionType {
+    fn from(value: i64) -> Self {
+        DiveSectionType::from(value as u8)
+    }
+}
+impl convert::From<&str> for DiveSectionType {
+    fn from(value: &str) -> Self {
+        match value {
+            "ascent" => DiveSectionType::Ascent,
+            "descent" => DiveSectionType::Descent,
+            "hang" => DiveSectionType::Hang,
+            &_ => DiveSectionType::UnknownVariant(0),
+        }
+    }
+}
+impl Serialize for DiveSectionType {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        serializer.serialize_str(&self.to_string())
+    }
+}
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd, Eq, Ord, Hash)]
+pub enum ApneaDiscipline {
+    ConstantWeightWithFins,
+    ConstantWeightWithBifins,
+    ConstantWeightWithoutFins,
+    DynamicWithFins,
+    DynamicWithBifins,
+    DynamicWithoutFins,
+    FreeImmersion,
+    NoLimit,
+    SpeedEnduranceApnea,
+    StaticApnea,
+    VariableWeight,
+    UnknownVariant(u8),
+}
+impl ApneaDiscipline {
+    pub fn is_named_variant(value: i64) -> bool {
+        matches!(value, 0i64..=10i64)
+    }
+    pub fn as_u8(self) -> u8 {
+        match self {
+            ApneaDiscipline::ConstantWeightWithFins => 0,
+            ApneaDiscipline::ConstantWeightWithBifins => 1,
+            ApneaDiscipline::ConstantWeightWithoutFins => 2,
+            ApneaDiscipline::DynamicWithFins => 3,
+            ApneaDiscipline::DynamicWithBifins => 4,
+            ApneaDiscipline::DynamicWithoutFins => 5,
+            ApneaDiscipline::FreeImmersion => 6,
+            ApneaDiscipline::NoLimit => 7,
+            ApneaDiscipline::SpeedEnduranceApnea => 8,
+            ApneaDiscipline::StaticApnea => 9,
+            ApneaDiscipline::VariableWeight => 10,
+            ApneaDiscipline::UnknownVariant(value) => value,
+        }
+    }
+    pub fn as_i64(self) -> i64 {
+        self.as_u8() as i64
+    }
+}
+impl fmt::Display for ApneaDiscipline {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match &self {
+            ApneaDiscipline::ConstantWeightWithFins => write!(f, "constant_weight_with_fins"),
+            ApneaDiscipline::ConstantWeightWithBifins => write!(f, "constant_weight_with_bifins"),
+            ApneaDiscipline::ConstantWeightWithoutFins => write!(f, "constant_weight_without_fins"),
+            ApneaDiscipline::DynamicWithFins => write!(f, "dynamic_with_fins"),
+            ApneaDiscipline::DynamicWithBifins => write!(f, "dynamic_with_bifins"),
+            ApneaDiscipline::DynamicWithoutFins => write!(f, "dynamic_without_fins"),
+            ApneaDiscipline::FreeImmersion => write!(f, "free_immersion"),
+            ApneaDiscipline::NoLimit => write!(f, "no_limit"),
+            ApneaDiscipline::SpeedEnduranceApnea => write!(f, "speed_endurance_apnea"),
+            ApneaDiscipline::StaticApnea => write!(f, "static_apnea"),
+            ApneaDiscipline::VariableWeight => write!(f, "variable_weight"),
+            ApneaDiscipline::UnknownVariant(value) => write!(f, "unknown_variant_{}", value),
+        }
+    }
+}
+impl convert::From<u8> for ApneaDiscipline {
+    fn from(value: u8) -> Self {
+        match value {
+            0 => ApneaDiscipline::ConstantWeightWithFins,
+            1 => ApneaDiscipline::ConstantWeightWithBifins,
+            2 => ApneaDiscipline::ConstantWeightWithoutFins,
+            3 => ApneaDiscipline::DynamicWithFins,
+            4 => ApneaDiscipline::DynamicWithBifins,
+            5 => ApneaDiscipline::DynamicWithoutFins,
+            6 => ApneaDiscipline::FreeImmersion,
+            7 => ApneaDiscipline::NoLimit,
+            8 => ApneaDiscipline::SpeedEnduranceApnea,
+            9 => ApneaDiscipline::StaticApnea,
+            10 => ApneaDiscipline::VariableWeight,
+            _ => ApneaDiscipline::UnknownVariant(value),
+        }
+    }
+}
+impl convert::From<i64> for ApneaDiscipline {
+    fn from(value: i64) -> Self {
+        ApneaDiscipline::from(value as u8)
+    }
+}
+impl convert::From<&str> for ApneaDiscipline {
+    fn from(value: &str) -> Self {
+        match value {
+            "constant_weight_with_fins" => ApneaDiscipline::ConstantWeightWithFins,
+            "constant_weight_with_bifins" => ApneaDiscipline::ConstantWeightWithBifins,
+            "constant_weight_without_fins" => ApneaDiscipline::ConstantWeightWithoutFins,
+            "dynamic_with_fins" => ApneaDiscipline::DynamicWithFins,
+            "dynamic_with_bifins" => ApneaDiscipline::DynamicWithBifins,
+            "dynamic_without_fins" => ApneaDiscipline::DynamicWithoutFins,
+            "free_immersion" => ApneaDiscipline::FreeImmersion,
+            "no_limit" => ApneaDiscipline::NoLimit,
+            "speed_endurance_apnea" => ApneaDiscipline::SpeedEnduranceApnea,
+            "static_apnea" => ApneaDiscipline::StaticApnea,
+            "variable_weight" => ApneaDiscipline::VariableWeight,
+            &_ => ApneaDiscipline::UnknownVariant(0),
+        }
+    }
+}
+impl Serialize for ApneaDiscipline {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,

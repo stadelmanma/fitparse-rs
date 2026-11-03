@@ -5,6 +5,7 @@
   message; the value is kept as raw bytes under an `unknown_dev_field_<idx>_<num>`
   placeholder, and `DecodeOption::DropUnknownFields` drops it (kjones)
 * Fix developer field parsing when ReturnNumericEnumValues is set (erik)
+* Bump packaged FIT SDK version to 21.218.0
 
 ## v0.11.0
 * Profile parser fixes for FIT SDK 21.195.0 and onward (richyo-codes)
