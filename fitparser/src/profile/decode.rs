@@ -1,4 +1,4 @@
-#![doc = "//! Auto generated profile messages from FIT SDK Release: 21.202.0"]
+#![doc = "//! Auto generated profile messages from FIT SDK Release: 21.218.00"]
 #![allow(unused_variables)]
 #![allow(clippy::if_same_then_else, clippy::too_many_arguments)]
 use super::field_types::*;
@@ -9,7 +9,7 @@ use crate::{FitDataField, Value};
 use std::collections::{HashMap, HashSet, VecDeque};
 use std::convert::TryInto;
 #[doc = "FIT SDK version used to generate profile decoder"]
-pub const VERSION: &str = "21.202.0";
+pub const VERSION: &str = "21.218.00";
 #[doc = "Must be first message in file."]
 #[doc = " * time_created: Only set for files that are can be created/erased."]
 #[doc = " * number: Only set for files that are not created/erased."]
@@ -13298,9 +13298,12 @@ fn activity_message_timestamp_field(
 #[doc = " * event_type: stop"]
 #[doc = " * total_elapsed_time: Time (includes pauses)"]
 #[doc = " * total_timer_time: Timer Time (excludes pauses)"]
+#[doc = " * total_pushes: total number of pushes in a session"]
 #[doc = " * avg_speed: total_distance / total_timer_time"]
 #[doc = " * avg_heart_rate: average heart rate (excludes pause time)"]
 #[doc = " * avg_cadence: total_cycles / total_timer_time if non_zero_avg_cadence otherwise total_cycles / total_elapsed_time"]
+#[doc = " * avg_push_cadence: average pushes per minute in a session"]
+#[doc = " * max_push_cadence: max pushes per minute in a session"]
 #[doc = " * avg_power: total_power / total_timer_time if non_zero_avg_power otherwise total_power / total_elapsed_time"]
 #[doc = " * nec_lat: North east corner latitude"]
 #[doc = " * nec_long: North east corner longitude"]
@@ -13494,7 +13497,41 @@ fn session_message(
                 )?);
             }
             10u8 => {
-                if Sport::Running.as_i64()
+                if SubSport::StrengthTraining.as_i64()
+                    == data_map
+                        .get(&6u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(session_message_total_reps_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "reps",
+                        value,
+                    )?);
+                } else if Sport::Hiit.as_i64()
+                    == data_map
+                        .get(&5u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(session_message_total_reps_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "reps",
+                        value,
+                    )?);
+                } else if Sport::Running.as_i64()
                     == data_map
                         .get(&5u8)
                         .and_then(|v| v.try_into().ok())
@@ -13594,6 +13631,40 @@ fn session_message(
                         1f64,
                         0f64,
                         "strokes",
+                        value,
+                    )?);
+                } else if Sport::WheelchairPushRun.as_i64()
+                    == data_map
+                        .get(&5u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(session_message_total_pushes_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "pushes",
+                        value,
+                    )?);
+                } else if Sport::WheelchairPushWalk.as_i64()
+                    == data_map
+                        .get(&5u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(session_message_total_pushes_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "pushes",
                         value,
                     )?);
                 } else {
@@ -13738,6 +13809,91 @@ fn session_message(
                         "strides/min",
                         value,
                     )?);
+                } else if Sport::Swimming.as_i64()
+                    == data_map
+                        .get(&5u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(session_message_avg_swimming_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "strokes/min",
+                        value,
+                    )?);
+                } else if Sport::Rowing.as_i64()
+                    == data_map
+                        .get(&5u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(session_message_avg_paddlesport_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "strokes/min",
+                        value,
+                    )?);
+                } else if Sport::StandUpPaddleboarding.as_i64()
+                    == data_map
+                        .get(&5u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(session_message_avg_paddlesport_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "strokes/min",
+                        value,
+                    )?);
+                } else if Sport::WheelchairPushRun.as_i64()
+                    == data_map
+                        .get(&5u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(session_message_avg_push_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "pushes/min",
+                        value,
+                    )?);
+                } else if Sport::WheelchairPushWalk.as_i64()
+                    == data_map
+                        .get(&5u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(session_message_avg_push_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "pushes/min",
+                        value,
+                    )?);
                 } else {
                     fields.push(session_message_avg_cadence_field(
                         mesg_num,
@@ -13768,6 +13924,91 @@ fn session_message(
                         1f64,
                         0f64,
                         "strides/min",
+                        value,
+                    )?);
+                } else if Sport::Swimming.as_i64()
+                    == data_map
+                        .get(&5u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(session_message_max_swimming_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "strokes/min",
+                        value,
+                    )?);
+                } else if Sport::Rowing.as_i64()
+                    == data_map
+                        .get(&5u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(session_message_max_paddlesport_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "strokes/min",
+                        value,
+                    )?);
+                } else if Sport::StandUpPaddleboarding.as_i64()
+                    == data_map
+                        .get(&5u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(session_message_max_paddlesport_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "strokes/min",
+                        value,
+                    )?);
+                } else if Sport::WheelchairPushRun.as_i64()
+                    == data_map
+                        .get(&5u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(session_message_max_push_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "pushes/min",
+                        value,
+                    )?);
+                } else if Sport::WheelchairPushWalk.as_i64()
+                    == data_map
+                        .get(&5u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(session_message_max_push_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "pushes/min",
                         value,
                     )?);
                 } else {
@@ -14511,6 +14752,32 @@ fn session_message(
                     value,
                 )?);
             }
+            79u8 => {
+                fields.push(session_message_avg_strokes_per_length_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    10f64,
+                    0f64,
+                    "strokes/length",
+                    value,
+                )?);
+            }
+            80u8 => {
+                fields.push(session_message_avg_swolf_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "",
+                    value,
+                )?);
+            }
             82u8 => {
                 fields.push(session_message_player_score_field(
                     mesg_num,
@@ -14820,6 +15087,45 @@ fn session_message(
                     2f64,
                     0f64,
                     "percent",
+                    value,
+                )?);
+            }
+            106u8 => {
+                fields.push(session_message_num_segment_laps_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "",
+                    value,
+                )?);
+            }
+            107u8 => {
+                fields.push(session_message_front_gear_shift_count_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "",
+                    value,
+                )?);
+            }
+            108u8 => {
+                fields.push(session_message_rear_gear_shift_count_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "",
                     value,
                 )?);
             }
@@ -15667,6 +15973,19 @@ fn session_message(
                     value,
                 )?);
             }
+            211u8 => {
+                fields.push(session_message_avg_grade_adjusted_speed_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1000f64,
+                    0f64,
+                    "m/s",
+                    value,
+                )?);
+            }
             253u8 => {
                 fields.push(session_message_timestamp_field(
                     mesg_num,
@@ -16010,6 +16329,39 @@ fn session_message_total_cycles_field(
         options,
     )
 }
+fn session_message_total_reps_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 10u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "total_cycles"
+    } else {
+        "total_reps"
+    };
+    data_field_with_info(
+        10u8,
+        None,
+        name,
+        FieldDataType::UInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
 fn session_message_total_strides_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
@@ -16063,6 +16415,39 @@ fn session_message_total_strokes_field(
         "total_cycles"
     } else {
         "total_strokes"
+    };
+    data_field_with_info(
+        10u8,
+        None,
+        name,
+        FieldDataType::UInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn session_message_total_pushes_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 10u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "total_cycles"
+    } else {
+        "total_pushes"
     };
     data_field_with_info(
         10u8,
@@ -16305,6 +16690,105 @@ fn session_message_avg_running_cadence_field(
         options,
     )
 }
+fn session_message_avg_swimming_cadence_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 18u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "avg_cadence"
+    } else {
+        "avg_swimming_cadence"
+    };
+    data_field_with_info(
+        18u8,
+        None,
+        name,
+        FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn session_message_avg_paddlesport_cadence_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 18u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "avg_cadence"
+    } else {
+        "avg_paddlesport_cadence"
+    };
+    data_field_with_info(
+        18u8,
+        None,
+        name,
+        FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn session_message_avg_push_cadence_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 18u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "avg_cadence"
+    } else {
+        "avg_push_cadence"
+    };
+    data_field_with_info(
+        18u8,
+        None,
+        name,
+        FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
 fn session_message_max_cadence_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
@@ -16353,6 +16837,105 @@ fn session_message_max_running_cadence_field(
         "max_cadence"
     } else {
         "max_running_cadence"
+    };
+    data_field_with_info(
+        19u8,
+        None,
+        name,
+        FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn session_message_max_swimming_cadence_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 19u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "max_cadence"
+    } else {
+        "max_swimming_cadence"
+    };
+    data_field_with_info(
+        19u8,
+        None,
+        name,
+        FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn session_message_max_paddlesport_cadence_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 19u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "max_cadence"
+    } else {
+        "max_paddlesport_cadence"
+    };
+    data_field_with_info(
+        19u8,
+        None,
+        name,
+        FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn session_message_max_push_cadence_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 19u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "max_cadence"
+    } else {
+        "max_push_cadence"
     };
     data_field_with_info(
         19u8,
@@ -17822,6 +18405,62 @@ fn session_message_active_time_field(
         options,
     )
 }
+fn session_message_avg_strokes_per_length_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 79u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        79u8,
+        None,
+        "avg_strokes_per_length",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn session_message_avg_swolf_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 80u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        80u8,
+        None,
+        "avg_swolf",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
 fn session_message_player_score_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
@@ -18487,6 +19126,90 @@ fn session_message_avg_combined_pedal_smoothness_field(
         None,
         "avg_combined_pedal_smoothness",
         FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn session_message_num_segment_laps_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 106u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        106u8,
+        None,
+        "num_segment_laps",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn session_message_front_gear_shift_count_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 107u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        107u8,
+        None,
+        "front_gear_shift_count",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn session_message_rear_gear_shift_count_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 108u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        108u8,
+        None,
+        "rear_gear_shift_count",
+        FieldDataType::UInt16,
         scale,
         offset,
         units,
@@ -20202,6 +20925,34 @@ fn session_message_max_core_temperature_field(
         options,
     )
 }
+fn session_message_avg_grade_adjusted_speed_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 211u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        211u8,
+        None,
+        "avg_grade_adjusted_speed",
+        FieldDataType::UInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
 fn session_message_timestamp_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
@@ -20261,9 +21012,16 @@ fn session_message_message_index_field(
 #[doc = "lap message definition"]
 #[doc = " * total_elapsed_time: Time (includes pauses)"]
 #[doc = " * total_timer_time: Timer Time (excludes pauses)"]
+#[doc = " * total_pushes: total number of pushes in a lap"]
 #[doc = " * total_fat_calories: If New Leaf"]
 #[doc = " * avg_cadence: total_cycles / total_timer_time if non_zero_avg_cadence otherwise total_cycles / total_elapsed_time"]
+#[doc = " * avg_push_cadence: average pushes per minute in a lap"]
+#[doc = " * max_push_cadence: max pushes per minute in a lap"]
 #[doc = " * avg_power: total_power / total_timer_time if non_zero_avg_power otherwise total_power / total_elapsed_time"]
+#[doc = " * nec_lat: North east corner latitude."]
+#[doc = " * nec_long: North east corner longitude."]
+#[doc = " * swc_lat: South west corner latitude."]
+#[doc = " * swc_long: South west corner latitude."]
 #[doc = " * num_lengths: # of lengths of swim pool"]
 #[doc = " * num_active_lengths: # of active lengths of swim pool"]
 #[doc = " * stroke_count: stroke_type enum used as the index"]
@@ -20544,6 +21302,40 @@ fn lap_message(
                         "strokes",
                         value,
                     )?);
+                } else if Sport::WheelchairPushRun.as_i64()
+                    == data_map
+                        .get(&25u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(lap_message_total_pushes_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "pushes",
+                        value,
+                    )?);
+                } else if Sport::WheelchairPushWalk.as_i64()
+                    == data_map
+                        .get(&25u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(lap_message_total_pushes_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "pushes",
+                        value,
+                    )?);
                 } else {
                     fields.push(lap_message_total_cycles_field(
                         mesg_num,
@@ -20686,6 +21478,91 @@ fn lap_message(
                         "strides/min",
                         value,
                     )?);
+                } else if Sport::Swimming.as_i64()
+                    == data_map
+                        .get(&25u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(lap_message_avg_swimming_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "strokes/min",
+                        value,
+                    )?);
+                } else if Sport::Rowing.as_i64()
+                    == data_map
+                        .get(&25u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(lap_message_avg_paddlesport_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "strokes/min",
+                        value,
+                    )?);
+                } else if Sport::StandUpPaddleboarding.as_i64()
+                    == data_map
+                        .get(&25u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(lap_message_avg_paddlesport_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "strokes/min",
+                        value,
+                    )?);
+                } else if Sport::WheelchairPushRun.as_i64()
+                    == data_map
+                        .get(&25u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(lap_message_avg_push_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "pushes/min",
+                        value,
+                    )?);
+                } else if Sport::WheelchairPushWalk.as_i64()
+                    == data_map
+                        .get(&25u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(lap_message_avg_push_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "pushes/min",
+                        value,
+                    )?);
                 } else {
                     fields.push(lap_message_avg_cadence_field(
                         mesg_num,
@@ -20716,6 +21593,91 @@ fn lap_message(
                         1f64,
                         0f64,
                         "strides/min",
+                        value,
+                    )?);
+                } else if Sport::Swimming.as_i64()
+                    == data_map
+                        .get(&25u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(lap_message_max_swimming_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "strokes/min",
+                        value,
+                    )?);
+                } else if Sport::Rowing.as_i64()
+                    == data_map
+                        .get(&25u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(lap_message_max_paddlesport_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "strokes/min",
+                        value,
+                    )?);
+                } else if Sport::StandUpPaddleboarding.as_i64()
+                    == data_map
+                        .get(&25u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(lap_message_max_paddlesport_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "strokes/min",
+                        value,
+                    )?);
+                } else if Sport::WheelchairPushRun.as_i64()
+                    == data_map
+                        .get(&25u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(lap_message_max_push_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "pushes/min",
+                        value,
+                    )?);
+                } else if Sport::WheelchairPushWalk.as_i64()
+                    == data_map
+                        .get(&25u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(lap_message_max_push_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "pushes/min",
                         value,
                     )?);
                 } else {
@@ -20833,6 +21795,58 @@ fn lap_message(
                     1f64,
                     0f64,
                     "",
+                    value,
+                )?);
+            }
+            27u8 => {
+                fields.push(lap_message_nec_lat_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "semicircles",
+                    value,
+                )?);
+            }
+            28u8 => {
+                fields.push(lap_message_nec_long_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "semicircles",
+                    value,
+                )?);
+            }
+            29u8 => {
+                fields.push(lap_message_swc_lat_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "semicircles",
+                    value,
+                )?);
+            }
+            30u8 => {
+                fields.push(lap_message_swc_long_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "semicircles",
                     value,
                 )?);
             }
@@ -21316,6 +22330,19 @@ fn lap_message(
                     value,
                 )?);
             }
+            73u8 => {
+                fields.push(lap_message_avg_swolf_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "",
+                    value,
+                )?);
+            }
             74u8 => {
                 fields.push(lap_message_opponent_score_field(
                     mesg_num,
@@ -21524,6 +22551,19 @@ fn lap_message(
                     value,
                 )?);
             }
+            90u8 => {
+                fields.push(lap_message_avg_strokes_per_length_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    10f64,
+                    0f64,
+                    "strokes / length",
+                    value,
+                )?);
+            }
             91u8 => {
                 fields.push(lap_message_avg_left_torque_effectiveness_field(
                     mesg_num,
@@ -21586,6 +22626,32 @@ fn lap_message(
                     2f64,
                     0f64,
                     "percent",
+                    value,
+                )?);
+            }
+            96u8 => {
+                fields.push(lap_message_front_gear_shift_count_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "",
+                    value,
+                )?);
+            }
+            97u8 => {
+                fields.push(lap_message_rear_gear_shift_count_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "",
                     value,
                 )?);
             }
@@ -22091,6 +23157,19 @@ fn lap_message(
                     value,
                 )?);
             }
+            155u8 => {
+                fields.push(lap_message_metabolic_calories_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "kcal",
+                    value,
+                )?);
+            }
             156u8 => {
                 fields.push(lap_message_total_fractional_ascent_field(
                     mesg_num,
@@ -22153,6 +23232,19 @@ fn lap_message(
                     100f64,
                     0f64,
                     "C",
+                    value,
+                )?);
+            }
+            161u8 => {
+                fields.push(lap_message_avg_grade_adjusted_speed_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1000f64,
+                    0f64,
+                    "m/s",
                     value,
                 )?);
             }
@@ -22565,6 +23657,39 @@ fn lap_message_total_strokes_field(
         options,
     )
 }
+fn lap_message_total_pushes_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 10u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "total_cycles"
+    } else {
+        "total_pushes"
+    };
+    data_field_with_info(
+        10u8,
+        None,
+        name,
+        FieldDataType::UInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
 fn lap_message_total_calories_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
@@ -22794,6 +23919,105 @@ fn lap_message_avg_running_cadence_field(
         options,
     )
 }
+fn lap_message_avg_swimming_cadence_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 17u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "avg_cadence"
+    } else {
+        "avg_swimming_cadence"
+    };
+    data_field_with_info(
+        17u8,
+        None,
+        name,
+        FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn lap_message_avg_paddlesport_cadence_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 17u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "avg_cadence"
+    } else {
+        "avg_paddlesport_cadence"
+    };
+    data_field_with_info(
+        17u8,
+        None,
+        name,
+        FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn lap_message_avg_push_cadence_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 17u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "avg_cadence"
+    } else {
+        "avg_push_cadence"
+    };
+    data_field_with_info(
+        17u8,
+        None,
+        name,
+        FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
 fn lap_message_max_cadence_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
@@ -22842,6 +24066,105 @@ fn lap_message_max_running_cadence_field(
         "max_cadence"
     } else {
         "max_running_cadence"
+    };
+    data_field_with_info(
+        18u8,
+        None,
+        name,
+        FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn lap_message_max_swimming_cadence_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 18u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "max_cadence"
+    } else {
+        "max_swimming_cadence"
+    };
+    data_field_with_info(
+        18u8,
+        None,
+        name,
+        FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn lap_message_max_paddlesport_cadence_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 18u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "max_cadence"
+    } else {
+        "max_paddlesport_cadence"
+    };
+    data_field_with_info(
+        18u8,
+        None,
+        name,
+        FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn lap_message_max_push_cadence_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 18u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "max_cadence"
+    } else {
+        "max_push_cadence"
     };
     data_field_with_info(
         18u8,
@@ -23072,6 +24395,118 @@ fn lap_message_event_group_field(
         None,
         "event_group",
         FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn lap_message_nec_lat_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 27u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        27u8,
+        None,
+        "nec_lat",
+        FieldDataType::SInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn lap_message_nec_long_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 28u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        28u8,
+        None,
+        "nec_long",
+        FieldDataType::SInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn lap_message_swc_lat_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 29u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        29u8,
+        None,
+        "swc_lat",
+        FieldDataType::SInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn lap_message_swc_long_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 30u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        30u8,
+        None,
+        "swc_long",
+        FieldDataType::SInt32,
         scale,
         offset,
         units,
@@ -24003,6 +25438,34 @@ fn lap_message_wkt_step_index_field(
         options,
     )
 }
+fn lap_message_avg_swolf_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 73u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        73u8,
+        None,
+        "avg_swolf",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
 fn lap_message_opponent_score_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
@@ -24451,6 +25914,34 @@ fn lap_message_max_saturated_hemoglobin_percent_field(
         options,
     )
 }
+fn lap_message_avg_strokes_per_length_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 90u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        90u8,
+        None,
+        "avg_strokes_per_length",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
 fn lap_message_avg_left_torque_effectiveness_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
@@ -24584,6 +26075,62 @@ fn lap_message_avg_combined_pedal_smoothness_field(
         None,
         "avg_combined_pedal_smoothness",
         FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn lap_message_front_gear_shift_count_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 96u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        96u8,
+        None,
+        "front_gear_shift_count",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn lap_message_rear_gear_shift_count_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 97u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        97u8,
+        None,
+        "rear_gear_shift_count",
+        FieldDataType::UInt16,
         scale,
         offset,
         units,
@@ -25599,6 +27146,34 @@ fn lap_message_avg_flow_field(
         options,
     )
 }
+fn lap_message_metabolic_calories_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 155u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        155u8,
+        None,
+        "metabolic_calories",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
 fn lap_message_total_fractional_ascent_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
@@ -25732,6 +27307,34 @@ fn lap_message_max_core_temperature_field(
         None,
         "max_core_temperature",
         FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn lap_message_avg_grade_adjusted_speed_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 161u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        161u8,
+        None,
+        "avg_grade_adjusted_speed",
+        FieldDataType::UInt32,
         scale,
         offset,
         units,
@@ -26101,6 +27704,19 @@ fn length_message(
                     0f64,
                     "",
                     enhanced_max_respiration_rate,
+                )?);
+            }
+            26u8 => {
+                fields.push(length_message_metabolic_calories_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "kcal",
+                    value,
                 )?);
             }
             253u8 => {
@@ -26691,6 +28307,34 @@ fn length_message_max_respiration_rate_field(
         None,
         "max_respiration_rate",
         FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn length_message_metabolic_calories_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 26u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        26u8,
+        None,
+        "metabolic_calories",
+        FieldDataType::UInt16,
         scale,
         offset,
         units,
@@ -34640,6 +36284,109 @@ fn training_file_message_timestamp_field(
         options,
     )
 }
+#[doc = "battery message definition"]
+fn battery_message(
+    mesg_num: MesgNum,
+    data_map: &mut HashMap<u8, Value>,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+) -> Result<Vec<FitDataField>> {
+    let mut fields = Vec::new();
+    let mut entries: VecDeque<(u8, Value)> =
+        data_map.iter().map(|(k, v)| (*k, v.clone())).collect();
+    while let Some((field_nr, value)) = entries.pop_front() {
+        match field_nr {
+            2u8 => {
+                fields.push(battery_message_capacity_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "%",
+                    value,
+                )?);
+            }
+            253u8 => {
+                fields.push(battery_message_timestamp_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "",
+                    value,
+                )?);
+            }
+            _ => {
+                if !options.contains(&DecodeOption::DropUnknownFields) {
+                    fields.push(unknown_field(field_nr, value));
+                }
+            }
+        }
+    }
+    Ok(fields)
+}
+fn battery_message_capacity_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 2u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        2u8,
+        None,
+        "capacity",
+        FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn battery_message_timestamp_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 253u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        253u8,
+        None,
+        "timestamp",
+        FieldDataType::DateTime,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
 #[doc = "weather_conditions message definition"]
 #[doc = " * weather_report: Current or forecast"]
 #[doc = " * condition: Corresponds to GSC Response weatherIcon field"]
@@ -37601,6 +39348,19 @@ fn barometer_data_message(
                     value,
                 )?);
             }
+            3u8 => {
+                fields.push(barometer_data_message_enhanced_altitude_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    5f64,
+                    500f64,
+                    "m",
+                    value,
+                )?);
+            }
             253u8 => {
                 fields.push(barometer_data_message_timestamp_field(
                     mesg_num,
@@ -37699,6 +39459,34 @@ fn barometer_data_message_baro_pres_field(
         2u8,
         None,
         "baro_pres",
+        FieldDataType::UInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn barometer_data_message_enhanced_altitude_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 3u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        3u8,
+        None,
+        "enhanced_altitude",
         FieldDataType::UInt32,
         scale,
         offset,
@@ -41371,7 +43159,38 @@ fn jump_message_timestamp_field(
     )
 }
 #[doc = "split message definition"]
+#[doc = " * nec_lat: North east corner latitude"]
+#[doc = " * nec_long: North east corner longitude"]
+#[doc = " * swc_lat: South west corner latitude"]
+#[doc = " * swc_long: South west corner longitude"]
+#[doc = " * avg_push_cadence: average pushes per minute in a split"]
+#[doc = " * max_push_cadence: max pushes per minute in a split"]
+#[doc = " * total_reps: total reps in a split round"]
+#[doc = " * total_pushes: total number of pushes in a split"]
+#[doc = " * time_standing: Total time spent in the standing position"]
+#[doc = " * avg_left_pco: Average left platform center offset"]
+#[doc = " * avg_right_pco: Average right platform center offset"]
+#[doc = " * avg_left_power_phase: Average left power phase angles. Data value indexes defined by power_phase_type."]
+#[doc = " * avg_left_power_phase_peak: Average left power phase peak angles. Data value indexes defined by power_phase_type."]
+#[doc = " * avg_right_power_phase: Average right power phase angles. Data value indexes defined by power_phase_type."]
+#[doc = " * avg_right_power_phase_peak: Average right power phase peak angles. Data value indexes defined by power_phase_type."]
+#[doc = " * avg_power_position: Average power by position. Data value indexes defined by rider_position_type."]
+#[doc = " * max_power_position: Maximum power by position. Data value indexes defined by rider_position_type."]
+#[doc = " * avg_flow: The flow score estimates how long distance wise a cyclist deaccelerates over intervals where deacceleration is unnecessary such as smooth turns or small grade angle intervals."]
+#[doc = " * total_grit: The grit score estimates how challenging a route could be for a cyclist in terms of time spent going over sharp turns or large grade slopes."]
+#[doc = " * num_active_lengths: # of active lengths of swim pool"]
+#[doc = " * first_lap_index: This is only set for split types that will trigger the end of a lap when the split ends"]
+#[doc = " * num_laps: This is only set for split types that will trigger the end of a lap when the split ends"]
+#[doc = " * status: Use with indoor climbing activities only"]
+#[doc = " * num_falls: Use with indoor climbing activities only"]
+#[doc = " * climb_send: Use with indoor climbing activities only"]
 #[doc = " * active_time: Active time of split rounds"]
+#[doc = " * total_fractional_ascent: fractional part of total_ascent"]
+#[doc = " * total_fractional_descent: fractional part of total_descent"]
+#[doc = " * min_push_cadence: min pushes per minute in a split"]
+#[doc = " * avg_depth: Average depth. 0 if above water"]
+#[doc = " * max_depth: Max depth. 0 if above water"]
+#[doc = " * surface_interval: Time since end of last dive"]
 fn split_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -41461,6 +43280,32 @@ fn split_message(
                     value,
                 )?);
             }
+            11u8 => {
+                fields.push(split_message_sport_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "",
+                    value,
+                )?);
+            }
+            12u8 => {
+                fields.push(split_message_sub_sport_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "",
+                    value,
+                )?);
+            }
             13u8 => {
                 fields.push(split_message_total_ascent_field(
                     mesg_num,
@@ -41484,6 +43329,84 @@ fn split_message(
                     1f64,
                     0f64,
                     "m",
+                    value,
+                )?);
+            }
+            15u8 => {
+                fields.push(split_message_avg_heart_rate_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "bpm",
+                    value,
+                )?);
+            }
+            16u8 => {
+                fields.push(split_message_max_heart_rate_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "bpm",
+                    value,
+                )?);
+            }
+            17u8 => {
+                fields.push(split_message_nec_lat_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "semicircles",
+                    value,
+                )?);
+            }
+            18u8 => {
+                fields.push(split_message_nec_long_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "semicircles",
+                    value,
+                )?);
+            }
+            19u8 => {
+                fields.push(split_message_swc_lat_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "semicircles",
+                    value,
+                )?);
+            }
+            20u8 => {
+                fields.push(split_message_swc_long_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "semicircles",
                     value,
                 )?);
             }
@@ -41591,6 +43514,1117 @@ fn split_message(
                     value,
                 )?);
             }
+            29u8 => {
+                if Sport::Running.as_i64()
+                    == data_map
+                        .get(&11u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_message_avg_running_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        128f64,
+                        0f64,
+                        "strides/min",
+                        value,
+                    )?);
+                } else if Sport::Swimming.as_i64()
+                    == data_map
+                        .get(&11u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_message_avg_swimming_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        128f64,
+                        0f64,
+                        "strokes/min",
+                        value,
+                    )?);
+                } else if Sport::Rowing.as_i64()
+                    == data_map
+                        .get(&11u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_message_avg_paddlesport_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        128f64,
+                        0f64,
+                        "strokes/min",
+                        value,
+                    )?);
+                } else if Sport::StandUpPaddleboarding.as_i64()
+                    == data_map
+                        .get(&11u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_message_avg_paddlesport_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        128f64,
+                        0f64,
+                        "strokes/min",
+                        value,
+                    )?);
+                } else if Sport::WheelchairPushRun.as_i64()
+                    == data_map
+                        .get(&11u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_message_avg_push_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "pushes/min",
+                        value,
+                    )?);
+                } else if Sport::WheelchairPushWalk.as_i64()
+                    == data_map
+                        .get(&11u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_message_avg_push_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "pushes/min",
+                        value,
+                    )?);
+                } else {
+                    fields.push(split_message_avg_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        128f64,
+                        0f64,
+                        "rpm",
+                        value,
+                    )?);
+                }
+            }
+            30u8 => {
+                if Sport::Running.as_i64()
+                    == data_map
+                        .get(&11u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_message_max_running_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        128f64,
+                        0f64,
+                        "strides/min",
+                        value,
+                    )?);
+                } else if Sport::Swimming.as_i64()
+                    == data_map
+                        .get(&11u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_message_max_swimming_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        128f64,
+                        0f64,
+                        "strokes/min",
+                        value,
+                    )?);
+                } else if Sport::Rowing.as_i64()
+                    == data_map
+                        .get(&11u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_message_max_paddlesport_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        128f64,
+                        0f64,
+                        "strokes/min",
+                        value,
+                    )?);
+                } else if Sport::StandUpPaddleboarding.as_i64()
+                    == data_map
+                        .get(&11u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_message_max_paddlesport_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        128f64,
+                        0f64,
+                        "strokes/min",
+                        value,
+                    )?);
+                } else if Sport::WheelchairPushRun.as_i64()
+                    == data_map
+                        .get(&11u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_message_max_push_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "pushes/min",
+                        value,
+                    )?);
+                } else if Sport::WheelchairPushWalk.as_i64()
+                    == data_map
+                        .get(&11u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_message_max_push_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "pushes/min",
+                        value,
+                    )?);
+                } else {
+                    fields.push(split_message_max_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        128f64,
+                        0f64,
+                        "rpm",
+                        value,
+                    )?);
+                }
+            }
+            31u8 => {
+                if Sport::Running.as_i64()
+                    == data_map
+                        .get(&11u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_message_total_strides_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "strides",
+                        value,
+                    )?);
+                } else if Sport::Walking.as_i64()
+                    == data_map
+                        .get(&11u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_message_total_strides_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "strides",
+                        value,
+                    )?);
+                } else if Sport::Cycling.as_i64()
+                    == data_map
+                        .get(&11u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_message_total_strokes_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "strokes",
+                        value,
+                    )?);
+                } else if Sport::Swimming.as_i64()
+                    == data_map
+                        .get(&11u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_message_total_strokes_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "strokes",
+                        value,
+                    )?);
+                } else if Sport::Rowing.as_i64()
+                    == data_map
+                        .get(&11u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_message_total_strokes_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "strokes",
+                        value,
+                    )?);
+                } else if Sport::StandUpPaddleboarding.as_i64()
+                    == data_map
+                        .get(&11u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_message_total_strokes_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "strokes",
+                        value,
+                    )?);
+                } else if Sport::Hiit.as_i64()
+                    == data_map
+                        .get(&11u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_message_total_reps_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "reps",
+                        value,
+                    )?);
+                } else if Sport::WheelchairPushRun.as_i64()
+                    == data_map
+                        .get(&11u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_message_total_pushes_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "pushes",
+                        value,
+                    )?);
+                } else if Sport::WheelchairPushWalk.as_i64()
+                    == data_map
+                        .get(&11u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_message_total_pushes_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "pushes",
+                        value,
+                    )?);
+                } else {
+                    fields.push(split_message_total_cycles_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "cycles",
+                        value,
+                    )?);
+                }
+            }
+            32u8 => {
+                fields.push(split_message_avg_temperature_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "C",
+                    value,
+                )?);
+            }
+            33u8 => {
+                fields.push(split_message_max_temperature_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "C",
+                    value,
+                )?);
+            }
+            34u8 => {
+                fields.push(split_message_min_temperature_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "C",
+                    value,
+                )?);
+            }
+            35u8 => {
+                fields.push(split_message_avg_vertical_oscillation_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    10f64,
+                    0f64,
+                    "mm",
+                    value,
+                )?);
+            }
+            36u8 => {
+                fields.push(split_message_avg_vertical_ratio_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    100f64,
+                    0f64,
+                    "percent",
+                    value,
+                )?);
+            }
+            37u8 => {
+                fields.push(split_message_avg_stance_time_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    10f64,
+                    0f64,
+                    "ms",
+                    value,
+                )?);
+            }
+            38u8 => {
+                fields.push(split_message_avg_stance_time_balance_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    100f64,
+                    0f64,
+                    "percent",
+                    value,
+                )?);
+            }
+            39u8 => {
+                fields.push(split_message_avg_step_length_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    10f64,
+                    0f64,
+                    "mm",
+                    value,
+                )?);
+            }
+            40u8 => {
+                fields.push(split_message_avg_power_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "watts",
+                    value,
+                )?);
+            }
+            41u8 => {
+                fields.push(split_message_max_power_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "watts",
+                    value,
+                )?);
+            }
+            42u8 => {
+                fields.push(split_message_normalized_power_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "watts",
+                    value,
+                )?);
+            }
+            43u8 => {
+                fields.push(split_message_left_right_balance_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "",
+                    value,
+                )?);
+            }
+            44u8 => {
+                fields.push(split_message_time_standing_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1000f64,
+                    0f64,
+                    "s",
+                    value,
+                )?);
+            }
+            45u8 => {
+                fields.push(split_message_avg_left_pco_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "mm",
+                    value,
+                )?);
+            }
+            46u8 => {
+                fields.push(split_message_avg_right_pco_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "mm",
+                    value,
+                )?);
+            }
+            47u8 => {
+                fields.push(split_message_avg_left_power_phase_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    0.7111111f64,
+                    0f64,
+                    "degrees",
+                    value,
+                )?);
+            }
+            48u8 => {
+                fields.push(split_message_avg_left_power_phase_peak_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    0.7111111f64,
+                    0f64,
+                    "degrees",
+                    value,
+                )?);
+            }
+            49u8 => {
+                fields.push(split_message_avg_right_power_phase_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    0.7111111f64,
+                    0f64,
+                    "degrees",
+                    value,
+                )?);
+            }
+            50u8 => {
+                fields.push(split_message_avg_right_power_phase_peak_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    0.7111111f64,
+                    0f64,
+                    "degrees",
+                    value,
+                )?);
+            }
+            51u8 => {
+                fields.push(split_message_avg_power_position_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "watts",
+                    value,
+                )?);
+            }
+            52u8 => {
+                fields.push(split_message_max_power_position_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "watts",
+                    value,
+                )?);
+            }
+            53u8 => {
+                fields.push(split_message_avg_left_torque_effectiveness_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    2f64,
+                    0f64,
+                    "percent",
+                    value,
+                )?);
+            }
+            54u8 => {
+                fields.push(split_message_avg_right_torque_effectiveness_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    2f64,
+                    0f64,
+                    "percent",
+                    value,
+                )?);
+            }
+            55u8 => {
+                fields.push(split_message_avg_left_pedal_smoothness_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    2f64,
+                    0f64,
+                    "percent",
+                    value,
+                )?);
+            }
+            56u8 => {
+                fields.push(split_message_avg_right_pedal_smoothness_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    2f64,
+                    0f64,
+                    "percent",
+                    value,
+                )?);
+            }
+            57u8 => {
+                fields.push(split_message_avg_combined_pedal_smoothness_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    2f64,
+                    0f64,
+                    "percent",
+                    value,
+                )?);
+            }
+            58u8 => {
+                fields.push(split_message_avg_flow_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "Flow",
+                    value,
+                )?);
+            }
+            59u8 => {
+                fields.push(split_message_total_grit_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "kGrit",
+                    value,
+                )?);
+            }
+            62u8 => {
+                fields.push(split_message_swim_stroke_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "",
+                    value,
+                )?);
+            }
+            63u8 => {
+                fields.push(split_message_num_active_lengths_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "lengths",
+                    value,
+                )?);
+            }
+            64u8 => {
+                fields.push(split_message_avg_swolf_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "",
+                    value,
+                )?);
+            }
+            65u8 => {
+                fields.push(split_message_avg_stroke_distance_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    100f64,
+                    0f64,
+                    "m",
+                    value,
+                )?);
+            }
+            66u8 => {
+                fields.push(split_message_avg_strokes_per_length_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    10f64,
+                    0f64,
+                    "strokes / length",
+                    value,
+                )?);
+            }
+            67u8 => {
+                fields.push(split_message_first_lap_index_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "",
+                    value,
+                )?);
+            }
+            68u8 => {
+                fields.push(split_message_num_laps_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "",
+                    value,
+                )?);
+            }
+            69u8 => {
+                fields.push(split_message_climb_grading_scale_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "",
+                    value,
+                )?);
+            }
+            70u8 => {
+                if ClimbGradingScale::Yds.as_i64()
+                    == data_map
+                        .get(&69u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_message_climb_grade_yds_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "",
+                        value,
+                    )?);
+                } else if ClimbGradingScale::Uiaa.as_i64()
+                    == data_map
+                        .get(&69u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_message_climb_grade_uiaa_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "",
+                        value,
+                    )?);
+                } else if ClimbGradingScale::French.as_i64()
+                    == data_map
+                        .get(&69u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_message_climb_grade_french_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "",
+                        value,
+                    )?);
+                } else if ClimbGradingScale::BritishAdjectival.as_i64()
+                    == data_map
+                        .get(&69u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_message_climb_grade_british_adjectival_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "",
+                        value,
+                    )?);
+                } else if ClimbGradingScale::BritishTechnical.as_i64()
+                    == data_map
+                        .get(&69u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_message_climb_grade_british_technical_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "",
+                        value,
+                    )?);
+                } else if ClimbGradingScale::Ewbank.as_i64()
+                    == data_map
+                        .get(&69u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_message_climb_grade_ewbank_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "",
+                        value,
+                    )?);
+                } else if ClimbGradingScale::Brazilian.as_i64()
+                    == data_map
+                        .get(&69u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_message_climb_grade_brazilian_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "",
+                        value,
+                    )?);
+                } else if ClimbGradingScale::Saxon.as_i64()
+                    == data_map
+                        .get(&69u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_message_climb_grade_saxon_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "",
+                        value,
+                    )?);
+                } else if ClimbGradingScale::Vermin.as_i64()
+                    == data_map
+                        .get(&69u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_message_climb_grade_vermin_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "",
+                        value,
+                    )?);
+                } else if ClimbGradingScale::Font.as_i64()
+                    == data_map
+                        .get(&69u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_message_climb_grade_font_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "",
+                        value,
+                    )?);
+                } else if ClimbGradingScale::Dankyu.as_i64()
+                    == data_map
+                        .get(&69u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_message_climb_grade_dankyu_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "",
+                        value,
+                    )?);
+                } else {
+                    fields.push(split_message_climb_grade_value_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "",
+                        value,
+                    )?);
+                }
+            }
+            71u8 => {
+                fields.push(split_message_status_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "",
+                    value,
+                )?);
+            }
+            72u8 => {
+                fields.push(split_message_num_falls_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "",
+                    value,
+                )?);
+            }
+            73u8 => {
+                fields.push(split_message_climb_send_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "",
+                    value,
+                )?);
+            }
             74u8 => {
                 fields.push(split_message_start_elevation_field(
                     mesg_num,
@@ -41617,6 +44651,240 @@ fn split_message(
                     value,
                 )?);
             }
+            79u8 => {
+                fields.push(split_message_metabolic_calories_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "kcal",
+                    value,
+                )?);
+            }
+            80u8 => {
+                fields.push(split_message_total_fractional_ascent_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    100f64,
+                    0f64,
+                    "m",
+                    value,
+                )?);
+            }
+            81u8 => {
+                fields.push(split_message_total_fractional_descent_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    100f64,
+                    0f64,
+                    "m",
+                    value,
+                )?);
+            }
+            88u8 => {
+                fields.push(split_message_avg_grade_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    100f64,
+                    0f64,
+                    "%",
+                    value,
+                )?);
+            }
+            89u8 => {
+                fields.push(split_message_max_grade_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    100f64,
+                    0f64,
+                    "%",
+                    value,
+                )?);
+            }
+            90u8 => {
+                if Sport::Running.as_i64()
+                    == data_map
+                        .get(&11u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_message_min_running_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        128f64,
+                        0f64,
+                        "strides/min",
+                        value,
+                    )?);
+                } else if Sport::Swimming.as_i64()
+                    == data_map
+                        .get(&11u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_message_min_swimming_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        128f64,
+                        0f64,
+                        "strokes/min",
+                        value,
+                    )?);
+                } else if Sport::Rowing.as_i64()
+                    == data_map
+                        .get(&11u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_message_min_paddlesport_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        128f64,
+                        0f64,
+                        "strokes/min",
+                        value,
+                    )?);
+                } else if Sport::StandUpPaddleboarding.as_i64()
+                    == data_map
+                        .get(&11u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_message_min_paddlesport_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        128f64,
+                        0f64,
+                        "strokes/min",
+                        value,
+                    )?);
+                } else if Sport::WheelchairPushRun.as_i64()
+                    == data_map
+                        .get(&11u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_message_min_push_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "pushes/min",
+                        value,
+                    )?);
+                } else if Sport::WheelchairPushWalk.as_i64()
+                    == data_map
+                        .get(&11u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_message_min_push_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "pushes/min",
+                        value,
+                    )?);
+                } else {
+                    fields.push(split_message_min_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        128f64,
+                        0f64,
+                        "rpm",
+                        value,
+                    )?);
+                }
+            }
+            93u8 => {
+                fields.push(split_message_avg_grade_adjusted_speed_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1000f64,
+                    0f64,
+                    "m/s",
+                    value,
+                )?);
+            }
+            94u8 => {
+                fields.push(split_message_avg_stress_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "",
+                    value,
+                )?);
+            }
+            99u8 => {
+                fields.push(split_message_avg_vam_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1000f64,
+                    0f64,
+                    "m/s",
+                    value,
+                )?);
+            }
+            104u8 => {
+                fields.push(split_message_jump_count_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "",
+                    value,
+                )?);
+            }
             110u8 => {
                 fields.push(split_message_total_moving_time_field(
                     mesg_num,
@@ -41625,6 +44893,253 @@ fn split_message(
                     data_map,
                     false,
                     1000f64,
+                    0f64,
+                    "s",
+                    value,
+                )?);
+            }
+            112u8 => {
+                fields.push(split_message_dive_section_type_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "",
+                    value,
+                )?);
+            }
+            113u8 => {
+                fields.push(split_message_avg_ascent_rate_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1000f64,
+                    0f64,
+                    "m/s",
+                    value,
+                )?);
+            }
+            114u8 => {
+                fields.push(split_message_max_ascent_rate_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1000f64,
+                    0f64,
+                    "m/s",
+                    value,
+                )?);
+            }
+            115u8 => {
+                fields.push(split_message_avg_descent_rate_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1000f64,
+                    0f64,
+                    "m/s",
+                    value,
+                )?);
+            }
+            116u8 => {
+                fields.push(split_message_max_descent_rate_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1000f64,
+                    0f64,
+                    "m/s",
+                    value,
+                )?);
+            }
+            117u8 => {
+                fields.push(split_message_total_ascent_time_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1000f64,
+                    0f64,
+                    "s",
+                    value,
+                )?);
+            }
+            118u8 => {
+                fields.push(split_message_total_descent_time_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1000f64,
+                    0f64,
+                    "s",
+                    value,
+                )?);
+            }
+            119u8 => {
+                fields.push(split_message_total_hang_time_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1000f64,
+                    0f64,
+                    "s",
+                    value,
+                )?);
+            }
+            120u8 => {
+                fields.push(split_message_apnea_discipline_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "",
+                    value,
+                )?);
+            }
+            121u8 => {
+                fields.push(split_message_avg_depth_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1000f64,
+                    0f64,
+                    "m",
+                    value,
+                )?);
+            }
+            122u8 => {
+                fields.push(split_message_max_depth_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1000f64,
+                    0f64,
+                    "m",
+                    value,
+                )?);
+            }
+            124u8 => {
+                fields.push(split_message_min_heart_rate_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "bpm",
+                    value,
+                )?);
+            }
+            127u8 => {
+                fields.push(split_message_surface_interval_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "s",
+                    value,
+                )?);
+            }
+            142u8 => {
+                fields.push(split_message_total_fractional_cycles_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    128f64,
+                    0f64,
+                    "cycles",
+                    value,
+                )?);
+            }
+            144u8 => {
+                fields.push(split_message_avg_stance_time_percent_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    100f64,
+                    0f64,
+                    "percent",
+                    value,
+                )?);
+            }
+            168u8 => {
+                fields.push(split_message_total_anaerobic_training_effect_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    10f64,
+                    0f64,
+                    "",
+                    value,
+                )?);
+            }
+            169u8 => {
+                fields.push(split_message_front_gear_shift_count_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "",
+                    value,
+                )?);
+            }
+            170u8 => {
+                fields.push(split_message_rear_gear_shift_count_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "",
+                    value,
+                )?);
+            }
+            253u8 => {
+                fields.push(split_message_timestamp_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
                     0f64,
                     "s",
                     value,
@@ -41820,6 +45335,62 @@ fn split_message_start_time_field(
         options,
     )
 }
+fn split_message_sport_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 11u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        11u8,
+        None,
+        "sport",
+        FieldDataType::Sport,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_sub_sport_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 12u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        12u8,
+        None,
+        "sub_sport",
+        FieldDataType::SubSport,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
 fn split_message_total_ascent_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
@@ -41869,6 +45440,174 @@ fn split_message_total_descent_field(
         None,
         "total_descent",
         FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_avg_heart_rate_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 15u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        15u8,
+        None,
+        "avg_heart_rate",
+        FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_max_heart_rate_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 16u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        16u8,
+        None,
+        "max_heart_rate",
+        FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_nec_lat_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 17u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        17u8,
+        None,
+        "nec_lat",
+        FieldDataType::SInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_nec_long_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 18u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        18u8,
+        None,
+        "nec_long",
+        FieldDataType::SInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_swc_lat_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 19u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        19u8,
+        None,
+        "swc_lat",
+        FieldDataType::SInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_swc_long_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 20u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        20u8,
+        None,
+        "swc_long",
+        FieldDataType::SInt32,
         scale,
         offset,
         units,
@@ -42100,6 +45839,1969 @@ fn split_message_total_calories_field(
         options,
     )
 }
+fn split_message_avg_cadence_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 29u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        29u8,
+        None,
+        "avg_cadence",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_avg_running_cadence_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 29u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "avg_cadence"
+    } else {
+        "avg_running_cadence"
+    };
+    data_field_with_info(
+        29u8,
+        None,
+        name,
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_avg_swimming_cadence_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 29u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "avg_cadence"
+    } else {
+        "avg_swimming_cadence"
+    };
+    data_field_with_info(
+        29u8,
+        None,
+        name,
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_avg_paddlesport_cadence_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 29u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "avg_cadence"
+    } else {
+        "avg_paddlesport_cadence"
+    };
+    data_field_with_info(
+        29u8,
+        None,
+        name,
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_avg_push_cadence_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 29u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "avg_cadence"
+    } else {
+        "avg_push_cadence"
+    };
+    data_field_with_info(
+        29u8,
+        None,
+        name,
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_max_cadence_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 30u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        30u8,
+        None,
+        "max_cadence",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_max_running_cadence_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 30u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "max_cadence"
+    } else {
+        "max_running_cadence"
+    };
+    data_field_with_info(
+        30u8,
+        None,
+        name,
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_max_swimming_cadence_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 30u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "max_cadence"
+    } else {
+        "max_swimming_cadence"
+    };
+    data_field_with_info(
+        30u8,
+        None,
+        name,
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_max_paddlesport_cadence_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 30u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "max_cadence"
+    } else {
+        "max_paddlesport_cadence"
+    };
+    data_field_with_info(
+        30u8,
+        None,
+        name,
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_max_push_cadence_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 30u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "max_cadence"
+    } else {
+        "max_push_cadence"
+    };
+    data_field_with_info(
+        30u8,
+        None,
+        name,
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_total_cycles_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 31u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        31u8,
+        None,
+        "total_cycles",
+        FieldDataType::UInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_total_strides_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 31u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "total_cycles"
+    } else {
+        "total_strides"
+    };
+    data_field_with_info(
+        31u8,
+        None,
+        name,
+        FieldDataType::UInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_total_strokes_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 31u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "total_cycles"
+    } else {
+        "total_strokes"
+    };
+    data_field_with_info(
+        31u8,
+        None,
+        name,
+        FieldDataType::UInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_total_reps_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 31u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "total_cycles"
+    } else {
+        "total_reps"
+    };
+    data_field_with_info(
+        31u8,
+        None,
+        name,
+        FieldDataType::UInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_total_pushes_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 31u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "total_cycles"
+    } else {
+        "total_pushes"
+    };
+    data_field_with_info(
+        31u8,
+        None,
+        name,
+        FieldDataType::UInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_avg_temperature_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 32u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        32u8,
+        None,
+        "avg_temperature",
+        FieldDataType::SInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_max_temperature_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 33u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        33u8,
+        None,
+        "max_temperature",
+        FieldDataType::SInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_min_temperature_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 34u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        34u8,
+        None,
+        "min_temperature",
+        FieldDataType::SInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_avg_vertical_oscillation_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 35u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        35u8,
+        None,
+        "avg_vertical_oscillation",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_avg_vertical_ratio_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 36u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        36u8,
+        None,
+        "avg_vertical_ratio",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_avg_stance_time_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 37u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        37u8,
+        None,
+        "avg_stance_time",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_avg_stance_time_balance_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 38u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        38u8,
+        None,
+        "avg_stance_time_balance",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_avg_step_length_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 39u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        39u8,
+        None,
+        "avg_step_length",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_avg_power_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 40u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        40u8,
+        None,
+        "avg_power",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_max_power_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 41u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        41u8,
+        None,
+        "max_power",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_normalized_power_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 42u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        42u8,
+        None,
+        "normalized_power",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_left_right_balance_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 43u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        43u8,
+        None,
+        "left_right_balance",
+        FieldDataType::LeftRightBalance100,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_time_standing_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 44u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        44u8,
+        None,
+        "time_standing",
+        FieldDataType::UInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_avg_left_pco_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 45u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        45u8,
+        None,
+        "avg_left_pco",
+        FieldDataType::SInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_avg_right_pco_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 46u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        46u8,
+        None,
+        "avg_right_pco",
+        FieldDataType::SInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_avg_left_power_phase_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 47u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        47u8,
+        None,
+        "avg_left_power_phase",
+        FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_avg_left_power_phase_peak_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 48u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        48u8,
+        None,
+        "avg_left_power_phase_peak",
+        FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_avg_right_power_phase_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 49u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        49u8,
+        None,
+        "avg_right_power_phase",
+        FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_avg_right_power_phase_peak_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 50u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        50u8,
+        None,
+        "avg_right_power_phase_peak",
+        FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_avg_power_position_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 51u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        51u8,
+        None,
+        "avg_power_position",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_max_power_position_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 52u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        52u8,
+        None,
+        "max_power_position",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_avg_left_torque_effectiveness_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 53u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        53u8,
+        None,
+        "avg_left_torque_effectiveness",
+        FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_avg_right_torque_effectiveness_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 54u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        54u8,
+        None,
+        "avg_right_torque_effectiveness",
+        FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_avg_left_pedal_smoothness_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 55u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        55u8,
+        None,
+        "avg_left_pedal_smoothness",
+        FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_avg_right_pedal_smoothness_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 56u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        56u8,
+        None,
+        "avg_right_pedal_smoothness",
+        FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_avg_combined_pedal_smoothness_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 57u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        57u8,
+        None,
+        "avg_combined_pedal_smoothness",
+        FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_avg_flow_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 58u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        58u8,
+        None,
+        "avg_flow",
+        FieldDataType::Float32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_total_grit_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 59u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        59u8,
+        None,
+        "total_grit",
+        FieldDataType::Float32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_swim_stroke_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 62u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        62u8,
+        None,
+        "swim_stroke",
+        FieldDataType::SwimStroke,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_num_active_lengths_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 63u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        63u8,
+        None,
+        "num_active_lengths",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_avg_swolf_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 64u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        64u8,
+        None,
+        "avg_swolf",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_avg_stroke_distance_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 65u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        65u8,
+        None,
+        "avg_stroke_distance",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_avg_strokes_per_length_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 66u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        66u8,
+        None,
+        "avg_strokes_per_length",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_first_lap_index_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 67u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        67u8,
+        None,
+        "first_lap_index",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_num_laps_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 68u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        68u8,
+        None,
+        "num_laps",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_climb_grading_scale_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 69u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        69u8,
+        None,
+        "climb_grading_scale",
+        FieldDataType::ClimbGradingScale,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_climb_grade_value_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 70u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        70u8,
+        None,
+        "climb_grade_value",
+        FieldDataType::UInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_climb_grade_yds_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 70u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "climb_grade_value"
+    } else {
+        "climb_grade_yds"
+    };
+    data_field_with_info(
+        70u8,
+        None,
+        name,
+        FieldDataType::YdsGradingScale,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_climb_grade_uiaa_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 70u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "climb_grade_value"
+    } else {
+        "climb_grade_uiaa"
+    };
+    data_field_with_info(
+        70u8,
+        None,
+        name,
+        FieldDataType::UiaaGradingScale,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_climb_grade_french_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 70u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "climb_grade_value"
+    } else {
+        "climb_grade_french"
+    };
+    data_field_with_info(
+        70u8,
+        None,
+        name,
+        FieldDataType::FrenchGradingScale,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_climb_grade_british_adjectival_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 70u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "climb_grade_value"
+    } else {
+        "climb_grade_british_adjectival"
+    };
+    data_field_with_info(
+        70u8,
+        None,
+        name,
+        FieldDataType::BritishAdjectivalGradingScale,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_climb_grade_british_technical_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 70u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "climb_grade_value"
+    } else {
+        "climb_grade_british_technical"
+    };
+    data_field_with_info(
+        70u8,
+        None,
+        name,
+        FieldDataType::BritishTechnicalGradingScale,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_climb_grade_ewbank_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 70u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "climb_grade_value"
+    } else {
+        "climb_grade_ewbank"
+    };
+    data_field_with_info(
+        70u8,
+        None,
+        name,
+        FieldDataType::EwbankGradingScale,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_climb_grade_brazilian_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 70u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "climb_grade_value"
+    } else {
+        "climb_grade_brazilian"
+    };
+    data_field_with_info(
+        70u8,
+        None,
+        name,
+        FieldDataType::BrazilianGradingScale,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_climb_grade_saxon_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 70u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "climb_grade_value"
+    } else {
+        "climb_grade_saxon"
+    };
+    data_field_with_info(
+        70u8,
+        None,
+        name,
+        FieldDataType::SaxonGradingScale,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_climb_grade_vermin_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 70u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "climb_grade_value"
+    } else {
+        "climb_grade_vermin"
+    };
+    data_field_with_info(
+        70u8,
+        None,
+        name,
+        FieldDataType::VerminGradingScale,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_climb_grade_font_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 70u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "climb_grade_value"
+    } else {
+        "climb_grade_font"
+    };
+    data_field_with_info(
+        70u8,
+        None,
+        name,
+        FieldDataType::FontGradingScale,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_climb_grade_dankyu_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 70u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "climb_grade_value"
+    } else {
+        "climb_grade_dankyu"
+    };
+    data_field_with_info(
+        70u8,
+        None,
+        name,
+        FieldDataType::DankyuGradingScale,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_status_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 71u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        71u8,
+        None,
+        "status",
+        FieldDataType::SplitStatus,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_num_falls_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 72u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        72u8,
+        None,
+        "num_falls",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_climb_send_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 73u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        73u8,
+        None,
+        "climb_send",
+        FieldDataType::Bool,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
 fn split_message_start_elevation_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
@@ -42156,6 +47858,418 @@ fn split_message_active_time_field(
         options,
     )
 }
+fn split_message_metabolic_calories_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 79u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        79u8,
+        None,
+        "metabolic_calories",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_total_fractional_ascent_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 80u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        80u8,
+        None,
+        "total_fractional_ascent",
+        FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_total_fractional_descent_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 81u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        81u8,
+        None,
+        "total_fractional_descent",
+        FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_avg_grade_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 88u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        88u8,
+        None,
+        "avg_grade",
+        FieldDataType::SInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_max_grade_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 89u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        89u8,
+        None,
+        "max_grade",
+        FieldDataType::SInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_min_cadence_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 90u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        90u8,
+        None,
+        "min_cadence",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_min_running_cadence_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 90u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "min_cadence"
+    } else {
+        "min_running_cadence"
+    };
+    data_field_with_info(
+        90u8,
+        None,
+        name,
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_min_swimming_cadence_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 90u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "min_cadence"
+    } else {
+        "min_swimming_cadence"
+    };
+    data_field_with_info(
+        90u8,
+        None,
+        name,
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_min_paddlesport_cadence_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 90u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "min_cadence"
+    } else {
+        "min_paddlesport_cadence"
+    };
+    data_field_with_info(
+        90u8,
+        None,
+        name,
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_min_push_cadence_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 90u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "min_cadence"
+    } else {
+        "min_push_cadence"
+    };
+    data_field_with_info(
+        90u8,
+        None,
+        name,
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_avg_grade_adjusted_speed_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 93u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        93u8,
+        None,
+        "avg_grade_adjusted_speed",
+        FieldDataType::UInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_avg_stress_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 94u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        94u8,
+        None,
+        "avg_stress",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_avg_vam_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 99u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        99u8,
+        None,
+        "avg_vam",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_jump_count_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 104u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        104u8,
+        None,
+        "jump_count",
+        FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
 fn split_message_total_moving_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
@@ -42177,6 +48291,538 @@ fn split_message_total_moving_time_field(
         None,
         "total_moving_time",
         FieldDataType::UInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_dive_section_type_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 112u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        112u8,
+        None,
+        "dive_section_type",
+        FieldDataType::DiveSectionType,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_avg_ascent_rate_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 113u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        113u8,
+        None,
+        "avg_ascent_rate",
+        FieldDataType::UInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_max_ascent_rate_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 114u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        114u8,
+        None,
+        "max_ascent_rate",
+        FieldDataType::UInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_avg_descent_rate_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 115u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        115u8,
+        None,
+        "avg_descent_rate",
+        FieldDataType::UInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_max_descent_rate_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 116u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        116u8,
+        None,
+        "max_descent_rate",
+        FieldDataType::UInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_total_ascent_time_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 117u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        117u8,
+        None,
+        "total_ascent_time",
+        FieldDataType::UInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_total_descent_time_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 118u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        118u8,
+        None,
+        "total_descent_time",
+        FieldDataType::UInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_total_hang_time_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 119u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        119u8,
+        None,
+        "total_hang_time",
+        FieldDataType::UInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_apnea_discipline_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 120u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        120u8,
+        None,
+        "apnea_discipline",
+        FieldDataType::ApneaDiscipline,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_avg_depth_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 121u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        121u8,
+        None,
+        "avg_depth",
+        FieldDataType::UInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_max_depth_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 122u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        122u8,
+        None,
+        "max_depth",
+        FieldDataType::UInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_min_heart_rate_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 124u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        124u8,
+        None,
+        "min_heart_rate",
+        FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_surface_interval_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 127u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        127u8,
+        None,
+        "surface_interval",
+        FieldDataType::UInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_total_fractional_cycles_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 142u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        142u8,
+        None,
+        "total_fractional_cycles",
+        FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_avg_stance_time_percent_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 144u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        144u8,
+        None,
+        "avg_stance_time_percent",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_total_anaerobic_training_effect_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 168u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        168u8,
+        None,
+        "total_anaerobic_training_effect",
+        FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_front_gear_shift_count_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 169u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        169u8,
+        None,
+        "front_gear_shift_count",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_rear_gear_shift_count_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 170u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        170u8,
+        None,
+        "rear_gear_shift_count",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_message_timestamp_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 253u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        253u8,
+        None,
+        "timestamp",
+        FieldDataType::DateTime,
         scale,
         offset,
         units,
@@ -42213,7 +48859,28 @@ fn split_message_message_index_field(
     )
 }
 #[doc = "split_summary message definition"]
+#[doc = " * avg_push_cadence: average pushes per minute in all splits of the type"]
+#[doc = " * max_push_cadence: max pushes per minute in all splits of the type"]
+#[doc = " * total_reps: total reps in all splits"]
+#[doc = " * total_pushes: total number of pushes in all splits of the type"]
+#[doc = " * left_right_balance: Total time spent in the standing position"]
+#[doc = " * time_standing: Average left platform center offset"]
+#[doc = " * avg_left_pco: Average right platform center offset"]
+#[doc = " * avg_right_pco: Average left power phase angles. Data value indexes defined by power_phase_type."]
+#[doc = " * avg_left_power_phase: Average left power phase peak angles. Data value indexes defined by power_phase_type."]
+#[doc = " * avg_left_power_phase_peak: Average right power phase angles. Data value indexes defined by power_phase_type."]
+#[doc = " * avg_right_power_phase: Average right power phase peak angles. Data value indexes defined by power_phase_type."]
+#[doc = " * avg_right_power_phase_peak: Average power by position. Data value indexes defined by rider_position_type."]
+#[doc = " * avg_power_position: Maximum power by position. Data value indexes defined by rider_position_type."]
+#[doc = " * avg_combined_pedal_smoothness: The flow score estimates how long distance wise a cyclist deaccelerates over intervals where deacceleration is unnecessary such as smooth turns or small grade angle intervals."]
+#[doc = " * avg_flow: The grit score estimates how challenging a route could be for a cyclist in terms of time spent going over sharp turns or large grade slopes."]
+#[doc = " * swim_stroke: # of active lengths of swim pool"]
+#[doc = " * max_distance: Distance of the longest split"]
 #[doc = " * active_time: total active time in all split rounds"]
+#[doc = " * total_fractional_ascent: fractional part of total_ascent"]
+#[doc = " * total_fractional_descent: fractional part of total_descent"]
+#[doc = " * avg_fractional_ascent: fractional part of avg_ascent"]
+#[doc = " * max_fractional_ascent: fractional part of max_descent"]
 fn split_summary_message(
     mesg_num: MesgNum,
     data_map: &mut HashMap<u8, Value>,
@@ -42227,6 +48894,32 @@ fn split_summary_message(
         match field_nr {
             0u8 => {
                 fields.push(split_summary_message_split_type_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "",
+                    value,
+                )?);
+            }
+            1u8 => {
+                fields.push(split_summary_message_sport_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "",
+                    value,
+                )?);
+            }
+            2u8 => {
+                fields.push(split_summary_message_sub_sport_field(
                     mesg_num,
                     accumlators,
                     options,
@@ -42381,6 +49074,1147 @@ fn split_summary_message(
                     value,
                 )?);
             }
+            14u8 => {
+                if Sport::Running.as_i64()
+                    == data_map
+                        .get(&1u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_summary_message_avg_running_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        128f64,
+                        0f64,
+                        "strides/min",
+                        value,
+                    )?);
+                } else if Sport::Swimming.as_i64()
+                    == data_map
+                        .get(&1u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_summary_message_avg_swimming_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        128f64,
+                        0f64,
+                        "strokes/min",
+                        value,
+                    )?);
+                } else if Sport::Rowing.as_i64()
+                    == data_map
+                        .get(&1u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_summary_message_avg_paddlesport_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        128f64,
+                        0f64,
+                        "strokes/min",
+                        value,
+                    )?);
+                } else if Sport::StandUpPaddleboarding.as_i64()
+                    == data_map
+                        .get(&1u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_summary_message_avg_paddlesport_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        128f64,
+                        0f64,
+                        "strokes/min",
+                        value,
+                    )?);
+                } else if Sport::WheelchairPushRun.as_i64()
+                    == data_map
+                        .get(&1u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_summary_message_avg_push_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "pushes/min",
+                        value,
+                    )?);
+                } else if Sport::WheelchairPushWalk.as_i64()
+                    == data_map
+                        .get(&1u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_summary_message_avg_push_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "pushes/min",
+                        value,
+                    )?);
+                } else {
+                    fields.push(split_summary_message_avg_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        128f64,
+                        0f64,
+                        "rpm",
+                        value,
+                    )?);
+                }
+            }
+            15u8 => {
+                if Sport::Running.as_i64()
+                    == data_map
+                        .get(&1u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_summary_message_max_running_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        128f64,
+                        0f64,
+                        "strides/min",
+                        value,
+                    )?);
+                } else if Sport::Swimming.as_i64()
+                    == data_map
+                        .get(&1u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_summary_message_max_swimming_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        128f64,
+                        0f64,
+                        "strokes/min",
+                        value,
+                    )?);
+                } else if Sport::Rowing.as_i64()
+                    == data_map
+                        .get(&1u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_summary_message_max_paddlesport_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        128f64,
+                        0f64,
+                        "strokes/min",
+                        value,
+                    )?);
+                } else if Sport::StandUpPaddleboarding.as_i64()
+                    == data_map
+                        .get(&1u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_summary_message_max_paddlesport_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        128f64,
+                        0f64,
+                        "strokes/min",
+                        value,
+                    )?);
+                } else if Sport::WheelchairPushRun.as_i64()
+                    == data_map
+                        .get(&1u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_summary_message_max_push_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "pushes/min",
+                        value,
+                    )?);
+                } else if Sport::WheelchairPushWalk.as_i64()
+                    == data_map
+                        .get(&1u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_summary_message_max_push_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "pushes/min",
+                        value,
+                    )?);
+                } else {
+                    fields.push(split_summary_message_max_cadence_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        128f64,
+                        0f64,
+                        "rpm",
+                        value,
+                    )?);
+                }
+            }
+            16u8 => {
+                if Sport::Running.as_i64()
+                    == data_map
+                        .get(&1u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_summary_message_total_strides_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "strides",
+                        value,
+                    )?);
+                } else if Sport::Walking.as_i64()
+                    == data_map
+                        .get(&1u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_summary_message_total_strides_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "strides",
+                        value,
+                    )?);
+                } else if Sport::Cycling.as_i64()
+                    == data_map
+                        .get(&1u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_summary_message_total_strokes_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "strokes",
+                        value,
+                    )?);
+                } else if Sport::Swimming.as_i64()
+                    == data_map
+                        .get(&1u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_summary_message_total_strokes_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "strokes",
+                        value,
+                    )?);
+                } else if Sport::Rowing.as_i64()
+                    == data_map
+                        .get(&1u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_summary_message_total_strokes_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "strokes",
+                        value,
+                    )?);
+                } else if Sport::StandUpPaddleboarding.as_i64()
+                    == data_map
+                        .get(&1u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_summary_message_total_strokes_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "strokes",
+                        value,
+                    )?);
+                } else if Sport::Hiit.as_i64()
+                    == data_map
+                        .get(&1u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_summary_message_total_reps_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "reps",
+                        value,
+                    )?);
+                } else if Sport::WheelchairPushRun.as_i64()
+                    == data_map
+                        .get(&1u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_summary_message_total_pushes_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "pushes",
+                        value,
+                    )?);
+                } else if Sport::WheelchairPushWalk.as_i64()
+                    == data_map
+                        .get(&1u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_summary_message_total_pushes_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "pushes",
+                        value,
+                    )?);
+                } else {
+                    fields.push(split_summary_message_total_cycles_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "cycles",
+                        value,
+                    )?);
+                }
+            }
+            17u8 => {
+                fields.push(split_summary_message_avg_temperature_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "C",
+                    value,
+                )?);
+            }
+            18u8 => {
+                fields.push(split_summary_message_max_temperature_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "C",
+                    value,
+                )?);
+            }
+            19u8 => {
+                fields.push(split_summary_message_min_temperature_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "C",
+                    value,
+                )?);
+            }
+            20u8 => {
+                fields.push(split_summary_message_avg_vertical_oscillation_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    10f64,
+                    0f64,
+                    "mm",
+                    value,
+                )?);
+            }
+            21u8 => {
+                fields.push(split_summary_message_avg_vertical_ratio_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    100f64,
+                    0f64,
+                    "percent",
+                    value,
+                )?);
+            }
+            22u8 => {
+                fields.push(split_summary_message_avg_stance_time_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    10f64,
+                    0f64,
+                    "ms",
+                    value,
+                )?);
+            }
+            23u8 => {
+                fields.push(split_summary_message_avg_stance_time_balance_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    100f64,
+                    0f64,
+                    "percent",
+                    value,
+                )?);
+            }
+            24u8 => {
+                fields.push(split_summary_message_avg_step_length_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    10f64,
+                    0f64,
+                    "mm",
+                    value,
+                )?);
+            }
+            25u8 => {
+                fields.push(split_summary_message_avg_power_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "watts",
+                    value,
+                )?);
+            }
+            26u8 => {
+                fields.push(split_summary_message_max_power_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "watts",
+                    value,
+                )?);
+            }
+            27u8 => {
+                fields.push(split_summary_message_normalized_power_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "watts",
+                    value,
+                )?);
+            }
+            28u8 => {
+                fields.push(split_summary_message_left_right_balance_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "",
+                    value,
+                )?);
+            }
+            29u8 => {
+                fields.push(split_summary_message_time_standing_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1000f64,
+                    0f64,
+                    "s",
+                    value,
+                )?);
+            }
+            30u8 => {
+                fields.push(split_summary_message_avg_left_pco_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "mm",
+                    value,
+                )?);
+            }
+            31u8 => {
+                fields.push(split_summary_message_avg_right_pco_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "mm",
+                    value,
+                )?);
+            }
+            32u8 => {
+                fields.push(split_summary_message_avg_left_power_phase_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    0.7111111f64,
+                    0f64,
+                    "degrees",
+                    value,
+                )?);
+            }
+            33u8 => {
+                fields.push(split_summary_message_avg_left_power_phase_peak_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    0.7111111f64,
+                    0f64,
+                    "degrees",
+                    value,
+                )?);
+            }
+            34u8 => {
+                fields.push(split_summary_message_avg_right_power_phase_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    0.7111111f64,
+                    0f64,
+                    "degrees",
+                    value,
+                )?);
+            }
+            35u8 => {
+                fields.push(split_summary_message_avg_right_power_phase_peak_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    0.7111111f64,
+                    0f64,
+                    "degrees",
+                    value,
+                )?);
+            }
+            36u8 => {
+                fields.push(split_summary_message_avg_power_position_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "watts",
+                    value,
+                )?);
+            }
+            37u8 => {
+                fields.push(split_summary_message_max_power_position_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "watts",
+                    value,
+                )?);
+            }
+            38u8 => {
+                fields.push(split_summary_message_avg_left_torque_effectiveness_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    2f64,
+                    0f64,
+                    "percent",
+                    value,
+                )?);
+            }
+            39u8 => {
+                fields.push(split_summary_message_avg_right_torque_effectiveness_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    2f64,
+                    0f64,
+                    "percent",
+                    value,
+                )?);
+            }
+            40u8 => {
+                fields.push(split_summary_message_avg_left_pedal_smoothness_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    2f64,
+                    0f64,
+                    "percent",
+                    value,
+                )?);
+            }
+            41u8 => {
+                fields.push(split_summary_message_avg_right_pedal_smoothness_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    2f64,
+                    0f64,
+                    "percent",
+                    value,
+                )?);
+            }
+            42u8 => {
+                fields.push(split_summary_message_avg_combined_pedal_smoothness_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    2f64,
+                    0f64,
+                    "percent",
+                    value,
+                )?);
+            }
+            43u8 => {
+                fields.push(split_summary_message_avg_flow_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "Flow",
+                    value,
+                )?);
+            }
+            44u8 => {
+                fields.push(split_summary_message_total_grit_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "kGrit",
+                    value,
+                )?);
+            }
+            47u8 => {
+                fields.push(split_summary_message_swim_stroke_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "",
+                    value,
+                )?);
+            }
+            48u8 => {
+                fields.push(split_summary_message_num_active_lengths_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "lengths",
+                    value,
+                )?);
+            }
+            49u8 => {
+                fields.push(split_summary_message_avg_swolf_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "",
+                    value,
+                )?);
+            }
+            50u8 => {
+                fields.push(split_summary_message_avg_stroke_distance_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    100f64,
+                    0f64,
+                    "m",
+                    value,
+                )?);
+            }
+            51u8 => {
+                fields.push(split_summary_message_avg_strokes_per_length_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    10f64,
+                    0f64,
+                    "strokes / length",
+                    value,
+                )?);
+            }
+            52u8 => {
+                fields.push(split_summary_message_avg_ascent_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "m",
+                    value,
+                )?);
+            }
+            53u8 => {
+                fields.push(split_summary_message_max_ascent_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "m",
+                    value,
+                )?);
+            }
+            54u8 => {
+                fields.push(split_summary_message_climb_grading_scale_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "",
+                    value,
+                )?);
+            }
+            55u8 => {
+                if ClimbGradingScale::Yds.as_i64()
+                    == data_map
+                        .get(&54u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_summary_message_climb_max_grade_yds_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "",
+                        value,
+                    )?);
+                } else if ClimbGradingScale::Uiaa.as_i64()
+                    == data_map
+                        .get(&54u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_summary_message_climb_max_grade_uiaa_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "",
+                        value,
+                    )?);
+                } else if ClimbGradingScale::French.as_i64()
+                    == data_map
+                        .get(&54u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_summary_message_climb_max_grade_french_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "",
+                        value,
+                    )?);
+                } else if ClimbGradingScale::BritishAdjectival.as_i64()
+                    == data_map
+                        .get(&54u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(
+                        split_summary_message_climb_max_grade_british_adjectival_field(
+                            mesg_num,
+                            accumlators,
+                            options,
+                            data_map,
+                            false,
+                            1f64,
+                            0f64,
+                            "",
+                            value,
+                        )?,
+                    );
+                } else if ClimbGradingScale::BritishTechnical.as_i64()
+                    == data_map
+                        .get(&54u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(
+                        split_summary_message_climb_max_grade_british_technical_field(
+                            mesg_num,
+                            accumlators,
+                            options,
+                            data_map,
+                            false,
+                            1f64,
+                            0f64,
+                            "",
+                            value,
+                        )?,
+                    );
+                } else if ClimbGradingScale::Ewbank.as_i64()
+                    == data_map
+                        .get(&54u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_summary_message_climb_max_grade_ewbank_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "",
+                        value,
+                    )?);
+                } else if ClimbGradingScale::Brazilian.as_i64()
+                    == data_map
+                        .get(&54u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_summary_message_climb_max_grade_brazilian_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "",
+                        value,
+                    )?);
+                } else if ClimbGradingScale::Saxon.as_i64()
+                    == data_map
+                        .get(&54u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_summary_message_climb_max_grade_saxon_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "",
+                        value,
+                    )?);
+                } else if ClimbGradingScale::Vermin.as_i64()
+                    == data_map
+                        .get(&54u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_summary_message_climb_max_grade_vermin_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "",
+                        value,
+                    )?);
+                } else if ClimbGradingScale::Font.as_i64()
+                    == data_map
+                        .get(&54u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_summary_message_climb_max_grade_font_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "",
+                        value,
+                    )?);
+                } else if ClimbGradingScale::Dankyu.as_i64()
+                    == data_map
+                        .get(&54u8)
+                        .and_then(|v| v.try_into().ok())
+                        .unwrap_or(-1i64)
+                {
+                    fields.push(split_summary_message_climb_max_grade_dankyu_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "",
+                        value,
+                    )?);
+                } else {
+                    fields.push(split_summary_message_climb_max_grade_value_field(
+                        mesg_num,
+                        accumlators,
+                        options,
+                        data_map,
+                        false,
+                        1f64,
+                        0f64,
+                        "",
+                        value,
+                    )?);
+                }
+            }
+            56u8 => {
+                fields.push(split_summary_message_num_falls_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "",
+                    value,
+                )?);
+            }
+            58u8 => {
+                fields.push(split_summary_message_num_climbs_attempted_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "",
+                    value,
+                )?);
+            }
+            59u8 => {
+                fields.push(split_summary_message_num_climbs_completed_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "",
+                    value,
+                )?);
+            }
+            60u8 => {
+                fields.push(split_summary_message_max_distance_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    100f64,
+                    0f64,
+                    "m",
+                    value,
+                )?);
+            }
+            64u8 => {
+                fields.push(split_summary_message_metabolic_calories_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "kcal",
+                    value,
+                )?);
+            }
             65u8 => {
                 fields.push(split_summary_message_active_time_field(
                     mesg_num,
@@ -42394,6 +50228,84 @@ fn split_summary_message(
                     value,
                 )?);
             }
+            66u8 => {
+                fields.push(split_summary_message_total_fractional_ascent_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    100f64,
+                    0f64,
+                    "m",
+                    value,
+                )?);
+            }
+            67u8 => {
+                fields.push(split_summary_message_total_fractional_descent_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    100f64,
+                    0f64,
+                    "m",
+                    value,
+                )?);
+            }
+            68u8 => {
+                fields.push(split_summary_message_avg_fractional_ascent_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    100f64,
+                    0f64,
+                    "m",
+                    value,
+                )?);
+            }
+            69u8 => {
+                fields.push(split_summary_message_max_fractional_ascent_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    100f64,
+                    0f64,
+                    "m",
+                    value,
+                )?);
+            }
+            71u8 => {
+                fields.push(split_summary_message_avg_grade_adjusted_speed_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1000f64,
+                    0f64,
+                    "m/s",
+                    value,
+                )?);
+            }
+            72u8 => {
+                fields.push(split_summary_message_avg_stress_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "",
+                    value,
+                )?);
+            }
             77u8 => {
                 fields.push(split_summary_message_total_moving_time_field(
                     mesg_num,
@@ -42402,6 +50314,71 @@ fn split_summary_message(
                     data_map,
                     false,
                     1000f64,
+                    0f64,
+                    "s",
+                    value,
+                )?);
+            }
+            79u8 => {
+                fields.push(split_summary_message_start_time_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "",
+                    value,
+                )?);
+            }
+            87u8 => {
+                fields.push(split_summary_message_min_heart_rate_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "bpm",
+                    value,
+                )?);
+            }
+            91u8 => {
+                fields.push(split_summary_message_avg_stance_time_percent_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    100f64,
+                    0f64,
+                    "percent",
+                    value,
+                )?);
+            }
+            101u8 => {
+                fields.push(split_summary_message_max_total_timer_time_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1000f64,
+                    0f64,
+                    "s",
+                    value,
+                )?);
+            }
+            253u8 => {
+                fields.push(split_summary_message_timestamp_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
                     0f64,
                     "s",
                     value,
@@ -42450,6 +50427,62 @@ fn split_summary_message_split_type_field(
         None,
         "split_type",
         FieldDataType::SplitType,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_sport_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 1u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        1u8,
+        None,
+        "sport",
+        FieldDataType::Sport,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_sub_sport_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 2u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        2u8,
+        None,
+        "sub_sport",
+        FieldDataType::SubSport,
         scale,
         offset,
         units,
@@ -42765,6 +50798,2025 @@ fn split_summary_message_total_calories_field(
         options,
     )
 }
+fn split_summary_message_avg_cadence_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 14u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        14u8,
+        None,
+        "avg_cadence",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_avg_running_cadence_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 14u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "avg_cadence"
+    } else {
+        "avg_running_cadence"
+    };
+    data_field_with_info(
+        14u8,
+        None,
+        name,
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_avg_swimming_cadence_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 14u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "avg_cadence"
+    } else {
+        "avg_swimming_cadence"
+    };
+    data_field_with_info(
+        14u8,
+        None,
+        name,
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_avg_paddlesport_cadence_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 14u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "avg_cadence"
+    } else {
+        "avg_paddlesport_cadence"
+    };
+    data_field_with_info(
+        14u8,
+        None,
+        name,
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_avg_push_cadence_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 14u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "avg_cadence"
+    } else {
+        "avg_push_cadence"
+    };
+    data_field_with_info(
+        14u8,
+        None,
+        name,
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_max_cadence_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 15u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        15u8,
+        None,
+        "max_cadence",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_max_running_cadence_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 15u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "max_cadence"
+    } else {
+        "max_running_cadence"
+    };
+    data_field_with_info(
+        15u8,
+        None,
+        name,
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_max_swimming_cadence_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 15u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "max_cadence"
+    } else {
+        "max_swimming_cadence"
+    };
+    data_field_with_info(
+        15u8,
+        None,
+        name,
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_max_paddlesport_cadence_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 15u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "max_cadence"
+    } else {
+        "max_paddlesport_cadence"
+    };
+    data_field_with_info(
+        15u8,
+        None,
+        name,
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_max_push_cadence_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 15u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "max_cadence"
+    } else {
+        "max_push_cadence"
+    };
+    data_field_with_info(
+        15u8,
+        None,
+        name,
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_total_cycles_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 16u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        16u8,
+        None,
+        "total_cycles",
+        FieldDataType::UInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_total_strides_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 16u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "total_cycles"
+    } else {
+        "total_strides"
+    };
+    data_field_with_info(
+        16u8,
+        None,
+        name,
+        FieldDataType::UInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_total_strokes_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 16u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "total_cycles"
+    } else {
+        "total_strokes"
+    };
+    data_field_with_info(
+        16u8,
+        None,
+        name,
+        FieldDataType::UInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_total_reps_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 16u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "total_cycles"
+    } else {
+        "total_reps"
+    };
+    data_field_with_info(
+        16u8,
+        None,
+        name,
+        FieldDataType::UInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_total_pushes_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 16u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "total_cycles"
+    } else {
+        "total_pushes"
+    };
+    data_field_with_info(
+        16u8,
+        None,
+        name,
+        FieldDataType::UInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_avg_temperature_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 17u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        17u8,
+        None,
+        "avg_temperature",
+        FieldDataType::SInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_max_temperature_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 18u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        18u8,
+        None,
+        "max_temperature",
+        FieldDataType::SInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_min_temperature_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 19u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        19u8,
+        None,
+        "min_temperature",
+        FieldDataType::SInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_avg_vertical_oscillation_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 20u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        20u8,
+        None,
+        "avg_vertical_oscillation",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_avg_vertical_ratio_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 21u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        21u8,
+        None,
+        "avg_vertical_ratio",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_avg_stance_time_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 22u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        22u8,
+        None,
+        "avg_stance_time",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_avg_stance_time_balance_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 23u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        23u8,
+        None,
+        "avg_stance_time_balance",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_avg_step_length_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 24u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        24u8,
+        None,
+        "avg_step_length",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_avg_power_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 25u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        25u8,
+        None,
+        "avg_power",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_max_power_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 26u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        26u8,
+        None,
+        "max_power",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_normalized_power_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 27u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        27u8,
+        None,
+        "normalized_power",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_left_right_balance_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 28u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        28u8,
+        None,
+        "left_right_balance",
+        FieldDataType::LeftRightBalance100,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_time_standing_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 29u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        29u8,
+        None,
+        "time_standing",
+        FieldDataType::UInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_avg_left_pco_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 30u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        30u8,
+        None,
+        "avg_left_pco",
+        FieldDataType::SInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_avg_right_pco_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 31u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        31u8,
+        None,
+        "avg_right_pco",
+        FieldDataType::SInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_avg_left_power_phase_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 32u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        32u8,
+        None,
+        "avg_left_power_phase",
+        FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_avg_left_power_phase_peak_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 33u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        33u8,
+        None,
+        "avg_left_power_phase_peak",
+        FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_avg_right_power_phase_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 34u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        34u8,
+        None,
+        "avg_right_power_phase",
+        FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_avg_right_power_phase_peak_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 35u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        35u8,
+        None,
+        "avg_right_power_phase_peak",
+        FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_avg_power_position_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 36u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        36u8,
+        None,
+        "avg_power_position",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_max_power_position_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 37u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        37u8,
+        None,
+        "max_power_position",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_avg_left_torque_effectiveness_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 38u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        38u8,
+        None,
+        "avg_left_torque_effectiveness",
+        FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_avg_right_torque_effectiveness_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 39u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        39u8,
+        None,
+        "avg_right_torque_effectiveness",
+        FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_avg_left_pedal_smoothness_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 40u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        40u8,
+        None,
+        "avg_left_pedal_smoothness",
+        FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_avg_right_pedal_smoothness_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 41u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        41u8,
+        None,
+        "avg_right_pedal_smoothness",
+        FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_avg_combined_pedal_smoothness_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 42u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        42u8,
+        None,
+        "avg_combined_pedal_smoothness",
+        FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_avg_flow_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 43u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        43u8,
+        None,
+        "avg_flow",
+        FieldDataType::Float32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_total_grit_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 44u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        44u8,
+        None,
+        "total_grit",
+        FieldDataType::Float32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_swim_stroke_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 47u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        47u8,
+        None,
+        "swim_stroke",
+        FieldDataType::SwimStroke,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_num_active_lengths_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 48u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        48u8,
+        None,
+        "num_active_lengths",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_avg_swolf_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 49u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        49u8,
+        None,
+        "avg_swolf",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_avg_stroke_distance_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 50u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        50u8,
+        None,
+        "avg_stroke_distance",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_avg_strokes_per_length_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 51u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        51u8,
+        None,
+        "avg_strokes_per_length",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_avg_ascent_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 52u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        52u8,
+        None,
+        "avg_ascent",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_max_ascent_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 53u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        53u8,
+        None,
+        "max_ascent",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_climb_grading_scale_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 54u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        54u8,
+        None,
+        "climb_grading_scale",
+        FieldDataType::ClimbGradingScale,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_climb_max_grade_value_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 55u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        55u8,
+        None,
+        "climb_max_grade_value",
+        FieldDataType::UInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_climb_max_grade_yds_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 55u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "climb_max_grade_value"
+    } else {
+        "climb_max_grade_yds"
+    };
+    data_field_with_info(
+        55u8,
+        None,
+        name,
+        FieldDataType::YdsGradingScale,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_climb_max_grade_uiaa_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 55u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "climb_max_grade_value"
+    } else {
+        "climb_max_grade_uiaa"
+    };
+    data_field_with_info(
+        55u8,
+        None,
+        name,
+        FieldDataType::UiaaGradingScale,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_climb_max_grade_french_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 55u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "climb_max_grade_value"
+    } else {
+        "climb_max_grade_french"
+    };
+    data_field_with_info(
+        55u8,
+        None,
+        name,
+        FieldDataType::FrenchGradingScale,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_climb_max_grade_british_adjectival_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 55u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "climb_max_grade_value"
+    } else {
+        "climb_max_grade_british_adjectival"
+    };
+    data_field_with_info(
+        55u8,
+        None,
+        name,
+        FieldDataType::BritishAdjectivalGradingScale,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_climb_max_grade_british_technical_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 55u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "climb_max_grade_value"
+    } else {
+        "climb_max_grade_british_technical"
+    };
+    data_field_with_info(
+        55u8,
+        None,
+        name,
+        FieldDataType::BritishTechnicalGradingScale,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_climb_max_grade_ewbank_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 55u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "climb_max_grade_value"
+    } else {
+        "climb_max_grade_ewbank"
+    };
+    data_field_with_info(
+        55u8,
+        None,
+        name,
+        FieldDataType::EwbankGradingScale,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_climb_max_grade_brazilian_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 55u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "climb_max_grade_value"
+    } else {
+        "climb_max_grade_brazilian"
+    };
+    data_field_with_info(
+        55u8,
+        None,
+        name,
+        FieldDataType::BrazilianGradingScale,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_climb_max_grade_saxon_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 55u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "climb_max_grade_value"
+    } else {
+        "climb_max_grade_saxon"
+    };
+    data_field_with_info(
+        55u8,
+        None,
+        name,
+        FieldDataType::SaxonGradingScale,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_climb_max_grade_vermin_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 55u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "climb_max_grade_value"
+    } else {
+        "climb_max_grade_vermin"
+    };
+    data_field_with_info(
+        55u8,
+        None,
+        name,
+        FieldDataType::VerminGradingScale,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_climb_max_grade_font_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 55u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "climb_max_grade_value"
+    } else {
+        "climb_max_grade_font"
+    };
+    data_field_with_info(
+        55u8,
+        None,
+        name,
+        FieldDataType::FontGradingScale,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_climb_max_grade_dankyu_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 55u8, value)?
+    } else {
+        value
+    };
+    let name = if options.contains(&DecodeOption::UseGenericSubFieldName) {
+        "climb_max_grade_value"
+    } else {
+        "climb_max_grade_dankyu"
+    };
+    data_field_with_info(
+        55u8,
+        None,
+        name,
+        FieldDataType::DankyuGradingScale,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_num_falls_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 56u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        56u8,
+        None,
+        "num_falls",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_num_climbs_attempted_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 58u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        58u8,
+        None,
+        "num_climbs_attempted",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_num_climbs_completed_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 59u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        59u8,
+        None,
+        "num_climbs_completed",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_max_distance_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 60u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        60u8,
+        None,
+        "max_distance",
+        FieldDataType::UInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_metabolic_calories_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 64u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        64u8,
+        None,
+        "metabolic_calories",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
 fn split_summary_message_active_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
@@ -42793,6 +52845,174 @@ fn split_summary_message_active_time_field(
         options,
     )
 }
+fn split_summary_message_total_fractional_ascent_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 66u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        66u8,
+        None,
+        "total_fractional_ascent",
+        FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_total_fractional_descent_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 67u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        67u8,
+        None,
+        "total_fractional_descent",
+        FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_avg_fractional_ascent_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 68u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        68u8,
+        None,
+        "avg_fractional_ascent",
+        FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_max_fractional_ascent_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 69u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        69u8,
+        None,
+        "max_fractional_ascent",
+        FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_avg_grade_adjusted_speed_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 71u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        71u8,
+        None,
+        "avg_grade_adjusted_speed",
+        FieldDataType::UInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_avg_stress_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 72u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        72u8,
+        None,
+        "avg_stress",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
 fn split_summary_message_total_moving_time_field(
     mesg_num: MesgNum,
     accumlators: &mut HashMap<u32, Value>,
@@ -42814,6 +53034,146 @@ fn split_summary_message_total_moving_time_field(
         None,
         "total_moving_time",
         FieldDataType::UInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_start_time_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 79u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        79u8,
+        None,
+        "start_time",
+        FieldDataType::DateTime,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_min_heart_rate_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 87u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        87u8,
+        None,
+        "min_heart_rate",
+        FieldDataType::UInt8,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_avg_stance_time_percent_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 91u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        91u8,
+        None,
+        "avg_stance_time_percent",
+        FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_max_total_timer_time_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 101u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        101u8,
+        None,
+        "max_total_timer_time",
+        FieldDataType::UInt32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn split_summary_message_timestamp_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 253u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        253u8,
+        None,
+        "timestamp",
+        FieldDataType::DateTime,
         scale,
         offset,
         units,
@@ -46810,6 +57170,19 @@ fn segment_lap_message(
                     value,
                 )?);
             }
+            88u8 => {
+                fields.push(segment_lap_message_metabolic_calories_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "kcal",
+                    value,
+                )?);
+            }
             89u8 => {
                 fields.push(segment_lap_message_total_fractional_ascent_field(
                     mesg_num,
@@ -49400,6 +59773,34 @@ fn segment_lap_message_avg_flow_field(
         None,
         "avg_flow",
         FieldDataType::Float32,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn segment_lap_message_metabolic_calories_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 88u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        88u8,
+        None,
+        "metabolic_calories",
+        FieldDataType::UInt16,
         scale,
         offset,
         units,
@@ -56134,6 +66535,7 @@ fn monitoring_info_message_timestamp_field(
 #[doc = " * temperature_max: Max temperature during the logging interval ended at timestamp"]
 #[doc = " * activity_time: Indexed using minute_activity_level enum"]
 #[doc = " * current_activity_type_intensity: Indicates single type / intensity for duration since last monitoring message."]
+#[doc = " * pushes: Wheelchair Pushes"]
 #[doc = " * timestamp: Must align to logging interval, for example, time must be 00:00:00 for daily log."]
 fn monitoring_message(
     mesg_num: MesgNum,
@@ -56606,6 +67008,19 @@ fn monitoring_message(
                     1f64,
                     0f64,
                     "minutes",
+                    value,
+                )?);
+            }
+            41u8 => {
+                fields.push(monitoring_message_pushes_field(
+                    mesg_num,
+                    accumlators,
+                    options,
+                    data_map,
+                    false,
+                    1f64,
+                    0f64,
+                    "",
                     value,
                 )?);
             }
@@ -57474,6 +67889,34 @@ fn monitoring_message_vigorous_activity_minutes_field(
         None,
         "vigorous_activity_minutes",
         FieldDataType::UInt16,
+        scale,
+        offset,
+        units,
+        value,
+        options,
+    )
+}
+fn monitoring_message_pushes_field(
+    mesg_num: MesgNum,
+    accumlators: &mut HashMap<u32, Value>,
+    options: &HashSet<DecodeOption>,
+    data_map: &HashMap<u8, Value>,
+    accumulate: bool,
+    scale: f64,
+    offset: f64,
+    units: &'static str,
+    value: Value,
+) -> Result<FitDataField> {
+    let value = if accumulate {
+        calculate_cumulative_value(accumlators, mesg_num.as_u16(), 41u8, value)?
+    } else {
+        value
+    };
+    data_field_with_info(
+        41u8,
+        None,
+        "pushes",
+        FieldDataType::UInt32,
         scale,
         offset,
         units,
@@ -60582,7 +71025,7 @@ fn hsa_wrist_temperature_data_message(
                     false,
                     1000f64,
                     0f64,
-                    "degC",
+                    "C",
                     value,
                 )?);
             }
@@ -67741,6 +78184,7 @@ impl MesgNum {
                 device_aux_battery_info_message(self, data_map, accumlators, options)
             }
             MesgNum::TrainingFile => training_file_message(self, data_map, accumlators, options),
+            MesgNum::Battery => battery_message(self, data_map, accumlators, options),
             MesgNum::WeatherConditions => {
                 weather_conditions_message(self, data_map, accumlators, options)
             }
