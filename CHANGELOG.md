@@ -1,6 +1,6 @@
 # Changelog
 
-## HEAD
+## v0.12.0
 * Don't fail a file when a developer field is used before its field_description
   message; the value is kept as raw bytes under an `unknown_dev_field_<idx>_<num>`
   placeholder, and `DecodeOption::DropUnknownFields` drops it (kjones)
