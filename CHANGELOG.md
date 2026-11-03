@@ -4,6 +4,7 @@
 * Don't fail a file when a developer field is used before its field_description
   message; the value is kept as raw bytes under an `unknown_dev_field_<idx>_<num>`
   placeholder, and `DecodeOption::DropUnknownFields` drops it (kjones)
+* Fix developer field parsing when ReturnNumericEnumValues is set (erik)
 
 ## v0.11.0
 * Profile parser fixes for FIT SDK 21.195.0 and onward (richyo-codes)
