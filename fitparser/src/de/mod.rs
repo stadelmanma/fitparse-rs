@@ -121,6 +121,14 @@ impl Deserializer {
     fn deserialize_header<'de>(&mut self, input: &'de [u8]) -> Result<(&'de [u8], FitObject)> {
         let (remaining, header) =
             parser::fit_file_header(input).map_err(|e| self.to_parse_err(e))?;
+        let header_size = header.header_size() as usize;
+
+        if header_size > input.len() {
+            return Err(
+                ErrorKind::UnexpectedEof(nom::Needed::new(header_size - input.len())).into(),
+            );
+        }
+        //here
         self.end_of_messages =
             self.position + header.header_size() as usize + header.data_size() as usize;
         self.position += header.header_size() as usize;
