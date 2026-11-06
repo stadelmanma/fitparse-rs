@@ -499,6 +499,7 @@ impl TryFrom<&Vec<FitDataField>> for DeveloperFieldDescription {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use nom::Needed;
     use std::collections::HashSet;
 
     #[test]
@@ -506,6 +507,36 @@ mod tests {
         let data = include_bytes!("../tests/fixtures/Activity.fit").to_vec();
         let fit_data = from_bytes(&data).unwrap();
         assert_eq!(fit_data.len(), 22);
+    }
+
+    fn assert_header_size_error(crc: u16) {
+        let mut data = vec![0u8; 14];
+
+        data[0] = 200;
+        data[8..12].copy_from_slice(b".FIT");
+        data[12..14].copy_from_slice(&crc.to_le_bytes());
+
+        let result = from_bytes(&data);
+
+        match result {
+            Err(err) => match *err {
+                ErrorKind::UnexpectedEof(Needed::Size(n)) => {
+                    assert_eq!(n.get(), 186);
+                }
+                other => panic!("Expected UnexpectedEof, got {:?}", other),
+            },
+            Ok(_) => panic!("Expected an UnexpectedEof error"),
+        }
+    }
+
+    #[test]
+    fn header_size_larger_than_input_with_crc() {
+        assert_header_size_error(1);
+    }
+
+    #[test]
+    fn header_size_larger_than_input_without_crc() {
+        assert_header_size_error(0);
     }
 
     #[test]
