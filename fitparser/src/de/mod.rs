@@ -128,10 +128,8 @@ impl Deserializer {
                 ErrorKind::UnexpectedEof(nom::Needed::new(header_size - input.len())).into(),
             );
         }
-        //here
-        self.end_of_messages =
-            self.position + header.header_size() as usize + header.data_size() as usize;
-        self.position += header.header_size() as usize;
+        self.end_of_messages = self.position + header_size + header.data_size() as usize;
+        self.position += header_size;
         self.crc = 0;
 
         // Check CRC if the header was 14 bytes. If the value is 0 treat it like the CRC doesn't
@@ -139,7 +137,7 @@ impl Deserializer {
         // FitTestTool.jar utility included with the SDK.
         let crc_value = header.crc().unwrap_or(0);
         if crc_value > 0 {
-            let checksum = caculate_crc(&input[0..(header.header_size() - 2) as usize]);
+            let checksum = caculate_crc(&input[0..(header_size - 2)]);
             if !self
                 .options
                 .contains(&DecodeOption::SkipHeaderCrcValidation)
@@ -155,7 +153,7 @@ impl Deserializer {
         } else {
             // if the header doesn't have its own CRC then the header bytes are included in
             // the data CRC
-            self.crc = update_crc(0, &input[0..(header.header_size() as usize)]);
+            self.crc = update_crc(0, &input[0..header_size]);
         }
 
         Ok((remaining, FitObject::Header(header)))
